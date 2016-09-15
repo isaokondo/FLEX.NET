@@ -41,7 +41,10 @@ Friend Class clsCulcDistance
         End Get
     End Property
 
-    Public WriteOnly Property 測量ポイント総距離() As Double
+    Public Property 測量ポイント総距離() As Double
+        Get
+            Return mdbl測量ポイント総距離
+        End Get
         Set(ByVal Value As Double)
             mblnChangeFlg = mblnChangeFlg Or (Value <> mdbl測量ポイント総距離) ''鹿島品川線より追加
             mdbl測量ポイント総距離 = Value
@@ -96,7 +99,7 @@ Friend Class clsCulcDistance
         mdbl掘進総距離 = mdbl測量ポイント総距離
 
 
-        Dim intCnt As Short
+        Dim i As Short
 
         If PlcIf.ExcaStatus = cTaiki Then ''待機中
 
@@ -104,32 +107,32 @@ Friend Class clsCulcDistance
 
             Else
                 ''現在のリング番号-測量リング>1　のとき
-                With clsSegMakDat
-                    For intCnt = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 2)
-                        clsSegMakDat.RingNo = intCnt
-                        mdbl掘進総距離 = mdbl掘進総距離 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .セグメント幅 / 1000)
-                    Next intCnt
+                With SegmentAssembly
+                    For i = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 2)
+                        'SegMakDat.RingNo = intCnt
+                        mdbl掘進総距離 = mdbl掘進総距離 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .SegmentWidth(i) / 1000)
+                    Next i
 
-                    mdbl掘進総距離 = mdbl掘進総距離 - .掘進終了ストローク(mint測量ポイントリング番号) / 1000 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .掘進終了ストローク(CShort(mint現在のリング番号 - 1)) / 1000)
+                    mdbl掘進総距離 = mdbl掘進総距離 - .RingLastStroke(mint測量ポイントリング番号) / 1000 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .RingLastStroke(CShort(mint現在のリング番号 - 1)) / 1000)
 
                 End With
             End If
 
         Else
             ''掘進中or中断中
-            With clsSegMakDat
+            With SegmentAssembly
                 If mblnChangeFlg Then ''リング番号、測量ポイントのリング番号および総距離が変化した時のみ演算　負荷削減のため
-                    For intCnt = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 1)
-                        clsSegMakDat.RingNo = intCnt
-                        mdbl掘進総距離 = mdbl掘進総距離 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .セグメント幅 / 1000)
-                    Next intCnt
+                    For i = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 1)
+                        'SegMakDat.RingNo = intCnt
+                        mdbl掘進総距離 = mdbl掘進総距離 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .SegmentWidth(i) / 1000)
+                    Next i
                     mdbl現リング総距離 = mdbl掘進総距離
                     mblnChangeFlg = False
                 Else
                     mdbl掘進総距離 = mdbl現リング総距離
                 End If
 
-                mdbl掘進総距離 = mdbl掘進総距離 - .掘進終了ストローク(mint測量ポイントリング番号) / 1000 + fnGetHoseiSegmentWidth(mdbl掘進総距離, PlcIf.掘進中最大ストローク / 1000)
+                mdbl掘進総距離 = mdbl掘進総距離 - .RingLastStroke(mint測量ポイントリング番号) / 1000 + fnGetHoseiSegmentWidth(mdbl掘進総距離, PlcIf.MaxExcavingStroke / 1000)
             End With
 
         End If

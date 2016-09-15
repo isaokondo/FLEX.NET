@@ -1,5 +1,7 @@
 ﻿Option Strict Off
 Option Explicit On
+Imports System.Math
+
 Friend Class clsJkManualOut
 
     ' @(h) clsJkManualOut.cls                ver 1.0 ( '01.03.7 近藤　勲 )
@@ -7,65 +9,56 @@ Friend Class clsJkManualOut
     ' @(s)ジャッキ操作量の手動出力
     '
 
-    Private mdblPointX As Double 'ﾛｰｶﾙ ｺﾋﾟｰ
-    Private mdblPointY As Double 'ﾛｰｶﾙ ｺﾋﾟｰ
-    Private mdbl操作角 As Double 'ﾛｰｶﾙ ｺﾋﾟｰ
-    Private mdbl操作強 As Double 'ﾛｰｶﾙ ｺﾋﾟｰ
+    Private _PointX As Single 'ﾛｰｶﾙ ｺﾋﾟｰ
+    Private _PointY As Single 'ﾛｰｶﾙ ｺﾋﾟｰ
+    Private _操作角 As Single 'ﾛｰｶﾙ ｺﾋﾟｰ
+    Private _操作強 As Single 'ﾛｰｶﾙ ｺﾋﾟｰ
 
     ''ポイント座標が入力されたイベント
-    Public Event ValueChanges()
+    Public Event PointChanges()
 
-    Public ReadOnly Property 操作強() As Double
+    Public ReadOnly Property 操作強() As Single
         Get
-            操作強 = mdbl操作強
+            操作強 = _操作強
         End Get
     End Property
 
-    Public ReadOnly Property 操作角() As Double
+    Public ReadOnly Property 操作角() As Single
         Get
-            操作角 = mdbl操作角
+            操作角 = _操作角
         End Get
     End Property
 
 
-    Public Property PointY() As Double
+    Public ReadOnly Property PointY() As Double
         Get
-            PointY = mdblPointY
+            PointY = _PointY
         End Get
-        Set(ByVal Value As Double)
-            mdblPointY = Value
-            Call sbCul() ''操作強、操作角度算出
-
-        End Set
     End Property
 
 
 
-    Public Property PointX() As Double
+    Public ReadOnly Property PointX() As Double
         Get
-            PointX = mdblPointX
+            PointX = _PointX
         End Get
-        Set(ByVal Value As Double)
-            mdblPointX = Value
-            Call sbCul() ''操作強、操作角度算出
-        End Set
     End Property
 
-    Public Sub sbPutPointXY(ByVal dblPointX As Double, ByVal dblPointY As Double)
+    Public Sub PutPointXY(ByVal dblPointX As Single, ByVal dblPointY As Single)
         ' @(f)
         '
         ' 機能      :ポイント座標ＸＹ入力時
         '
         ' 備考      :
 
-        mdblPointX = dblPointX
-        mdblPointY = dblPointY
+        _PointX = dblPointX
+        _PointY = dblPointY
         Call sbCul() ''操作強、操作角度算出
     End Sub
 
 
 
-    Public Sub sbCul()
+    Private Sub sbCul()
         ' @(f)
         '
         ' 機能      :操作強、操作角度算出
@@ -74,28 +67,28 @@ Friend Class clsJkManualOut
 
 
 
-        If fnNearZero(mdblPointX) And fnNearZero(mdblPointY) Then
-            mdbl操作角 = 0
-            mdbl操作強 = 0
+        If fnNearZero(_PointX) And fnNearZero(_PointY) Then
+            _操作角 = 0
+            _操作強 = 0
         Else
-            If fnNearZero(mdblPointX) And mdblPointY > 0 Then
-                mdbl操作角 = 90
-            ElseIf fnNearZero(mdblPointX) And mdblPointY < 0 Then
-                mdbl操作角 = 270
+            If fnNearZero(_PointX) And _PointY > 0 Then
+                _操作角 = 90
+            ElseIf fnNearZero(_PointX) And _PointY < 0 Then
+                _操作角 = 270
             Else
-                If mdblPointX > 0 And mdblPointY >= 0 Then
-                    mdbl操作角 = System.Math.Atan(mdblPointY / mdblPointX) * 180 / cPI
-                ElseIf mdblPointX > 0 And mdblPointY < 0 Then
-                    mdbl操作角 = System.Math.Atan(mdblPointY / mdblPointX) * 180 / cPI + 360
+                If _PointX > 0 And _PointY >= 0 Then
+                    _操作角 = Atan(_PointY / _PointX) * 180 / PI
+                ElseIf _PointX > 0 And _PointY < 0 Then
+                    _操作角 = Atan(_PointY / _PointX) * 180 / PI + 360
                 Else
-                    mdbl操作角 = System.Math.Atan(mdblPointY / mdblPointX) * 180 / cPI + 180
+                    _操作角 = Atan(_PointY / _PointX) * 180 / PI + 180
                 End If
             End If
         End If
-        mdbl操作強 = System.Math.Sqrt(mdblPointX ^ 2 + mdblPointY ^ 2)
+        _操作強 = Sqrt(_PointX ^ 2 + _PointY ^ 2)
 
         ''ポイント座標が入力され演算完了したイベント
-        RaiseEvent ValueChanges()
+        RaiseEvent PointChanges()
 
     End Sub
 End Class

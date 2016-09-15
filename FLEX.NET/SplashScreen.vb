@@ -7,8 +7,6 @@
     Private Sub SplashScreen1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'アプリケーションのアセンブリ情報に従って、ランタイムにダイアログ テキストを設定します。  
 
-        'TODO: [プロジェクト] メニューの下にある [プロジェクト プロパティ] ダイアログの [アプリケーション] ペインで、アプリケーションのアセンブリ情報を 
-        '  カスタマイズします
 
         'アプリケーション タイトル
         If My.Application.Info.Title <> "" Then

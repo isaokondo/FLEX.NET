@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class frmRingNoChange
-    Inherits System.Windows.Forms.Form
+    Inherits frmSettingBase
 
     'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -23,30 +23,23 @@ Partial Class frmRingNoChange
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRingNoChange))
-        Me.btnOK = New System.Windows.Forms.Button()
-        Me.btnCancel = New System.Windows.Forms.Button()
         Me.RingNoEdt = New FLEX.NET.ucnNumEdit()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.BackColor = System.Drawing.Color.Silver
         resources.ApplyResources(Me.btnOK, "btnOK")
-        Me.btnOK.Name = "btnOK"
-        Me.btnOK.UseVisualStyleBackColor = False
         '
         'btnCancel
         '
-        Me.btnCancel.BackColor = System.Drawing.Color.Silver
         resources.ApplyResources(Me.btnCancel, "btnCancel")
-        Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.UseVisualStyleBackColor = False
         '
         'RingNoEdt
         '
         Me.RingNoEdt.DecimalPlaces = CType(0, Short)
         Me.RingNoEdt.DspFieldName = False
         Me.RingNoEdt.FieldName = Nothing
+        Me.RingNoEdt.Increment = 1.0!
         Me.RingNoEdt.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         resources.ApplyResources(Me.RingNoEdt, "RingNoEdt")
         Me.RingNoEdt.MaxValue = "10000"
@@ -54,7 +47,7 @@ Partial Class frmRingNoChange
         Me.RingNoEdt.Name = "RingNoEdt"
         Me.RingNoEdt.SelectItem = Nothing
         Me.RingNoEdt.Unit = "リング"
-        Me.RingNoEdt.Value = 0.0R
+        Me.RingNoEdt.Value = 0R
         '
         'frmRingNoChange
         '
@@ -62,13 +55,12 @@ Partial Class frmRingNoChange
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
         Me.Controls.Add(Me.RingNoEdt)
-        Me.Controls.Add(Me.btnCancel)
-        Me.Controls.Add(Me.btnOK)
         Me.Name = "frmRingNoChange"
+        Me.Controls.SetChildIndex(Me.RingNoEdt, 0)
+        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents btnOK As System.Windows.Forms.Button
-    Friend WithEvents btnCancel As System.Windows.Forms.Button
     Friend WithEvents RingNoEdt As FLEX.NET.ucnNumEdit
 End Class

@@ -8,6 +8,8 @@ Public Class ucnNumEdit
     Private _MaxValue As Single '最大値
     Private _MinValue As Single '最小値
 
+    Private _DataDspWidth As Integer    'データ表示幅
+
     Private numUDDefPointX As Integer
     Private lblUnitDefPointX As Integer
     ''' <summary>
@@ -36,8 +38,10 @@ Public Class ucnNumEdit
     End Enum
 
     Private _InputStyle As InputMethod
-
-
+    ''' <summary>
+    ''' データ変化時
+    ''' </summary>
+    Public Event ValueChanged(sender As Object, e As EventArgs)
 
 
     <Browsable(True), Description("入力方式の選択")>
@@ -53,6 +57,15 @@ Public Class ucnNumEdit
         End Set
     End Property
 
+    <Browsable(True), Description("UPDOWNボタンの増減値")>
+    Public Property Increment As Single
+        Get
+            Return numUD.Increment
+        End Get
+        Set(value As Single)
+            numUD.Increment = value
+        End Set
+    End Property
 
 
     <Browsable(True), Description("最大値の設定")>
@@ -120,6 +133,24 @@ Public Class ucnNumEdit
         End Set
     End Property
 
+    <Browsable(True), Description("データ表示幅")>
+    Public Property DataDspWidth As Integer
+        Get
+            Return _DataDspWidth
+
+        End Get
+        Set(value As Integer)
+            _DataDspWidth = value
+            'If _InputStyle = InputMethod.SelectType Then
+            ComboBox.Width = _DataDspWidth
+            'Else
+            numUD.Width = _DataDspWidth
+            'End If
+
+        End Set
+    End Property
+
+
     ''' <summary>
     ''' 小数点桁数の設定
     ''' </summary>
@@ -151,7 +182,7 @@ Public Class ucnNumEdit
                     If _Value < numUD.Minimum Then _Value = numUD.Minimum
                     numUD.Value = _Value
                 Case InputMethod.SelectType
-                    ComboBox.SelectedIndex = _Value
+                    'ComboBox.SelectedIndex = _Value
             End Select
         End Set
     End Property
@@ -183,6 +214,7 @@ Public Class ucnNumEdit
 
     Private Sub numUD_ValueChanged(sender As Object, e As EventArgs) Handles numUD.ValueChanged
         _Value = numUD.Value
+        RaiseEvent ValueChanged(sender, e)
     End Sub
 
     Public Sub New()
@@ -196,6 +228,12 @@ Public Class ucnNumEdit
         lblUnitDefPointX = lblUnit.Location.X
 
 
+    End Sub
+
+    Private Sub ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox.SelectedIndexChanged
+        If Not IsNothing(_SelectItem) Then
+            RaiseEvent ValueChanged(sender, e)
+        End If
     End Sub
 End Class
 

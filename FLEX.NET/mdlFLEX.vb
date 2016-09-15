@@ -1,70 +1,55 @@
 ﻿Option Explicit On
-Imports System.Math
+
 Module mdlFLEX
 
     Public InitParameter As New clsInitParameter '初期値パラメータ
-    'Public clsPlanLine As clsPlanLineRead ''計画路線読みこみ
+
     Public HorPlan As New clsHorPanData '平面掘進計画線
     Public VerPlan As New clsVerPlanData '縦断掘進計画線
+    ''' <summary>
+    ''' シールドマシン諸元
+    ''' </summary>
+    Public MachineSpec As New clsMachinSpec
 
-    Public MachineSpec As New clsMachinSpec 'シールドマシン諸元
+    Public SegmentAssembly As New clsSegmentAssembly ''セグメント組立データ
 
-    Public clsSegMakDat As clsSegmentMakeData ''セグメント組立データ
-
-    Public clsEstValue As clsEstmateValeu ''元圧とモーメントの予測値 04/09/21
-
-    Public ControlParameter As New clsControlParameter  '制御パラメータ
+    Public WithEvents ControlParameter As New clsControlParameter  '制御パラメータ
 
     Public CulcMoment As New clsCulMoment ''モーメント、推力の演算
 
-    Public WithEvents JackMvAuto As clsCulJackMv ''ジャッキ操作量の演算
-
-    Public DivCul As New clsThrustDiv ''推力分担率の演算
-
-    Public clsKijunHoui As clsCulKijun ''基準方位演算
-
-    Private WithEvents JackManual As clsJkManualOut ''ジャッキ手動操作出力
+    Public WithEvents JackMvAuto As New clsCulJackMv ''ジャッキ操作量の演算
+    ''' <summary>
+    ''' 推力分担率の演算
+    ''' </summary>
+    Public DivCul As New clsThrustDiv ''
+    ''' <summary>
+    ''' 基準方位演算
+    ''' </summary>
+    Public RefernceDirection As New clsCulKijun
+    ''' <summary>
+    ''' ジャッキ手動操作出力
+    ''' </summary>
+    Public WithEvents JackManual As New clsJkManualOut
 
     'PLCインターフェース
     Public WithEvents PlcIf As New clsPlcIf
 
-    Public Const cPI = 3.14159265358979     ''円周率
+    ''' <summary>
+    ''' 減圧処理
+    ''' </summary>
+    Private WithEvents Reduce As New clsReducePress
 
-    Public Const cDirectOut As Short = &HAAS ''圧力指令値のﾀﾞｲﾚｸﾄ出力
-    Public Const cPIDOut As Short = &HFFS ''PID演算開始
-    Public Const cIgnoreOut As Short = &H22S ''待機中につき演算無視
-    ''01.09.20  追加
-    Public Const cTracking As Short = &H44S ''減圧弁トラッキング
-
-    Public Const c全押しスタート As Short = 0
-    Public Const c前回値保持 As Short = 1
-    Public Const c減圧前 As Short = 2
-
-    Public Const cMAX_Ring As Short = 10000
-
-    ''04/08/11 仮リング対応
-    Public Const cStart_Ring As Short = -10
-
-    Public Const cMAX_SegType As Short = 50 ''02/10/24 追加
-
-    Public Const cMaxJackNum As Short = 60 ''最大ジャッキ本数　03/01/10 追加
-
-    Public gblnNoPlc As Boolean ''ＰＬＣなしの場合のモード（デモバージョン）
-
-    ''掘進ステータス定数
-    Public Const cTaiki As Short = 1 ''待機中
-    Public Const cKussin As Short = 2 ''掘進中
-    Public Const cChudan As Short = 3 ''中断中
-
-    Public gdblToStartDistance As Double ''起点から発進座標までの累積距離
 
 
     Public Sub Main()
-        'ControlParameter.ストローク管理法 = 1
-        Dim intSheetID As Integer = 20
-        HorPlan.DataRead(intSheetID)
-        VerPlan.DataRead(intSheetID)
+
+
+
+        'メイン画面の表示
         Application.Run(New frmMain())
+
+
+
     End Sub
 
     Private Sub PlcIf_PLCErrOccur(sender As Object, ByVale As EventArgs, ErrMsg As String) Handles PlcIf.PLCErrOccur
@@ -72,250 +57,384 @@ Module mdlFLEX
         If response = MsgBoxResult.Abort Then End
     End Sub
 
+    ''' <summary>
+    ''' 掘進ステータス変化時
+    ''' </summary>
+    ''' <param name="PreStatus">変化前</param>
+    ''' <param name="NowStatus">変化後</param>
+    Private Sub PlcIf_ExcavationStatusChange(PreStatus As Integer, NowStatus As Integer) _
+        Handles PlcIf.ExcavationStatusChange
+        '組立パターンの情報を取得
+        SegmentAssembly.sbSegmentAssemblyDataRead(PlcIf.RingNo)
 
-    Private Sub PLCIF_PLCRead(sender As Object, ByVale As EventArgs) Handles PlcIf.PLCRead
-
-    End Sub
-    
-
-  
-  
-
-
-    Public Function Arcsin(ByRef x As Double) As Double
-        ''アークサイン
-
-        If x <= -1 Then
-            Arcsin = -cPI / 2
-            Exit Function
+        If PreStatus = -1 Then Exit Sub
+        '待機中から掘進
+        If PreStatus = cTaiki And NowStatus = cKussin Then
+            PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
+            PlcIf.LosZeroSts_FLEX = 0
+            WriteEventData(PlcIf.RingNo & "リング 掘進開始しました", Color.CornflowerBlue)
+            My.Forms.frmMain.ChartClear() 'チャート初期化
+            My.Forms.frmMain.DspExcavStartDay(Now)
         End If
-        If x >= 1 Then
-            Arcsin = cPI / 2
-            Exit Function
+        If PreStatus = cChudan And NowStatus = cKussin Then
+            WriteEventData("掘進再開しました", Color.Magenta)
+        End If
+        '中断
+        If NowStatus = cChudan Then
+            WriteEventData("掘進中断しました", Color.Black)
+        End If
+        '待機中
+        If NowStatus = cTaiki Then
+            WriteEventData("待機中になりました。", Color.Blue)
+            PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
+            PlcIf.LosZeroSts_FLEX = 0
+        End If
+        '掘進中で手動方向制御
+        If NowStatus = cKussin And ControlParameter.AutoDirectionControl = False Then
+            '保持してる作用点
+            JackManual.PutPointXY(ControlParameter.PointX, ControlParameter.PointY)
         End If
 
-        Arcsin = Atan(x / Sqrt(-x * x + 1))
+        '掘進してないときは、自動方向制御停止
+        If NowStatus <> cKussin Then JackMvAuto.MvAutoStop()
 
-    End Function
-    Function Hoko2Hoi(ByRef Hoko As Double) As Double
-        ''左回り角度±１８０度を方位角に変換
-        '   '01/06/28 追加
-        '   Hoko = Lim180(Hoko)
-        '   Hoko2Hoi = -Hoko
-        '   If Hoko2Hoi < 0 Then
-        '       Hoko2Hoi = Hoko2Hoi + 360
-        '   End If
-        '**<<変更履歴>> 方位計算異常の修正(2003/03/18)
-        '左回りを右回りに変換し、値を０～３６０に調整
-        Hoko2Hoi = -Hoko
-        Do While Hoko2Hoi < 0 Or Hoko2Hoi > 360
-            If Hoko2Hoi < 0 Then
-                Hoko2Hoi = Hoko2Hoi + 360
-            End If
-            If Hoko2Hoi > 360 Then
-                Hoko2Hoi = Hoko2Hoi - 360
-            End If
-        Loop
-    End Function
-
-    Public Function Hoi2Hoko(ByVal Hoi As Double) As Double
-        '方位角（右回り０～３６０）を左回り角度±１８０度に変換
-
-        '   Hoi2Hoko = 360 - Hoi
-        '   Hoi2Hoko = Lim180(Hoi2Hoko)
-        '**<<変更履歴>> 方位計算異常の修正(2003/03/18)
-        Hoi2Hoko = 360 - Hoi
-        Do While Hoi2Hoko < 0 Or Hoi2Hoko > 360
-            If Hoi2Hoko < 0 Then
-                Hoi2Hoko = Hoi2Hoko + 360
-            End If
-            If Hoi2Hoko > 360 Then
-                Hoi2Hoko = Hoi2Hoko - 360
-            End If
-        Loop
-
-    End Function
-    Public Function Lim180(ByVal Kakudo As Double) As Double
-        '０～３６０度の角度を同回りの±１８０度に変換
-
-        '   If Kakudo > 180 Then
-        '       Lim180 = Kakudo - 360
-        '   Exit Function
-        '   End If
-        '
-        '   If Kakudo < -180 Then
-        '       Lim180 = 360 + Kakudo
-        '   Exit Function
-        '   End If
-        '
-        '   Lim180 = Kakudo
-        '**<<変更履歴>> 方位計算異常の修正(2003/03/18)
-        Do While Kakudo > 180 Or Kakudo < -180
-            If Kakudo > 180 Then
-                Kakudo = Kakudo - 360
-            End If
-            If Kakudo < -180 Then
-                Kakudo = 360 + Kakudo
-            End If
-        Loop
-        Lim180 = Kakudo
-        Exit Function
-
-    End Function
-
-
-    Public Function fnNearZero(ByVal vData As Double) As Boolean
-        ' @(f)
-        '
-        ' 機能      :限りなき小さい値はゼロにする
-        '
-        '
-        ' 返り値    :ゼロかどうか？
-        ' 　　　    :
-        '
-        ' 機能説明  :実数判定用幅ΔCの範囲内の値の時は真
-        '
-        ' 備考      :
-
-
-        Const cDeltaC As Double = 0.0001
-
-        If vData >= -cDeltaC And vData <= cDeltaC Then
-            fnNearZero = True
-        Else
-            fnNearZero = False
+        If NowStatus = cKussin And ControlParameter.AutoDirectionControl Then
+            'JackMvAuto.MvAutoStart()
         End If
 
 
-
-
-
-    End Function
-
-
-
-
-    Public Function fnDegToPermili(ByRef dblDeg As Double) As Double
-        ' @(f)
-        '
-        ' 機能      :単位の変換
-        '
-        ' 機能説明  :ディグリーをパーミリへ変換
-        '
-        ' 引数      :
-        '
-        ' 備考      :02/09/11 追加
-
-        Return Tan(dblDeg * cPI / 180) * 1000
-
-
-    End Function
-
-
-    Public Function fnPermiliToDeg(ByRef dblPermili As Double) As Double
-        ' @(f)
-        '
-        ' 機能      :単位の変換
-        '
-        ' 機能説明  :パーミリをディグリーへ変換
-        '
-        ' 引数      :
-        '
-        ' 備考      :02/10/08 追加
-
-        Return Atan(dblPermili / 1000) / (cPI / 180)
-
-
-    End Function
-
-
-    
-    Private Sub JackMvAuto_制御モードフラグChanges(intMode As Short) Handles JackMvAuto.制御モードフラグChanges
+        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
 
     End Sub
 
 
 
-    Public Sub sbZahyoGtoL(ByRef dblLx As Double, ByRef dblLy As Double, ByVal dblGX As Double, ByVal dblGY As Double, ByVal dblGX0 As Double, ByVal dblGY0 As Double, ByVal sngAlfa0 As Double)
-        ' @(f)
-        '
-        ' 機能      :ローカルからグローバル座標への変換
-        ' 返り値    :
-        '
-        '
-        ' 機能説明  :
-        '
-        ' 備考      :
-        ''
 
-        'Lx,Ly  変換対象のローカル座標値（出力値）
-        'Gx,Gy  変換対象のグローバル座標値（入力値）
-        'X0,Y0  変換中心のグローバル座標値（入力値）
-        'Alfa0　変換中心のグローバル座標上の方向角(deg)（入力値）
+    ''' <summary>
+    ''' マシン先端距離の変化時の処理
+    ''' </summary>
+    Private Sub LineDistanceChage() Handles PlcIf.LineDistanceChage, ControlParameter.ReferChnge
 
-        Dim dblCT, dblST As Double
+        '        RefernceDirection.Distance.測量ポイントリング番号
+        Call RefernceDirection.sbCulKijun()
 
-        dblCT = Cos(Lim180(sngAlfa0) * cPI / 180)
-        dblST = Sin(Lim180(sngAlfa0) * cPI / 180)
-        dblLx = dblCT * (dblGX - dblGX0) + dblST * (dblGY - dblGY0)
-        dblLy = -dblST * (dblGX - dblGX0) + dblCT * (dblGY - dblGY0)
+        My.Forms.frmMain.LineDataUpdate()
+
+        If ControlParameter.AutoDirectionControl Then
+            JackMvAuto.水平偏差角 = RefernceDirection.平面偏角
+            JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
+        End If
+
+
+
+    End Sub
+    ''' <summary>
+    ''' 操作点手動操作時の処理
+    ''' </summary>
+    Private Sub JackManual_PointChanges() Handles JackManual.PointChanges,
+        PlcIf.ExcavationStatusChange, JackMvAuto.AutoDirectionCulc, Reduce.ReduceOn, PlcIf.LosZeroStsChange
+
+        With DivCul
+            'パラメータセット
+            .最低全開グループ数 = ControlParameter.最低全開グループ数
+            .全開作動指令値 = ControlParameter.全開作動指令値
+            .全開作動範囲 = ControlParameter.全開作動範囲
+            .全開グループ制限 = ControlParameter.全開グループ制限
+
+            If ControlParameter.AutoDirectionControl Then
+                .操作角 = JackMvAuto.操作角
+                .操作強 = JackMvAuto.操作強
+                ControlParameter.PointX = JackMvAuto.PointX
+                ControlParameter.PointY = JackMvAuto.PointY
+                ControlParameter.操作角 = JackMvAuto.操作角
+                ControlParameter.操作強 = JackMvAuto.操作強
+            Else
+                .操作角 = JackManual.操作角
+                .操作強 = JackManual.操作強
+                ControlParameter.操作角 = JackManual.操作角
+                ControlParameter.操作強 = JackManual.操作強
+            End If
+
+            .sbCul() ''推力分担率の演算
+
+
+        End With
+
+        GroupSvOut() 'シーケンサへ圧力分担値の送出
 
     End Sub
 
 
 
-    Private Function Kai(ByVal N As Integer) As Double
-        'Ｎの階上
-        Dim i As Integer
+    ''' <summary>
+    ''' シーケンサへ圧力分担値の送出
+    ''' </summary>
+    Private Sub GroupSvOut()
 
-        Kai = 1
-        If N = 0 Then
-            Exit Function
-        End If
+        With DivCul
 
-        For i = 1 To N
-            Kai = Kai * i
-        Next
+            Dim sngGpSV(InitParameter.NumberGroup - 1) As Single
+            Dim intGpFl(InitParameter.NumberGroup - 1) As Short
 
-    End Function
+            '減圧中から組立完了
+            If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
+                Dim Gp As List(Of Short) =
+                        SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+                For Each R As Short In Gp
+                    sngGpSV(R - 1) =
+                        Reduce.MvOut(R - 1) * ControlParameter.最大全開出力時の目標圧力 / 100
+                    intGpFl(R - 1) = cTracking
+                Next
+            End If
 
 
-    Public Function f(ByVal L As Double, ByVal R As Double) As Double
-        'ﾕｰｻﾞｰ関数 ｆ
-        Dim Sigma As Double
-        Dim LR As Double
-        Dim k As Short
+            Select Case PlcIf.ExcaStatus
 
-        If R <> 0 Then
-            LR = L / (2 * R)
+                Case cKussin
+                    ''掘進中の処理
+                    For i = 0 To InitParameter.NumberGroup - 1
+                        If intGpFl(i) <> cTracking Then
+                            If .分担率指令値(i) > 99 Then ''全開出力
+                                sngGpSV(i) = ControlParameter.最大全開出力時の目標圧力
+                                intGpFl(i) = cFillPower
+                            Else
+                                sngGpSV(i) = .分担率指令値(i) / 100 * PlcIf.FilterJkPress
+                                If Math.Abs(PlcIf.GroupPv(i) - PlcIf.GroupSV(i)) < ControlParameter.PIDShiftDefl _
+                                    Or ControlParameter.DirectControl = False Then
+                                    intGpFl(i) = cPIDOut ''ＰＩＤ出力
+                                Else
+                                    intGpFl(i) = cDirect  'ダイレクト指令制御
+                                End If
+
+                            End If
+                        End If
+                        'TODO:トラッキングの意味
+                        ''01/09/20 追加
+                        'If mblnTracking Then
+                        '    intGpFl(i) = cTracking ''トラッキング
+                        '    'frmTuningMonitor.lblPID(intCnt).Text = "T" ''チューニングモニタのステータス
+                        'End If
+
+                    Next i
+                    ''中断中及び待機中の処理
+                Case cChudan, cTaiki
+                    For intCnt = 0 To InitParameter.NumberGroup - 1
+                        intGpFl(intCnt) = cIgnoreOut
+                    Next intCnt
+
+            End Select
+            ''シーケンサ出力
+            PlcIf.PutSvPress(sngGpSV, intGpFl)
+        End With
+
+
+
+
+    End Sub
+    ''' <summary>
+    ''' PLC読込イベント
+    ''' </summary>
+    Private Sub PlcIf_PLCRead() Handles PlcIf.PLCRead
+        'モーメント推力の演算
+        CulcMoment.MomentCul()
+
+
+
+    End Sub
+
+    ''' <summary>
+    ''' 同時施工ステータス変化
+    ''' </summary>
+    ''' <param name="PreSts">変化前のステータス</param>
+    ''' <param name="NowSts">変化後のステータス</param>
+    ''' <param name="FromDev">True:マシン　False：FLEX</param>
+    Private Sub PlcIf_LosZeroStsChange(PreSts As Short,
+                                       NowSts As Short, FromDev As Boolean) Handles PlcIf.LosZeroStsChange
+        'マシンからのステータス
+        If FromDev Then
+            Select Case NowSts
+                Case 1
+                    PlcIf.LosZeroSts_FLEX = 1'1ピース目の減圧開始
+                Case 2
+                    WriteEventData("ジャッキの引戻し開始しました。", Color.Magenta)
+                Case 3
+                    WriteEventData("ジャッキの引戻し完了しました。", Color.Magenta)
+                Case 4, 6
+                    WriteEventData("ジャッキ押込み開始しました。", Color.Magenta)
+                Case 5
+                    WriteEventData("セグメント組立完了しました。", Color.Magenta)
+                    PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
+                Case 7
+                    WriteEventData("ジャッキ押付け完了しました。", Color.Magenta)
+                    PlcIf.LosZeroSts_FLEX = 4 '押し付け完了確認
+                    If PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then '最終ピース到達前
+                        If ControlParameter.NextPieceConfirm Then
+                            '同時施工継続メッセージ出力
+                            My.Forms.frmNextPieceConfirm.Show()
+                        Else
+                            PlcIf.LosZeroSts_FLEX = 1 '減圧開始
+                        End If
+                    End If
+
+
+                Case 8
+                    WriteEventData("Kセグメント組立完了しました。", Color.Magenta)
+
+            End Select
         Else
-            LR = 0
+            'FLEXからのステータス
+            Select Case NowSts
+                Case 1  '減圧開始
+                    If PlcIf.LosZeroSts_M <> 1 Then
+                        PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
+                    End If
+                    WriteEventData(PlcIf.AssemblyPieceNo & "ピース目の減圧開始します。", Color.Magenta)
+                    'マシンへ指令　
+                    With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
+                        PlcIf.LosZeroDataWrite("減圧ジャッキ", .ReduceJack)
+                        PlcIf.LosZeroDataWrite("引戻しジャッキ", .PullBackJack)
+                        PlcIf.LosZeroDataWrite("押込みジャッキ", .ClosetJack)
+                    End With
+                    '減圧処理開始
+                    Reduce.Start()
+
+                Case 2
+                    WriteEventData("減圧完了しました。", Color.Magenta)
+                    PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
+
+            End Select
+
+
+
         End If
-        Sigma = 0
-        For k = 1 To 5
-            Sigma = Sigma + 1 / ((4 * k - 3) * Kai(2 * k - 2)) * (-1) ^ (k + 1) * LR ^ (2 * k - 2)
-        Next
-        Return L * Sigma
-
-    End Function
+    End Sub
 
 
-    Public Function g(ByVal L As Double, ByVal R As Double) As Double
-        'ﾕｰｻﾞｰ関数 ｆ
-        Dim Sigma As Double
-        Dim LR As Double
-        Dim k As Short
+    ''' <summary>
+    ''' イベントデータをデータベースに書込
+    ''' </summary>
+    ''' <param name="EventMsg">イベントメッセージ</param>
+    ''' <param name="EventColor">表示用のイベントカラー</param>
+    Public Sub WriteEventData(EventMsg As String, EventColor As Color)
+        Dim Colorlng As Long = ColorTranslator.ToOle(EventColor)
 
-        If R <> 0 Then
-            LR = L / (2 * R)
+        Dim db As New clsDataBase
+
+        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql _
+            ("INSERT INTO FLEXイベントデータ(Time,イベントデータ,イベント種類) VALUES('" _
+             & Now & "','" & EventMsg & "','" & Colorlng & "')")
+
+        My.Forms.frmMain.EventlogUpdate()
+
+    End Sub
+    ''' <summary>
+    ''' 姿勢制御自動手動の切替時の処理
+    ''' </summary>
+    ''' 
+    Private Sub ControlParameter_FlexAutoManualChange() Handles ControlParameter.FlexAutoManualChange, PlcIf.ExcavationStatusChange
+        '掘進中以外はスキップ
+        'If PlcIf.ExcaStatus <> cKussin Then Exit Sub
+
+        If ControlParameter.AutoDirectionControl Then
+            WriteEventData("自動方向制御開始しました。", Color.Orange)
+            'tmrAutoDirect.Enabled = False
+            'TODO:自動手動切替時しかPID定数が反映されてない！
+            ''手動→自動切替時
+            With JackMvAuto
+
+                .水平P定数 = ControlParameter.水平ジャッキ制御P定数
+                .水平I定数 = ControlParameter.水平ジャッキ制御I定数
+                .水平D定数 = ControlParameter.水平ジャッキ制御D定数
+                .鉛直P定数 = ControlParameter.鉛直ジャッキ制御P定数
+                .鉛直I定数 = ControlParameter.鉛直ジャッキ制御I定数
+                .鉛直D定数 = ControlParameter.鉛直ジャッキ制御D定数
+                .水平偏差角 = RefernceDirection.平面偏角
+                .鉛直偏差角 = RefernceDirection.縦断偏角
+                ''自動から手動時のトラッキング処理
+                .PointX = JackManual.PointX
+                .PointY = JackManual.PointY
+                .sbMnToAutTracking()
+                ''自動演算開始
+                .MvAutoStart()
+            End With
+
         Else
-            LR = 0
-        End If
-        Sigma = 0
-        For k = 1 To 5
-            Sigma = Sigma + 1 / ((4 * k - 1) * Kai(2 * k - 1)) * (-1) ^ (k + 1) * LR ^ (2 * k - 1)
-        Next
-        g = L * Sigma
+            WriteEventData("方向制御 手動モードに変わりました", Color.Blue)
+            ''自動演算停止
+            JackMvAuto.MvAutoStop()
+            '                ''自動→手動切替時
+            'TODO:操作権
+            'If mneSosa.Checked Then
+            ''自動から手動時のトラッキング処理
+            ''自動時の座標を手動時の座標へ渡す
+            JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
 
-    End Function
+        End If
+    End Sub
+
+    Private Sub JackMvAuto_OneWayLimitModeChanges(Flg As Boolean) Handles JackMvAuto.OneWayLimitModeChanges
+        If Flg Then
+            WriteEventData("圧力調整中になりました。", Color.Magenta)
+            WriteEventData("方向制御　自動に変わりました", Color.Orange)
+
+        Else
+            WriteEventData("PID制御に変わりました。", Color.Blue)
+        End If
+    End Sub
+
+
+
+
+
+    ''' <summary>
+    ''' 正円を描画
+    ''' </summary>
+    ''' <param name="g">グラフィック</param>
+    ''' <param name="center">中心ポイント</param>
+    ''' <param name="radius">半径</param>
+    Public Sub DrawACircle(pen As Pen, ByRef g As Graphics, ByRef center As Point, ByVal radius As Integer)
+
+        ' Select a pen object and make it red
+
+        ' Create a bounding rectangle and make its center the center of our point
+
+        ' Then make its width 2 * the radius
+
+        ' Then draw our ellipse
+
+        Dim rect As New Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2)
+
+        g.DrawEllipse(pen, rect)
+
+    End Sub
+
+    ''' <summary>
+    ''' 正円を塗りつぶし
+    ''' </summary>
+    ''' <param name="g">グラフィック</param>
+    ''' <param name="center">中心ポイント</param>
+    ''' <param name="radius">半径</param>
+    Public Sub FillACircle(pen As Brush, ByRef g As Graphics, ByRef center As Point, ByVal radius As Integer)
+
+        ' Select a pen object and make it red
+
+        ' Create a bounding rectangle and make its center the center of our point
+
+        ' Then make its width 2 * the radius
+
+        ' Then draw our ellipse
+
+        Dim rect As New Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2)
+
+        g.FillEllipse(pen, rect)
+
+    End Sub
+
+
+
+
+
+
+
+
 End Module

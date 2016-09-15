@@ -1,4 +1,6 @@
-﻿Public Class frmSim
+﻿Imports System.Text
+
+Public Class frmSim
 
     Public InitParm As New FLEX.NET.clsInitParameter '初期値パラメータ
 
@@ -7,8 +9,12 @@
     Private DspGpPv() As FLEX.NET.ucnDspGpPres
     Private DspGpMv() As Label
     Private JackSel() As CheckBox
+    Private GpMvOutReal(InitParm.NumberGroup - 1) As Integer
+    Private GpMvOutBefore(InitParm.NumberGroup - 1) As Integer
 
-
+    Const ELEMENT_SIZE_WORD = 10        '文字列の書込み/読出し時、シーケンサ格納データ用配列の使用要素数
+    Const ELEMENT_SIZE_32BITINTEGER = 2 '32bit整数の書込み/読出し時、シーケンサ格納データ用配列の使用要素数
+    Const ELEMENT_SIZE_REALNUMBER = 2   '実数の書込み/読出し時、シーケンサ格納データ用配列の使用要素数
 
     Public Sub New()
 
@@ -98,6 +104,14 @@
         Next
 
 
+        For i = 0 To InitParm.NumberJack - 1
+            DgvLosZero.Rows.Add()
+            DgvLosZero.Rows(i).Cells(0).Value = (i + 1).ToString
+        Next
+
+
+
+
     End Sub
 
     ''' <summary>
@@ -108,7 +122,9 @@
     Private Sub JackSelectChange(ByVal sender As Object, ByVal e As EventArgs)
         Debug.Print(DirectCast(sender, CheckBox).Text)
         Dim J As CheckBox = DirectCast(sender, CheckBox)
-        Dim iRet = ComPlc.SetDevice(fnGetBitAdr(My.Settings.JackSel + CInt(J.Text) - 1), IIf(J.Checked, 1, 0))
+        Dim Jadr As String =
+            "B" & Convert.ToString(Convert.ToInt32(My.Settings.JackSel.Substring(1), 16) + CInt(J.Text) - 1, 16)
+        Dim iRet = ComPlc.SetDevice(Jadr, IIf(J.Checked, 1, 0))
 
     End Sub
     Private Sub tmrPlcWR_Tick(sender As Object, e As EventArgs) Handles tmrPlcWR.Tick
@@ -118,12 +134,21 @@
         Dim plcData As Integer
 
         '掘進中
-        iRet = ComPlc.GetDevice(fnGetBitAdr(My.Settings.KussinOn), plcData)
+        iRet = ComPlc.GetDevice(My.Settings.KussinOn, plcData)
         If iRet = 0 Then chkExcavOn.Checked = plcData
 
         'FLEX ON
-        iRet = ComPlc.GetDevice(fnGetBitAdr(My.Settings.FlexMode), plcData)
+        iRet = ComPlc.GetDevice(My.Settings.FlexMode, plcData)
         If iRet = 0 Then chkFlexOn.Checked = plcData
+
+        '同時施工モード
+        iRet = ComPlc.GetDevice(My.Settings.LosZeroModeMachine, plcData)
+        If iRet = 0 Then chkLosZeroMode.Checked = plcData
+
+        '同時施工可
+        iRet = ComPlc.GetDevice(My.Settings.LosZeroEnable, plcData)
+        If iRet = 0 Then chkLosZeroEnable.Checked = plcData
+
 
         '元圧
         iRet = ComPlc.GetDevice(My.Settings.JkPresAdr, plcData)
@@ -144,6 +169,41 @@
         '右ｽﾋﾟｰﾄﾞ
         iRet = ComPlc.GetDevice(My.Settings.RightSpeedAdr, plcData)
         nudRightSpeed.Value = fnChangeSpeedAnalogIn(plcData)
+        'ピッチング
+        iRet = ComPlc.GetDevice2(My.Settings.PitchingAdr, plcData)
+        nudPitching.Value = plcData / 100
+
+        'ロスゼロ　fromマシン
+        iRet = ComPlc.GetDevice2(My.Settings.LosZeroStMachine, plcData)
+        nudLosZeroStatusMachin.Value = plcData
+
+        'ロスゼロ　fromFLEX
+        iRet = ComPlc.GetDevice2(My.Settings.LosZeroStFlex, plcData)
+        nudLosZeroStsFlex.Value = plcData
+
+
+
+        Dim sharrBufferForDeviceValue(ELEMENT_SIZE_32BITINTEGER - 1) As Short   'シーケンサ用データバッファの宣言
+        iRet = ComPlc.ReadDeviceBlock2(My.Settings.GyairoAdr, ELEMENT_SIZE_32BITINTEGER, sharrBufferForDeviceValue(0))
+
+        Dim byarrTemp() As Byte
+        Dim byarrBufferByte(ELEMENT_SIZE_32BITINTEGER * 2 - 1) As Byte          '編集用バイトバッファの宣言
+        'シーケンサ用データを一時的に受ける配列
+        'シーケンサ用データバッファからバイト配列に変換
+        For iNumber = 0 To ELEMENT_SIZE_32BITINTEGER - 1
+            byarrTemp = BitConverter.GetBytes(sharrBufferForDeviceValue(iNumber))
+            byarrBufferByte(iNumber * 2) = byarrTemp(0)
+            byarrBufferByte(iNumber * 2 + 1) = byarrTemp(1)
+        Next iNumber
+
+        'バイト配列より32bit整数に変換してから、読出し用テキストボックスに格納
+        nudGyairo.Value = BitConverter.ToInt32(byarrBufferByte, 0) / 100
+
+
+
+
+
+
         Dim i As Integer
 
         'グループ圧PV
@@ -158,7 +218,8 @@
         ReDim plcGpMv(InitParm.NumberGroup)
         iRet = ComPlc.ReadDeviceBlock(My.Settings.GpPresMV, InitParm.NumberGroup, plcGpMv(0))
         For i = 0 To InitParm.NumberGroup - 1
-            DspGpMv(i).Text = (fnChangePresAnalogIn(plcGpMv(i)) / My.Settings.PresEngScale * 100).ToString & "%"
+            GpMvOutReal(i) = fnChangePresAnalogIn(plcGpMv(i)) / My.Settings.PresEngScale * 100
+            DspGpMv(i).Text = GpMvOutReal(i).ToString & "%"
         Next
 
 
@@ -166,7 +227,7 @@
         'ジャッキ選択
         Dim plcJkData() As Integer
         ReDim plcJkData(CInt(InitParm.NumberJack / 16) + 1)
-        iRet = ComPlc.ReadDeviceBlock(fnGetBitAdr(My.Settings.JackSel), plcJkData.Length, plcJkData(0))
+        iRet = ComPlc.ReadDeviceBlock(My.Settings.JackSel, plcJkData.Length, plcJkData(0))
 
         '２進数の文字列に変更
         Dim JkSts As String = ""
@@ -179,11 +240,49 @@
             JackSel(i).BackColor = IIf(JackSel(i).Checked, Color.Red, Color.Transparent)
         Next
 
+        '推進／組立
+        LosZeroStatusRead(My.Settings.ExcavOrSegmentAdr, 1)
+        '引戻し中
+        LosZeroStatusRead(My.Settings.PullBackOnAdr, 2)
+        '引戻しANS
+        LosZeroStatusRead(My.Settings.PullBackAnsAdr, 3)
+        '押込み中
+        LosZeroStatusRead(My.Settings.ClosetOnAdr, 4)
+        '押込みANS
+        LosZeroStatusRead(My.Settings.ClosetAnsAdr, 5)
 
+        '引戻し指令
+        LosZeroStatusRead(My.Settings.PullBackCommand, 6)
+        '押込み指令
+        LosZeroStatusRead(My.Settings.ClosetCommand, 7)
 
 
 
     End Sub
+
+    Private Sub LosZeroStatusRead(PlcAdr As String, ColNum As Integer)
+
+        'ジャッキ選択
+        Dim plcJkData(CInt(InitParm.NumberJack / 16) + 1) As Integer
+        Dim iRet As Long = ComPlc.ReadDeviceBlock(PlcAdr, plcJkData.Length, plcJkData(0))
+
+        '２進数の文字列に変更
+        Dim JkSts As String = ""
+        For i = 0 To plcJkData.Length - 1
+            JkSts = Convert10to2(plcJkData(i)) & JkSts
+        Next
+
+        For i = 0 To InitParm.NumberJack - 1
+            Dim t As Boolean = JkSts(JkSts.Length - i - 1).Equals("1"c)
+            DgvLosZero.Rows(i).Cells(ColNum).Value = IIf(t, "●", "")
+            '            DgvLosZero.Rows(i).Cells(ColNum).Style.BackColor = IIf(t, Color.Red, Color.White)
+            'JackSel(i).Checked = JkSts(JkSts.Length - i - 1).Equals("1"c)
+            'JackSel(i).BackColor = IIf(JackSel(i).Checked, Color.Red, Color.Transparent)
+        Next
+
+    End Sub
+
+
 
 #End Region
     ''' <summary>
@@ -201,8 +300,8 @@
                 strData = "1" & strData
             Else
                 strData = "0" & strData
-                End If
-            Next
+            End If
+        Next
 
         Return strData
 
@@ -249,26 +348,36 @@
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub chkChange(sender As Object, e As EventArgs) Handles chkExcavOn.CheckedChanged, chkFlexOn.CheckedChanged
+    Private Sub chkChange(sender As Object, e As EventArgs) Handles chkExcavOn.CheckedChanged, chkFlexOn.CheckedChanged, chkLosZeroEnable.CheckedChanged, chkLosZeroMode.CheckedChanged
+
+
         tmrPlcWR.Enabled = False
-        Dim OffsetAdr As Integer
+
+        Dim PlcAdr As String = Nothing
         'FLEXモード
         If sender Is chkFlexOn Then
-            OffsetAdr = My.Settings.FlexMode
+            PlcAdr = My.Settings.FlexMode
         End If
         '掘進中
         If sender Is chkExcavOn Then
-            OffsetAdr = My.Settings.KussinOn
+            PlcAdr = My.Settings.KussinOn
         End If
-        '屈伸してない時は、
-        If Not chkExcavOn.Checked Then
-            nudLeftSpeed.Value = 0
-            nudRightSpeed.Value = 0
+        '同時施工モード
+        If sender Is chkLosZeroMode Then
+            PlcAdr = My.Settings.LosZeroModeMachine
         End If
+        '同時施工可
+        If sender Is chkLosZeroEnable Then
+            PlcAdr = My.Settings.LosZeroEnable
+        End If
+
+
+        tmrLeftJack.Enabled = chkExcavOn.Checked
+        tmrRightJack.Enabled = chkExcavOn.Checked
 
 
         Dim iRet As Long =
-            ComPlc.SetDevice(fnGetBitAdr(OffsetAdr), DirectCast(sender, CheckBox).Checked)
+            ComPlc.SetDevice(PlcAdr, DirectCast(sender, CheckBox).Checked)
 
         tmrPlcWR.Enabled = True
 
@@ -280,7 +389,8 @@
     ''' <param name="e"></param>
     Private Sub nud_ValueChanged(sender As Object, e As EventArgs) _
         Handles nudSoucePressure.ValueChanged, nudRightStroke.ValueChanged,
-        nudLeftStroke.ValueChanged, nudRightSpeed.ValueChanged, nudLeftSpeed.ValueChanged
+        nudLeftStroke.ValueChanged, nudRightSpeed.ValueChanged, nudLeftSpeed.ValueChanged, nudPitching.ValueChanged,
+        nudLosZeroStsFlex.ValueChanged, nudLosZeroStatusMachin.ValueChanged
 
         Dim FieldName As String = New StackFrame(1).GetMethod.Name
         'タイマー停止
@@ -301,14 +411,32 @@
                 Case nudLeftSpeed.Name
                     PlcAdress = .LeftSpeedAdr
                     PlcWriteData = fnChangeSpeedAnalogOut(NumObj.Value)
+                    If nudLeftSpeed.Value <> 0 Then
+                        tmrLeftJack.Interval = 60000 / nudLeftSpeed.Value
+                    End If
                 Case nudRightSpeed.Name
                     PlcAdress = .RightSpeedAdr
                     PlcWriteData = fnChangeSpeedAnalogOut(NumObj.Value)
-
+                    If nudRightSpeed.Value <> 0 Then
+                        tmrRightJack.Interval = 60000 / nudRightSpeed.Value
+                    End If
 
                 Case nudSoucePressure.Name
                     PlcAdress = .JkPresAdr
                     PlcWriteData = fnChangePresAnalogOut(NumObj.Value)
+
+                Case nudPitching.Name
+                    PlcAdress = .PitchingAdr
+                    PlcWriteData = NumObj.Value * 100
+
+                Case nudLosZeroStatusMachin.Name
+                    PlcAdress = .LosZeroStMachine
+                    PlcWriteData = NumObj.Value
+
+                Case nudLosZeroStsFlex.Name
+                    PlcAdress = .LosZeroStFlex
+                    PlcWriteData = NumObj.Value
+
             End Select
         End With
 
@@ -327,7 +455,122 @@
     Private Sub btnJackAllSelect_Click(sender As Object, e As EventArgs) Handles btnJackAllSelect.Click
         Dim i As Integer
         For i = 0 To InitParm.NumberJack - 1
-            Dim iRet = ComPlc.SetDevice(fnGetBitAdr(My.Settings.JackSel + i), 1)
+            Dim Jadr As String =
+            "B" & Convert.ToString((Convert.ToInt32(My.Settings.JackSel.Substring(1), 16) + i), 16)
+            Dim iRet As Long = ComPlc.SetDevice(Jadr, 1)
         Next
     End Sub
+
+    Private Sub tmrLeftJack_Tick(sender As Object, e As EventArgs) Handles tmrLeftJack.Tick
+        nudLeftStroke.Value = nudLeftStroke.Value + 1
+    End Sub
+
+    Private Sub tmrRightJack_Tick(sender As Object, e As EventArgs) Handles tmrRightJack.Tick
+        nudRightStroke.Value = nudRightStroke.Value + 1
+
+    End Sub
+
+    Private Sub tmrAuto_Tick(sender As Object, e As EventArgs) Handles tmrAuto.Tick
+
+        If GpMvOutReal Is Nothing Then Exit Sub
+
+        Dim GpPv(InitParm.NumberGroup - 1) As Integer
+        Dim i As Integer
+        For i = 0 To InitParm.NumberGroup - 1
+            GpPv(i) = GpMvOutBefore(i) / 100 * nudSoucePressure.Value * My.Settings.PresPlcScale / My.Settings.PresEngScale
+            GpMvOutBefore(i) = GpMvOutReal(i)
+        Next
+
+        Dim iRet As Long = ComPlc.WriteDeviceBlock(My.Settings.GpPresPV, InitParm.NumberGroup, GpPv(0))
+
+    End Sub
+
+    Private Sub nudGyairo_ValueChanged(sender As Object, e As EventArgs) Handles nudGyairo.ValueChanged
+
+        Dim iReturnCode As Integer                                              '戻り値
+        Dim byarrBufferByte() As Byte                                           '編集用バイトバッファの宣言
+        Dim sharrBufferForDeviceValue(ELEMENT_SIZE_32BITINTEGER - 1) As Short   'シーケンサ用バッファの宣言
+
+        'エラー処理ルーチン先設定
+        On Error GoTo CatchError
+
+        '入力されたデータを32bit整数に変換し、バイト配列に代入(データ量は4バイト固定)
+        byarrBufferByte = BitConverter.GetBytes(CInt(nudGyairo.Value * 100))
+
+        'バイト配列からシーケンサ用データバッファに代入
+        sharrBufferForDeviceValue(0) = BitConverter.ToInt16(byarrBufferByte, 0)
+        sharrBufferForDeviceValue(1) = BitConverter.ToInt16(byarrBufferByte, 2)
+
+        'D10から用意した32bit整数を書き込む
+        iReturnCode = ComPlc.WriteDeviceBlock2(My.Settings.GyairoAdr,
+                                                     ELEMENT_SIZE_32BITINTEGER,
+                                                     sharrBufferForDeviceValue(0))
+
+
+        '正常終了
+        Exit Sub
+
+CatchError:  '例外処理
+
+        MsgBox(Err.Description(), MsgBoxStyle.Critical)
+        End
+
+
+
+
+    End Sub
+
+
+    Private Sub DgvLosZero_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvLosZero.CellDoubleClick
+
+        If e.ColumnIndex = -1 Then Exit Sub
+
+        tmrPlcWR.Enabled = False
+
+        'PLCのベースアドレス
+        Dim PlcWrBaseAdress As String = ""
+        Select Case e.ColumnIndex
+            Case 1
+                PlcWrBaseAdress = My.Settings.ExcavOrSegmentAdr
+            Case 2
+                PlcWrBaseAdress = My.Settings.PullBackOnAdr
+            Case 3
+                PlcWrBaseAdress = My.Settings.PullBackAnsAdr
+            Case 4
+                PlcWrBaseAdress = My.Settings.ClosetOnAdr
+            Case 5
+                PlcWrBaseAdress = My.Settings.ClosetAnsAdr
+            Case 6
+                PlcWrBaseAdress = My.Settings.PullBackCommand
+            Case 7
+                PlcWrBaseAdress = My.Settings.ClosetCommand
+        End Select
+
+        Dim intPlcWrBaseAdress As Integer = Convert.ToInt32(PlcWrBaseAdress.Substring(1), 16)
+
+
+        If e.RowIndex <> -1 Then
+            Dim PlcAdr As String = "B" & Convert.ToString(intPlcWrBaseAdress + e.RowIndex, 16)
+            '現在の値をセルから取得し、反転
+            Dim WrData As Boolean = (DgvLosZero.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "")
+
+            Dim iRet = ComPlc.SetDevice(PlcAdr, WrData)
+        Else
+            'ヘッダーをダブルクリック
+            Dim i As Integer
+            For i = 0 To InitParm.NumberJack - 1
+                Dim PlcAdr As String = "B" & Convert.ToString(intPlcWrBaseAdress + i, 16)
+                'シフトキーが推されてた時は、ON
+                Dim iret = ComPlc.SetDevice(PlcAdr, (Control.ModifierKeys And Keys.Shift) = Keys.Shift)
+            Next
+
+
+        End If
+
+        tmrPlcWR.Enabled = True
+
+
+
+    End Sub
+
 End Class

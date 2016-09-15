@@ -5,9 +5,43 @@ Public Class ucnDspData
     ''' </summary>
     ''' <remarks></remarks>
     Private _DecimalPlaces As Short
-    Private _Value As Double
+    Private _ValueData As String
     Private _FieldName As String
     Private _Unit As String
+    ''' <summary>
+    ''' 数値か文字列か？
+    ''' </summary>
+    Private _ValueType As Boolean = False
+    ''' <summary>
+    ''' 点滅時のカラー
+    ''' </summary>
+    Private _BlinkColor As Color = Color.Red
+    '点滅
+    Private _Blink As Boolean
+    Private _TextAlign As ContentAlignment = ContentAlignment.MiddleRight
+
+    'ブリンクフラグ
+    Private flg As Boolean
+
+    Public Sub New()
+
+        ' この呼び出しはデザイナーで必要です。
+        InitializeComponent()
+
+        ' InitializeComponent() 呼び出しの後で初期化を追加します。
+
+    End Sub
+
+    <Browsable(True), Description("データが文字列か数値　文字列：true 数値:false")>
+    Public Property ValueType As Boolean
+        Get
+            Return _ValueType
+        End Get
+        Set(value As Boolean)
+            _ValueType = value
+        End Set
+    End Property
+
 
     <Browsable(True), Description("項目名の設定")>
     Public Property FieldName As String
@@ -16,7 +50,25 @@ Public Class ucnDspData
         End Get
         Set(value As String)
             _FieldName = value
-            lblFieldName.Text = Space(2) & value
+            lblFieldName.Text = Space(1) & value
+        End Set
+    End Property
+
+    Public Property FieldNameWidth As Integer
+        Get
+            Return lblFieldName.Width
+        End Get
+        Set(value As Integer)
+            lblFieldName.Width = value
+            lblData.Left = lblFieldName.Location.X + lblFieldName.Width
+        End Set
+    End Property
+    Public Property DataWidth As Integer
+        Get
+            Return lblData.Width
+        End Get
+        Set(value As Integer)
+            lblData.Width = value
         End Set
     End Property
 
@@ -30,7 +82,15 @@ Public Class ucnDspData
             lblUnit.Text = value
         End Set
     End Property
-
+    <Browsable(True), Description("単位なし")>
+    Public Property UnitVisible As Boolean
+        Get
+            Return lblUnit.Visible
+        End Get
+        Set(value As Boolean)
+            lblUnit.Visible = value
+        End Set
+    End Property
     ''' <summary>
     ''' 小数点桁数の設定
     ''' </summary>
@@ -49,21 +109,82 @@ Public Class ucnDspData
     End Property
 
     <Browsable(True)>
-    Public Property Value As Double
+    Public Property Value As String
         Get
-            Return lblData.Text
+            Return _ValueData
         End Get
-        Set(value As Double)
-            _Value = value
+        Set(value As String)
+            _ValueData = value
             Call sbIndustrialValueSet()
         End Set
     End Property
 
+    Public Property BlinkColor As Color
+        Get
+            Return _BlinkColor
+        End Get
+        Set(value As Color)
+            _BlinkColor = value
+        End Set
+    End Property
+    <Browsable(True), Description("Data テキスト位置")>
+    Public Property DataTextAlign As ContentAlignment
+        Get
+            '_TextAlign = lblData.TextAlign
+            Return _TextAlign
+        End Get
+        Set(value As ContentAlignment)
+            _TextAlign = value
+            lblData.TextAlign = _TextAlign
+        End Set
+    End Property
+
+
+    Public Property Blink As Boolean
+        Get
+            Return _Blink
+        End Get
+        Set(value As Boolean)
+            _Blink = value
+            tmrBlink.Enabled = _Blink
+            If Not _Blink Then
+                lblData.BackColor = Color.Black
+            End If
+        End Set
+    End Property
+
+
     ''' <summary>
-    ''' 工業値の表示
+    ''' 工業値の表示 もしくは文字列
     ''' </summary>
     ''' <remarks></remarks>
     Private Sub sbIndustrialValueSet()
-        lblData.Text = _Value.ToString("F" & _DecimalPlaces.ToString) & " "
+        If _ValueType = False And IsNumeric(_ValueData) Then
+            '数値の場合は小数点付加　右寄せ
+            lblData.Text = CDbl(_ValueData).ToString("F" & _DecimalPlaces.ToString)
+            'lblData.TextAlign = ContentAlignment.MiddleRight
+        Else
+            '文字の場合はセンター
+            lblData.Text = _ValueData
+            'lblData.TextAlign = ContentAlignment.MiddleCenter
+        End If
+        lblData.TextAlign = _TextAlign
+    End Sub
+
+    Private Sub lblFieldName_Paint(sender As Object, e As PaintEventArgs) Handles lblFieldName.Paint, lblUnit.Paint, lblData.Paint
+        Dim rc1 As Rectangle
+        Dim lb As Label = CType(sender, Label)
+
+        rc1 = lb.ClientRectangle
+
+
+        e.Graphics.DrawRectangle(New Pen(Color.Silver, 6), rc1)
+        e.Graphics.DrawRectangle(New Pen(Color.DarkGray, 3), rc1)
+        e.Graphics.DrawRectangle(New Pen(Color.Gray, 1), rc1)
+    End Sub
+
+    Private Sub tmrBlink_Tick(sender As Object, e As EventArgs) Handles tmrBlink.Tick
+        flg = Not flg
+        lblData.BackColor = IIf(flg, Color.Black, BlinkColor)
     End Sub
 End Class

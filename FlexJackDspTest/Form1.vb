@@ -11,7 +11,7 @@
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-
+        'ジャッキ画面の初期設定
         With UcnJackDsp1
             .FirstJackLoc = InitParameter.FirstJackLoc
             .FaiJack = InitParameter.FaiJack
@@ -31,6 +31,21 @@
 
     Private Sub Form1_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         ' Call UcnJackDsp1.DspBaseJack()
+
+    End Sub
+
+    Private Sub UcnJackDsp1_Load(sender As Object, e As EventArgs) Handles UcnJackDsp1.Load
+
+    End Sub
+
+    Private Sub UcnJackDsp1_ManualPointChange() Handles UcnJackDsp1.ManualPointChange
+
+    End Sub
+
+
+
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
 
     End Sub
 End Class

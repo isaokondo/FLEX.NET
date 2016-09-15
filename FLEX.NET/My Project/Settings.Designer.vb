@@ -56,7 +56,16 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("jsichikawa.jpn.ph")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("flex大成外環大泉")>  _
+        Public ReadOnly Property DataseName() As String
+            Get
+                Return CType(Me("DataseName"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("192.168.2.249")>  _
         Public ReadOnly Property HostName() As String
             Get
                 Return CType(Me("HostName"),String)
@@ -65,11 +74,104 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("flex大成外環大泉")>  _
-        Public ReadOnly Property DataseName() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("Black")>  _
+        Public ReadOnly Property GpPsColor1() As Global.System.Drawing.Color
             Get
-                Return CType(Me("DataseName"),String)
+                Return CType(Me("GpPsColor1"),Global.System.Drawing.Color)
             End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("DarkBlue")>  _
+        Public ReadOnly Property GpPsColor2() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("GpPsColor2"),Global.System.Drawing.Color)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("MediumBlue")>  _
+        Public ReadOnly Property GpPsColor3() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("GpPsColor3"),Global.System.Drawing.Color)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("SlateBlue")>  _
+        Public ReadOnly Property GpPsColor4() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("GpPsColor4"),Global.System.Drawing.Color)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("MediumPurple")>  _
+        Public ReadOnly Property GpPsColor5() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("GpPsColor5"),Global.System.Drawing.Color)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("255, 128, 255")>  _
+        Public ReadOnly Property GpPsColor6() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("GpPsColor6"),Global.System.Drawing.Color)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Violet")>  _
+        Public ReadOnly Property GpPsColor7() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("GpPsColor7"),Global.System.Drawing.Color)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("HotPink")>  _
+        Public ReadOnly Property GpPsColor8() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("GpPsColor8"),Global.System.Drawing.Color)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("DeepPink")>  _
+        Public ReadOnly Property GpPsColor9() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("GpPsColor9"),Global.System.Drawing.Color)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Red")>  _
+        Public ReadOnly Property GpPsColor10() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("GpPsColor10"),Global.System.Drawing.Color)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property Setting() As String
+            Get
+                Return CType(Me("Setting"),String)
+            End Get
+            Set
+                Me("Setting") = value
+            End Set
         End Property
     End Class
 End Namespace

@@ -1,5 +1,7 @@
 ﻿Option Strict Off
 Option Explicit On
+Imports System.Math
+
 Friend Class clsCulMoment
     ' @(h) clsCulMoment.cls               ver 1.0 ( '01.03.29 近藤　勲 )
     ' @(h) clsCulMoment.cls               ver 1.1 ( '01.09.04 近藤　勲 )
@@ -8,53 +10,37 @@ Friend Class clsCulMoment
     ' @(s) モーメントを求めるクラス
     '
     '
+    Private _MomentX As Single ''Ｘ軸方向モーメント
+    Private _MomentY As Single ''Ｙ軸方向モーメント
+    Private _MomentR As Single ''合成モーメント
+    Private _Thrust As Single ''推力
 
-    Private mbln掘進ステータス As Boolean ''掘進中かどうか？
-    Private mdblMomentX As Double ''Ｘ軸方向モーメント
-    Private mdblMomentY As Double ''Ｙ軸方向モーメント
-    Private mdblMomentR As Double ''合成モーメント
-    Private mdblSuiryoku As Double ''推力
-    Private msngGpPv() As Single ''グループ圧
 
-    Public WriteOnly Property PressData(ByVal Index As Short) As Single
-        Set(ByVal Value As Single)
-            ''グループ圧入力
-            msngGpPv(Index) = Value
-            Call sbCul() ''モーメント、推力の計算
-        End Set
-    End Property
-
-    Public WriteOnly Property 掘進ステータス() As Boolean
-        Set(ByVal Value As Boolean)
-            mbln掘進ステータス = Value
-            Call sbCul() ''モーメント、推力の計算
-        End Set
-    End Property
-    Public ReadOnly Property MomentX() As Double
+    Public ReadOnly Property MomentX() As Single
         Get
-            MomentX = mdblMomentX
+            MomentX = _MomentX
         End Get
     End Property
-    Public ReadOnly Property MomentY() As Double
+    Public ReadOnly Property MomentY() As Single
         Get
-            MomentY = mdblMomentY
+            MomentY = _MomentY
         End Get
     End Property
-    Public ReadOnly Property MomentR() As Double
+    Public ReadOnly Property MomentR() As Single
         Get
-            MomentR = mdblMomentR
+            MomentR = _MomentR
         End Get
     End Property
-    Public ReadOnly Property 推力() As Double
+    Public ReadOnly Property Thrust() As Single
         Get
-            推力 = mdblSuiryoku
+            Thrust = _Thrust
         End Get
     End Property
 
 
 
 
-    Private Sub sbCul()
+    Public Sub MomentCul()
         ' @(f)
         '
         ' 機能      :モーメント、推力の計算
@@ -66,56 +52,45 @@ Friend Class clsCulMoment
         ' 機能説明  :
         '
         ' 備考      :
-        mdblMomentX = 0
-        mdblMomentY = 0
-        mdblMomentR = 0
+        _MomentX = 0
+        _MomentY = 0
+        _MomentR = 0
 
-        mdblSuiryoku = 0
+        _Thrust = 0
 
         ''掘進中以外は０に
-        If Not mbln掘進ステータス Then Exit Sub
+        If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
 
-        Dim intCnt As Short
+        Dim i As Short
         With InitParameter
-            For intCnt = 1 To .NumberJack
-                If PlcIf.JackSel(intCnt) Then
+            For i = 0 To .NumberJack - 1
+                If PlcIf.JackSel(i) Then
                     ''水平方向のモーメントの演算    01/09/11 変更
-                    mdblMomentX = mdblMomentX + System.Math.Cos(.FaiJack(intCnt) / 180 * cPI) * msngGpPv(.JackGroupPos(intCnt)) / .JackMaxOilPres * .JackPower * .JackRadius
+                    _MomentX += Cos(.FaiJack(i) / 180 * PI) * PlcIf.GroupPv(.JackGroupPos(i) - 1) / .JackMaxOilPres * .JackPower * .JackRadius
                     ''鉛直方向のモーメントの演算    01/09/11 変更
-                    mdblMomentY = mdblMomentY + System.Math.Sin(.FaiJack(intCnt) / 180 * cPI) * msngGpPv(.JackGroupPos(intCnt)) / .JackMaxOilPres * .JackPower * .JackRadius
+                    _MomentY += Sin(.FaiJack(i) / 180 * PI) * PlcIf.GroupPv(.JackGroupPos(i) - 1) / .JackMaxOilPres * .JackPower * .JackRadius
                     ''推力の演算
                     If PlcIf.FlexControlOn Then
-
                         '' 01/09/04 変更    神谷部長指摘による
-                        mdblSuiryoku = msngGpPv(.JackGroupPos(intCnt)) / .JackMaxOilPres * .JackPower + mdblSuiryoku
-                        ' Debug.Print intCnt, mdblSuiryoku
+                        _Thrust += PlcIf.GroupPv(.JackGroupPos(i) - 1) / .JackMaxOilPres * .JackPower
                     Else
                         ''04/05/11 FLEXモードでないときの推力演算追加
-                        If PlcIf.JackSel(intCnt) Then mdblSuiryoku = mdblSuiryoku + .JackPower * PlcIf.JkPress / .JackMaxOilPres
+                        If PlcIf.JackSel(i) Then _Thrust += .JackPower * PlcIf.JkPress / .JackMaxOilPres
 
                     End If
                 End If
-            Next intCnt
+            Next i
             '方向を掘削管理のデータと合わせる
-            mdblMomentX = -mdblMomentX
-            mdblMomentY = -mdblMomentY
+            _MomentX = -_MomentX
+            _MomentY = -_MomentY
 
         End With
         ''合成値の演算
-        mdblMomentR = System.Math.Sqrt(mdblMomentX ^ 2 + mdblMomentY ^ 2)
+        _MomentR = Sqrt(_MomentX ^ 2 + _MomentY ^ 2)
 
 
     End Sub
 
-    'UPGRADE_NOTE: Class_Initialize は Class_Initialize_Renamed にアップグレードされました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"' をクリックしてください。
-    Private Sub Class_Initialize_Renamed()
 
-        'UPGRADE_WARNING: 配列 msngGpPv の下限が 1 から 0 に変更されました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"' をクリックしてください。
-        ReDim msngGpPv(InitParameter.NumberGroup)
-    End Sub
-    Public Sub New()
-        MyBase.New()
-        Class_Initialize_Renamed()
-    End Sub
 End Class

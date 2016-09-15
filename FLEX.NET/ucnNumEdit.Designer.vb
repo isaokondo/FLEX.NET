@@ -95,6 +95,5 @@ Partial Class ucnNumEdit
     Friend WithEvents lblUnit As System.Windows.Forms.Label
     Friend WithEvents numUD As System.Windows.Forms.NumericUpDown
     Friend WithEvents lblFieldName As System.Windows.Forms.Label
-    Friend WithEvents ComboBox As System.Windows.Forms.ComboBox
-
+    Public WithEvents ComboBox As ComboBox
 End Class

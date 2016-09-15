@@ -43,7 +43,7 @@ Public Class clsLineMake
 
     ''縦断
     Private mint縦断ゾーン番号 As Integer
-    Private mint縦断線形 As Short
+    Private mint縦断線形 As Integer
     Private mdbl縦断ゾーン掘進距離 As Double
     Private mdbl縦断ゾーン残距離 As Double
     Private mdbl縦断半径 As Double
@@ -221,7 +221,7 @@ Public Class clsLineMake
             縦断ゾーン番号 = mint縦断ゾーン番号
         End Get
     End Property
-    Public ReadOnly Property 縦断線形() As Short
+    Public ReadOnly Property 縦断線形() As Integer
         Get
             縦断線形 = mint縦断線形
         End Get
@@ -305,28 +305,28 @@ Public Class clsLineMake
 
                 Case 1 ''直線の場合
                     mdbl軌道中心平面半径 = 99999
-                    mdbl軌道中心方位角 = .始点方向角(mint平面線形)
+                    mdbl軌道中心方位角 = .始点方向角(mint平面ゾーン番号)
                     '構築への補正
                     mdbl構築中心方位角 = Lim180(mdbl軌道中心方位角 + mdbl平面シフト追加角)
 
-                    mdbl軌道中心X座標 = .始点X座標(mint平面線形) + mdbl平面ゾーン掘進距離 * Cos(.始点方向角(mint平面線形) * cPI / 180)
-                    mdbl軌道中心Y座標 = .始点Y座標(mint平面線形) + mdbl平面ゾーン掘進距離 * Sin(.始点方向角(mint平面線形) * cPI / 180)
+                    mdbl軌道中心X座標 = .始点X座標(mint平面ゾーン番号) + mdbl平面ゾーン掘進距離 * Cos(.始点方向角(mint平面ゾーン番号) * PI / 180)
+                    mdbl軌道中心Y座標 = .始点Y座標(mint平面ゾーン番号) + mdbl平面ゾーン掘進距離 * Sin(.始点方向角(mint平面ゾーン番号) * PI / 180)
 
-                    mdbl構築中心X座標 = mdbl軌道中心X座標 - mdbl平面シフト量 * Sin(.始点方向角(mint平面線形) * cPI / 180)
-                    mdbl構築中心Y座標 = mdbl軌道中心Y座標 + mdbl平面シフト量 * Cos(.始点方向角(mint平面線形) * cPI / 180)
+                    mdbl構築中心X座標 = mdbl軌道中心X座標 - mdbl平面シフト量 * Sin(.始点方向角(mint平面ゾーン番号) * PI / 180)
+                    mdbl構築中心Y座標 = mdbl軌道中心Y座標 + mdbl平面シフト量 * Cos(.始点方向角(mint平面ゾーン番号) * PI / 180)
 
                 Case 2 ''曲線の場合
-                    mdbl軌道中心平面半径 = .始点曲率半径(mint平面線形)
+                    mdbl軌道中心平面半径 = .始点曲率半径(mint平面ゾーン番号)
 
-                    Sheatdash = mdbl平面ゾーン掘進距離 / mdbl軌道中心平面半径 * 180 / cPI 'ｿﾞｰﾝ内角度
-                    mdbl軌道中心方位角 = Lim180(.始点方向角(mint平面線形) + Sheatdash)
+                    Sheatdash = mdbl平面ゾーン掘進距離 / mdbl軌道中心平面半径 * 180 / PI 'ｿﾞｰﾝ内角度
+                    mdbl軌道中心方位角 = Lim180(.始点方向角(mint平面ゾーン番号) + Sheatdash)
                     mdbl構築中心方位角 = Lim180(mdbl軌道中心方位角 + mdbl平面シフト追加角)
 
-                    mdbl軌道中心X座標 = .始点中心X座標(mint平面線形) + mdbl軌道中心平面半径 * Sin(mdbl軌道中心方位角 * cPI / 180)
-                    mdbl軌道中心Y座標 = .始点中心Y座標(mint平面線形) - mdbl軌道中心平面半径 * Cos(mdbl軌道中心方位角 * cPI / 180)
+                    mdbl軌道中心X座標 = .始点中心X座標(mint平面ゾーン番号) + mdbl軌道中心平面半径 * Sin(mdbl軌道中心方位角 * PI / 180)
+                    mdbl軌道中心Y座標 = .始点中心Y座標(mint平面ゾーン番号) - mdbl軌道中心平面半径 * Cos(mdbl軌道中心方位角 * PI / 180)
 
-                    mdbl構築中心X座標 = mdbl軌道中心X座標 - mdbl平面シフト量 * Sin(.始点方向角(mint平面線形) * cPI / 180)
-                    mdbl構築中心Y座標 = mdbl軌道中心Y座標 + mdbl平面シフト量 * Cos(.始点方向角(mint平面線形) * cPI / 180)
+                    mdbl構築中心X座標 = mdbl軌道中心X座標 - mdbl平面シフト量 * Sin(.始点方向角(mint平面ゾーン番号) * PI / 180)
+                    mdbl構築中心Y座標 = mdbl軌道中心Y座標 + mdbl平面シフト量 * Cos(.始点方向角(mint平面ゾーン番号) * PI / 180)
 
                 Case 3 ''クロソイドの場合
 
@@ -334,28 +334,28 @@ Public Class clsLineMake
 
 
 
-                    If .クロソイドパラメータ(mint平面線形) >= 0 Then 'ｸﾛｿｲﾄﾞﾊﾟﾗﾒｰﾀの二乗（Ａ2＝LR）
-                        A2 = .クロソイドパラメータ(mint平面線形) ^ 2
+                    If .クロソイドパラメータ(mint平面ゾーン番号) >= 0 Then 'ｸﾛｿｲﾄﾞﾊﾟﾗﾒｰﾀの二乗（Ａ2＝LR）
+                        A2 = .クロソイドパラメータ(mint平面ゾーン番号) ^ 2
                     Else
-                        A2 = -.クロソイドパラメータ(mint平面線形) ^ 2
+                        A2 = - .クロソイドパラメータ(mint平面ゾーン番号) ^ 2
                     End If
-                    If .始点曲率半径(mint平面線形) = 0 Then
+                    If .始点曲率半径(mint平面ゾーン番号) = 0 Then
                         TR0 = 0
                     Else
-                        TR0 = 1 / .始点曲率半径(mint平面線形)
+                        TR0 = 1 / .始点曲率半径(mint平面ゾーン番号)
                     End If
-                    If .終点曲率半径(mint平面線形) = 0 Then
+                    If .終点曲率半径(mint平面ゾーン番号) = 0 Then
                         TR1 = 0
                     Else
-                        TR1 = 1 / .終点曲率半径(mint平面線形)
+                        TR1 = 1 / .終点曲率半径(mint平面ゾーン番号)
                     End If
                     L0 = A2 * TR0 '曲線長
-                    Taudash0 = L0 * TR0 / 2 * 180 / cPI 'ｸﾛｿｲﾄﾞ内の接線方向角
-                    Xdash0 = f(L0, .始点曲率半径(mint平面線形))
-                    Ydash0 = g(L0, .始点曲率半径(mint平面線形))
+                    Taudash0 = L0 * TR0 / 2 * 180 / PI 'ｸﾛｿｲﾄﾞ内の接線方向角
+                    Xdash0 = userFunctionF(L0, .始点曲率半径(mint平面ゾーン番号))
+                    Ydash0 = userFunctionG(L0, .始点曲率半径(mint平面ゾーン番号))
                     L1 = A2 * TR1
-                    Taudash1 = L1 * TR1 / 2 * 180 / cPI
-                    Alfadash = Lim180(.始点方向角(mint平面線形) - Taudash0)
+                    Taudash1 = L1 * TR1 / 2 * 180 / PI
+                    Alfadash = Lim180(.始点方向角(mint平面ゾーン番号) - Taudash0)
                     LC = mdbl平面ゾーン掘進距離 + L0
                     If LC <> 0 Then
                         rc = A2 / LC '検討位置の半径
@@ -364,9 +364,9 @@ Public Class clsLineMake
                         rc = 0
                         TRC = 0
                     End If
-                    XdashC = f(LC, rc)
-                    YdashC = g(LC, rc)
-                    TaudashC = LC * TRC / 2 * 180 / cPI
+                    XdashC = userFunctionF(LC, rc)
+                    YdashC = userFunctionG(LC, rc)
+                    TaudashC = LC * TRC / 2 * 180 / PI
                     Xdash = XdashC - Xdash0
                     Ydash = YdashC - Ydash0
                     If rc <> 0 Then
@@ -379,11 +379,11 @@ Public Class clsLineMake
 
                     mdbl構築中心方位角 = Lim180(mdbl軌道中心方位角 + mdbl平面シフト追加角)
 
-                    mdbl軌道中心X座標 = .始点中心X座標(mint平面線形) + (Xdash * Cos(Alfadash * cPI / 180) - Ydash * Sin(Alfadash * cPI / 180))
-                    mdbl軌道中心Y座標 = .始点中心Y座標(mint平面線形) + (Xdash * Sin(Alfadash * cPI / 180) + Ydash * Cos(Alfadash * cPI / 180))
+                    mdbl軌道中心X座標 = .始点中心X座標(mint平面ゾーン番号) + (Xdash * Cos(Alfadash * PI / 180) - Ydash * Sin(Alfadash * PI / 180))
+                    mdbl軌道中心Y座標 = .始点中心Y座標(mint平面ゾーン番号) + (Xdash * Sin(Alfadash * PI / 180) + Ydash * Cos(Alfadash * PI / 180))
 
-                    mdbl構築中心X座標 = mdbl軌道中心X座標 - mdbl平面シフト量 * Sin(.始点方向角(mint平面線形) * cPI / 180)
-                    mdbl構築中心Y座標 = mdbl軌道中心Y座標 + mdbl平面シフト量 * Cos(.始点方向角(mint平面線形) * cPI / 180)
+                    mdbl構築中心X座標 = mdbl軌道中心X座標 - mdbl平面シフト量 * Sin(.始点方向角(mint平面ゾーン番号) * PI / 180)
+                    mdbl構築中心Y座標 = mdbl軌道中心Y座標 + mdbl平面シフト量 * Cos(.始点方向角(mint平面ゾーン番号) * PI / 180)
                 Case Else
 
             End Select
@@ -431,7 +431,7 @@ Public Class clsLineMake
                     intShiftZoneNo = intZone
                     dblZoneLen = mdbl掘進累積距離 - .シフトゾーン距離(intZone)
                     mdbl平面シフト量 = .始点シフト量(intZone) + (.終点シフト量(intZone) - .始点シフト量(intZone)) * dblZoneLen / .シフト区間長(intZone)
-                    mdbl平面シフト追加角 = Atan((.終点シフト量(intZone) - .始点シフト量(intZone)) / .シフト区間長(intZone)) * 180 / cPI
+                    mdbl平面シフト追加角 = Atan((.終点シフト量(intZone) - .始点シフト量(intZone)) / .シフト区間長(intZone)) * 180 / PI
                     Exit Sub
                 End If
                 intZone = CShort(intZone + 1)
@@ -479,13 +479,13 @@ Public Class clsLineMake
             'Call sbCalcVerShift     ''02/09/12 変更　Ver1.1 シフトの演算
 
 
-            'mint縦断線形 = .線形(intZone)
+            mint縦断線形 = .線形(intZone)
             Select Case .線形(mint縦断ゾーン番号)
                 Case 1 ''直線の場合
-                    mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + (mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) * Tan(.始点勾配(mint縦断ゾーン番号) * cPI / 180)
+                    mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + (mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) * Tan(.始点勾配(mint縦断ゾーン番号) * PI / 180)
                 Case 2 ''曲線の場合
-                    mdbl鉛直角軌道中心 = Arcsin((mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) / .曲率半径(mint縦断ゾーン番号) + Sin(.始点勾配(mint縦断ゾーン番号) * cPI / 180)) * 180 / cPI
-                    mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + .曲率半径(mint縦断ゾーン番号) * (Cos(.始点勾配(mint縦断ゾーン番号) * cPI / 180) - Cos(mdbl鉛直角軌道中心 * cPI / 180))
+                    mdbl鉛直角軌道中心 = Arcsin((mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) / .曲率半径(mint縦断ゾーン番号) + Sin(.始点勾配(mint縦断ゾーン番号) * PI / 180)) * 180 / PI
+                    mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + .曲率半径(mint縦断ゾーン番号) * (Cos(.始点勾配(mint縦断ゾーン番号) * PI / 180) - Cos(mdbl鉛直角軌道中心 * PI / 180))
                 Case Else
             End Select
 
@@ -538,7 +538,7 @@ Public Class clsLineMake
             Call sbCalcVerShift() ''02/09/12 変更　Ver1.1 シフトの演算
 
 
-            'mint縦断線形 = .線形(intZone)
+            mint縦断線形 = .線形(mint縦断ゾーン番号)
             Select Case .線形(mint縦断ゾーン番号)
                 Case 1 ''直線の場合
                     ''            mdbl縦断半径 = Null
@@ -546,18 +546,18 @@ Public Class clsLineMake
                     mdbl縦断半径 = 99999 'by Isao Kondo 01/01/19
                     'mdbl鉛直角 = .始点勾配
                     mdbl鉛直角軌道中心 = .始点勾配(mint縦断ゾーン番号)
-                    mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + (mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) * Tan(.始点勾配(mint縦断ゾーン番号) * cPI / 180)
+                    mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + (mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) * Tan(.始点勾配(mint縦断ゾーン番号) * PI / 180)
                 Case 2 ''曲線の場合
                     mdbl縦断半径 = .曲率半径(mint縦断ゾーン番号)
                     '                                                                                       FZv→FVz ミス？
-                    mdbl鉛直角軌道中心 = Arcsin((mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) / .曲率半径(mint縦断ゾーン番号) + Sin(.始点勾配(mint縦断ゾーン番号) * cPI / 180)) * 180 / cPI
-                    mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + .曲率半径(mint縦断ゾーン番号) * (Cos(.始点勾配(mint縦断ゾーン番号) * cPI / 180) - Cos(mdbl鉛直角軌道中心 * cPI / 180))
+                    mdbl鉛直角軌道中心 = Arcsin((mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) / .曲率半径(mint縦断ゾーン番号) + Sin(.始点勾配(mint縦断ゾーン番号) * PI / 180)) * 180 / PI
+                    mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + .曲率半径(mint縦断ゾーン番号) * (Cos(.始点勾配(mint縦断ゾーン番号) * PI / 180) - Cos(mdbl鉛直角軌道中心 * PI / 180))
                 Case Else
             End Select
 
             ''02/09/12 変更　Ver1.1 シフトの演算
             mdbl鉛直角 = mdbl鉛直角軌道中心 + mdbl縦断シフト追加角
-            mdblZシフト座標 = mdblZ座標 + mdbl縦断シフト量 * Cos(.始点勾配(mint縦断ゾーン番号) * cPI / 180)
+            mdblZシフト座標 = mdblZ座標 + mdbl縦断シフト量 * Cos(.始点勾配(mint縦断ゾーン番号) * PI / 180)
 
         End With
 
@@ -605,7 +605,7 @@ Public Class clsLineMake
                     intShiftZoneNo = intZone
                     dblZoneLen = mdbl掘進累積距離 - .シフトゾーン距離(intZone)
                     mdbl縦断シフト量 = .始点シフト量(intZone) + (.終点シフト量(intZone) - .始点シフト量(intZone)) * dblZoneLen / .シフト区間長(intZone)
-                    mdbl縦断シフト追加角 = System.Math.Atan((.終点シフト量(intZone) - .始点シフト量(intZone)) / .シフト区間長(intZone)) * 180 / cPI
+                    mdbl縦断シフト追加角 = System.Math.Atan((.終点シフト量(intZone) - .始点シフト量(intZone)) / .シフト区間長(intZone)) * 180 / PI
                     Exit Sub
                 End If
                 intZone = intZone + 1
@@ -621,6 +621,87 @@ Public Class clsLineMake
 
 
     End Sub
+
+
+    Friend Function userFunctionG(ByVal L As Double, ByVal R As Double) As Double
+        'ﾕｰｻﾞｰ関数 ｆ
+        Dim Sigma As Double
+        Dim LR As Double
+        Dim k As Short
+
+        If R <> 0 Then
+            LR = L / (2 * R)
+        Else
+            LR = 0
+        End If
+        Sigma = 0
+        For k = 1 To 5
+            Sigma = Sigma + 1 / ((4 * k - 3) * Kai(2 * k - 2)) * (-1) ^ (k + 1) * LR ^ (2 * k - 2)
+        Next
+        Return L * Sigma
+
+    End Function
+
+    Friend Function userFunctionF(ByVal L As Double, ByVal R As Double) As Double
+        'ﾕｰｻﾞｰ関数 ｆ
+        Dim Sigma As Double
+        Dim LR As Double
+        Dim k As Short
+
+        If R <> 0 Then
+            LR = L / (2 * R)
+        Else
+            LR = 0
+        End If
+        Sigma = 0
+        For k = 1 To 5
+            Sigma = Sigma + 1 / ((4 * k - 1) * Kai(2 * k - 1)) * (-1) ^ (k + 1) * LR ^ (2 * k - 1)
+        Next
+        Return L * Sigma
+
+    End Function
+    Private Function Kai(ByVal N As Integer) As Double
+        'Ｎの階上
+        Dim i As Integer
+
+        Kai = 1
+        If N = 0 Then
+            Exit Function
+        End If
+
+        For i = 1 To N
+            Kai = Kai * i
+        Next
+
+    End Function
+
+    Friend Sub sbZahyoGtoL(ByRef dblLx As Double, ByRef dblLy As Double, ByVal dblGX As Double, ByVal dblGY As Double, ByVal dblGX0 As Double, ByVal dblGY0 As Double, ByVal sngAlfa0 As Double)
+        ' @(f)
+        '
+        ' 機能      :ローカルからグローバル座標への変換
+        ' 返り値    :
+        '
+        '
+        ' 機能説明  :
+        '
+        ' 備考      :
+        ''
+
+        'Lx,Ly  変換対象のローカル座標値（出力値）
+        'Gx,Gy  変換対象のグローバル座標値（入力値）
+        'X0,Y0  変換中心のグローバル座標値（入力値）
+        'Alfa0　変換中心のグローバル座標上の方向角(deg)（入力値）
+
+        Dim dblCT, dblST As Double
+
+        dblCT = Cos(Lim180(sngAlfa0) * PI / 180)
+        dblST = Sin(Lim180(sngAlfa0) * PI / 180)
+        dblLx = dblCT * (dblGX - dblGX0) + dblST * (dblGY - dblGY0)
+        dblLy = -dblST * (dblGX - dblGX0) + dblCT * (dblGY - dblGY0)
+
+    End Sub
+
+
 End Class
 
 
@@ -630,7 +711,7 @@ Friend Class clsCorToDist
     '' 与えられた座標から属するｿﾞｰﾝを算出し、ｿﾞｰﾝの線形で距離を算出
     '' 鹿島品川線より追加
 
-
+    Inherits clsLineMake
 
     Private mdblXp As Double ''対象のX座標
     Private mdblYp As Double ''対象のY座標
@@ -740,10 +821,10 @@ Friend Class clsCorToDist
                             Do
                                 intLL = intLL + 1 'ﾙｰﾌﾟ数ｶｳﾝﾄ
                                 dblLC = (dblL0 + dblL1) * 0.5 '次の検討位置を近い側の半分へ移動（ｽﾀｰﾄ時は始点終点間の真ん中）
-                                dblSheatC = dblLC / dblR * 180 / cPI '検討位置の中心角
+                                dblSheatC = dblLC / dblR * 180 / PI '検討位置の中心角
                                 dblAlfaC = .始点方向角(mint抽出Zone) + dblSheatC
-                                dblXc = .始点中心X座標(mint抽出Zone) + dblR * Sin(Lim180(dblAlfaC) * cPI / 180)
-                                dblYc = .始点中心Y座標(mint抽出Zone) - dblR * Cos(Lim180(dblAlfaC) * cPI / 180)
+                                dblXc = .始点中心X座標(mint抽出Zone) + dblR * Sin(Lim180(dblAlfaC) * PI / 180)
+                                dblYc = .始点中心Y座標(mint抽出Zone) - dblR * Cos(Lim180(dblAlfaC) * PI / 180)
                                 Call sbZahyoGtoL(dblXDc, dblYDc, mdblXp, mdblYp, dblXc, dblYc, dblAlfaC)
 
                                 If Abs(dblXDc) <= dblEp Then '距離を検討し、きわめて近いとき
@@ -786,26 +867,27 @@ Friend Class clsCorToDist
                         Else '計測点はｿﾞｰﾝ内
                             dblL0 = dblA2 * dblTR0
                             dblL1 = dblA2 * dblTR1
-                            dblTauDash0 = dblL0 * dblTR0 / 2 * 180 / cPI
-                            dblTauDash1 = dblL1 * dblTR1 / 2 * 180 / cPI
+                            dblTauDash0 = dblL0 * dblTR0 / 2 * 180 / PI
+                            dblTauDash1 = dblL1 * dblTR1 / 2 * 180 / PI
                             intLL = 0
 
-                            dblXdash0 = f(dblL0, .始点曲率半径(mint抽出Zone))
-                            dblYdash0 = g(dblL0, .始点曲率半径(mint抽出Zone))
+                            dblXdash0 = userFunctionG(dblL0, .始点曲率半径(mint抽出Zone))
+                            dblYdash0 = userFunctionF(dblL0, .始点曲率半径(mint抽出Zone))
+
                             dblAlfadash = Lim180(.始点方向角(mint抽出Zone) - dblTauDash0)
                             Do
                                 intLL = CShort(intLL + 1) 'ﾙｰﾌﾟ数ｶｳﾝﾄ
                                 dblLC = (dblL0 + dblL1) * 0.5 '次の検討位置を近い側の半分へ移動（ｽﾀｰﾄ時は始点終点間の真ん中）
                                 dblRc = dblA2 / dblLC '検討位置の半径
                                 dblTRc = 1 / dblRc 'その逆数
-                                dblXdashC = f(dblLC, dblRc)
-                                dblYdashC = g(dblLC, dblRc)
+                                dblXdashC = userFunctionG(dblLC, dblRc)
+                                dblYdashC = userFunctionF(dblLC, dblRc)
                                 dblXdash = dblXdashC - dblXdash0
                                 dblYdash = dblYdashC - dblYdash0
-                                dblTauDashC = dblLC / dblTRc / 2 * 180 / cPI
+                                dblTauDashC = dblLC / dblTRc / 2 * 180 / PI
                                 dblAlfaC = Lim180(dblAlfadash + dblTauDashC)
-                                dblXc = .始点中心X座標(mint抽出Zone) + dblXdash * Cos(dblAlfadash * cPI / 180) - dblYdash * Sin(dblAlfadash * cPI / 180)
-                                dblYc = .始点中心Y座標(mint抽出Zone) + dblXdash * Sin(dblAlfadash * cPI / 180) + dblYdash * Cos(dblAlfadash * cPI / 180)
+                                dblXc = .始点中心X座標(mint抽出Zone) + dblXdash * Cos(dblAlfadash * PI / 180) - dblYdash * Sin(dblAlfadash * PI / 180)
+                                dblYc = .始点中心Y座標(mint抽出Zone) + dblXdash * Sin(dblAlfadash * PI / 180) + dblYdash * Cos(dblAlfadash * PI / 180)
                                 Call sbZahyoGtoL(dblXDc, dblYDc, mdblXp, mdblYp, dblXc, dblYc, dblAlfaC)
 
                                 If Abs(dblXDc) <= dblEp Then '距離を検討し、きわめて近いとき
@@ -829,7 +911,6 @@ Friend Class clsCorToDist
         End With
 
     End Sub
-
 
 
 End Class

@@ -33,7 +33,7 @@ Partial Class ucnDspBit
         Me.lblFieldName.Location = New System.Drawing.Point(1, 0)
         Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblFieldName.Name = "lblFieldName"
-        Me.lblFieldName.Size = New System.Drawing.Size(146, 30)
+        Me.lblFieldName.Size = New System.Drawing.Size(135, 30)
         Me.lblFieldName.TabIndex = 5
         Me.lblFieldName.Text = "待 機"
         Me.lblFieldName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter

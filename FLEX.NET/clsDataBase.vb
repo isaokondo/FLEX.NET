@@ -126,7 +126,7 @@ Public Class clsTag
             'If Not IsDBNull(anaTag("項目名")) Then
             _Tag(i).FieldName = anaTag("項目名").ToString
             _Tag(i).Address = anaTag("アドレス").ToString
-            If TableName = "アナログtag" Then
+            If TableName = "FLEXアナログtag" Then
                 _Tag(i).DigitLoc = CInt(anaTag("小数点位置"))
                 _Tag(i).Unit = anaTag("単位").ToString
                 _Tag(i).EngLow = CSng(anaTag("下限"))
@@ -169,12 +169,14 @@ Public Class clsInitParameter
     Private _numberGroup As Short          '分割数
     Private _faiJack() As Single             'ジャッキ取付位置(演算)
     Private _JackGroupPos() As Short              '所属グループ番号
+    Private _faiGroup() As Single           '各グループの中心角度
+    Private _numberJackOfGroup As Short()   '各グループのジャッキ本数
     Private _jackPower As Single             'ジャッキ能力
     Private _jackRadius As Single           'ジャッキ取付半径
     Private _JackMaxOilPres As Single        'ジャッキの最大油圧
     Private _actLogicalStationNumber As Short 'PLC論理局
     Private _firstJackLoc As String            'No1ジャッキの位置 top or left
-
+    Private _sheetID As Integer = 20                 ''計画路線のシートID（10:計画路線　20:掘進計画線)
     'Private _planDataMdb As String '計画路線（線形データ）のファイルパス
 
     Private WithEvents Htb As New clsHashtableRead
@@ -202,6 +204,17 @@ Public Class clsInitParameter
         End Get
     End Property
     ''' <summary>
+    ''' 計画路線のシートID（10:計画路線　20:掘進計画線)
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property SheetID As Integer
+        Get
+            Return _sheetID
+        End Get
+    End Property
+
+
+    ''' <summary>
     ''' ジャッキ取付位置
     ''' </summary>
     ''' <value></value>
@@ -219,6 +232,16 @@ Public Class clsInitParameter
     Public ReadOnly Property JackGroupPos() As Short()
         Get
             Return _JackGroupPos
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 各グループの中心角度
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property FaiGroup() As Single()
+        Get
+            Return _faiGroup
         End Get
     End Property
 
@@ -255,7 +278,7 @@ Public Class clsInitParameter
     'End Property
     Public Sub New()
         Dim paraDB As OdbcDataReader
-        paraDB = ExecuteSql("SELECT * FROM 初期パラメータ")
+        paraDB = ExecuteSql("SELECT * FROM FLEX初期パラメータ")
 
         Dim ht As Hashtable = New Hashtable
 
@@ -272,6 +295,7 @@ Public Class clsInitParameter
             _JackMaxOilPres = Htb.GetValue("ジャッキの最大油圧")
             _actLogicalStationNumber = Htb.GetValue("PLC論理局")
             _firstJackLoc = Htb.GetValue("No1ジャッキの位置")
+            _sheetID = Htb.GetValue("SheetID")
             '_planDataMdb = Htb.GetValue("PlanDataMdb")
             ''絶対パスに変換
             'If Not (System.IO.Path.IsPathRooted(_planDataMdb)) Then
@@ -280,13 +304,39 @@ Public Class clsInitParameter
             ReDim _faiJack(_numberJack - 1)
             ReDim _JackGroupPos(_numberJack - 1)
 
+            ReDim _numberJackOfGroup(_numberGroup - 1)
+
             Dim i As Integer
             For i = 0 To _numberJack - 1
                 '_faiJack(i) = Htb.GetValue("ジャッキ取付位置" & (i + 1))
                 _JackGroupPos(i) = Htb.GetValue("所属するジャッキグループの番号" & (i + 1))
+                _numberJackOfGroup(_JackGroupPos(i) - 1) += 1
             Next
-
+            'ジャッキ取付角度の演算(degree)
             Call CalucFaiJack()
+
+
+            'グループの中心角度の計算
+            ReDim _faiGroup(_numberGroup - 1)
+
+            For i = 0 To _numberJack - 1
+                _faiGroup(_JackGroupPos(i) - 1) += _faiJack(i)
+                Dim j As Integer
+                If j = _numberJack - 1 Then
+                    j = 0
+                Else
+                    j = i + 1
+                End If
+                '次のグループが同じグループで角度が大きい時
+                If _faiJack(i) < _faiJack(j) And _JackGroupPos(i) = _JackGroupPos(j) Then
+                    _faiGroup(_JackGroupPos(i) - 1) += 360
+                End If
+
+            Next
+            Dim test As Single = 0
+            For i = 0 To _numberGroup - 1
+                _faiGroup(i) = _faiGroup(i) / _numberJackOfGroup(i)
+            Next
 
         Catch ex As Exception
 
@@ -300,7 +350,7 @@ Public Class clsInitParameter
     Private Sub CalucFaiJack()
 
         Dim sngStartLoc As Single
-        sngStartLoc = IIf(_firstJackLoc = "top", 90, 90 - 360 / _numberJack / 2)
+        sngStartLoc = IIf(_firstJackLoc.ToLower = "top", 90, 90 - 360 / _numberJack / 2)
 
         ReDim _faiJack(_numberJack)
 

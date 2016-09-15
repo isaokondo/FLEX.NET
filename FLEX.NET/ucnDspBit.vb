@@ -30,6 +30,13 @@ Public Class ucnDspBit
             Call sbDspStatus()
         End Set
     End Property
+    ''' <summary>
+    ''' 点滅用フラグ
+    ''' </summary>
+    ''' <returns></returns>
+    <Browsable(True)>
+    Public Property Blink As Boolean = False
+
 
     <Browsable(True)>
     Public Property BitStatus As Boolean

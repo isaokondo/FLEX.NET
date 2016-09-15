@@ -50,8 +50,16 @@ Friend Class clsCulKijun
     Private mdbl平面後胴中心 As Double
     Private mdbl縦断後胴中心 As Double
 
+    Private _平面偏角 As Double
+    Private _縦断偏角 As Double
+
+
+
     ''掘進総距離取得用クラスをモジュール変数に変更　鹿島品川線より
-    Private clsDistance As clsCulcDistance ''掘進総距離取得用クラスの設定
+    ''' <summary>
+    ''' 掘進総距離取得用クラスの設定
+    ''' </summary>
+    Public Distance As clsCulcDistance ''
 
 
 
@@ -111,9 +119,23 @@ Friend Class clsCulKijun
         End Get
     End Property
 
+    Public ReadOnly Property 平面偏角 As Double
+        Get
+            Return Lim180(PlcIf.Gyro - mdbl平面基準方位)
+        End Get
+    End Property
+
+    Public ReadOnly Property 縦断偏角 As Double
+        Get
+            Return PlcIf.Pitching - mdbl縦断基準方位
+        End Get
+    End Property
 
 
 
+    ''' <summary>
+    ''' 基準方位の算出
+    ''' </summary>
     Public Sub sbCulKijun()
         ' @(f)
         '
@@ -143,14 +165,14 @@ Friend Class clsCulKijun
         dblKodoMae = MachineSpec.HorKodoCenter - MachineSpec.HorZendoCenter
 
         With ControlParameter
-            If PlcIf.リング番号 <> 0 Then
-                clsDistance.現在のリング番号 = PlcIf.リング番号
-                clsDistance.測量ポイントリング番号 = .測量ポイントリング番号
-                clsDistance.測量ポイント総距離 = .測量ポイント総距離
+            If PlcIf.RingNo <> 0 Then
+                Distance.現在のリング番号 = PlcIf.RingNo
+                Distance.測量ポイントリング番号 = .測量ポイントリング番号
+                Distance.測量ポイント総距離 = .測量ポイント総距離
 
                 'dblSentanDistance = clsDistance.掘進総距離
                 ''鹿島品川線対応　 計画線起点、発進点に伴う変更
-                dblSentanDistance = clsDistance.掘進総距離 '+ gdblToStartDistance
+                dblSentanDistance = Distance.掘進総距離 '+ gdblToStartDistance
 
             End If
         End With
@@ -202,7 +224,7 @@ Friend Class clsCulKijun
                 clsSetKoudouC.後胴中心 = HorPlan.後胴中心.Clone
                 clsSetKoudouC.線分長 = HorPlan.線分長.Clone
                 clsSetKoudouC.sbCul()
-                If clsSetKoudouC.抽出フラグ = 1 And clsSetKoudouC.抽出ゾーン掘進距離 <= MachineSpec.機長 Then
+                If clsSetKoudouC.抽出フラグ = 1 And clsSetKoudouC.抽出ゾーン掘進距離 <= MachineSpec.MachiLength Then
                     mdbl平面後胴中心 = clsSetKoudouC.抽出後胴中心
                 End If
                 dbl後胴長 = mdbl平面後胴中心 - MachineSpec.ZendoLen
@@ -222,14 +244,14 @@ Friend Class clsCulKijun
 
                 '中折れ計算１（後胴中心で検討）
                 With HorNakaKodo
-                    .ゾーン番号 = HorKodoKijun.平面ゾーン番号
+                    .ZoneNo = HorKodoKijun.平面ゾーン番号
                     .ゾーン掘進距離 = HorKodoKijun.平面ゾーン掘進距離
                     .ゾーン残距離 = HorKodoKijun.平面ゾーン内残距離
                     .前胴長 = MachineSpec.ZendoLen
                     '               .後胴前 = dblKodoMae 'initParameter.HorZendoCenter 'initParameter.KodoLen
                     .後胴前 = dbl後胴長 'initParameter.HorZendoCenter 'MachineSpec
                     .ディフォルト旋回中心 = MachineSpec.HorSenkaiCyuushin
-                    .sbCulNakaore1()
+                    .sbCulNakaore1(HorPlan)
                 End With
                 ' End If
                 '2010/4/7 修正
@@ -319,7 +341,7 @@ Friend Class clsCulKijun
                 clsSetKoudouC.ゾーン掘進距離 = VerKodoCenTmp.掘進累積距離
                 clsSetKoudouC.ゾーン残距離 = VerKodoCenTmp.縦断ゾーン内残距離
                 clsSetKoudouC.sbCul()
-                If clsSetKoudouC.抽出フラグ = 1 And clsSetKoudouC.抽出ゾーン掘進距離 <= MachineSpec.機長 Then
+                If clsSetKoudouC.抽出フラグ = 1 And clsSetKoudouC.抽出ゾーン掘進距離 <= MachineSpec.MachiLength Then
                     mdbl縦断後胴中心 = clsSetKoudouC.抽出後胴中心
                 End If
                 dbl後胴長 = mdbl縦断後胴中心 - MachineSpec.ZendoLen
@@ -330,14 +352,14 @@ Friend Class clsCulKijun
 
                 '中折れ計算１（後胴中心で検討）
                 With VerNakaKodo
-                    .ゾーン番号 = VerKodoKijun.縦断ゾーン番号
+                    .ZoneNo = VerKodoKijun.縦断ゾーン番号
                     .ゾーン掘進距離 = VerKodoKijun.縦断ゾーン内掘進距離
                     .ゾーン残距離 = VerKodoKijun.縦断ゾーン内残距離
                     .前胴長 = MachineSpec.ZendoLen
                     '            .後胴前 = initParameter.VerKodoCenter - initParameter.ZendoLen
                     .後胴前 = dbl後胴長
                     .ディフォルト旋回中心 = MachineSpec.HorSenkaiCyuushin
-                    .sbCulNakaore1()
+                    .sbCulNakaore1(VerPlan)
                 End With
 
                 ''前胴中心の計算
@@ -443,7 +465,7 @@ Friend Class clsCulKijun
     'UPGRADE_NOTE: Class_Initialize は Class_Initialize_Renamed にアップグレードされました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"' をクリックしてください。
     Private Sub Class_Initialize_Renamed()
 
-        clsDistance = New clsCulcDistance
+        Distance = New clsCulcDistance
 
         StartKijun = New clsLineMake
         With HorPlan
@@ -472,11 +494,11 @@ Friend Class clsCulKijun
         ' 備考      :08/08/25 追加
 
 
-        Dim dblNL0, dblNL1 As Double
-        Dim intFd0, intFd1 As Short
+        Dim dblNL0 As Double = 0, dblNL1 As Double = 0
+        Dim intFd0 As Short = 1, intFd1 As Short = 0
         Dim dblKc0, dblKc1 As Double
 
-        dblNL0 = 0 : dblNL1 = 0 : intFd0 = 1 : intFd1 = 0
+        'dblNL0 = 0 : dblNL1 = 0 : intFd0 = 1 : intFd1 = 0
 
         Dim intCnt As Integer '中折れの有無あり？ '過去ｿﾞｰﾝのチェック
         With NakaoreKijun
@@ -792,7 +814,7 @@ Friend Class clsCulKijun
 
         Inherits clsPlanData
         ''入力項目
-        Private mintゾーン番号 As Integer
+        Private _ZoneNo As Integer
         Private mdblゾーン掘進距離 As Double
         Private mdblゾーン残距離 As Double
 
@@ -817,6 +839,7 @@ Friend Class clsCulKijun
         Private mdbl現中折角度 As Double
         Private mint現中折計算区分 As Short
         Private mdbl現戻し開始 As Double
+
 
 
         'Public WriteOnly Property 線形 As Integer()
@@ -918,9 +941,9 @@ Friend Class clsCulKijun
             End Set
         End Property
 
-        Public WriteOnly Property ゾーン番号() As Integer
+        Public WriteOnly Property ZoneNo() As Integer
             Set(ByVal Value As Integer)
-                mintゾーン番号 = Value
+                _ZoneNo = Value
             End Set
         End Property
 
@@ -937,8 +960,13 @@ Friend Class clsCulKijun
         End Property
 
 
-
-        Public Sub sbCulNakaore1()
+        ''' <summary>
+        ''' 中折計算1
+        ''' </summary>
+        ''' <param name="LineData">
+        ''' 線形データクラス　水平、鉛直
+        ''' </param>
+        Public Sub sbCulNakaore1(LineData As Object)
             ' @(f)
             '
             ' 機能      :中折れ演算１
@@ -957,11 +985,11 @@ Friend Class clsCulKijun
             '
             ' 備考      :
 
-            'Sub Cal_naka1(intzone, mdbl平面ゾーン掘進距離, mdblゾーン残距離, L1, L2, Lch, .Hor線形(), .Hor中折(), .Hor前胴中心(), .Hor中折開始(), .Hor戻し開始(), .Hor最大中折れ角(), .Hor姿勢変化率(), Mc, Ns, Ms, Max, Kh, Nk, Fnk)
+            'Sub Cal_naka1(_ZoneNo, mdbl平面ゾーン掘進距離, mdblゾーン残距離, L1, L2, Lch, .Hor線形(), .Hor中折(), .Hor前胴中心(), .Hor中折開始(), .Hor戻し開始(), .Hor最大中折れ角(), .Hor姿勢変化率(), Mc, Ns, Ms, Max, Kh, Nk, Fnk)
 
             '現在のｿﾞｰﾝ番号、ｿﾞｰﾝ内掘進距離、ｿﾞｰﾝ内残距離を引き渡し、現在の中折れ角と、中折れﾃﾞｰﾀ、および計算の区分を返す。
 
-            'intzone=         現在のｿﾞｰﾝ番号
+            '_ZoneNo=         現在のｿﾞｰﾝ番号
             'mdbl平面ゾーン掘進距離=        現在のｿﾞｰﾝ内掘進距離(m)
             'mdblゾーン残距離=        現在のｿﾞｰﾝ内残距離(m)
 
@@ -986,108 +1014,87 @@ Friend Class clsCulKijun
 
             'Dim Cer As Short
 
+            With DirectCast(LineData, clsPlanData)
 
-            'With objSenkei
-            Dim intZone As Integer = mintゾーン番号
-            'UPGRADE_WARNING: オブジェクト objSenkei.線形 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-            Select Case mint線形(intZone)
-
-                Case 1 '後胴が直線（中折れ計算は次ｿﾞｰﾝが対象）
-                    mdbl現中折開始 = mdbl中折開始(intZone + 1) '中折れ開始位置
-                    mdbl現戻し開始 = mdbl戻し開始(intZone + 1) '中折れ戻し開始位置
-                    mdbl現最大中折角 = mdbl最大中折角(intZone + 1) '最大中折れ角
-                    mdbl現姿勢変化率 = mdbl姿勢変化率(intZone + 1) '姿勢変化率
-                    If mint中折(intZone + 1) = 1 Then '次ｿﾞｰﾝ中折れ施工
-                        If mint線形(intZone + 1) = 2 Then '次ｿﾞｰﾝ単曲線
-                            '                            mdbl現旋回中心 = (mdbl前胴長 + mdbl後胴前) - .前胴中心(intZone + 1) '旋回中心は次ｿﾞｰﾝの前胴中心
-                            ''03/04/17 修正 堀川より
-                            mdbl現旋回中心 = mdbl前胴中心(intZone + 1) '旋回中心は次ｿﾞｰﾝの前胴中心
-                            If mdblゾーン残距離 <= (mdbl前胴長 + mdbl後胴前) - mdbl現中折開始 Then
-                                mint現中折計算区分 = 2 '特殊処理
-                                '??????????????↓０のはず
-                                mdbl現中折角度 = mdbl現最大中折角 * (1 - mdblゾーン残距離 / ((mdbl前胴長 + mdbl後胴前) - mdbl現中折開始)) '中折れ角
+                Select Case .線形(_ZoneNo)
+                    Case 1 '後胴が直線（中折れ計算は次ｿﾞｰﾝが対象）
+                        mdbl現中折開始 = .中折開始(_ZoneNo + 1) '中折れ開始位置
+                        mdbl現戻し開始 = .戻し開始(_ZoneNo + 1) '中折れ戻し開始位置
+                        mdbl現最大中折角 = .最大中折れ角(_ZoneNo + 1) '最大中折れ角
+                        mdbl現姿勢変化率 = .姿勢変化率(_ZoneNo + 1) '姿勢変化率
+                        If .中折(_ZoneNo + 1) = 1 Then '次ｿﾞｰﾝ中折れ施工
+                            If .線形(_ZoneNo + 1) = 2 Then '次ｿﾞｰﾝ単曲線
+                                '                            mdbl現旋回中心 = (mdbl前胴長 + mdbl後胴前) - .前胴中心(_ZoneNo + 1) '旋回中心は次ｿﾞｰﾝの前胴中心
+                                ''03/04/17 修正 堀川より
+                                mdbl現旋回中心 = .前胴中心(_ZoneNo + 1) '旋回中心は次ｿﾞｰﾝの前胴中心
+                                If mdblゾーン残距離 <= (mdbl前胴長 + mdbl後胴前) - mdbl現中折開始 Then
+                                    mint現中折計算区分 = 2 '特殊処理
+                                    '??????????????↓０のはず
+                                    mdbl現中折角度 = mdbl現最大中折角 * (1 - mdblゾーン残距離 / ((mdbl前胴長 + mdbl後胴前) - mdbl現中折開始)) '中折れ角
+                                Else
+                                    mint現中折計算区分 = 1 '通常の中折れ処理
+                                    mdbl現中折角度 = 0 '中折れ不定
+                                End If
                             Else
                                 mint現中折計算区分 = 1 '通常の中折れ処理
+                                '                            mdbl現旋回中心 = (mdbl前胴長 + mdbl後胴前) - .前胴中心(_ZoneNo + 1) '旋回中心は次ｿﾞｰﾝの前胴中心
+                                'UPGRADE_WARNING: オブジェクト objSenkei.前胴中心 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
+                                mdbl現旋回中心 = .前胴中心(_ZoneNo + 1) '旋回中心は次ｿﾞｰﾝの前胴中心05/01/20 修正
                                 mdbl現中折角度 = 0 '中折れ不定
                             End If
                         Else
-                            mint現中折計算区分 = 1 '通常の中折れ処理
-                            '                            mdbl現旋回中心 = (mdbl前胴長 + mdbl後胴前) - .前胴中心(intZone + 1) '旋回中心は次ｿﾞｰﾝの前胴中心
-                            'UPGRADE_WARNING: オブジェクト objSenkei.前胴中心 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                            mdbl現旋回中心 = mdbl前胴中心(intZone + 1) '旋回中心は次ｿﾞｰﾝの前胴中心05/01/20 修正
-                            mdbl現中折角度 = 0 '中折れ不定
+
+                            mint現中折計算区分 = 0 '中折れなし
+                            mdbl現旋回中心 = mdblディフォルト旋回中心 '旋回中心は次ｿﾞｰﾝのマシン中心
+                            mdbl現中折角度 = 0 '中折れ角は0
                         End If
-                    Else
 
-                        mint現中折計算区分 = 0 '中折れなし
-                        mdbl現旋回中心 = mdblディフォルト旋回中心 '旋回中心は次ｿﾞｰﾝのマシン中心
-                        mdbl現中折角度 = 0 '中折れ角は0
-                    End If
-                    ''01/09/10 修正 Caseの先頭へ移動 ver 1.1
-                    '                    mdbl現中折開始 = .中折開始(intZone + 1) '中折れ開始位置
-                    '                    mdbl現戻し開始 = .戻し開始(intZone + 1)  '中折れ戻し開始位置
-                    '                    mdbl現最大中折角 = .最大中折れ角(intZone + 1) '最大中折れ角
-                    '                    mdbl現姿勢変化率 = .姿勢変化率(intZone + 1) '姿勢変化率
+                    Case 2 '後胴が単曲線（中折れ計算は現ｿﾞｰﾝが対象）
+                        mdbl現中折開始 = .中折開始(_ZoneNo) '中折れ開始位置
+                        mdbl現戻し開始 = .戻し開始(_ZoneNo) '中折れ戻し開始位置
+                        mdbl現最大中折角 = .最大中折れ角(_ZoneNo) '最大中折れ角
+                        mdbl現姿勢変化率 = .姿勢変化率(_ZoneNo) '姿勢変化率
+                        If .中折(_ZoneNo) = 1 Then '現ｿﾞｰﾝ中折れ施工
+                            If .線形(_ZoneNo + 1) = 1 Then '次が直線
+                                mdbl現旋回中心 = .前胴中心(_ZoneNo) '旋回中心は次ｿﾞｰﾝの前胴中心
 
-                Case 2 '後胴が単曲線（中折れ計算は現ｿﾞｰﾝが対象）
-                    mdbl現中折開始 = mdbl中折開始(intZone) '中折れ開始位置
-                    mdbl現戻し開始 = mdbl戻し開始(intZone) '中折れ戻し開始位置
-                    mdbl現最大中折角 = mdbl最大中折角(intZone) '最大中折れ角
-                    mdbl現姿勢変化率 = mdbl姿勢変化率(intZone) '姿勢変化率
-                    If mint中折(intZone) = 1 Then '現ｿﾞｰﾝ中折れ施工
-                        If mint線形(intZone + 1) = 1 Then '次が直線
-                            'mdbl現旋回中心 = (mdbl前胴長 + mdbl後胴前) - .前胴中心(intZone) '旋回中心は現ｿﾞｰﾝの前胴中心
-                            ''03/05/08 修正 堀川より
-                            mdbl現旋回中心 = mdbl前胴中心(intZone) '旋回中心は次ｿﾞｰﾝの前胴中心
-
-                            If mdblゾーン残距離 <= (mdbl前胴長 + mdbl後胴前) - mdbl現中折開始 Then
-                                mint現中折計算区分 = 2 '特殊処理
-                                mdbl現中折角度 = mdbl現最大中折角 * mdblゾーン残距離 / ((mdbl前胴長 + mdbl後胴前) - mdbl現中折開始) '中折れ角
+                                If mdblゾーン残距離 <= (mdbl前胴長 + mdbl後胴前) - mdbl現中折開始 Then
+                                    mint現中折計算区分 = 2 '特殊処理
+                                    mdbl現中折角度 = mdbl現最大中折角 * mdblゾーン残距離 / ((mdbl前胴長 + mdbl後胴前) - mdbl現中折開始) '中折れ角
+                                Else
+                                    mint現中折計算区分 = 1 '通常の中折れ処理
+                                    mdbl現中折角度 = 0
+                                End If
                             Else
                                 mint現中折計算区分 = 1 '通常の中折れ処理
-                                mdbl現中折角度 = 0
+                                mdbl現旋回中心 = .前胴中心(_ZoneNo + 1) '旋回中心は次ｿﾞｰﾝの前胴中心　05/01/20 修正
+                                mdbl現中折角度 = 0 '中折れ不定
                             End If
                         Else
-                            mint現中折計算区分 = 1 '通常の中折れ処理
-                            '                            mdbl現旋回中心 = (mdbl前胴長 + mdbl後胴前) - .前胴中心(intZone) '旋回中心は現ｿﾞｰﾝの前胴中心
-                            mdbl現旋回中心 = mdbl前胴中心(intZone + 1) '旋回中心は次ｿﾞｰﾝの前胴中心　05/01/20 修正
-                            mdbl現中折角度 = 0 '中折れ不定
+                            mint現中折計算区分 = 0 '中折れなし
+                            mdbl現旋回中心 = mdblディフォルト旋回中心 '旋回中心は現ｿﾞｰﾝのマシン中心
+                            mdbl現中折角度 = 0 '中折れ角は０
                         End If
-                    Else
-                        mint現中折計算区分 = 0 '中折れなし
-                        mdbl現旋回中心 = mdblディフォルト旋回中心 '旋回中心は現ｿﾞｰﾝのマシン中心
-                        mdbl現中折角度 = 0 '中折れ角は０
-                    End If
-                    ''01/09/10 修正 Caseの先頭へ移動 ver 1.1
-                    '                    mdbl現中折開始 = .中折開始(intZone) '中折れ開始位置
-                    '                    mdbl現戻し開始 = .戻し開始(intZone)  '中折れ戻し開始位置
-                    '                    mdbl現最大中折角 = .最大中折れ角(intZone) '最大中折れ角
-                    '                    mdbl現姿勢変化率 = .姿勢変化率(intZone) '姿勢変化率
 
-                Case 3 '後胴が緩和曲線（中折れ処理は現ｿﾞｰﾝが対象）
-                    mdbl現中折開始 = mdbl中折開始(intZone) '中折れ開始位置
-                    mdbl現戻し開始 = mdbl戻し開始(intZone) '中折れ戻し開始位置
-                    mdbl現最大中折角 = mdbl最大中折角(intZone) '最大中折れ角
-                    mdbl現姿勢変化率 = mdbl姿勢変化率(intZone) '姿勢変化率
-                    If mint中折(intZone) = 1 Then '現ｿﾞｰﾝ中折れ施工
-                        mint現中折計算区分 = 1 '通常の中折れ処理
-                        'mdbl現旋回中心 = (mdbl前胴長 + mdbl後胴前) - .前胴中心(intZone) '旋回中心は現ｿﾞｰﾝの前胴中心
-                        mdbl現旋回中心 = mdbl前胴中心(intZone) '旋回中心は現ｿﾞｰﾝの前胴中心　05/01/20 修正
-                        mdbl現中折角度 = 0 '中折れ不定
-                    Else
-                        mint現中折計算区分 = 0 '中折れなし
-                        mdbl現旋回中心 = mdblディフォルト旋回中心 '旋回中心は現ｿﾞｰﾝのマシン中心
-                        mdbl現中折角度 = 0 '中折れ角は０
-                    End If
-                    ''01/09/10 修正 Caseの先頭へ移動 ver 1.1
-                    '                    mdbl現中折開始 = .中折開始(intZone) '中折れ開始位置
-                    '                    mdbl現戻し開始 = .戻し開始(intZone)  '中折れ戻し開始位置
-                    '                    mdbl現最大中折角 = .最大中折れ角(intZone) '最大中折れ角
-                    '                    mdbl現姿勢変化率 = .姿勢変化率(intZone) '姿勢変化率
+                    Case 3 '後胴が緩和曲線（中折れ処理は現ｿﾞｰﾝが対象）
+                        mdbl現中折開始 = .中折開始(_ZoneNo) '中折れ開始位置
+                        mdbl現戻し開始 = .戻し開始(_ZoneNo) '中折れ戻し開始位置
+                        mdbl現最大中折角 = .最大中折れ角(_ZoneNo) '最大中折れ角
+                        mdbl現姿勢変化率 = .姿勢変化率(_ZoneNo) '姿勢変化率
+                        If .中折(_ZoneNo) = 1 Then '現ｿﾞｰﾝ中折れ施工
+                            mint現中折計算区分 = 1 '通常の中折れ処理
+                            mdbl現旋回中心 = .前胴中心(_ZoneNo) '旋回中心は現ｿﾞｰﾝの前胴中心　05/01/20 修正
+                            mdbl現中折角度 = 0 '中折れ不定
+                        Else
+                            mint現中折計算区分 = 0 '中折れなし
+                            mdbl現旋回中心 = mdblディフォルト旋回中心 '旋回中心は現ｿﾞｰﾝのマシン中心
+                            mdbl現中折角度 = 0 '中折れ角は０
+                        End If
 
-                Case Else
+                    Case Else
 
-            End Select
+                End Select
+            End With
 
         End Sub
     End Class

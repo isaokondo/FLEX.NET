@@ -1,5 +1,7 @@
 ﻿Option Strict Off
 Option Explicit On
+Imports System.Math
+
 Friend Class clsThrustDiv
     ' @(h) clsThrustDiv                ver 1.0 ( '01.03.06 近藤　勲 )
 
@@ -10,7 +12,7 @@ Friend Class clsThrustDiv
     Private mint最低全開グループ数 As Short
     Private mint全開作動指令値 As Short
     Private mint全開作動範囲 As Short
-    Private mbln全開制御フラグ As Boolean
+    Private mbln全開グループ制限 As Boolean
     Private mdbl操作角 As Double
     Private mdbl操作強 As Double
 
@@ -22,21 +24,21 @@ Friend Class clsThrustDiv
 
 
 
-    Public Property 分担率指令値(ByVal Index As Short) As Double
+    Public Property 分担率指令値 As Double()
         Get
-            分担率指令値 = mdbl分担率指令値(Index)
+            Return mdbl分担率指令値
         End Get
-        Set(ByVal Value As Double)
-            mdbl分担率指令値(Index) = Value
+        Set(ByVal Value As Double())
+            mdbl分担率指令値 = Value
         End Set
     End Property
 
-    Public Property 分担率計算値(ByVal Index As Short) As Double
+    Public Property 分担率計算値 As Double()
         Get
-            分担率計算値 = mdbl分担率計算値(Index)
+            Return mdbl分担率計算値
         End Get
-        Set(ByVal Value As Double)
-            mdbl分担率計算値(Index) = Value
+        Set(ByVal Value As Double())
+            mdbl分担率計算値 = Value
         End Set
     End Property
 
@@ -59,12 +61,12 @@ Friend Class clsThrustDiv
         End Set
     End Property
 
-    Public Property 全開制御フラグ() As Boolean
+    Public Property 全開グループ制限() As Boolean
         Get
-            全開制御フラグ = mbln全開制御フラグ
+            全開グループ制限 = mbln全開グループ制限
         End Get
         Set(ByVal Value As Boolean)
-            mbln全開制御フラグ = Value
+            mbln全開グループ制限 = Value
         End Set
     End Property
 
@@ -101,14 +103,10 @@ Friend Class clsThrustDiv
         End Get
     End Property
 
-
-    'UPGRADE_NOTE: Class_Initialize は Class_Initialize_Renamed にアップグレードされました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"' をクリックしてください。
     Private Sub Class_Initialize_Renamed()
         ''配列の初期化
-        'UPGRADE_WARNING: 配列 mdbl分担率計算値 の下限が 1 から 0 に変更されました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"' をクリックしてください。
-        ReDim mdbl分担率計算値(InitParameter.NumberGroup)
-        'UPGRADE_WARNING: 配列 mdbl分担率指令値 の下限が 1 から 0 に変更されました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"' をクリックしてください。
-        ReDim mdbl分担率指令値(InitParameter.NumberGroup)
+        ReDim mdbl分担率計算値(InitParameter.NumberGroup - 1)
+        ReDim mdbl分担率指令値(InitParameter.NumberGroup - 1)
     End Sub
     Public Sub New()
         MyBase.New()
@@ -116,7 +114,9 @@ Friend Class clsThrustDiv
     End Sub
 
 
-
+    ''' <summary>
+    ''' 推力分担率の演算
+    ''' </summary>
     Public Sub sbCul()
         ' @(f)
         '
@@ -129,137 +129,213 @@ Friend Class clsThrustDiv
         '
         ' 備考      :
 
-        Dim intCnt As Short
+        Dim i As Short
 
-        Dim intIg() As Short
-        Dim intJg() As Short
-        Dim dblPj() As Double
+        With InitParameter
 
-        Dim dblPgMax As Double
+            Dim intIg(.NumberGroup - 1) As Short
+            Dim intJg(.NumberGroup - 1) As Short
+            Dim dblPj(.NumberJack - 1) As Double
 
-        'UPGRADE_WARNING: 配列 intIg の下限が 1 から 0 に変更されました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"' をクリックしてください。
-        ReDim intIg(InitParameter.NumberGroup)
-        'UPGRADE_WARNING: 配列 intJg の下限が 1 から 0 に変更されました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"' をクリックしてください。
-        ReDim intJg(InitParameter.NumberGroup)
-        'UPGRADE_WARNING: 配列 dblPj の下限が 1 から 0 に変更されました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"' をクリックしてください。
-        ReDim dblPj(InitParameter.NumberJack)
+            Dim dblPgMax As Double
 
-
-        '============================= page Ⅲ－２８ ===============================
-        mbln最小数全開調整フラグ = False
-        mbln設定値全開調整フラグ = False
-
-        For intCnt = 1 To InitParameter.NumberGroup
-            mdbl分担率計算値(intCnt) = 0
-            intIg(intCnt) = 0
-            intJg(intCnt) = intCnt
-        Next intCnt
+            '============================= page Ⅲ－２８ ===============================
+            mbln最小数全開調整フラグ = False
+            mbln設定値全開調整フラグ = False
+            For i = 0 To .NumberGroup - 1
+                mdbl分担率計算値(i) = 0
+                intIg(i) = 0
+                intJg(i) = i
+            Next i
 
 
-        ''極座標演算
-        For intCnt = 1 To InitParameter.NumberJack
-            If mdbl操作強 <= 1 Then
-                dblPj(intCnt) = 1 + ((System.Math.Cos((InitParameter.FaiJack(intCnt) - mdbl操作角) * cPI / 180) + 1) / 2 - 1) * mdbl操作強
-            Else
-                dblPj(intCnt) = ((System.Math.Cos((InitParameter.FaiJack(intCnt) - mdbl操作角) * cPI / 180) + 1) / 2) ^ mdbl操作強
-            End If
-        Next intCnt
-
-        '============================= page Ⅲ－２９ ===============================
-
-        For intCnt = 1 To InitParameter.NumberJack
-            mdbl分担率計算値(InitParameter.JackGroupPos(intCnt)) = mdbl分担率計算値(InitParameter.JackGroupPos(intCnt)) + dblPj(intCnt)
-            intIg(InitParameter.JackGroupPos(intCnt)) = intIg(InitParameter.JackGroupPos(intCnt)) + 1
-        Next intCnt
-
-        For intCnt = 1 To InitParameter.NumberGroup
-            mdbl分担率計算値(intCnt) = mdbl分担率計算値(intCnt) / intIg(intCnt)
-        Next intCnt
-
-        ''最大値を求める
-        dblPgMax = mdbl分担率計算値(1)
-
-        For intCnt = 2 To InitParameter.NumberGroup
-            If mdbl分担率計算値(intCnt) > dblPgMax Then dblPgMax = mdbl分担率計算値(intCnt)
-        Next intCnt
-
-        For intCnt = 1 To InitParameter.NumberGroup
-            mdbl分担率計算値(intCnt) = mdbl分担率計算値(intCnt) / dblPgMax * 100
-        Next intCnt
-
-        '============================= page Ⅲ－３０ ===============================
-
-        ''全開調整
-        For intCnt = 1 To InitParameter.NumberGroup
-
-            If mdbl分担率指令値(intCnt) < 100 Then
-                If mdbl分担率計算値(intCnt) > mint全開作動指令値 + mint全開作動範囲 Then
-                    mdbl分担率指令値(intCnt) = 100
-                    mbln設定値全開調整フラグ = True
+            ''極座標演算
+            For i = 0 To .NumberJack - 1
+                If mdbl操作強 <= 1 Then
+                    dblPj(i) = 1 + ((Cos((.FaiJack(i) - mdbl操作角) * PI / 180) + 1) / 2 - 1) * mdbl操作強
                 Else
-                    mdbl分担率指令値(intCnt) = mdbl分担率計算値(intCnt)
+                    dblPj(i) = ((Cos((.FaiJack(i) - mdbl操作角) * PI / 180) + 1) / 2) ^ mdbl操作強
                 End If
-            Else
-                If mdbl分担率計算値(intCnt) > mint全開作動指令値 - mint全開作動範囲 Then
-                    mdbl分担率指令値(intCnt) = 100
-                    mbln設定値全開調整フラグ = True
+            Next i
+
+            '============================= page Ⅲ－２９ ===============================
+
+            For i = 0 To .NumberJack - 1
+                mdbl分担率計算値(.JackGroupPos(i) - 1) = mdbl分担率計算値(.JackGroupPos(i) - 1) + dblPj(i)
+                intIg(.JackGroupPos(i) - 1) = intIg(.JackGroupPos(i) - 1) + 1
+            Next i
+
+            For i = 0 To .NumberGroup - 1
+                mdbl分担率計算値(i) = mdbl分担率計算値(i) / intIg(i)
+            Next i
+
+            ''最大値を求める
+
+            dblPgMax = mdbl分担率計算値.Max
+
+            For i = 0 To .NumberGroup - 1
+                mdbl分担率計算値(i) = mdbl分担率計算値(i) / dblPgMax * 100
+            Next i
+
+            '============================= page Ⅲ－３０ ===============================
+
+            ''全開調整
+            For i = 0 To .NumberGroup - 1
+
+                If mdbl分担率指令値(i) < 100 Then
+                    If mdbl分担率計算値(i) > mint全開作動指令値 + mint全開作動範囲 Then
+                        mdbl分担率指令値(i) = 100
+                        mbln設定値全開調整フラグ = True
+                    Else
+                        mdbl分担率指令値(i) = mdbl分担率計算値(i)
+                    End If
                 Else
-                    mdbl分担率指令値(intCnt) = mdbl分担率計算値(intCnt)
+                    If mdbl分担率計算値(i) > mint全開作動指令値 - mint全開作動範囲 Then
+                        mdbl分担率指令値(i) = 100
+                        mbln設定値全開調整フラグ = True
+                    Else
+                        mdbl分担率指令値(i) = mdbl分担率計算値(i)
+                    End If
                 End If
+
+            Next i
+
+            Dim dblD(.NumberGroup - 1) As Double
+
+            For i = 0 To .NumberGroup - 1
+                dblD(i) = mdbl分担率計算値(i)
+            Next i
+
+
+            Dim intCntI, intCntJ As Short
+            Dim dblSt As Double
+            Dim intSt As Short
+
+            For intCntI = 0 To .NumberGroup - 2
+                For intCntJ = intCntI + 1 To .NumberGroup - 1
+                    If dblD(intCntJ) > dblD(intCntI) Then
+                        dblSt = dblD(intCntI)
+                        dblD(intCntI) = dblD(intCntJ)
+                        dblD(intCntJ) = dblSt
+
+                        intSt = intJg(intCntI)
+                        intJg(intCntI) = intJg(intCntJ)
+                        intJg(intCntJ) = intSt
+                    End If
+                Next intCntJ
+            Next intCntI
+
+
+            '============================= page Ⅲ－３１===============================
+            ''全開グループ制御
+            Dim dblWork As Double
+            If mbln全開グループ制限 Then
+
+                dblWork = 100
+
+                For i = 0 To mint最低全開グループ数 - 1
+                    If mdbl分担率指令値(intJg(i)) <> 100 Then
+                        dblWork = mdbl分担率指令値(intJg(i))
+                        mdbl分担率指令値(intJg(i)) = 100
+                        mbln最小数全開調整フラグ = True
+                    End If
+                Next i
+
+                For i = mint最低全開グループ数 To .NumberGroup - 1
+                    If mdbl分担率指令値(intJg(i)) = dblWork Then
+                        mdbl分担率指令値(intJg(i)) = 100
+                    End If
+                Next i
+
             End If
-
-        Next intCnt
-
-        Dim dblD() As Double
-        'UPGRADE_WARNING: 配列 dblD の下限が 1 から 0 に変更されました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"' をクリックしてください。
-        ReDim dblD(InitParameter.NumberGroup)
-
-        For intCnt = 1 To InitParameter.NumberGroup
-            dblD(intCnt) = mdbl分担率計算値(intCnt)
-        Next intCnt
-
-
-        Dim intCntI, intCntJ As Short
-        Dim dblSt As Double
-        Dim intSt As Short
-
-        For intCntI = 1 To InitParameter.NumberGroup - 1
-            For intCntJ = intCntI + 1 To InitParameter.NumberGroup
-                If dblD(intCntJ) > dblD(intCntI) Then
-                    dblSt = dblD(intCntI)
-                    dblD(intCntI) = dblD(intCntJ)
-                    dblD(intCntJ) = dblSt
-
-                    intSt = intJg(intCntI)
-                    intJg(intCntI) = intJg(intCntJ)
-                    intJg(intCntJ) = intSt
-                End If
-            Next intCntJ
-        Next intCntI
-
-
-        '============================= page Ⅲ－３１===============================
-        ''全開グループ制御
-        Dim dblWork As Double
-        If mbln全開制御フラグ Then
-
-            dblWork = 100
-
-            For intCnt = 1 To mint最低全開グループ数
-                If mdbl分担率指令値(intJg(intCnt)) <> 100 Then
-                    dblWork = mdbl分担率指令値(intJg(intCnt))
-                    mdbl分担率指令値(intJg(intCnt)) = 100
-                    mbln最小数全開調整フラグ = True
-                End If
-            Next intCnt
-
-            For intCnt = mint最低全開グループ数 + 1 To InitParameter.NumberGroup
-                If mdbl分担率指令値(intJg(intCnt)) = dblWork Then
-                    mdbl分担率指令値(intJg(intCnt)) = 100
-                End If
-            Next intCnt
-
-        End If
-
+        End With
     End Sub
 End Class
+
+''' <summary>
+''' 減圧中処理
+''' </summary>
+Friend Class clsReducePress
+
+    Private _MvOut(InitParameter.NumberGroup - 1) As Short
+    ''' <summary>
+    ''' 1秒ごとの減圧量(%)
+    ''' </summary>
+    Private ReduceDev(InitParameter.NumberGroup - 1) As Short
+    ''' <summary>
+    ''' 減圧グループ
+    ''' </summary>
+    Private LstRd As List(Of Short)
+
+    Private timer As Timer
+    ''' <summary>
+    ''' 減圧処理　１秒毎
+    ''' </summary>
+    Public Event ReduceOn()
+
+    ''' <summary>
+    ''' 操作出力
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MvOut As Short()
+        Get
+            Return _MvOut
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 減圧開始
+    ''' </summary>
+    Public Sub Start()
+        '減圧グループ
+        LstRd = SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+
+        For Each GpNo As Short In LstRd
+            '減圧開始時の操作出力
+            _MvOut(GpNo - 1) = PlcIf.GroupMV(GpNo - 1)
+            '１秒毎の減圧量を算出
+            ReduceDev(GpNo - 1) = _MvOut(GpNo - 1) / ControlParameter.ReduceTime
+        Next
+
+        timer = New Timer()
+        AddHandler timer.Tick, New EventHandler(AddressOf Reduce)
+        timer.Interval = 1000   '1秒ごとの処理
+        timer.Enabled = True ' timer.Start()と同じ
+
+    End Sub
+    ''' <summary>
+    ''' 減圧処理
+    ''' </summary>
+    Private Sub Reduce()
+        '操作出力0%まで、減圧
+        For i As Short = 0 To InitParameter.NumberGroup - 1
+            _MvOut(i) -= ReduceDev(i)
+            If _MvOut(i) < 0 Then _MvOut(i) = 0
+        Next
+        Dim ReduceOn As Boolean = True
+        Dim MvZero As Short = 0
+        For Each GpNp As Short In LstRd
+            '減圧判断
+            ReduceOn = ReduceOn And (PlcIf.GroupPv(GpNp - 1) < ControlParameter.ReduceJudgePress)
+            MvZero += _MvOut(GpNp - 1)
+        Next
+        '減圧完了
+        If ReduceOn Then
+            PlcIf.LosZeroSts_FLEX = 2
+        End If
+        '減圧処理停止 MVがすべて０で、減圧判断圧力以下
+        If MvZero = 0 And ReduceOn Then
+            timer.Stop()
+        End If
+
+        RaiseEvent ReduceOn() '減圧処理イベント
+    End Sub
+
+
+
+End Class
+
+
+
+
+

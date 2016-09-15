@@ -117,31 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lblUnit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAJcAAAAwCAIAAACT5H94AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnMAABJzAYwiuQcAAAF8SURBVHhe7dcxa8JAGMbxfjO/UlZJhyI4iUpDCLhlEgkk
-        g0OHIAEh1NhRSKFJBxOhlOJgp+JQ0hsCIigau7z38PzW3E3/3L3JXUX6Y0UEdcXdbvdGGoqi6FAxjmPf
-        919JK91u17bto4qDwWC5XH6RJjzPa7VaJyoGQVAUxS+JlySJYRhnK6rH6/X6hQRT49BxnAsVx+OxaZr3
-        JNJoNJpOp1dV7HQ6w+HQImEmk0kYhg0qqnVq9ROJMZ/PF4tF44qz2Uxdwe8kQJ7naZreWFF96XyQAJvN
-        hhW1x4oIWBEBKyJgRQSsiIAVEbAiAlZEwIoIWBEBKyJgRQSsiIAVEbAiAlZEwIoIWBEBKyJgRQSsiIAV
-        EbAiAlZEwIoI/lVRbf4kAVTIGysWRfFNYqiQjSvmef5DwpRl2aDiarWqXwASJsuyqyqqY/tMgqnjeKGi
-        67qPJF6/3z9b0bKsB9JEu90+UdH3ffVrQRrp9XpHFbfbbT09SSv7/f5QkTRWVX90aQAfX6wC1gAAAABJ
-        RU5ErkJggg==
-</value>
-  </data>
-  <data name="lblFieldName.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAJcAAAAwCAIAAACT5H94AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnMAABJzAYwiuQcAAAF8SURBVHhe7dcxa8JAGMbxfjO/UlZJhyI4iUpDCLhlEgkk
-        g0OHIAEh1NhRSKFJBxOhlOJgp+JQ0hsCIigau7z38PzW3E3/3L3JXUX6Y0UEdcXdbvdGGoqi6FAxjmPf
-        919JK91u17bto4qDwWC5XH6RJjzPa7VaJyoGQVAUxS+JlySJYRhnK6rH6/X6hQRT49BxnAsVx+OxaZr3
-        JNJoNJpOp1dV7HQ6w+HQImEmk0kYhg0qqnVq9ROJMZ/PF4tF44qz2Uxdwe8kQJ7naZreWFF96XyQAJvN
-        hhW1x4oIWBEBKyJgRQSsiIAVEbAiAlZEwIoIWBEBKyJgRQSsiIAVEbAiAlZEwIoIWBEBKyJgRQSsiIAV
-        EbAiAlZEwIoI/lVRbf4kAVTIGysWRfFNYqiQjSvmef5DwpRl2aDiarWqXwASJsuyqyqqY/tMgqnjeKGi
-        67qPJF6/3z9b0bKsB9JEu90+UdH3ffVrQRrp9XpHFbfbbT09SSv7/f5QkTRWVX90aQAfX6wC1gAAAABJ
-        RU5ErkJggg==
-</value>
-  </data>
+  <metadata name="tmrBlink.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

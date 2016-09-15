@@ -1,14 +1,8 @@
-﻿'Public Structure Group
-'    Public Pv As Single ''グループ圧PV
-'    Public Sv As Single ''グループ圧SV
-'    Public Mv As Single ''グループ圧MV
-'    Public Flg As Short ''グループ圧制御フラグ
-'End Structure
+﻿
 Public Class clsPlcIf
 
     Private mblnComOk As Boolean            ''通信フラグ
 
-    'Private _group() As Group       'グループ圧力データ
 
     Private _groupPv() As Single 'グループ圧力データ
     Private _groupSv() As Single
@@ -41,39 +35,25 @@ Public Class clsPlcIf
     '    Private _autoDirectionContorolFLG As Boolean ''自動方向制御フラグ
     Private _contorolModeFLG As Boolean ''制御モードフラグ
     Private _excaStatus As Integer     ''掘進ステータス
-
-    Private mint掘進中最大ストローク As Short
+    ''' <summary>
+    ''' 掘進ストローク
+    ''' </summary>
+    Private _MaxExcavingStroke As Integer
 
     Private _gyiroError As Boolean ''ジャイロエラー
 
-    Private _mint元圧フィルタ係数 As Integer
+    'Private _mint元圧フィルタ係数 As Integer
 
-    Private _msngFilterJkPress As Single     ''フィルター後のシールド圧
+    Private _FilterJkPress As Single     ''フィルター後のシールド圧
 
     Private _mintIPAdress As Integer         ''操作権のあるＩＰアドレス（下位）
 
-    'Private _mdbl測量ポイントリング番号 As Double ''測量ポイントリング番号
-    'Private _mdbl測量ポイント総距離 As Double     ''測量ポイント総距離
-    'Private _mdbl鉛直入力補正値 As Double        ''鉛直入力補正値
-    'Private _mdbl水平入力補正値 As Double        ''水平入力補正値
-    'Private _mdblジャッキモーメント上限値 As Double        ''ジャッキモーメント上限値
-    'Private _mdbl最大全開出力時の目標圧力 As Single        ''最大全開出力時の目標圧力
-    'Private _msng偏差角許容値 As Single        ''偏差角許容値
-    ' ''01/09/20 追加
-    'Private _mdbl圧力制御開始推力値 As Double        ''圧力制御開始推力値
-    'Private _mbln圧力制御開始推力値有効フラグ As Boolean        ''圧力制御開始推力値有効フラグ
-    'Private _mbln全押しスタート As Boolean        ''全押しスタート
+    Private _CopyAngle As Integer   'コピー角度
+    Private _CopyStroke As Integer 'コピーストローク
 
-
-    ' ''力点座標
-    'Private _mdblPointX As Double        ''Ｘ座標
-    'Private _mdblPointY As Double        ''Ｙ座標
-    ''操作強、角
-    'Private _mdbl操作強 As Double
-    'Private _mdbl操作角 As Double
 
     'パラメータ　Rレジスタ
-    Private _リング番号 As Integer           ''リング番号
+    Private _RingNo As Integer           ''リング番号
 
     Private _ストローク管理法 As Integer    'ストローク管理法0:MAX 1:右 2:左 3:左右平均
     Private _掘進判定ストローク As Integer
@@ -95,54 +75,73 @@ Public Class clsPlcIf
     'Private _mblnピッチロールIN As Integer
 
 
-    'Private _mintHorJackContPConst As Integer
-    'Private _mintHorJackContIConst As Integer
-    'Private _mintVerJackContPConst As Integer
-    'Private _mintVerJackContIConst As Integer
-    'Private _msngContMode切替作動範囲 As Single
-    'Private _mint全開作動範囲 As Integer
-    'Private _mint全開作動指令値 As Integer
-    'Private _msng圧力許容値 As Single
-    'Private _mbln片押し制限Flag As Boolean
-    'Private _mint最低全開グループ数 As Integer
-    'Private _mbln全開ContFlag As Boolean
-    'Private _mintExca中最大Stroke As Integer
-    'Private _mintExca開始Stroke As Integer
-    'Private _msng片押しR制限 As Single
-
-
     ' ''前回の値を保持するレジスタ(イベントを起こすため）
-    Private _msngPreGpPv() As Single            ''グループ圧PV
-    Private _msngPreGpSv() As Single            ''グループ圧SV
-    Private _msngPreGpMv() As Single            ''グループ圧MV
-    Private _mintPreGpFlg() As Integer          ''グループ圧制御フラグ
-    Private _mintPreRingNo As Integer           ''リング番号
-    Private _msngPreJyairo As Single           ''ジャイロ方位角
-    Private _msngPrePitching As Single         ''ピッチング
-    Private _mintPreRealStroke As Integer       ''掘進実ストローク
-    Private _mintPreExcaStatus As Integer     ''掘進ステータス
-    'Private _mdblPreSurveyPointRingNo As Double ''測量ポイントリング番号
-    'Private _mdblPreSurveyPointDistance As Double     ''測量ポイント総距離
-    'Private _mdblPreVerCorrectionValue As Double        ''鉛直入力補正値
-    'Private _mdblPreHorCorrectionValue As Double        ''水平入力補正値
+    Private _PreGpPv() As Single            ''グループ圧PV
+    Private _PreGpSv() As Single            ''グループ圧SV
+    Private _PreGpMv() As Single            ''グループ圧MV
+    Private _PreGpFlg() As Integer          ''グループ圧制御フラグ
+    Private _PreRingNo As Integer           ''リング番号
+    Private _PreJyairo As Single           ''ジャイロ方位角
+    Private _PrePitching As Single         ''ピッチング
+    Private PreRealStroke As Integer       ''掘進実ストローク
+    Private PreExcaStatus As Integer = -1     ''掘進ステータス
     Private _mintPreIPAdress As Integer         ''操作権のあるＩＰアドレス（下位）
     Private _mblnPreContModeFlag As Boolean ''制御モードフラグ
     Private _mvarPressWrData() As Object    ''圧力シーケンサ書き込み用
     Private _mblnPre自動方向ContFlag As Boolean ''自動方向制御フラグ
 
-    'Private _mdblPrePointX As Double        ''ポイント座標Ｘ
-    'Private _mdblPrePointY As Double        ''ポイント座標Ｙ
+
+
+    'ロスゼロデータ
+    ''' <summary>
+    ''' 組立ピース番号
+    ''' </summary>
+    Private _AssemblyPieceNo As Short = 1
+    ''' <summary>
+    ''' 同時施工可
+    ''' </summary>
+    Private _LosZeroEnable As Boolean
+
+    ''' <summary>
+    ''' 同時施工ステータス　from FLEX
+    ''' </summary>
+    Private _LosZeroSts_FLEX As Short
+
+
+
+
+
 
 
 
     Private WithEvents com_ReferencesEasyIF As ACTMULTILib.ActEasyIF
 
-    Public Event PLCRead(ByVal sender As Object, ByVale As EventArgs) 'PLC読込イベント
+    Public Event PLCRead() 'PLC読込イベント
     Public Event PLCErrOccur(ByVal sender As Object, ByVale As EventArgs, ByVal ErrMsg As String) 'PLC読込イベント
+    ''' <summary>
+    ''' 掘進ステータスの変化時
+    ''' </summary>
+    ''' <param name="PreStatus">変化前の値</param>
+    ''' <param name="NowStatus">変化後の値</param>
+    Public Event ExcavationStatusChange(PreStatus As Integer, NowStatus As Integer)
 
-    Private AnalogTag As New clsTag("アナログtag", "D")
-    Public ParameterTag As New clsTag("アナログtag", "R")
-    Private DigtalTag As New clsTag("デジタルtag", "M")
+    ''' <summary>
+    ''' 基準値が変化　掘進ステータス、掘進ストローク
+    ''' </summary>
+    Public Event LineDistanceChage()
+
+    ''' <summary>
+    ''' 同時施工ステータス変化
+    ''' </summary>
+    ''' <param name="PreSts">変化前のステータス</param>
+    ''' <param name="NowSts">変化後のステータス</param>
+    ''' <param name="FromDev">True:マシン　False：FLEX</param>
+    Public Event LosZeroStsChange(PreSts As Short, NowSts As Short, FromDev As Boolean)
+
+
+    Private AnalogTag As New clsTag("FLEXアナログtag", "D")
+    Public ParameterTag As New clsTag("FLEXアナログtag", "R")
+    Private DigtalTag As New clsTag("FLEXデジタルtag", "M")
     Private sharrDeviceValue() As Short         'デバイス値
 
 
@@ -223,6 +222,10 @@ Public Class clsPlcIf
             Return _nakaoreTB
         End Get
     End Property
+    ''' <summary>
+    ''' ''シールド元圧
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property JkPress As Single
         Get
             Return _jkPress
@@ -279,13 +282,28 @@ Public Class clsPlcIf
         End Get
     End Property
 
+    Public ReadOnly Property CopyAngle As Integer
+        Get
+            Return _CopyAngle
+        End Get
+    End Property
+
+    Public ReadOnly Property CopyStroke As Integer
+        Get
+            Return _CopyStroke
+        End Get
+    End Property
+
     Public ReadOnly Property JackStatus() As Short()
         Get
             Return _JackStatus
 
         End Get
     End Property
-
+    ''' <summary>
+    ''' FLEX姿勢制御自動
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property FlexControlOn As Boolean
         Get
             Return _flexControlOn
@@ -301,19 +319,33 @@ Public Class clsPlcIf
             Return _gyiroError
         End Get
     End Property
-
-    Public ReadOnly Property 掘進中最大ストローク As Short
+    ''' <summary>
+    ''' 掘進ストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MaxExcavingStroke As Short
         Get
-            Return mint掘進中最大ストローク
+            Return _MaxExcavingStroke
+        End Get
+    End Property
+    ''' <summary>
+    ''' フィルタ後のジャッキ元圧
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property FilterJkPress As Single
+        Get
+            Return _FilterJkPress
         End Get
     End Property
 
-    Public Property リング番号 As Integer
+
+
+    Public Property RingNo As Integer
         Get
-            Return _リング番号
+            Return _RingNo
         End Get
         Set(value As Integer)
-            _リング番号 = value
+            _RingNo = value
             Call ParameterWrite(value)
         End Set
     End Property
@@ -324,6 +356,8 @@ Public Class clsPlcIf
         End Get
         Set(value As Integer)
             _ストローク管理法 = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
 
@@ -333,6 +367,8 @@ Public Class clsPlcIf
         End Get
         Set(value As Integer)
             _掘進判定ストローク = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
 
@@ -342,6 +378,8 @@ Public Class clsPlcIf
         End Get
         Set(value As Integer)
             _終了判定ストローク = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
     Public Property 終了判定引きストローク As Integer
@@ -350,6 +388,8 @@ Public Class clsPlcIf
         End Get
         Set(value As Integer)
             _終了判定引きストローク = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
 
@@ -359,6 +399,8 @@ Public Class clsPlcIf
         End Get
         Set(value As Integer)
             _中断判定速度 = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
 
@@ -368,24 +410,30 @@ Public Class clsPlcIf
         End Get
         Set(value As Integer)
             _終了判定時間 = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
 
-    Public Property 減圧弁制御p定数 As Integer
+    Public Property 減圧弁制御P定数 As Integer
         Get
             Return _減圧弁制御P定数
         End Get
         Set(value As Integer)
             _減圧弁制御P定数 = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
 
-    Public Property 減圧弁制御i定数 As Integer
+    Public Property 減圧弁制御I定数 As Integer
         Get
             Return _減圧弁制御I定数
         End Get
         Set(value As Integer)
             _減圧弁制御I定数 = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
 
@@ -395,6 +443,8 @@ Public Class clsPlcIf
         End Get
         Set(value As Integer)
             _減圧弁制御D定数 = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
 
@@ -404,6 +454,8 @@ Public Class clsPlcIf
         End Get
         Set(value As Integer)
             _感度調整減圧弁制御Ｐ定数 = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
 
@@ -413,6 +465,8 @@ Public Class clsPlcIf
         End Get
         Set(value As Integer)
             _感度調整減圧弁制御Ｉ定数 = value
+            Call ParameterWrite(value)
+
         End Set
     End Property
 
@@ -434,13 +488,61 @@ Public Class clsPlcIf
         End Set
     End Property
 
+    ''' <summary>
+    ''' 組立ピース番号
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property AssemblyPieceNo As Short
+        Get
+            Return _AssemblyPieceNo
+        End Get
+        Set(value As Short)
+            _AssemblyPieceNo = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 同時施工モード　マシンからの信号
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property LosZeroMode() As Boolean
+    ''' <summary>
+    ''' 同時施工可　FLEXより
+    '''     ''' </summary>
+    ''' <returns></returns>
+    Public Property LosZeroEnable() As Boolean
+        Get
+            Return _LosZeroEnable
+        End Get
+        Set(value As Boolean)
+            _LosZeroEnable = value
+            DigtalPlcWrite("同時施工可", value)
+        End Set
+    End Property
+    ''' <summary>
+    ''' 同時施工ステータス　from マシン
+    ''' </summary>
+    Public ReadOnly Property LosZeroSts_M As Short
+    ''' <summary>
+    ''' 同時施工ステータス　from FLEX
+    ''' 1:減圧中 2:減圧完了 3:組立完了確認
+    ''' 4:押し付け完了確認
+    ''' </summary>
+    Public Property LosZeroSts_FLEX As Short
+        Get
+            Return _LosZeroSts_FLEX
+        End Get
+        Set(value As Short)
+            '_LosZeroSts_FLEX = value
+            AnalogPlcWrite("同時施工ステータス_FLEX", value)
+        End Set
+    End Property
 
     Public Sub New()
         '* ACTコントロール用インスタンスの生成*************************************/
         com_ReferencesEasyIF = New ACTMULTILib.ActEasyIF
         com_ReferencesEasyIF.ActLogicalStationNumber = InitParameter.ActLogicalStationNumber   'PLC論理局
 
-        'ReDim _group(InitParameter.NumberGroup - 1) 'グループ圧力
         ReDim _groupPv(InitParameter.NumberGroup - 1) 'グループ圧力Pv
         ReDim _groupSv(InitParameter.NumberGroup - 1) 'グループ圧力Sv
         ReDim _groupMv(InitParameter.NumberGroup - 1) 'グループ圧力Mv
@@ -467,9 +569,9 @@ Public Class clsPlcIf
         timer.Enabled = True ' timer.Start()と同じ
 
     End Sub
- 
+
     Public Sub PLC_Read(sender As Object, e As EventArgs)
-        Console.WriteLine(DateTime.Now)
+        'Console.WriteLine(DateTime.Now)
 
         'Call PLC_Open() 'オープン処理
 
@@ -482,8 +584,8 @@ Public Class clsPlcIf
             'デバイス値用の領域を割り当て
             ReDim sharrDeviceValue(AnalogTag.DeviceSize)
             'ReadDeviceBlock2関数処理の実行 アナログの読込
-            iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(AnalogTag.StartAddress, _
-                                                        AnalogTag.DeviceSize, _
+            iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(AnalogTag.StartAddress,
+                                                        AnalogTag.DeviceSize + 1,
                                                         sharrDeviceValue(0))
             If iReturnCode = 0 Then '通信OK
                 _gyro = GetAnalogData("ジャイロ方位", AnalogTag)
@@ -494,6 +596,9 @@ Public Class clsPlcIf
                 _mashineRolling = GetAnalogData("マシンローリング", AnalogTag)
 
                 _jkPress = GetAnalogData("ジャッキ圧力", AnalogTag)
+
+                _FilterJkPress = _jkPress + ControlParameter.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
+
                 _nakaoreLR = GetAnalogData("中折左右角", AnalogTag)
                 _nakaoreTB = GetAnalogData("中折上下角", AnalogTag)
                 _leftStroke = GetAnalogData("左ストローク", AnalogTag)
@@ -506,7 +611,27 @@ Public Class clsPlcIf
                 _botomSpeed = GetAnalogData("下ジャッキ速度", AnalogTag)
                 _realStroke = GetAnalogData("掘進ストローク", AnalogTag)
                 _excaStatus = GetAnalogData("掘進ステータス", AnalogTag)
-                'mint掘進中最大ストローク = GetAnalogData("掘進中最大ストローク", AnalogTag)
+                _CopyAngle = GetAnalogData("コピー角度", AnalogTag)
+                _CopyStroke = GetAnalogData("コピーストローク", AnalogTag)
+
+                '同時施工ステータス読込
+                Dim p As Short
+                p = _LosZeroSts_FLEX
+                _LosZeroSts_FLEX = GetAnalogData("同時施工ステータス_FLEX", AnalogTag)
+                '同時施工モードでステータス変化時
+                If _LosZeroMode And p <> _LosZeroSts_FLEX Then
+                    RaiseEvent LosZeroStsChange(p, _LosZeroSts_FLEX, False)
+                End If
+
+                p = _LosZeroSts_M
+                _LosZeroSts_M = GetAnalogData("同時施工ステータス_Machine", AnalogTag)
+                '同時施工モードでステータス変化時
+                If _LosZeroMode And p <> _LosZeroSts_M Then
+                    RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
+                End If
+
+
+
 
 
                 Dim i As Integer
@@ -516,6 +641,14 @@ Public Class clsPlcIf
                     _groupSv(i) = GetAnalogData("グループ" & (i + 1) & "圧力SV", AnalogTag)
                     _groupFlg(i) = GetAnalogData("グループ" & (i + 1) & "制御フラグ", AnalogTag)
                 Next
+
+                For i = 0 To InitParameter.NumberJack - 1
+                    _JackStatus(i) = GetAnalogData("ジャッキステータス" & (i + 1), AnalogTag)
+                    _jackSelect(i) = (_JackStatus(i) And 1)
+                Next
+
+
+
                 frmMain.tmrDataDsp.Enabled = True
             Else    'エラー発生
                 RaiseEvent PLCErrOccur(sender, e, "")
@@ -526,13 +659,13 @@ Public Class clsPlcIf
             'デバイス値用の領域を割り当て
             ReDim sharrDeviceValue(ParameterTag.DeviceSize)
             'ReadDeviceBlock2関数処理の実行 パラメータの読込
-            iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(ParameterTag.StartAddress, _
-                                                        ParameterTag.DeviceSize, _
+            iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(ParameterTag.StartAddress,
+                                                        ParameterTag.DeviceSize + 1,
                                                         sharrDeviceValue(0))
             If iReturnCode = 0 Then '通信OK
 
 
-                _リング番号 = GetAnalogData("リング番号", ParameterTag)
+                _RingNo = GetAnalogData("リング番号", ParameterTag)
 
                 _ストローク管理法 = GetAnalogData("ストローク管理法", ParameterTag)   'ストローク管理方法
                 _掘進判定ストローク = GetAnalogData("掘進判定ストローク", ParameterTag)
@@ -540,16 +673,18 @@ Public Class clsPlcIf
                 _終了判定引きストローク = GetAnalogData("終了判定引きストローク", ParameterTag)
                 _終了判定時間 = GetAnalogData("終了判定時間", ParameterTag)
 
-                _減圧弁制御P定数 = GetAnalogData("減圧弁制御Ｐ定数", ParameterTag)
-                _減圧弁制御I定数 = GetAnalogData("減圧弁制御Ｉ定数", ParameterTag)
-                _減圧弁制御D定数 = GetAnalogData("減圧弁制御Ｄ定数", ParameterTag)
+                _減圧弁制御P定数 = GetAnalogData("減圧弁制御P定数", ParameterTag)
+                _減圧弁制御I定数 = GetAnalogData("減圧弁制御I定数", ParameterTag)
+                _減圧弁制御D定数 = GetAnalogData("減圧弁制御D定数", ParameterTag)
                 _中断判定速度 = GetAnalogData("中断判定速度", ParameterTag)
 
                 ''偏差過大の時の設定値　
-                _感度調整減圧弁制御Ｐ定数 = GetAnalogData("感度調整減圧弁制御Ｐ定数", ParameterTag)
-                _感度調整減圧弁制御Ｉ定数 = GetAnalogData("感度調整減圧弁制御Ｉ定数", ParameterTag)
+                _感度調整減圧弁制御Ｐ定数 = GetAnalogData("感度調整減圧弁制御P定数", ParameterTag)
+                _感度調整減圧弁制御Ｉ定数 = GetAnalogData("感度調整減圧弁制御I定数", ParameterTag)
                 '_GaingSetReducingValveContDConst = GetAnalogData("", ParameterTag)
                 _感度調整設定圧力偏差 = GetAnalogData("感度調整設定圧力偏差", ParameterTag)
+                'TODO:同時施工で考慮
+                _MaxExcavingStroke = GetAnalogData("掘進中最大ストローク", ParameterTag)
 
 
             Else    'エラー発生
@@ -561,33 +696,28 @@ Public Class clsPlcIf
             'デバイス値用の領域を割り当て
             ReDim sharrDeviceValue(DigtalTag.DeviceSize \ 16 + 1)
             'デジタルの読込
-            iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(DigtalTag.StartAddress, _
-                                                        DigtalTag.DeviceSize \ 16 + 1, _
+            iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(DigtalTag.StartAddress,
+                                                        DigtalTag.DeviceSize \ 16 + 1,
                                                     sharrDeviceValue(0))
             If iReturnCode = 0 Then '通信成功
                 Dim bit() As Boolean = WordToBit(sharrDeviceValue)
 
-                'ジャッキ選択の取込
-                For i = 0 To _jackSelect.Length - 1
-                    _jackSelect(i) = bit(DigtalTag.TagData("ジャッキ選択" & (i + 1)).OffsetAddress)
-                Next
-
-                'TODO:待機中、同時施工時の表示も追加
-                'ジャッキステータス表示
-                For i = 0 To _jackSelect.Length - 1
-                    If _jackSelect(i) Then
-                        _JackStatus(i) = 1
-                    Else
-                        _JackStatus(i) = 0
-                    End If
-                Next
-
+                ''ジャッキ選択の取込
+                'For i = 0 To _jackSelect.Length - 1
+                '    _jackSelect(i) = bit(DigtalTag.TagData("ジャッキ選択" & (i + 1)).OffsetAddress)
+                'Next
 
 
 
                 'FLEXON（圧力制御中)
                 _flexControlOn = bit(DigtalTag.TagData("圧力制御").OffsetAddress)
                 _gyiroError = bit(DigtalTag.TagData("ジャイロ異常").OffsetAddress)
+
+                '同時施工モード
+
+                _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
+                _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
+
             Else    'エラー発生
                 RaiseEvent PLCErrOccur(sender, e, "")
             End If
@@ -596,11 +726,57 @@ Public Class clsPlcIf
             MessageBox.Show(exException.Message, "PLC_READ", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End Try
+        '掘進スロトーク、ステータスの変化　基準方向の変更
+        If _realStroke <> PreRealStroke Or _excaStatus <> PreExcaStatus _
+            Or _gyro <> _PreJyairo Or _PrePitching <> _gyroPitching Then
+            RaiseEvent LineDistanceChage()
+        End If
+        '掘進ステータスの変化
+        If _excaStatus <> PreExcaStatus Then
+            RaiseEvent ExcavationStatusChange(PreExcaStatus, _excaStatus)
+        End If
 
-        RaiseEvent PLCRead(Me, New EventArgs)
+
+
+
+        '掘進ストローク保持
+        PreRealStroke = _realStroke
+        '掘進ステータスの保持
+        PreExcaStatus = _excaStatus
+
+        _PreJyairo = _gyro
+        _PrePitching = _gyroPitching
+
+        'PLC読込イベント
+        RaiseEvent PLCRead()
 
         ' ……
     End Sub
+    ''' <summary>
+    ''' 同時施工用の設定データをPLCへ書込
+    ''' </summary>
+    ''' <param name="TagName">書込種類　引戻しジャッキ等</param>
+    ''' <param name="WrData">書込データ</param>
+    Public Sub LosZeroDataWrite(ByVal TagName As String, ByVal WrData As List(Of Short))
+        Dim PlcAdress As String = DigtalTag.TagData(TagName & "1").Address  'PLC書込アドレス
+        Dim Bit(InitParameter.NumberJack - 1) As Boolean
+        If Not IsNothing(WrData) Then
+            For Each i As Short In WrData
+                Bit(i - 1) = True
+            Next
+        End If
+        Dim PlcWrData() As Integer = BitToWord(Bit)
+        Dim iReturnCode As Long = com_ReferencesEasyIF.WriteDeviceBlock(PlcAdress, PlcWrData.Length, PlcWrData(0))
+        'todo:通信エラー時の処理
+    End Sub
+
+
+
+
+
+
+
+
 
     Private Function GetAnalogData(ByVal FieldName As String, Tag As clsTag) As Single
         'アナログデータのスケール変換
@@ -624,6 +800,25 @@ Public Class clsPlcIf
 
         End With
     End Function
+    ''' <summary>
+    ''' ビットデータをPLC書き込み用にワードデータに変換
+    ''' </summary>
+    ''' <param name="sBit"></param>
+    ''' <returns></returns>
+    Private Function BitToWord(ByVal sBit() As Boolean) As Integer()
+        Dim sData(Math.Ceiling(sBit.Length / 16)) As Integer
+        Dim i, j As Short
+        For i = 0 To sData.Length - 1
+            Dim S As String = vbNullString
+            For j = 0 To 15
+                If i * 16 + j > sBit.Length - 1 Then Exit For
+                S = IIf(sBit(i * 16 + j), "1", "0") & S
+            Next
+            sData(i) = Convert.ToInt32(S, 2)
+        Next
+        Return sData
+    End Function
+
 
 
     Private Function WordToBit(sData() As Short) As Boolean()
@@ -636,14 +831,12 @@ Public Class clsPlcIf
             Next
         Next
         Return Bit
-
-
-
-
-
     End Function
 
-
+    ''' <summary>
+    ''' パラメータをPLCに書込
+    ''' </summary>
+    ''' <param name="value"></param>
     Private Sub ParameterWrite(value As Double)
         '読み出し元の書込項目名を取得
         Dim TagName As String = New StackFrame(1).GetMethod.Name.Substring(4)
@@ -653,19 +846,25 @@ Public Class clsPlcIf
             'PLC書込
             Call PLC_Write(.Address, wD)
         End With
-
-
-
-
     End Sub
-
-
-
-
-
-
-
-
+    ''' <summary>
+    ''' デジタル（ビット）データのPLC書込
+    ''' </summary>
+    ''' <param name="TagName">TAG名</param>
+    ''' <param name="Value">書込値</param>
+    Public Sub DigtalPlcWrite(TagName As String, ByVal Value As Boolean)
+        Dim PlcAdress As String = DigtalTag.TagData(TagName).Address
+        PLC_Write(PlcAdress, Value)
+    End Sub
+    ''' <summary>
+    ''' アナログデータ　PLC書込
+    ''' </summary>
+    ''' <param name="TagName"></param>
+    ''' <param name="Value"></param>
+    Public Sub AnalogPlcWrite(TagName As String, ByVal Value As Short)
+        Dim PlcAdress As String = AnalogTag.TagData(TagName).Address
+        PLC_Write(PlcAdress, Value)
+    End Sub
 
 
     ''' <summary>
@@ -685,6 +884,42 @@ Public Class clsPlcIf
             Exit Sub
         End Try
     End Sub
+
+    Public Sub PutSvPress(ByVal sngPres As Single(), ByRef intPresFLg As Short())
+        ' @(f)
+        '
+        ' 機能      :グループ圧設定値と制御フラグを一度に出力
+        '
+        '
+        ' 返り値    :
+        ' 　　　    :
+        '
+        ' 機能説明  :
+        '
+        ' 備考      :
+
+        Dim intPressWrData(InitParameter.NumberGroup - 1) As Short
+        Dim intPressWrFlg(InitParameter.NumberGroup - 1) As Short
+        For i As Short = 0 To InitParameter.NumberGroup - 1
+            If ControlParameter.最大全開出力時の目標圧力 <> 0 Then
+                '' PLCに0-4000でSVを出力
+                intPressWrData(i) = Int(sngPres(i) / ControlParameter.最大全開出力時の目標圧力 * 4000)
+            End If
+        Next i
+
+        Dim iReturnCode As Long = com_ReferencesEasyIF.WriteDeviceBlock2(AnalogTag.TagData("グループ1圧力SV").Address,
+                                                        InitParameter.NumberGroup,
+                                                        intPressWrData(0))
+        iReturnCode = com_ReferencesEasyIF.WriteDeviceBlock2(AnalogTag.TagData("グループ1制御フラグ").Address,
+                                                        InitParameter.NumberGroup,
+                                                        intPresFLg(0))
+        _groupSv = sngPres
+        _groupFlg = intPresFLg
+
+    End Sub
+
+
+
 
 
 

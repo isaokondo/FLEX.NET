@@ -28,6 +28,10 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -78,11 +82,14 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic.PowerPacks, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -108,9 +115,8 @@
     <Compile Include="clsControlParameter.vb" />
     <Compile Include="clsMachinSpec.vb" />
     <Compile Include="clsThrustDiv.vb" />
-    <Compile Include="clsSegmentMakeData.vb" />
+    <Compile Include="clsSegmentAssembly.vb" />
     <Compile Include="clsJkManualOut.vb" />
-    <Compile Include="clsEstmateValeu.vb" />
     <Compile Include="clsDataSave.vb" />
     <Compile Include="clsCulJackMv.vb" />
     <Compile Include="clsCulcDistance.vb" />
@@ -120,10 +126,53 @@
     <Compile Include="clsDataBase.vb" />
     <Compile Include="clsPlanData.vb" />
     <Compile Include="clsPLC.vb" />
+    <Compile Include="CommonMdl.vb" />
+    <Compile Include="frmNextPieceConfirm.Designer.vb">
+      <DependentUpon>frmNextPieceConfirm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmNextPieceConfirm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmManagmentMethd.Designer.vb">
+      <DependentUpon>frmManagmentMethd.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmManagmentMethd.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLosZeroSetting.Designer.vb">
+      <DependentUpon>frmLosZeroSetting.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmLosZeroSetting.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmCorrectionValueManagement.Designer.vb">
       <DependentUpon>frmCorrectionValueManagement.vb</DependentUpon>
     </Compile>
     <Compile Include="frmCorrectionValueManagement.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOneWayTunnel.Designer.vb">
+      <DependentUpon>frmOneWayTunnel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmOneWayTunnel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOtherSetting.Designer.vb">
+      <DependentUpon>frmOtherSetting.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmOtherSetting.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPressBlock.Designer.vb">
+      <DependentUpon>frmPressBlock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPressBlock.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPressParameterSet.Designer.vb">
+      <DependentUpon>frmPressParameterSet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPressParameterSet.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmRingNoChange.Designer.vb">
@@ -142,6 +191,24 @@
       <DependentUpon>frmRinguUpdateSetting.vb</DependentUpon>
     </Compile>
     <Compile Include="frmRinguUpdateSetting.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmScaleSet.Designer.vb">
+      <DependentUpon>frmScaleSet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmScaleSet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettingBase.Designer.vb">
+      <DependentUpon>frmSettingBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSettingBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTuningMonitor.Designer.vb">
+      <DependentUpon>frmTuningMonitor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTuningMonitor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="mdlFLEX.vb" />
@@ -164,12 +231,24 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="frmOneWayTunnelLimit.Designer.vb">
+      <DependentUpon>frmOneWayTunnelLimit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmOneWayTunnelLimit.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Settings.vb" />
     <Compile Include="SplashScreen.Designer.vb">
       <DependentUpon>SplashScreen.vb</DependentUpon>
     </Compile>
     <Compile Include="SplashScreen.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ucnChart.Designer.vb">
+      <DependentUpon>ucnChart.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucnChart.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ucnDspBit.Designer.vb">
       <DependentUpon>ucnDspBit.vb</DependentUpon>
@@ -189,10 +268,22 @@
     <Compile Include="ucnDspDataMin.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ucnDspDevImg.Designer.vb">
+      <DependentUpon>ucnDspDevImg.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucnDspDevImg.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ucnDspGpPres.Designer.vb">
       <DependentUpon>ucnDspGpPres.vb</DependentUpon>
     </Compile>
     <Compile Include="ucnDspGpPres.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucnGpPvBarGraph.Designer.vb">
+      <DependentUpon>ucnGpPvBarGraph.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucnGpPvBarGraph.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ucnJackDsp.Designer.vb">
@@ -207,16 +298,64 @@
     <Compile Include="ucnNumEdit.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ucnRdBtn.Designer.vb">
+      <DependentUpon>ucnRdBtn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucnRdBtn.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ucnSpredCompnent.Designer.vb">
       <DependentUpon>ucnSpredCompnent.vb</DependentUpon>
     </Compile>
     <Compile Include="ucnSpredCompnent.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ucnTuningComp.Designer.vb">
+      <DependentUpon>ucnTuningComp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucnTuningComp.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucnChart2.Designer.vb">
+      <DependentUpon>ucnChart2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucnChart2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="frmAssemblyProcessEdit.Designer.vb">
+      <DependentUpon>frmAssemblyProcessEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAssemblyProcessEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmNextPieceConfirm.resx">
+      <DependentUpon>frmNextPieceConfirm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmManagmentMethd.resx">
+      <DependentUpon>frmManagmentMethd.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLosZeroSetting.resx">
+      <DependentUpon>frmLosZeroSetting.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCorrectionValueManagement.resx">
       <DependentUpon>frmCorrectionValueManagement.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOneWayTunnel.resx">
+      <DependentUpon>frmOneWayTunnel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOneWayTunnelLimit.resx">
+      <DependentUpon>frmOneWayTunnelLimit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOtherSetting.resx">
+      <DependentUpon>frmOtherSetting.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPressBlock.resx">
+      <DependentUpon>frmPressBlock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPressParameterSet.resx">
+      <DependentUpon>frmPressParameterSet.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmRingNoChange.is-IS.resx">
       <DependentUpon>frmRingNoChange.vb</DependentUpon>
@@ -230,6 +369,15 @@
     <EmbeddedResource Include="frmRinguUpdateSetting.resx">
       <DependentUpon>frmRinguUpdateSetting.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmScaleSet.resx">
+      <DependentUpon>frmScaleSet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettingBase.resx">
+      <DependentUpon>frmSettingBase.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTuningMonitor.resx">
+      <DependentUpon>frmTuningMonitor.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -239,6 +387,9 @@
     <EmbeddedResource Include="SplashScreen.resx">
       <DependentUpon>SplashScreen.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucnChart.resx">
+      <DependentUpon>ucnChart.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucnDspBit.resx">
       <DependentUpon>ucnDspBit.vb</DependentUpon>
@@ -252,14 +403,29 @@
     <EmbeddedResource Include="ucnDspGpPres.resx">
       <DependentUpon>ucnDspGpPres.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ucnGpPvBarGraph.resx">
+      <DependentUpon>ucnGpPvBarGraph.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ucnJackDsp.resx">
       <DependentUpon>ucnJackDsp.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucnNumEdit.resx">
       <DependentUpon>ucnNumEdit.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ucnRdBtn.resx">
+      <DependentUpon>ucnRdBtn.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ucnSpredCompnent.resx">
       <DependentUpon>ucnSpredCompnent.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucnTuningComp.resx">
+      <DependentUpon>ucnTuningComp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucnChart2.resx">
+      <DependentUpon>ucnChart2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAssemblyProcessEdit.resx">
+      <DependentUpon>frmAssemblyProcessEdit.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +471,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\point.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

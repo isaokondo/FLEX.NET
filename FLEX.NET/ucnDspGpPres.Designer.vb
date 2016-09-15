@@ -33,7 +33,7 @@ Partial Class ucnDspGpPres
         Me.lblData.Location = New System.Drawing.Point(0, 0)
         Me.lblData.Margin = New System.Windows.Forms.Padding(0)
         Me.lblData.Name = "lblData"
-        Me.lblData.Size = New System.Drawing.Size(45, 20)
+        Me.lblData.Size = New System.Drawing.Size(38, 16)
         Me.lblData.TabIndex = 8
         Me.lblData.Text = "99.9"
         Me.lblData.TextAlign = System.Drawing.ContentAlignment.MiddleRight

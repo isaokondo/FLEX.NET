@@ -47,6 +47,10 @@ End Class
 Public Class clsHorPanData
     Inherits clsPlanData
 
+    Public Sub New()
+        DataRead()
+    End Sub
+
     '平面線形データ
     Public Property 発進X座標 As Double
     Public Property 発進Y座標 As Double
@@ -106,9 +110,9 @@ Public Class clsHorPanData
 
 
 
-   
 
-    Public Sub DataRead(SheetID As Integer)
+
+    Public Sub DataRead()
         '計画路線の読込
         'Dim db As New AccessMdb
         'Dim tb As DataTable
@@ -116,7 +120,7 @@ Public Class clsHorPanData
         'db.Connect()
         Dim db As New clsDataBase
 
-        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql("SELECT * FROM 平面起点 WHERE `シートID` = " & SheetID)
+        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql("SELECT * FROM 平面起点 WHERE `シートID` = " & InitParameter.SheetID)
         tb.Read()
         With tb
             _座標系 = .Item("座標系")
@@ -135,7 +139,7 @@ Public Class clsHorPanData
         'db.Disconnect()
 
         'ゾーン総数を求める
-        tb = db.ExecuteSql("SELECT MAX(`ゾーン№`) FROM 平面線形 WHERE `シートID` = " & SheetID)
+        tb = db.ExecuteSql("SELECT MAX(`ゾーン№`) FROM 平面線形 WHERE `シートID` = " & InitParameter.SheetID)
         tb.Read()
         ゾーン総数 = tb.Item(0)
         '        ReDim _horData(_ゾーン総数 + 1)
@@ -143,7 +147,7 @@ Public Class clsHorPanData
 
         Call RedimData()
 
-        tb = db.ExecuteSql("SELECT * FROM 平面線形 WHERE `シートID` = " & SheetID & " ORDER BY `ゾーン№`;")
+        tb = db.ExecuteSql("SELECT * FROM 平面線形 WHERE `シートID` = " & InitParameter.SheetID & " ORDER BY `ゾーン№`;")
         ' Dim i As Integer
 
         'For i = 0 To tb.Rows.Count - 1
@@ -193,12 +197,12 @@ Public Class clsHorPanData
         'db.Disconnect()
 
         'ゾーン総数を求める
-        tb = db.ExecuteSql("SELECT MAX(`シフト№`) FROM 平面シフト WHERE `シートID` = " & SheetID)
+        tb = db.ExecuteSql("SELECT MAX(`シフト№`) FROM 平面シフト WHERE `シートID` = " & InitParameter.SheetID)
         tb.Read()
         シフトゾーン総数 = tb.Item(0)
         'db.Disconnect()
 
-        tb = db.ExecuteSql("SELECT * FROM 平面シフト WHERE `シートID` = " & SheetID & " ORDER BY `シフト№`;")
+        tb = db.ExecuteSql("SELECT * FROM 平面シフト WHERE `シートID` = " & InitParameter.SheetID & " ORDER BY `シフト№`;")
         'For i = 0 To tb.Rows.Count - 1
 
         With tb
@@ -220,6 +224,10 @@ End Class
 Public Class clsVerPlanData
 
     Inherits clsPlanData
+
+    Public Sub New()
+        DataRead()
+    End Sub
 
     Public Property 発進Z座標 As Double           '発進Z座標
     Public Property 発進勾配 As Double          '発進勾配
@@ -254,14 +262,14 @@ Public Class clsVerPlanData
     End Sub
 
 
-    Public Sub DataRead(SheetID As Integer)
+    Public Sub DataRead()
 
         '計画路線の読込
         'Dim db As New AccessMdb
         'Dim tb As DataTable
         'db.Connect()
         Dim db As New clsDataBase
-        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql("SELECT * FROM 縦断発進 WHERE `シートID` = " & SheetID)
+        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql("SELECT * FROM 縦断発進 WHERE `シートID` = " & InitParameter.SheetID)
         With tb
             .Read()
             発進Z座標 = .Item("発進Z座標")
@@ -272,13 +280,13 @@ Public Class clsVerPlanData
         '        db.Disconnect()
 
         'ゾーン総数を求める
-        tb = db.ExecuteSql("SELECT MAX(`ゾーン№`) FROM 縦断線形 WHERE `シートID` = " & SheetID)
+        tb = db.ExecuteSql("SELECT MAX(`ゾーン№`) FROM 縦断線形 WHERE `シートID` = " & InitParameter.SheetID)
         tb.Read()
         ゾーン総数 = CInt(tb.Item(0))
         'db.Disconnect()
         Call RedimData()
 
-        tb = db.ExecuteSql("SELECT * FROM 縦断線形 WHERE `シートID` = " & SheetID & " ORDER BY `ゾーン№`;")
+        tb = db.ExecuteSql("SELECT * FROM 縦断線形 WHERE `シートID` = " & InitParameter.SheetID & " ORDER BY `ゾーン№`;")
         '        Dim i As Integer
 
         '        For i = 0 To tb.Rows.Count - 1
@@ -314,12 +322,12 @@ Public Class clsVerPlanData
         '        db.Disconnect()
 
         'ゾーン総数を求める
-        tb = db.ExecuteSql("SELECT MAX(`シフト№`) FROM 縦断シフト WHERE `シートID` = " & SheetID)
+        tb = db.ExecuteSql("SELECT MAX(`シフト№`) FROM 縦断シフト WHERE `シートID` = " & InitParameter.SheetID)
         tb.Read()
         シフトゾーン総数 = tb.Item(0)
         '        db.Disconnect()
 
-        tb = db.ExecuteSql("SELECT * FROM 縦断シフト WHERE `シートID` = " & SheetID & " ORDER BY `シフト№`;")
+        tb = db.ExecuteSql("SELECT * FROM 縦断シフト WHERE `シートID` = " & InitParameter.SheetID & " ORDER BY `シフト№`;")
         'For i = 0 To tb.Rows.Count - 1
 
         With tb

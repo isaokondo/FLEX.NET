@@ -24,44 +24,44 @@ Partial Class frmCorrectionValueManagement
     Private Sub InitializeComponent()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.btnOK = New System.Windows.Forms.Button()
-        Me.UcnSpredCompnent30 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent31 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent32 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent33 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent34 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent35 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent36 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent37 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent38 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent39 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent22 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent23 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent24 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent25 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent26 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent27 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent28 = New FLEX.NET.ucnSpredCompnent()
+        Me.btnCLose = New System.Windows.Forms.Button()
+        Me.PlanCommon2 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan15 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan14 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan13 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan12 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan11 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan10 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan9 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan8 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan7 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan6 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan5 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan4 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan3 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan2 = New FLEX.NET.ucnSpredCompnent()
+        Me.VerPlan1 = New FLEX.NET.ucnSpredCompnent()
         Me.UcnSpredCompnent29 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent21 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent20 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent19 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent18 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent17 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent16 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent15 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent13 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent12 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent11 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent10 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent9 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent8 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent7 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent6 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent5 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan16 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan15 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan14 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan13 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan12 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan11 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan10 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan9 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan8 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan7 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan6 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan5 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan4 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan3 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan2 = New FLEX.NET.ucnSpredCompnent()
+        Me.HorPlan1 = New FLEX.NET.ucnSpredCompnent()
         Me.UcnSpredCompnent4 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent3 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent2 = New FLEX.NET.ucnSpredCompnent()
-        Me.UcnSpredCompnent1 = New FLEX.NET.ucnSpredCompnent()
+        Me.PlanCommon4 = New FLEX.NET.ucnSpredCompnent()
+        Me.PlanCommon3 = New FLEX.NET.ucnSpredCompnent()
+        Me.PlanCommon1 = New FLEX.NET.ucnSpredCompnent()
         Me.UcnSpredCompnent14 = New FLEX.NET.ucnSpredCompnent()
         Me.VerCorrentionValue = New FLEX.NET.ucnNumEdit()
         Me.HorCorrentionValue = New FLEX.NET.ucnNumEdit()
@@ -74,7 +74,7 @@ Partial Class frmCorrectionValueManagement
         '
         Me.btnCancel.BackColor = System.Drawing.Color.Silver
         Me.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnCancel.Location = New System.Drawing.Point(284, 363)
+        Me.btnCancel.Location = New System.Drawing.Point(185, 345)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(109, 35)
         Me.btnCancel.TabIndex = 6
@@ -85,250 +85,247 @@ Partial Class frmCorrectionValueManagement
         '
         Me.btnOK.BackColor = System.Drawing.Color.Silver
         Me.btnOK.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnOK.Location = New System.Drawing.Point(151, 363)
+        Me.btnOK.Location = New System.Drawing.Point(52, 345)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(109, 35)
         Me.btnOK.TabIndex = 5
         Me.btnOK.Text = "OK"
         Me.btnOK.UseVisualStyleBackColor = False
         '
-        'UcnSpredCompnent30
+        'btnCLose
         '
-        Me.UcnSpredCompnent30.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent30.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent30.FieldName = Nothing
-        Me.UcnSpredCompnent30.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent30.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent30.Location = New System.Drawing.Point(467, 821)
-        Me.UcnSpredCompnent30.Name = "UcnSpredCompnent30"
-        Me.UcnSpredCompnent30.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent30.TabIndex = 58
-        Me.UcnSpredCompnent30.Unit = Nothing
-        Me.UcnSpredCompnent30.Value = 12345.0R
+        Me.btnCLose.BackColor = System.Drawing.Color.Silver
+        Me.btnCLose.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnCLose.Location = New System.Drawing.Point(52, 401)
+        Me.btnCLose.Name = "btnCLose"
+        Me.btnCLose.Size = New System.Drawing.Size(109, 35)
+        Me.btnCLose.TabIndex = 58
+        Me.btnCLose.Text = "閉じる"
+        Me.btnCLose.UseVisualStyleBackColor = False
         '
-        'UcnSpredCompnent31
+        'PlanCommon2
         '
-        Me.UcnSpredCompnent31.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent31.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent31.FieldName = Nothing
-        Me.UcnSpredCompnent31.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent31.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent31.Location = New System.Drawing.Point(467, 800)
-        Me.UcnSpredCompnent31.Name = "UcnSpredCompnent31"
-        Me.UcnSpredCompnent31.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent31.TabIndex = 57
-        Me.UcnSpredCompnent31.Unit = Nothing
-        Me.UcnSpredCompnent31.Value = 12345.0R
+        Me.PlanCommon2.DecimalPlaces = CType(3, Short)
+        Me.PlanCommon2.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.PlanCommon2.FieldName = "セグメント幅の追加距離"
+        Me.PlanCommon2.ForeColor = System.Drawing.Color.Black
+        Me.PlanCommon2.HeaderColor = System.Drawing.Color.Empty
+        Me.PlanCommon2.Location = New System.Drawing.Point(467, 65)
+        Me.PlanCommon2.Name = "PlanCommon2"
+        Me.PlanCommon2.Size = New System.Drawing.Size(448, 21)
+        Me.PlanCommon2.TabIndex = 57
+        Me.PlanCommon2.Unit = "m"
+        Me.PlanCommon2.Value = 12345.0R
         '
-        'UcnSpredCompnent32
+        'VerPlan15
         '
-        Me.UcnSpredCompnent32.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent32.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent32.FieldName = "姿勢角管理幅"
-        Me.UcnSpredCompnent32.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent32.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent32.Location = New System.Drawing.Point(467, 779)
-        Me.UcnSpredCompnent32.Name = "UcnSpredCompnent32"
-        Me.UcnSpredCompnent32.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent32.TabIndex = 56
-        Me.UcnSpredCompnent32.Unit = "deg"
-        Me.UcnSpredCompnent32.Value = 12345.0R
+        Me.VerPlan15.DecimalPlaces = CType(3, Short)
+        Me.VerPlan15.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan15.FieldName = "姿勢角管理値"
+        Me.VerPlan15.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan15.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan15.Location = New System.Drawing.Point(467, 800)
+        Me.VerPlan15.Name = "VerPlan15"
+        Me.VerPlan15.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan15.TabIndex = 56
+        Me.VerPlan15.Unit = "deg"
+        Me.VerPlan15.Value = 12345.0R
         '
-        'UcnSpredCompnent33
+        'VerPlan14
         '
-        Me.UcnSpredCompnent33.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent33.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent33.FieldName = "後胴部の鉛直角"
-        Me.UcnSpredCompnent33.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent33.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent33.Location = New System.Drawing.Point(467, 758)
-        Me.UcnSpredCompnent33.Name = "UcnSpredCompnent33"
-        Me.UcnSpredCompnent33.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent33.TabIndex = 55
-        Me.UcnSpredCompnent33.Unit = "deg"
-        Me.UcnSpredCompnent33.Value = 12345.0R
+        Me.VerPlan14.DecimalPlaces = CType(3, Short)
+        Me.VerPlan14.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan14.FieldName = "後胴部の鉛直角"
+        Me.VerPlan14.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan14.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan14.Location = New System.Drawing.Point(467, 779)
+        Me.VerPlan14.Name = "VerPlan14"
+        Me.VerPlan14.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan14.TabIndex = 55
+        Me.VerPlan14.Unit = "deg"
+        Me.VerPlan14.Value = 12345.0R
         '
-        'UcnSpredCompnent34
+        'VerPlan13
         '
-        Me.UcnSpredCompnent34.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent34.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent34.FieldName = "前胴部の鉛直角"
-        Me.UcnSpredCompnent34.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent34.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent34.Location = New System.Drawing.Point(467, 737)
-        Me.UcnSpredCompnent34.Name = "UcnSpredCompnent34"
-        Me.UcnSpredCompnent34.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent34.TabIndex = 54
-        Me.UcnSpredCompnent34.Unit = "deg"
-        Me.UcnSpredCompnent34.Value = 12345.0R
+        Me.VerPlan13.DecimalPlaces = CType(3, Short)
+        Me.VerPlan13.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan13.FieldName = "前胴部の鉛直角"
+        Me.VerPlan13.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan13.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan13.Location = New System.Drawing.Point(467, 758)
+        Me.VerPlan13.Name = "VerPlan13"
+        Me.VerPlan13.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan13.TabIndex = 54
+        Me.VerPlan13.Unit = "deg"
+        Me.VerPlan13.Value = 12345.0R
         '
-        'UcnSpredCompnent35
+        'VerPlan12
         '
-        Me.UcnSpredCompnent35.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent35.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent35.FieldName = "鉛直中折角"
-        Me.UcnSpredCompnent35.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent35.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent35.Location = New System.Drawing.Point(467, 716)
-        Me.UcnSpredCompnent35.Name = "UcnSpredCompnent35"
-        Me.UcnSpredCompnent35.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent35.TabIndex = 53
-        Me.UcnSpredCompnent35.Unit = "deg"
-        Me.UcnSpredCompnent35.Value = 12345.0R
+        Me.VerPlan12.DecimalPlaces = CType(3, Short)
+        Me.VerPlan12.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan12.FieldName = "鉛直中折角"
+        Me.VerPlan12.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan12.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan12.Location = New System.Drawing.Point(467, 737)
+        Me.VerPlan12.Name = "VerPlan12"
+        Me.VerPlan12.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan12.TabIndex = 53
+        Me.VerPlan12.Unit = "deg"
+        Me.VerPlan12.Value = 12345.0R
         '
-        'UcnSpredCompnent36
+        'VerPlan11
         '
-        Me.UcnSpredCompnent36.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent36.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent36.FieldName = "シフト追加角"
-        Me.UcnSpredCompnent36.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent36.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent36.Location = New System.Drawing.Point(467, 695)
-        Me.UcnSpredCompnent36.Name = "UcnSpredCompnent36"
-        Me.UcnSpredCompnent36.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent36.TabIndex = 52
-        Me.UcnSpredCompnent36.Unit = "deg"
-        Me.UcnSpredCompnent36.Value = 12345.0R
+        Me.VerPlan11.DecimalPlaces = CType(3, Short)
+        Me.VerPlan11.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan11.FieldName = "シフト追加角"
+        Me.VerPlan11.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan11.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan11.Location = New System.Drawing.Point(467, 716)
+        Me.VerPlan11.Name = "VerPlan11"
+        Me.VerPlan11.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan11.TabIndex = 52
+        Me.VerPlan11.Unit = "deg"
+        Me.VerPlan11.Value = 12345.0R
         '
-        'UcnSpredCompnent37
+        'VerPlan10
         '
-        Me.UcnSpredCompnent37.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent37.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent37.FieldName = "シフト"
-        Me.UcnSpredCompnent37.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent37.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent37.Location = New System.Drawing.Point(467, 674)
-        Me.UcnSpredCompnent37.Name = "UcnSpredCompnent37"
-        Me.UcnSpredCompnent37.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent37.TabIndex = 51
-        Me.UcnSpredCompnent37.Unit = "m"
-        Me.UcnSpredCompnent37.Value = 12345.0R
+        Me.VerPlan10.DecimalPlaces = CType(3, Short)
+        Me.VerPlan10.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan10.FieldName = "シフト"
+        Me.VerPlan10.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan10.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan10.Location = New System.Drawing.Point(467, 695)
+        Me.VerPlan10.Name = "VerPlan10"
+        Me.VerPlan10.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan10.TabIndex = 51
+        Me.VerPlan10.Unit = "mm"
+        Me.VerPlan10.Value = 12345.0R
         '
-        'UcnSpredCompnent38
+        'VerPlan9
         '
-        Me.UcnSpredCompnent38.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent38.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent38.FieldName = "Z座標"
-        Me.UcnSpredCompnent38.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent38.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent38.Location = New System.Drawing.Point(467, 653)
-        Me.UcnSpredCompnent38.Name = "UcnSpredCompnent38"
-        Me.UcnSpredCompnent38.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent38.TabIndex = 50
-        Me.UcnSpredCompnent38.Unit = "m"
-        Me.UcnSpredCompnent38.Value = 12345.0R
+        Me.VerPlan9.DecimalPlaces = CType(3, Short)
+        Me.VerPlan9.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan9.FieldName = "Z座標"
+        Me.VerPlan9.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan9.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan9.Location = New System.Drawing.Point(467, 674)
+        Me.VerPlan9.Name = "VerPlan9"
+        Me.VerPlan9.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan9.TabIndex = 50
+        Me.VerPlan9.Unit = "m"
+        Me.VerPlan9.Value = 12345.0R
         '
-        'UcnSpredCompnent39
+        'VerPlan8
         '
-        Me.UcnSpredCompnent39.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent39.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent39.FieldName = "後方変化点距離"
-        Me.UcnSpredCompnent39.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent39.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent39.Location = New System.Drawing.Point(467, 632)
-        Me.UcnSpredCompnent39.Name = "UcnSpredCompnent39"
-        Me.UcnSpredCompnent39.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent39.TabIndex = 49
-        Me.UcnSpredCompnent39.Unit = "m"
-        Me.UcnSpredCompnent39.Value = 12345.0R
+        Me.VerPlan8.DecimalPlaces = CType(3, Short)
+        Me.VerPlan8.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan8.FieldName = "後方変化点距離"
+        Me.VerPlan8.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan8.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan8.Location = New System.Drawing.Point(467, 653)
+        Me.VerPlan8.Name = "VerPlan8"
+        Me.VerPlan8.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan8.TabIndex = 49
+        Me.VerPlan8.Unit = "m"
+        Me.VerPlan8.Value = 12345.0R
         '
-        'UcnSpredCompnent22
+        'VerPlan7
         '
-        Me.UcnSpredCompnent22.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent22.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent22.FieldName = "前方変化点距離"
-        Me.UcnSpredCompnent22.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent22.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent22.Location = New System.Drawing.Point(467, 611)
-        Me.UcnSpredCompnent22.Name = "UcnSpredCompnent22"
-        Me.UcnSpredCompnent22.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent22.TabIndex = 48
-        Me.UcnSpredCompnent22.Unit = "m"
-        Me.UcnSpredCompnent22.Value = 12345.0R
+        Me.VerPlan7.DecimalPlaces = CType(3, Short)
+        Me.VerPlan7.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan7.FieldName = "前方変化点距離"
+        Me.VerPlan7.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan7.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan7.Location = New System.Drawing.Point(467, 632)
+        Me.VerPlan7.Name = "VerPlan7"
+        Me.VerPlan7.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan7.TabIndex = 48
+        Me.VerPlan7.Unit = "m"
+        Me.VerPlan7.Value = 12345.0R
         '
-        'UcnSpredCompnent23
+        'VerPlan6
         '
-        Me.UcnSpredCompnent23.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent23.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent23.FieldName = "曲率半径"
-        Me.UcnSpredCompnent23.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent23.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent23.Location = New System.Drawing.Point(467, 590)
-        Me.UcnSpredCompnent23.Name = "UcnSpredCompnent23"
-        Me.UcnSpredCompnent23.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent23.TabIndex = 47
-        Me.UcnSpredCompnent23.Unit = "m"
-        Me.UcnSpredCompnent23.Value = 12345.0R
+        Me.VerPlan6.DecimalPlaces = CType(3, Short)
+        Me.VerPlan6.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan6.FieldName = "曲率半径"
+        Me.VerPlan6.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan6.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan6.Location = New System.Drawing.Point(467, 611)
+        Me.VerPlan6.Name = "VerPlan6"
+        Me.VerPlan6.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan6.TabIndex = 47
+        Me.VerPlan6.Unit = "m"
+        Me.VerPlan6.Value = 12345.0R
         '
-        'UcnSpredCompnent24
+        'VerPlan5
         '
-        Me.UcnSpredCompnent24.DecimalPlaces = CType(0, Short)
-        Me.UcnSpredCompnent24.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent24.FieldName = "線形"
-        Me.UcnSpredCompnent24.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent24.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent24.Location = New System.Drawing.Point(467, 569)
-        Me.UcnSpredCompnent24.Name = "UcnSpredCompnent24"
-        Me.UcnSpredCompnent24.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent24.TabIndex = 46
-        Me.UcnSpredCompnent24.Unit = Nothing
-        Me.UcnSpredCompnent24.Value = 12345.0R
+        Me.VerPlan5.DecimalPlaces = CType(0, Short)
+        Me.VerPlan5.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan5.FieldName = "線形(1:直線　２：単曲線)"
+        Me.VerPlan5.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan5.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan5.Location = New System.Drawing.Point(467, 590)
+        Me.VerPlan5.Name = "VerPlan5"
+        Me.VerPlan5.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan5.TabIndex = 46
+        Me.VerPlan5.Unit = Nothing
+        Me.VerPlan5.Value = 12345.0R
         '
-        'UcnSpredCompnent25
+        'VerPlan4
         '
-        Me.UcnSpredCompnent25.DecimalPlaces = CType(0, Short)
-        Me.UcnSpredCompnent25.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent25.FieldName = "ゾーン"
-        Me.UcnSpredCompnent25.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent25.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent25.Location = New System.Drawing.Point(467, 548)
-        Me.UcnSpredCompnent25.Name = "UcnSpredCompnent25"
-        Me.UcnSpredCompnent25.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent25.TabIndex = 45
-        Me.UcnSpredCompnent25.Unit = Nothing
-        Me.UcnSpredCompnent25.Value = 12345.0R
+        Me.VerPlan4.DecimalPlaces = CType(0, Short)
+        Me.VerPlan4.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan4.FieldName = "ゾーン"
+        Me.VerPlan4.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan4.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan4.Location = New System.Drawing.Point(467, 569)
+        Me.VerPlan4.Name = "VerPlan4"
+        Me.VerPlan4.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan4.TabIndex = 45
+        Me.VerPlan4.Unit = Nothing
+        Me.VerPlan4.Value = 12345.0R
         '
-        'UcnSpredCompnent26
+        'VerPlan3
         '
-        Me.UcnSpredCompnent26.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent26.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent26.FieldName = "基点から旋回中心までの距離"
-        Me.UcnSpredCompnent26.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent26.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent26.Location = New System.Drawing.Point(467, 527)
-        Me.UcnSpredCompnent26.Name = "UcnSpredCompnent26"
-        Me.UcnSpredCompnent26.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent26.TabIndex = 44
-        Me.UcnSpredCompnent26.Unit = "m"
-        Me.UcnSpredCompnent26.Value = 12345.0R
+        Me.VerPlan3.DecimalPlaces = CType(3, Short)
+        Me.VerPlan3.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan3.FieldName = "基点から旋回中心までの距離"
+        Me.VerPlan3.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan3.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan3.Location = New System.Drawing.Point(467, 548)
+        Me.VerPlan3.Name = "VerPlan3"
+        Me.VerPlan3.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan3.TabIndex = 44
+        Me.VerPlan3.Unit = "m"
+        Me.VerPlan3.Value = 12345.0R
         '
-        'UcnSpredCompnent27
+        'VerPlan2
         '
-        Me.UcnSpredCompnent27.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent27.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent27.FieldName = "発進から旋回中心までの距離"
-        Me.UcnSpredCompnent27.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent27.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent27.Location = New System.Drawing.Point(467, 506)
-        Me.UcnSpredCompnent27.Name = "UcnSpredCompnent27"
-        Me.UcnSpredCompnent27.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent27.TabIndex = 43
-        Me.UcnSpredCompnent27.Unit = "m"
-        Me.UcnSpredCompnent27.Value = 12345.0R
+        Me.VerPlan2.DecimalPlaces = CType(3, Short)
+        Me.VerPlan2.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan2.FieldName = "発進から旋回中心までの距離"
+        Me.VerPlan2.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan2.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan2.Location = New System.Drawing.Point(467, 527)
+        Me.VerPlan2.Name = "VerPlan2"
+        Me.VerPlan2.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan2.TabIndex = 43
+        Me.VerPlan2.Unit = "m"
+        Me.VerPlan2.Value = 12345.0R
         '
-        'UcnSpredCompnent28
+        'VerPlan1
         '
-        Me.UcnSpredCompnent28.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent28.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent28.FieldName = "旋回中心"
-        Me.UcnSpredCompnent28.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent28.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent28.Location = New System.Drawing.Point(467, 485)
-        Me.UcnSpredCompnent28.Name = "UcnSpredCompnent28"
-        Me.UcnSpredCompnent28.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent28.TabIndex = 42
-        Me.UcnSpredCompnent28.Unit = "m"
-        Me.UcnSpredCompnent28.Value = 12345.0R
+        Me.VerPlan1.DecimalPlaces = CType(3, Short)
+        Me.VerPlan1.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.VerPlan1.FieldName = "旋回中心"
+        Me.VerPlan1.ForeColor = System.Drawing.Color.Black
+        Me.VerPlan1.HeaderColor = System.Drawing.Color.Empty
+        Me.VerPlan1.Location = New System.Drawing.Point(467, 506)
+        Me.VerPlan1.Name = "VerPlan1"
+        Me.VerPlan1.Size = New System.Drawing.Size(448, 21)
+        Me.VerPlan1.TabIndex = 42
+        Me.VerPlan1.Unit = "m"
+        Me.VerPlan1.Value = 12345.0R
         '
         'UcnSpredCompnent29
         '
@@ -337,236 +334,236 @@ Partial Class frmCorrectionValueManagement
         Me.UcnSpredCompnent29.FieldName = "鉛直方向"
         Me.UcnSpredCompnent29.ForeColor = System.Drawing.Color.Black
         Me.UcnSpredCompnent29.HeaderColor = System.Drawing.Color.Yellow
-        Me.UcnSpredCompnent29.Location = New System.Drawing.Point(467, 465)
+        Me.UcnSpredCompnent29.Location = New System.Drawing.Point(467, 485)
         Me.UcnSpredCompnent29.Name = "UcnSpredCompnent29"
         Me.UcnSpredCompnent29.Size = New System.Drawing.Size(448, 21)
         Me.UcnSpredCompnent29.TabIndex = 41
         Me.UcnSpredCompnent29.Unit = Nothing
-        Me.UcnSpredCompnent29.Value = 0.0R
+        Me.UcnSpredCompnent29.Value = 0R
         '
-        'UcnSpredCompnent21
+        'HorPlan16
         '
-        Me.UcnSpredCompnent21.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent21.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent21.FieldName = "姿勢角管理幅"
-        Me.UcnSpredCompnent21.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent21.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent21.Location = New System.Drawing.Point(467, 443)
-        Me.UcnSpredCompnent21.Name = "UcnSpredCompnent21"
-        Me.UcnSpredCompnent21.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent21.TabIndex = 40
-        Me.UcnSpredCompnent21.Unit = "deg"
-        Me.UcnSpredCompnent21.Value = 12345.0R
+        Me.HorPlan16.DecimalPlaces = CType(3, Short)
+        Me.HorPlan16.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan16.FieldName = "姿勢角管理値"
+        Me.HorPlan16.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan16.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan16.Location = New System.Drawing.Point(467, 464)
+        Me.HorPlan16.Name = "HorPlan16"
+        Me.HorPlan16.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan16.TabIndex = 40
+        Me.HorPlan16.Unit = "deg"
+        Me.HorPlan16.Value = 12345.0R
         '
-        'UcnSpredCompnent20
+        'HorPlan15
         '
-        Me.UcnSpredCompnent20.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent20.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent20.FieldName = "後胴部の方位角"
-        Me.UcnSpredCompnent20.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent20.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent20.Location = New System.Drawing.Point(467, 422)
-        Me.UcnSpredCompnent20.Name = "UcnSpredCompnent20"
-        Me.UcnSpredCompnent20.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent20.TabIndex = 39
-        Me.UcnSpredCompnent20.Unit = "deg"
-        Me.UcnSpredCompnent20.Value = 12345.0R
+        Me.HorPlan15.DecimalPlaces = CType(3, Short)
+        Me.HorPlan15.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan15.FieldName = "後胴部の方位角"
+        Me.HorPlan15.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan15.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan15.Location = New System.Drawing.Point(467, 443)
+        Me.HorPlan15.Name = "HorPlan15"
+        Me.HorPlan15.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan15.TabIndex = 39
+        Me.HorPlan15.Unit = "deg"
+        Me.HorPlan15.Value = 12345.0R
         '
-        'UcnSpredCompnent19
+        'HorPlan14
         '
-        Me.UcnSpredCompnent19.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent19.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent19.FieldName = "前胴部の方位角"
-        Me.UcnSpredCompnent19.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent19.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent19.Location = New System.Drawing.Point(467, 401)
-        Me.UcnSpredCompnent19.Name = "UcnSpredCompnent19"
-        Me.UcnSpredCompnent19.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent19.TabIndex = 38
-        Me.UcnSpredCompnent19.Unit = "deg"
-        Me.UcnSpredCompnent19.Value = 12345.0R
+        Me.HorPlan14.DecimalPlaces = CType(3, Short)
+        Me.HorPlan14.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan14.FieldName = "前胴部の方位角"
+        Me.HorPlan14.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan14.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan14.Location = New System.Drawing.Point(467, 422)
+        Me.HorPlan14.Name = "HorPlan14"
+        Me.HorPlan14.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan14.TabIndex = 38
+        Me.HorPlan14.Unit = "deg"
+        Me.HorPlan14.Value = 12345.0R
         '
-        'UcnSpredCompnent18
+        'HorPlan13
         '
-        Me.UcnSpredCompnent18.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent18.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent18.FieldName = "水平中折角"
-        Me.UcnSpredCompnent18.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent18.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent18.Location = New System.Drawing.Point(467, 380)
-        Me.UcnSpredCompnent18.Name = "UcnSpredCompnent18"
-        Me.UcnSpredCompnent18.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent18.TabIndex = 37
-        Me.UcnSpredCompnent18.Unit = "deg"
-        Me.UcnSpredCompnent18.Value = 12345.0R
+        Me.HorPlan13.DecimalPlaces = CType(3, Short)
+        Me.HorPlan13.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan13.FieldName = "水平中折角"
+        Me.HorPlan13.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan13.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan13.Location = New System.Drawing.Point(467, 401)
+        Me.HorPlan13.Name = "HorPlan13"
+        Me.HorPlan13.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan13.TabIndex = 37
+        Me.HorPlan13.Unit = "deg"
+        Me.HorPlan13.Value = 12345.0R
         '
-        'UcnSpredCompnent17
+        'HorPlan12
         '
-        Me.UcnSpredCompnent17.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent17.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent17.FieldName = "シフト追加角"
-        Me.UcnSpredCompnent17.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent17.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent17.Location = New System.Drawing.Point(467, 359)
-        Me.UcnSpredCompnent17.Name = "UcnSpredCompnent17"
-        Me.UcnSpredCompnent17.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent17.TabIndex = 36
-        Me.UcnSpredCompnent17.Unit = "deg"
-        Me.UcnSpredCompnent17.Value = 12345.0R
+        Me.HorPlan12.DecimalPlaces = CType(3, Short)
+        Me.HorPlan12.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan12.FieldName = "シフト追加角"
+        Me.HorPlan12.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan12.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan12.Location = New System.Drawing.Point(467, 380)
+        Me.HorPlan12.Name = "HorPlan12"
+        Me.HorPlan12.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan12.TabIndex = 36
+        Me.HorPlan12.Unit = "deg"
+        Me.HorPlan12.Value = 12345.0R
         '
-        'UcnSpredCompnent16
+        'HorPlan11
         '
-        Me.UcnSpredCompnent16.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent16.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent16.FieldName = "シフト"
-        Me.UcnSpredCompnent16.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent16.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent16.Location = New System.Drawing.Point(467, 338)
-        Me.UcnSpredCompnent16.Name = "UcnSpredCompnent16"
-        Me.UcnSpredCompnent16.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent16.TabIndex = 35
-        Me.UcnSpredCompnent16.Unit = "m"
-        Me.UcnSpredCompnent16.Value = 12345.0R
+        Me.HorPlan11.DecimalPlaces = CType(3, Short)
+        Me.HorPlan11.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan11.FieldName = "シフト"
+        Me.HorPlan11.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan11.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan11.Location = New System.Drawing.Point(467, 359)
+        Me.HorPlan11.Name = "HorPlan11"
+        Me.HorPlan11.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan11.TabIndex = 35
+        Me.HorPlan11.Unit = "mm"
+        Me.HorPlan11.Value = 12345.0R
         '
-        'UcnSpredCompnent15
+        'HorPlan10
         '
-        Me.UcnSpredCompnent15.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent15.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent15.FieldName = "Y座標"
-        Me.UcnSpredCompnent15.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent15.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent15.Location = New System.Drawing.Point(467, 317)
-        Me.UcnSpredCompnent15.Name = "UcnSpredCompnent15"
-        Me.UcnSpredCompnent15.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent15.TabIndex = 34
-        Me.UcnSpredCompnent15.Unit = "m"
-        Me.UcnSpredCompnent15.Value = 12345.0R
+        Me.HorPlan10.DecimalPlaces = CType(3, Short)
+        Me.HorPlan10.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan10.FieldName = "Y座標"
+        Me.HorPlan10.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan10.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan10.Location = New System.Drawing.Point(467, 338)
+        Me.HorPlan10.Name = "HorPlan10"
+        Me.HorPlan10.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan10.TabIndex = 34
+        Me.HorPlan10.Unit = "m"
+        Me.HorPlan10.Value = 12345.0R
         '
-        'UcnSpredCompnent13
+        'HorPlan9
         '
-        Me.UcnSpredCompnent13.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent13.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent13.FieldName = "X座標"
-        Me.UcnSpredCompnent13.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent13.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent13.Location = New System.Drawing.Point(467, 296)
-        Me.UcnSpredCompnent13.Name = "UcnSpredCompnent13"
-        Me.UcnSpredCompnent13.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent13.TabIndex = 33
-        Me.UcnSpredCompnent13.Unit = "m"
-        Me.UcnSpredCompnent13.Value = 12345.0R
+        Me.HorPlan9.DecimalPlaces = CType(3, Short)
+        Me.HorPlan9.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan9.FieldName = "X座標"
+        Me.HorPlan9.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan9.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan9.Location = New System.Drawing.Point(467, 317)
+        Me.HorPlan9.Name = "HorPlan9"
+        Me.HorPlan9.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan9.TabIndex = 33
+        Me.HorPlan9.Unit = "m"
+        Me.HorPlan9.Value = 12345.0R
         '
-        'UcnSpredCompnent12
+        'HorPlan8
         '
-        Me.UcnSpredCompnent12.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent12.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent12.FieldName = "後方変化点距離"
-        Me.UcnSpredCompnent12.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent12.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent12.Location = New System.Drawing.Point(467, 275)
-        Me.UcnSpredCompnent12.Name = "UcnSpredCompnent12"
-        Me.UcnSpredCompnent12.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent12.TabIndex = 32
-        Me.UcnSpredCompnent12.Unit = "m"
-        Me.UcnSpredCompnent12.Value = 12345.0R
+        Me.HorPlan8.DecimalPlaces = CType(3, Short)
+        Me.HorPlan8.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan8.FieldName = "後方変化点距離"
+        Me.HorPlan8.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan8.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan8.Location = New System.Drawing.Point(467, 296)
+        Me.HorPlan8.Name = "HorPlan8"
+        Me.HorPlan8.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan8.TabIndex = 32
+        Me.HorPlan8.Unit = "m"
+        Me.HorPlan8.Value = 12345.0R
         '
-        'UcnSpredCompnent11
+        'HorPlan7
         '
-        Me.UcnSpredCompnent11.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent11.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent11.FieldName = "前方変化点距離"
-        Me.UcnSpredCompnent11.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent11.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent11.Location = New System.Drawing.Point(467, 254)
-        Me.UcnSpredCompnent11.Name = "UcnSpredCompnent11"
-        Me.UcnSpredCompnent11.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent11.TabIndex = 31
-        Me.UcnSpredCompnent11.Unit = "m"
-        Me.UcnSpredCompnent11.Value = 12345.0R
+        Me.HorPlan7.DecimalPlaces = CType(3, Short)
+        Me.HorPlan7.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan7.FieldName = "前方変化点距離"
+        Me.HorPlan7.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan7.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan7.Location = New System.Drawing.Point(467, 275)
+        Me.HorPlan7.Name = "HorPlan7"
+        Me.HorPlan7.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan7.TabIndex = 31
+        Me.HorPlan7.Unit = "m"
+        Me.HorPlan7.Value = 12345.0R
         '
-        'UcnSpredCompnent10
+        'HorPlan6
         '
-        Me.UcnSpredCompnent10.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent10.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent10.FieldName = "曲率半径"
-        Me.UcnSpredCompnent10.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent10.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent10.Location = New System.Drawing.Point(467, 233)
-        Me.UcnSpredCompnent10.Name = "UcnSpredCompnent10"
-        Me.UcnSpredCompnent10.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent10.TabIndex = 30
-        Me.UcnSpredCompnent10.Unit = "m"
-        Me.UcnSpredCompnent10.Value = 12345.0R
+        Me.HorPlan6.DecimalPlaces = CType(3, Short)
+        Me.HorPlan6.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan6.FieldName = "曲率半径"
+        Me.HorPlan6.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan6.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan6.Location = New System.Drawing.Point(467, 254)
+        Me.HorPlan6.Name = "HorPlan6"
+        Me.HorPlan6.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan6.TabIndex = 30
+        Me.HorPlan6.Unit = "m"
+        Me.HorPlan6.Value = 12345.0R
         '
-        'UcnSpredCompnent9
+        'HorPlan5
         '
-        Me.UcnSpredCompnent9.DecimalPlaces = CType(0, Short)
-        Me.UcnSpredCompnent9.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent9.FieldName = "線形"
-        Me.UcnSpredCompnent9.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent9.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent9.Location = New System.Drawing.Point(467, 212)
-        Me.UcnSpredCompnent9.Name = "UcnSpredCompnent9"
-        Me.UcnSpredCompnent9.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent9.TabIndex = 29
-        Me.UcnSpredCompnent9.Unit = Nothing
-        Me.UcnSpredCompnent9.Value = 0.0R
+        Me.HorPlan5.DecimalPlaces = CType(0, Short)
+        Me.HorPlan5.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan5.FieldName = "線形(1:直線　２：単曲線　3:緩和)"
+        Me.HorPlan5.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan5.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan5.Location = New System.Drawing.Point(467, 233)
+        Me.HorPlan5.Name = "HorPlan5"
+        Me.HorPlan5.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan5.TabIndex = 29
+        Me.HorPlan5.Unit = Nothing
+        Me.HorPlan5.Value = 0R
         '
-        'UcnSpredCompnent8
+        'HorPlan4
         '
-        Me.UcnSpredCompnent8.DecimalPlaces = CType(0, Short)
-        Me.UcnSpredCompnent8.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent8.FieldName = "ゾーン"
-        Me.UcnSpredCompnent8.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent8.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent8.Location = New System.Drawing.Point(467, 191)
-        Me.UcnSpredCompnent8.Name = "UcnSpredCompnent8"
-        Me.UcnSpredCompnent8.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent8.TabIndex = 28
-        Me.UcnSpredCompnent8.Unit = Nothing
-        Me.UcnSpredCompnent8.Value = 12345.0R
+        Me.HorPlan4.DecimalPlaces = CType(0, Short)
+        Me.HorPlan4.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan4.FieldName = "ゾーン"
+        Me.HorPlan4.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan4.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan4.Location = New System.Drawing.Point(467, 212)
+        Me.HorPlan4.Name = "HorPlan4"
+        Me.HorPlan4.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan4.TabIndex = 28
+        Me.HorPlan4.Unit = Nothing
+        Me.HorPlan4.Value = 12345.0R
         '
-        'UcnSpredCompnent7
+        'HorPlan3
         '
-        Me.UcnSpredCompnent7.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent7.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent7.FieldName = "基点から旋回中心までの距離"
-        Me.UcnSpredCompnent7.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent7.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent7.Location = New System.Drawing.Point(467, 170)
-        Me.UcnSpredCompnent7.Name = "UcnSpredCompnent7"
-        Me.UcnSpredCompnent7.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent7.TabIndex = 27
-        Me.UcnSpredCompnent7.Unit = "m"
-        Me.UcnSpredCompnent7.Value = 12345.0R
+        Me.HorPlan3.DecimalPlaces = CType(3, Short)
+        Me.HorPlan3.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan3.FieldName = "基点から旋回中心までの距離"
+        Me.HorPlan3.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan3.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan3.Location = New System.Drawing.Point(467, 191)
+        Me.HorPlan3.Name = "HorPlan3"
+        Me.HorPlan3.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan3.TabIndex = 27
+        Me.HorPlan3.Unit = "m"
+        Me.HorPlan3.Value = 12345.0R
         '
-        'UcnSpredCompnent6
+        'HorPlan2
         '
-        Me.UcnSpredCompnent6.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent6.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent6.FieldName = "発進から旋回中心までの距離"
-        Me.UcnSpredCompnent6.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent6.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent6.Location = New System.Drawing.Point(467, 149)
-        Me.UcnSpredCompnent6.Name = "UcnSpredCompnent6"
-        Me.UcnSpredCompnent6.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent6.TabIndex = 26
-        Me.UcnSpredCompnent6.Unit = "m"
-        Me.UcnSpredCompnent6.Value = 12345.0R
+        Me.HorPlan2.DecimalPlaces = CType(3, Short)
+        Me.HorPlan2.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan2.FieldName = "発進から旋回中心までの距離"
+        Me.HorPlan2.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan2.HeaderColor = System.Drawing.Color.Empty
+        Me.HorPlan2.Location = New System.Drawing.Point(467, 170)
+        Me.HorPlan2.Name = "HorPlan2"
+        Me.HorPlan2.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan2.TabIndex = 26
+        Me.HorPlan2.Unit = "m"
+        Me.HorPlan2.Value = 12345.0R
         '
-        'UcnSpredCompnent5
+        'HorPlan1
         '
-        Me.UcnSpredCompnent5.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent5.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent5.FieldName = "旋回中心"
-        Me.UcnSpredCompnent5.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent5.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.UcnSpredCompnent5.Location = New System.Drawing.Point(467, 128)
-        Me.UcnSpredCompnent5.Name = "UcnSpredCompnent5"
-        Me.UcnSpredCompnent5.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent5.TabIndex = 25
-        Me.UcnSpredCompnent5.Unit = "m"
-        Me.UcnSpredCompnent5.Value = 12345.0R
+        Me.HorPlan1.DecimalPlaces = CType(3, Short)
+        Me.HorPlan1.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.HorPlan1.FieldName = "旋回中心"
+        Me.HorPlan1.ForeColor = System.Drawing.Color.Black
+        Me.HorPlan1.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.HorPlan1.Location = New System.Drawing.Point(467, 149)
+        Me.HorPlan1.Name = "HorPlan1"
+        Me.HorPlan1.Size = New System.Drawing.Size(448, 21)
+        Me.HorPlan1.TabIndex = 25
+        Me.HorPlan1.Unit = "m"
+        Me.HorPlan1.Value = 12345.0R
         '
         'UcnSpredCompnent4
         '
@@ -575,54 +572,54 @@ Partial Class frmCorrectionValueManagement
         Me.UcnSpredCompnent4.FieldName = "水平方向"
         Me.UcnSpredCompnent4.ForeColor = System.Drawing.Color.Black
         Me.UcnSpredCompnent4.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.UcnSpredCompnent4.Location = New System.Drawing.Point(467, 109)
+        Me.UcnSpredCompnent4.Location = New System.Drawing.Point(467, 128)
         Me.UcnSpredCompnent4.Name = "UcnSpredCompnent4"
         Me.UcnSpredCompnent4.Size = New System.Drawing.Size(448, 21)
         Me.UcnSpredCompnent4.TabIndex = 24
         Me.UcnSpredCompnent4.Unit = Nothing
-        Me.UcnSpredCompnent4.Value = 0.0R
+        Me.UcnSpredCompnent4.Value = 0R
         '
-        'UcnSpredCompnent3
+        'PlanCommon4
         '
-        Me.UcnSpredCompnent3.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent3.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent3.FieldName = "当リング始点の先端総距離"
-        Me.UcnSpredCompnent3.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent3.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent3.Location = New System.Drawing.Point(467, 86)
-        Me.UcnSpredCompnent3.Name = "UcnSpredCompnent3"
-        Me.UcnSpredCompnent3.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent3.TabIndex = 23
-        Me.UcnSpredCompnent3.Unit = "m"
-        Me.UcnSpredCompnent3.Value = 12345.0R
+        Me.PlanCommon4.DecimalPlaces = CType(3, Short)
+        Me.PlanCommon4.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.PlanCommon4.FieldName = "当リング始点の先端総距離"
+        Me.PlanCommon4.ForeColor = System.Drawing.Color.Black
+        Me.PlanCommon4.HeaderColor = System.Drawing.Color.Empty
+        Me.PlanCommon4.Location = New System.Drawing.Point(467, 107)
+        Me.PlanCommon4.Name = "PlanCommon4"
+        Me.PlanCommon4.Size = New System.Drawing.Size(448, 21)
+        Me.PlanCommon4.TabIndex = 23
+        Me.PlanCommon4.Unit = "m"
+        Me.PlanCommon4.Value = 12345.0R
         '
-        'UcnSpredCompnent2
+        'PlanCommon3
         '
-        Me.UcnSpredCompnent2.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent2.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent2.FieldName = "押し上がりストロークの差"
-        Me.UcnSpredCompnent2.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent2.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent2.Location = New System.Drawing.Point(467, 65)
-        Me.UcnSpredCompnent2.Name = "UcnSpredCompnent2"
-        Me.UcnSpredCompnent2.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent2.TabIndex = 22
-        Me.UcnSpredCompnent2.Unit = "m"
-        Me.UcnSpredCompnent2.Value = 12345.0R
+        Me.PlanCommon3.DecimalPlaces = CType(3, Short)
+        Me.PlanCommon3.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.PlanCommon3.FieldName = "押し上がりストロークの差"
+        Me.PlanCommon3.ForeColor = System.Drawing.Color.Black
+        Me.PlanCommon3.HeaderColor = System.Drawing.Color.Empty
+        Me.PlanCommon3.Location = New System.Drawing.Point(467, 86)
+        Me.PlanCommon3.Name = "PlanCommon3"
+        Me.PlanCommon3.Size = New System.Drawing.Size(448, 21)
+        Me.PlanCommon3.TabIndex = 22
+        Me.PlanCommon3.Unit = "m"
+        Me.PlanCommon3.Value = 12345.0R
         '
-        'UcnSpredCompnent1
+        'PlanCommon1
         '
-        Me.UcnSpredCompnent1.DecimalPlaces = CType(3, Short)
-        Me.UcnSpredCompnent1.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.UcnSpredCompnent1.FieldName = "確認リングの先端総距離"
-        Me.UcnSpredCompnent1.ForeColor = System.Drawing.Color.Black
-        Me.UcnSpredCompnent1.HeaderColor = System.Drawing.Color.Empty
-        Me.UcnSpredCompnent1.Location = New System.Drawing.Point(467, 44)
-        Me.UcnSpredCompnent1.Name = "UcnSpredCompnent1"
-        Me.UcnSpredCompnent1.Size = New System.Drawing.Size(448, 21)
-        Me.UcnSpredCompnent1.TabIndex = 21
-        Me.UcnSpredCompnent1.Unit = "m"
-        Me.UcnSpredCompnent1.Value = 12345.0R
+        Me.PlanCommon1.DecimalPlaces = CType(3, Short)
+        Me.PlanCommon1.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.PlanCommon1.FieldName = "確認リングの先端総距離"
+        Me.PlanCommon1.ForeColor = System.Drawing.Color.Black
+        Me.PlanCommon1.HeaderColor = System.Drawing.Color.Empty
+        Me.PlanCommon1.Location = New System.Drawing.Point(467, 44)
+        Me.PlanCommon1.Name = "PlanCommon1"
+        Me.PlanCommon1.Size = New System.Drawing.Size(448, 21)
+        Me.PlanCommon1.TabIndex = 21
+        Me.PlanCommon1.Unit = "m"
+        Me.PlanCommon1.Value = 12345.0R
         '
         'UcnSpredCompnent14
         '
@@ -636,45 +633,48 @@ Partial Class frmCorrectionValueManagement
         Me.UcnSpredCompnent14.Size = New System.Drawing.Size(448, 21)
         Me.UcnSpredCompnent14.TabIndex = 20
         Me.UcnSpredCompnent14.Unit = Nothing
-        Me.UcnSpredCompnent14.Value = 0.0R
+        Me.UcnSpredCompnent14.Value = 0R
         '
         'VerCorrentionValue
         '
         Me.VerCorrentionValue.DecimalPlaces = CType(3, Short)
         Me.VerCorrentionValue.DspFieldName = True
         Me.VerCorrentionValue.FieldName = "鉛直補正値"
+        Me.VerCorrentionValue.Increment = 0.01!
         Me.VerCorrentionValue.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.VerCorrentionValue.Location = New System.Drawing.Point(21, 221)
-        Me.VerCorrentionValue.MaxValue = "10000"
-        Me.VerCorrentionValue.MinValue = "-100"
+        Me.VerCorrentionValue.MaxValue = "5"
+        Me.VerCorrentionValue.MinValue = "-5"
         Me.VerCorrentionValue.Name = "VerCorrentionValue"
         Me.VerCorrentionValue.SelectItem = Nothing
         Me.VerCorrentionValue.Size = New System.Drawing.Size(417, 38)
         Me.VerCorrentionValue.TabIndex = 4
         Me.VerCorrentionValue.Unit = "deg"
-        Me.VerCorrentionValue.Value = 0.0R
+        Me.VerCorrentionValue.Value = 0R
         '
         'HorCorrentionValue
         '
         Me.HorCorrentionValue.DecimalPlaces = CType(3, Short)
         Me.HorCorrentionValue.DspFieldName = True
         Me.HorCorrentionValue.FieldName = "水平補正値"
+        Me.HorCorrentionValue.Increment = 0.01!
         Me.HorCorrentionValue.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.HorCorrentionValue.Location = New System.Drawing.Point(21, 186)
-        Me.HorCorrentionValue.MaxValue = "10000"
-        Me.HorCorrentionValue.MinValue = "-100"
+        Me.HorCorrentionValue.MaxValue = "5"
+        Me.HorCorrentionValue.MinValue = "-5"
         Me.HorCorrentionValue.Name = "HorCorrentionValue"
         Me.HorCorrentionValue.SelectItem = Nothing
         Me.HorCorrentionValue.Size = New System.Drawing.Size(417, 38)
         Me.HorCorrentionValue.TabIndex = 3
         Me.HorCorrentionValue.Unit = "deg"
-        Me.HorCorrentionValue.Value = 0.0R
+        Me.HorCorrentionValue.Value = 0R
         '
         'PuchUpStroke
         '
         Me.PuchUpStroke.DecimalPlaces = CType(0, Short)
         Me.PuchUpStroke.DspFieldName = True
         Me.PuchUpStroke.FieldName = "押し上がりストローク"
+        Me.PuchUpStroke.Increment = 1.0!
         Me.PuchUpStroke.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.PuchUpStroke.Location = New System.Drawing.Point(21, 116)
         Me.PuchUpStroke.MaxValue = "10000"
@@ -691,6 +691,7 @@ Partial Class frmCorrectionValueManagement
         Me.TipDistance.DecimalPlaces = CType(3, Short)
         Me.TipDistance.DspFieldName = True
         Me.TipDistance.FieldName = "先端の総距離"
+        Me.TipDistance.Increment = 0.01!
         Me.TipDistance.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.TipDistance.Location = New System.Drawing.Point(21, 81)
         Me.TipDistance.MaxValue = "10000"
@@ -707,6 +708,7 @@ Partial Class frmCorrectionValueManagement
         Me.ConfirmRingNo.DecimalPlaces = CType(0, Short)
         Me.ConfirmRingNo.DspFieldName = True
         Me.ConfirmRingNo.FieldName = "確認リング"
+        Me.ConfirmRingNo.Increment = 1.0!
         Me.ConfirmRingNo.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.ConfirmRingNo.Location = New System.Drawing.Point(21, 46)
         Me.ConfirmRingNo.MaxValue = "10000"
@@ -725,44 +727,44 @@ Partial Class frmCorrectionValueManagement
         Me.BackColor = System.Drawing.Color.Gray
         Me.ClientSize = New System.Drawing.Size(992, 862)
         Me.ControlBox = False
-        Me.Controls.Add(Me.UcnSpredCompnent30)
-        Me.Controls.Add(Me.UcnSpredCompnent31)
-        Me.Controls.Add(Me.UcnSpredCompnent32)
-        Me.Controls.Add(Me.UcnSpredCompnent33)
-        Me.Controls.Add(Me.UcnSpredCompnent34)
-        Me.Controls.Add(Me.UcnSpredCompnent35)
-        Me.Controls.Add(Me.UcnSpredCompnent36)
-        Me.Controls.Add(Me.UcnSpredCompnent37)
-        Me.Controls.Add(Me.UcnSpredCompnent38)
-        Me.Controls.Add(Me.UcnSpredCompnent39)
-        Me.Controls.Add(Me.UcnSpredCompnent22)
-        Me.Controls.Add(Me.UcnSpredCompnent23)
-        Me.Controls.Add(Me.UcnSpredCompnent24)
-        Me.Controls.Add(Me.UcnSpredCompnent25)
-        Me.Controls.Add(Me.UcnSpredCompnent26)
-        Me.Controls.Add(Me.UcnSpredCompnent27)
-        Me.Controls.Add(Me.UcnSpredCompnent28)
+        Me.Controls.Add(Me.btnCLose)
+        Me.Controls.Add(Me.PlanCommon2)
+        Me.Controls.Add(Me.VerPlan15)
+        Me.Controls.Add(Me.VerPlan14)
+        Me.Controls.Add(Me.VerPlan13)
+        Me.Controls.Add(Me.VerPlan12)
+        Me.Controls.Add(Me.VerPlan11)
+        Me.Controls.Add(Me.VerPlan10)
+        Me.Controls.Add(Me.VerPlan9)
+        Me.Controls.Add(Me.VerPlan8)
+        Me.Controls.Add(Me.VerPlan7)
+        Me.Controls.Add(Me.VerPlan6)
+        Me.Controls.Add(Me.VerPlan5)
+        Me.Controls.Add(Me.VerPlan4)
+        Me.Controls.Add(Me.VerPlan3)
+        Me.Controls.Add(Me.VerPlan2)
+        Me.Controls.Add(Me.VerPlan1)
         Me.Controls.Add(Me.UcnSpredCompnent29)
-        Me.Controls.Add(Me.UcnSpredCompnent21)
-        Me.Controls.Add(Me.UcnSpredCompnent20)
-        Me.Controls.Add(Me.UcnSpredCompnent19)
-        Me.Controls.Add(Me.UcnSpredCompnent18)
-        Me.Controls.Add(Me.UcnSpredCompnent17)
-        Me.Controls.Add(Me.UcnSpredCompnent16)
-        Me.Controls.Add(Me.UcnSpredCompnent15)
-        Me.Controls.Add(Me.UcnSpredCompnent13)
-        Me.Controls.Add(Me.UcnSpredCompnent12)
-        Me.Controls.Add(Me.UcnSpredCompnent11)
-        Me.Controls.Add(Me.UcnSpredCompnent10)
-        Me.Controls.Add(Me.UcnSpredCompnent9)
-        Me.Controls.Add(Me.UcnSpredCompnent8)
-        Me.Controls.Add(Me.UcnSpredCompnent7)
-        Me.Controls.Add(Me.UcnSpredCompnent6)
-        Me.Controls.Add(Me.UcnSpredCompnent5)
+        Me.Controls.Add(Me.HorPlan16)
+        Me.Controls.Add(Me.HorPlan15)
+        Me.Controls.Add(Me.HorPlan14)
+        Me.Controls.Add(Me.HorPlan13)
+        Me.Controls.Add(Me.HorPlan12)
+        Me.Controls.Add(Me.HorPlan11)
+        Me.Controls.Add(Me.HorPlan10)
+        Me.Controls.Add(Me.HorPlan9)
+        Me.Controls.Add(Me.HorPlan8)
+        Me.Controls.Add(Me.HorPlan7)
+        Me.Controls.Add(Me.HorPlan6)
+        Me.Controls.Add(Me.HorPlan5)
+        Me.Controls.Add(Me.HorPlan4)
+        Me.Controls.Add(Me.HorPlan3)
+        Me.Controls.Add(Me.HorPlan2)
+        Me.Controls.Add(Me.HorPlan1)
         Me.Controls.Add(Me.UcnSpredCompnent4)
-        Me.Controls.Add(Me.UcnSpredCompnent3)
-        Me.Controls.Add(Me.UcnSpredCompnent2)
-        Me.Controls.Add(Me.UcnSpredCompnent1)
+        Me.Controls.Add(Me.PlanCommon4)
+        Me.Controls.Add(Me.PlanCommon3)
+        Me.Controls.Add(Me.PlanCommon1)
         Me.Controls.Add(Me.UcnSpredCompnent14)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnOK)
@@ -784,42 +786,42 @@ Partial Class frmCorrectionValueManagement
     Friend WithEvents btnCancel As System.Windows.Forms.Button
     Friend WithEvents btnOK As System.Windows.Forms.Button
     Friend WithEvents UcnSpredCompnent14 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent1 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent2 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent3 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents PlanCommon1 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents PlanCommon3 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents PlanCommon4 As FLEX.NET.ucnSpredCompnent
     Friend WithEvents UcnSpredCompnent4 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent5 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent6 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent7 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent8 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent9 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent10 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent11 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent12 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent13 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent15 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent16 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent17 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent18 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent19 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent20 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent21 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent22 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent23 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent24 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent25 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent26 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent27 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent28 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan1 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan2 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan3 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan4 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan5 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan6 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan7 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan8 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan9 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan10 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan11 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan12 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan13 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan14 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan15 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents HorPlan16 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan7 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan6 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan5 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan4 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan3 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan2 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan1 As FLEX.NET.ucnSpredCompnent
     Friend WithEvents UcnSpredCompnent29 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent30 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent31 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent32 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent33 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent34 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent35 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent36 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent37 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent38 As FLEX.NET.ucnSpredCompnent
-    Friend WithEvents UcnSpredCompnent39 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan15 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan14 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan13 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan12 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan11 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan10 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan9 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents VerPlan8 As FLEX.NET.ucnSpredCompnent
+    Friend WithEvents PlanCommon2 As ucnSpredCompnent
+    Friend WithEvents btnCLose As Button
 End Class

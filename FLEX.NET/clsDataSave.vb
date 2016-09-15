@@ -14,7 +14,7 @@ Friend Class clsDataSave
 
 
 
-        Dim recDataSave As Odbc.OdbcDataReader = ExecuteSql("REPLACE INTO 掘削データ VALUES(" & getSqlData() & ")")
+        Dim recDataSave As Odbc.OdbcDataReader = ExecuteSql("REPLACE INTO FLEX掘削データ VALUES(" & getSqlData() & ")")
 
 
 
@@ -24,7 +24,7 @@ Friend Class clsDataSave
     Private Function getSqlData() As String
 
         'Dim intCnt As Short
-        getSqlData = "'" & PlcIf.リング番号 & "',"
+        getSqlData = "'" & PlcIf.RingNo & "',"
 
         With PlcIf
             getSqlData = getSqlData & "'" & .RealStroke & "',"
@@ -66,8 +66,8 @@ Friend Class clsDataSave
 
             getSqlData = getSqlData & "'" & DivCul.操作強.ToString("F3") & "',"
             getSqlData = getSqlData & "'" & DivCul.操作角.ToString("F3") & "',"
-            getSqlData = getSqlData & "'" & PlcIf.減圧弁制御p定数 & "',"
-            getSqlData = getSqlData & "'" & PlcIf.減圧弁制御i定数 & "',"
+            getSqlData = getSqlData & "'" & PlcIf.減圧弁制御P定数 & "',"
+            getSqlData = getSqlData & "'" & PlcIf.減圧弁制御I定数 & "',"
             getSqlData = getSqlData & "'" & PlcIf.ストローク管理法 & "',"
             getSqlData = getSqlData & "'" & PlcIf.掘進判定ストローク & "',"
             getSqlData = getSqlData & "'" & PlcIf.終了判定ストローク & "',"
@@ -88,17 +88,16 @@ Friend Class clsDataSave
             getSqlData = getSqlData & "'" & .MomentX & "',"
             getSqlData = getSqlData & "'" & .MomentY & "',"
             getSqlData = getSqlData & "'" & .MomentR & "',"
-            getSqlData = getSqlData & "'" & .推力 & "',"
+            getSqlData = getSqlData & "'" & .Thrust & "',"
         End With
 
         With JackMvAuto
-            getSqlData = getSqlData & "'" & .水平P定数 & "',"
-            getSqlData = getSqlData & "'" & .水平I定数 & "',"
-            getSqlData = getSqlData & "'" & .鉛直P定数 & "',"
-            getSqlData = getSqlData & "'" & .鉛直I定数 & "',"
-            getSqlData = getSqlData & "'" & .作動範囲 & "',"
+            getSqlData = getSqlData & "'" & ControlParameter.水平ジャッキ制御P定数 & "',"
+            getSqlData = getSqlData & "'" & ControlParameter.水平ジャッキ制御I定数 & "',"
+            getSqlData = getSqlData & "'" & ControlParameter.鉛直ジャッキ制御P定数 & "',"
+            getSqlData = getSqlData & "'" & ControlParameter.鉛直ジャッキ制御I定数 & "',"
             getSqlData = getSqlData & "'" & .片押制御Flg & "',"
-            getSqlData = getSqlData & "'" & .圧力許容値 & "',"
+            getSqlData = getSqlData & "'" & ControlParameter.圧力許容値 & "',"
 
 
         End With
@@ -106,11 +105,11 @@ Friend Class clsDataSave
         With DivCul
             getSqlData = getSqlData & "'" & .全開作動指令値 & "',"
             getSqlData = getSqlData & "'" & .全開作動範囲 & "',"
-            getSqlData = getSqlData & "'" & .全開制御フラグ & "',"
+            getSqlData = getSqlData & "'" & .全開グループ制限 & "',"
             getSqlData = getSqlData & "'" & .最低全開グループ数 & "',"
         End With
 
-        With clsKijunHoui.HorZendoKijun
+        With RefernceDirection.HorZendoKijun
             getSqlData = getSqlData & "'" & .掘進累積距離.ToString("F3") & "',"
             getSqlData = getSqlData & "'" & .平面ゾーン番号 & "',"
             getSqlData = getSqlData & "'" & .平面ゾーン掘進距離.ToString("F3") & "',"
@@ -128,7 +127,7 @@ Friend Class clsDataSave
 
         End With
 
-        With clsKijunHoui.VerZendoKijun
+        With RefernceDirection.VerZendoKijun
             getSqlData = getSqlData & "'" & .縦断ゾーン番号 & "',"
             getSqlData = getSqlData & "'" & .縦断ゾーン内掘進距離.ToString("F3") & "',"
             getSqlData = getSqlData & "'" & .縦断ゾーン内残距離.ToString("F3") & "',"
@@ -137,7 +136,7 @@ Friend Class clsDataSave
             getSqlData = getSqlData & "'" & .Z座標.ToString("F3") & "',"
         End With
 
-        With clsKijunHoui
+        With RefernceDirection
             getSqlData = getSqlData & "'" & .平面計画方位.ToString("F3") & "',"
             getSqlData = getSqlData & "'" & .縦断計画方位.ToString("F3") & "',"
             getSqlData = getSqlData & "'" & (PlcIf.Gyro - .平面基準方位).ToString("F3") & "',"

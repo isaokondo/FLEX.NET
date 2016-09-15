@@ -1,19 +1,21 @@
 ﻿Public Class frmRingNoChange
+    Public Sub New()
 
+        ' この呼び出しはデザイナーで必要です。
+        InitializeComponent()
+
+        ' InitializeComponent() 呼び出しの後で初期化を追加します。
+
+    End Sub
 
     Private Sub frmRingNoChange_Load(sender As Object, e As EventArgs) Handles Me.Load
-        RingNoEdt.Value = PlcIf.リング番号
+        RingNoEdt.Value = PlcIf.RingNo
     End Sub
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
         '設定変更を反映
-        PlcIf.リング番号 = RingNoEdt.Value
-        '画面を閉じる
-        Me.Close()
+        PlcIf.RingNo = RingNoEdt.Value
     End Sub
 
-    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
-        '画面を閉じる
-        Me.Close()
-    End Sub
+
 End Class
