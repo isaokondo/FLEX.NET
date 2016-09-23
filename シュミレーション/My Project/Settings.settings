@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DataseName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">flex大成外環大泉</Value>
+      <Value Profile="(Default)">flex鹿島外環</Value>
     </Setting>
     <Setting Name="LeftStrokeAdr" Type="System.String" Scope="Application">
       <Value Profile="(Default)">W124</Value>
@@ -12,49 +12,49 @@
       <Value Profile="(Default)">W10C</Value>
     </Setting>
     <Setting Name="JkPresAdr" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">W01A0</Value>
+      <Value Profile="(Default)">W0F0</Value>
     </Setting>
     <Setting Name="GpPresPV" Type="System.String" Scope="Application">
       <Value Profile="(Default)">W180</Value>
     </Setting>
     <Setting Name="GpPresMV" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">W000</Value>
+      <Value Profile="(Default)">W1000</Value>
     </Setting>
     <Setting Name="BitStartAdr" Type="System.String" Scope="Application">
       <Value Profile="(Default)">B0100</Value>
     </Setting>
     <Setting Name="KussinOn" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B103</Value>
+      <Value Profile="(Default)">M4009</Value>
     </Setting>
     <Setting Name="JackSel" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B120</Value>
+      <Value Profile="(Default)">M5360</Value>
     </Setting>
     <Setting Name="FlexMode" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B10F</Value>
+      <Value Profile="(Default)">M4170</Value>
     </Setting>
     <Setting Name="StrokePlcScale" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">4000</Value>
+      <Value Profile="(Default)">3500</Value>
     </Setting>
     <Setting Name="StrokeEngScale" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">2500</Value>
+      <Value Profile="(Default)">3500</Value>
     </Setting>
     <Setting Name="PresPlcScale" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">4000</Value>
+      <Value Profile="(Default)">350</Value>
     </Setting>
     <Setting Name="PresEngScale" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">50</Value>
+      <Value Profile="(Default)">35</Value>
     </Setting>
     <Setting Name="SpeedPlcScale" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">4000</Value>
+      <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="SpeedEngScale" Type="System.Int16" Scope="Application">
       <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="LeftSpeedAdr" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">W164</Value>
+      <Value Profile="(Default)">W146</Value>
     </Setting>
     <Setting Name="RightSpeedAdr" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">W14C</Value>
+      <Value Profile="(Default)">W142</Value>
     </Setting>
     <Setting Name="PitchingAdr" Type="System.String" Scope="Application">
       <Value Profile="(Default)">W30C</Value>
@@ -66,37 +66,37 @@
       <Value Profile="(Default)">192.168.2.249</Value>
     </Setting>
     <Setting Name="ExcavOrSegmentAdr" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B160</Value>
+      <Value Profile="(Default)">M5424</Value>
     </Setting>
     <Setting Name="PullBackOnAdr" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B1A0</Value>
+      <Value Profile="(Default)">M5488</Value>
     </Setting>
     <Setting Name="PullBackAnsAdr" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B1E0</Value>
+      <Value Profile="(Default)">M5552</Value>
     </Setting>
     <Setting Name="ClosetOnAdr" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B220</Value>
+      <Value Profile="(Default)">M5616</Value>
     </Setting>
     <Setting Name="ClosetAnsAdr" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B260</Value>
+      <Value Profile="(Default)">M5680</Value>
     </Setting>
     <Setting Name="PullBackCommand" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B50</Value>
+      <Value Profile="(Default)">B1020</Value>
     </Setting>
     <Setting Name="ClosetCommand" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B90</Value>
+      <Value Profile="(Default)">B1060</Value>
     </Setting>
     <Setting Name="LosZeroStMachine" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">W1Af</Value>
+      <Value Profile="(Default)">W15D</Value>
     </Setting>
     <Setting Name="LosZeroStFlex" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">w024</Value>
+      <Value Profile="(Default)">w1024</Value>
     </Setting>
     <Setting Name="LosZeroModeMachine" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B10A</Value>
+      <Value Profile="(Default)">M4003</Value>
     </Setting>
     <Setting Name="LosZeroEnable" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B005</Value>
+      <Value Profile="(Default)">B1005</Value>
     </Setting>
   </Settings>
 </SettingsFile>

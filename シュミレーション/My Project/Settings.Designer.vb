@@ -56,7 +56,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("flex大成外環大泉")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("flex鹿島外環")>  _
         Public ReadOnly Property DataseName() As String
             Get
                 Return CType(Me("DataseName"),String)
@@ -83,7 +83,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("W01A0")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("W0F0")>  _
         Public ReadOnly Property JkPresAdr() As String
             Get
                 Return CType(Me("JkPresAdr"),String)
@@ -101,7 +101,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("W000")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("W1000")>  _
         Public ReadOnly Property GpPresMV() As String
             Get
                 Return CType(Me("GpPresMV"),String)
@@ -119,7 +119,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B103")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("M4009")>  _
         Public ReadOnly Property KussinOn() As String
             Get
                 Return CType(Me("KussinOn"),String)
@@ -128,7 +128,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B120")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("M5360")>  _
         Public ReadOnly Property JackSel() As String
             Get
                 Return CType(Me("JackSel"),String)
@@ -137,7 +137,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B10F")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("M4170")>  _
         Public ReadOnly Property FlexMode() As String
             Get
                 Return CType(Me("FlexMode"),String)
@@ -146,7 +146,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("4000")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("3500")>  _
         Public ReadOnly Property StrokePlcScale() As Short
             Get
                 Return CType(Me("StrokePlcScale"),Short)
@@ -155,7 +155,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("2500")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("3500")>  _
         Public ReadOnly Property StrokeEngScale() As Short
             Get
                 Return CType(Me("StrokeEngScale"),Short)
@@ -164,7 +164,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("4000")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("350")>  _
         Public ReadOnly Property PresPlcScale() As Short
             Get
                 Return CType(Me("PresPlcScale"),Short)
@@ -173,7 +173,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("35")>  _
         Public ReadOnly Property PresEngScale() As Short
             Get
                 Return CType(Me("PresEngScale"),Short)
@@ -182,7 +182,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("4000")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1000")>  _
         Public ReadOnly Property SpeedPlcScale() As Short
             Get
                 Return CType(Me("SpeedPlcScale"),Short)
@@ -200,7 +200,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("W164")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("W146")>  _
         Public ReadOnly Property LeftSpeedAdr() As String
             Get
                 Return CType(Me("LeftSpeedAdr"),String)
@@ -209,7 +209,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("W14C")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("W142")>  _
         Public ReadOnly Property RightSpeedAdr() As String
             Get
                 Return CType(Me("RightSpeedAdr"),String)
@@ -245,7 +245,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B160")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("M5424")>  _
         Public ReadOnly Property ExcavOrSegmentAdr() As String
             Get
                 Return CType(Me("ExcavOrSegmentAdr"),String)
@@ -254,7 +254,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B1A0")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("M5488")>  _
         Public ReadOnly Property PullBackOnAdr() As String
             Get
                 Return CType(Me("PullBackOnAdr"),String)
@@ -263,7 +263,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B1E0")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("M5552")>  _
         Public ReadOnly Property PullBackAnsAdr() As String
             Get
                 Return CType(Me("PullBackAnsAdr"),String)
@@ -272,7 +272,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B220")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("M5616")>  _
         Public ReadOnly Property ClosetOnAdr() As String
             Get
                 Return CType(Me("ClosetOnAdr"),String)
@@ -281,7 +281,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B260")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("M5680")>  _
         Public ReadOnly Property ClosetAnsAdr() As String
             Get
                 Return CType(Me("ClosetAnsAdr"),String)
@@ -290,7 +290,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B50")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("B1020")>  _
         Public ReadOnly Property PullBackCommand() As String
             Get
                 Return CType(Me("PullBackCommand"),String)
@@ -299,7 +299,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B90")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("B1060")>  _
         Public ReadOnly Property ClosetCommand() As String
             Get
                 Return CType(Me("ClosetCommand"),String)
@@ -308,7 +308,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("W1Af")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("W15D")>  _
         Public ReadOnly Property LosZeroStMachine() As String
             Get
                 Return CType(Me("LosZeroStMachine"),String)
@@ -317,7 +317,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("w024")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("w1024")>  _
         Public ReadOnly Property LosZeroStFlex() As String
             Get
                 Return CType(Me("LosZeroStFlex"),String)
@@ -326,7 +326,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B10A")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("M4003")>  _
         Public ReadOnly Property LosZeroModeMachine() As String
             Get
                 Return CType(Me("LosZeroModeMachine"),String)
@@ -335,7 +335,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B005")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("B1005")>  _
         Public ReadOnly Property LosZeroEnable() As String
             Get
                 Return CType(Me("LosZeroEnable"),String)
