@@ -12,6 +12,8 @@ Public Class frmSim
     Private GpMvOutReal(InitParm.NumberGroup - 1) As Integer
     Private GpMvOutBefore(InitParm.NumberGroup - 1) As Integer
 
+    Private SimlationSetting As New clsSimlationSetting
+
     Const ELEMENT_SIZE_WORD = 10        '文字列の書込み/読出し時、シーケンサ格納データ用配列の使用要素数
     Const ELEMENT_SIZE_32BITINTEGER = 2 '32bit整数の書込み/読出し時、シーケンサ格納データ用配列の使用要素数
     Const ELEMENT_SIZE_REALNUMBER = 2   '実数の書込み/読出し時、シーケンサ格納データ用配列の使用要素数
@@ -123,7 +125,7 @@ Public Class frmSim
         Debug.Print(DirectCast(sender, CheckBox).Text)
         Dim J As CheckBox = DirectCast(sender, CheckBox)
         Dim Jadr As String =
-            "B" & Convert.ToString(Convert.ToInt32(My.Settings.JackSel.Substring(1), 16) + CInt(J.Text) - 1, 16)
+            "B" & Convert.ToString(Convert.ToInt32(SimlationSetting.JackSel.Substring(1), 16) + CInt(J.Text) - 1, 16)
         Dim iRet = ComPlc.SetDevice(Jadr, IIf(J.Checked, 1, 0))
 
     End Sub
@@ -134,57 +136,57 @@ Public Class frmSim
         Dim plcData As Integer
 
         '掘進中
-        iRet = ComPlc.GetDevice(My.Settings.KussinOn, plcData)
+        iRet = ComPlc.GetDevice(SimlationSetting.KussinOn, plcData)
         If iRet = 0 Then chkExcavOn.Checked = plcData
 
         'FLEX ON
-        iRet = ComPlc.GetDevice(My.Settings.FlexMode, plcData)
+        iRet = ComPlc.GetDevice(SimlationSetting.FlexMode, plcData)
         If iRet = 0 Then chkFlexOn.Checked = plcData
 
         '同時施工モード
-        iRet = ComPlc.GetDevice(My.Settings.LosZeroModeMachine, plcData)
+        iRet = ComPlc.GetDevice(SimlationSetting.LosZeroModeMachine, plcData)
         If iRet = 0 Then chkLosZeroMode.Checked = plcData
 
         '同時施工可
-        iRet = ComPlc.GetDevice(My.Settings.LosZeroEnable, plcData)
+        iRet = ComPlc.GetDevice(SimlationSetting.LosZeroEnable, plcData)
         If iRet = 0 Then chkLosZeroEnable.Checked = plcData
 
 
         '元圧
-        iRet = ComPlc.GetDevice(My.Settings.JkPresAdr, plcData)
+        iRet = ComPlc.GetDevice(SimlationSetting.JkPresAdr, plcData)
         nudSoucePressure.Value = fnChangePresAnalogIn(plcData)
 
         '左ストローク
-        iRet = ComPlc.GetDevice(My.Settings.LeftStrokeAdr, plcData)
+        iRet = ComPlc.GetDevice(SimlationSetting.LeftStrokeAdr, plcData)
         nudLeftStroke.Value = fnChangeStrokeAnalogIn(plcData)
 
         '右ストローク
-        iRet = ComPlc.GetDevice(My.Settings.RightStrokeAdr, plcData)
+        iRet = ComPlc.GetDevice(SimlationSetting.RightStrokeAdr, plcData)
         nudRightStroke.Value = fnChangeStrokeAnalogIn(plcData)
 
         '左ｽﾋﾟｰﾄﾞ
-        iRet = ComPlc.GetDevice(My.Settings.LeftSpeedAdr, plcData)
+        iRet = ComPlc.GetDevice(SimlationSetting.LeftSpeedAdr, plcData)
         nudLeftSpeed.Value = fnChangeSpeedAnalogIn(plcData)
 
         '右ｽﾋﾟｰﾄﾞ
-        iRet = ComPlc.GetDevice(My.Settings.RightSpeedAdr, plcData)
+        iRet = ComPlc.GetDevice(SimlationSetting.RightSpeedAdr, plcData)
         nudRightSpeed.Value = fnChangeSpeedAnalogIn(plcData)
         'ピッチング
-        iRet = ComPlc.GetDevice2(My.Settings.PitchingAdr, plcData)
+        iRet = ComPlc.GetDevice2(SimlationSetting.PitchingAdr, plcData)
         nudPitching.Value = plcData / 100
 
         'ロスゼロ　fromマシン
-        iRet = ComPlc.GetDevice2(My.Settings.LosZeroStMachine, plcData)
+        iRet = ComPlc.GetDevice2(SimlationSetting.LosZeroStMachine, plcData)
         nudLosZeroStatusMachin.Value = plcData
 
         'ロスゼロ　fromFLEX
-        iRet = ComPlc.GetDevice2(My.Settings.LosZeroStFlex, plcData)
+        iRet = ComPlc.GetDevice2(SimlationSetting.LosZeroStFlex, plcData)
         nudLosZeroStsFlex.Value = plcData
 
 
 
         Dim sharrBufferForDeviceValue(ELEMENT_SIZE_32BITINTEGER - 1) As Short   'シーケンサ用データバッファの宣言
-        iRet = ComPlc.ReadDeviceBlock2(My.Settings.GyairoAdr, ELEMENT_SIZE_32BITINTEGER, sharrBufferForDeviceValue(0))
+        iRet = ComPlc.ReadDeviceBlock2(SimlationSetting.GyairoAdr, ELEMENT_SIZE_32BITINTEGER, sharrBufferForDeviceValue(0))
 
         Dim byarrTemp() As Byte
         Dim byarrBufferByte(ELEMENT_SIZE_32BITINTEGER * 2 - 1) As Byte          '編集用バイトバッファの宣言
@@ -209,16 +211,16 @@ Public Class frmSim
         'グループ圧PV
         Dim plcGpPv() As Integer
         ReDim plcGpPv(InitParm.NumberGroup)
-        iRet = ComPlc.ReadDeviceBlock(My.Settings.GpPresPV, InitParm.NumberGroup, plcGpPv(0))
+        iRet = ComPlc.ReadDeviceBlock(SimlationSetting.GpPresPV, InitParm.NumberGroup, plcGpPv(0))
         For i = 0 To InitParm.NumberGroup - 1
             DspGpPv(i).Value = fnChangePresAnalogIn(plcGpPv(i))
         Next
 
         Dim plcGpMv() As Integer
         ReDim plcGpMv(InitParm.NumberGroup)
-        iRet = ComPlc.ReadDeviceBlock(My.Settings.GpPresMV, InitParm.NumberGroup, plcGpMv(0))
+        iRet = ComPlc.ReadDeviceBlock(SimlationSetting.GpPresMV, InitParm.NumberGroup, plcGpMv(0))
         For i = 0 To InitParm.NumberGroup - 1
-            GpMvOutReal(i) = fnChangePresAnalogIn(plcGpMv(i)) / My.Settings.PresEngScale * 100
+            GpMvOutReal(i) = fnChangePresAnalogIn(plcGpMv(i)) / SimlationSetting.PresEngScale * 100
             DspGpMv(i).Text = GpMvOutReal(i).ToString & "%"
         Next
 
@@ -227,7 +229,7 @@ Public Class frmSim
         'ジャッキ選択
         Dim plcJkData() As Integer
         ReDim plcJkData(CInt(InitParm.NumberJack / 16) + 1)
-        iRet = ComPlc.ReadDeviceBlock(My.Settings.JackSel, plcJkData.Length, plcJkData(0))
+        iRet = ComPlc.ReadDeviceBlock(SimlationSetting.JackSel, plcJkData.Length, plcJkData(0))
 
         '２進数の文字列に変更
         Dim JkSts As String = ""
@@ -241,20 +243,20 @@ Public Class frmSim
         Next
 
         '推進／組立
-        LosZeroStatusRead(My.Settings.ExcavOrSegmentAdr, 1)
+        LosZeroStatusRead(SimlationSetting.ExcavOrSegmentAdr, 1)
         '引戻し中
-        LosZeroStatusRead(My.Settings.PullBackOnAdr, 2)
+        LosZeroStatusRead(SimlationSetting.PullBackOnAdr, 2)
         '引戻しANS
-        LosZeroStatusRead(My.Settings.PullBackAnsAdr, 3)
+        LosZeroStatusRead(SimlationSetting.PullBackAnsAdr, 3)
         '押込み中
-        LosZeroStatusRead(My.Settings.ClosetOnAdr, 4)
+        LosZeroStatusRead(SimlationSetting.ClosetOnAdr, 4)
         '押込みANS
-        LosZeroStatusRead(My.Settings.ClosetAnsAdr, 5)
+        LosZeroStatusRead(SimlationSetting.ClosetAnsAdr, 5)
 
         '引戻し指令
-        LosZeroStatusRead(My.Settings.PullBackCommand, 6)
+        LosZeroStatusRead(SimlationSetting.PullBackCommand, 6)
         '押込み指令
-        LosZeroStatusRead(My.Settings.ClosetCommand, 7)
+        LosZeroStatusRead(SimlationSetting.ClosetCommand, 7)
 
 
 
@@ -310,7 +312,7 @@ Public Class frmSim
 
     Private Function fnGetBitAdr(intOffsetAdr) As String
 
-        Dim lngBaseAdr As Long = CLng("&H" & (Mid(My.Settings.BitStartAdr, 2)))
+        Dim lngBaseAdr As Long = CLng("&H" & (Mid(SimlationSetting.BitStartAdr, 2)))
         Return "B" & Hex(lngBaseAdr + intOffsetAdr)
 
     End Function
@@ -320,28 +322,28 @@ Public Class frmSim
     ''' <param name="PlcData"></param>
     ''' <returns>PLCからの    ''' データ</returns>
     Private Function fnChangeStrokeAnalogIn(PlcData As Integer) As Single
-        Return PlcData / My.Settings.StrokePlcScale * My.Settings.StrokeEngScale
+        Return PlcData / SimlationSetting.StrokePlcScale * SimlationSetting.StrokeEngScale
     End Function
 
     Private Function fnChangeStrokeAnalogOut(OrData As Single) As Integer
-        Return OrData / My.Settings.StrokeEngScale * My.Settings.StrokePlcScale
+        Return OrData / SimlationSetting.StrokeEngScale * SimlationSetting.StrokePlcScale
     End Function
 
 
     Private Function fnChangeSpeedAnalogIn(PlcData As Integer) As Single
-        Return PlcData / My.Settings.SpeedPlcScale * My.Settings.SpeedEngScale
+        Return PlcData / SimlationSetting.SpeedPlcScale * SimlationSetting.SpeedEngScale
     End Function
 
     Private Function fnChangeSpeedAnalogOut(OrData As Single) As Integer
-        Return OrData / My.Settings.SpeedEngScale * My.Settings.SpeedPlcScale
+        Return OrData / SimlationSetting.SpeedEngScale * SimlationSetting.SpeedPlcScale
     End Function
 
 
     Private Function fnChangePresAnalogIn(PlcData As Integer) As Single
-        Return PlcData / My.Settings.PresPlcScale * My.Settings.PresEngScale
+        Return PlcData / SimlationSetting.PresPlcScale * SimlationSetting.PresEngScale
     End Function
     Private Function fnChangePresAnalogOut(OrData As Single) As Integer
-        Return OrData / My.Settings.PresEngScale * My.Settings.PresPlcScale
+        Return OrData / SimlationSetting.PresEngScale * SimlationSetting.PresPlcScale
     End Function
     ''' <summary>
     ''' FLEXモード、掘進中　変化
@@ -356,19 +358,19 @@ Public Class frmSim
         Dim PlcAdr As String = Nothing
         'FLEXモード
         If sender Is chkFlexOn Then
-            PlcAdr = My.Settings.FlexMode
+            PlcAdr = SimlationSetting.FlexMode
         End If
         '掘進中
         If sender Is chkExcavOn Then
-            PlcAdr = My.Settings.KussinOn
+            PlcAdr = SimlationSetting.KussinOn
         End If
         '同時施工モード
         If sender Is chkLosZeroMode Then
-            PlcAdr = My.Settings.LosZeroModeMachine
+            PlcAdr = SimlationSetting.LosZeroModeMachine
         End If
         '同時施工可
         If sender Is chkLosZeroEnable Then
-            PlcAdr = My.Settings.LosZeroEnable
+            PlcAdr = SimlationSetting.LosZeroEnable
         End If
 
 
@@ -399,7 +401,7 @@ Public Class frmSim
         Dim NumObj As NumericUpDown = DirectCast(sender, NumericUpDown)
         Dim PlcAdress As String = ""
         Dim PlcWriteData As Integer
-        With My.Settings
+        With SimlationSetting
             Select Case NumObj.Name
                 Case nudLeftStroke.Name
                     PlcAdress = .LeftStrokeAdr
@@ -455,8 +457,14 @@ Public Class frmSim
     Private Sub btnJackAllSelect_Click(sender As Object, e As EventArgs) Handles btnJackAllSelect.Click
         Dim i As Integer
         For i = 0 To InitParm.NumberJack - 1
-            Dim Jadr As String =
-            "B" & Convert.ToString((Convert.ToInt32(My.Settings.JackSel.Substring(1), 16) + i), 16)
+            Dim Jadr As String
+            If SimlationSetting.JackSel.StartsWith("M") Then
+                Jadr = "M" & (SimlationSetting.JackSel.Substring(1) + i)
+            Else
+                Jadr = "B" & Convert.ToString((Convert.ToInt32(SimlationSetting.JackSel.Substring(1), 16) + i), 16)
+
+            End If
+
             Dim iRet As Long = ComPlc.SetDevice(Jadr, 1)
         Next
     End Sub
@@ -477,11 +485,11 @@ Public Class frmSim
         Dim GpPv(InitParm.NumberGroup - 1) As Integer
         Dim i As Integer
         For i = 0 To InitParm.NumberGroup - 1
-            GpPv(i) = GpMvOutBefore(i) / 100 * nudSoucePressure.Value * My.Settings.PresPlcScale / My.Settings.PresEngScale
+            GpPv(i) = GpMvOutBefore(i) / 100 * nudSoucePressure.Value * SimlationSetting.PresPlcScale / SimlationSetting.PresEngScale
             GpMvOutBefore(i) = GpMvOutReal(i)
         Next
 
-        Dim iRet As Long = ComPlc.WriteDeviceBlock(My.Settings.GpPresPV, InitParm.NumberGroup, GpPv(0))
+        Dim iRet As Long = ComPlc.WriteDeviceBlock(SimlationSetting.GpPresPV, InitParm.NumberGroup, GpPv(0))
 
     End Sub
 
@@ -502,7 +510,7 @@ Public Class frmSim
         sharrBufferForDeviceValue(1) = BitConverter.ToInt16(byarrBufferByte, 2)
 
         'D10から用意した32bit整数を書き込む
-        iReturnCode = ComPlc.WriteDeviceBlock2(My.Settings.GyairoAdr,
+        iReturnCode = ComPlc.WriteDeviceBlock2(SimlationSetting.GyairoAdr,
                                                      ELEMENT_SIZE_32BITINTEGER,
                                                      sharrBufferForDeviceValue(0))
 
@@ -531,19 +539,19 @@ CatchError:  '例外処理
         Dim PlcWrBaseAdress As String = ""
         Select Case e.ColumnIndex
             Case 1
-                PlcWrBaseAdress = My.Settings.ExcavOrSegmentAdr
+                PlcWrBaseAdress = SimlationSetting.ExcavOrSegmentAdr
             Case 2
-                PlcWrBaseAdress = My.Settings.PullBackOnAdr
+                PlcWrBaseAdress = SimlationSetting.PullBackOnAdr
             Case 3
-                PlcWrBaseAdress = My.Settings.PullBackAnsAdr
+                PlcWrBaseAdress = SimlationSetting.PullBackAnsAdr
             Case 4
-                PlcWrBaseAdress = My.Settings.ClosetOnAdr
+                PlcWrBaseAdress = SimlationSetting.ClosetOnAdr
             Case 5
-                PlcWrBaseAdress = My.Settings.ClosetAnsAdr
+                PlcWrBaseAdress = SimlationSetting.ClosetAnsAdr
             Case 6
-                PlcWrBaseAdress = My.Settings.PullBackCommand
+                PlcWrBaseAdress = SimlationSetting.PullBackCommand
             Case 7
-                PlcWrBaseAdress = My.Settings.ClosetCommand
+                PlcWrBaseAdress = SimlationSetting.ClosetCommand
         End Select
 
         Dim intPlcWrBaseAdress As Integer = Convert.ToInt32(PlcWrBaseAdress.Substring(1), 16)
