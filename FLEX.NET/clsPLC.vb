@@ -88,7 +88,6 @@ Public Class clsPlcIf
     Private _mintPreIPAdress As Integer         ''操作権のあるＩＰアドレス（下位）
     Private _mblnPreContModeFlag As Boolean ''制御モードフラグ
     Private _mvarPressWrData() As Object    ''圧力シーケンサ書き込み用
-    Private _mblnPre自動方向ContFlag As Boolean ''自動方向制御フラグ
 
 
 
@@ -538,6 +537,9 @@ Public Class clsPlcIf
         End Set
     End Property
 
+    Public ReadOnly Property MachineComErr As Boolean
+
+
     Public Sub New()
         '* ACTコントロール用インスタンスの生成*************************************/
         com_ReferencesEasyIF = New ACTMULTILib.ActEasyIF
@@ -717,6 +719,8 @@ Public Class clsPlcIf
 
                 _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
                 _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
+
+                _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
 
             Else    'エラー発生
                 RaiseEvent PLCErrOccur(sender, e, "")

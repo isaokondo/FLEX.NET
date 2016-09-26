@@ -15,8 +15,12 @@ Public Class clsSimlationSetting
     Public ReadOnly Property FlexMode As String
     Public ReadOnly Property StrokePlcScale As String
     Public ReadOnly Property StrokeEngScale As String
+    Public ReadOnly Property GpMvPlcScale As String
+    Public ReadOnly Property GpMvEngScale As String
+
     Public ReadOnly Property PresPlcScale As String
     Public ReadOnly Property PresEngScale As String
+
     Public ReadOnly Property SpeedPlcScale As String
     Public ReadOnly Property SpeedEngScale As String
     Public ReadOnly Property LeftSpeedAdr As String
@@ -71,6 +75,10 @@ Public Class clsSimlationSetting
                         _PresPlcScale = .Item("値")
                     Case "PresEngScale"
                         _PresEngScale = .Item("値")
+                    Case "GpMvPlcScale"
+                        _GpMvPlcScale = .Item("値")
+                    Case "GpMvEngScale"
+                        _GpMvEngScale = .Item("値")
                     Case "SpeedPlcScale"
                         _SpeedPlcScale = .Item("値")
                     Case "SpeedEngScale"

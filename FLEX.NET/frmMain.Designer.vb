@@ -160,6 +160,7 @@ Partial Class frmMain
         Me.DspDirection = New FLEX.NET.ucnDspData()
         Me.DspVerDev = New FLEX.NET.ucnDspData()
         Me.DspHorDev = New FLEX.NET.ucnDspData()
+        Me.DspMachinComErr = New FLEX.NET.ucnDspBit()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -719,6 +720,7 @@ Partial Class frmMain
         '
         Me.Panel2.BackColor = System.Drawing.Color.DarkGray
         Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel2.Controls.Add(Me.DspMachinComErr)
         Me.Panel2.Controls.Add(Me.DspFlexGyiroControl)
         Me.Panel2.Controls.Add(Me.DspFlexAutoAzurControl)
         Me.Panel2.Controls.Add(Me.DspExcavingStop)
@@ -2178,6 +2180,20 @@ Partial Class frmMain
         Me.DspHorDev.Value = "123.45 "
         Me.DspHorDev.ValueType = False
         '
+        'DspMachinComErr
+        '
+        Me.DspMachinComErr.BackColor = System.Drawing.Color.Transparent
+        Me.DspMachinComErr.BitStatus = True
+        Me.DspMachinComErr.Blink = True
+        Me.DspMachinComErr.FieldName = "シールドマシン伝送異常"
+        Me.DspMachinComErr.Location = New System.Drawing.Point(80, 20)
+        Me.DspMachinComErr.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspMachinComErr.Name = "DspMachinComErr"
+        Me.DspMachinComErr.OffBackColor = System.Drawing.Color.LightGray
+        Me.DspMachinComErr.OnBackColor = System.Drawing.Color.Red
+        Me.DspMachinComErr.Size = New System.Drawing.Size(409, 30)
+        Me.DspMachinComErr.TabIndex = 74
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
@@ -2406,6 +2422,7 @@ Partial Class frmMain
     Friend WithEvents LineShape1 As PowerPacks.LineShape
     Friend WithEvents ucnVerLineChart As ucnChart2
     Friend WithEvents ucnHorLineChart As ucnChart2
+    Friend WithEvents DspMachinComErr As ucnDspBit
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

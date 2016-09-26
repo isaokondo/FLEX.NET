@@ -88,6 +88,9 @@ Module mdlFLEX
             WriteEventData("待機中になりました。", Color.Blue)
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
             PlcIf.LosZeroSts_FLEX = 0
+            PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
+            PlcIf.LosZeroDataWrite("引戻しジャッキ", Nothing)
+            PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
         End If
         '掘進中で手動方向制御
         If NowStatus = cKussin And ControlParameter.AutoDirectionControl = False Then
@@ -252,61 +255,77 @@ Module mdlFLEX
                                        NowSts As Short, FromDev As Boolean) Handles PlcIf.LosZeroStsChange
         'マシンからのステータス
         If FromDev Then
-            Select Case NowSts
-                Case 1
-                    PlcIf.LosZeroSts_FLEX = 1'1ピース目の減圧開始
-                Case 2
-                    WriteEventData("ジャッキの引戻し開始しました。", Color.Magenta)
-                Case 3
-                    WriteEventData("ジャッキの引戻し完了しました。", Color.Magenta)
-                Case 4, 6
-                    WriteEventData("ジャッキ押込み開始しました。", Color.Magenta)
-                Case 5
-                    WriteEventData("セグメント組立完了しました。", Color.Magenta)
-                    PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
-                Case 7
-                    WriteEventData("ジャッキ押付け完了しました。", Color.Magenta)
-                    PlcIf.LosZeroSts_FLEX = 4 '押し付け完了確認
-                    If PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then '最終ピース到達前
-                        If ControlParameter.NextPieceConfirm Then
-                            '同時施工継続メッセージ出力
-                            My.Forms.frmNextPieceConfirm.Show()
-                        Else
-                            PlcIf.LosZeroSts_FLEX = 1 '減圧開始
+
+            With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
+                Select Case NowSts
+                    Case 1
+                        PlcIf.LosZeroSts_FLEX = 1'1ピース目の減圧開始
+                    Case 2
+                        '引き戻しジャッキ
+                        Dim PullJk As String =
+                            String.Join(",", .PullBackJack)
+
+                        WriteEventData("No." & PullJk & " のジャッキの引戻し開始しました。", Color.Magenta)
+                    Case 3
+                        WriteEventData("ジャッキの引戻し完了しました。", Color.Magenta)
+                    Case 4, 6
+                        '押込みジャッキ
+                        Dim ClosetJk As String =
+                            String.Join(",", .ClosetJack)
+                        WriteEventData("No." & ClosetJk & " のジャッキ押込み開始しました。", Color.Magenta)
+                    Case 5
+                        '押込みジャッキ
+                        WriteEventData("[" & .PieceName & "] セグメント組立完了しました。", Color.Magenta)
+                        PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
+                    Case 7
+                        WriteEventData("ジャッキ押付け完了しました。", Color.Magenta)
+                        PlcIf.LosZeroSts_FLEX = 4 '押し付け完了確認
+                        If PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then '最終ピース到達前
+                            If ControlParameter.NextPieceConfirm Then
+                                '同時施工継続メッセージ出力
+                                My.Forms.frmNextPieceConfirm.Show()
+                            Else
+                                PlcIf.LosZeroSts_FLEX = 1 '減圧開始
+                            End If
                         End If
-                    End If
 
 
-                Case 8
-                    WriteEventData("Kセグメント組立完了しました。", Color.Magenta)
+                    Case 8
+                        WriteEventData("Kセグメント組立完了しました。", Color.Magenta)
 
-            End Select
+                End Select
+            End With
+
         Else
-            'FLEXからのステータス
-            Select Case NowSts
-                Case 1  '減圧開始
-                    If PlcIf.LosZeroSts_M <> 1 Then
-                        PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
-                    End If
-                    WriteEventData(PlcIf.AssemblyPieceNo & "ピース目の減圧開始します。", Color.Magenta)
-                    'マシンへ指令　
-                    With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
-                        PlcIf.LosZeroDataWrite("減圧ジャッキ", .ReduceJack)
-                        PlcIf.LosZeroDataWrite("引戻しジャッキ", .PullBackJack)
-                        PlcIf.LosZeroDataWrite("押込みジャッキ", .ClosetJack)
-                    End With
-                    '減圧処理開始
-                    Reduce.Start()
+                'FLEXからのステータス
+                Select Case NowSts
+                    Case 1  '減圧開始
+                        If PlcIf.LosZeroSts_M <> 1 Then
+                            PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
+                        End If
 
-                Case 2
-                    WriteEventData("減圧完了しました。", Color.Magenta)
-                    PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
+                        With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
+                            '減圧グループ
+                            WriteEventData(PlcIf.AssemblyPieceNo & "ピース目 " & String.Join(",", .ReduceGroup) & "グループの減圧開始します。", Color.Magenta)
 
-            End Select
+                            'マシンへ指令　
+                            PlcIf.LosZeroDataWrite("減圧ジャッキ", .ReduceJack)
+                            PlcIf.LosZeroDataWrite("引戻しジャッキ", .PullBackJack)
+                            PlcIf.LosZeroDataWrite("押込みジャッキ", .ClosetJack)
+                        End With
+                        '減圧処理開始
+                        Reduce.Start()
 
+                    Case 2
+                        WriteEventData("減圧完了しました。", Color.Magenta)
+                        PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
 
+                End Select
 
-        End If
+            End If
+
+        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+
     End Sub
 
 

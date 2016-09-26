@@ -220,7 +220,7 @@ Public Class frmSim
         ReDim plcGpMv(InitParm.NumberGroup)
         iRet = ComPlc.ReadDeviceBlock(SimlationSetting.GpPresMV, InitParm.NumberGroup, plcGpMv(0))
         For i = 0 To InitParm.NumberGroup - 1
-            GpMvOutReal(i) = fnChangePresAnalogIn(plcGpMv(i)) / SimlationSetting.PresEngScale * 100
+            GpMvOutReal(i) = plcGpMv(i) * SimlationSetting.GpMvEngScale / SimlationSetting.GpMvPlcScale
             DspGpMv(i).Text = GpMvOutReal(i).ToString & "%"
         Next
 

@@ -21,6 +21,9 @@
 
         'PLCからの読込表示
         With PlcIf
+
+            DspMachinComErr.Visible = .MachineComErr 'マシン伝送異常
+
             DspRingNo.Text = .RingNo 'リングNo
 
             DspAveStroke.Value = .RealStroke        '平均ストローク
