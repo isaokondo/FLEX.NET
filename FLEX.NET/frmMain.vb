@@ -23,6 +23,7 @@
         With PlcIf
 
             DspMachinComErr.Visible = .MachineComErr 'マシン伝送異常
+            DspMachinComErr.BitStatus = BlinkFlg
 
             DspRingNo.Text = .RingNo 'リングNo
 

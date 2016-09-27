@@ -52,9 +52,13 @@ Module mdlFLEX
 
     End Sub
 
-    Private Sub PlcIf_PLCErrOccur(sender As Object, ByVale As EventArgs, ErrMsg As String) Handles PlcIf.PLCErrOccur
-        Dim response = MsgBox("PLC通信エラー:" & ErrMsg, MsgBoxStyle.AbortRetryIgnore)
-        If response = MsgBoxResult.Abort Then End
+    Private Sub PlcIf_PLCErrOccur(sender As Object, ByVale As EventArgs, ErrMsg As String, ErrCode As Long) Handles PlcIf.PLCErrOccur
+        If ErrCode <> 0 Then
+            Dim response = MsgBox("PLC通信エラー:" & ErrMsg, MsgBoxStyle.AbortRetryIgnore)
+            If response = MsgBoxResult.Abort Then End
+        Else
+            WriteEventData(ErrMsg, Color.Red)
+        End If
     End Sub
 
     ''' <summary>
@@ -355,7 +359,9 @@ Module mdlFLEX
         'If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
         If ControlParameter.AutoDirectionControl Then
-            WriteEventData("自動方向制御開始しました。", Color.Orange)
+            If PlcIf.ExcaStatus = cKussin Then
+                WriteEventData("自動方向制御開始しました。", Color.Orange)
+            End If
             'tmrAutoDirect.Enabled = False
             'TODO:自動手動切替時しかPID定数が反映されてない！
             ''手動→自動切替時
@@ -378,17 +384,19 @@ Module mdlFLEX
             End With
 
         Else
-            WriteEventData("方向制御 手動モードに変わりました", Color.Blue)
+            If PlcIf.ExcaStatus = cKussin Then
+                WriteEventData("方向制御 手動モードに変わりました", Color.Blue)
+            End If
             ''自動演算停止
             JackMvAuto.MvAutoStop()
-            '                ''自動→手動切替時
-            'TODO:操作権
-            'If mneSosa.Checked Then
-            ''自動から手動時のトラッキング処理
-            ''自動時の座標を手動時の座標へ渡す
-            JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
+                '                ''自動→手動切替時
+                'TODO:操作権
+                'If mneSosa.Checked Then
+                ''自動から手動時のトラッキング処理
+                ''自動時の座標を手動時の座標へ渡す
+                JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
 
-        End If
+            End If
     End Sub
 
     Private Sub JackMvAuto_OneWayLimitModeChanges(Flg As Boolean) Handles JackMvAuto.OneWayLimitModeChanges

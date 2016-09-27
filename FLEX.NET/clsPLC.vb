@@ -116,7 +116,7 @@ Public Class clsPlcIf
     Private WithEvents com_ReferencesEasyIF As ACTMULTILib.ActEasyIF
 
     Public Event PLCRead() 'PLC読込イベント
-    Public Event PLCErrOccur(ByVal sender As Object, ByVale As EventArgs, ByVal ErrMsg As String) 'PLC読込イベント
+    Public Event PLCErrOccur(ByVal sender As Object, ByVale As EventArgs, ByVal ErrMsg As String, ByVal ErrCode As Long) 'PLC読込イベント
     ''' <summary>
     ''' 掘進ステータスの変化時
     ''' </summary>
@@ -653,7 +653,7 @@ Public Class clsPlcIf
 
                 frmMain.tmrDataDsp.Enabled = True
             Else    'エラー発生
-                RaiseEvent PLCErrOccur(sender, e, "")
+                RaiseEvent PLCErrOccur(sender, e, "アナログ読込エラー", iReturnCode)
             End If
 
 
@@ -690,7 +690,7 @@ Public Class clsPlcIf
 
 
             Else    'エラー発生
-                RaiseEvent PLCErrOccur(sender, e, "")
+                RaiseEvent PLCErrOccur(sender, e, "パラメータ読込エラー", iReturnCode)
             End If
 
 
@@ -719,11 +719,12 @@ Public Class clsPlcIf
 
                 _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
                 _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
-
+                Dim tmp As Boolean = _MachineComErr
                 _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
+                If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(sender, e, "シールドマシン伝送異常が発生しました。", 0)
 
             Else    'エラー発生
-                RaiseEvent PLCErrOccur(sender, e, "")
+                    RaiseEvent PLCErrOccur(sender, e, "デジタル読込エラー", iReturnCode)
             End If
         Catch exException As Exception
             '例外処理	
@@ -907,8 +908,11 @@ Public Class clsPlcIf
         For i As Short = 0 To InitParameter.NumberGroup - 1
             If ControlParameter.最大全開出力時の目標圧力 <> 0 Then
                 '' PLCに0-4000でSVを出力
+
                 intPressWrData(i) = Int(sngPres(i) / ControlParameter.最大全開出力時の目標圧力 * 4000)
+
             End If
+
         Next i
 
         Dim iReturnCode As Long = com_ReferencesEasyIF.WriteDeviceBlock2(AnalogTag.TagData("グループ1圧力SV").Address,
@@ -940,7 +944,7 @@ Public Class clsPlcIf
             iReturnCode = com_ReferencesEasyIF.Open()
 
             If iReturnCode <> 0 Then
-                RaiseEvent PLCErrOccur(Me, New EventArgs, "PLC_OpenError! " & String.Format("0x{0:x8} [HEX]", iReturnCode))
+                RaiseEvent PLCErrOccur(Me, New EventArgs, "PLC_OpenError! " & String.Format("0x{0:x8} [HEX]", iReturnCode), iReturnCode)
             End If
 
 
