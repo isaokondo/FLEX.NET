@@ -312,6 +312,7 @@ Friend Class clsReducePress
             _MvOut(i) -= ReduceDev(i)
             If _MvOut(i) < 0 Then _MvOut(i) = 0
         Next
+        Console.WriteLine("MV" & String.Join(",", _MvOut))
         Dim ReduceOn As Boolean = True
         Dim MvZero As Short = 0
         For Each GpNp As Short In LstRd

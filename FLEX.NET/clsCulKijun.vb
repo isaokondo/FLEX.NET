@@ -571,7 +571,7 @@ Friend Class clsCulKijun
                     Return HorPlan.後胴中心(.平面ゾーン番号)
 
                 Case Else
-
+                    Return 0
             End Select
         End With
 

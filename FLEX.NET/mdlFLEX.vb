@@ -71,7 +71,7 @@ Module mdlFLEX
         '組立パターンの情報を取得
         SegmentAssembly.sbSegmentAssemblyDataRead(PlcIf.RingNo)
 
-        If PreStatus = -1 Then Exit Sub
+        'If PreStatus = -1 Then Exit Sub
         '待機中から掘進
         If PreStatus = cTaiki And NowStatus = cKussin Then
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
@@ -89,7 +89,9 @@ Module mdlFLEX
         End If
         '待機中
         If NowStatus = cTaiki Then
-            WriteEventData("待機中になりました。", Color.Blue)
+            If PreStatus <> -1 Then
+                WriteEventData("待機中になりました。", Color.Blue)
+            End If
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
             PlcIf.LosZeroSts_FLEX = 0
             PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
@@ -114,7 +116,88 @@ Module mdlFLEX
 
     End Sub
 
+    ''' <summary>
+    ''' 同時施工ステータス変化
+    ''' </summary>
+    ''' <param name="PreSts">変化前のステータス</param>
+    ''' <param name="NowSts">変化後のステータス</param>
+    ''' <param name="FromDev">True:マシン　False：FLEX</param>
+    Private Sub PlcIf_LosZeroStsChange(PreSts As Short,
+                                       NowSts As Short, FromDev As Boolean) Handles PlcIf.LosZeroStsChange
+        'マシンからのステータス
+        If FromDev Then
 
+            With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
+                Select Case NowSts
+                    Case 1
+                        PlcIf.LosZeroSts_FLEX = 1'1ピース目の減圧開始
+                    Case 2
+                        '引き戻しジャッキ
+                        Dim PullJk As String =
+                            String.Join(",", .PullBackJack)
+
+                        WriteEventData("No." & PullJk & " のジャッキの引戻し開始しました。", Color.Magenta)
+                    Case 3
+                        WriteEventData("ジャッキの引戻し完了しました。", Color.Magenta)
+                    Case 4, 6
+                        '押込みジャッキ
+                        Dim ClosetJk As String =
+                            String.Join(",", .ClosetJack)
+                        WriteEventData("No." & ClosetJk & " のジャッキ押込み開始しました。", Color.Magenta)
+                    Case 5
+                        '押込みジャッキ
+                        WriteEventData("[" & .PieceName & "] セグメント組立完了しました。", Color.Magenta)
+                        PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
+                    Case 7
+                        WriteEventData("ジャッキ押付け完了しました。", Color.Magenta)
+                        PlcIf.LosZeroSts_FLEX = 4 '押し付け完了確認
+                        If PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then '最終ピース到達前
+                            If ControlParameter.NextPieceConfirm Then
+                                '同時施工継続メッセージ出力
+                                My.Forms.frmNextPieceConfirm.Show()
+                            Else
+                                PlcIf.LosZeroSts_FLEX = 1 '減圧開始
+                            End If
+                        End If
+
+
+                    Case 8
+                        WriteEventData("Kセグメント組立完了しました。", Color.Magenta)
+
+                End Select
+            End With
+
+        Else
+            'FLEXからのステータス
+            Select Case NowSts
+                Case 1  '減圧開始
+                    If PlcIf.LosZeroSts_M <> 1 Then
+                        PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
+                    End If
+
+                    With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
+                        '減圧グループ
+                        WriteEventData(PlcIf.AssemblyPieceNo & "ピース目 " & String.Join(",", .ReduceGroup) & "グループの減圧開始します。", Color.Magenta)
+
+                        'マシンへ指令　
+                        PlcIf.LosZeroDataWrite("減圧ジャッキ", .ReduceJack)
+                        PlcIf.LosZeroDataWrite("引戻しジャッキ", .PullBackJack)
+                        PlcIf.LosZeroDataWrite("押込みジャッキ", .ClosetJack)
+                    End With
+                    '減圧処理開始
+                    Reduce.Start()
+
+                Case 2
+                    WriteEventData("減圧完了しました。", Color.Magenta)
+                    PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
+
+            End Select
+
+        End If
+
+        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+
+    End Sub
 
 
     ''' <summary>
@@ -249,88 +332,7 @@ Module mdlFLEX
 
     End Sub
 
-    ''' <summary>
-    ''' 同時施工ステータス変化
-    ''' </summary>
-    ''' <param name="PreSts">変化前のステータス</param>
-    ''' <param name="NowSts">変化後のステータス</param>
-    ''' <param name="FromDev">True:マシン　False：FLEX</param>
-    Private Sub PlcIf_LosZeroStsChange(PreSts As Short,
-                                       NowSts As Short, FromDev As Boolean) Handles PlcIf.LosZeroStsChange
-        'マシンからのステータス
-        If FromDev Then
 
-            With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
-                Select Case NowSts
-                    Case 1
-                        PlcIf.LosZeroSts_FLEX = 1'1ピース目の減圧開始
-                    Case 2
-                        '引き戻しジャッキ
-                        Dim PullJk As String =
-                            String.Join(",", .PullBackJack)
-
-                        WriteEventData("No." & PullJk & " のジャッキの引戻し開始しました。", Color.Magenta)
-                    Case 3
-                        WriteEventData("ジャッキの引戻し完了しました。", Color.Magenta)
-                    Case 4, 6
-                        '押込みジャッキ
-                        Dim ClosetJk As String =
-                            String.Join(",", .ClosetJack)
-                        WriteEventData("No." & ClosetJk & " のジャッキ押込み開始しました。", Color.Magenta)
-                    Case 5
-                        '押込みジャッキ
-                        WriteEventData("[" & .PieceName & "] セグメント組立完了しました。", Color.Magenta)
-                        PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
-                    Case 7
-                        WriteEventData("ジャッキ押付け完了しました。", Color.Magenta)
-                        PlcIf.LosZeroSts_FLEX = 4 '押し付け完了確認
-                        If PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then '最終ピース到達前
-                            If ControlParameter.NextPieceConfirm Then
-                                '同時施工継続メッセージ出力
-                                My.Forms.frmNextPieceConfirm.Show()
-                            Else
-                                PlcIf.LosZeroSts_FLEX = 1 '減圧開始
-                            End If
-                        End If
-
-
-                    Case 8
-                        WriteEventData("Kセグメント組立完了しました。", Color.Magenta)
-
-                End Select
-            End With
-
-        Else
-                'FLEXからのステータス
-                Select Case NowSts
-                    Case 1  '減圧開始
-                        If PlcIf.LosZeroSts_M <> 1 Then
-                            PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
-                        End If
-
-                        With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
-                            '減圧グループ
-                            WriteEventData(PlcIf.AssemblyPieceNo & "ピース目 " & String.Join(",", .ReduceGroup) & "グループの減圧開始します。", Color.Magenta)
-
-                            'マシンへ指令　
-                            PlcIf.LosZeroDataWrite("減圧ジャッキ", .ReduceJack)
-                            PlcIf.LosZeroDataWrite("引戻しジャッキ", .PullBackJack)
-                            PlcIf.LosZeroDataWrite("押込みジャッキ", .ClosetJack)
-                        End With
-                        '減圧処理開始
-                        Reduce.Start()
-
-                    Case 2
-                        WriteEventData("減圧完了しました。", Color.Magenta)
-                        PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
-
-                End Select
-
-            End If
-
-        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
-
-    End Sub
 
 
     ''' <summary>
@@ -354,7 +356,7 @@ Module mdlFLEX
     ''' 姿勢制御自動手動の切替時の処理
     ''' </summary>
     ''' 
-    Private Sub ControlParameter_FlexAutoManualChange() Handles ControlParameter.FlexAutoManualChange, PlcIf.ExcavationStatusChange
+    Private Sub ControlParameter_FlexAutoManualChange() Handles ControlParameter.FlexAutoManualChange ', PlcIf.ExcavationStatusChange
         '掘進中以外はスキップ
         'If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
@@ -389,14 +391,14 @@ Module mdlFLEX
             End If
             ''自動演算停止
             JackMvAuto.MvAutoStop()
-                '                ''自動→手動切替時
-                'TODO:操作権
-                'If mneSosa.Checked Then
-                ''自動から手動時のトラッキング処理
-                ''自動時の座標を手動時の座標へ渡す
-                JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
+            '                ''自動→手動切替時
+            'TODO:操作権
+            'If mneSosa.Checked Then
+            ''自動から手動時のトラッキング処理
+            ''自動時の座標を手動時の座標へ渡す
+            JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
 
-            End If
+        End If
     End Sub
 
     Private Sub JackMvAuto_OneWayLimitModeChanges(Flg As Boolean) Handles JackMvAuto.OneWayLimitModeChanges
