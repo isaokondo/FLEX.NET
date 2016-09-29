@@ -199,7 +199,8 @@ Public Class ucnJackDsp
     Public Property PieceName As New List(Of String)
     Public Property PieceAngle As New List(Of Single)
     Public Property PieceCenterAngle As New List(Of Single)
-
+    Public Property AssemblyOrder As New List(Of Short)
+    Public Property AssemblyPieceNo As Short    ''組み立てするピースの色付け用
 
     <Browsable(True), Description("FLEX方向制御自動/手動")>
     Public Property FlexAutoManual As Boolean
@@ -418,14 +419,21 @@ Public Class ucnJackDsp
         For i As Short = 0 To PieceName.Count - 1
 
             g.ResetTransform() 'ワールド座標系リセット
+            '組み立てするピースの色付け
+            If _AssemblyPieceNo >= _AssemblyOrder(i) Then
+                Dim cl As Color
+                If _AssemblyOrder(i) = _AssemblyPieceNo Then
+                    cl = Color.Yellow
+                Else
+                    cl = Color.LightGray
+                End If
+                'Dim p As New Pen(IIf(_AssemblyPieceNo = _AssemblyOrder(i), Color.Yellow, Color.LightGray), 17) '幅10
+                Dim p As New Pen(cl, 17)
+                Dim d As Integer = MaxRadios * 0.97
+                g.DrawArc(p, New RectangleF(CenterPos.X - d, CenterPos.Y - d, d * 2, d * 2),
+                          _PieceCenterAngle(i) - _PieceAngle(i) / 2 - 90, _PieceAngle(i))
 
-            'If AssemblyPieceNo.Value = Qw.AssemblyOrder Then
-            '    Dim p As New Pen(Color.Cyan, 17) '幅10
-            '    Dim d As Integer = Rd * 0.957
-            '    g.DrawArc(p, New RectangleF(CenterPos.X - d, CenterPos.Y - d, d * 2, d * 2),
-            '              Qw.PieceCenterAngle - Qw.PieceAngle / 2 - 90, Qw.PieceAngle)
-
-            'End If
+            End If
             Dim Rd As Integer = MaxRadios - 1
             Dim Angle As Single = (90 - _PieceAngle(i) / 2 - _PieceCenterAngle(i)) * PI / 180
             Dim pX As Integer = CenterPos.X + Rd * Cos(Angle)

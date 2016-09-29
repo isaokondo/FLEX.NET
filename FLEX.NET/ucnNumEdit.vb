@@ -171,6 +171,12 @@ Public Class ucnNumEdit
     <Browsable(True)>
     Public Property Value As Double
         Get
+            Select Case _InputStyle
+                Case InputMethod.NumericInputType
+                    Return _Value
+                Case InputMethod.SelectType
+                    Return ComboBox.SelectedIndex
+            End Select
             Return _Value
         End Get
         Set(value As Double)
@@ -182,7 +188,7 @@ Public Class ucnNumEdit
                     If _Value < numUD.Minimum Then _Value = numUD.Minimum
                     numUD.Value = _Value
                 Case InputMethod.SelectType
-                    'ComboBox.SelectedIndex = _Value
+                    ComboBox.SelectedIndex = _Value
             End Select
         End Set
     End Property

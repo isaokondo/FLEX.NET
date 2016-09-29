@@ -63,6 +63,16 @@ Namespace My.Resources
         '''<summary>
         '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         '''</summary>
+        Friend ReadOnly Property FLEX_SPLASH() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("FLEX_SPLASH", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        '''</summary>
         Friend ReadOnly Property point() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("point", resourceCulture)

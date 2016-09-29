@@ -292,14 +292,16 @@
         UcnJackDsp.PieceAngle.Clear()
         UcnJackDsp.PieceCenterAngle.Clear()
         UcnJackDsp.PieceName.Clear()
+        UcnJackDsp.AssemblyOrder.Clear()
 
         For Each pca As clsSegmentAssembly.AsseblyProcess
                                         In SegmentAssembly.SegmentProcessData.Values
             UcnJackDsp.PieceName.Add(pca.PieceName)
             UcnJackDsp.PieceAngle.Add(pca.PieceAngle)
             UcnJackDsp.PieceCenterAngle.Add(pca.PieceCenterAngle)
+            UcnJackDsp.AssemblyOrder.Add(pca.AssemblyOrder)
         Next
-
+        UcnJackDsp.AssemblyPieceNo = PlcIf.AssemblyPieceNo
 
         UcnJackDsp.SegmentPieceDsp() 'ｾｸﾞﾒﾝﾄピース表示
 
@@ -360,7 +362,8 @@
 
     Private Sub SystemEnd_Click(sender As Object, e As EventArgs) Handles SystemEnd.Click
         If MsgBox("FLEXシステムを終了します。", MsgBoxStyle.OkCancel + MsgBoxStyle.Exclamation, "FLEX") = MsgBoxResult.Ok Then
-            Application.Exit()
+            Me.Close()
+            'Application.Exit()
         End If
 
     End Sub

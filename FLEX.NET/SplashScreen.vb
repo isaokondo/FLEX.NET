@@ -30,4 +30,7 @@
         Copyright.Text = My.Application.Info.Copyright
     End Sub
 
+    Private Sub MainLayoutPanel_Paint(sender As Object, e As PaintEventArgs)
+
+    End Sub
 End Class

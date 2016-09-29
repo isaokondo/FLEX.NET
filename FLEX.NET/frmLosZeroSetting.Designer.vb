@@ -76,6 +76,7 @@ Partial Class frmLosZeroSetting
         '
         'ReduceJudgePress
         '
+        Me.ReduceJudgePress.DataDspWidth = 0
         Me.ReduceJudgePress.DecimalPlaces = CType(1, Short)
         Me.ReduceJudgePress.DspFieldName = True
         Me.ReduceJudgePress.FieldName = "減圧完了判断圧力"
@@ -93,6 +94,7 @@ Partial Class frmLosZeroSetting
         '
         'ReduceTime
         '
+        Me.ReduceTime.DataDspWidth = 0
         Me.ReduceTime.DecimalPlaces = CType(0, Short)
         Me.ReduceTime.DspFieldName = True
         Me.ReduceTime.FieldName = "減圧時間"
@@ -131,6 +133,7 @@ Partial Class frmLosZeroSetting
         Me.Controls.Add(Me.LosZeroOpposeControl)
         Me.Controls.Add(Me.LosZeroOpposeJack)
         Me.Controls.Add(Me.LosZeroRollingTake)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "frmLosZeroSetting"
         Me.Text = "同時施工関連"
         Me.Controls.SetChildIndex(Me.LosZeroRollingTake, 0)

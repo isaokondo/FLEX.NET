@@ -3,6 +3,7 @@ Public Class clsPlcIf
 
     Private mblnComOk As Boolean            ''通信フラグ
 
+    Private mblnBlink As Boolean 'ブリンク
 
     Private _groupPv() As Single 'グループ圧力データ
     Private _groupSv() As Single
@@ -751,6 +752,13 @@ Public Class clsPlcIf
 
         _PreJyairo = _gyro
         _PrePitching = _gyroPitching
+
+        '伝送フラグの送出
+        'デジタルの読込
+        Dim t As Long = 0
+        mblnBlink = Not mblnBlink
+        t = t Or mblnBlink
+        iReturnCode = com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
 
         'PLC読込イベント
         RaiseEvent PLCRead()

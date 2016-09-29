@@ -35,6 +35,7 @@
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
         With PlcIf
+            .ストローク管理法 = StrokeManag.Value
             .掘進判定ストローク = StartStokeEdt.Value
             .終了判定引きストローク = CloseJudgePullStroke.Value
             .終了判定時間 = CloseJudgeTime.Value
