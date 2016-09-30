@@ -1747,6 +1747,8 @@ Partial Class frmMain
         '
         'UcnJackDsp
         '
+        Me.UcnJackDsp.AssemblyOrder = CType(resources.GetObject("UcnJackDsp.AssemblyOrder"), System.Collections.Generic.List(Of Short))
+        Me.UcnJackDsp.AssemblyPieceNo = CType(0, Short)
         Me.UcnJackDsp.AutoSize = True
         Me.UcnJackDsp.BackColor = System.Drawing.Color.Transparent
         Me.UcnJackDsp.CopyStrechSet = 100

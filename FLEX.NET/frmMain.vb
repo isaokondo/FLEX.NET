@@ -12,6 +12,28 @@
         InitializeComponent()
 
 
+        InitParameter = New clsInitParameter '初期値パラメータ
+        ControlParameter = New clsControlParameter  '制御パラメータ
+
+        HorPlan = New clsHorPanData '平面掘進計画線
+        VerPlan = New clsVerPlanData '縦断掘進計画線
+
+        MachineSpec = New clsMachinSpec
+
+        SegmentAssembly = New clsSegmentAssembly ''セグメント組立データ
+
+
+        CulcMoment = New clsCulMoment ''モーメント、推力の演算
+
+        JackMvAuto = New clsCulJackMv ''ジャッキ操作量の演算
+        DivCul = New clsThrustDiv ''
+        RefernceDirection = New clsCulKijun
+        JackManual = New clsJkManualOut
+
+        'PLCインターフェース
+        PlcIf = New clsPlcIf
+
+
 
     End Sub
 

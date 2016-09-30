@@ -22,6 +22,7 @@ Partial Class SplashScreen
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SplashScreen))
         Me.Version = New System.Windows.Forms.Label()
         Me.Copyright = New System.Windows.Forms.Label()
         Me.SuspendLayout()
@@ -30,10 +31,10 @@ Partial Class SplashScreen
         '
         Me.Version.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Version.BackColor = System.Drawing.Color.Transparent
-        Me.Version.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Version.Location = New System.Drawing.Point(28, 393)
+        Me.Version.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Version.Location = New System.Drawing.Point(26, 397)
         Me.Version.Name = "Version"
-        Me.Version.Size = New System.Drawing.Size(241, 20)
+        Me.Version.Size = New System.Drawing.Size(325, 25)
         Me.Version.TabIndex = 3
         Me.Version.Text = "バージョン {0}.{1:00}"
         '
@@ -41,10 +42,10 @@ Partial Class SplashScreen
         '
         Me.Copyright.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Copyright.BackColor = System.Drawing.Color.Transparent
-        Me.Copyright.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Copyright.Location = New System.Drawing.Point(28, 423)
+        Me.Copyright.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Copyright.Location = New System.Drawing.Point(26, 435)
         Me.Copyright.Name = "Copyright"
-        Me.Copyright.Size = New System.Drawing.Size(241, 40)
+        Me.Copyright.Size = New System.Drawing.Size(325, 40)
         Me.Copyright.TabIndex = 5
         Me.Copyright.Text = "著作権"
         '
@@ -59,6 +60,7 @@ Partial Class SplashScreen
         Me.Controls.Add(Me.Version)
         Me.Controls.Add(Me.Copyright)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "SplashScreen"

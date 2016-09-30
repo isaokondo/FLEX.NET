@@ -257,11 +257,11 @@ End Class
 ''' </summary>
 Friend Class clsReducePress
 
-    Private _MvOut(InitParameter.NumberGroup - 1) As Short
+    Private _MvOut() As Short
     ''' <summary>
     ''' 1秒ごとの減圧量(%)
     ''' </summary>
-    Private ReduceDev(InitParameter.NumberGroup - 1) As Short
+    Private ReduceDev() As Short
     ''' <summary>
     ''' 減圧グループ
     ''' </summary>
@@ -287,6 +287,9 @@ Friend Class clsReducePress
     ''' 減圧開始
     ''' </summary>
     Public Sub Start()
+
+        ReDim _MvOut(InitParameter.NumberGroup - 1)
+        ReDim ReduceDev(InitParameter.NumberGroup - 1)
         '減圧グループ
         LstRd = SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
 

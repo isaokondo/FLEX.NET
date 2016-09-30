@@ -318,7 +318,7 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblySegmentSel.Size = New System.Drawing.Size(417, 38)
         Me.AssemblySegmentSel.TabIndex = 124
         Me.AssemblySegmentSel.Unit = ""
-        Me.AssemblySegmentSel.Value = 1000.0R
+        'Me.AssemblySegmentSel.Value = 1000.0R
         '
         'ConfirmRingNo
         '
@@ -354,7 +354,7 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblyPatternSel.Size = New System.Drawing.Size(417, 38)
         Me.AssemblyPatternSel.TabIndex = 126
         Me.AssemblyPatternSel.Unit = ""
-        Me.AssemblyPatternSel.Value = 1000.0R
+        'Me.AssemblyPatternSel.Value = 1000.0R
         '
         'LastJackNo
         '
@@ -408,7 +408,7 @@ Partial Class frmAssemblyProcessEdit
         Me.OperattionJackSel.Size = New System.Drawing.Size(417, 38)
         Me.OperattionJackSel.TabIndex = 128
         Me.OperattionJackSel.Unit = ""
-        Me.OperattionJackSel.Value = 1000.0R
+        'Me.OperattionJackSel.Value = 1000.0R
         '
         'AssemblyPieceNo
         '

@@ -2,37 +2,37 @@
 
 Module mdlFLEX
 
-    Public InitParameter As New clsInitParameter '初期値パラメータ
+    Public InitParameter As clsInitParameter '初期値パラメータ
 
-    Public HorPlan As New clsHorPanData '平面掘進計画線
-    Public VerPlan As New clsVerPlanData '縦断掘進計画線
+    Public HorPlan As clsHorPanData '平面掘進計画線
+    Public VerPlan As clsVerPlanData '縦断掘進計画線
     ''' <summary>
     ''' シールドマシン諸元
     ''' </summary>
-    Public MachineSpec As New clsMachinSpec
+    Public MachineSpec As clsMachinSpec
 
-    Public SegmentAssembly As New clsSegmentAssembly ''セグメント組立データ
+    Public SegmentAssembly As clsSegmentAssembly ''セグメント組立データ
 
-    Public WithEvents ControlParameter As New clsControlParameter  '制御パラメータ
+    Public WithEvents ControlParameter As clsControlParameter  '制御パラメータ
 
-    Public CulcMoment As New clsCulMoment ''モーメント、推力の演算
+    Public CulcMoment As clsCulMoment ''モーメント、推力の演算
 
-    Public WithEvents JackMvAuto As New clsCulJackMv ''ジャッキ操作量の演算
+    Public WithEvents JackMvAuto As clsCulJackMv ''ジャッキ操作量の演算
     ''' <summary>
     ''' 推力分担率の演算
     ''' </summary>
-    Public DivCul As New clsThrustDiv ''
+    Public DivCul As clsThrustDiv ''
     ''' <summary>
     ''' 基準方位演算
     ''' </summary>
-    Public RefernceDirection As New clsCulKijun
+    Public RefernceDirection As clsCulKijun
     ''' <summary>
     ''' ジャッキ手動操作出力
     ''' </summary>
-    Public WithEvents JackManual As New clsJkManualOut
+    Public WithEvents JackManual As clsJkManualOut
 
     'PLCインターフェース
-    Public WithEvents PlcIf As New clsPlcIf
+    Public WithEvents PlcIf As clsPlcIf
 
     ''' <summary>
     ''' 減圧処理
@@ -185,6 +185,7 @@ Module mdlFLEX
                         PlcIf.LosZeroDataWrite("押込みジャッキ", .ClosetJack)
                     End With
                     '減圧処理開始
+                    'Reduce = New clsReducePress
                     Reduce.Start()
 
                 Case 2
@@ -266,22 +267,23 @@ Module mdlFLEX
             Dim sngGpSV(InitParameter.NumberGroup - 1) As Single
             Dim intGpFl(InitParameter.NumberGroup - 1) As Short
 
-            '減圧中から組立完了
-            If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
-                Dim Gp As List(Of Short) =
-                        SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
-                For Each R As Short In Gp
-                    sngGpSV(R - 1) =
-                        Reduce.MvOut(R - 1) * ControlParameter.最大全開出力時の目標圧力 / 100
-                    intGpFl(R - 1) = cTracking
-                Next
-            End If
 
 
             Select Case PlcIf.ExcaStatus
 
                 Case cKussin
                     ''掘進中の処理
+                    '減圧中から組立完了
+                    If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
+                        Dim Gp As List(Of Short) =
+                        SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+                        For Each R As Short In Gp
+                            sngGpSV(R - 1) =
+                        Reduce.MvOut(R - 1) * ControlParameter.最大全開出力時の目標圧力 / 100
+                            intGpFl(R - 1) = cTracking
+                        Next
+                    End If
+
                     For i = 0 To InitParameter.NumberGroup - 1
                         If intGpFl(i) <> cTracking Then
                             If .分担率指令値(i) > 99 Then ''全開出力

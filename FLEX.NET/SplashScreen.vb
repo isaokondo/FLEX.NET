@@ -10,10 +10,10 @@
 
         'アプリケーション タイトル
         If My.Application.Info.Title <> "" Then
-            ApplicationTitle.Text = My.Application.Info.Title
+            'ApplicationTitle.Text = My.Application.Info.Title
         Else
             'アプリケーション タイトルがない場合は、拡張子なしのアプリケーション名を使用します
-            ApplicationTitle.Text = System.IO.Path.GetFileNameWithoutExtension(My.Application.Info.AssemblyName)
+            'ApplicationTitle.Text = System.IO.Path.GetFileNameWithoutExtension(My.Application.Info.AssemblyName)my
         End If
 
         'デザイン時に書式設定文字列としてバージョン管理で設定されたテキストを使用して、バージョン情報の書式を

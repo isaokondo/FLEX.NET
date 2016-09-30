@@ -396,8 +396,8 @@ Public Class ucnJackDsp
             'DspInitBaseImg()
             Me.BackgroundImage = imgJackBase
             DspJackStatus()
+            SegmentPieceDsp()
             DspCopy()
-            'SegmentPieceDsp()
         End If
 
 
