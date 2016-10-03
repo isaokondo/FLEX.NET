@@ -65,15 +65,6 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("192.168.2.249")>  _
-        Public ReadOnly Property HostName() As String
-            Get
-                Return CType(Me("HostName"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Black")>  _
         Public ReadOnly Property GpPsColor1() As Global.System.Drawing.Color
             Get
@@ -172,6 +163,15 @@ Namespace My
             Set
                 Me("Setting") = value
             End Set
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("localhost")>  _
+        Public ReadOnly Property HostName() As String
+            Get
+                Return CType(Me("HostName"),String)
+            End Get
         End Property
     End Class
 End Namespace
