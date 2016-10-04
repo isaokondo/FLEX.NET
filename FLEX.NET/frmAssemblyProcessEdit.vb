@@ -47,6 +47,8 @@ Public Class frmAssemblyProcessEdit
             DspAssemblyPieace.Value = .PieceName  '組立ピース名称
             DspPullBackJack.Value = SegmentAssembly.JackListDsp(.PullBackJack) '引戻しジャッキ
             DspClosetJack.Value = SegmentAssembly.JackListDsp(.ClosetJack) '押込みジャッキ
+            DspAddClosetThrustJack.Value = SegmentAssembly.JackListDsp(.AddClosetJack) '追加押込みジャッキ
+
 
             AssemblyPieceNo.MaxValue = SegmentAssembly.AssemblyPieceNumber '組立ピース番号MAX値設定
 

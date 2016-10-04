@@ -25,8 +25,8 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPattern = New FLEX.NET.ucnDspData()
         Me.DspNextPieceName = New FLEX.NET.ucnDspData()
         Me.UcnDspData24 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData21 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData22 = New FLEX.NET.ucnDspData()
+        Me.DspAddClosetThrustJack = New FLEX.NET.ucnDspData()
+        Me.DspClosetThrustJack = New FLEX.NET.ucnDspData()
         Me.DspClosetJack = New FLEX.NET.ucnDspData()
         Me.DspPullBackJack = New FLEX.NET.ucnDspData()
         Me.UcnDspData17 = New FLEX.NET.ucnDspData()
@@ -64,10 +64,10 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPattern.FieldName = "組立パターン"
         Me.DspAssemblyPattern.FieldNameWidth = 292
         Me.DspAssemblyPattern.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAssemblyPattern.Location = New System.Drawing.Point(486, 66)
+        Me.DspAssemblyPattern.Location = New System.Drawing.Point(486, 65)
         Me.DspAssemblyPattern.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPattern.Name = "DspAssemblyPattern"
-        Me.DspAssemblyPattern.Size = New System.Drawing.Size(505, 32)
+        Me.DspAssemblyPattern.Size = New System.Drawing.Size(496, 32)
         Me.DspAssemblyPattern.TabIndex = 122
         Me.DspAssemblyPattern.Unit = "deg"
         Me.DspAssemblyPattern.UnitVisible = False
@@ -85,7 +85,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspNextPieceName.FieldName = "次の組立ﾋﾟｰｽ"
         Me.DspNextPieceName.FieldNameWidth = 146
         Me.DspNextPieceName.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspNextPieceName.Location = New System.Drawing.Point(735, 202)
+        Me.DspNextPieceName.Location = New System.Drawing.Point(724, 205)
         Me.DspNextPieceName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspNextPieceName.Name = "DspNextPieceName"
         Me.DspNextPieceName.Size = New System.Drawing.Size(247, 32)
@@ -106,7 +106,7 @@ Partial Class frmAssemblyProcessEdit
         Me.UcnDspData24.FieldName = "RL考慮ｼﾞｬｯｷ"
         Me.UcnDspData24.FieldNameWidth = 146
         Me.UcnDspData24.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData24.Location = New System.Drawing.Point(486, 202)
+        Me.UcnDspData24.Location = New System.Drawing.Point(486, 205)
         Me.UcnDspData24.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData24.Name = "UcnDspData24"
         Me.UcnDspData24.Size = New System.Drawing.Size(244, 32)
@@ -116,47 +116,47 @@ Partial Class frmAssemblyProcessEdit
         Me.UcnDspData24.Value = "-"
         Me.UcnDspData24.ValueType = True
         '
-        'UcnDspData21
+        'DspAddClosetThrustJack
         '
-        Me.UcnDspData21.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData21.Blink = False
-        Me.UcnDspData21.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData21.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.UcnDspData21.DataWidth = 91
-        Me.UcnDspData21.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData21.FieldName = "追加推進ｼﾞｬｯｷ"
-        Me.UcnDspData21.FieldNameWidth = 146
-        Me.UcnDspData21.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData21.Location = New System.Drawing.Point(735, 168)
-        Me.UcnDspData21.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData21.Name = "UcnDspData21"
-        Me.UcnDspData21.Size = New System.Drawing.Size(247, 32)
-        Me.UcnDspData21.TabIndex = 119
-        Me.UcnDspData21.Unit = "deg"
-        Me.UcnDspData21.UnitVisible = False
-        Me.UcnDspData21.Value = "24"
-        Me.UcnDspData21.ValueType = True
+        Me.DspAddClosetThrustJack.BackColor = System.Drawing.Color.Transparent
+        Me.DspAddClosetThrustJack.Blink = False
+        Me.DspAddClosetThrustJack.BlinkColor = System.Drawing.Color.Red
+        Me.DspAddClosetThrustJack.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.DspAddClosetThrustJack.DataWidth = 91
+        Me.DspAddClosetThrustJack.DecimalPlaces = CType(0, Short)
+        Me.DspAddClosetThrustJack.FieldName = "追加推進ｼﾞｬｯｷ"
+        Me.DspAddClosetThrustJack.FieldNameWidth = 146
+        Me.DspAddClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(724, 170)
+        Me.DspAddClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspAddClosetThrustJack.Name = "DspAddClosetThrustJack"
+        Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(247, 32)
+        Me.DspAddClosetThrustJack.TabIndex = 119
+        Me.DspAddClosetThrustJack.Unit = "deg"
+        Me.DspAddClosetThrustJack.UnitVisible = False
+        Me.DspAddClosetThrustJack.Value = "24"
+        Me.DspAddClosetThrustJack.ValueType = True
         '
-        'UcnDspData22
+        'DspClosetThrustJack
         '
-        Me.UcnDspData22.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData22.Blink = False
-        Me.UcnDspData22.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData22.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.UcnDspData22.DataWidth = 91
-        Me.UcnDspData22.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData22.FieldName = "押込推進ｼﾞｬｯｷ"
-        Me.UcnDspData22.FieldNameWidth = 146
-        Me.UcnDspData22.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData22.Location = New System.Drawing.Point(486, 168)
-        Me.UcnDspData22.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData22.Name = "UcnDspData22"
-        Me.UcnDspData22.Size = New System.Drawing.Size(244, 32)
-        Me.UcnDspData22.TabIndex = 118
-        Me.UcnDspData22.Unit = "deg"
-        Me.UcnDspData22.UnitVisible = False
-        Me.UcnDspData22.Value = "21-23"
-        Me.UcnDspData22.ValueType = True
+        Me.DspClosetThrustJack.BackColor = System.Drawing.Color.Transparent
+        Me.DspClosetThrustJack.Blink = False
+        Me.DspClosetThrustJack.BlinkColor = System.Drawing.Color.Red
+        Me.DspClosetThrustJack.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.DspClosetThrustJack.DataWidth = 91
+        Me.DspClosetThrustJack.DecimalPlaces = CType(2, Short)
+        Me.DspClosetThrustJack.FieldName = "押込推進ｼﾞｬｯｷ"
+        Me.DspClosetThrustJack.FieldNameWidth = 146
+        Me.DspClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspClosetThrustJack.Location = New System.Drawing.Point(486, 170)
+        Me.DspClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspClosetThrustJack.Name = "DspClosetThrustJack"
+        Me.DspClosetThrustJack.Size = New System.Drawing.Size(244, 32)
+        Me.DspClosetThrustJack.TabIndex = 118
+        Me.DspClosetThrustJack.Unit = "deg"
+        Me.DspClosetThrustJack.UnitVisible = False
+        Me.DspClosetThrustJack.Value = "-"
+        Me.DspClosetThrustJack.ValueType = True
         '
         'DspClosetJack
         '
@@ -169,7 +169,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClosetJack.FieldName = "押込ｼﾞｬｯｷ"
         Me.DspClosetJack.FieldNameWidth = 146
         Me.DspClosetJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetJack.Location = New System.Drawing.Point(735, 133)
+        Me.DspClosetJack.Location = New System.Drawing.Point(724, 135)
         Me.DspClosetJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetJack.Name = "DspClosetJack"
         Me.DspClosetJack.Size = New System.Drawing.Size(247, 32)
@@ -190,7 +190,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspPullBackJack.FieldName = "引戻ｼﾞｬｯｷ"
         Me.DspPullBackJack.FieldNameWidth = 146
         Me.DspPullBackJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspPullBackJack.Location = New System.Drawing.Point(486, 133)
+        Me.DspPullBackJack.Location = New System.Drawing.Point(486, 135)
         Me.DspPullBackJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspPullBackJack.Name = "DspPullBackJack"
         Me.DspPullBackJack.Size = New System.Drawing.Size(244, 32)
@@ -211,7 +211,7 @@ Partial Class frmAssemblyProcessEdit
         Me.UcnDspData17.FieldName = "ﾛｰﾘﾝｸﾞ偏差"
         Me.UcnDspData17.FieldNameWidth = 146
         Me.UcnDspData17.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData17.Location = New System.Drawing.Point(735, 100)
+        Me.UcnDspData17.Location = New System.Drawing.Point(724, 100)
         Me.UcnDspData17.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData17.Name = "UcnDspData17"
         Me.UcnDspData17.Size = New System.Drawing.Size(247, 32)
@@ -253,7 +253,7 @@ Partial Class frmAssemblyProcessEdit
         Me.UcnDspData2.FieldName = "組立ﾎﾞﾙﾄﾋﾟｯﾁ"
         Me.UcnDspData2.FieldNameWidth = 146
         Me.UcnDspData2.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData2.Location = New System.Drawing.Point(735, 31)
+        Me.UcnDspData2.Location = New System.Drawing.Point(724, 30)
         Me.UcnDspData2.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData2.Name = "UcnDspData2"
         Me.UcnDspData2.Size = New System.Drawing.Size(247, 32)
@@ -274,7 +274,7 @@ Partial Class frmAssemblyProcessEdit
         Me.UcnDspData1.FieldName = "組立ｾｸﾞﾒﾝﾄ"
         Me.UcnDspData1.FieldNameWidth = 146
         Me.UcnDspData1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData1.Location = New System.Drawing.Point(486, 31)
+        Me.UcnDspData1.Location = New System.Drawing.Point(486, 30)
         Me.UcnDspData1.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData1.Name = "UcnDspData1"
         Me.UcnDspData1.Size = New System.Drawing.Size(244, 32)
@@ -318,7 +318,7 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblySegmentSel.Size = New System.Drawing.Size(417, 38)
         Me.AssemblySegmentSel.TabIndex = 124
         Me.AssemblySegmentSel.Unit = ""
-        'Me.AssemblySegmentSel.Value = 1000.0R
+        Me.AssemblySegmentSel.Value = -1.0R
         '
         'ConfirmRingNo
         '
@@ -354,7 +354,7 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblyPatternSel.Size = New System.Drawing.Size(417, 38)
         Me.AssemblyPatternSel.TabIndex = 126
         Me.AssemblyPatternSel.Unit = ""
-        'Me.AssemblyPatternSel.Value = 1000.0R
+        Me.AssemblyPatternSel.Value = -1.0R
         '
         'LastJackNo
         '
@@ -408,7 +408,7 @@ Partial Class frmAssemblyProcessEdit
         Me.OperattionJackSel.Size = New System.Drawing.Size(417, 38)
         Me.OperattionJackSel.TabIndex = 128
         Me.OperattionJackSel.Unit = ""
-        'Me.OperattionJackSel.Value = 1000.0R
+        Me.OperattionJackSel.Value = -1.0R
         '
         'AssemblyPieceNo
         '
@@ -454,8 +454,8 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.Add(Me.DspAssemblyPattern)
         Me.Controls.Add(Me.DspNextPieceName)
         Me.Controls.Add(Me.UcnDspData24)
-        Me.Controls.Add(Me.UcnDspData21)
-        Me.Controls.Add(Me.UcnDspData22)
+        Me.Controls.Add(Me.DspAddClosetThrustJack)
+        Me.Controls.Add(Me.DspClosetThrustJack)
         Me.Controls.Add(Me.DspClosetJack)
         Me.Controls.Add(Me.DspPullBackJack)
         Me.Controls.Add(Me.UcnDspData17)
@@ -472,8 +472,8 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.SetChildIndex(Me.UcnDspData17, 0)
         Me.Controls.SetChildIndex(Me.DspPullBackJack, 0)
         Me.Controls.SetChildIndex(Me.DspClosetJack, 0)
-        Me.Controls.SetChildIndex(Me.UcnDspData22, 0)
-        Me.Controls.SetChildIndex(Me.UcnDspData21, 0)
+        Me.Controls.SetChildIndex(Me.DspClosetThrustJack, 0)
+        Me.Controls.SetChildIndex(Me.DspAddClosetThrustJack, 0)
         Me.Controls.SetChildIndex(Me.UcnDspData24, 0)
         Me.Controls.SetChildIndex(Me.DspNextPieceName, 0)
         Me.Controls.SetChildIndex(Me.DspAssemblyPattern, 0)
@@ -494,8 +494,8 @@ Partial Class frmAssemblyProcessEdit
     Friend WithEvents DspAssemblyPattern As ucnDspData
     Friend WithEvents DspNextPieceName As ucnDspData
     Friend WithEvents UcnDspData24 As ucnDspData
-    Friend WithEvents UcnDspData21 As ucnDspData
-    Friend WithEvents UcnDspData22 As ucnDspData
+    Friend WithEvents DspAddClosetThrustJack As ucnDspData
+    Friend WithEvents DspClosetThrustJack As ucnDspData
     Friend WithEvents DspClosetJack As ucnDspData
     Friend WithEvents DspPullBackJack As ucnDspData
     Friend WithEvents UcnDspData17 As ucnDspData

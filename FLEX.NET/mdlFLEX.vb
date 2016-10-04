@@ -37,7 +37,7 @@ Module mdlFLEX
     ''' <summary>
     ''' 減圧処理
     ''' </summary>
-    Private WithEvents Reduce As New clsReducePress
+    Public WithEvents Reduce As clsReducePress
 
 
 
@@ -97,6 +97,8 @@ Module mdlFLEX
             PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
             PlcIf.LosZeroDataWrite("引戻しジャッキ", Nothing)
             PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
+            PlcIf.LosZeroDataWrite("押込みジャッキ②", Nothing)
+            PlcIf.LosZeroEnable = False   '同時施工可OFF
         End If
         '掘進中で手動方向制御
         If NowStatus = cKussin And ControlParameter.AutoDirectionControl = False Then
@@ -136,21 +138,19 @@ Module mdlFLEX
                         Dim PullJk As String =
                             String.Join(",", .PullBackJack)
 
-                        WriteEventData("No." & PullJk & " のジャッキの引戻し開始しました。", Color.Magenta)
+                        WriteEventData("No." & PullJk & " のジャッキの引戻し開始しました。", Color.Blue)
                     Case 3
                         WriteEventData("ジャッキの引戻し完了しました。", Color.Magenta)
                     Case 4, 6
                         '押込みジャッキ
                         Dim ClosetJk As String =
                             String.Join(",", .ClosetJack)
-                        WriteEventData("No." & ClosetJk & " のジャッキ押込み開始しました。", Color.Magenta)
+                        WriteEventData("No." & ClosetJk & " のジャッキ押込み開始しました。", Color.Blue)
                     Case 5
-                        '押込みジャッキ
+
                         WriteEventData("[" & .PieceName & "] セグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
-                    Case 7
-                        WriteEventData("ジャッキ押付け完了しました。", Color.Magenta)
-                        PlcIf.LosZeroSts_FLEX = 4 '押し付け完了確認
+
                         If PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then '最終ピース到達前
                             If ControlParameter.NextPieceConfirm Then
                                 '同時施工継続メッセージ出力
@@ -159,6 +159,9 @@ Module mdlFLEX
                                 PlcIf.LosZeroSts_FLEX = 1 '減圧開始
                             End If
                         End If
+                    Case 7
+                        WriteEventData("ジャッキ押付け完了しました。", Color.Magenta)
+                        PlcIf.LosZeroSts_FLEX = 4 '押し付け完了確認
 
 
                     Case 8
@@ -177,12 +180,13 @@ Module mdlFLEX
 
                     With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
                         '減圧グループ
-                        WriteEventData(PlcIf.AssemblyPieceNo & "ピース目 " & String.Join(",", .ReduceGroup) & "グループの減圧開始します。", Color.Magenta)
+                        WriteEventData(PlcIf.AssemblyPieceNo & "ピース目 " & String.Join(",", .ReduceGroup) & "グループの減圧開始します。", Color.Blue)
 
                         'マシンへ指令　
                         PlcIf.LosZeroDataWrite("減圧ジャッキ", .ReduceJack)
                         PlcIf.LosZeroDataWrite("引戻しジャッキ", .PullBackJack)
                         PlcIf.LosZeroDataWrite("押込みジャッキ", .ClosetJack)
+                        PlcIf.LosZeroDataWrite("押込みジャッキ②", .AddClosetJack)
                     End With
                     '減圧処理開始
                     'Reduce = New clsReducePress
@@ -197,6 +201,21 @@ Module mdlFLEX
         End If
 
         My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+
+    End Sub
+    ''' <summary>
+    ''' 同時施工キャンセル
+    ''' </summary>
+    Private Sub PlcIf_LosZeroCancelOn() Handles PlcIf.LosZeroCancelOn
+        PlcIf.LosZeroSts_FLEX = 0
+        PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
+        PlcIf.LosZeroDataWrite("引戻しジャッキ", Nothing)
+        PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
+        PlcIf.LosZeroDataWrite("押込みジャッキ②", Nothing)
+        PlcIf.LosZeroEnable = False   '同時施工可OFF
+        PlcIf.DigtalPlcWrite("同時施工キャンセル", False)
+        Reduce.Cancel()
+        WriteEventData("同時施工キャンセルされました。", Color.Red)
 
     End Sub
 
@@ -460,12 +479,5 @@ Module mdlFLEX
         g.FillEllipse(pen, rect)
 
     End Sub
-
-
-
-
-
-
-
 
 End Module

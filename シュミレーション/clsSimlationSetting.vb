@@ -34,6 +34,7 @@ Public Class clsSimlationSetting
     Public ReadOnly Property ClosetAnsAdr As String
     Public ReadOnly Property PullBackCommand As String
     Public ReadOnly Property ClosetCommand As String
+    Public ReadOnly Property AddClosetCommand As String
     Public ReadOnly Property LosZeroStMachine As String
     Public ReadOnly Property LosZeroStFlex As String
     Public ReadOnly Property LosZeroModeMachine As String
@@ -105,6 +106,8 @@ Public Class clsSimlationSetting
                         _PullBackCommand = .Item("値")
                     Case "ClosetCommand"
                         _ClosetCommand = .Item("値")
+                    Case "AddClosetCommand"
+                        _AddClosetCommand = .Item("値")
                     Case "LosZeroStMachine"
                         _LosZeroStMachine = .Item("値")
                     Case "LosZeroStFlex"

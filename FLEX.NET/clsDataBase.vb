@@ -6,11 +6,11 @@ Public Class clsDataBase
     Private Function conDB() As OdbcConnection
         'TODO MariDB以外対応も検討、ポート番号指定しよう！
         Dim ConnectionString As String =
-"DRIVER={MySQL ODBC 3.51 Driver};server=" & My.Settings.HostName &
-"; database=" & My.Settings.DataseName &
-"; uid= toyo;pwd= yanagi;OPTION=3"
-        '  Dim ConnectionString As String = _
-        '"DRIVER={MySQL ODBC 5.3 Unicode Driver};server=" & My.Settings.HostName & _
+        "DRIVER={MySQL ODBC 3.51 Driver};server=" & My.Settings.HostName &
+        "; database=" & My.Settings.DataseName &
+        "; uid= toyo;pwd= yanagi;OPTION=3"
+        'Dim ConnectionString As String =
+        '"DRIVER={MySQL ODBC 5.3 Unicode Driver};server=" & My.Settings.HostName &
         ' "; database=" & My.Settings.DataseName & "; uid= toyo;pwd= yanagi;OPTION=3"
         Dim cn As New OdbcConnection(ConnectionString)
         Try

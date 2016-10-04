@@ -257,6 +257,8 @@ Public Class frmSim
         LosZeroStatusRead(SimlationSetting.PullBackCommand, 6)
         '押込み指令
         LosZeroStatusRead(SimlationSetting.ClosetCommand, 7)
+        '追加押込み指令
+        LosZeroStatusRead(SimlationSetting.AddClosetCommand, 8)
 
 
 
@@ -552,6 +554,8 @@ CatchError:  '例外処理
                 PlcWrBaseAdress = SimlationSetting.PullBackCommand
             Case 7
                 PlcWrBaseAdress = SimlationSetting.ClosetCommand
+            Case 8
+                PlcWrBaseAdress = SimlationSetting.AddClosetCommand
         End Select
 
         Dim intPlcWrBaseAdress As Integer = Convert.ToInt32(PlcWrBaseAdress.Substring(1), 16)

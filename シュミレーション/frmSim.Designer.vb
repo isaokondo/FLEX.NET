@@ -31,6 +31,7 @@ Partial Class frmSim
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.tmrPlcWR = New System.Windows.Forms.Timer(Me.components)
         Me.chkExcavOn = New System.Windows.Forms.CheckBox()
         Me.chkFlexOn = New System.Windows.Forms.CheckBox()
@@ -53,14 +54,6 @@ Partial Class frmSim
         Me.label22 = New System.Windows.Forms.Label()
         Me.nudPitching = New System.Windows.Forms.NumericUpDown()
         Me.DgvLosZero = New System.Windows.Forms.DataGridView()
-        Me.JackNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ExcavOrSegment = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PullBakOn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PullBackAns = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ClosetOn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ClosetAns = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PullBackCommand = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ClosetCommand = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.nudLosZeroStatusMachin = New System.Windows.Forms.NumericUpDown()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -69,6 +62,15 @@ Partial Class frmSim
         Me.chkLosZeroMode = New System.Windows.Forms.CheckBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
+        Me.JackNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ExcavOrSegment = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PullBakOn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PullBackAns = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ClosetOn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ClosetAns = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PullBackCommand = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ClosetCommand = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AddClosetCommand = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.nudSoucePressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudLeftStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudRightStroke, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -297,8 +299,8 @@ Partial Class frmSim
         Me.DgvLosZero.AllowUserToResizeColumns = False
         Me.DgvLosZero.AllowUserToResizeRows = False
         Me.DgvLosZero.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvLosZero.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.JackNo, Me.ExcavOrSegment, Me.PullBakOn, Me.PullBackAns, Me.ClosetOn, Me.ClosetAns, Me.PullBackCommand, Me.ClosetCommand})
-        Me.DgvLosZero.Location = New System.Drawing.Point(1147, 12)
+        Me.DgvLosZero.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.JackNo, Me.ExcavOrSegment, Me.PullBakOn, Me.PullBackAns, Me.ClosetOn, Me.ClosetAns, Me.PullBackCommand, Me.ClosetCommand, Me.AddClosetCommand})
+        Me.DgvLosZero.Location = New System.Drawing.Point(1123, 12)
         Me.DgvLosZero.MultiSelect = False
         Me.DgvLosZero.Name = "DgvLosZero"
         Me.DgvLosZero.ReadOnly = True
@@ -306,8 +308,97 @@ Partial Class frmSim
         Me.DgvLosZero.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.DgvLosZero.RowTemplate.Height = 24
         Me.DgvLosZero.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DgvLosZero.Size = New System.Drawing.Size(384, 845)
+        Me.DgvLosZero.Size = New System.Drawing.Size(432, 845)
         Me.DgvLosZero.TabIndex = 17
+        '
+        'nudLosZeroStatusMachin
+        '
+        Me.nudLosZeroStatusMachin.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.nudLosZeroStatusMachin.Location = New System.Drawing.Point(993, 63)
+        Me.nudLosZeroStatusMachin.Margin = New System.Windows.Forms.Padding(2)
+        Me.nudLosZeroStatusMachin.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.nudLosZeroStatusMachin.Name = "nudLosZeroStatusMachin"
+        Me.nudLosZeroStatusMachin.Size = New System.Drawing.Size(83, 27)
+        Me.nudLosZeroStatusMachin.TabIndex = 18
+        Me.nudLosZeroStatusMachin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label7.Location = New System.Drawing.Point(940, 12)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(164, 40)
+        Me.Label7.TabIndex = 19
+        Me.Label7.Text = "同時施工ステータス" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "マシンより"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label8.Location = New System.Drawing.Point(940, 304)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(164, 40)
+        Me.Label8.TabIndex = 21
+        Me.Label8.Text = "同時施工ステータス" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FLEXより"
+        '
+        'nudLosZeroStsFlex
+        '
+        Me.nudLosZeroStsFlex.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.nudLosZeroStsFlex.Location = New System.Drawing.Point(993, 355)
+        Me.nudLosZeroStsFlex.Margin = New System.Windows.Forms.Padding(2)
+        Me.nudLosZeroStsFlex.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.nudLosZeroStsFlex.Name = "nudLosZeroStsFlex"
+        Me.nudLosZeroStsFlex.Size = New System.Drawing.Size(83, 27)
+        Me.nudLosZeroStsFlex.TabIndex = 20
+        Me.nudLosZeroStsFlex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'chkLosZeroEnable
+        '
+        Me.chkLosZeroEnable.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.chkLosZeroEnable.Location = New System.Drawing.Point(454, 334)
+        Me.chkLosZeroEnable.Margin = New System.Windows.Forms.Padding(2)
+        Me.chkLosZeroEnable.Name = "chkLosZeroEnable"
+        Me.chkLosZeroEnable.Size = New System.Drawing.Size(220, 24)
+        Me.chkLosZeroEnable.TabIndex = 23
+        Me.chkLosZeroEnable.Text = "同時施工可"
+        Me.chkLosZeroEnable.UseVisualStyleBackColor = True
+        '
+        'chkLosZeroMode
+        '
+        Me.chkLosZeroMode.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.chkLosZeroMode.Location = New System.Drawing.Point(454, 304)
+        Me.chkLosZeroMode.Margin = New System.Windows.Forms.Padding(2)
+        Me.chkLosZeroMode.Name = "chkLosZeroMode"
+        Me.chkLosZeroMode.Size = New System.Drawing.Size(220, 24)
+        Me.chkLosZeroMode.TabIndex = 22
+        Me.chkLosZeroMode.Text = "同時施工／通常モード"
+        Me.chkLosZeroMode.UseVisualStyleBackColor = True
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("MS UI Gothic", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label9.Location = New System.Drawing.Point(903, 105)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(215, 136)
+        Me.Label9.TabIndex = 24
+        Me.Label9.Text = "1" & Global.Microsoft.VisualBasic.ChrW(9) & "減圧開始指令（1ピースのみ）" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "2" & Global.Microsoft.VisualBasic.ChrW(9) & "引き戻し開始" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "3" & Global.Microsoft.VisualBasic.ChrW(9) & "引き戻し完了" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "4" & Global.Microsoft.VisualBasic.ChrW(9) & "押し込み中①" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "5" & Global.Microsoft.VisualBasic.ChrW(9) & "組立完了" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "6" & Global.Microsoft.VisualBasic.ChrW(9) & "押し込み中②" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "7" & Global.Microsoft.VisualBasic.ChrW(9) & "押し付け①②完" &
+    "了" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "8" & Global.Microsoft.VisualBasic.ChrW(9) & "Kセグメント組立完了" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("MS UI Gothic", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label10.Location = New System.Drawing.Point(913, 398)
+        Me.Label10.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(145, 68)
+        Me.Label10.TabIndex = 25
+        Me.Label10.Text = "1" & Global.Microsoft.VisualBasic.ChrW(9) & "減圧開始" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "2" & Global.Microsoft.VisualBasic.ChrW(9) & "減圧完了" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "3" & Global.Microsoft.VisualBasic.ChrW(9) & "組立完了確認" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "4" & Global.Microsoft.VisualBasic.ChrW(9) & "押し付け完了確認" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'JackNo
         '
@@ -405,100 +496,23 @@ Partial Class frmSim
         Me.ClosetCommand.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.ClosetCommand.Width = 50
         '
-        'nudLosZeroStatusMachin
+        'AddClosetCommand
         '
-        Me.nudLosZeroStatusMachin.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.nudLosZeroStatusMachin.Location = New System.Drawing.Point(993, 63)
-        Me.nudLosZeroStatusMachin.Margin = New System.Windows.Forms.Padding(2)
-        Me.nudLosZeroStatusMachin.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
-        Me.nudLosZeroStatusMachin.Name = "nudLosZeroStatusMachin"
-        Me.nudLosZeroStatusMachin.Size = New System.Drawing.Size(83, 27)
-        Me.nudLosZeroStatusMachin.TabIndex = 18
-        Me.nudLosZeroStatusMachin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label7.Location = New System.Drawing.Point(940, 12)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(164, 40)
-        Me.Label7.TabIndex = 19
-        Me.Label7.Text = "同時施工ステータス" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "マシンより"
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label8.Location = New System.Drawing.Point(940, 304)
-        Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(164, 40)
-        Me.Label8.TabIndex = 21
-        Me.Label8.Text = "同時施工ステータス" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FLEXより"
-        '
-        'nudLosZeroStsFlex
-        '
-        Me.nudLosZeroStsFlex.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.nudLosZeroStsFlex.Location = New System.Drawing.Point(993, 355)
-        Me.nudLosZeroStsFlex.Margin = New System.Windows.Forms.Padding(2)
-        Me.nudLosZeroStsFlex.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
-        Me.nudLosZeroStsFlex.Name = "nudLosZeroStsFlex"
-        Me.nudLosZeroStsFlex.Size = New System.Drawing.Size(83, 27)
-        Me.nudLosZeroStsFlex.TabIndex = 20
-        Me.nudLosZeroStsFlex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'chkLosZeroEnable
-        '
-        Me.chkLosZeroEnable.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.chkLosZeroEnable.Location = New System.Drawing.Point(454, 334)
-        Me.chkLosZeroEnable.Margin = New System.Windows.Forms.Padding(2)
-        Me.chkLosZeroEnable.Name = "chkLosZeroEnable"
-        Me.chkLosZeroEnable.Size = New System.Drawing.Size(220, 24)
-        Me.chkLosZeroEnable.TabIndex = 23
-        Me.chkLosZeroEnable.Text = "同時施工可"
-        Me.chkLosZeroEnable.UseVisualStyleBackColor = True
-        '
-        'chkLosZeroMode
-        '
-        Me.chkLosZeroMode.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.chkLosZeroMode.Location = New System.Drawing.Point(454, 304)
-        Me.chkLosZeroMode.Margin = New System.Windows.Forms.Padding(2)
-        Me.chkLosZeroMode.Name = "chkLosZeroMode"
-        Me.chkLosZeroMode.Size = New System.Drawing.Size(220, 24)
-        Me.chkLosZeroMode.TabIndex = 22
-        Me.chkLosZeroMode.Text = "同時施工／通常モード"
-        Me.chkLosZeroMode.UseVisualStyleBackColor = True
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("MS UI Gothic", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label9.Location = New System.Drawing.Point(903, 105)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(215, 136)
-        Me.Label9.TabIndex = 24
-        Me.Label9.Text = "1" & Global.Microsoft.VisualBasic.ChrW(9) & "減圧開始指令（1ピースのみ）" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "2" & Global.Microsoft.VisualBasic.ChrW(9) & "引き戻し開始" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "3" & Global.Microsoft.VisualBasic.ChrW(9) & "引き戻し完了" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "4" & Global.Microsoft.VisualBasic.ChrW(9) & "押し込み中①" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "5" & Global.Microsoft.VisualBasic.ChrW(9) & "組立完了" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "6" & Global.Microsoft.VisualBasic.ChrW(9) & "押し込み中②" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "7" & Global.Microsoft.VisualBasic.ChrW(9) & "押し付け①②完" &
-    "了" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "8" & Global.Microsoft.VisualBasic.ChrW(9) & "Kセグメント組立完了" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("MS UI Gothic", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label10.Location = New System.Drawing.Point(913, 398)
-        Me.Label10.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(145, 68)
-        Me.Label10.TabIndex = 25
-        Me.Label10.Text = "1" & Global.Microsoft.VisualBasic.ChrW(9) & "減圧開始" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "2" & Global.Microsoft.VisualBasic.ChrW(9) & "減圧完了" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "3" & Global.Microsoft.VisualBasic.ChrW(9) & "組立完了確認" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "4" & Global.Microsoft.VisualBasic.ChrW(9) & "押し付け完了確認" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.AddClosetCommand.DefaultCellStyle = DataGridViewCellStyle9
+        Me.AddClosetCommand.Frozen = True
+        Me.AddClosetCommand.HeaderText = "追加押込み指令"
+        Me.AddClosetCommand.Name = "AddClosetCommand"
+        Me.AddClosetCommand.ReadOnly = True
+        Me.AddClosetCommand.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.AddClosetCommand.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.AddClosetCommand.Width = 50
         '
         'frmSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
-        Me.ClientSize = New System.Drawing.Size(1543, 869)
+        Me.ClientSize = New System.Drawing.Size(1593, 869)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.chkLosZeroEnable)
@@ -565,14 +579,6 @@ Partial Class frmSim
     Friend WithEvents label22 As Label
     Friend WithEvents nudPitching As NumericUpDown
     Friend WithEvents DgvLosZero As DataGridView
-    Friend WithEvents JackNo As DataGridViewTextBoxColumn
-    Friend WithEvents ExcavOrSegment As DataGridViewTextBoxColumn
-    Friend WithEvents PullBakOn As DataGridViewTextBoxColumn
-    Friend WithEvents PullBackAns As DataGridViewTextBoxColumn
-    Friend WithEvents ClosetOn As DataGridViewTextBoxColumn
-    Friend WithEvents ClosetAns As DataGridViewTextBoxColumn
-    Friend WithEvents PullBackCommand As DataGridViewTextBoxColumn
-    Friend WithEvents ClosetCommand As DataGridViewTextBoxColumn
     Friend WithEvents nudLosZeroStatusMachin As NumericUpDown
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
@@ -581,4 +587,13 @@ Partial Class frmSim
     Friend WithEvents chkLosZeroMode As CheckBox
     Friend WithEvents Label9 As Label
     Friend WithEvents Label10 As Label
+    Friend WithEvents JackNo As DataGridViewTextBoxColumn
+    Friend WithEvents ExcavOrSegment As DataGridViewTextBoxColumn
+    Friend WithEvents PullBakOn As DataGridViewTextBoxColumn
+    Friend WithEvents PullBackAns As DataGridViewTextBoxColumn
+    Friend WithEvents ClosetOn As DataGridViewTextBoxColumn
+    Friend WithEvents ClosetAns As DataGridViewTextBoxColumn
+    Friend WithEvents PullBackCommand As DataGridViewTextBoxColumn
+    Friend WithEvents ClosetCommand As DataGridViewTextBoxColumn
+    Friend WithEvents AddClosetCommand As DataGridViewTextBoxColumn
 End Class

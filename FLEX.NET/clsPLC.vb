@@ -90,7 +90,7 @@ Public Class clsPlcIf
     Private _mblnPreContModeFlag As Boolean ''制御モードフラグ
     Private _mvarPressWrData() As Object    ''圧力シーケンサ書き込み用
 
-
+    Private LosZeroCancel As Boolean ''同時施工キャンセル
 
     'ロスゼロデータ
     ''' <summary>
@@ -137,7 +137,10 @@ Public Class clsPlcIf
     ''' <param name="NowSts">変化後のステータス</param>
     ''' <param name="FromDev">True:マシン　False：FLEX</param>
     Public Event LosZeroStsChange(PreSts As Short, NowSts As Short, FromDev As Boolean)
-
+    ''' <summary>
+    ''' 同時施工キャンセル
+    ''' </summary>
+    Public Event LosZeroCancelOn()
 
     Private AnalogTag As New clsTag("FLEXアナログtag", "D")
     Public ParameterTag As New clsTag("FLEXアナログtag", "R")
@@ -578,6 +581,8 @@ Public Class clsPlcIf
 
         'Call PLC_Open() 'オープン処理
 
+        Debug.Write(System.DateTime.Now.ToString("HH:mm:ss.fff  "))
+
         Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
         Dim szDeviceName As String = ""         'デバイス名称
         Dim iNumberOfDeviceName As Integer = 0  'デバイス・サイズ
@@ -724,6 +729,10 @@ Public Class clsPlcIf
                 _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
                 If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(sender, e, "シールドマシン伝送異常が発生しました。", 0)
 
+                tmp = LosZeroCancel
+                LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
+                If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
+
             Else    'エラー発生
                     RaiseEvent PLCErrOccur(sender, e, "デジタル読込エラー", iReturnCode)
             End If
@@ -759,6 +768,9 @@ Public Class clsPlcIf
         mblnBlink = Not mblnBlink
         t = t Or mblnBlink
         iReturnCode = com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
+
+        Debug.WriteLine(System.DateTime.Now.ToString("HH:mm:ss.fff"))
+
 
         'PLC読込イベント
         RaiseEvent PLCRead()

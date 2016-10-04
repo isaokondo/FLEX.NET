@@ -65,69 +65,6 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("W124")>  _
-        Public ReadOnly Property LeftStrokeAdr() As String
-            Get
-                Return CType(Me("LeftStrokeAdr"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("W10C")>  _
-        Public ReadOnly Property RightStrokeAdr() As String
-            Get
-                Return CType(Me("RightStrokeAdr"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("W0F0")>  _
-        Public ReadOnly Property JkPresAdr() As String
-            Get
-                Return CType(Me("JkPresAdr"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("W180")>  _
-        Public ReadOnly Property GpPresPV() As String
-            Get
-                Return CType(Me("GpPresPV"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("W1000")>  _
-        Public ReadOnly Property GpPresMV() As String
-            Get
-                Return CType(Me("GpPresMV"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("B0100")>  _
-        Public ReadOnly Property BitStartAdr() As String
-            Get
-                Return CType(Me("BitStartAdr"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("M4009")>  _
-        Public ReadOnly Property KussinOn() As String
-            Get
-                Return CType(Me("KussinOn"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("M5360")>  _
         Public ReadOnly Property JackSel() As String
             Get

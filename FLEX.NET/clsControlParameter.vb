@@ -714,8 +714,9 @@ Public Class clsControlParameter
                 Try
 
                     'htPlcAdr(.Item("項目名称").ToString) = .Item("PLCアドレス")
+                    'Console.WriteLine(tb.Item("項目名称").ToString)
 
-                    Select Case .Item("項目名称").ToString
+                    Select Case tb.Item("項目名称").ToString
                         Case "最低全開グループ数"
                             _最低全開グループ数 = .Item("値")
                         Case "全開作動範囲"
@@ -780,17 +781,17 @@ Public Class clsControlParameter
                             End If
                         Case "GraphStrokeWidth"
                             _GraphStrokeWidth = .Item("値")
-                        Case "HorMomentTrendWidth "
+                        Case "HorMomentTrendWidth"
                             _HorMomentTrendWidth = .Item("値")
-                        Case "VerMomentTrendWidth "
+                        Case "VerMomentTrendWidth"
                             _VerMomentTrendWidth = .Item("値")
-                        Case "HorDevDegTrendWidth "
+                        Case "HorDevDegTrendWidth"
                             _HorDevDegTrendWidth = .Item("値")
-                        Case "VerDevDegTrendWidth "
+                        Case "VerDevDegTrendWidth"
                             _VerDevDegTrendWidth = .Item("値")
                         Case "LineDevStartRing"
                             _LineDevStartRing = .Item("値")
-                        Case "LineDevLastRing "
+                        Case "LineDevLastRing"
                             _LineDevLastRing = .Item("値")
                         Case "PresBarGraphWidt"
                             _PresBarGraphWidt = .Item("値")

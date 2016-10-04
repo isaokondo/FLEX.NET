@@ -268,6 +268,13 @@ Friend Class clsReducePress
     Private LstRd As List(Of Short)
 
     Private timer As Timer
+
+    Public Sub New()
+        ReDim _MvOut(InitParameter.NumberGroup - 1)
+        ReDim ReduceDev(InitParameter.NumberGroup - 1)
+
+    End Sub
+
     ''' <summary>
     ''' 減圧処理　１秒毎
     ''' </summary>
@@ -288,8 +295,7 @@ Friend Class clsReducePress
     ''' </summary>
     Public Sub Start()
 
-        ReDim _MvOut(InitParameter.NumberGroup - 1)
-        ReDim ReduceDev(InitParameter.NumberGroup - 1)
+
         '減圧グループ
         LstRd = SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
 
@@ -316,25 +322,30 @@ Friend Class clsReducePress
             If _MvOut(i) < 0 Then _MvOut(i) = 0
         Next
         Console.WriteLine("MV" & String.Join(",", _MvOut))
-        Dim ReduceOn As Boolean = True
+        Dim ReduceFlg As Boolean = True
         Dim MvZero As Short = 0
         For Each GpNp As Short In LstRd
             '減圧判断
-            ReduceOn = ReduceOn And (PlcIf.GroupPv(GpNp - 1) < ControlParameter.ReduceJudgePress)
+            ReduceFlg = ReduceFlg And (PlcIf.GroupPv(GpNp - 1) < ControlParameter.ReduceJudgePress)
             MvZero += _MvOut(GpNp - 1)
         Next
         '減圧完了
-        If ReduceOn Then
+        If ReduceFlg Then
             PlcIf.LosZeroSts_FLEX = 2
         End If
         '減圧処理停止 MVがすべて０で、減圧判断圧力以下
-        If MvZero = 0 And ReduceOn Then
+        If MvZero = 0 And ReduceFlg Then
             timer.Stop()
         End If
 
         RaiseEvent ReduceOn() '減圧処理イベント
     End Sub
-
+    ''' <summary>
+    ''' 減圧キャンセル
+    ''' </summary>
+    Public Sub Cancel()
+        timer.Stop()
+    End Sub
 
 
 End Class

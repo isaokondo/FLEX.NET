@@ -33,6 +33,7 @@
         'PLCインターフェース
         PlcIf = New clsPlcIf
 
+        Reduce = New clsReducePress
 
 
     End Sub
@@ -66,7 +67,8 @@
             DspLeftSpeed.Value = .LeftSpeed         '左ｽﾋﾟｰﾄﾞ
 
             DspJackPress.Value = .JkPress           'ジャッキ圧力
-
+            'TODO:取り敢えず、左右の平均を算出
+            DspExcvSpeed.Value = (.RightSpeed + .LeftSpeed) / 2
 
 
             DspPitching.Value = .Pitching           'ピッチング
@@ -133,6 +135,13 @@
         '同時施工用
         ucnLosZeroMode.BitStatus = PlcIf.LosZeroEnable And PlcIf.LosZeroMode
         ucnLosZeroMode.Blink = Not PlcIf.LosZeroEnable And PlcIf.LosZeroMode
+        '同時施工ピース確認ボタンブリンク
+        btnPieceConfirm.Enabled = ucnLosZeroMode.Blink
+        If btnPieceConfirm.Enabled Then
+            btnPieceConfirm.ForeColor = IIf(BlinkFlg, Color.Black, Color.Red)
+        End If
+        '同時施工キャンセルボタン有効／無効
+        btnLossZerooCancel.Enabled = ucnLosZeroMode.BitStatus
 
         '組立ピース番号
         If ucnLosZeroMode.BitStatus Then
@@ -300,7 +309,7 @@
             DspAssemblyPieace.Value = .PieceName  '組立ピース名称
             DspPullBackJack.Value = SegmentAssembly.JackListDsp(.PullBackJack) '引戻しジャッキ
             DspClosetJack.Value = SegmentAssembly.JackListDsp(.ClosetJack) '押込みジャッキ
-
+            DspAddClosetThrustJack.Value = SegmentAssembly.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
         End With
         'MAXのピース番号内で表示
@@ -539,5 +548,14 @@
 
     Private Sub UcnJackDsp_Load(sender As Object, e As EventArgs) Handles UcnJackDsp.Load
 
+    End Sub
+
+    Private Sub btnPieceConfirm_Click(sender As Object, e As EventArgs) Handles btnPieceConfirm.Click
+        PlcIf.LosZeroEnable = True '同時施工可　信号出力
+    End Sub
+
+    Private Sub ｂｔｎLossZerooCancel_Click(sender As Object, e As EventArgs) Handles btnLossZerooCancel.Click
+        PlcIf.DigtalPlcWrite("同時施工キャンセル", True)
+        PlcIf.LosZeroEnable = False '同時施工キャンセル
     End Sub
 End Class
