@@ -501,6 +501,7 @@ Public Class clsPlcIf
         End Get
         Set(value As Short)
             _AssemblyPieceNo = value
+            AnalogPlcWrite("組立ピース", _AssemblyPieceNo)
         End Set
     End Property
 

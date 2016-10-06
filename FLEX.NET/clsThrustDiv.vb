@@ -272,7 +272,9 @@ Friend Class clsReducePress
     Public Sub New()
         ReDim _MvOut(InitParameter.NumberGroup - 1)
         ReDim ReduceDev(InitParameter.NumberGroup - 1)
-
+        timer = New Timer()
+        AddHandler timer.Tick, New EventHandler(AddressOf Reduce)
+        timer.Interval = 1000   '1秒ごとの処理
     End Sub
 
     ''' <summary>
@@ -306,9 +308,7 @@ Friend Class clsReducePress
             ReduceDev(GpNo - 1) = _MvOut(GpNo - 1) / ControlParameter.ReduceTime
         Next
 
-        timer = New Timer()
-        AddHandler timer.Tick, New EventHandler(AddressOf Reduce)
-        timer.Interval = 1000   '1秒ごとの処理
+
         timer.Enabled = True ' timer.Start()と同じ
 
     End Sub
@@ -321,7 +321,7 @@ Friend Class clsReducePress
             _MvOut(i) -= ReduceDev(i)
             If _MvOut(i) < 0 Then _MvOut(i) = 0
         Next
-        Console.WriteLine("MV" & String.Join(",", _MvOut))
+        'Console.WriteLine("MV" & String.Join(",", _MvOut))
         Dim ReduceFlg As Boolean = True
         Dim MvZero As Short = 0
         For Each GpNp As Short In LstRd
@@ -336,9 +336,10 @@ Friend Class clsReducePress
         '減圧処理停止 MVがすべて０で、減圧判断圧力以下
         If MvZero = 0 And ReduceFlg Then
             timer.Stop()
+
         End If
 
-        RaiseEvent ReduceOn() '減圧処理イベント
+        'RaiseEvent ReduceOn() '減圧処理イベント
     End Sub
     ''' <summary>
     ''' 減圧キャンセル
