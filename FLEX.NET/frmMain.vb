@@ -149,6 +149,7 @@
         Else
             ucnAssemblyPieceNo.FieldName = "-------"
         End If
+        'TODO:工程表示の変数は別に作成の必要あり！
         '減圧中
         ucnReduceFinish.Blink = (PlcIf.LosZeroSts_FLEX = 1)
         '減圧完了
@@ -156,11 +157,11 @@
         '引戻し中
         ucnPullBackFinish.Blink = (PlcIf.LosZeroSts_M = 2)
         '引戻完了
-        ucnPullBackFinish.BitStatus = (PlcIf.LosZeroSts_M >= 3)
+        ucnPullBackFinish.BitStatus = (PlcIf.LosZeroSts_M >= 3 And PlcIf.LosZeroSts_FLEX <> 1)
         '組立中
-        ucnAssemblyFinish.Blink = (PlcIf.LosZeroSts_M >= 3 And PlcIf.LosZeroSts_M < 5)
+        ucnAssemblyFinish.Blink = (PlcIf.LosZeroSts_M >= 3 And PlcIf.LosZeroSts_M < 5 And PlcIf.LosZeroSts_FLEX <> 1)
         '組立完了
-        ucnAssemblyFinish.BitStatus = (PlcIf.LosZeroSts_M >= 5)
+        ucnAssemblyFinish.BitStatus = (PlcIf.LosZeroSts_M >= 5 And PlcIf.LosZeroSts_FLEX <> 1)
 
         '同時施工組立データ
         'SegmentDataDsp()

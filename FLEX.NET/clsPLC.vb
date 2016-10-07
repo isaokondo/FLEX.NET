@@ -141,6 +141,11 @@ Public Class clsPlcIf
     ''' 同時施工キャンセル
     ''' </summary>
     Public Event LosZeroCancelOn()
+    ''' <summary>
+    ''' 同時施工モード変換
+    ''' </summary>
+    Public Event LosZeroModeChange()
+
 
     Private AnalogTag As New clsTag("FLEXアナログtag", "D")
     Public ParameterTag As New clsTag("FLEXアナログtag", "R")
@@ -722,11 +727,13 @@ Public Class clsPlcIf
                 _flexControlOn = bit(DigtalTag.TagData("圧力制御").OffsetAddress)
                 _gyiroError = bit(DigtalTag.TagData("ジャイロ異常").OffsetAddress)
 
+                Dim tmp As Boolean
                 '同時施工モード
-
+                tmp = _LosZeroMode
                 _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
+                If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
                 _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
-                Dim tmp As Boolean = _MachineComErr
+                tmp = _MachineComErr
                 _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
                 If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(sender, e, "シールドマシン伝送異常が発生しました。", 0)
 

@@ -76,13 +76,13 @@ Partial Class frmLosZeroSetting
         '
         'ReduceJudgePress
         '
-        Me.ReduceJudgePress.DataDspWidth = 0
+        Me.ReduceJudgePress.DataDspWidth = 120
         Me.ReduceJudgePress.DecimalPlaces = CType(1, Short)
         Me.ReduceJudgePress.DspFieldName = True
         Me.ReduceJudgePress.FieldName = "減圧完了判断圧力"
         Me.ReduceJudgePress.Increment = 1.0!
         Me.ReduceJudgePress.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.ReduceJudgePress.Location = New System.Drawing.Point(16, 299)
+        Me.ReduceJudgePress.Location = New System.Drawing.Point(16, 302)
         Me.ReduceJudgePress.MaxValue = "50"
         Me.ReduceJudgePress.MinValue = "0"
         Me.ReduceJudgePress.Name = "ReduceJudgePress"
@@ -94,7 +94,7 @@ Partial Class frmLosZeroSetting
         '
         'ReduceTime
         '
-        Me.ReduceTime.DataDspWidth = 0
+        Me.ReduceTime.DataDspWidth = 120
         Me.ReduceTime.DecimalPlaces = CType(0, Short)
         Me.ReduceTime.DspFieldName = True
         Me.ReduceTime.FieldName = "減圧時間"
@@ -127,9 +127,9 @@ Partial Class frmLosZeroSetting
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(469, 451)
+        Me.Controls.Add(Me.ReduceTime)
         Me.Controls.Add(Me.NextPieceConfirm)
         Me.Controls.Add(Me.ReduceJudgePress)
-        Me.Controls.Add(Me.ReduceTime)
         Me.Controls.Add(Me.LosZeroOpposeControl)
         Me.Controls.Add(Me.LosZeroOpposeJack)
         Me.Controls.Add(Me.LosZeroRollingTake)
@@ -141,9 +141,9 @@ Partial Class frmLosZeroSetting
         Me.Controls.SetChildIndex(Me.LosZeroOpposeControl, 0)
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
-        Me.Controls.SetChildIndex(Me.ReduceTime, 0)
         Me.Controls.SetChildIndex(Me.ReduceJudgePress, 0)
         Me.Controls.SetChildIndex(Me.NextPieceConfirm, 0)
+        Me.Controls.SetChildIndex(Me.ReduceTime, 0)
         Me.ResumeLayout(False)
 
     End Sub

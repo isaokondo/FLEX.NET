@@ -204,20 +204,46 @@ Module mdlFLEX
 
     End Sub
     ''' <summary>
+    ''' 同時施工モード変化
+    ''' </summary>
+    Private Sub PlcIf_LosZeroModeChange() Handles PlcIf.LosZeroModeChange
+
+        LosZeroSettingInit() '同時施工データ初期化
+
+        If PlcIf.LosZeroMode Then
+            WriteEventData("同時施工モードになりました。", Color.Blue)
+        Else
+            WriteEventData("同時施工モードがOFFになりました", Color.Magenta)
+        End If
+
+
+
+    End Sub
+
+
+    ''' <summary>
     ''' 同時施工キャンセル
     ''' </summary>
     Private Sub PlcIf_LosZeroCancelOn() Handles PlcIf.LosZeroCancelOn
+        LosZeroSettingInit() '同時施工データ初期化
+        PlcIf.DigtalPlcWrite("同時施工キャンセル", False)
+        Reduce.Cancel()
+        WriteEventData("同時施工キャンセルされました。", Color.Red)
+
+    End Sub
+    ''' <summary>
+    ''' 同時施工データ初期化
+    ''' </summary>
+    Private Sub LosZeroSettingInit()
         PlcIf.LosZeroSts_FLEX = 0
         PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
         PlcIf.LosZeroDataWrite("引戻しジャッキ", Nothing)
         PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
         PlcIf.LosZeroDataWrite("押込みジャッキ②", Nothing)
         PlcIf.LosZeroEnable = False   '同時施工可OFF
-        PlcIf.DigtalPlcWrite("同時施工キャンセル", False)
-        Reduce.Cancel()
-        WriteEventData("同時施工キャンセルされました。", Color.Red)
 
     End Sub
+
 
 
     ''' <summary>

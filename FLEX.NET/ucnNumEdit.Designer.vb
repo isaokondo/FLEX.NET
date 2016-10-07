@@ -83,9 +83,9 @@ Partial Class ucnNumEdit
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.ComboBox)
+        Me.Controls.Add(Me.numUD)
         Me.Controls.Add(Me.lblFieldName)
         Me.Controls.Add(Me.lblUnit)
-        Me.Controls.Add(Me.numUD)
         Me.Name = "ucnNumEdit"
         Me.Size = New System.Drawing.Size(343, 114)
         CType(Me.numUD, System.ComponentModel.ISupportInitialize).EndInit()
@@ -93,7 +93,7 @@ Partial Class ucnNumEdit
 
     End Sub
     Friend WithEvents lblUnit As System.Windows.Forms.Label
-    Friend WithEvents numUD As System.Windows.Forms.NumericUpDown
-    Friend WithEvents lblFieldName As System.Windows.Forms.Label
     Public WithEvents ComboBox As ComboBox
+    Public WithEvents lblFieldName As Label
+    Friend WithEvents numUD As NumericUpDown
 End Class

@@ -266,8 +266,11 @@ Friend Class clsReducePress
     ''' 減圧グループ
     ''' </summary>
     Private LstRd As List(Of Short)
-
+    ''' <summary>
+    ''' 減圧処理タイマ
+    ''' </summary>
     Private timer As Timer
+    Private tCount As Short = 0
 
     Public Sub New()
         ReDim _MvOut(InitParameter.NumberGroup - 1)
@@ -310,7 +313,7 @@ Friend Class clsReducePress
 
 
         timer.Enabled = True ' timer.Start()と同じ
-
+        tCount = 0
     End Sub
     ''' <summary>
     ''' 減圧処理
@@ -324,22 +327,25 @@ Friend Class clsReducePress
         'Console.WriteLine("MV" & String.Join(",", _MvOut))
         Dim ReduceFlg As Boolean = True
         Dim MvZero As Short = 0
+        '5秒間は減圧中フラグを保持
+        If tCount < 5 Then
+            tCount += 1
+        End If
         For Each GpNp As Short In LstRd
             '減圧判断
             ReduceFlg = ReduceFlg And (PlcIf.GroupPv(GpNp - 1) < ControlParameter.ReduceJudgePress)
             MvZero += _MvOut(GpNp - 1)
         Next
         '減圧完了
-        If ReduceFlg Then
+        If ReduceFlg And tCount = 5 Then
             PlcIf.LosZeroSts_FLEX = 2
         End If
         '減圧処理停止 MVがすべて０で、減圧判断圧力以下
-        If MvZero = 0 And ReduceFlg Then
+        If MvZero = 0 And ReduceFlg And tCount = 5 Then
             timer.Stop()
-
         End If
 
-        'RaiseEvent ReduceOn() '減圧処理イベント
+        RaiseEvent ReduceOn() '減圧処理イベント
     End Sub
     ''' <summary>
     ''' 減圧キャンセル
