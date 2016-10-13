@@ -567,6 +567,14 @@ Public Class clsPlcIf
             MsgBox("シーケンサと通信出来ません！" & vbCrLf & "論理局番：" & com_ReferencesEasyIF.ActLogicalStationNumber.ToString, MsgBoxStyle.Exclamation)
             End
         End If
+
+        '初期状態読込
+        _LosZeroSts_FLEX = AnalogPlcRead("同時施工ステータス_FLEX")
+        _LosZeroSts_M = AnalogPlcRead("同時施工ステータス_Machine")
+        _excaStatus = AnalogPlcRead("掘進ステータス")
+        PreExcaStatus = _excaStatus
+        _LosZeroMode = DigtalPlcRead("同時施工モード")
+
         TimerRun()
 
     End Sub
@@ -917,6 +925,40 @@ Public Class clsPlcIf
             Exit Sub
         End Try
     End Sub
+
+    ''' <summary>
+    ''' デジタル（ビット）データのPLC読込
+    ''' </summary>
+    ''' <param name="TagName">TAG名</param>
+    Public Function DigtalPlcRead(TagName As String) As Boolean
+        Dim PlcAdress As String = DigtalTag.TagData(TagName).Address
+        Return PLC_Read(PlcAdress)
+    End Function
+    ''' <summary>
+    ''' アナログデータ　PLC読込
+    ''' </summary>
+    ''' <param name="TagName"></param>
+    Public Function AnalogPlcRead(TagName As String) As Integer
+        Dim PlcAdress As String = AnalogTag.TagData(TagName).Address
+        Return PLC_Read(PlcAdress)
+    End Function
+    ''' <summary>
+    ''' PLCから読込
+    ''' </summary>
+    ''' <param name="PlcAdress">アドレス</param>
+    ''' <remarks></remarks>
+    Private Function PLC_Read(PlcAdress As String) As Integer
+        Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
+        Dim Value As Integer
+        Try
+            iReturnCode = com_ReferencesEasyIF.GetDevice(PlcAdress, Value)
+            Return Value
+        Catch exException As Exception
+            '例外処理	
+            MessageBox.Show(exException.Message, "PLC_Write", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Function
+        End Try
+    End Function
 
     Public Sub PutSvPress(ByVal sngPres As Single(), ByRef intPresFLg As Short())
         ' @(f)

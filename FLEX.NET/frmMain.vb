@@ -5,6 +5,18 @@
 
     Private DspGp() As ucnDspGpPres
     Private BlinkFlg As Boolean
+    ''' <summary>
+    ''' 画面のちらつきをなくす
+    ''' </summary>
+    ''' <returns></returns>
+    Protected Overrides ReadOnly Property CreateParams() As CreateParams
+        Get
+            Dim cp As CreateParams = MyBase.CreateParams
+            '拡張ウィンドウスタイルにWS_EX_COMPOSITEDを追加する
+            cp.ExStyle = cp.ExStyle Or &H2000000
+            Return cp
+        End Get
+    End Property
 
     Public Sub New()
 
@@ -149,23 +161,19 @@
         Else
             ucnAssemblyPieceNo.FieldName = "-------"
         End If
-        'TODO:工程表示の変数は別に作成の必要あり！
+
         '減圧中
-        ucnReduceFinish.Blink = (PlcIf.LosZeroSts_FLEX = 1)
+        ucnReduceFinish.Blink = (LosZeroSts = 1)
         '減圧完了
-        ucnReduceFinish.BitStatus = (PlcIf.LosZeroSts_FLEX >= 2)
+        ucnReduceFinish.BitStatus = (LosZeroSts >= 2)
         '引戻し中
-        ucnPullBackFinish.Blink = (PlcIf.LosZeroSts_M = 2)
+        ucnPullBackFinish.Blink = (LosZeroSts = 2)
         '引戻完了
-        ucnPullBackFinish.BitStatus = (PlcIf.LosZeroSts_M >= 3 And PlcIf.LosZeroSts_FLEX <> 1)
+        ucnPullBackFinish.BitStatus = (LosZeroSts >= 3)
         '組立中
-        ucnAssemblyFinish.Blink = (PlcIf.LosZeroSts_M >= 3 And PlcIf.LosZeroSts_M < 5 And PlcIf.LosZeroSts_FLEX <> 1)
+        ucnAssemblyFinish.Blink = (LosZeroSts = 5)
         '組立完了
-        ucnAssemblyFinish.BitStatus = (PlcIf.LosZeroSts_M >= 5 And PlcIf.LosZeroSts_FLEX <> 1)
-
-        '同時施工組立データ
-        'SegmentDataDsp()
-
+        ucnAssemblyFinish.BitStatus = (LosZeroSts >= 6)
 
         '点滅用フラグ
         BlinkFlg = Not BlinkFlg
@@ -178,6 +186,12 @@
                 End If
             End If
         Next
+
+        '経過時間の表示
+        DspExcationElapsedTime.Value = ElapsedTime.ExcavationTime
+        DspLosZeroElapsedTime.Value = ElapsedTime.LozeroExcavationTime
+        DspWatingElapsedTime.Value = ElapsedTime.WatingTime
+        DspCycleTime.Value = ElapsedTime.CycleTime
 
 
         'TODO:線形データ画面更新　LineDistanceChage に記述したい

@@ -116,6 +116,7 @@
     <Compile Include="ActDefine.vb" />
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="clsControlParameter.vb" />
+    <Compile Include="clsElapsedTime.vb" />
     <Compile Include="clsMachinSpec.vb" />
     <Compile Include="clsThrustDiv.vb" />
     <Compile Include="clsSegmentAssembly.vb" />

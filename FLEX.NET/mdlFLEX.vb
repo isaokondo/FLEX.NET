@@ -39,7 +39,15 @@ Module mdlFLEX
     ''' </summary>
     Public WithEvents Reduce As clsReducePress
 
-
+    ''' <summary>
+    ''' ロスゼロステータス（工程表示用)
+    ''' 1:減圧中　2:減圧完了　3:引き戻し中　4:引き戻し完了　5:組立中 6:組立完了
+    ''' </summary>
+    Public LosZeroSts As Short
+    ''' <summary>
+    ''' 経過時間の算出
+    ''' </summary>
+    Public ElapsedTime As New clsElapsedTime
 
     Public Sub Main()
 
@@ -79,16 +87,22 @@ Module mdlFLEX
             WriteEventData(PlcIf.RingNo & "リング 掘進開始しました", Color.CornflowerBlue)
             My.Forms.frmMain.ChartClear() 'チャート初期化
             My.Forms.frmMain.DspExcavStartDay(Now)
+            ElapsedTime.Reset() '掘進時間計算開始
         End If
         If PreStatus = cChudan And NowStatus = cKussin Then
             WriteEventData("掘進再開しました", Color.Magenta)
+            ElapsedTime.ExcavationStart()
+            If LosZeroSts >= 1 Then ElapsedTime.LosZeroStart()
         End If
         '中断
         If NowStatus = cChudan Then
             WriteEventData("掘進中断しました", Color.Black)
+            ElapsedTime.ExcavationStop()
         End If
         '待機中
         If NowStatus = cTaiki Then
+
+            LosZeroSts = 0
             If PreStatus <> -1 Then
                 WriteEventData("待機中になりました。", Color.Blue)
             End If
@@ -99,6 +113,7 @@ Module mdlFLEX
             PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
             PlcIf.LosZeroDataWrite("押込みジャッキ②", Nothing)
             PlcIf.LosZeroEnable = False   '同時施工可OFF
+            ElapsedTime.WaingStart()
         End If
         '掘進中で手動方向制御
         If NowStatus = cKussin And ControlParameter.AutoDirectionControl = False Then
@@ -132,24 +147,31 @@ Module mdlFLEX
             With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
                 Select Case NowSts
                     Case 1
-                        PlcIf.LosZeroSts_FLEX = 1'1ピース目の減圧開始
+                        PlcIf.LosZeroSts_FLEX = 1 '1ピース目の減圧開始
+                        LosZeroSts = 1
+                        ElapsedTime.LosZeroStart()
                     Case 2
                         '引き戻しジャッキ
                         Dim PullJk As String =
                             String.Join(",", .PullBackJack)
 
                         WriteEventData("No." & PullJk & " のジャッキの引戻し開始しました。", Color.Blue)
+                        LosZeroSts = 3
+
                     Case 3
                         WriteEventData("ジャッキの引戻し完了しました。", Color.Magenta)
+                        LosZeroSts = 4
                     Case 4, 6
                         '押込みジャッキ
                         Dim ClosetJk As String =
                             String.Join(",", .ClosetJack)
                         WriteEventData("No." & ClosetJk & " のジャッキ押込み開始しました。", Color.Blue)
+                        LosZeroSts = 5
                     Case 5
 
                         WriteEventData("[" & .PieceName & "] セグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
+                        LosZeroSts = 6
 
                         If PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then '最終ピース到達前
                             If ControlParameter.NextPieceConfirm Then
@@ -191,10 +213,12 @@ Module mdlFLEX
                     '減圧処理開始
                     'Reduce = New clsReducePress
                     Reduce.Start()
+                    LosZeroSts = 1
 
                 Case 2
                     WriteEventData("減圧完了しました。", Color.Magenta)
                     PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
+                    LosZeroSts = 2
 
             End Select
 
@@ -214,6 +238,8 @@ Module mdlFLEX
             WriteEventData("同時施工モードになりました。", Color.Blue)
         Else
             WriteEventData("同時施工モードがOFFになりました", Color.Magenta)
+            LosZeroSts = 0
+            ElapsedTime.LosZeroStop()
         End If
 
 
