@@ -348,7 +348,7 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblyPatternSel.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.SelectType
         Me.AssemblyPatternSel.Location = New System.Drawing.Point(23, 145)
         Me.AssemblyPatternSel.MaxValue = "10000"
-        Me.AssemblyPatternSel.MinValue = "-100"
+        Me.AssemblyPatternSel.MinValue = "1"
         Me.AssemblyPatternSel.Name = "AssemblyPatternSel"
         Me.AssemblyPatternSel.SelectItem = Nothing
         Me.AssemblyPatternSel.Size = New System.Drawing.Size(417, 38)

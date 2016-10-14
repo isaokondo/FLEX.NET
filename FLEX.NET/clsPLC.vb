@@ -353,7 +353,7 @@ Public Class clsPlcIf
             Return _RingNo
         End Get
         Set(value As Integer)
-            _RingNo = value
+            '_RingNo = value
             Call ParameterWrite(value)
         End Set
     End Property
@@ -686,8 +686,11 @@ Public Class clsPlcIf
                                                         sharrDeviceValue(0))
             If iReturnCode = 0 Then '通信OK
 
-
-                _RingNo = GetAnalogData("リング番号", ParameterTag)
+                Dim rno As Integer = _RingNo
+                _RingNo = GetAnalogData("RingNo", ParameterTag)
+                If rno <> _RingNo Then
+                    RaiseEvent ExcavationStatusChange(0, 0)
+                End If
 
                 _ストローク管理法 = GetAnalogData("ストローク管理法", ParameterTag)   'ストローク管理方法
                 _掘進判定ストローク = GetAnalogData("掘進判定ストローク", ParameterTag)

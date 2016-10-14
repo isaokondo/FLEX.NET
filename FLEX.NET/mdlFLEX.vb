@@ -149,7 +149,8 @@ Module mdlFLEX
                     Case 1
                         PlcIf.LosZeroSts_FLEX = 1 '1ピース目の減圧開始
                         LosZeroSts = 1
-                        ElapsedTime.LosZeroStart()
+                        ElapsedTime.LosZeroStart()  '同時施工時間算出
+
                     Case 2
                         '引き戻しジャッキ
                         Dim PullJk As String =
@@ -199,7 +200,7 @@ Module mdlFLEX
                     If PlcIf.LosZeroSts_M <> 1 Then
                         PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
                     End If
-
+                    My.Forms.frmNextPieceConfirm.Close() '継続確認画面を閉じる
                     With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
                         '減圧グループ
                         WriteEventData(PlcIf.AssemblyPieceNo & "ピース目 " & String.Join(",", .ReduceGroup) & "グループの減圧開始します。", Color.Blue)

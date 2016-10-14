@@ -167,9 +167,9 @@
         '減圧完了
         ucnReduceFinish.BitStatus = (LosZeroSts >= 2)
         '引戻し中
-        ucnPullBackFinish.Blink = (LosZeroSts = 2)
+        ucnPullBackFinish.Blink = (LosZeroSts = 3)
         '引戻完了
-        ucnPullBackFinish.BitStatus = (LosZeroSts >= 3)
+        ucnPullBackFinish.BitStatus = (LosZeroSts >= 4)
         '組立中
         ucnAssemblyFinish.Blink = (LosZeroSts = 5)
         '組立完了

@@ -50,7 +50,7 @@ Public Class frmAssemblyProcessEdit
             DspAddClosetThrustJack.Value = SegmentAssembly.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
 
-            AssemblyPieceNo.MaxValue = SegmentAssembly.AssemblyPieceNumber '組立ピース番号MAX値設定
+            AssemblyPieceNo.MaxValue = SegAsbly.AssemblyPieceNumber '組立ピース番号MAX値設定
 
             '作動ジャッキの表示
             If OperattionJackSel.ComboBox.SelectedIndex = -1 Then

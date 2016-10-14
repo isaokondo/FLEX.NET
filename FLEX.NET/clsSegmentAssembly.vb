@@ -126,8 +126,13 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     ''' <param name="tmpS">文字列</param>
     ''' <returns></returns>
-    Private Function JkList(ByVal tmpS As String) As List(Of Short)
+    Private Function JkList(ByVal tmpS As Object) As List(Of Short)
+
         Dim lst As New List(Of Short)
+
+        If TypeName(tmpS) = "DBNull" Then
+            Return lst
+        End If
 
         If tmpS.IndexOf(",") > 0 Then
             Dim i As Integer
@@ -162,8 +167,10 @@ Friend Class clsSegmentAssembly
 
     End Function
 
-
-
+    'TODO:オーバーライドを使いたい！
+    'Private Function JkList(ByVal tmpS As DBNull) As List(Of Short)
+    '    Return New List(Of Short)
+    'End Function
     ''' <summary>
     ''' データベース読込
     ''' </summary>

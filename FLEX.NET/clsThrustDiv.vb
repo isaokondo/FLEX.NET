@@ -309,6 +309,7 @@ Friend Class clsReducePress
             _MvOut(GpNo - 1) = PlcIf.GroupMV(GpNo - 1)
             '１秒毎の減圧量を算出
             ReduceDev(GpNo - 1) = _MvOut(GpNo - 1) / ControlParameter.ReduceTime
+            If ReduceDev(GpNo - 1) = 0 Then ReduceDev(GpNo - 1) = 1
         Next
 
 
@@ -342,6 +343,11 @@ Friend Class clsReducePress
         End If
         '減圧処理停止 MVがすべて０で、減圧判断圧力以下
         If MvZero = 0 And ReduceFlg And tCount = 5 Then
+            timer.Stop()
+        End If
+        '掘進停止時は、減圧完了とする
+        If PlcIf.ExcaStatus <> cKussin Then
+            PlcIf.LosZeroSts_FLEX = 2
             timer.Stop()
         End If
 
