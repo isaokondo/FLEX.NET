@@ -99,23 +99,40 @@ Friend Class clsSegmentAssembly
         '当該リングのセグメント組立IDを取得
         Dim Id As Short = _SegmentAssenblyPtnID(RingNo)
         '検索
+        'Dim rsData As Odbc.OdbcDataReader =
+        'ExecuteSql("SELECT * FROM `flexセグメント組立手順` WHERE `ID`='" & Id & "' ORDER BY `組立順序`")
         Dim rsData As Odbc.OdbcDataReader =
-            ExecuteSql("SELECT * FROM `flexセグメント組立手順` WHERE `ID`='" & Id & "' ORDER BY `組立順序`")
+            ExecuteSql("SELECT * FROM `セグメント分割仕様リスト` " &
+            "Inner Join `セグメント組立パターンベース` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンベース`.`分割No`" &
+            " Inner Join `セグメント組立パターンリスト` ON `セグメント組立パターンベース`.`組立パターンNo` = `セグメント組立パターンリスト`.`組立パターンNo` ORDER BY `組立順序`")
         _AssemblyPieceNumber = 0
         _SegmentProcessData.Clear()
         'データ読込
         While rsData.Read()
             Dim SegDat As New AsseblyProcess
+
+            Dim PieaceNo As String = rsData.Item("ピースNo")
+            If PieaceNo = "1" Then
+                PieaceNo = "K"
+            End If
+
             SegDat.AssemblyOrder = rsData.Item("組立順序")
-            SegDat.PieceName = rsData.Item("ピース名称")
-            SegDat.PieceAngle = rsData.Item("ピース角度")
-            SegDat.PieceCenterAngle = rsData.Item("組立ピース中心角")
-            SegDat.PullBackJack = JkList(rsData.Item("引戻ジャッキ"))
-            SegDat.OpposeJack = JkList(rsData.Item("対抗ジャッキ"))
-            SegDat.ClosetJack = JkList(rsData.Item("押込ジャッキ"))
-            SegDat.AddClosetJack = JkList(rsData.Item("追加押込ジャッキ"))
-            SegDat.RightRollingClosetJack = JkList(rsData.Item("右ローリング押込ジャッキ"))
-            SegDat.LeftRollingClosetJack = JkList(rsData.Item("左ローリング押込ジャッキ"))
+            SegDat.PieceName = rsData.Item("ピース名")
+            'SegDat.PieceAngle = rsData.Item("ピース角度")
+            SegDat.PieceAngle = rsData.Item(PieaceNo & "スパン")
+            'SegDat.PieceCenterAngle = rsData.Item("組立ピース中心角")
+            If PieaceNo = "K" Then
+                SegDat.PieceCenterAngle = rsData.Item("基本位置")
+            Else
+                SegDat.PieceCenterAngle = rsData.Item(PieaceNo & "中心")
+            End If
+            SegDat.PieceCenterAngle = 90 - SegDat.PieceCenterAngle
+            SegDat.PullBackJack = JkList(rsData.Item("引戻"))
+            'SegDat.OpposeJack = JkList(rsData.Item("対抗ジャッキ"))
+            SegDat.ClosetJack = JkList(rsData.Item("押込"))
+            SegDat.AddClosetJack = JkList(rsData.Item("追加"))
+            'SegDat.RightRollingClosetJack = JkList(rsData.Item("右ローリング押込ジャッキ"))
+            'SegDat.LeftRollingClosetJack = JkList(rsData.Item("左ローリング押込ジャッキ"))
             _SegmentProcessData(rsData.Item("組立順序")) = SegDat
             _AssemblyPieceNumber += 1   '組立ピース数
         End While

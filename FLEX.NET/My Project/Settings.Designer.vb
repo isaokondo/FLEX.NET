@@ -56,7 +56,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("flex安藤間北西線")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("flex鹿島外環")>  _
         Public ReadOnly Property DataseName() As String
             Get
                 Return CType(Me("DataseName"),String)
@@ -171,6 +171,17 @@ Namespace My
         Public ReadOnly Property HostName() As String
             Get
                 Return CType(Me("HostName"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Driver={MySQL ODBC 5.3 Unicode Driver};server=192.168.2.249;uid=toyo;database={fl"& _ 
+            "ex鹿島外環};port=3306;found_rows=1")>  _
+        Public ReadOnly Property _flex鹿島外環_ConnectionString() As String
+            Get
+                Return CType(Me("_flex鹿島外環_ConnectionString"),String)
             End Get
         End Property
     End Class

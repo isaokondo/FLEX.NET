@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DataseName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">flex安藤間北西線</Value>
+      <Value Profile="(Default)">flex鹿島外環</Value>
     </Setting>
     <Setting Name="GpPsColor1" Type="System.Drawing.Color" Scope="Application">
       <Value Profile="(Default)">Black</Value>
@@ -40,6 +40,14 @@
     </Setting>
     <Setting Name="HostName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">127.0.0.1</Value>
+    </Setting>
+    <Setting Name="_flex鹿島外環_ConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Driver={MySQL ODBC 5.3 Unicode Driver};server=192.168.2.249;uid=toyo;database={flex鹿島外環};port=3306;found_rows=1&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.Odbc&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Driver={MySQL ODBC 5.3 Unicode Driver};server=192.168.2.249;uid=toyo;database={flex鹿島外環};port=3306;found_rows=1</Value>
     </Setting>
   </Settings>
 </SettingsFile>
