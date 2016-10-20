@@ -316,11 +316,13 @@
     ''' </summary>
     Public Sub SegmentDataDsp()
         '組立パターン
-        DspAssemblyPattern.Value = SegmentAssembly.SegmentAssenblyPtn(PlcIf.RingNo)
+
         Dim p As Short = 0
         If PlcIf.AssemblyPieceNo = 0 Then p = 1
         With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
             'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
+            DspAssemblyPattern.Value = .PatternName '組立パターン名
+            DspBoltPitch.Value = .BoltPitch '組立ボルトピッチ
             DspAssemblyPieace.Value = .PieceName  '組立ピース名称
             DspPullBackJack.Value = SegmentAssembly.JackListDsp(.PullBackJack) '引戻しジャッキ
             DspClosetJack.Value = SegmentAssembly.JackListDsp(.ClosetJack) '押込みジャッキ

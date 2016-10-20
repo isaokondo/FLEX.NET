@@ -31,7 +31,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspPullBackJack = New FLEX.NET.ucnDspData()
         Me.UcnDspData17 = New FLEX.NET.ucnDspData()
         Me.DspAssemblyPieace = New FLEX.NET.ucnDspData()
-        Me.UcnDspData2 = New FLEX.NET.ucnDspData()
+        Me.DspBoltPitch = New FLEX.NET.ucnDspData()
         Me.UcnDspData1 = New FLEX.NET.ucnDspData()
         Me.AssemblyBoltPitchSel = New FLEX.NET.ucnNumEdit()
         Me.AssemblySegmentSel = New FLEX.NET.ucnNumEdit()
@@ -242,26 +242,26 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPieace.Value = "A2-1"
         Me.DspAssemblyPieace.ValueType = True
         '
-        'UcnDspData2
+        'DspBoltPitch
         '
-        Me.UcnDspData2.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData2.Blink = False
-        Me.UcnDspData2.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData2.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData2.DataWidth = 91
-        Me.UcnDspData2.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData2.FieldName = "組立ﾎﾞﾙﾄﾋﾟｯﾁ"
-        Me.UcnDspData2.FieldNameWidth = 146
-        Me.UcnDspData2.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData2.Location = New System.Drawing.Point(724, 30)
-        Me.UcnDspData2.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData2.Name = "UcnDspData2"
-        Me.UcnDspData2.Size = New System.Drawing.Size(247, 32)
-        Me.UcnDspData2.TabIndex = 113
-        Me.UcnDspData2.Unit = "deg"
-        Me.UcnDspData2.UnitVisible = False
-        Me.UcnDspData2.Value = "3"
-        Me.UcnDspData2.ValueType = False
+        Me.DspBoltPitch.BackColor = System.Drawing.Color.Transparent
+        Me.DspBoltPitch.Blink = False
+        Me.DspBoltPitch.BlinkColor = System.Drawing.Color.Red
+        Me.DspBoltPitch.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspBoltPitch.DataWidth = 91
+        Me.DspBoltPitch.DecimalPlaces = CType(1, Short)
+        Me.DspBoltPitch.FieldName = "組立ﾎﾞﾙﾄﾋﾟｯﾁ"
+        Me.DspBoltPitch.FieldNameWidth = 146
+        Me.DspBoltPitch.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspBoltPitch.Location = New System.Drawing.Point(724, 30)
+        Me.DspBoltPitch.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspBoltPitch.Name = "DspBoltPitch"
+        Me.DspBoltPitch.Size = New System.Drawing.Size(247, 32)
+        Me.DspBoltPitch.TabIndex = 113
+        Me.DspBoltPitch.Unit = "deg"
+        Me.DspBoltPitch.UnitVisible = False
+        Me.DspBoltPitch.Value = "3"
+        Me.DspBoltPitch.ValueType = False
         '
         'UcnDspData1
         '
@@ -460,14 +460,14 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.Add(Me.DspPullBackJack)
         Me.Controls.Add(Me.UcnDspData17)
         Me.Controls.Add(Me.DspAssemblyPieace)
-        Me.Controls.Add(Me.UcnDspData2)
+        Me.Controls.Add(Me.DspBoltPitch)
         Me.Controls.Add(Me.UcnDspData1)
         Me.Name = "frmAssemblyProcessEdit"
         Me.Text = "組立工程の編集"
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.UcnDspData1, 0)
-        Me.Controls.SetChildIndex(Me.UcnDspData2, 0)
+        Me.Controls.SetChildIndex(Me.DspBoltPitch, 0)
         Me.Controls.SetChildIndex(Me.DspAssemblyPieace, 0)
         Me.Controls.SetChildIndex(Me.UcnDspData17, 0)
         Me.Controls.SetChildIndex(Me.DspPullBackJack, 0)
@@ -500,7 +500,7 @@ Partial Class frmAssemblyProcessEdit
     Friend WithEvents DspPullBackJack As ucnDspData
     Friend WithEvents UcnDspData17 As ucnDspData
     Friend WithEvents DspAssemblyPieace As ucnDspData
-    Friend WithEvents UcnDspData2 As ucnDspData
+    Friend WithEvents DspBoltPitch As ucnDspData
     Friend WithEvents UcnDspData1 As ucnDspData
     Friend WithEvents AssemblyBoltPitchSel As ucnNumEdit
     Friend WithEvents AssemblySegmentSel As ucnNumEdit

@@ -141,13 +141,17 @@ Friend Class clsSegmentAssembly
         While rsData.Read()
             Dim SegDat As New AsseblyProcess
 
+            SegDat.PatternName = rsData.Item("組立パターン名")
+            SegDat.BoltPitch = rsData.Item("組立ピッチ")
             Dim PieaceNo As String = rsData.Item("ピースNo")
             If PieaceNo = "1" Then
                 PieaceNo = "K"
             End If
+            If IsDBNull(rsData.Item("ピース名")) Then Exit While
 
             SegDat.AssemblyOrder = rsData.Item("組立順序")
             SegDat.PieceName = rsData.Item("ピース名")
+
             'SegDat.PieceAngle = rsData.Item("ピース角度")
             SegDat.PieceAngle = rsData.Item(PieaceNo & "スパン")
             'SegDat.PieceCenterAngle = rsData.Item("組立ピース中心角")
@@ -156,15 +160,15 @@ Friend Class clsSegmentAssembly
             Else
                 SegDat.PieceCenterAngle = rsData.Item(PieaceNo & "中心")
             End If
-            SegDat.PieceCenterAngle += 360 / rsData.Item("ﾎﾞﾙﾄ  数") * rsData("組立ピッチ")
+            SegDat.PieceCenterAngle -= 360 / rsData.Item("ﾎﾞﾙﾄ  数") * rsData("組立ピッチ")
             SegDat.PieceCenterAngle = 90 - SegDat.PieceCenterAngle
             SegDat.PullBackJack = JkList(rsData.Item("引戻"))
             'SegDat.OpposeJack = JkList(rsData.Item("対抗ジャッキ"))
             SegDat.ClosetJack = JkList(rsData.Item("押込"))
-        SegDat.AddClosetJack = JkList(rsData.Item("追加"))
-        'SegDat.RightRollingClosetJack = JkList(rsData.Item("右ローリング押込ジャッキ"))
-        'SegDat.LeftRollingClosetJack = JkList(rsData.Item("左ローリング押込ジャッキ"))
-        _SegmentProcessData(rsData.Item("組立順序")) = SegDat
+            SegDat.AddClosetJack = JkList(rsData.Item("追加"))
+            'SegDat.RightRollingClosetJack = JkList(rsData.Item("右ローリング押込ジャッキ"))
+            'SegDat.LeftRollingClosetJack = JkList(rsData.Item("左ローリング押込ジャッキ"))
+            _SegmentProcessData(rsData.Item("組立順序")) = SegDat
         _AssemblyPieceNumber += 1   '組立ピース数
         End While
 
@@ -178,38 +182,47 @@ Friend Class clsSegmentAssembly
 
         Dim lst As New List(Of Short)
 
-        If TypeName(tmpS) = "DBNull" Then
+        If TypeName(tmpS) = "DBNull" Or tmpS = "" Then
             Return lst
         End If
 
-        If tmpS.IndexOf(",") > 0 Then
-            Dim i As Integer
-            Dim j As String() = tmpS.Split(",")
-            '数値に変更可能か
-            If IsNumeric(j(0)) And IsNumeric(j(1)) Then
-                Dim St, Lt As Integer
-                St = CShort(j(0))
-                Lt = CShort(j(1))
-                If Lt > St Then
-                    For i = St To Lt
-                        lst.Add(i)
-                    Next
-                Else
-                    '天端ジャッキを含む場合
-                    For i = St To InitParameter.NumberJack
-                        lst.Add(i)
-                    Next
-                    For i = 1 To Lt
-                        lst.Add(i)
-                    Next
-                End If
-            End If
-        Else
-            '数値ひとつの場合
-            If IsNumeric(tmpS) Then
-                lst.Add(CShort(tmpS))
-            End If
-        End If
+        Dim i As String() = tmpS.split(",")
+
+        For Each k As Short In i
+            lst.Add(k)
+        Next
+        Return lst
+
+
+
+        'If tmpS.IndexOf(",") > 0 Then
+        '    Dim i As Integer
+        '    Dim j As String() = tmpS.Split(",")
+        '    '数値に変更可能か
+        '    If IsNumeric(j(0)) And IsNumeric(j(j.Count - 1)) Then
+        '        Dim St, Lt As Integer
+        '        St = CShort(j(0))
+        '        Lt = CShort(j(j.Count - 1))
+        '        If Lt > St Then
+        '            For i = St To Lt
+        '                lst.Add(i)
+        '            Next
+        '        Else
+        '            '天端ジャッキを含む場合
+        '            For i = St To InitParameter.NumberJack
+        '                lst.Add(i)
+        '            Next
+        '            For i = 1 To Lt
+        '                lst.Add(i)
+        '            Next
+        '        End If
+        '    End If
+        'Else
+        '    '数値ひとつの場合
+        '    If IsNumeric(tmpS) Then
+        '        lst.Add(CShort(tmpS))
+        '    End If
+        'End If
 
         Return lst
 
@@ -374,8 +387,16 @@ Friend Class clsSegmentAssembly
     ''' 組立手順データ
     ''' </summary>
     Public Class AsseblyProcess
-
-
+        ''' <summary>
+        ''' 組立パターン名
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property PatternName As String
+        ''' <summary>
+        ''' 組立ボルトピッチ
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property BoltPitch As Single
 
         Dim _PullBackJack As List(Of Short)
         ''' <summary>

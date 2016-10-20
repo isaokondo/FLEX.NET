@@ -40,10 +40,11 @@ Public Class frmAssemblyProcessEdit
 
         '組立パターンの表示
         AssemblyPatternSel.ComboBox.Text = SegAsbly.SegmentAssenblyPtn(ConfirmRingNo.Value)
-        DspAssemblyPattern.Value = SegAsbly.SegmentAssenblyPtn(ConfirmRingNo.Value)
-
+        'DspAssemblyPattern.Value = SegAsbly.SegmentAssenblyPtn(ConfirmRingNo.Value)
         With SegAsbly.SegmentProcessData(AssemblyPieceNo.Value)
             'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
+            DspAssemblyPattern.Value = .PatternName
+            DspBoltPitch.Value = .BoltPitch
             DspAssemblyPieace.Value = .PieceName  '組立ピース名称
             DspPullBackJack.Value = SegmentAssembly.JackListDsp(.PullBackJack) '引戻しジャッキ
             DspClosetJack.Value = SegmentAssembly.JackListDsp(.ClosetJack) '押込みジャッキ
