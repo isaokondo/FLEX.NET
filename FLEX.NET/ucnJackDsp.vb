@@ -435,6 +435,9 @@ Public Class ucnJackDsp
 
             End If
             Dim Rd As Integer = MaxRadios - 1
+
+            'TODO:同じような処理が2つあるので　簡潔に！
+            'セグメント区切り線
             Dim Angle As Single = (90 - _PieceAngle(i) / 2 - _PieceCenterAngle(i)) * PI / 180
             Dim pX As Integer = CenterPos.X + Rd * Cos(Angle)
             Dim pY As Integer = CenterPos.Y - Rd * Sin(Angle)
@@ -442,6 +445,17 @@ Public Class ucnJackDsp
             Dim p2Y As Integer = CenterPos.Y - (Rd - sWidth) * Sin(Angle)
 
             g.DrawLine(Pens.Black, New Point(p2X, p2Y), New Point(pX, pY))
+
+            Angle = (90 + _PieceAngle(i) / 2 - _PieceCenterAngle(i)) * PI / 180
+            Dim pX2 As Integer = CenterPos.X + Rd * Cos(Angle)
+            Dim pY2 As Integer = CenterPos.Y - Rd * Sin(Angle)
+            Dim p2X2 As Integer = CenterPos.X + (Rd - 20) * Cos(Angle)
+            Dim p2Y2 As Integer = CenterPos.Y - (Rd - 20) * Sin(Angle)
+
+            g.DrawLine(Pens.Black, New Point(p2X2, p2Y2), New Point(pX2, pY2))
+
+
+
             'Rd -= 2
             '文字回転用
             g.TranslateTransform(Rd * Cos((90 - _PieceCenterAngle(i)) * PI / 180) + CenterPos.X,
