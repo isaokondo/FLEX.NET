@@ -29,23 +29,24 @@ Partial Class ucnDspBit
         '
         Me.lblFieldName.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.lblFieldName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblFieldName.Location = New System.Drawing.Point(1, 0)
         Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblFieldName.Name = "lblFieldName"
-        Me.lblFieldName.Size = New System.Drawing.Size(135, 30)
+        Me.lblFieldName.Size = New System.Drawing.Size(126, 30)
         Me.lblFieldName.TabIndex = 5
         Me.lblFieldName.Text = "待 機"
         Me.lblFieldName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'ucnDspBit
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Transparent
         Me.Controls.Add(Me.lblFieldName)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "ucnDspBit"
-        Me.Size = New System.Drawing.Size(167, 30)
+        Me.Size = New System.Drawing.Size(156, 30)
         Me.ResumeLayout(False)
 
     End Sub

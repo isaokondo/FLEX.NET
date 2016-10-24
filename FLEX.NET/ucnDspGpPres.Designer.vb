@@ -33,20 +33,20 @@ Partial Class ucnDspGpPres
         Me.lblData.Location = New System.Drawing.Point(0, 0)
         Me.lblData.Margin = New System.Windows.Forms.Padding(0)
         Me.lblData.Name = "lblData"
-        Me.lblData.Size = New System.Drawing.Size(38, 16)
+        Me.lblData.Size = New System.Drawing.Size(35, 16)
         Me.lblData.TabIndex = 8
         Me.lblData.Text = "99.9"
         Me.lblData.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'ucnDspGpPres
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Transparent
         Me.Controls.Add(Me.lblData)
         Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "ucnDspGpPres"
-        Me.Size = New System.Drawing.Size(50, 24)
+        Me.Size = New System.Drawing.Size(47, 23)
         Me.ResumeLayout(False)
 
     End Sub

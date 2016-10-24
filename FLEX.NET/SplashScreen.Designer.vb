@@ -32,9 +32,10 @@ Partial Class SplashScreen
         Me.Version.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Version.BackColor = System.Drawing.Color.Transparent
         Me.Version.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Version.Location = New System.Drawing.Point(26, 397)
+        Me.Version.Location = New System.Drawing.Point(39, 351)
+        Me.Version.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Version.Name = "Version"
-        Me.Version.Size = New System.Drawing.Size(325, 25)
+        Me.Version.Size = New System.Drawing.Size(244, 20)
         Me.Version.TabIndex = 3
         Me.Version.Text = "バージョン {0}.{1:00}"
         '
@@ -43,24 +44,26 @@ Partial Class SplashScreen
         Me.Copyright.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Copyright.BackColor = System.Drawing.Color.Transparent
         Me.Copyright.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Copyright.Location = New System.Drawing.Point(26, 435)
+        Me.Copyright.Location = New System.Drawing.Point(39, 381)
+        Me.Copyright.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Copyright.Name = "Copyright"
-        Me.Copyright.Size = New System.Drawing.Size(325, 40)
+        Me.Copyright.Size = New System.Drawing.Size(244, 32)
         Me.Copyright.TabIndex = 5
         Me.Copyright.Text = "著作権"
         '
         'SplashScreen
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = Global.FLEX.NET.My.Resources.Resources.FLEX_SPLASH
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(496, 507)
+        Me.ClientSize = New System.Drawing.Size(410, 473)
         Me.ControlBox = False
         Me.Controls.Add(Me.Version)
         Me.Controls.Add(Me.Copyright)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "SplashScreen"

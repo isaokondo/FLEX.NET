@@ -39,11 +39,11 @@ Partial Class ucnTuningComp
         'lblPv
         '
         Me.lblPv.BackColor = System.Drawing.Color.Transparent
-        Me.lblPv.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblPv.Location = New System.Drawing.Point(16, 12)
+        Me.lblPv.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblPv.Location = New System.Drawing.Point(34, 17)
         Me.lblPv.Margin = New System.Windows.Forms.Padding(0)
         Me.lblPv.Name = "lblPv"
-        Me.lblPv.Size = New System.Drawing.Size(62, 13)
+        Me.lblPv.Size = New System.Drawing.Size(46, 10)
         Me.lblPv.TabIndex = 0
         Me.lblPv.Text = "0.0Mpa"
         Me.lblPv.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -51,12 +51,12 @@ Partial Class ucnTuningComp
         'lblSv
         '
         Me.lblSv.BackColor = System.Drawing.Color.Transparent
-        Me.lblSv.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblSv.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblSv.ForeColor = System.Drawing.Color.Red
-        Me.lblSv.Location = New System.Drawing.Point(16, 0)
+        Me.lblSv.Location = New System.Drawing.Point(34, 5)
         Me.lblSv.Margin = New System.Windows.Forms.Padding(0)
         Me.lblSv.Name = "lblSv"
-        Me.lblSv.Size = New System.Drawing.Size(62, 13)
+        Me.lblSv.Size = New System.Drawing.Size(46, 10)
         Me.lblSv.TabIndex = 1
         Me.lblSv.Text = "0.0Mpa"
         Me.lblSv.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -66,9 +66,10 @@ Partial Class ucnTuningComp
         Me.lblPIDStatus.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lblPIDStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblPIDStatus.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblPIDStatus.Location = New System.Drawing.Point(438, 12)
+        Me.lblPIDStatus.Location = New System.Drawing.Point(435, 12)
+        Me.lblPIDStatus.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblPIDStatus.Name = "lblPIDStatus"
-        Me.lblPIDStatus.Size = New System.Drawing.Size(23, 25)
+        Me.lblPIDStatus.Size = New System.Drawing.Size(22, 25)
         Me.lblPIDStatus.TabIndex = 2
         Me.lblPIDStatus.Text = "A"
         Me.lblPIDStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -79,7 +80,7 @@ Partial Class ucnTuningComp
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.LineShape3, Me.barMv, Me.barPv, Me.barSv, Me.LineShape2, Me.LineShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(483, 38)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(467, 37)
         Me.ShapeContainer1.TabIndex = 3
         Me.ShapeContainer1.TabStop = False
         '
@@ -135,9 +136,10 @@ Partial Class ucnTuningComp
         '
         Me.lblNo.BackColor = System.Drawing.Color.Transparent
         Me.lblNo.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblNo.Location = New System.Drawing.Point(380, 13)
+        Me.lblNo.Location = New System.Drawing.Point(385, 12)
+        Me.lblNo.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblNo.Name = "lblNo"
-        Me.lblNo.Size = New System.Drawing.Size(57, 19)
+        Me.lblNo.Size = New System.Drawing.Size(46, 18)
         Me.lblNo.TabIndex = 4
         Me.lblNo.Text = "No.1"
         Me.lblNo.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -147,17 +149,17 @@ Partial Class ucnTuningComp
         Me.lblMv.BackColor = System.Drawing.Color.Transparent
         Me.lblMv.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblMv.ForeColor = System.Drawing.Color.Blue
-        Me.lblMv.Location = New System.Drawing.Point(4, 24)
+        Me.lblMv.Location = New System.Drawing.Point(25, 27)
         Me.lblMv.Margin = New System.Windows.Forms.Padding(0)
         Me.lblMv.Name = "lblMv"
-        Me.lblMv.Size = New System.Drawing.Size(62, 13)
+        Me.lblMv.Size = New System.Drawing.Size(46, 10)
         Me.lblMv.TabIndex = 2
         Me.lblMv.Text = "100.0%"
         Me.lblMv.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'ucnTuningComp
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Transparent
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
@@ -169,7 +171,7 @@ Partial Class ucnTuningComp
         Me.Controls.Add(Me.lblMv)
         Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "ucnTuningComp"
-        Me.Size = New System.Drawing.Size(483, 38)
+        Me.Size = New System.Drawing.Size(467, 37)
         Me.ResumeLayout(False)
 
     End Sub

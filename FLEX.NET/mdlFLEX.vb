@@ -146,7 +146,7 @@ Module mdlFLEX
 
             With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
                 Select Case NowSts
-                    Case 1
+                    Case 1 'マシンからの減圧開始
                         PlcIf.LosZeroSts_FLEX = 1 '1ピース目の減圧開始
                         LosZeroSts = 1
                         ElapsedTime.LosZeroStart()  '同時施工時間算出
@@ -173,7 +173,7 @@ Module mdlFLEX
                         WriteEventData("[" & .PieceName & "] セグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
-
+                        'TODO:推進圧力がある程度たってから
                         If PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then '最終ピース到達前
                             If ControlParameter.NextPieceConfirm Then
                                 '同時施工継続メッセージ出力
@@ -197,7 +197,7 @@ Module mdlFLEX
             'FLEXからのステータス
             Select Case NowSts
                 Case 1  '減圧開始
-                    If PlcIf.LosZeroSts_M <> 1 Then
+                    If PlcIf.LosZeroSts_M <> 1 And PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then
                         PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
                     End If
                     My.Forms.frmNextPieceConfirm.Close() '継続確認画面を閉じる

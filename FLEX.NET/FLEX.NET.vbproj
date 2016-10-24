@@ -405,6 +405,9 @@
     <EmbeddedResource Include="ucnDspDataMin.resx">
       <DependentUpon>ucnDspDataMin.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ucnDspDevImg.resx">
+      <DependentUpon>ucnDspDevImg.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ucnDspGpPres.resx">
       <DependentUpon>ucnDspGpPres.vb</DependentUpon>
     </EmbeddedResource>

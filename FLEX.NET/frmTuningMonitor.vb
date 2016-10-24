@@ -18,8 +18,8 @@
             GpData(i).Location = New Point(0, GpData(i).Height * i)
             picDsp.Controls.Add(GpData(i))
         Next
-        picDsp.Height = GpData(0).Height * InitParameter.NumberGroup + 10
-        Me.Height = picDsp.Height + 30
+        picDsp.Height = GpData(0).Height * InitParameter.NumberGroup + 30
+        Me.Height = picDsp.Top + picDsp.Height + 60
 
         GpUpdate() '画面更新
 

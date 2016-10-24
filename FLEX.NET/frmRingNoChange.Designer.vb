@@ -36,6 +36,7 @@ Partial Class frmRingNoChange
         '
         'RingNoEdt
         '
+        Me.RingNoEdt.DataDspWidth = 0
         Me.RingNoEdt.DecimalPlaces = CType(0, Short)
         Me.RingNoEdt.DspFieldName = False
         Me.RingNoEdt.FieldName = Nothing

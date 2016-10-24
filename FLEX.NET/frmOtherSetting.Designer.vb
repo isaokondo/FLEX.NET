@@ -29,20 +29,21 @@ Partial Class frmOtherSetting
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(179, 204)
+        Me.btnOK.Location = New System.Drawing.Point(183, 219)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(313, 205)
+        Me.btnCancel.Location = New System.Drawing.Point(320, 220)
         '
         'StartPowerPointPosition
         '
         Me.StartPowerPointPosition.BackColor = System.Drawing.Color.Transparent
         Me.StartPowerPointPosition.FieldName = "開始時の力点位置"
-        Me.StartPowerPointPosition.Location = New System.Drawing.Point(19, 19)
+        Me.StartPowerPointPosition.Location = New System.Drawing.Point(18, 27)
+        Me.StartPowerPointPosition.Margin = New System.Windows.Forms.Padding(2)
         Me.StartPowerPointPosition.Name = "StartPowerPointPosition"
         Me.StartPowerPointPosition.rdbtnValue = False
-        Me.StartPowerPointPosition.Size = New System.Drawing.Size(403, 42)
+        Me.StartPowerPointPosition.Size = New System.Drawing.Size(408, 34)
         Me.StartPowerPointPosition.SlectNoName = "前回保持"
         Me.StartPowerPointPosition.SlectYesName = "全押し"
         Me.StartPowerPointPosition.TabIndex = 31
@@ -51,10 +52,11 @@ Partial Class frmOtherSetting
         '
         Me.JackCullControl.BackColor = System.Drawing.Color.Transparent
         Me.JackCullControl.FieldName = "ジャッキの間引き制御"
-        Me.JackCullControl.Location = New System.Drawing.Point(19, 67)
+        Me.JackCullControl.Location = New System.Drawing.Point(18, 82)
+        Me.JackCullControl.Margin = New System.Windows.Forms.Padding(2)
         Me.JackCullControl.Name = "JackCullControl"
         Me.JackCullControl.rdbtnValue = False
-        Me.JackCullControl.Size = New System.Drawing.Size(403, 42)
+        Me.JackCullControl.Size = New System.Drawing.Size(408, 34)
         Me.JackCullControl.SlectNoName = "しない"
         Me.JackCullControl.SlectYesName = "する"
         Me.JackCullControl.TabIndex = 34
@@ -63,20 +65,21 @@ Partial Class frmOtherSetting
         '
         Me.ClearanceMeterExist.BackColor = System.Drawing.Color.Transparent
         Me.ClearanceMeterExist.FieldName = "クリアランス計"
-        Me.ClearanceMeterExist.Location = New System.Drawing.Point(19, 119)
+        Me.ClearanceMeterExist.Location = New System.Drawing.Point(18, 137)
+        Me.ClearanceMeterExist.Margin = New System.Windows.Forms.Padding(2)
         Me.ClearanceMeterExist.Name = "ClearanceMeterExist"
         Me.ClearanceMeterExist.rdbtnValue = False
-        Me.ClearanceMeterExist.Size = New System.Drawing.Size(403, 42)
+        Me.ClearanceMeterExist.Size = New System.Drawing.Size(408, 34)
         Me.ClearanceMeterExist.SlectNoName = "なし"
         Me.ClearanceMeterExist.SlectYesName = "あり"
         Me.ClearanceMeterExist.TabIndex = 35
         '
         'frmOtherSetting
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
-        Me.ClientSize = New System.Drawing.Size(483, 271)
+        Me.ClientSize = New System.Drawing.Size(454, 278)
         Me.Controls.Add(Me.ClearanceMeterExist)
         Me.Controls.Add(Me.JackCullControl)
         Me.Controls.Add(Me.StartPowerPointPosition)

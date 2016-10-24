@@ -32,10 +32,10 @@ Partial Class ucnDspDataMin
         Me.lblData.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblData.ForeColor = System.Drawing.Color.Yellow
-        Me.lblData.Location = New System.Drawing.Point(73, 22)
+        Me.lblData.Location = New System.Drawing.Point(58, 18)
         Me.lblData.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblData.Name = "lblData"
-        Me.lblData.Size = New System.Drawing.Size(74, 23)
+        Me.lblData.Size = New System.Drawing.Size(70, 24)
         Me.lblData.TabIndex = 7
         Me.lblData.Text = "1234"
         Me.lblData.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -44,23 +44,24 @@ Partial Class ucnDspDataMin
         '
         Me.lblFieldName.BackColor = System.Drawing.Color.Transparent
         Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblFieldName.Location = New System.Drawing.Point(23, 0)
+        Me.lblFieldName.Location = New System.Drawing.Point(17, 0)
         Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblFieldName.Name = "lblFieldName"
-        Me.lblFieldName.Size = New System.Drawing.Size(134, 22)
+        Me.lblFieldName.Size = New System.Drawing.Size(111, 18)
         Me.lblFieldName.TabIndex = 6
         Me.lblFieldName.Text = "上ST実(mm/min)"
         Me.lblFieldName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'ucnDspDataMin
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Transparent
         Me.Controls.Add(Me.lblData)
         Me.Controls.Add(Me.lblFieldName)
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Name = "ucnDspDataMin"
-        Me.Size = New System.Drawing.Size(149, 46)
+        Me.Size = New System.Drawing.Size(166, 51)
         Me.ResumeLayout(False)
 
     End Sub

@@ -27,11 +27,11 @@ Partial Class frmNextPieceConfirm
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(99, 78)
+        Me.btnOK.Location = New System.Drawing.Point(119, 97)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(233, 79)
+        Me.btnCancel.Location = New System.Drawing.Point(244, 97)
         '
         'Label1
         '
@@ -39,17 +39,18 @@ Partial Class frmNextPieceConfirm
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(31, 21)
+        Me.Label1.Location = New System.Drawing.Point(19, 25)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(253, 24)
+        Me.Label1.Size = New System.Drawing.Size(202, 19)
         Me.Label1.TabIndex = 9
         Me.Label1.Text = "同時施工継続しますか？"
         '
         'frmNextPieceConfirm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(378, 136)
+        Me.ClientSize = New System.Drawing.Size(357, 143)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmNextPieceConfirm"
         Me.Text = "同時施工継続"

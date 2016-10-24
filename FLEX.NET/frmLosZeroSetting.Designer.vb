@@ -32,20 +32,21 @@ Partial Class frmLosZeroSetting
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(181, 373)
+        Me.btnOK.Location = New System.Drawing.Point(204, 404)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(315, 374)
+        Me.btnCancel.Location = New System.Drawing.Point(328, 404)
         '
         'LosZeroOpposeControl
         '
         Me.LosZeroOpposeControl.BackColor = System.Drawing.Color.Transparent
         Me.LosZeroOpposeControl.FieldName = "対抗圧制御"
-        Me.LosZeroOpposeControl.Location = New System.Drawing.Point(21, 112)
+        Me.LosZeroOpposeControl.Location = New System.Drawing.Point(16, 116)
+        Me.LosZeroOpposeControl.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeControl.Name = "LosZeroOpposeControl"
         Me.LosZeroOpposeControl.rdbtnValue = False
-        Me.LosZeroOpposeControl.Size = New System.Drawing.Size(403, 42)
+        Me.LosZeroOpposeControl.Size = New System.Drawing.Size(389, 34)
         Me.LosZeroOpposeControl.SlectNoName = "する"
         Me.LosZeroOpposeControl.SlectYesName = "しない"
         Me.LosZeroOpposeControl.TabIndex = 38
@@ -54,10 +55,11 @@ Partial Class frmLosZeroSetting
         '
         Me.LosZeroOpposeJack.BackColor = System.Drawing.Color.Transparent
         Me.LosZeroOpposeJack.FieldName = "対抗ジャッキ選択"
-        Me.LosZeroOpposeJack.Location = New System.Drawing.Point(21, 62)
+        Me.LosZeroOpposeJack.Location = New System.Drawing.Point(16, 63)
+        Me.LosZeroOpposeJack.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeJack.Name = "LosZeroOpposeJack"
         Me.LosZeroOpposeJack.rdbtnValue = False
-        Me.LosZeroOpposeJack.Size = New System.Drawing.Size(403, 42)
+        Me.LosZeroOpposeJack.Size = New System.Drawing.Size(389, 34)
         Me.LosZeroOpposeJack.SlectNoName = "する"
         Me.LosZeroOpposeJack.SlectYesName = "しない"
         Me.LosZeroOpposeJack.TabIndex = 37
@@ -66,10 +68,11 @@ Partial Class frmLosZeroSetting
         '
         Me.LosZeroRollingTake.BackColor = System.Drawing.Color.Transparent
         Me.LosZeroRollingTake.FieldName = "ローリングの考慮"
-        Me.LosZeroRollingTake.Location = New System.Drawing.Point(21, 12)
+        Me.LosZeroRollingTake.Location = New System.Drawing.Point(16, 10)
+        Me.LosZeroRollingTake.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroRollingTake.Name = "LosZeroRollingTake"
         Me.LosZeroRollingTake.rdbtnValue = False
-        Me.LosZeroRollingTake.Size = New System.Drawing.Size(403, 42)
+        Me.LosZeroRollingTake.Size = New System.Drawing.Size(389, 34)
         Me.LosZeroRollingTake.SlectNoName = "する"
         Me.LosZeroRollingTake.SlectYesName = "しない"
         Me.LosZeroRollingTake.TabIndex = 36
@@ -82,12 +85,13 @@ Partial Class frmLosZeroSetting
         Me.ReduceJudgePress.FieldName = "減圧完了判断圧力"
         Me.ReduceJudgePress.Increment = 1.0!
         Me.ReduceJudgePress.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.ReduceJudgePress.Location = New System.Drawing.Point(16, 302)
+        Me.ReduceJudgePress.Location = New System.Drawing.Point(16, 316)
+        Me.ReduceJudgePress.Margin = New System.Windows.Forms.Padding(2)
         Me.ReduceJudgePress.MaxValue = "50"
         Me.ReduceJudgePress.MinValue = "0"
         Me.ReduceJudgePress.Name = "ReduceJudgePress"
         Me.ReduceJudgePress.SelectItem = Nothing
-        Me.ReduceJudgePress.Size = New System.Drawing.Size(414, 49)
+        Me.ReduceJudgePress.Size = New System.Drawing.Size(405, 39)
         Me.ReduceJudgePress.TabIndex = 40
         Me.ReduceJudgePress.Unit = "MPa"
         Me.ReduceJudgePress.Value = 0R
@@ -100,12 +104,13 @@ Partial Class frmLosZeroSetting
         Me.ReduceTime.FieldName = "減圧時間"
         Me.ReduceTime.Increment = 1.0!
         Me.ReduceTime.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.ReduceTime.Location = New System.Drawing.Point(16, 244)
+        Me.ReduceTime.Location = New System.Drawing.Point(16, 258)
+        Me.ReduceTime.Margin = New System.Windows.Forms.Padding(2)
         Me.ReduceTime.MaxValue = "60"
         Me.ReduceTime.MinValue = "0"
         Me.ReduceTime.Name = "ReduceTime"
         Me.ReduceTime.SelectItem = Nothing
-        Me.ReduceTime.Size = New System.Drawing.Size(414, 49)
+        Me.ReduceTime.Size = New System.Drawing.Size(405, 39)
         Me.ReduceTime.TabIndex = 39
         Me.ReduceTime.Unit = "sec"
         Me.ReduceTime.Value = 0R
@@ -114,19 +119,20 @@ Partial Class frmLosZeroSetting
         '
         Me.NextPieceConfirm.BackColor = System.Drawing.Color.Transparent
         Me.NextPieceConfirm.FieldName = "次ピース組立確認"
-        Me.NextPieceConfirm.Location = New System.Drawing.Point(21, 162)
+        Me.NextPieceConfirm.Location = New System.Drawing.Point(16, 169)
+        Me.NextPieceConfirm.Margin = New System.Windows.Forms.Padding(2)
         Me.NextPieceConfirm.Name = "NextPieceConfirm"
         Me.NextPieceConfirm.rdbtnValue = False
-        Me.NextPieceConfirm.Size = New System.Drawing.Size(403, 42)
+        Me.NextPieceConfirm.Size = New System.Drawing.Size(389, 34)
         Me.NextPieceConfirm.SlectNoName = "する"
         Me.NextPieceConfirm.SlectYesName = "しない"
         Me.NextPieceConfirm.TabIndex = 41
         '
         'frmLosZeroSetting
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(469, 451)
+        Me.ClientSize = New System.Drawing.Size(441, 458)
         Me.Controls.Add(Me.ReduceTime)
         Me.Controls.Add(Me.NextPieceConfirm)
         Me.Controls.Add(Me.ReduceJudgePress)

@@ -33,11 +33,11 @@ Partial Class ucnDspData
         '
         Me.lblUnit.BackColor = System.Drawing.Color.LightGray
         Me.lblUnit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblUnit.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblUnit.Location = New System.Drawing.Point(236, 0)
+        Me.lblUnit.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblUnit.Location = New System.Drawing.Point(221, 0)
         Me.lblUnit.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblUnit.Name = "lblUnit"
-        Me.lblUnit.Size = New System.Drawing.Size(70, 32)
+        Me.lblUnit.Size = New System.Drawing.Size(65, 32)
         Me.lblUnit.TabIndex = 6
         Me.lblUnit.Text = "mm/min"
         Me.lblUnit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -46,12 +46,12 @@ Partial Class ucnDspData
         '
         Me.lblData.BackColor = System.Drawing.Color.Black
         Me.lblData.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblData.ForeColor = System.Drawing.Color.Yellow
-        Me.lblData.Location = New System.Drawing.Point(146, 0)
+        Me.lblData.Location = New System.Drawing.Point(137, 0)
         Me.lblData.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblData.Name = "lblData"
-        Me.lblData.Size = New System.Drawing.Size(91, 32)
+        Me.lblData.Size = New System.Drawing.Size(85, 32)
         Me.lblData.TabIndex = 5
         Me.lblData.Text = "123.45 "
         Me.lblData.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -60,11 +60,11 @@ Partial Class ucnDspData
         '
         Me.lblFieldName.BackColor = System.Drawing.Color.LightGray
         Me.lblFieldName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ ゴシック", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ ゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblFieldName.Location = New System.Drawing.Point(1, 0)
         Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblFieldName.Name = "lblFieldName"
-        Me.lblFieldName.Size = New System.Drawing.Size(146, 32)
+        Me.lblFieldName.Size = New System.Drawing.Size(137, 32)
         Me.lblFieldName.TabIndex = 4
         Me.lblFieldName.Text = " 押込推進ｼﾞｬｯｷ"
         Me.lblFieldName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -75,7 +75,7 @@ Partial Class ucnDspData
         '
         'ucnDspData
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Transparent
         Me.Controls.Add(Me.lblUnit)
@@ -84,7 +84,7 @@ Partial Class ucnDspData
         Me.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Margin = New System.Windows.Forms.Padding(1)
         Me.Name = "ucnDspData"
-        Me.Size = New System.Drawing.Size(317, 33)
+        Me.Size = New System.Drawing.Size(297, 32)
         Me.ResumeLayout(False)
 
     End Sub

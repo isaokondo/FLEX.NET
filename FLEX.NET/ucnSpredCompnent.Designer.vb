@@ -31,13 +31,13 @@ Partial Class ucnSpredCompnent
         '
         Me.lblFieldName.BackColor = System.Drawing.Color.White
         Me.lblFieldName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblFieldName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.lblFieldName.Location = New System.Drawing.Point(1, 0)
-        Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 5, 0)
+        Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 4, 0)
         Me.lblFieldName.Name = "lblFieldName"
-        Me.lblFieldName.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
-        Me.lblFieldName.Size = New System.Drawing.Size(240, 22)
+        Me.lblFieldName.Padding = New System.Windows.Forms.Padding(8, 0, 0, 0)
+        Me.lblFieldName.Size = New System.Drawing.Size(225, 22)
         Me.lblFieldName.TabIndex = 9
         Me.lblFieldName.Text = "確認リングの先端距離"
         Me.lblFieldName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -46,12 +46,12 @@ Partial Class ucnSpredCompnent
         '
         Me.lblData.BackColor = System.Drawing.Color.White
         Me.lblData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblData.Location = New System.Drawing.Point(240, 0)
-        Me.lblData.Margin = New System.Windows.Forms.Padding(1, 0, 5, 0)
+        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblData.Location = New System.Drawing.Point(225, 0)
+        Me.lblData.Margin = New System.Windows.Forms.Padding(1, 0, 4, 0)
         Me.lblData.Name = "lblData"
-        Me.lblData.Padding = New System.Windows.Forms.Padding(0, 0, 5, 0)
-        Me.lblData.Size = New System.Drawing.Size(128, 22)
+        Me.lblData.Padding = New System.Windows.Forms.Padding(0, 0, 4, 0)
+        Me.lblData.Size = New System.Drawing.Size(120, 22)
         Me.lblData.TabIndex = 10
         Me.lblData.Text = "12345"
         Me.lblData.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -60,25 +60,26 @@ Partial Class ucnSpredCompnent
         '
         Me.lblUnit.BackColor = System.Drawing.Color.White
         Me.lblUnit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblUnit.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblUnit.Location = New System.Drawing.Point(367, 0)
-        Me.lblUnit.Margin = New System.Windows.Forms.Padding(1, 0, 5, 0)
+        Me.lblUnit.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblUnit.Location = New System.Drawing.Point(343, 0)
+        Me.lblUnit.Margin = New System.Windows.Forms.Padding(1, 0, 4, 0)
         Me.lblUnit.Name = "lblUnit"
-        Me.lblUnit.Size = New System.Drawing.Size(76, 22)
+        Me.lblUnit.Size = New System.Drawing.Size(72, 22)
         Me.lblUnit.TabIndex = 11
         Me.lblUnit.Text = "mm"
         Me.lblUnit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'ucnSpredCompnent
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.lblUnit)
         Me.Controls.Add(Me.lblData)
         Me.Controls.Add(Me.lblFieldName)
         Me.ForeColor = System.Drawing.Color.Black
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Name = "ucnSpredCompnent"
-        Me.Size = New System.Drawing.Size(448, 26)
+        Me.Size = New System.Drawing.Size(420, 26)
         Me.ResumeLayout(False)
 
     End Sub

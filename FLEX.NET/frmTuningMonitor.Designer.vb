@@ -44,9 +44,10 @@ Partial Class frmTuningMonitor
         '
         'btnClose
         '
-        Me.btnClose.Location = New System.Drawing.Point(556, 147)
+        Me.btnClose.Location = New System.Drawing.Point(417, 118)
+        Me.btnClose.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnClose.Name = "btnClose"
-        Me.btnClose.Size = New System.Drawing.Size(70, 31)
+        Me.btnClose.Size = New System.Drawing.Size(52, 25)
         Me.btnClose.TabIndex = 0
         Me.btnClose.Text = "閉じる"
         Me.btnClose.UseVisualStyleBackColor = True
@@ -54,9 +55,10 @@ Partial Class frmTuningMonitor
         'picDsp
         '
         Me.picDsp.BackColor = System.Drawing.Color.White
-        Me.picDsp.Location = New System.Drawing.Point(12, 46)
+        Me.picDsp.Location = New System.Drawing.Point(11, 46)
+        Me.picDsp.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.picDsp.Name = "picDsp"
-        Me.picDsp.Size = New System.Drawing.Size(512, 456)
+        Me.picDsp.Size = New System.Drawing.Size(480, 481)
         Me.picDsp.TabIndex = 1
         Me.picDsp.TabStop = False
         '
@@ -87,7 +89,7 @@ Partial Class frmTuningMonitor
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.barPv, Me.barMv, Me.barSv})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(654, 514)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(614, 560)
         Me.ShapeContainer1.TabIndex = 2
         Me.ShapeContainer1.TabStop = False
         '
@@ -102,27 +104,30 @@ Partial Class frmTuningMonitor
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(530, 59)
+        Me.Label1.Location = New System.Drawing.Point(497, 58)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(25, 15)
+        Me.Label1.Size = New System.Drawing.Size(20, 12)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "SV"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(530, 82)
+        Me.Label2.Location = New System.Drawing.Point(497, 82)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(25, 15)
+        Me.Label2.Size = New System.Drawing.Size(20, 12)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "PV"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(530, 104)
+        Me.Label3.Location = New System.Drawing.Point(497, 103)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(27, 15)
+        Me.Label3.Size = New System.Drawing.Size(22, 12)
         Me.Label3.TabIndex = 5
         Me.Label3.Text = "MV"
         '
@@ -132,7 +137,8 @@ Partial Class frmTuningMonitor
         Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem})
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.Name = "MenuStrip"
-        Me.MenuStrip.Size = New System.Drawing.Size(654, 24)
+        Me.MenuStrip.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
+        Me.MenuStrip.Size = New System.Drawing.Size(614, 24)
         Me.MenuStrip.TabIndex = 6
         Me.MenuStrip.Text = "MenuStrip1"
         '
@@ -140,27 +146,27 @@ Partial Class frmTuningMonitor
         '
         Me.ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AlwaysTopMost, Me.CloseWindow})
         Me.ToolStripMenuItem.Name = "ToolStripMenuItem"
-        Me.ToolStripMenuItem.Size = New System.Drawing.Size(65, 20)
+        Me.ToolStripMenuItem.Size = New System.Drawing.Size(55, 20)
         Me.ToolStripMenuItem.Text = "システム"
         '
         'AlwaysTopMost
         '
         Me.AlwaysTopMost.Name = "AlwaysTopMost"
-        Me.AlwaysTopMost.Size = New System.Drawing.Size(137, 26)
+        Me.AlwaysTopMost.Size = New System.Drawing.Size(115, 22)
         Me.AlwaysTopMost.Text = "常に手前"
         '
         'CloseWindow
         '
         Me.CloseWindow.Name = "CloseWindow"
-        Me.CloseWindow.Size = New System.Drawing.Size(137, 26)
+        Me.CloseWindow.Size = New System.Drawing.Size(115, 22)
         Me.CloseWindow.Text = "閉じる"
         '
         'frmTuningMonitor
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.ClientSize = New System.Drawing.Size(654, 514)
+        Me.ClientSize = New System.Drawing.Size(614, 560)
         Me.ControlBox = False
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -171,6 +177,7 @@ Partial Class frmTuningMonitor
         Me.Controls.Add(Me.ShapeContainer1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Name = "frmTuningMonitor"
         Me.Text = "チューニングモニタ"
         CType(Me.picDsp, System.ComponentModel.ISupportInitialize).EndInit()

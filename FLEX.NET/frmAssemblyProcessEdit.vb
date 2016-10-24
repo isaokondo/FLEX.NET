@@ -231,8 +231,11 @@ Public Class frmAssemblyProcessEdit
 
     End Sub
 
+    Private Sub OperattionJackSel_Load(sender As Object, e As EventArgs) Handles OperattionJackSel.Load
 
+    End Sub
 
+    Private Sub StartJackNo_Load(sender As Object, e As EventArgs) Handles StartJackNo.Load
 
-
+    End Sub
 End Class

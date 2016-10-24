@@ -30,9 +30,10 @@ Partial Class frmSettingBase
         '
         Me.btnCancel.BackColor = System.Drawing.Color.Silver
         Me.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnCancel.Location = New System.Drawing.Point(473, 490)
+        Me.btnCancel.Location = New System.Drawing.Point(443, 490)
+        Me.btnCancel.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(109, 35)
+        Me.btnCancel.Size = New System.Drawing.Size(102, 35)
         Me.btnCancel.TabIndex = 8
         Me.btnCancel.Text = "キャンセル"
         Me.btnCancel.UseVisualStyleBackColor = False
@@ -41,21 +42,23 @@ Partial Class frmSettingBase
         '
         Me.btnOK.BackColor = System.Drawing.Color.Silver
         Me.btnOK.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnOK.Location = New System.Drawing.Point(339, 489)
+        Me.btnOK.Location = New System.Drawing.Point(317, 488)
+        Me.btnOK.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnOK.Name = "btnOK"
-        Me.btnOK.Size = New System.Drawing.Size(109, 35)
+        Me.btnOK.Size = New System.Drawing.Size(102, 35)
         Me.btnOK.TabIndex = 7
         Me.btnOK.Text = "OK"
         Me.btnOK.UseVisualStyleBackColor = False
         '
         'frmSettingBase
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
-        Me.ClientSize = New System.Drawing.Size(611, 552)
+        Me.ClientSize = New System.Drawing.Size(574, 559)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnOK)
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Name = "frmSettingBase"
         Me.Text = "frmSettingBase"
         Me.TopMost = True

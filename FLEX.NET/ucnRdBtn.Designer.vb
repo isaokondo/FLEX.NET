@@ -30,22 +30,24 @@ Partial Class ucnRdBtn
         'lblFieldName
         '
         Me.lblFieldName.AutoSize = True
-        Me.lblFieldName.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblFieldName.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblFieldName.ForeColor = System.Drawing.Color.White
-        Me.lblFieldName.Location = New System.Drawing.Point(3, 10)
+        Me.lblFieldName.Location = New System.Drawing.Point(5, 12)
+        Me.lblFieldName.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblFieldName.Name = "lblFieldName"
-        Me.lblFieldName.Size = New System.Drawing.Size(162, 19)
+        Me.lblFieldName.Size = New System.Drawing.Size(139, 16)
         Me.lblFieldName.TabIndex = 0
         Me.lblFieldName.Text = "ダイレクト指令制御"
         '
         'rdbtnNo
         '
         Me.rdbtnNo.AutoSize = True
-        Me.rdbtnNo.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.rdbtnNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.rdbtnNo.ForeColor = System.Drawing.Color.White
-        Me.rdbtnNo.Location = New System.Drawing.Point(199, 10)
+        Me.rdbtnNo.Location = New System.Drawing.Point(189, 10)
+        Me.rdbtnNo.Margin = New System.Windows.Forms.Padding(2)
         Me.rdbtnNo.Name = "rdbtnNo"
-        Me.rdbtnNo.Size = New System.Drawing.Size(79, 23)
+        Me.rdbtnNo.Size = New System.Drawing.Size(68, 20)
         Me.rdbtnNo.TabIndex = 1
         Me.rdbtnNo.Text = "しない"
         Me.rdbtnNo.UseVisualStyleBackColor = True
@@ -54,11 +56,12 @@ Partial Class ucnRdBtn
         '
         Me.rdbtnYes.AutoSize = True
         Me.rdbtnYes.Checked = True
-        Me.rdbtnYes.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.rdbtnYes.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.rdbtnYes.ForeColor = System.Drawing.Color.White
-        Me.rdbtnYes.Location = New System.Drawing.Point(318, 10)
+        Me.rdbtnYes.Location = New System.Drawing.Point(300, 10)
+        Me.rdbtnYes.Margin = New System.Windows.Forms.Padding(2)
         Me.rdbtnYes.Name = "rdbtnYes"
-        Me.rdbtnYes.Size = New System.Drawing.Size(62, 23)
+        Me.rdbtnYes.Size = New System.Drawing.Size(54, 20)
         Me.rdbtnYes.TabIndex = 2
         Me.rdbtnYes.TabStop = True
         Me.rdbtnYes.Text = "する"
@@ -66,14 +69,15 @@ Partial Class ucnRdBtn
         '
         'ucnRdBtn
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
         Me.Controls.Add(Me.rdbtnYes)
         Me.Controls.Add(Me.rdbtnNo)
         Me.Controls.Add(Me.lblFieldName)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "ucnRdBtn"
-        Me.Size = New System.Drawing.Size(453, 42)
+        Me.Size = New System.Drawing.Size(425, 42)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
