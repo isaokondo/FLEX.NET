@@ -26,13 +26,13 @@ Partial Class frmOneWayTunnel
         Me.HorPID_I = New FLEX.NET.ucnNumEdit()
         Me.HorPID_P = New FLEX.NET.ucnNumEdit()
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
+        Me.RectangleShape1 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.RectangleShape2 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.lblFieldName = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.VerPID_D = New FLEX.NET.ucnNumEdit()
         Me.VerPID_I = New FLEX.NET.ucnNumEdit()
         Me.VerPID_P = New FLEX.NET.ucnNumEdit()
-        Me.RectangleShape1 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.SuspendLayout()
         '
         'btnOK
@@ -45,7 +45,7 @@ Partial Class frmOneWayTunnel
         '
         'HorPID_D
         '
-        Me.HorPID_D.DataDspWidth = 0
+        Me.HorPID_D.DataDspWidth = 110
         Me.HorPID_D.DecimalPlaces = CType(0, Short)
         Me.HorPID_D.DspFieldName = True
         Me.HorPID_D.FieldName = "D"
@@ -64,7 +64,7 @@ Partial Class frmOneWayTunnel
         '
         'HorPID_I
         '
-        Me.HorPID_I.DataDspWidth = 0
+        Me.HorPID_I.DataDspWidth = 110
         Me.HorPID_I.DecimalPlaces = CType(0, Short)
         Me.HorPID_I.DspFieldName = True
         Me.HorPID_I.FieldName = "I"
@@ -83,7 +83,7 @@ Partial Class frmOneWayTunnel
         '
         'HorPID_P
         '
-        Me.HorPID_P.DataDspWidth = 0
+        Me.HorPID_P.DataDspWidth = 110
         Me.HorPID_P.DecimalPlaces = CType(0, Short)
         Me.HorPID_P.DspFieldName = True
         Me.HorPID_P.FieldName = "P"
@@ -109,6 +109,14 @@ Partial Class frmOneWayTunnel
         Me.ShapeContainer1.Size = New System.Drawing.Size(484, 524)
         Me.ShapeContainer1.TabIndex = 24
         Me.ShapeContainer1.TabStop = False
+        '
+        'RectangleShape1
+        '
+        Me.RectangleShape1.BorderColor = System.Drawing.Color.White
+        Me.RectangleShape1.CornerRadius = 10
+        Me.RectangleShape1.Location = New System.Drawing.Point(18, 13)
+        Me.RectangleShape1.Name = "RectangleShape1"
+        Me.RectangleShape1.Size = New System.Drawing.Size(428, 170)
         '
         'RectangleShape2
         '
@@ -144,7 +152,7 @@ Partial Class frmOneWayTunnel
         '
         'VerPID_D
         '
-        Me.VerPID_D.DataDspWidth = 0
+        Me.VerPID_D.DataDspWidth = 110
         Me.VerPID_D.DecimalPlaces = CType(0, Short)
         Me.VerPID_D.DspFieldName = True
         Me.VerPID_D.FieldName = "D"
@@ -163,7 +171,7 @@ Partial Class frmOneWayTunnel
         '
         'VerPID_I
         '
-        Me.VerPID_I.DataDspWidth = 0
+        Me.VerPID_I.DataDspWidth = 110
         Me.VerPID_I.DecimalPlaces = CType(0, Short)
         Me.VerPID_I.DspFieldName = True
         Me.VerPID_I.FieldName = "I"
@@ -182,7 +190,7 @@ Partial Class frmOneWayTunnel
         '
         'VerPID_P
         '
-        Me.VerPID_P.DataDspWidth = 0
+        Me.VerPID_P.DataDspWidth = 110
         Me.VerPID_P.DecimalPlaces = CType(0, Short)
         Me.VerPID_P.DspFieldName = True
         Me.VerPID_P.FieldName = "P"
@@ -198,14 +206,6 @@ Partial Class frmOneWayTunnel
         Me.VerPID_P.TabIndex = 26
         Me.VerPID_P.Unit = "%"
         Me.VerPID_P.Value = 0R
-        '
-        'RectangleShape1
-        '
-        Me.RectangleShape1.BorderColor = System.Drawing.Color.White
-        Me.RectangleShape1.CornerRadius = 10
-        Me.RectangleShape1.Location = New System.Drawing.Point(18, 13)
-        Me.RectangleShape1.Name = "RectangleShape1"
-        Me.RectangleShape1.Size = New System.Drawing.Size(428, 170)
         '
         'frmOneWayTunnel
         '

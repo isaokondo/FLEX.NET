@@ -89,5 +89,25 @@ Namespace My.Resources
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
+        
+        '''<summary>
+        '''  型 System.Byte[] のローカライズされたリソースを検索します。
+        '''</summary>
+        Friend ReadOnly Property ReduceFinished() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ReduceFinished", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  型 System.Byte[] のローカライズされたリソースを検索します。
+        '''</summary>
+        Friend ReadOnly Property ReduceStart() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ReduceStart", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
     End Module
 End Namespace

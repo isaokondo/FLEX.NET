@@ -110,8 +110,8 @@ Public Class frmSim
             DgvLosZero.Rows.Add()
             DgvLosZero.Rows(i).Cells(0).Value = (i + 1).ToString
         Next
-
-
+        'フォームに情報表示
+        Me.Text &= "　論理局番=[" & ComPlc.ActLogicalStationNumber & "] DBName=[" & My.Settings.DataseName & "] HostName=[" & My.Settings.HostName & "]"
 
 
     End Sub
@@ -479,7 +479,11 @@ Public Class frmSim
         nudRightStroke.Value = nudRightStroke.Value + 1
 
     End Sub
-
+    ''' <summary>
+    ''' グループ圧のシュミレーション
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub tmrAuto_Tick(sender As Object, e As EventArgs) Handles tmrAuto.Tick
 
         If GpMvOutReal Is Nothing Then Exit Sub

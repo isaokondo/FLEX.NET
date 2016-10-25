@@ -73,6 +73,10 @@ Public Class clsPlcIf
     Private _GaingSetReducingValveContDConst As Integer
     Private _感度調整設定圧力偏差 As Single
 
+    'グループ数、ジャッキ本数
+    Private _numberGroup As Short
+    Private _numberJack As Short
+
     'Private _mblnピッチロールIN As Integer
 
 
@@ -891,6 +895,18 @@ Public Class clsPlcIf
             Call PLC_Write(.Address, wD)
         End With
     End Sub
+
+    ''' <summary>
+    ''' パラメータをPLCに書込
+    ''' </summary>
+    ''' <param name="TagName"></param>
+    ''' <param name="Value"></param>
+    Public Sub ParameterWrite(TagName As String, ByVal Value As Short)
+        Dim PlcAdress As String = ParameterTag.TagData(TagName).Address
+        PLC_Write(PlcAdress, Value)
+    End Sub
+
+
     ''' <summary>
     ''' デジタル（ビット）データのPLC書込
     ''' </summary>
@@ -959,7 +975,7 @@ Public Class clsPlcIf
         Catch exException As Exception
             '例外処理	
             MessageBox.Show(exException.Message, "PLC_Write", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Function
+            Return 0
         End Try
     End Function
 

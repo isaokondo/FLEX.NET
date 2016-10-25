@@ -75,7 +75,7 @@ Partial Class frmCorrectionValueManagement
         Me.btnCancel.BackColor = System.Drawing.Color.Silver
         Me.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnCancel.Location = New System.Drawing.Point(168, 276)
-        Me.btnCancel.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnCancel.Margin = New System.Windows.Forms.Padding(2)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(102, 35)
         Me.btnCancel.TabIndex = 6
@@ -87,7 +87,7 @@ Partial Class frmCorrectionValueManagement
         Me.btnOK.BackColor = System.Drawing.Color.Silver
         Me.btnOK.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnOK.Location = New System.Drawing.Point(39, 276)
-        Me.btnOK.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnOK.Margin = New System.Windows.Forms.Padding(2)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(102, 35)
         Me.btnOK.TabIndex = 5
@@ -99,7 +99,7 @@ Partial Class frmCorrectionValueManagement
         Me.btnCLose.BackColor = System.Drawing.Color.Silver
         Me.btnCLose.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnCLose.Location = New System.Drawing.Point(39, 327)
-        Me.btnCLose.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnCLose.Margin = New System.Windows.Forms.Padding(2)
         Me.btnCLose.Name = "btnCLose"
         Me.btnCLose.Size = New System.Drawing.Size(102, 35)
         Me.btnCLose.TabIndex = 58
@@ -697,7 +697,7 @@ Partial Class frmCorrectionValueManagement
         '
         'HorCorrentionValue
         '
-        Me.HorCorrentionValue.DataDspWidth = 100
+        Me.HorCorrentionValue.DataDspWidth = 110
         Me.HorCorrentionValue.DecimalPlaces = CType(3, Short)
         Me.HorCorrentionValue.DspFieldName = True
         Me.HorCorrentionValue.FieldName = "水平補正値"
@@ -824,7 +824,7 @@ Partial Class frmCorrectionValueManagement
         Me.Controls.Add(Me.PuchUpStroke)
         Me.Controls.Add(Me.TipDistance)
         Me.Controls.Add(Me.ConfirmRingNo)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "frmCorrectionValueManagement"
         Me.Text = "補正値管理"
         Me.ResumeLayout(False)

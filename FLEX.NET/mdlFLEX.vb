@@ -49,6 +49,37 @@ Module mdlFLEX
     ''' </summary>
     Public ElapsedTime As New clsElapsedTime
 
+    ''' <summary>
+    ''' MP3再生
+    ''' </summary>
+    ''' <param name="command"></param>
+    ''' <param name="buffer"></param>
+    ''' <param name="bufferSize"></param>
+    ''' <param name="hwndCallback"></param>
+    ''' <returns></returns>
+    <System.Runtime.InteropServices.DllImport("winmm.dll",
+    CharSet:=System.Runtime.InteropServices.CharSet.Auto)>
+    Private Function mciSendString(ByVal command As String,
+    ByVal buffer As System.Text.StringBuilder,
+    ByVal bufferSize As Integer, ByVal hwndCallback As IntPtr) As Integer
+    End Function
+
+    Private aliasName As String = "MediaFile"
+
+    Private Sub Mp3Play(Mp3FileName As String)
+        Dim cmd As String
+        'ファイルを開く
+        cmd = "open """ + Mp3FileName + """ type mpegvideo alias " + aliasName
+        If mciSendString(cmd, Nothing, 0, IntPtr.Zero) <> 0 Then
+            Return
+        End If '再生する
+        cmd = "play " + aliasName
+        mciSendString(cmd, Nothing, 0, IntPtr.Zero)
+    End Sub
+
+
+
+
     Public Sub Main()
 
 
@@ -93,6 +124,10 @@ Module mdlFLEX
             WriteEventData("掘進再開しました", Color.Magenta)
             ElapsedTime.ExcavationStart()
             If LosZeroSts >= 1 Then ElapsedTime.LosZeroStart()
+
+            'Mp3Play(My.Resources.ReduceStart)
+
+
         End If
         '中断
         If NowStatus = cChudan Then

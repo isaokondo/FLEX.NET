@@ -40,7 +40,7 @@ Partial Class frmRinguUpdateSetting
         '
         'StrokeManag
         '
-        Me.StrokeManag.DataDspWidth = 0
+        Me.StrokeManag.DataDspWidth = 110
         Me.StrokeManag.DecimalPlaces = CType(0, Short)
         Me.StrokeManag.DspFieldName = True
         Me.StrokeManag.FieldName = "ストローク取得方法"
@@ -59,7 +59,7 @@ Partial Class frmRinguUpdateSetting
         '
         'StopJudgeSpeed
         '
-        Me.StopJudgeSpeed.DataDspWidth = 0
+        Me.StopJudgeSpeed.DataDspWidth = 110
         Me.StopJudgeSpeed.DecimalPlaces = CType(0, Short)
         Me.StopJudgeSpeed.DspFieldName = True
         Me.StopJudgeSpeed.FieldName = "中断判定速度"
@@ -78,7 +78,7 @@ Partial Class frmRinguUpdateSetting
         '
         'CloseJudgeTime
         '
-        Me.CloseJudgeTime.DataDspWidth = 0
+        Me.CloseJudgeTime.DataDspWidth = 110
         Me.CloseJudgeTime.DecimalPlaces = CType(0, Short)
         Me.CloseJudgeTime.DspFieldName = True
         Me.CloseJudgeTime.FieldName = "終了判定時間"
@@ -97,7 +97,7 @@ Partial Class frmRinguUpdateSetting
         '
         'CloseJudgePullStroke
         '
-        Me.CloseJudgePullStroke.DataDspWidth = 0
+        Me.CloseJudgePullStroke.DataDspWidth = 110
         Me.CloseJudgePullStroke.DecimalPlaces = CType(0, Short)
         Me.CloseJudgePullStroke.DspFieldName = True
         Me.CloseJudgePullStroke.FieldName = "終了判定引きストローク"
@@ -116,7 +116,7 @@ Partial Class frmRinguUpdateSetting
         '
         'CloseStokeEdt
         '
-        Me.CloseStokeEdt.DataDspWidth = 0
+        Me.CloseStokeEdt.DataDspWidth = 110
         Me.CloseStokeEdt.DecimalPlaces = CType(0, Short)
         Me.CloseStokeEdt.DspFieldName = True
         Me.CloseStokeEdt.FieldName = "終了ストローク"
@@ -135,7 +135,7 @@ Partial Class frmRinguUpdateSetting
         '
         'StartStokeEdt
         '
-        Me.StartStokeEdt.DataDspWidth = 0
+        Me.StartStokeEdt.DataDspWidth = 110
         Me.StartStokeEdt.DecimalPlaces = CType(0, Short)
         Me.StartStokeEdt.DspFieldName = True
         Me.StartStokeEdt.FieldName = "開始ストローク"
@@ -164,7 +164,6 @@ Partial Class frmRinguUpdateSetting
         Me.Controls.Add(Me.CloseJudgePullStroke)
         Me.Controls.Add(Me.CloseStokeEdt)
         Me.Controls.Add(Me.StartStokeEdt)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "frmRinguUpdateSetting"
         Me.Text = "リング更新設定"
         Me.Controls.SetChildIndex(Me.StartStokeEdt, 0)

@@ -17,5 +17,7 @@
         PlcIf.RingNo = RingNoEdt.Value
     End Sub
 
+    Private Sub RingNoEdt_Load(sender As Object, e As EventArgs) Handles RingNoEdt.Load
 
+    End Sub
 End Class

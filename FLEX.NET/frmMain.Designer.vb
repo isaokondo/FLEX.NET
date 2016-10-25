@@ -432,6 +432,7 @@ Partial Class frmMain
         '
         'rtbEventLog
         '
+        Me.rtbEventLog.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.rtbEventLog.Location = New System.Drawing.Point(21, 248)
         Me.rtbEventLog.Margin = New System.Windows.Forms.Padding(2)
         Me.rtbEventLog.Name = "rtbEventLog"
@@ -444,7 +445,7 @@ Partial Class frmMain
         '
         Me.lblUnit.BackColor = System.Drawing.Color.Transparent
         Me.lblUnit.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblUnit.Location = New System.Drawing.Point(119, 11)
+        Me.lblUnit.Location = New System.Drawing.Point(115, 12)
         Me.lblUnit.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblUnit.Name = "lblUnit"
         Me.lblUnit.Size = New System.Drawing.Size(74, 26)
@@ -456,12 +457,12 @@ Partial Class frmMain
         '
         Me.DspRingNo.BackColor = System.Drawing.Color.Black
         Me.DspRingNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.DspRingNo.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.DspRingNo.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.DspRingNo.ForeColor = System.Drawing.Color.Yellow
-        Me.DspRingNo.Location = New System.Drawing.Point(21, 9)
+        Me.DspRingNo.Location = New System.Drawing.Point(21, 6)
         Me.DspRingNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.DspRingNo.Name = "DspRingNo"
-        Me.DspRingNo.Size = New System.Drawing.Size(86, 30)
+        Me.DspRingNo.Size = New System.Drawing.Size(92, 41)
         Me.DspRingNo.TabIndex = 119
         Me.DspRingNo.Text = "1234"
         Me.DspRingNo.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -498,10 +499,10 @@ Partial Class frmMain
         Me.pnlLosZero.Controls.Add(Me.UcnDspBit1)
         Me.pnlLosZero.Controls.Add(Me.ucnLosZeroMode)
         Me.pnlLosZero.Controls.Add(Me.ShapeContainer1)
-        Me.pnlLosZero.Location = New System.Drawing.Point(1747, 37)
+        Me.pnlLosZero.Location = New System.Drawing.Point(1728, 31)
         Me.pnlLosZero.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlLosZero.Name = "pnlLosZero"
-        Me.pnlLosZero.Size = New System.Drawing.Size(156, 326)
+        Me.pnlLosZero.Size = New System.Drawing.Size(156, 343)
         Me.pnlLosZero.TabIndex = 121
         '
         'ShapeContainer1
@@ -510,7 +511,7 @@ Partial Class frmMain
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.LineShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(154, 324)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(154, 341)
         Me.ShapeContainer1.TabIndex = 134
         Me.ShapeContainer1.TabStop = False
         '
@@ -519,17 +520,17 @@ Partial Class frmMain
         Me.LineShape1.Name = "LineShape1"
         Me.LineShape1.X1 = 0
         Me.LineShape1.X2 = 150
-        Me.LineShape1.Y1 = 162
-        Me.LineShape1.Y2 = 162
+        Me.LineShape1.Y1 = 165
+        Me.LineShape1.Y2 = 165
         '
         'btnLossZerooCancel
         '
         Me.btnLossZerooCancel.BackColor = System.Drawing.Color.DarkGray
         Me.btnLossZerooCancel.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnLossZerooCancel.Location = New System.Drawing.Point(1755, 390)
+        Me.btnLossZerooCancel.Location = New System.Drawing.Point(1741, 418)
         Me.btnLossZerooCancel.Margin = New System.Windows.Forms.Padding(2)
         Me.btnLossZerooCancel.Name = "btnLossZerooCancel"
-        Me.btnLossZerooCancel.Size = New System.Drawing.Size(125, 36)
+        Me.btnLossZerooCancel.Size = New System.Drawing.Size(135, 36)
         Me.btnLossZerooCancel.TabIndex = 123
         Me.btnLossZerooCancel.Text = "同時施工" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "キャンセル"
         Me.btnLossZerooCancel.UseVisualStyleBackColor = False
@@ -539,7 +540,7 @@ Partial Class frmMain
         Me.btnPieceConfirm.BackColor = System.Drawing.Color.DarkGray
         Me.btnPieceConfirm.Enabled = False
         Me.btnPieceConfirm.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnPieceConfirm.Location = New System.Drawing.Point(1408, 430)
+        Me.btnPieceConfirm.Location = New System.Drawing.Point(1408, 422)
         Me.btnPieceConfirm.Margin = New System.Windows.Forms.Padding(2)
         Me.btnPieceConfirm.Name = "btnPieceConfirm"
         Me.btnPieceConfirm.Size = New System.Drawing.Size(231, 31)
@@ -642,7 +643,7 @@ Partial Class frmMain
         Me.ucnAssemblyFinish.BitStatus = True
         Me.ucnAssemblyFinish.Blink = False
         Me.ucnAssemblyFinish.FieldName = "組立完了"
-        Me.ucnAssemblyFinish.Location = New System.Drawing.Point(10, 288)
+        Me.ucnAssemblyFinish.Location = New System.Drawing.Point(10, 296)
         Me.ucnAssemblyFinish.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnAssemblyFinish.Name = "ucnAssemblyFinish"
         Me.ucnAssemblyFinish.OffBackColor = System.Drawing.Color.LightGray
@@ -656,7 +657,7 @@ Partial Class frmMain
         Me.ucnPullBackFinish.BitStatus = True
         Me.ucnPullBackFinish.Blink = False
         Me.ucnPullBackFinish.FieldName = "引戻完了"
-        Me.ucnPullBackFinish.Location = New System.Drawing.Point(10, 248)
+        Me.ucnPullBackFinish.Location = New System.Drawing.Point(10, 256)
         Me.ucnPullBackFinish.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnPullBackFinish.Name = "ucnPullBackFinish"
         Me.ucnPullBackFinish.OffBackColor = System.Drawing.Color.LightGray
@@ -670,7 +671,7 @@ Partial Class frmMain
         Me.ucnReduceFinish.BitStatus = True
         Me.ucnReduceFinish.Blink = False
         Me.ucnReduceFinish.FieldName = "減圧完了"
-        Me.ucnReduceFinish.Location = New System.Drawing.Point(10, 208)
+        Me.ucnReduceFinish.Location = New System.Drawing.Point(10, 216)
         Me.ucnReduceFinish.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnReduceFinish.Name = "ucnReduceFinish"
         Me.ucnReduceFinish.OffBackColor = System.Drawing.Color.LightGray
@@ -684,7 +685,7 @@ Partial Class frmMain
         Me.ucnAssemblyPieceNo.BitStatus = True
         Me.ucnAssemblyPieceNo.Blink = False
         Me.ucnAssemblyPieceNo.FieldName = "2ピース目"
-        Me.ucnAssemblyPieceNo.Location = New System.Drawing.Point(10, 168)
+        Me.ucnAssemblyPieceNo.Location = New System.Drawing.Point(10, 176)
         Me.ucnAssemblyPieceNo.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnAssemblyPieceNo.Name = "ucnAssemblyPieceNo"
         Me.ucnAssemblyPieceNo.OffBackColor = System.Drawing.Color.White
@@ -1011,7 +1012,7 @@ Partial Class frmMain
         Me.DspCycleTime.FieldName = "ｻｲｸﾙ時間(分)"
         Me.DspCycleTime.FieldNameWidth = 175
         Me.DspCycleTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspCycleTime.Location = New System.Drawing.Point(21, 212)
+        Me.DspCycleTime.Location = New System.Drawing.Point(21, 211)
         Me.DspCycleTime.Margin = New System.Windows.Forms.Padding(1)
         Me.DspCycleTime.Name = "DspCycleTime"
         Me.DspCycleTime.Size = New System.Drawing.Size(275, 32)
@@ -1032,7 +1033,7 @@ Partial Class frmMain
         Me.DspWatingElapsedTime.FieldName = "待機時間(分)"
         Me.DspWatingElapsedTime.FieldNameWidth = 175
         Me.DspWatingElapsedTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWatingElapsedTime.Location = New System.Drawing.Point(21, 181)
+        Me.DspWatingElapsedTime.Location = New System.Drawing.Point(21, 179)
         Me.DspWatingElapsedTime.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWatingElapsedTime.Name = "DspWatingElapsedTime"
         Me.DspWatingElapsedTime.Size = New System.Drawing.Size(275, 32)
@@ -1053,7 +1054,7 @@ Partial Class frmMain
         Me.DspLosZeroElapsedTime.FieldName = "同時掘進時間(分)"
         Me.DspLosZeroElapsedTime.FieldNameWidth = 175
         Me.DspLosZeroElapsedTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspLosZeroElapsedTime.Location = New System.Drawing.Point(21, 150)
+        Me.DspLosZeroElapsedTime.Location = New System.Drawing.Point(21, 147)
         Me.DspLosZeroElapsedTime.Margin = New System.Windows.Forms.Padding(1)
         Me.DspLosZeroElapsedTime.Name = "DspLosZeroElapsedTime"
         Me.DspLosZeroElapsedTime.Size = New System.Drawing.Size(275, 32)
@@ -1074,7 +1075,7 @@ Partial Class frmMain
         Me.DspExcationElapsedTime.FieldName = "掘進時間(分)"
         Me.DspExcationElapsedTime.FieldNameWidth = 175
         Me.DspExcationElapsedTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspExcationElapsedTime.Location = New System.Drawing.Point(21, 119)
+        Me.DspExcationElapsedTime.Location = New System.Drawing.Point(21, 115)
         Me.DspExcationElapsedTime.Margin = New System.Windows.Forms.Padding(1)
         Me.DspExcationElapsedTime.Name = "DspExcationElapsedTime"
         Me.DspExcationElapsedTime.Size = New System.Drawing.Size(275, 32)
@@ -1095,7 +1096,7 @@ Partial Class frmMain
         Me.DspExcavStartTime.FieldName = "開始時刻"
         Me.DspExcavStartTime.FieldNameWidth = 125
         Me.DspExcavStartTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspExcavStartTime.Location = New System.Drawing.Point(21, 88)
+        Me.DspExcavStartTime.Location = New System.Drawing.Point(21, 83)
         Me.DspExcavStartTime.Margin = New System.Windows.Forms.Padding(1)
         Me.DspExcavStartTime.Name = "DspExcavStartTime"
         Me.DspExcavStartTime.Size = New System.Drawing.Size(275, 32)
@@ -1137,10 +1138,10 @@ Partial Class frmMain
         Me.DspAssemblyPattern.FieldName = "組立パターン"
         Me.DspAssemblyPattern.FieldNameWidth = 292
         Me.DspAssemblyPattern.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAssemblyPattern.Location = New System.Drawing.Point(1408, 500)
+        Me.DspAssemblyPattern.Location = New System.Drawing.Point(1408, 498)
         Me.DspAssemblyPattern.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPattern.Name = "DspAssemblyPattern"
-        Me.DspAssemblyPattern.Size = New System.Drawing.Size(472, 26)
+        Me.DspAssemblyPattern.Size = New System.Drawing.Size(472, 32)
         Me.DspAssemblyPattern.TabIndex = 111
         Me.DspAssemblyPattern.Unit = "deg"
         Me.DspAssemblyPattern.UnitVisible = False
@@ -1158,7 +1159,7 @@ Partial Class frmMain
         Me.DspNextPieceName.FieldName = "次の組立ﾋﾟｰｽ"
         Me.DspNextPieceName.FieldNameWidth = 146
         Me.DspNextPieceName.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspNextPieceName.Location = New System.Drawing.Point(1642, 636)
+        Me.DspNextPieceName.Location = New System.Drawing.Point(1642, 625)
         Me.DspNextPieceName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspNextPieceName.Name = "DspNextPieceName"
         Me.DspNextPieceName.Size = New System.Drawing.Size(243, 32)
@@ -1179,7 +1180,7 @@ Partial Class frmMain
         Me.UcnDspData24.FieldName = "RL考慮ｼﾞｬｯｷ"
         Me.UcnDspData24.FieldNameWidth = 146
         Me.UcnDspData24.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData24.Location = New System.Drawing.Point(1408, 636)
+        Me.UcnDspData24.Location = New System.Drawing.Point(1408, 626)
         Me.UcnDspData24.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData24.Name = "UcnDspData24"
         Me.UcnDspData24.Size = New System.Drawing.Size(243, 32)
@@ -1200,7 +1201,7 @@ Partial Class frmMain
         Me.DspAddClosetThrustJack.FieldName = "追加推進ｼﾞｬｯｷ"
         Me.DspAddClosetThrustJack.FieldNameWidth = 146
         Me.DspAddClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(1642, 602)
+        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(1642, 593)
         Me.DspAddClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAddClosetThrustJack.Name = "DspAddClosetThrustJack"
         Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(243, 32)
@@ -1221,7 +1222,7 @@ Partial Class frmMain
         Me.DspClosetThrustJack.FieldName = "押込推進ｼﾞｬｯｷ"
         Me.DspClosetThrustJack.FieldNameWidth = 146
         Me.DspClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetThrustJack.Location = New System.Drawing.Point(1408, 602)
+        Me.DspClosetThrustJack.Location = New System.Drawing.Point(1408, 594)
         Me.DspClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetThrustJack.Name = "DspClosetThrustJack"
         Me.DspClosetThrustJack.Size = New System.Drawing.Size(243, 32)
@@ -1242,7 +1243,7 @@ Partial Class frmMain
         Me.DspClosetJack.FieldName = "押込ｼﾞｬｯｷ"
         Me.DspClosetJack.FieldNameWidth = 146
         Me.DspClosetJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetJack.Location = New System.Drawing.Point(1642, 568)
+        Me.DspClosetJack.Location = New System.Drawing.Point(1642, 561)
         Me.DspClosetJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetJack.Name = "DspClosetJack"
         Me.DspClosetJack.Size = New System.Drawing.Size(243, 32)
@@ -1263,7 +1264,7 @@ Partial Class frmMain
         Me.DspPullBackJack.FieldName = "引戻ｼﾞｬｯｷ"
         Me.DspPullBackJack.FieldNameWidth = 146
         Me.DspPullBackJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspPullBackJack.Location = New System.Drawing.Point(1408, 568)
+        Me.DspPullBackJack.Location = New System.Drawing.Point(1408, 562)
         Me.DspPullBackJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspPullBackJack.Name = "DspPullBackJack"
         Me.DspPullBackJack.Size = New System.Drawing.Size(243, 32)
@@ -1284,7 +1285,7 @@ Partial Class frmMain
         Me.UcnDspData17.FieldName = "ﾛｰﾘﾝｸﾞ偏差"
         Me.UcnDspData17.FieldNameWidth = 146
         Me.UcnDspData17.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData17.Location = New System.Drawing.Point(1642, 534)
+        Me.UcnDspData17.Location = New System.Drawing.Point(1642, 529)
         Me.UcnDspData17.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData17.Name = "UcnDspData17"
         Me.UcnDspData17.Size = New System.Drawing.Size(243, 32)
@@ -1305,7 +1306,7 @@ Partial Class frmMain
         Me.DspAssemblyPieace.FieldName = "組立ﾋﾟｰｽ"
         Me.DspAssemblyPieace.FieldNameWidth = 146
         Me.DspAssemblyPieace.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAssemblyPieace.Location = New System.Drawing.Point(1408, 534)
+        Me.DspAssemblyPieace.Location = New System.Drawing.Point(1408, 530)
         Me.DspAssemblyPieace.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPieace.Name = "DspAssemblyPieace"
         Me.DspAssemblyPieace.Size = New System.Drawing.Size(243, 32)
@@ -1471,7 +1472,7 @@ Partial Class frmMain
         Me.DspUpSpeed.BackColor = System.Drawing.Color.Transparent
         Me.DspUpSpeed.DecimalPlaces = CType(0, Short)
         Me.DspUpSpeed.FieldName = "上速度"
-        Me.DspUpSpeed.Location = New System.Drawing.Point(112, 213)
+        Me.DspUpSpeed.Location = New System.Drawing.Point(112, 183)
         Me.DspUpSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.DspUpSpeed.Name = "DspUpSpeed"
         Me.DspUpSpeed.Size = New System.Drawing.Size(138, 46)
@@ -1484,7 +1485,7 @@ Partial Class frmMain
         Me.DspUpRealStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspUpRealStroke.DecimalPlaces = CType(0, Short)
         Me.DspUpRealStroke.FieldName = "上ST実"
-        Me.DspUpRealStroke.Location = New System.Drawing.Point(112, 162)
+        Me.DspUpRealStroke.Location = New System.Drawing.Point(112, 132)
         Me.DspUpRealStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspUpRealStroke.Name = "DspUpRealStroke"
         Me.DspUpRealStroke.Size = New System.Drawing.Size(138, 46)
@@ -1497,7 +1498,7 @@ Partial Class frmMain
         Me.DspBottomSpeed.BackColor = System.Drawing.Color.Transparent
         Me.DspBottomSpeed.DecimalPlaces = CType(0, Short)
         Me.DspBottomSpeed.FieldName = "下速度"
-        Me.DspBottomSpeed.Location = New System.Drawing.Point(112, 583)
+        Me.DspBottomSpeed.Location = New System.Drawing.Point(124, 639)
         Me.DspBottomSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.DspBottomSpeed.Name = "DspBottomSpeed"
         Me.DspBottomSpeed.Size = New System.Drawing.Size(138, 46)
@@ -1510,7 +1511,7 @@ Partial Class frmMain
         Me.DspRealBottomStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspRealBottomStroke.DecimalPlaces = CType(0, Short)
         Me.DspRealBottomStroke.FieldName = "下ST実"
-        Me.DspRealBottomStroke.Location = New System.Drawing.Point(112, 532)
+        Me.DspRealBottomStroke.Location = New System.Drawing.Point(124, 588)
         Me.DspRealBottomStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRealBottomStroke.Name = "DspRealBottomStroke"
         Me.DspRealBottomStroke.Size = New System.Drawing.Size(138, 46)
@@ -1854,7 +1855,7 @@ Partial Class frmMain
         Me.DspTargetPitching.FieldName = "目標ピッチ角"
         Me.DspTargetPitching.FieldNameWidth = 146
         Me.DspTargetPitching.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspTargetPitching.Location = New System.Drawing.Point(1072, 621)
+        Me.DspTargetPitching.Location = New System.Drawing.Point(1072, 625)
         Me.DspTargetPitching.Margin = New System.Windows.Forms.Padding(1)
         Me.DspTargetPitching.Name = "DspTargetPitching"
         Me.DspTargetPitching.Size = New System.Drawing.Size(305, 32)
@@ -1875,7 +1876,7 @@ Partial Class frmMain
         Me.DspTargetDirection.FieldName = "目標方位角"
         Me.DspTargetDirection.FieldNameWidth = 146
         Me.DspTargetDirection.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspTargetDirection.Location = New System.Drawing.Point(1072, 588)
+        Me.DspTargetDirection.Location = New System.Drawing.Point(1072, 592)
         Me.DspTargetDirection.Margin = New System.Windows.Forms.Padding(1)
         Me.DspTargetDirection.Name = "DspTargetDirection"
         Me.DspTargetDirection.Size = New System.Drawing.Size(305, 32)
@@ -1896,7 +1897,7 @@ Partial Class frmMain
         Me.DspVerRChangePoint.FieldName = "後方変化点"
         Me.DspVerRChangePoint.FieldNameWidth = 146
         Me.DspVerRChangePoint.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspVerRChangePoint.Location = New System.Drawing.Point(1072, 552)
+        Me.DspVerRChangePoint.Location = New System.Drawing.Point(1072, 549)
         Me.DspVerRChangePoint.Margin = New System.Windows.Forms.Padding(1)
         Me.DspVerRChangePoint.Name = "DspVerRChangePoint"
         Me.DspVerRChangePoint.Size = New System.Drawing.Size(305, 32)
@@ -1917,7 +1918,7 @@ Partial Class frmMain
         Me.DspVerFChangePoint.FieldName = "前方変化点"
         Me.DspVerFChangePoint.FieldNameWidth = 146
         Me.DspVerFChangePoint.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspVerFChangePoint.Location = New System.Drawing.Point(1072, 519)
+        Me.DspVerFChangePoint.Location = New System.Drawing.Point(1072, 517)
         Me.DspVerFChangePoint.Margin = New System.Windows.Forms.Padding(1)
         Me.DspVerFChangePoint.Name = "DspVerFChangePoint"
         Me.DspVerFChangePoint.Size = New System.Drawing.Size(305, 32)
@@ -1938,7 +1939,7 @@ Partial Class frmMain
         Me.DspVerLine.FieldName = "縦断線形"
         Me.DspVerLine.FieldNameWidth = 146
         Me.DspVerLine.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspVerLine.Location = New System.Drawing.Point(1072, 483)
+        Me.DspVerLine.Location = New System.Drawing.Point(1072, 485)
         Me.DspVerLine.Margin = New System.Windows.Forms.Padding(1)
         Me.DspVerLine.Name = "DspVerLine"
         Me.DspVerLine.Size = New System.Drawing.Size(305, 32)
@@ -1959,7 +1960,7 @@ Partial Class frmMain
         Me.DspHorRChangePoint.FieldName = "後方変化点"
         Me.DspHorRChangePoint.FieldNameWidth = 146
         Me.DspHorRChangePoint.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspHorRChangePoint.Location = New System.Drawing.Point(1072, 447)
+        Me.DspHorRChangePoint.Location = New System.Drawing.Point(1072, 445)
         Me.DspHorRChangePoint.Margin = New System.Windows.Forms.Padding(1)
         Me.DspHorRChangePoint.Name = "DspHorRChangePoint"
         Me.DspHorRChangePoint.Size = New System.Drawing.Size(305, 32)
@@ -1980,7 +1981,7 @@ Partial Class frmMain
         Me.DspHorFChangePoint.FieldName = "前方変化点"
         Me.DspHorFChangePoint.FieldNameWidth = 146
         Me.DspHorFChangePoint.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspHorFChangePoint.Location = New System.Drawing.Point(1072, 414)
+        Me.DspHorFChangePoint.Location = New System.Drawing.Point(1072, 413)
         Me.DspHorFChangePoint.Margin = New System.Windows.Forms.Padding(1)
         Me.DspHorFChangePoint.Name = "DspHorFChangePoint"
         Me.DspHorFChangePoint.Size = New System.Drawing.Size(305, 32)
@@ -2001,7 +2002,7 @@ Partial Class frmMain
         Me.DspHorLine.FieldName = "平面線形"
         Me.DspHorLine.FieldNameWidth = 146
         Me.DspHorLine.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspHorLine.Location = New System.Drawing.Point(1072, 378)
+        Me.DspHorLine.Location = New System.Drawing.Point(1072, 381)
         Me.DspHorLine.Margin = New System.Windows.Forms.Padding(1)
         Me.DspHorLine.Name = "DspHorLine"
         Me.DspHorLine.Size = New System.Drawing.Size(305, 32)
@@ -2022,7 +2023,7 @@ Partial Class frmMain
         Me.DspDistance.FieldName = "中心の総距離"
         Me.DspDistance.FieldNameWidth = 146
         Me.DspDistance.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspDistance.Location = New System.Drawing.Point(1072, 342)
+        Me.DspDistance.Location = New System.Drawing.Point(1072, 343)
         Me.DspDistance.Margin = New System.Windows.Forms.Padding(1)
         Me.DspDistance.Name = "DspDistance"
         Me.DspDistance.Size = New System.Drawing.Size(305, 32)
@@ -2043,7 +2044,7 @@ Partial Class frmMain
         Me.DspMoment.FieldName = "ｼﾞｬｯｷﾓｰﾒﾝﾄ"
         Me.DspMoment.FieldNameWidth = 146
         Me.DspMoment.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspMoment.Location = New System.Drawing.Point(1072, 306)
+        Me.DspMoment.Location = New System.Drawing.Point(1072, 301)
         Me.DspMoment.Margin = New System.Windows.Forms.Padding(1)
         Me.DspMoment.Name = "DspMoment"
         Me.DspMoment.Size = New System.Drawing.Size(305, 32)
@@ -2064,7 +2065,7 @@ Partial Class frmMain
         Me.DspThrust.FieldName = "推力"
         Me.DspThrust.FieldNameWidth = 146
         Me.DspThrust.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspThrust.Location = New System.Drawing.Point(1072, 273)
+        Me.DspThrust.Location = New System.Drawing.Point(1072, 269)
         Me.DspThrust.Margin = New System.Windows.Forms.Padding(1)
         Me.DspThrust.Name = "DspThrust"
         Me.DspThrust.Size = New System.Drawing.Size(305, 32)
@@ -2106,7 +2107,7 @@ Partial Class frmMain
         Me.DspVerBroken.FieldName = "鉛直中折角"
         Me.DspVerBroken.FieldNameWidth = 146
         Me.DspVerBroken.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspVerBroken.Location = New System.Drawing.Point(1072, 201)
+        Me.DspVerBroken.Location = New System.Drawing.Point(1072, 200)
         Me.DspVerBroken.Margin = New System.Windows.Forms.Padding(1)
         Me.DspVerBroken.Name = "DspVerBroken"
         Me.DspVerBroken.Size = New System.Drawing.Size(305, 32)
@@ -2148,7 +2149,7 @@ Partial Class frmMain
         Me.DspPitching.FieldName = "ピッチング"
         Me.DspPitching.FieldNameWidth = 146
         Me.DspPitching.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspPitching.Location = New System.Drawing.Point(1072, 132)
+        Me.DspPitching.Location = New System.Drawing.Point(1072, 131)
         Me.DspPitching.Margin = New System.Windows.Forms.Padding(1)
         Me.DspPitching.Name = "DspPitching"
         Me.DspPitching.Size = New System.Drawing.Size(305, 32)
@@ -2190,7 +2191,7 @@ Partial Class frmMain
         Me.DspVerDev.FieldName = "鉛直偏角"
         Me.DspVerDev.FieldNameWidth = 146
         Me.DspVerDev.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspVerDev.Location = New System.Drawing.Point(1072, 63)
+        Me.DspVerDev.Location = New System.Drawing.Point(1072, 62)
         Me.DspVerDev.Margin = New System.Windows.Forms.Padding(1)
         Me.DspVerDev.Name = "DspVerDev"
         Me.DspVerDev.Size = New System.Drawing.Size(305, 32)

@@ -42,7 +42,7 @@ Partial Class frmOneWayTunnelLimit
         '
         'OneWayRLimit
         '
-        Me.OneWayRLimit.DataDspWidth = 0
+        Me.OneWayRLimit.DataDspWidth = 110
         Me.OneWayRLimit.DecimalPlaces = CType(1, Short)
         Me.OneWayRLimit.DspFieldName = True
         Me.OneWayRLimit.FieldName = "片押R制限値"
@@ -61,7 +61,7 @@ Partial Class frmOneWayTunnelLimit
         '
         'MomentPermitValue
         '
-        Me.MomentPermitValue.DataDspWidth = 0
+        Me.MomentPermitValue.DataDspWidth = 110
         Me.MomentPermitValue.DecimalPlaces = CType(0, Short)
         Me.MomentPermitValue.DspFieldName = True
         Me.MomentPermitValue.FieldName = "ジャッキモーメント許容値"
@@ -80,7 +80,7 @@ Partial Class frmOneWayTunnelLimit
         '
         'PressPermitValue
         '
-        Me.PressPermitValue.DataDspWidth = 0
+        Me.PressPermitValue.DataDspWidth = 110
         Me.PressPermitValue.DecimalPlaces = CType(1, Short)
         Me.PressPermitValue.DspFieldName = True
         Me.PressPermitValue.FieldName = "シールド圧力許容値"
@@ -112,7 +112,7 @@ Partial Class frmOneWayTunnelLimit
         '
         'OneReduceTime
         '
-        Me.OneReduceTime.DataDspWidth = 0
+        Me.OneReduceTime.DataDspWidth = 110
         Me.OneReduceTime.DecimalPlaces = CType(0, Short)
         Me.OneReduceTime.DspFieldName = True
         Me.OneReduceTime.FieldName = "実施間隔"
@@ -131,7 +131,7 @@ Partial Class frmOneWayTunnelLimit
         '
         'OneReduceValue
         '
-        Me.OneReduceValue.DataDspWidth = 0
+        Me.OneReduceValue.DataDspWidth = 110
         Me.OneReduceValue.DecimalPlaces = CType(2, Short)
         Me.OneReduceValue.DspFieldName = True
         Me.OneReduceValue.FieldName = "１回のr引き戻し量"

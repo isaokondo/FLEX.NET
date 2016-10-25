@@ -79,7 +79,7 @@ Partial Class frmLosZeroSetting
         '
         'ReduceJudgePress
         '
-        Me.ReduceJudgePress.DataDspWidth = 120
+        Me.ReduceJudgePress.DataDspWidth = 110
         Me.ReduceJudgePress.DecimalPlaces = CType(1, Short)
         Me.ReduceJudgePress.DspFieldName = True
         Me.ReduceJudgePress.FieldName = "減圧完了判断圧力"
@@ -98,7 +98,7 @@ Partial Class frmLosZeroSetting
         '
         'ReduceTime
         '
-        Me.ReduceTime.DataDspWidth = 120
+        Me.ReduceTime.DataDspWidth = 110
         Me.ReduceTime.DecimalPlaces = CType(0, Short)
         Me.ReduceTime.DspFieldName = True
         Me.ReduceTime.FieldName = "減圧時間"

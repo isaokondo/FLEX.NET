@@ -8,7 +8,7 @@ Public Class ucnNumEdit
     Private _MaxValue As Single '最大値
     Private _MinValue As Single '最小値
 
-    Private _DataDspWidth As Integer    'データ表示幅
+    Private _DataDspWidth As Integer = 110    'データ表示幅
 
     Private numUDDefPointX As Integer
     Private lblUnitDefPointX As Integer

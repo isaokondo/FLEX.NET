@@ -34,7 +34,7 @@ Partial Class ucnDspData
         Me.lblUnit.BackColor = System.Drawing.Color.LightGray
         Me.lblUnit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblUnit.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblUnit.Location = New System.Drawing.Point(221, 0)
+        Me.lblUnit.Location = New System.Drawing.Point(231, 0)
         Me.lblUnit.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblUnit.Name = "lblUnit"
         Me.lblUnit.Size = New System.Drawing.Size(65, 32)
@@ -48,10 +48,10 @@ Partial Class ucnDspData
         Me.lblData.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblData.ForeColor = System.Drawing.Color.Yellow
-        Me.lblData.Location = New System.Drawing.Point(137, 0)
+        Me.lblData.Location = New System.Drawing.Point(138, 0)
         Me.lblData.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblData.Name = "lblData"
-        Me.lblData.Size = New System.Drawing.Size(85, 32)
+        Me.lblData.Size = New System.Drawing.Size(90, 32)
         Me.lblData.TabIndex = 5
         Me.lblData.Text = "123.45 "
         Me.lblData.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -78,8 +78,8 @@ Partial Class ucnDspData
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Transparent
-        Me.Controls.Add(Me.lblUnit)
         Me.Controls.Add(Me.lblData)
+        Me.Controls.Add(Me.lblUnit)
         Me.Controls.Add(Me.lblFieldName)
         Me.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Margin = New System.Windows.Forms.Padding(1)

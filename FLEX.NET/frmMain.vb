@@ -259,6 +259,12 @@
         'イベントログ更新
         EventlogUpdate()
 
+        'PLCにグループ数、ジャッキ本数書込
+        PlcIf.ParameterWrite("グループ数", InitParameter.NumberGroup)
+        PlcIf.ParameterWrite("ジャッキ本数", InitParameter.NumberJack)
+
+
+
     End Sub
     ''' <summary>
     ''' 線形データ画面更新
