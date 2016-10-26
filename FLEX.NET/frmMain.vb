@@ -23,29 +23,29 @@
         ' この呼び出しはデザイナーで必要です。
         InitializeComponent()
 
+        'TODO:My.Forms.frmMainを使うとNewが呼び出される？ので、以下をloadに移動　なぜか？
+        'InitParameter = New clsInitParameter '初期値パラメータ
+        'ControlParameter = New clsControlParameter  '制御パラメータ
 
-        InitParameter = New clsInitParameter '初期値パラメータ
-        ControlParameter = New clsControlParameter  '制御パラメータ
+        'HorPlan = New clsHorPanData '平面掘進計画線
+        'VerPlan = New clsVerPlanData '縦断掘進計画線
 
-        HorPlan = New clsHorPanData '平面掘進計画線
-        VerPlan = New clsVerPlanData '縦断掘進計画線
+        'MachineSpec = New clsMachinSpec
 
-        MachineSpec = New clsMachinSpec
-
-        SegmentAssembly = New clsSegmentAssembly ''セグメント組立データ
+        'SegmentAssembly = New clsSegmentAssembly ''セグメント組立データ
 
 
-        CulcMoment = New clsCulMoment ''モーメント、推力の演算
+        'CulcMoment = New clsCulMoment ''モーメント、推力の演算
 
-        JackMvAuto = New clsCulJackMv ''ジャッキ操作量の演算
-        DivCul = New clsThrustDiv ''
-        RefernceDirection = New clsCulKijun
-        JackManual = New clsJkManualOut
+        'JackMvAuto = New clsCulJackMv ''ジャッキ操作量の演算
+        'DivCul = New clsThrustDiv ''
+        'RefernceDirection = New clsCulKijun
+        'JackManual = New clsJkManualOut
 
-        'PLCインターフェース
-        PlcIf = New clsPlcIf
+        ''PLCインターフェース
+        'PlcIf = New clsPlcIf
 
-        Reduce = New clsReducePress
+        'Reduce = New clsReducePress
 
 
     End Sub
@@ -213,6 +213,30 @@
 
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
+        InitParameter = New clsInitParameter '初期値パラメータ
+        ControlParameter = New clsControlParameter  '制御パラメータ
+
+        HorPlan = New clsHorPanData '平面掘進計画線
+        VerPlan = New clsVerPlanData '縦断掘進計画線
+
+        MachineSpec = New clsMachinSpec
+
+        SegmentAssembly = New clsSegmentAssembly ''セグメント組立データ
+
+
+        CulcMoment = New clsCulMoment ''モーメント、推力の演算
+
+        JackMvAuto = New clsCulJackMv ''ジャッキ操作量の演算
+        DivCul = New clsThrustDiv ''
+        RefernceDirection = New clsCulKijun
+        JackManual = New clsJkManualOut
+
+        'PLCインターフェース
+        PlcIf = New clsPlcIf
+
+        Reduce = New clsReducePress
 
 
         'ジャッキ稼働画面の初期データ
