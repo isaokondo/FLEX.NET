@@ -53,19 +53,19 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("flex鹿島外環")>  _
+
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("flex大成外環大泉")>
         Public ReadOnly Property DataseName() As String
             Get
-                Return CType(Me("DataseName"),String)
+                Return CType(Me("DataseName"), String)
             End Get
         End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("127.0.0.1")>  _
+
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("192.168.2.212")>
         Public ReadOnly Property HostName() As String
             Get
                 Return CType(Me("HostName"),String)
