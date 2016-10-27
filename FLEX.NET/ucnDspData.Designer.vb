@@ -34,7 +34,7 @@ Partial Class ucnDspData
         Me.lblUnit.BackColor = System.Drawing.Color.LightGray
         Me.lblUnit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblUnit.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblUnit.Location = New System.Drawing.Point(231, 0)
+        Me.lblUnit.Location = New System.Drawing.Point(231, 4)
         Me.lblUnit.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblUnit.Name = "lblUnit"
         Me.lblUnit.Size = New System.Drawing.Size(65, 32)
