@@ -93,6 +93,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsDataBaseForSim.vb" />
     <Compile Include="clsSimlationSetting.vb" />
     <Compile Include="frmSim.Designer.vb">
       <DependentUpon>frmSim.vb</DependentUpon>

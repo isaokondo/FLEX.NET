@@ -574,7 +574,7 @@
     ''' </summary>
     Public Sub EventlogUpdate()
         rtbEventLog.Clear()
-        Dim DB As New FLEX.NET.clsDataBase
+        Dim DB As New clsDataBase
         Dim tb As Odbc.OdbcDataReader = DB.ExecuteSql _
             ("SELECT TIME,イベントデータ,イベント種類 FROM FLEXイベントデータ ORDER BY TIME DESC LIMIT 0,50")
         Dim i As Integer = 0

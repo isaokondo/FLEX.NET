@@ -46,7 +46,7 @@ Public Class clsSimlationSetting
     Public Sub New()
         Dim DB As New clsDataBase
 
-        Dim tb As Odbc.OdbcDataReader = DB.ExecuteSql("SELECT * FROM flexシュミレーション設定 ")
+         Dim tb As Odbc.OdbcDataReader = DB.ExecuteSql("SELECT * FROM flexシュミレーション設定 ")
         With tb
             While tb.Read
                 Select Case .Item("項目")

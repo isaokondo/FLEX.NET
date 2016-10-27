@@ -2,7 +2,7 @@
 
 Public Class frmSim
 
-    Public InitParm As New FLEX.NET.clsInitParameter '初期値パラメータ
+    Public InitParm As New clsInitParameter '初期値パラメータ
 
     Private WithEvents ComPlc As ACTMULTILib.ActEasyIF
 
@@ -111,7 +111,7 @@ Public Class frmSim
             DgvLosZero.Rows(i).Cells(0).Value = (i + 1).ToString
         Next
         'フォームに情報表示
-        Me.Text &= "　論理局番=[" & ComPlc.ActLogicalStationNumber & "] DBName=[" & My.Settings.DataseName & "] HostName=[" & My.Settings.HostName & "]"
+        Me.Text &= "　論理局番=[" & ComPlc.ActLogicalStationNumber & "] DBName=[" & My.Settings.DataBaseName & "] HostName=[" & My.Settings.HostName & "]"
 
 
     End Sub
