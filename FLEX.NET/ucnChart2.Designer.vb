@@ -41,13 +41,15 @@ Partial Class ucnChart2
         '
         'lblData
         '
+        Me.lblData.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblData.Location = New System.Drawing.Point(90, 2)
+        Me.lblData.Size = New System.Drawing.Size(59, 18)
         Me.lblData.Visible = False
         '
         'lblLegend
         '
         Me.lblLegend.Location = New System.Drawing.Point(45, 26)
-        Me.lblLegend.Size = New System.Drawing.Size(77, 12)
+        Me.lblLegend.Size = New System.Drawing.Size(84, 13)
         Me.lblLegend.Text = "ピッチ角(deg)"
         '
         'Label1
@@ -69,12 +71,12 @@ Partial Class ucnChart2
         '
         Me.lblTarget.BackColor = System.Drawing.Color.Black
         Me.lblTarget.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblTarget.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblTarget.ForeColor = System.Drawing.Color.Yellow
-        Me.lblTarget.Location = New System.Drawing.Point(315, 20)
+        Me.lblTarget.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTarget.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblTarget.Location = New System.Drawing.Point(311, 20)
         Me.lblTarget.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblTarget.Name = "lblTarget"
-        Me.lblTarget.Size = New System.Drawing.Size(61, 22)
+        Me.lblTarget.Size = New System.Drawing.Size(65, 22)
         Me.lblTarget.TabIndex = 14
         Me.lblTarget.Text = "360.00"
         Me.lblTarget.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -83,12 +85,12 @@ Partial Class ucnChart2
         '
         Me.lblReal.BackColor = System.Drawing.Color.Black
         Me.lblReal.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblReal.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblReal.ForeColor = System.Drawing.Color.Yellow
-        Me.lblReal.Location = New System.Drawing.Point(389, 20)
+        Me.lblReal.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblReal.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblReal.Location = New System.Drawing.Point(385, 20)
         Me.lblReal.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblReal.Name = "lblReal"
-        Me.lblReal.Size = New System.Drawing.Size(61, 22)
+        Me.lblReal.Size = New System.Drawing.Size(65, 22)
         Me.lblReal.TabIndex = 15
         Me.lblReal.Text = "360.00"
         Me.lblReal.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -97,12 +99,12 @@ Partial Class ucnChart2
         '
         Me.lblCorrection.BackColor = System.Drawing.Color.Black
         Me.lblCorrection.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblCorrection.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblCorrection.ForeColor = System.Drawing.Color.Yellow
-        Me.lblCorrection.Location = New System.Drawing.Point(241, 20)
+        Me.lblCorrection.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblCorrection.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblCorrection.Location = New System.Drawing.Point(237, 20)
         Me.lblCorrection.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblCorrection.Name = "lblCorrection"
-        Me.lblCorrection.Size = New System.Drawing.Size(61, 22)
+        Me.lblCorrection.Size = New System.Drawing.Size(65, 22)
         Me.lblCorrection.TabIndex = 16
         Me.lblCorrection.Text = "360.00"
         Me.lblCorrection.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -111,12 +113,12 @@ Partial Class ucnChart2
         '
         Me.lblPlan.BackColor = System.Drawing.Color.Black
         Me.lblPlan.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblPlan.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblPlan.ForeColor = System.Drawing.Color.Yellow
-        Me.lblPlan.Location = New System.Drawing.Point(167, 20)
+        Me.lblPlan.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblPlan.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblPlan.Location = New System.Drawing.Point(163, 20)
         Me.lblPlan.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblPlan.Name = "lblPlan"
-        Me.lblPlan.Size = New System.Drawing.Size(61, 22)
+        Me.lblPlan.Size = New System.Drawing.Size(65, 22)
         Me.lblPlan.TabIndex = 17
         Me.lblPlan.Text = "360.00"
         Me.lblPlan.TextAlign = System.Drawing.ContentAlignment.MiddleRight

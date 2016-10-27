@@ -30,8 +30,8 @@ Partial Class ucnDspDataMin
         '
         Me.lblData.BackColor = System.Drawing.Color.Black
         Me.lblData.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblData.ForeColor = System.Drawing.Color.Yellow
+        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblData.ForeColor = System.Drawing.Color.LightGreen
         Me.lblData.Location = New System.Drawing.Point(58, 18)
         Me.lblData.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblData.Name = "lblData"
@@ -59,7 +59,7 @@ Partial Class ucnDspDataMin
         Me.BackColor = System.Drawing.Color.Transparent
         Me.Controls.Add(Me.lblData)
         Me.Controls.Add(Me.lblFieldName)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "ucnDspDataMin"
         Me.Size = New System.Drawing.Size(166, 51)
         Me.ResumeLayout(False)

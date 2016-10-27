@@ -458,7 +458,7 @@ Partial Class frmMain
         Me.DspRingNo.BackColor = System.Drawing.Color.Black
         Me.DspRingNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.DspRingNo.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.DspRingNo.ForeColor = System.Drawing.Color.Yellow
+        Me.DspRingNo.ForeColor = System.Drawing.Color.LightGreen
         Me.DspRingNo.Location = New System.Drawing.Point(21, 6)
         Me.DspRingNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.DspRingNo.Name = "DspRingNo"
@@ -574,7 +574,7 @@ Partial Class frmMain
         Me.ucnVerLineChart.DecimalPlaces = CType(2, Short)
         Me.ucnVerLineChart.FieldName = "ピッチ角(deg)"
         Me.ucnVerLineChart.GraphHeight = 2.0!
-        Me.ucnVerLineChart.Location = New System.Drawing.Point(798, 886)
+        Me.ucnVerLineChart.Location = New System.Drawing.Point(798, 889)
         Me.ucnVerLineChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnVerLineChart.Name = "ucnVerLineChart"
         Me.ucnVerLineChart.PlanData = 360.0!
@@ -595,7 +595,7 @@ Partial Class frmMain
         Me.ucnHorLineChart.DecimalPlaces = CType(2, Short)
         Me.ucnHorLineChart.FieldName = "方位角(deg)"
         Me.ucnHorLineChart.GraphHeight = 2.0!
-        Me.ucnHorLineChart.Location = New System.Drawing.Point(802, 676)
+        Me.ucnHorLineChart.Location = New System.Drawing.Point(802, 679)
         Me.ucnHorLineChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnHorLineChart.Name = "ucnHorLineChart"
         Me.ucnHorLineChart.PlanData = 360.0!
@@ -614,7 +614,7 @@ Partial Class frmMain
         Me.ucnHorDevChart.DecimalPlaces = CType(2, Short)
         Me.ucnHorDevChart.FieldName = "水平偏角(deg)"
         Me.ucnHorDevChart.GraphHeight = 2.0!
-        Me.ucnHorDevChart.Location = New System.Drawing.Point(397, 765)
+        Me.ucnHorDevChart.Location = New System.Drawing.Point(416, 768)
         Me.ucnHorDevChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnHorDevChart.Name = "ucnHorDevChart"
         Me.ucnHorDevChart.Size = New System.Drawing.Size(397, 142)
@@ -630,7 +630,7 @@ Partial Class frmMain
         Me.ucnHorMomentChart.DecimalPlaces = CType(0, Short)
         Me.ucnHorMomentChart.FieldName = "水平ｼﾞｬｯｷﾓｰﾒﾝﾄ(kN･m)"
         Me.ucnHorMomentChart.GraphHeight = 10000.0!
-        Me.ucnHorMomentChart.Location = New System.Drawing.Point(3, 765)
+        Me.ucnHorMomentChart.Location = New System.Drawing.Point(22, 768)
         Me.ucnHorMomentChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnHorMomentChart.Name = "ucnHorMomentChart"
         Me.ucnHorMomentChart.Size = New System.Drawing.Size(397, 143)
@@ -1367,7 +1367,7 @@ Partial Class frmMain
         Me.ucnVerDevChart.DecimalPlaces = CType(2, Short)
         Me.ucnVerDevChart.FieldName = "鉛直偏角(deg)"
         Me.ucnVerDevChart.GraphHeight = 2.0!
-        Me.ucnVerDevChart.Location = New System.Drawing.Point(397, 901)
+        Me.ucnVerDevChart.Location = New System.Drawing.Point(416, 904)
         Me.ucnVerDevChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnVerDevChart.Name = "ucnVerDevChart"
         Me.ucnVerDevChart.Size = New System.Drawing.Size(397, 147)
@@ -1383,7 +1383,7 @@ Partial Class frmMain
         Me.ucnVerMomentChart.DecimalPlaces = CType(0, Short)
         Me.ucnVerMomentChart.FieldName = "鉛直ｼﾞｬｯｷﾓｰﾒﾝﾄ(kN･m)"
         Me.ucnVerMomentChart.GraphHeight = 10000.0!
-        Me.ucnVerMomentChart.Location = New System.Drawing.Point(0, 901)
+        Me.ucnVerMomentChart.Location = New System.Drawing.Point(19, 904)
         Me.ucnVerMomentChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnVerMomentChart.Name = "ucnVerMomentChart"
         Me.ucnVerMomentChart.Size = New System.Drawing.Size(397, 147)
@@ -1396,7 +1396,7 @@ Partial Class frmMain
         Me.UcnGpPvBarGraph.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.UcnGpPvBarGraph.GpFlg = Nothing
         Me.UcnGpPvBarGraph.GpPv = Nothing
-        Me.UcnGpPvBarGraph.Location = New System.Drawing.Point(12, 145)
+        Me.UcnGpPvBarGraph.Location = New System.Drawing.Point(34, 145)
         Me.UcnGpPvBarGraph.Margin = New System.Windows.Forms.Padding(0)
         Me.UcnGpPvBarGraph.Name = "UcnGpPvBarGraph"
         Me.UcnGpPvBarGraph.NumberGroup = 26
@@ -2230,6 +2230,8 @@ Partial Class frmMain
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ucnVerDevChart)
+        Me.Controls.Add(Me.ucnVerMomentChart)
         Me.Controls.Add(Me.btnPieceConfirm)
         Me.Controls.Add(Me.DspMachinComErr)
         Me.Controls.Add(Me.ucnVerLineChart)
@@ -2251,8 +2253,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.DspAssemblyPieace)
         Me.Controls.Add(Me.DspBoltPitch)
         Me.Controls.Add(Me.UcnDspData1)
-        Me.Controls.Add(Me.ucnVerDevChart)
-        Me.Controls.Add(Me.ucnVerMomentChart)
         Me.Controls.Add(Me.UcnGpPvBarGraph)
         Me.Controls.Add(Me.UcnDspDevImg)
         Me.Controls.Add(Me.DspRightSpeed)

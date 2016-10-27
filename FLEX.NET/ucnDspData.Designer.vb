@@ -34,10 +34,10 @@ Partial Class ucnDspData
         Me.lblUnit.BackColor = System.Drawing.Color.LightGray
         Me.lblUnit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblUnit.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblUnit.Location = New System.Drawing.Point(231, 4)
+        Me.lblUnit.Location = New System.Drawing.Point(227, 0)
         Me.lblUnit.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblUnit.Name = "lblUnit"
-        Me.lblUnit.Size = New System.Drawing.Size(65, 32)
+        Me.lblUnit.Size = New System.Drawing.Size(81, 32)
         Me.lblUnit.TabIndex = 6
         Me.lblUnit.Text = "mm/min"
         Me.lblUnit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -46,8 +46,8 @@ Partial Class ucnDspData
         '
         Me.lblData.BackColor = System.Drawing.Color.Black
         Me.lblData.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblData.ForeColor = System.Drawing.Color.Yellow
+        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblData.ForeColor = System.Drawing.Color.LightGreen
         Me.lblData.Location = New System.Drawing.Point(138, 0)
         Me.lblData.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblData.Name = "lblData"
@@ -84,7 +84,7 @@ Partial Class ucnDspData
         Me.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Margin = New System.Windows.Forms.Padding(1)
         Me.Name = "ucnDspData"
-        Me.Size = New System.Drawing.Size(297, 32)
+        Me.Size = New System.Drawing.Size(307, 32)
         Me.ResumeLayout(False)
 
     End Sub

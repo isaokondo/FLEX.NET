@@ -64,30 +64,41 @@ Module mdlFLEX
     ByVal bufferSize As Integer, ByVal hwndCallback As IntPtr) As Integer
     End Function
 
-    Private aliasName As String = "MediaFile"
 
-    Private Sub Mp3Play(Mp3FileName As String)
-        Dim cmd As String
-        'ファイルを開く
-        cmd = "open """ + Mp3FileName + """ type mpegvideo alias " + aliasName
-        If mciSendString(cmd, Nothing, 0, IntPtr.Zero) <> 0 Then
-            Return
-        End If '再生する
-        cmd = "play " + aliasName
-        mciSendString(cmd, Nothing, 0, IntPtr.Zero)
+    Private player As System.Media.SoundPlayer = Nothing
+
+    ''' <summary>
+    ''' リソースからWAVを再生する
+    ''' </summary>
+    ''' <param name="strm"></param>
+    Private Sub PlaySound(strm As IO.Stream)
+
+        '再生されているときは止める
+        If Not (player Is Nothing) Then
+            StopSound()
+        End If
+
+        '読み込む
+        player = New System.Media.SoundPlayer(strm)
+        '非同期再生する
+        player.Play()
+
+
+    End Sub
+
+    '再生されている音を止める
+    Private Sub StopSound()
+        If Not (player Is Nothing) Then
+            player.Stop()
+            player.Dispose()
+            player = Nothing
+        End If
     End Sub
 
 
-
-
     Public Sub Main()
-
-
-
         'メイン画面の表示
         Application.Run(New frmMain())
-
-
 
     End Sub
 
@@ -194,20 +205,29 @@ Module mdlFLEX
                         WriteEventData("No." & PullJk & " のジャッキの引戻し開始しました。", Color.Blue)
                         LosZeroSts = 3
 
+                        PlaySound(My.Resources.PullStart)
                     Case 3
                         WriteEventData("ジャッキの引戻し完了しました。", Color.Magenta)
                         LosZeroSts = 4
+
+                        PlaySound(My.Resources.PullFInish)
                     Case 4, 6
                         '押込みジャッキ
                         Dim ClosetJk As String =
                             String.Join(",", .ClosetJack)
                         WriteEventData("No." & ClosetJk & " のジャッキ押込み開始しました。", Color.Blue)
                         LosZeroSts = 5
+
+                        PlaySound(My.Resources.ClosetStart)
+
                     Case 5
 
                         WriteEventData("[" & .PieceName & "] セグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
+
+                        PlaySound(My.Resources.SegmentAsem)
+
                         'TODO:推進圧力がある程度たってから
                         If PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then '最終ピース到達前
                             If ControlParameter.NextPieceConfirm Then
@@ -251,10 +271,15 @@ Module mdlFLEX
                     Reduce.Start()
                     LosZeroSts = 1
 
+                    PlaySound(My.Resources.ReduceStart)
+
+
                 Case 2
                     WriteEventData("減圧完了しました。", Color.Magenta)
                     PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
                     LosZeroSts = 2
+
+                    PlaySound(My.Resources.ReduceFinish)
 
             End Select
 

@@ -489,6 +489,12 @@
     <None Include="Resources\FLEX_SPLASH.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ReduceStart.wav" />
+    <None Include="Resources\SegmentAsem.wav" />
+    <None Include="Resources\ClosetStart.wav" />
+    <None Include="Resources\PullFInish.wav" />
+    <None Include="Resources\ReduceFinish.wav" />
+    <None Include="Resources\PullStart.wav" />
     <Content Include="Resources\ReduceFinished.mp3" />
     <Content Include="Resources\ReduceStart.mp3" />
   </ItemGroup>

@@ -29,7 +29,7 @@ Partial Class ucnDspGpPres
         '
         Me.lblData.BackColor = System.Drawing.Color.Black
         Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblData.ForeColor = System.Drawing.Color.Yellow
+        Me.lblData.ForeColor = System.Drawing.Color.LightGreen
         Me.lblData.Location = New System.Drawing.Point(0, 0)
         Me.lblData.Margin = New System.Windows.Forms.Padding(0)
         Me.lblData.Name = "lblData"

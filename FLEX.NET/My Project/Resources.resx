@@ -127,10 +127,22 @@
   <data name="point1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\point.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ReduceFinished" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\reducefinished.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ClosetStart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClosetStart.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PullFInish" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PullFInish.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PullStart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PullStart.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ReduceFinish" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ReduceFinish.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ReduceStart" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\reducestart.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\ReduceStart.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SegmentAsem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SegmentAsem.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

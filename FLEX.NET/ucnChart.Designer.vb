@@ -35,12 +35,12 @@ Partial Class ucnChart
         '
         Me.lblData.BackColor = System.Drawing.Color.Black
         Me.lblData.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblData.ForeColor = System.Drawing.Color.Yellow
+        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblData.ForeColor = System.Drawing.Color.LightGreen
         Me.lblData.Location = New System.Drawing.Point(227, 3)
         Me.lblData.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblData.Name = "lblData"
-        Me.lblData.Size = New System.Drawing.Size(50, 18)
+        Me.lblData.Size = New System.Drawing.Size(67, 18)
         Me.lblData.TabIndex = 8
         Me.lblData.Text = "1234"
         Me.lblData.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -48,11 +48,11 @@ Partial Class ucnChart
         'lblLegend
         '
         Me.lblLegend.AutoSize = True
-        Me.lblLegend.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblLegend.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblLegend.Location = New System.Drawing.Point(50, 8)
         Me.lblLegend.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblLegend.Name = "lblLegend"
-        Me.lblLegend.Size = New System.Drawing.Size(147, 12)
+        Me.lblLegend.Size = New System.Drawing.Size(158, 13)
         Me.lblLegend.TabIndex = 10
         Me.lblLegend.Text = "水平ｼﾞｬｯｷﾓｰﾒﾝﾄ(kN･m)"
         '

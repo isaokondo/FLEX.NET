@@ -59,8 +59,8 @@ Partial Class ucnJackDsp
         '
         Me.lblPointX.BackColor = System.Drawing.Color.Black
         Me.lblPointX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPointX.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblPointX.ForeColor = System.Drawing.Color.Yellow
+        Me.lblPointX.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblPointX.ForeColor = System.Drawing.Color.LightGreen
         Me.lblPointX.Location = New System.Drawing.Point(339, 220)
         Me.lblPointX.Margin = New System.Windows.Forms.Padding(0)
         Me.lblPointX.Name = "lblPointX"
@@ -73,8 +73,8 @@ Partial Class ucnJackDsp
         '
         Me.lblPointY.BackColor = System.Drawing.Color.Black
         Me.lblPointY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPointY.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblPointY.ForeColor = System.Drawing.Color.Yellow
+        Me.lblPointY.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblPointY.ForeColor = System.Drawing.Color.LightGreen
         Me.lblPointY.Location = New System.Drawing.Point(433, 219)
         Me.lblPointY.Margin = New System.Windows.Forms.Padding(0)
         Me.lblPointY.Name = "lblPointY"
@@ -87,8 +87,8 @@ Partial Class ucnJackDsp
         '
         Me.lblPointR.BackColor = System.Drawing.Color.Black
         Me.lblPointR.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPointR.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblPointR.ForeColor = System.Drawing.Color.Yellow
+        Me.lblPointR.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblPointR.ForeColor = System.Drawing.Color.LightGreen
         Me.lblPointR.Location = New System.Drawing.Point(279, 267)
         Me.lblPointR.Margin = New System.Windows.Forms.Padding(0)
         Me.lblPointR.Name = "lblPointR"
@@ -101,8 +101,8 @@ Partial Class ucnJackDsp
         '
         Me.lblSeater.BackColor = System.Drawing.Color.Black
         Me.lblSeater.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblSeater.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblSeater.ForeColor = System.Drawing.Color.Yellow
+        Me.lblSeater.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblSeater.ForeColor = System.Drawing.Color.LightGreen
         Me.lblSeater.Location = New System.Drawing.Point(491, 267)
         Me.lblSeater.Margin = New System.Windows.Forms.Padding(0)
         Me.lblSeater.Name = "lblSeater"
@@ -141,7 +141,7 @@ Partial Class ucnJackDsp
         Me.lblX.ForeColor = System.Drawing.Color.White
         Me.lblX.Location = New System.Drawing.Point(342, 203)
         Me.lblX.Name = "lblX"
-        Me.lblX.Size = New System.Drawing.Size(16, 15)
+        Me.lblX.Size = New System.Drawing.Size(12, 12)
         Me.lblX.TabIndex = 121
         Me.lblX.Text = "X"
         '
@@ -152,7 +152,7 @@ Partial Class ucnJackDsp
         Me.lblY.ForeColor = System.Drawing.Color.White
         Me.lblY.Location = New System.Drawing.Point(450, 202)
         Me.lblY.Name = "lblY"
-        Me.lblY.Size = New System.Drawing.Size(16, 15)
+        Me.lblY.Size = New System.Drawing.Size(12, 12)
         Me.lblY.TabIndex = 122
         Me.lblY.Text = "Y"
         '
@@ -163,7 +163,7 @@ Partial Class ucnJackDsp
         Me.lblr.ForeColor = System.Drawing.Color.White
         Me.lblr.Location = New System.Drawing.Point(297, 249)
         Me.lblr.Name = "lblr"
-        Me.lblr.Size = New System.Drawing.Size(22, 15)
+        Me.lblr.Size = New System.Drawing.Size(17, 12)
         Me.lblr.TabIndex = 123
         Me.lblr.Text = "γ"
         '
@@ -174,7 +174,7 @@ Partial Class ucnJackDsp
         Me.lblS.ForeColor = System.Drawing.Color.White
         Me.lblS.Location = New System.Drawing.Point(497, 246)
         Me.lblS.Name = "lblS"
-        Me.lblS.Size = New System.Drawing.Size(22, 15)
+        Me.lblS.Size = New System.Drawing.Size(17, 12)
         Me.lblS.TabIndex = 124
         Me.lblS.Text = "θ"
         '
@@ -258,7 +258,7 @@ Partial Class ucnJackDsp
         '
         'ucnJackDsp
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 18.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DarkGray
         Me.Controls.Add(Me.lblPointDspRate)

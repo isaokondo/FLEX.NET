@@ -61,6 +61,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
+        '''</summary>
+        Friend ReadOnly Property ClosetStart() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("ClosetStart", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         '''</summary>
         Friend ReadOnly Property FLEX_SPLASH() As System.Drawing.Bitmap
@@ -91,22 +100,47 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  型 System.Byte[] のローカライズされたリソースを検索します。
+        '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
         '''</summary>
-        Friend ReadOnly Property ReduceFinished() As Byte()
+        Friend ReadOnly Property PullFInish() As System.IO.UnmanagedMemoryStream
             Get
-                Dim obj As Object = ResourceManager.GetObject("ReduceFinished", resourceCulture)
-                Return CType(obj,Byte())
+                Return ResourceManager.GetStream("PullFInish", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  型 System.Byte[] のローカライズされたリソースを検索します。
+        '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
         '''</summary>
-        Friend ReadOnly Property ReduceStart() As Byte()
+        Friend ReadOnly Property PullStart() As System.IO.UnmanagedMemoryStream
             Get
-                Dim obj As Object = ResourceManager.GetObject("ReduceStart", resourceCulture)
-                Return CType(obj,Byte())
+                Return ResourceManager.GetStream("PullStart", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
+        '''</summary>
+        Friend ReadOnly Property ReduceFinish() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("ReduceFinish", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
+        '''</summary>
+        Friend ReadOnly Property ReduceStart() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("ReduceStart", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
+        '''</summary>
+        Friend ReadOnly Property SegmentAsem() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("SegmentAsem", resourceCulture)
             End Get
         End Property
     End Module

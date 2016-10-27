@@ -398,6 +398,8 @@ Public Class ucnJackDsp
             DspJackStatus()
             SegmentPieceDsp()
             DspCopy()
+
+            DspGpPvImg()
         End If
 
 
@@ -456,7 +458,7 @@ Public Class ucnJackDsp
 
 
 
-            'Rd -= 2
+            Rd -= 2
             '文字回転用
             g.TranslateTransform(Rd * Cos((90 - _PieceCenterAngle(i)) * PI / 180) + CenterPos.X,
                       -Rd * Sin((90 - _PieceCenterAngle(i)) * PI / 180) + CenterPos.Y)
@@ -464,9 +466,9 @@ Public Class ucnJackDsp
 
 
             'Dim StColor As Brush = IIf(AssemblyPieceNo.Value = Qw.AssemblyOrder, Brushes.Red, Brushes.Black)
-            Dim fnt As New Font("Arial", 10) 'ジャッキ番号の表示フォント
+            Dim fnt As New Font("MS UI Gothic", 12) 'ジャッキ番号の表示フォント
             'ピース名称表示
-            g.DrawString(_PieceName(i), fnt, Brushes.Black, New Point(-_PieceName(i).Length * fnt.Size / 2, 0))
+            g.DrawString("[" & _AssemblyOrder(i) & "] " & _PieceName(i), fnt, Brushes.Black, New Point(-_PieceName(i).Length * fnt.Size / 2, 0))
 
 
         Next
