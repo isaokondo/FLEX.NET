@@ -51,14 +51,18 @@ Public Class ucnDspDevImg
         Dim X As Single = Me.Height / 2 + _HorDev * Me.Height
         Dim Y As Single = Me.Height / 2 - _VerDev * Me.Height
 
+        If X < 0 Then X = 0
+        If Y < 0 Then Y = 0
+        If X > Me.Height Then X = Me.Height
+        If Y > Me.Height Then Y = Me.Height
+
         Dim Div As Integer = 255  ''色（線）分割数
 
         Dim PicWd As Integer = Me.Height ''ピクチャーの大きさ（正方形）
         'intPicWd = picHensaDsp.ScaleHeight
 
-        Dim i As Integer
         ''四角形描画
-        For i = 1 To Div
+        For i As Short = 1 To Div
             ''色を変更　2001/05/08
             Dim LinePen As New Pen(ColorTranslator.FromOle(RGB(255 - i, 255 - i * 1, 255 - i)), 1)
 

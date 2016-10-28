@@ -353,7 +353,7 @@ Partial Class frmCorrectionValueManagement
         Me.UcnSpredCompnent29.FieldName = "鉛直方向"
         Me.UcnSpredCompnent29.ForeColor = System.Drawing.Color.Black
         Me.UcnSpredCompnent29.HeaderColor = System.Drawing.Color.Yellow
-        Me.UcnSpredCompnent29.Location = New System.Drawing.Point(471, 499)
+        Me.UcnSpredCompnent29.Location = New System.Drawing.Point(471, 501)
         Me.UcnSpredCompnent29.Margin = New System.Windows.Forms.Padding(2)
         Me.UcnSpredCompnent29.Name = "UcnSpredCompnent29"
         Me.UcnSpredCompnent29.Size = New System.Drawing.Size(420, 21)
@@ -608,7 +608,7 @@ Partial Class frmCorrectionValueManagement
         Me.UcnSpredCompnent4.FieldName = "水平方向"
         Me.UcnSpredCompnent4.ForeColor = System.Drawing.Color.Black
         Me.UcnSpredCompnent4.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.UcnSpredCompnent4.Location = New System.Drawing.Point(471, 142)
+        Me.UcnSpredCompnent4.Location = New System.Drawing.Point(471, 143)
         Me.UcnSpredCompnent4.Margin = New System.Windows.Forms.Padding(2)
         Me.UcnSpredCompnent4.Name = "UcnSpredCompnent4"
         Me.UcnSpredCompnent4.Size = New System.Drawing.Size(420, 21)

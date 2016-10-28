@@ -72,6 +72,8 @@ Partial Class frmMain
         Me.LineShape1 = New Microsoft.VisualBasic.PowerPacks.LineShape()
         Me.btnLossZerooCancel = New System.Windows.Forms.Button()
         Me.btnPieceConfirm = New System.Windows.Forms.Button()
+        Me.ucnVerDevChart = New FLEX.NET.ucnChart()
+        Me.ucnVerMomentChart = New FLEX.NET.ucnChart()
         Me.DspMachinComErr = New FLEX.NET.ucnDspBit()
         Me.ucnVerLineChart = New FLEX.NET.ucnChart2()
         Me.ucnHorLineChart = New FLEX.NET.ucnChart2()
@@ -117,8 +119,6 @@ Partial Class frmMain
         Me.DspAssemblyPieace = New FLEX.NET.ucnDspData()
         Me.DspBoltPitch = New FLEX.NET.ucnDspData()
         Me.UcnDspData1 = New FLEX.NET.ucnDspData()
-        Me.ucnVerDevChart = New FLEX.NET.ucnChart()
-        Me.ucnVerMomentChart = New FLEX.NET.ucnChart()
         Me.UcnGpPvBarGraph = New FLEX.NET.ucnGpPvBarGraph()
         Me.UcnDspDevImg = New FLEX.NET.ucnDspDevImg()
         Me.DspRightSpeed = New FLEX.NET.ucnDspDataMin()
@@ -547,6 +547,38 @@ Partial Class frmMain
         Me.btnPieceConfirm.TabIndex = 126
         Me.btnPieceConfirm.Text = "同時施 組立ピース確認"
         Me.btnPieceConfirm.UseVisualStyleBackColor = False
+        '
+        'ucnVerDevChart
+        '
+        Me.ucnVerDevChart.BackColor = System.Drawing.Color.Transparent
+        Me.ucnVerDevChart.CenterColor = System.Drawing.Color.Yellow
+        Me.ucnVerDevChart.ChartBakColor = System.Drawing.Color.Black
+        Me.ucnVerDevChart.ChartPenColor = System.Drawing.Color.White
+        Me.ucnVerDevChart.DecimalPlaces = CType(2, Short)
+        Me.ucnVerDevChart.FieldName = "鉛直偏角(deg)"
+        Me.ucnVerDevChart.GraphHeight = 2.0!
+        Me.ucnVerDevChart.Location = New System.Drawing.Point(416, 904)
+        Me.ucnVerDevChart.Margin = New System.Windows.Forms.Padding(2)
+        Me.ucnVerDevChart.Name = "ucnVerDevChart"
+        Me.ucnVerDevChart.Size = New System.Drawing.Size(397, 147)
+        Me.ucnVerDevChart.StrokeWidth = 1500
+        Me.ucnVerDevChart.TabIndex = 100
+        '
+        'ucnVerMomentChart
+        '
+        Me.ucnVerMomentChart.BackColor = System.Drawing.Color.Transparent
+        Me.ucnVerMomentChart.CenterColor = System.Drawing.Color.Black
+        Me.ucnVerMomentChart.ChartBakColor = System.Drawing.Color.White
+        Me.ucnVerMomentChart.ChartPenColor = System.Drawing.Color.Red
+        Me.ucnVerMomentChart.DecimalPlaces = CType(0, Short)
+        Me.ucnVerMomentChart.FieldName = "鉛直ｼﾞｬｯｷﾓｰﾒﾝﾄ(kN･m)"
+        Me.ucnVerMomentChart.GraphHeight = 10000.0!
+        Me.ucnVerMomentChart.Location = New System.Drawing.Point(19, 904)
+        Me.ucnVerMomentChart.Margin = New System.Windows.Forms.Padding(2)
+        Me.ucnVerMomentChart.Name = "ucnVerMomentChart"
+        Me.ucnVerMomentChart.Size = New System.Drawing.Size(397, 147)
+        Me.ucnVerMomentChart.StrokeWidth = 1500
+        Me.ucnVerMomentChart.TabIndex = 98
         '
         'DspMachinComErr
         '
@@ -1357,38 +1389,6 @@ Partial Class frmMain
         Me.UcnDspData1.UnitVisible = False
         Me.UcnDspData1.Value = "RC20ST"
         Me.UcnDspData1.ValueType = True
-        '
-        'ucnVerDevChart
-        '
-        Me.ucnVerDevChart.BackColor = System.Drawing.Color.Transparent
-        Me.ucnVerDevChart.CenterColor = System.Drawing.Color.Yellow
-        Me.ucnVerDevChart.ChartBakColor = System.Drawing.Color.Black
-        Me.ucnVerDevChart.ChartPenColor = System.Drawing.Color.White
-        Me.ucnVerDevChart.DecimalPlaces = CType(2, Short)
-        Me.ucnVerDevChart.FieldName = "鉛直偏角(deg)"
-        Me.ucnVerDevChart.GraphHeight = 2.0!
-        Me.ucnVerDevChart.Location = New System.Drawing.Point(416, 904)
-        Me.ucnVerDevChart.Margin = New System.Windows.Forms.Padding(2)
-        Me.ucnVerDevChart.Name = "ucnVerDevChart"
-        Me.ucnVerDevChart.Size = New System.Drawing.Size(397, 147)
-        Me.ucnVerDevChart.StrokeWidth = 1500
-        Me.ucnVerDevChart.TabIndex = 100
-        '
-        'ucnVerMomentChart
-        '
-        Me.ucnVerMomentChart.BackColor = System.Drawing.Color.Transparent
-        Me.ucnVerMomentChart.CenterColor = System.Drawing.Color.Black
-        Me.ucnVerMomentChart.ChartBakColor = System.Drawing.Color.White
-        Me.ucnVerMomentChart.ChartPenColor = System.Drawing.Color.Red
-        Me.ucnVerMomentChart.DecimalPlaces = CType(0, Short)
-        Me.ucnVerMomentChart.FieldName = "鉛直ｼﾞｬｯｷﾓｰﾒﾝﾄ(kN･m)"
-        Me.ucnVerMomentChart.GraphHeight = 10000.0!
-        Me.ucnVerMomentChart.Location = New System.Drawing.Point(19, 904)
-        Me.ucnVerMomentChart.Margin = New System.Windows.Forms.Padding(2)
-        Me.ucnVerMomentChart.Name = "ucnVerMomentChart"
-        Me.ucnVerMomentChart.Size = New System.Drawing.Size(397, 147)
-        Me.ucnVerMomentChart.StrokeWidth = 1500
-        Me.ucnVerMomentChart.TabIndex = 98
         '
         'UcnGpPvBarGraph
         '
@@ -2230,14 +2230,14 @@ Partial Class frmMain
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ucnHorDevChart)
+        Me.Controls.Add(Me.ucnHorMomentChart)
         Me.Controls.Add(Me.ucnVerDevChart)
         Me.Controls.Add(Me.ucnVerMomentChart)
         Me.Controls.Add(Me.btnPieceConfirm)
         Me.Controls.Add(Me.DspMachinComErr)
         Me.Controls.Add(Me.ucnVerLineChart)
         Me.Controls.Add(Me.ucnHorLineChart)
-        Me.Controls.Add(Me.ucnHorDevChart)
-        Me.Controls.Add(Me.ucnHorMomentChart)
         Me.Controls.Add(Me.btnLossZerooCancel)
         Me.Controls.Add(Me.pnlLosZero)
         Me.Controls.Add(Me.Panel2)

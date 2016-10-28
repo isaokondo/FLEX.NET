@@ -576,6 +576,8 @@ Public Class clsPlcIf
         _LosZeroSts_FLEX = AnalogPlcRead("同時施工ステータス_FLEX")
         _LosZeroSts_M = AnalogPlcRead("同時施工ステータス_Machine")
         _excaStatus = AnalogPlcRead("掘進ステータス")
+        _AssemblyPieceNo = AnalogPlcRead("組立ピース")
+
         PreExcaStatus = _excaStatus
         _LosZeroMode = DigtalPlcRead("同時施工モード")
 

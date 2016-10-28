@@ -467,7 +467,7 @@ Public Class ucnJackDsp
 
             'Dim StColor As Brush = IIf(AssemblyPieceNo.Value = Qw.AssemblyOrder, Brushes.Red, Brushes.Black)
             Dim fnt As New Font("MS UI Gothic", 12) 'ジャッキ番号の表示フォント
-            'ピース名称表示
+            '組立順序、ピース名称表示
             g.DrawString("[" & _AssemblyOrder(i) & "] " & _PieceName(i), fnt, Brushes.Black, New Point(-_PieceName(i).Length * fnt.Size / 2, 0))
 
 
