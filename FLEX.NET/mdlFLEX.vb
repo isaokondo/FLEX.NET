@@ -50,6 +50,12 @@ Module mdlFLEX
     Public ElapsedTime As New clsElapsedTime
 
     ''' <summary>
+    ''' データ保存
+    ''' </summary>
+    Public DataSave As clsDataSave
+
+
+    ''' <summary>
     ''' MP3再生
     ''' </summary>
     ''' <param name="command"></param>

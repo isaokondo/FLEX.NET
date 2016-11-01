@@ -40,7 +40,7 @@
         End With
         With My.Forms.frmMain.ucnVerMomentChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .GraphHeight = ControlParameter.HorMomentTrendWidth
+            .GraphHeight = ControlParameter.VerMomentTrendWidth
         End With
         With My.Forms.frmMain.ucnHorDevChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
@@ -48,7 +48,7 @@
         End With
         With My.Forms.frmMain.ucnVerDevChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .GraphHeight = ControlParameter.HorDevDegTrendWidth
+            .GraphHeight = ControlParameter.VerDevDegTrendWidth
         End With
 
         My.Forms.frmMain.UcnGpPvBarGraph.PresBarGraphWidt = ControlParameter.PresBarGraphWidt

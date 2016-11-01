@@ -32,6 +32,7 @@ Module CommonMdl
     Public Const cKussin As Short = 2 ''掘進中
     Public Const cChudan As Short = 3 ''中断中
 
+    'TODO:データベースより読み込むように変更
     Public gdblToStartDistance As Double ''起点から発進座標までの累積距離
 
 

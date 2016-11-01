@@ -224,6 +224,19 @@ Public Class clsPlcIf
             Return _gyroRolling
         End Get
     End Property
+
+    Public ReadOnly Property MashineRolling As Single
+        Get
+            Return _mashineRolling
+        End Get
+    End Property
+
+    Public ReadOnly Property MachinePitching As Single
+        Get
+            Return _machinePitching
+        End Get
+    End Property
+
     Public ReadOnly Property NakaoreLR As Single
         Get
             Return _nakaoreLR
@@ -770,12 +783,17 @@ Public Class clsPlcIf
         If _realStroke <> PreRealStroke Or _excaStatus <> PreExcaStatus _
             Or _gyro <> _PreJyairo Or _PrePitching <> _gyroPitching Then
             RaiseEvent LineDistanceChage()
+
+
         End If
         '掘進ステータスの変化
         If _excaStatus <> PreExcaStatus Then
             RaiseEvent ExcavationStatusChange(PreExcaStatus, _excaStatus)
         End If
 
+        If (_realStroke > PreRealStroke Or _excaStatus <> PreExcaStatus) And _excaStatus = cKussin Then
+            DataSave.Save()
+        End If
 
 
 

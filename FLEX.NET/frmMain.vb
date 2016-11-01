@@ -225,6 +225,7 @@
 
         SegmentAssembly = New clsSegmentAssembly ''セグメント組立データ
 
+        DataSave = New clsDataSave 'データ保存
 
         CulcMoment = New clsCulMoment ''モーメント、推力の演算
 
@@ -347,8 +348,8 @@
     Public Sub SegmentDataDsp()
         '組立パターン
 
-        Dim p As Short = 0
-        If PlcIf.AssemblyPieceNo = 0 Then p = 1
+        'Dim p As Short = 0
+        If PlcIf.AssemblyPieceNo <= 0 Then PlcIf.AssemblyPieceNo = 1
         With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
             'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
             DspAssemblyPattern.Value = .PatternName '組立パターン名

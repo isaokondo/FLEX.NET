@@ -499,7 +499,7 @@ Friend Class clsSegmentAssembly
 
     Public Function JackListDsp(t As List(Of Short)) As String
         'データないとき
-        If t.Count = 0 Then
+        If IsNothing(t) OrElse t.Count = 0 Then
             Return "-"
         Else
             Return t(0) & "-" & t(t.Count - 1)

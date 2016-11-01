@@ -239,7 +239,7 @@ Partial Class frmScaleSet
         Me.nudPresBarGraphWidt.FieldName = "圧力バーグラフ"
         Me.nudPresBarGraphWidt.Increment = 1.0!
         Me.nudPresBarGraphWidt.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.nudPresBarGraphWidt.Location = New System.Drawing.Point(35, 498)
+        Me.nudPresBarGraphWidt.Location = New System.Drawing.Point(35, 489)
         Me.nudPresBarGraphWidt.Margin = New System.Windows.Forms.Padding(2)
         Me.nudPresBarGraphWidt.MaxValue = "100"
         Me.nudPresBarGraphWidt.MinValue = "0"
