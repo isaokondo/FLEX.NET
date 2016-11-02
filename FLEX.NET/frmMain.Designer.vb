@@ -2415,7 +2415,6 @@ Partial Class frmMain
     Friend WithEvents DspWatingElapsedTime As ucnDspData
     Friend WithEvents DspLosZeroElapsedTime As ucnDspData
     Friend WithEvents DspExcationElapsedTime As ucnDspData
-    Friend WithEvents rtbEventLog As RichTextBox
     Friend WithEvents lblUnit As Label
     Friend WithEvents DspRingNo As Label
     Friend WithEvents UcnDspData15 As ucnDspData
@@ -2454,6 +2453,7 @@ Partial Class frmMain
     Friend WithEvents DspMachinComErr As ucnDspBit
     Friend WithEvents btnPieceConfirm As Button
     Public WithEvents DspLeftRealStroke As ucnDspDataMin
+    Public WithEvents rtbEventLog As RichTextBox
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

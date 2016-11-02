@@ -11,7 +11,7 @@ Module mdlFLEX
     ''' </summary>
     Public MachineSpec As clsMachinSpec
 
-    Public SegmentAssembly As clsSegmentAssembly ''セグメント組立データ
+    Public SegmentAssemblyData As clsSegmentAssembly ''セグメント組立データ
 
     Public WithEvents ControlParameter As clsControlParameter  '制御パラメータ
 
@@ -125,7 +125,7 @@ Module mdlFLEX
     Private Sub PlcIf_ExcavationStatusChange(PreStatus As Integer, NowStatus As Integer) _
         Handles PlcIf.ExcavationStatusChange
         '組立パターンの情報を取得
-        SegmentAssembly.sbSegmentAssemblyDataRead(PlcIf.RingNo)
+        SegmentAssemblyData.SegmentAssemblyDataRead(PlcIf.RingNo)
 
         'If PreStatus = -1 Then Exit Sub
         '待機中から掘進
@@ -196,7 +196,7 @@ Module mdlFLEX
         'マシンからのステータス
         If FromDev Then
 
-            With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
+            With SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo)
                 Select Case NowSts
                     Case 1 'マシンからの減圧開始
                         PlcIf.LosZeroSts_FLEX = 1 '1ピース目の減圧開始
@@ -235,7 +235,7 @@ Module mdlFLEX
                         PlaySound(My.Resources.SegmentAsem)
 
                         'TODO:推進圧力がある程度たってから
-                        If PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then '最終ピース到達前
+                        If PlcIf.AssemblyPieceNo < SegmentAssemblyData.AssemblyPieceNumber Then '最終ピース到達前
                             If ControlParameter.NextPieceConfirm Then
                                 '同時施工継続メッセージ出力
                                 My.Forms.frmNextPieceConfirm.Show()
@@ -258,11 +258,11 @@ Module mdlFLEX
             'FLEXからのステータス
             Select Case NowSts
                 Case 1  '減圧開始
-                    If PlcIf.LosZeroSts_M <> 1 And PlcIf.AssemblyPieceNo < SegmentAssembly.AssemblyPieceNumber Then
+                    If PlcIf.LosZeroSts_M <> 1 And PlcIf.AssemblyPieceNo < SegmentAssemblyData.AssemblyPieceNumber Then
                         PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
                     End If
                     My.Forms.frmNextPieceConfirm.Close() '継続確認画面を閉じる
-                    With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
+                    With SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo)
                         '減圧グループ
                         WriteEventData(PlcIf.AssemblyPieceNo & "ピース目 " & String.Join(",", .ReduceGroup) & "グループの減圧開始します。", Color.Blue)
 
@@ -414,7 +414,7 @@ Module mdlFLEX
                     '減圧中から組立完了
                     If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
                         Dim Gp As List(Of Short) =
-                        SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+                        SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
                         For Each R As Short In Gp
                             sngGpSV(R - 1) =
                         Reduce.MvOut(R - 1) * ControlParameter.最大全開出力時の目標圧力 / 100

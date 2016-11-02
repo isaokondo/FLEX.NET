@@ -119,8 +119,8 @@ Friend Class clsDataSave
             Data(ColumnList.IndexOf("平面基点から発旋回中心までの距離")) = .掘進累積距離.ToString("F4")
             Data(ColumnList.IndexOf("平面ｿﾞｰﾝ")) = .平面ゾーン番号
             Data(ColumnList.IndexOf("平面線形")) = .平面線形
-            Data(ColumnList.IndexOf("平面前方変化点距離")) = .平面ゾーン掘進距離.ToString("F4")
-            Data(ColumnList.IndexOf("平面後方変化点距離")) = .平面ゾーン内残距離.ToString("F4")
+            Data(ColumnList.IndexOf("平面前方変化点距離")) = .平面ゾーン内残距離.ToString("F4")
+            Data(ColumnList.IndexOf("平面後方変化点距離")) = .平面ゾーン掘進距離.ToString("F4")
             Data(ColumnList.IndexOf("平面ｼﾌﾄ量")) = .平面シフト量 * 1000
             Data(ColumnList.IndexOf("平面ｼﾌﾄ追加角")) = .平面シフト追加角
             Data(ColumnList.IndexOf("平面半径（軌道中心）")) = .軌道中心平面半径.ToString("F4")
@@ -143,8 +143,8 @@ Friend Class clsDataSave
             Data(ColumnList.IndexOf("縦断基点から発旋回中心までの距離")) = .掘進累積距離.ToString("F4")
             Data(ColumnList.IndexOf("縦断ｿﾞｰﾝ")) = .縦断ゾーン番号
             Data(ColumnList.IndexOf("縦断線形")) = .縦断線形
-            Data(ColumnList.IndexOf("縦断前方変化点距離")) = .縦断ゾーン内掘進距離.ToString("F4")
-            Data(ColumnList.IndexOf("縦断後方変化点距離")) = .縦断ゾーン内残距離.ToString("F4")
+            Data(ColumnList.IndexOf("縦断前方変化点距離")) = .縦断ゾーン内残距離.ToString("F4")
+            Data(ColumnList.IndexOf("縦断後方変化点距離")) = .縦断ゾーン内掘進距離.ToString("F4")
             Data(ColumnList.IndexOf("縦断ｼﾌﾄ量")) = .縦断シフト量 * 1000
             Data(ColumnList.IndexOf("縦断ｼﾌﾄ追加角")) = .縦断シフト追加角.ToString("F4")
             Data(ColumnList.IndexOf("縦断半径")) = .縦断半径.ToString("F4")
@@ -200,7 +200,7 @@ Friend Class clsDataSave
 
 
         Data(ColumnList.IndexOf("組立ピース")) = PlcIf.AssemblyPieceNo
-        With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
+        With SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo)
             'TODO:Data(ColumnList.IndexOf("組立セグメント")) = 
             Data(ColumnList.IndexOf("組立ボルトピッチ")) = .BoltPitch
             Data(ColumnList.IndexOf("組立パターン")) = .PatternName

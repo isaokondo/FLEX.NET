@@ -709,6 +709,8 @@ Public Class clsPlcIf
                 _RingNo = GetAnalogData("RingNo", ParameterTag)
                 If rno <> _RingNo Then
                     RaiseEvent ExcavationStatusChange(0, 0)
+                    RaiseEvent LineDistanceChage()
+
                 End If
 
                 _ストローク管理法 = GetAnalogData("ストローク管理法", ParameterTag)   'ストローク管理方法

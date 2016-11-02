@@ -132,6 +132,12 @@
     <Compile Include="clsPlanData.vb" />
     <Compile Include="clsPLC.vb" />
     <Compile Include="CommonMdl.vb" />
+    <Compile Include="frmSegmentEdit.Designer.vb">
+      <DependentUpon>frmSegmentEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSegmentEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmNextPieceConfirm.Designer.vb">
       <DependentUpon>frmNextPieceConfirm.vb</DependentUpon>
     </Compile>
@@ -335,6 +341,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmSegmentEdit.resx">
+      <DependentUpon>frmSegmentEdit.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmNextPieceConfirm.resx">
       <DependentUpon>frmNextPieceConfirm.vb</DependentUpon>
     </EmbeddedResource>

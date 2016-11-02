@@ -15,19 +15,29 @@ Friend Class clsSegmentAssembly
     ''' <summary>
     ''' セグメント幅
     ''' </summary>
-    Private _SegmentWidth As New Dictionary(Of Integer, Short)()
+    Private _SegmentWidth As New Dictionary(Of Integer, Short)
     ''' <summary>
     ''' 掘進終了時のストローク
     ''' </summary>
-    Private _RingLastStroke As New Dictionary(Of Integer, Short)()
+    Private _RingLastStroke As New Dictionary(Of Integer, Short)
     ''' <summary>
     ''' セグメント組立パターンID
     ''' </summary>
-    Private _SegmentAssenblyPtnID As New Dictionary(Of Integer, Short)()
+    Private _SegmentAssenblyPtnID As New Dictionary(Of Integer, Short)
     ''' <summary>
     ''' セグメント組立パターン
     ''' </summary>
-    Private _SegmentAssenblyPtn As New Dictionary(Of Integer, String)()
+    Private _SegmentAssenblyPtn As New Dictionary(Of Integer, String)
+
+    ''' <summary>
+    ''' セグメント種類No
+    ''' </summary>
+    Private _SegmentTypeNo As New Dictionary(Of Integer, Short)
+    '''' <summary>
+    '''' セグメント種類
+    '''' </summary>
+    'Private _SegmentTypeList As New Dictionary(Of Short, SegmentType)
+
 
     ''' <summary>
     ''' セグメント組立データ
@@ -36,12 +46,12 @@ Friend Class clsSegmentAssembly
 
 
     ''' <summary>
-    ''' セグメント幅
+    ''' セグメントタイプデータ
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property SegmentWidth As Dictionary(Of Integer, Short)
+    Public ReadOnly Property SegmentTypeData(ByVal RingNo As Integer) As SegmentType
         Get
-            Return _SegmentWidth
+            Return _SegmentTypeList(_SegmentTypeNo(RingNo))
         End Get
     End Property
     ''' <summary>
@@ -90,37 +100,33 @@ Friend Class clsSegmentAssembly
     ''' セグメント種類リスト
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property SegmentTypeList As New List(Of String)
+    Public ReadOnly Property SegmentTypeList As New Dictionary(Of Short, SegmentType)
+
+
+    Public Property SegmentAssenblyPtnID() As Dictionary(Of Integer, Short)
+        Get
+            Return _SegmentAssenblyPtnID
+        End Get
+        Set(value As Dictionary(Of Integer, Short))
+            _SegmentAssenblyPtnID = value
+            'TODO:データベース更新作業
+        End Set
+    End Property
+
+    Public ReadOnly Property SegmentTypeNo As Dictionary(Of Integer, Short)
+        Get
+            Return _SegmentTypeNo
+        End Get
+    End Property
+
+    'Public ReadOnly Property SegmentTypeLst As Dictionary(Of Short, SegmentType)
+
 
     ''' <summary>
     ''' 組立パターンの情報を取得
     ''' </summary>
     ''' <param name="RingNo">リング番号</param>
-    Public Sub sbSegmentAssemblyDataRead(RingNo As Integer)
-        ''当該リングのセグメント組立IDを取得
-        'Dim Id As Short = _SegmentAssenblyPtnID(RingNo)
-        ''検索
-        'Dim rsData As Odbc.OdbcDataReader =
-        '    ExecuteSql("SELECT * FROM `flexセグメント組立手順` WHERE `ID`='" & Id & "' ORDER BY `組立順序`")
-        '_AssemblyPieceNumber = 0
-        '_SegmentProcessData.Clear()
-        'データ読込
-        'While rsData.Read()
-        '    Dim SegDat As New AsseblyProcess
-        '    SegDat.AssemblyOrder = rsData.Item("組立順序")
-        '    SegDat.PieceName = rsData.Item("ピース名称")
-        '    SegDat.PieceAngle = rsData.Item("ピース角度")
-        '    SegDat.PieceCenterAngle = rsData.Item("組立ピース中心角")
-        '    SegDat.PullBackJack = JkList(rsData.Item("引戻ジャッキ"))
-        '    SegDat.OpposeJack = JkList(rsData.Item("対抗ジャッキ"))
-        '    SegDat.ClosetJack = JkList(rsData.Item("押込ジャッキ"))
-        '    SegDat.AddClosetJack = JkList(rsData.Item("追加押込ジャッキ"))
-        '    SegDat.RightRollingClosetJack = JkList(rsData.Item("右ローリング押込ジャッキ"))
-        '    SegDat.LeftRollingClosetJack = JkList(rsData.Item("左ローリング押込ジャッキ"))
-        '    _SegmentProcessData(rsData.Item("組立順序")) = SegDat
-        '    _AssemblyPieceNumber += 1   '組立ピース数
-        'End While
-
+    Public Sub SegmentAssemblyDataRead(RingNo As Integer)
 
 
         ''当該リングのセグメント組立IDを取得
@@ -169,7 +175,7 @@ Friend Class clsSegmentAssembly
             'SegDat.RightRollingClosetJack = JkList(rsData.Item("右ローリング押込ジャッキ"))
             'SegDat.LeftRollingClosetJack = JkList(rsData.Item("左ローリング押込ジャッキ"))
             _SegmentProcessData(rsData.Item("組立順序")) = SegDat
-        _AssemblyPieceNumber += 1   '組立ピース数
+            _AssemblyPieceNumber += 1   '組立ピース数
         End While
 
     End Sub
@@ -241,56 +247,58 @@ Friend Class clsSegmentAssembly
         Dim rsData As Odbc.OdbcDataReader
 
         rsData = ExecuteSql _
-            ("SELECT * FROM `セグメント組立データ` INNER Join `flexセグメント組立パターン` ON `組立パターンID` = `ID`;")
+            ("SELECT * FROM `flexセグメント組立データ` Inner Join `セグメント組立パターンベース`") ' ON `セグメント組立パターンベース`.`組立パターンNo` = `flexセグメント組立データ`.`組立パターンNo`;")
 
-        With rsData
-            While rsData.Read()
-                Dim i As Integer = .Item("リング番号")
-                _SegmentWidth(i) = .Item("セグメント幅")
-                'データが不正の場合はセグメント幅とする
-                If IsDBNull(.Item("掘進終了ストローク")) OrElse .Item("掘進終了ストローク") = 0 Then
-                    _RingLastStroke(i) = _SegmentWidth(i)
-                Else
-                    _RingLastStroke(i) = .Item("掘進終了ストローク")
-                End If
-                If IsDBNull("組立パターンID") Then
-                    _SegmentAssenblyPtnID(i) = 0
-                    _SegmentAssenblyPtn(i) = ""
-                Else
-                    _SegmentAssenblyPtnID(i) = .Item("組立パターンID")
-                    _SegmentAssenblyPtn(i) = .Item("組立パターン")
-                End If
+        While rsData.Read()
+            Dim i As Integer = rsData.Item("リング番号")
+            _SegmentTypeNo(i) = rsData.Item("セグメントNo")
+            If Not _SegmentTypeList.ContainsKey(_SegmentTypeNo(i)) Then
+                MsgBox(String.Format("{0}リングのセグメントNoが未登録です", i))
+            Else
+                '_SegmentWidth(i) = _SegmentTypeList(rsData.Item("セグメントNo")).CenterWidth * 1000
+            End If
+            _RingLastStroke(i) = rsData.Item("掘進終了ストローク")
+            _SegmentAssenblyPtnID(i) = rsData.Item("組立パターンNo")
+            '_SegmentAssenblyPtn(i) = rsData.Item("組立パターン")
+        End While
 
-            End While
-        End With
-
-        SegmentAssemblyPatternListRead() 'セグメント組立パターンリスト読込
+        'SegmentAssemblyPatternListRead() 'セグメント組立パターンリスト読込
     End Sub
-    ''' <summary>
-    ''' セグメント組立パターン、種類読込
-    ''' </summary>
-    Private Sub SegmentAssemblyPatternListRead()
 
-        _SegmentAssemblyPatternList.Clear()
+    ''' <summary>
+    ''' セグメント種類読込
+    ''' </summary>
+    Private Sub SegmentListRead()
+        'TODO:データベース更新時に読込
+        _SegmentTypeList.Clear()
 
         Dim rsData As Odbc.OdbcDataReader
 
-        rsData = ExecuteSql _
-            ("SELECT * FROM `flexセグメント組立パターン` ORDER BY `ID`")
+        rsData = ExecuteSql("SELECT * FROM `セグメントリスト`")
 
-        While rsData.Read()
-            _SegmentAssemblyPatternList.Add(rsData.Item("組立パターン"))
-        End While
-
-        _SegmentTypeList.Clear()
-
-        rsData = ExecuteSql("SELECT * FROM `flexセグメント種類` ORDER BY `ID`")
         While rsData.Read
-            _SegmentTypeList.Add(rsData.Item("セグメント種類"))
+            Dim st As New SegmentType
+            'Dim i As Short = rsData.Item("セグメントNo")
+            st.TypeName = rsData.Item("種類")
+            st.CenterWidth = rsData.Item("中心幅")
+            st.ETTaper = rsData.Item("坑口")
+            st.TFTaper = rsData.Item("テーパー量切羽")
+            'st.Note = rsData.Item("備考")
+            st.OuterDiameter = rsData.Item("外径")
+            st.TaperAngle = rsData.Item("位置")
+
+            _SegmentTypeList.Add(rsData.Item("セグメントNo"), st)
+
         End While
+
+
+
 
 
     End Sub
+
+
+
 
     Public Sub sbDataUpdat()
         ' @(f)
@@ -366,21 +374,11 @@ Friend Class clsSegmentAssembly
 
 
 
-
-
-
-
-
-    'UPGRADE_NOTE: Class_Initialize は Class_Initialize_Renamed にアップグレードされました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"' をクリックしてください。
-    Private Sub Class_Initialize_Renamed()
-
-
-        Call sbSegmentRingDataRead() ''データベース読込
-
-    End Sub
     Public Sub New()
-        MyBase.New()
-        Class_Initialize_Renamed()
+
+        SegmentListRead() 'セグメントリスト読込
+        sbSegmentRingDataRead() ''データベース読込
+
     End Sub
 
     ''' <summary>
@@ -506,6 +504,48 @@ Friend Class clsSegmentAssembly
 
         End If
     End Function
+
+    ''' <summary>
+    ''' セグメント種類
+    ''' </summary>
+    Public Class SegmentType
+        ''' <summary>
+        ''' セグメン種類名称
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property TypeName As String
+        ''' <summary>
+        ''' セグメント中心幅(m)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property CenterWidth As Single
+        ''' <summary>
+        ''' 外径(m)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property OuterDiameter As Single
+        ''' <summary>
+        ''' 切羽側テーパー量
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property TFTaper As Single
+        ''' <summary>
+        ''' 抗口側テーパー量
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ETTaper As Single
+        ''' <summary>
+        ''' テーパー位置（dgree)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property TaperAngle As Single
+        ''' <summary>
+        ''' 備考
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Note As String
+    End Class
+
 
 
 

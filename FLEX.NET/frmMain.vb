@@ -203,7 +203,7 @@
     ''' 偏角、モーメントのチャート初期化
     ''' 待機中から掘進中の時に実行
     ''' </summary>
-    Public Sub ChartClear()
+    Public  Sub ChartClear()
         ucnHorMomentChart.ChartClear()
         ucnVerMomentChart.ChartClear()
         ucnHorDevChart.ChartClear()
@@ -223,7 +223,7 @@
 
         MachineSpec = New clsMachinSpec
 
-        SegmentAssembly = New clsSegmentAssembly ''セグメント組立データ
+        SegmentAssemblyData = New clsSegmentAssembly ''セグメント組立データ
 
         DataSave = New clsDataSave 'データ保存
 
@@ -299,14 +299,14 @@
             '中心の総距離
             DspDistance.Value = .HorZendoKijun.掘進累積距離
             '平面線形データ
-            If .HorKodoKijun.平面線形 = 1 Then
+            If .HorZendoKijun.平面線形 = 1 Then
                 DspHorLine.Value = "-------"
             Else
                 DspHorLine.Value = .HorZendoKijun.軌道中心平面半径
             End If
 
-            DspHorFChangePoint.Value = .HorZendoKijun.平面ゾーン掘進距離
-            DspHorRChangePoint.Value = .HorZendoKijun.平面ゾーン内残距離
+            DspHorFChangePoint.Value = .HorZendoKijun.平面ゾーン内残距離
+            DspHorRChangePoint.Value = .HorZendoKijun.平面ゾーン掘進距離
             DspTargetDirection.Value = .平面基準方位
             DspHorDev.Value = .平面偏角
 
@@ -317,8 +317,8 @@
                 DspVerLine.Value = .VerZendoKijun.縦断半径
 
             End If
-            DspVerFChangePoint.Value = .VerZendoKijun.縦断ゾーン内掘進距離
-            DspVerRChangePoint.Value = .VerZendoKijun.縦断ゾーン内残距離
+            DspVerFChangePoint.Value = .VerZendoKijun.縦断ゾーン内残距離
+            DspVerRChangePoint.Value = .VerZendoKijun.縦断ゾーン内掘進距離
             DspTargetPitching.Value = .縦断基準方位
             DspVerDev.Value = .縦断偏角
 
@@ -350,20 +350,20 @@
 
         'Dim p As Short = 0
         If PlcIf.AssemblyPieceNo <= 0 Then PlcIf.AssemblyPieceNo = 1
-        With SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo)
+        With SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo)
             'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
             DspAssemblyPattern.Value = .PatternName '組立パターン名
             DspBoltPitch.Value = .BoltPitch '組立ボルトピッチ
             DspAssemblyPieace.Value = .PieceName  '組立ピース名称
-            DspPullBackJack.Value = SegmentAssembly.JackListDsp(.PullBackJack) '引戻しジャッキ
-            DspClosetJack.Value = SegmentAssembly.JackListDsp(.ClosetJack) '押込みジャッキ
-            DspAddClosetThrustJack.Value = SegmentAssembly.JackListDsp(.AddClosetJack) '追加押込みジャッキ
+            DspPullBackJack.Value = SegmentAssemblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
+            DspClosetJack.Value = SegmentAssemblyData.JackListDsp(.ClosetJack) '押込みジャッキ
+            DspAddClosetThrustJack.Value = SegmentAssemblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
         End With
         'MAXのピース番号内で表示
-        If SegmentAssembly.AssemblyPieceNumber > PlcIf.AssemblyPieceNo Then
+        If SegmentAssemblyData.AssemblyPieceNumber > PlcIf.AssemblyPieceNo Then
             DspNextPieceName.Value =
-            SegmentAssembly.SegmentProcessData(PlcIf.AssemblyPieceNo + 1).PieceName '組立次ピース名称
+            SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo + 1).PieceName '組立次ピース名称
         Else
             DspNextPieceName.Value = "-------"
         End If
@@ -374,7 +374,7 @@
         UcnJackDsp.AssemblyOrder.Clear()
 
         For Each pca As clsSegmentAssembly.AsseblyProcess
-                                        In SegmentAssembly.SegmentProcessData.Values
+                                        In SegmentAssemblyData.SegmentProcessData.Values
             UcnJackDsp.PieceName.Add(pca.PieceName)
             UcnJackDsp.PieceAngle.Add(pca.PieceAngle)
             UcnJackDsp.PieceCenterAngle.Add(pca.PieceCenterAngle)
@@ -505,6 +505,7 @@
     End Sub
 
     Private Sub SegmentEdit_Click(sender As Object, e As EventArgs) Handles SegmentEdit.Click
+        My.Forms.frmSegmentEdit.Show()
 
     End Sub
 
