@@ -34,14 +34,17 @@ Public Class frmAssemblyProcessEdit
         SegAsbly.SegmentAssemblyDataRead(ConfirmRingNo.Value)
 
         AssemblyPatternSel.SelectItem =
-            String.Join(",", SegAsbly.SegmentAssemblyPatternList) '組立パターンリスト　選択用
-        AssemblySegmentSel.SelectItem =
-            String.Join(",", SegAsbly.SegmentTypeList) 'セグメント種別　選択用
+            String.Join(",", SegAsbly.AssenblyPtnLst.Values.ToArray) '組立パターンリスト　選択用
+        DspSegmentTypeName.SelectItem =
+            String.Join(",", SegAsbly.TypeNameList.Values.ToArray) 'セグメント種別　選択用
+
+        DspSegmentTypeName.ComboBox.Text = SegAsbly.TypeData(ConfirmRingNo.Value).TypeName
 
         '組立パターンの表示
-        AssemblyPatternSel.ComboBox.Text = SegAsbly.SegmentAssenblyPtn(ConfirmRingNo.Value)
+        'TODO:1ピース目のパターン名を表示（他の方法がないか？）
+        AssemblyPatternSel.ComboBox.Text = SegAsbly.AssemblyPtnName(ConfirmRingNo.Value)
         'DspAssemblyPattern.Value = SegAsbly.SegmentAssenblyPtn(ConfirmRingNo.Value)
-        With SegAsbly.SegmentProcessData(AssemblyPieceNo.Value)
+        With SegAsbly.ProcessData(AssemblyPieceNo.Value)
             'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
             DspAssemblyPattern.Value = .PatternName
             DspBoltPitch.Value = .BoltPitch
@@ -78,7 +81,7 @@ Public Class frmAssemblyProcessEdit
         'MAXのピース番号内で表示
         If SegmentAssemblyData.AssemblyPieceNumber > AssemblyPieceNo.Value Then
             DspNextPieceName.Value =
-            SegmentAssemblyData.SegmentProcessData(AssemblyPieceNo.Value + 1).PieceName '組立次ピース名称
+            SegmentAssemblyData.ProcessData(AssemblyPieceNo.Value + 1).PieceName '組立次ピース名称
         Else
             DspNextPieceName.Value = "-------"
         End If
@@ -177,7 +180,7 @@ Public Class frmAssemblyProcessEdit
 
         'セグメント　ピース名称表示
         For Each Qw As clsSegmentAssembly.AsseblyProcess
-                                        In SegAsbly.SegmentProcessData.Values
+                                        In SegAsbly.ProcessData.Values
 
 
 

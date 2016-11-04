@@ -111,7 +111,7 @@ Friend Class clsCulcDistance
                     For i = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 2)
                         'SegMakDat.RingNo = intCnt
                         mdbl掘進総距離 +=
-                             fnGetHoseiSegmentWidth(mdbl掘進総距離, .SegmentTypeData(i).CenterWidth)
+                             fnGetHoseiSegmentWidth(mdbl掘進総距離, .TypeData(i).CenterWidth)
                     Next i
 
                     mdbl掘進総距離 -= .RingLastStroke(mint測量ポイントリング番号) / 1000 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .RingLastStroke(CShort(mint現在のリング番号 - 1)) / 1000)
@@ -125,7 +125,7 @@ Friend Class clsCulcDistance
                 If mblnChangeFlg Then ''リング番号、測量ポイントのリング番号および総距離が変化した時のみ演算　負荷削減のため
                     For i = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 1)
                         'SegMakDat.RingNo = intCnt
-                        mdbl掘進総距離 = mdbl掘進総距離 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .SegmentTypeData(i).CenterWidth / 1000)
+                        mdbl掘進総距離 = mdbl掘進総距離 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .TypeData(i).CenterWidth)
                     Next i
                     mdbl現リング総距離 = mdbl掘進総距離
                     mblnChangeFlg = False

@@ -196,7 +196,7 @@ Module mdlFLEX
         'マシンからのステータス
         If FromDev Then
 
-            With SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo)
+            With SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo)
                 Select Case NowSts
                     Case 1 'マシンからの減圧開始
                         PlcIf.LosZeroSts_FLEX = 1 '1ピース目の減圧開始
@@ -262,7 +262,7 @@ Module mdlFLEX
                         PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
                     End If
                     My.Forms.frmNextPieceConfirm.Close() '継続確認画面を閉じる
-                    With SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo)
+                    With SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo)
                         '減圧グループ
                         WriteEventData(PlcIf.AssemblyPieceNo & "ピース目 " & String.Join(",", .ReduceGroup) & "グループの減圧開始します。", Color.Blue)
 
@@ -414,7 +414,7 @@ Module mdlFLEX
                     '減圧中から組立完了
                     If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
                         Dim Gp As List(Of Short) =
-                        SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+                        SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
                         For Each R As Short In Gp
                             sngGpSV(R - 1) =
                         Reduce.MvOut(R - 1) * ControlParameter.最大全開出力時の目標圧力 / 100

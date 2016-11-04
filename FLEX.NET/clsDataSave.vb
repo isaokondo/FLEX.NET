@@ -200,7 +200,7 @@ Friend Class clsDataSave
 
 
         Data(ColumnList.IndexOf("組立ピース")) = PlcIf.AssemblyPieceNo
-        With SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo)
+        With SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo)
             'TODO:Data(ColumnList.IndexOf("組立セグメント")) = 
             Data(ColumnList.IndexOf("組立ボルトピッチ")) = .BoltPitch
             Data(ColumnList.IndexOf("組立パターン")) = .PatternName

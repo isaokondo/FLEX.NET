@@ -26,7 +26,7 @@ Public Class clsElapsedTime
     Public ReadOnly Property ExcavationTime As Integer
         Get
             '分に変換
-            Return ExcavationTimeSw.ElapsedMilliseconds / 100 / 60
+            Return ExcavationTimeSw.ElapsedMilliseconds / 1000 / 60
         End Get
     End Property
     ''' <summary>
@@ -35,7 +35,7 @@ Public Class clsElapsedTime
     ''' <returns></returns>
     Public ReadOnly Property LozeroExcavationTime As Integer
         Get
-            Return LosZeroExcavationTimeSw.ElapsedMilliseconds / 100 / 60
+            Return LosZeroExcavationTimeSw.ElapsedMilliseconds / 1000 / 60
         End Get
     End Property
     ''' <summary>
@@ -44,7 +44,7 @@ Public Class clsElapsedTime
     ''' <returns></returns>
     Public ReadOnly Property WatingTime As Integer
         Get
-            Return WaitingTimeSw.ElapsedMilliseconds / 100 / 60
+            Return WaitingTimeSw.ElapsedMilliseconds / 1000 / 60
         End Get
     End Property
     ''' <summary>
@@ -53,7 +53,7 @@ Public Class clsElapsedTime
     ''' <returns></returns>
     Public ReadOnly Property CycleTime As Integer
         Get
-            Return CycleTimeSw.ElapsedMilliseconds / 100 / 60
+            Return CycleTimeSw.ElapsedMilliseconds / 1000 / 60
         End Get
     End Property
     ''' <summary>

@@ -34,7 +34,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspBoltPitch = New FLEX.NET.ucnDspData()
         Me.UcnDspData1 = New FLEX.NET.ucnDspData()
         Me.AssemblyBoltPitchSel = New FLEX.NET.ucnNumEdit()
-        Me.AssemblySegmentSel = New FLEX.NET.ucnNumEdit()
+        Me.DspSegmentTypeName = New FLEX.NET.ucnNumEdit()
         Me.ConfirmRingNo = New FLEX.NET.ucnNumEdit()
         Me.AssemblyPatternSel = New FLEX.NET.ucnNumEdit()
         Me.LastJackNo = New FLEX.NET.ucnNumEdit()
@@ -48,12 +48,10 @@ Partial Class frmAssemblyProcessEdit
         'btnOK
         '
         Me.btnOK.Location = New System.Drawing.Point(140, 401)
-        Me.btnOK.Size = New System.Drawing.Size(102, 35)
         '
         'btnCancel
         '
         Me.btnCancel.Location = New System.Drawing.Point(266, 402)
-        Me.btnCancel.Size = New System.Drawing.Size(102, 35)
         '
         'DspAssemblyPattern
         '
@@ -61,7 +59,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPattern.Blink = False
         Me.DspAssemblyPattern.BlinkColor = System.Drawing.Color.Red
         Me.DspAssemblyPattern.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspAssemblyPattern.DataWidth = 182
+        Me.DspAssemblyPattern.DataWidth = 175
         Me.DspAssemblyPattern.DecimalPlaces = CType(0, Short)
         Me.DspAssemblyPattern.FieldName = "組立パターン"
         Me.DspAssemblyPattern.FieldNameWidth = 292
@@ -289,7 +287,7 @@ Partial Class frmAssemblyProcessEdit
         'AssemblyBoltPitchSel
         '
         Me.AssemblyBoltPitchSel.DataDspWidth = 114
-        Me.AssemblyBoltPitchSel.DecimalPlaces = CType(0, Short)
+        Me.AssemblyBoltPitchSel.DecimalPlaces = CType(1, Short)
         Me.AssemblyBoltPitchSel.DspFieldName = True
         Me.AssemblyBoltPitchSel.FieldName = "組立ボルトピッチ"
         Me.AssemblyBoltPitchSel.Increment = 1.0!
@@ -305,24 +303,24 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblyBoltPitchSel.Unit = ""
         Me.AssemblyBoltPitchSel.Value = 10.0R
         '
-        'AssemblySegmentSel
+        'DspSegmentTypeName
         '
-        Me.AssemblySegmentSel.DataDspWidth = 114
-        Me.AssemblySegmentSel.DecimalPlaces = CType(3, Short)
-        Me.AssemblySegmentSel.DspFieldName = True
-        Me.AssemblySegmentSel.FieldName = "組立セグメント"
-        Me.AssemblySegmentSel.Increment = 0.01!
-        Me.AssemblySegmentSel.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.SelectType
-        Me.AssemblySegmentSel.Location = New System.Drawing.Point(26, 75)
-        Me.AssemblySegmentSel.Margin = New System.Windows.Forms.Padding(2)
-        Me.AssemblySegmentSel.MaxValue = "10000"
-        Me.AssemblySegmentSel.MinValue = "-100"
-        Me.AssemblySegmentSel.Name = "AssemblySegmentSel"
-        Me.AssemblySegmentSel.SelectItem = Nothing
-        Me.AssemblySegmentSel.Size = New System.Drawing.Size(391, 37)
-        Me.AssemblySegmentSel.TabIndex = 124
-        Me.AssemblySegmentSel.Unit = ""
-        Me.AssemblySegmentSel.Value = -1.0R
+        Me.DspSegmentTypeName.DataDspWidth = 114
+        Me.DspSegmentTypeName.DecimalPlaces = CType(3, Short)
+        Me.DspSegmentTypeName.DspFieldName = True
+        Me.DspSegmentTypeName.FieldName = "組立セグメント"
+        Me.DspSegmentTypeName.Increment = 0.01!
+        Me.DspSegmentTypeName.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.SelectType
+        Me.DspSegmentTypeName.Location = New System.Drawing.Point(26, 75)
+        Me.DspSegmentTypeName.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspSegmentTypeName.MaxValue = "10000"
+        Me.DspSegmentTypeName.MinValue = "-100"
+        Me.DspSegmentTypeName.Name = "DspSegmentTypeName"
+        Me.DspSegmentTypeName.SelectItem = Nothing
+        Me.DspSegmentTypeName.Size = New System.Drawing.Size(391, 37)
+        Me.DspSegmentTypeName.TabIndex = 124
+        Me.DspSegmentTypeName.Unit = ""
+        Me.DspSegmentTypeName.Value = -1.0R
         '
         'ConfirmRingNo
         '
@@ -461,7 +459,7 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.Add(Me.AssemblyPieceNo)
         Me.Controls.Add(Me.AssemblyPatternSel)
         Me.Controls.Add(Me.AssemblyBoltPitchSel)
-        Me.Controls.Add(Me.AssemblySegmentSel)
+        Me.Controls.Add(Me.DspSegmentTypeName)
         Me.Controls.Add(Me.ConfirmRingNo)
         Me.Controls.Add(Me.DspAssemblyPattern)
         Me.Controls.Add(Me.DspNextPieceName)
@@ -490,7 +488,7 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.SetChildIndex(Me.DspNextPieceName, 0)
         Me.Controls.SetChildIndex(Me.DspAssemblyPattern, 0)
         Me.Controls.SetChildIndex(Me.ConfirmRingNo, 0)
-        Me.Controls.SetChildIndex(Me.AssemblySegmentSel, 0)
+        Me.Controls.SetChildIndex(Me.DspSegmentTypeName, 0)
         Me.Controls.SetChildIndex(Me.AssemblyBoltPitchSel, 0)
         Me.Controls.SetChildIndex(Me.AssemblyPatternSel, 0)
         Me.Controls.SetChildIndex(Me.AssemblyPieceNo, 0)
@@ -515,7 +513,7 @@ Partial Class frmAssemblyProcessEdit
     Friend WithEvents DspBoltPitch As ucnDspData
     Friend WithEvents UcnDspData1 As ucnDspData
     Friend WithEvents AssemblyBoltPitchSel As ucnNumEdit
-    Friend WithEvents AssemblySegmentSel As ucnNumEdit
+    Friend WithEvents DspSegmentTypeName As ucnNumEdit
     Friend WithEvents ConfirmRingNo As ucnNumEdit
     Friend WithEvents AssemblyPatternSel As ucnNumEdit
     Friend WithEvents LastJackNo As ucnNumEdit

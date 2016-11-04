@@ -350,7 +350,10 @@
 
         'Dim p As Short = 0
         If PlcIf.AssemblyPieceNo <= 0 Then PlcIf.AssemblyPieceNo = 1
-        With SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo)
+
+        DspTypeName.Value = SegmentAssemblyData.TypeData(PlcIf.RingNo).TypeName 'セグメント種類
+
+        With SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo)
             'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
             DspAssemblyPattern.Value = .PatternName '組立パターン名
             DspBoltPitch.Value = .BoltPitch '組立ボルトピッチ
@@ -358,12 +361,11 @@
             DspPullBackJack.Value = SegmentAssemblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
             DspClosetJack.Value = SegmentAssemblyData.JackListDsp(.ClosetJack) '押込みジャッキ
             DspAddClosetThrustJack.Value = SegmentAssemblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
-
         End With
         'MAXのピース番号内で表示
         If SegmentAssemblyData.AssemblyPieceNumber > PlcIf.AssemblyPieceNo Then
             DspNextPieceName.Value =
-            SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo + 1).PieceName '組立次ピース名称
+            SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).PieceName '組立次ピース名称
         Else
             DspNextPieceName.Value = "-------"
         End If
@@ -374,7 +376,7 @@
         UcnJackDsp.AssemblyOrder.Clear()
 
         For Each pca As clsSegmentAssembly.AsseblyProcess
-                                        In SegmentAssemblyData.SegmentProcessData.Values
+                                        In SegmentAssemblyData.ProcessData.Values
             UcnJackDsp.PieceName.Add(pca.PieceName)
             UcnJackDsp.PieceAngle.Add(pca.PieceAngle)
             UcnJackDsp.PieceCenterAngle.Add(pca.PieceCenterAngle)

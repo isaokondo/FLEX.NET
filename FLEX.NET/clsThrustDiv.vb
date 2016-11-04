@@ -302,7 +302,7 @@ Friend Class clsReducePress
 
 
         '減圧グループ
-        LstRd = SegmentAssemblyData.SegmentProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+        LstRd = SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
 
         For Each GpNo As Short In LstRd
             '減圧開始時の操作出力

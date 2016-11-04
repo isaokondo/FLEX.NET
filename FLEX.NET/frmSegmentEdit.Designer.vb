@@ -31,7 +31,7 @@ Partial Class frmSegmentEdit
         Me.RingNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SegmentType = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.SegWidth = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SegmentAssembly = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.AssemblyPtnName = New System.Windows.Forms.DataGridViewComboBoxColumn()
         CType(Me.DgvSegAssign, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -60,18 +60,17 @@ Partial Class frmSegmentEdit
         Me.DgvSegAssign.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DgvSegAssign.ColumnHeadersHeight = 40
         Me.DgvSegAssign.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.DgvSegAssign.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RingNo, Me.SegmentType, Me.SegWidth, Me.SegmentAssembly})
+        Me.DgvSegAssign.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RingNo, Me.SegmentType, Me.SegWidth, Me.AssemblyPtnName})
         Me.DgvSegAssign.Location = New System.Drawing.Point(28, 39)
         Me.DgvSegAssign.Margin = New System.Windows.Forms.Padding(2)
         Me.DgvSegAssign.MultiSelect = False
         Me.DgvSegAssign.Name = "DgvSegAssign"
-        Me.DgvSegAssign.ReadOnly = True
         Me.DgvSegAssign.RowHeadersVisible = False
         Me.DgvSegAssign.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.DgvSegAssign.RowTemplate.Height = 24
         Me.DgvSegAssign.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.DgvSegAssign.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DgvSegAssign.Size = New System.Drawing.Size(448, 631)
+        Me.DgvSegAssign.Size = New System.Drawing.Size(444, 631)
         Me.DgvSegAssign.TabIndex = 18
         '
         'RingNo
@@ -94,7 +93,6 @@ Partial Class frmSegmentEdit
         Me.SegmentType.Frozen = True
         Me.SegmentType.HeaderText = "セグメント種類"
         Me.SegmentType.Name = "SegmentType"
-        Me.SegmentType.ReadOnly = True
         Me.SegmentType.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.SegmentType.Width = 120
         '
@@ -111,18 +109,16 @@ Partial Class frmSegmentEdit
         Me.SegWidth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.SegWidth.Width = 120
         '
-        'SegmentAssembly
+        'AssemblyPtnName
         '
-        Me.SegmentAssembly.AutoComplete = False
+        Me.AssemblyPtnName.AutoComplete = False
         DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SegmentAssembly.DefaultCellStyle = DataGridViewCellStyle5
-        Me.SegmentAssembly.Frozen = True
-        Me.SegmentAssembly.HeaderText = "組立パターン"
-        Me.SegmentAssembly.Items.AddRange(New Object() {"１", "２", "３", "４"})
-        Me.SegmentAssembly.Name = "SegmentAssembly"
-        Me.SegmentAssembly.ReadOnly = True
-        Me.SegmentAssembly.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.SegmentAssembly.Width = 120
+        Me.AssemblyPtnName.DefaultCellStyle = DataGridViewCellStyle5
+        Me.AssemblyPtnName.Frozen = True
+        Me.AssemblyPtnName.HeaderText = "組立パターン"
+        Me.AssemblyPtnName.Name = "AssemblyPtnName"
+        Me.AssemblyPtnName.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.AssemblyPtnName.Width = 120
         '
         'frmSegmentEdit
         '
@@ -144,5 +140,5 @@ Partial Class frmSegmentEdit
     Friend WithEvents RingNo As DataGridViewTextBoxColumn
     Friend WithEvents SegmentType As DataGridViewComboBoxColumn
     Friend WithEvents SegWidth As DataGridViewTextBoxColumn
-    Friend WithEvents SegmentAssembly As DataGridViewComboBoxColumn
+    Friend WithEvents AssemblyPtnName As DataGridViewComboBoxColumn
 End Class
