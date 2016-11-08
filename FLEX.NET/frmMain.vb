@@ -1,7 +1,9 @@
 ﻿Public Class frmMain
     Inherits Windows.Forms.Form
-
-
+    ''' <summary>
+    ''' 姿勢トレンドデータ
+    ''' </summary>
+    Public DirectionChartD As New DirectionChartData
 
     Private DspGp() As ucnDspGpPres
     Private BlinkFlg As Boolean
@@ -203,7 +205,7 @@
     ''' 偏角、モーメントのチャート初期化
     ''' 待機中から掘進中の時に実行
     ''' </summary>
-    Public  Sub ChartClear()
+    Public Sub ChartClear()
         ucnHorMomentChart.ChartClear()
         ucnVerMomentChart.ChartClear()
         ucnHorDevChart.ChartClear()
@@ -260,19 +262,19 @@
         'チャートの設定
         With ucnHorMomentChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .GraphHeight = ControlParameter.HorMomentTrendWidth
+            .ChartHighScale = ControlParameter.HorMomentTrendWidth
         End With
         With ucnVerMomentChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .GraphHeight = ControlParameter.HorMomentTrendWidth
+            .ChartHighScale = ControlParameter.HorMomentTrendWidth
         End With
         With ucnHorDevChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .GraphHeight = ControlParameter.HorDevDegTrendWidth
+            .ChartHighScale = ControlParameter.HorDevDegTrendWidth
         End With
         With ucnVerDevChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .GraphHeight = ControlParameter.HorDevDegTrendWidth
+            .ChartHighScale = ControlParameter.HorDevDegTrendWidth
         End With
 
         '
@@ -331,12 +333,18 @@
             ucnHorLineChart.TargetData = DspTargetDirection.Value
             ucnHorLineChart.RealData = DspDirection.Value
 
+            ucnHorLineChart.GraphData = DirectionChartD.HorRData
+
+
+
+
 
             ucnVerLineChart.PlanData = .縦断計画方位
             ucnVerLineChart.CorrectData = ControlParameter.鉛直入力補正値
             ucnVerLineChart.TargetData = DspTargetPitching.Value
             ucnVerLineChart.RealData = DspPitching.Value
 
+            ucnVerLineChart.GraphData = DirectionChartD.VerRData
 
 
 
@@ -609,4 +617,86 @@
         PlcIf.DigtalPlcWrite("同時施工キャンセル", True)
         PlcIf.LosZeroEnable = False '同時施工キャンセル
     End Sub
+
+    ''' <summary>
+    ''' 姿勢トレンドのデータ取得
+    ''' </summary>
+    Public Class DirectionChartData
+        Inherits clsDataBase
+
+        Private _HorRData As New List(Of ucnChart2.gData)
+        Private _VerRData As New List(Of ucnChart2.gData)
+
+        Private Shared _StartRing As Integer
+        ''' <summary>
+        ''' 表示開始リング
+        ''' </summary>
+        Public WriteOnly Property StartRing As Integer
+            Set(value As Integer)
+                _StartRing = value
+                DataGet()
+            End Set
+        End Property
+        ''' <summary>
+        ''' 平面掘進データ
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property HorRData As List(Of ucnChart2.gData)
+            Get
+                Return _HorRData
+            End Get
+        End Property
+        ''' <summary>
+        ''' 縦断掘進データ
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property VerRData As List(Of ucnChart2.gData)
+            Get
+                Return _VerRData
+            End Get
+        End Property
+
+
+        Public Sub DataGet()
+            Dim rsData As Odbc.OdbcDataReader =
+                ExecuteSql(String.Format("SELECT * FROM flex掘削データ WHERE `リング番号`>='{0}' AND `リング番号`<'{1}' AND MOD(掘進ストローク,10)=0;", _StartRing, PlcIf.RingNo))
+            _HorRData.Clear()
+            _VerRData.Clear()
+            Dim RingNo As Integer = Nothing
+            Dim OffsetStroke As Integer = 0
+            Dim TmpStrk As Integer
+            While rsData.Read
+                If RingNo <> rsData.Item("リング番号") Then
+                    OffsetStroke += TmpStrk
+                End If
+                Dim g As ucnChart2.gData
+                g.RingNo = rsData("リング番号")
+                g.Distance = OffsetStroke + rsData.Item("掘進ストローク")
+                g.PlanDr = rsData.Item("前胴方位角")
+                g.TargetDr = rsData.Item("平面姿勢角管理値")
+                g.RealDr = rsData.Item("ジャイロ方位角")
+                _HorRData.Add(g)
+                Debug.Print(String.Format("RingNo={0},ストローク={1}  平面姿勢角管理値={2}", g.RingNo.ToString, g.Distance.ToString, g.TargetDr.ToString))
+
+                g.PlanDr = rsData.Item("前胴鉛直角")
+                g.TargetDr = rsData.Item("縦断姿勢角管理値")
+                g.RealDr = rsData.Item("ジャイロピッチング")
+                _VerRData.Add(g)
+                RingNo = g.RingNo
+                TmpStrk = rsData.Item("掘進ストローク")
+            End While
+
+
+
+        End Sub
+
+
+
+
+
+
+    End Class
+
+
+
 End Class

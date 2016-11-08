@@ -24,7 +24,7 @@ Partial Class ucnChart
     Private Sub InitializeComponent()
         Me.lblData = New System.Windows.Forms.Label()
         Me.lblLegend = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblCenter = New System.Windows.Forms.Label()
         Me.lblGraphHigh = New System.Windows.Forms.Label()
         Me.lblGraphLow = New System.Windows.Forms.Label()
         Me.picChart = New System.Windows.Forms.PictureBox()
@@ -56,22 +56,22 @@ Partial Class ucnChart
         Me.lblLegend.TabIndex = 10
         Me.lblLegend.Text = "水平ｼﾞｬｯｷﾓｰﾒﾝﾄ(kN･m)"
         '
-        'Label1
+        'lblCenter
         '
-        Me.Label1.Location = New System.Drawing.Point(23, 68)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(25, 18)
-        Me.Label1.TabIndex = 11
-        Me.Label1.Text = "0"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.lblCenter.Location = New System.Drawing.Point(-23, 68)
+        Me.lblCenter.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblCenter.Name = "lblCenter"
+        Me.lblCenter.Size = New System.Drawing.Size(62, 18)
+        Me.lblCenter.TabIndex = 11
+        Me.lblCenter.Text = "0"
+        Me.lblCenter.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lblGraphHigh
         '
-        Me.lblGraphHigh.Location = New System.Drawing.Point(-15, 15)
+        Me.lblGraphHigh.Location = New System.Drawing.Point(-23, 15)
         Me.lblGraphHigh.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblGraphHigh.Name = "lblGraphHigh"
-        Me.lblGraphHigh.Size = New System.Drawing.Size(55, 13)
+        Me.lblGraphHigh.Size = New System.Drawing.Size(62, 13)
         Me.lblGraphHigh.TabIndex = 12
         Me.lblGraphHigh.Text = "10000"
         Me.lblGraphHigh.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -104,7 +104,7 @@ Partial Class ucnChart
         Me.Controls.Add(Me.picChart)
         Me.Controls.Add(Me.lblGraphLow)
         Me.Controls.Add(Me.lblGraphHigh)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.lblCenter)
         Me.Controls.Add(Me.lblLegend)
         Me.Controls.Add(Me.lblData)
         Me.Margin = New System.Windows.Forms.Padding(2)
@@ -118,7 +118,7 @@ Partial Class ucnChart
     Public WithEvents picChart As PictureBox
     Public WithEvents lblData As Label
     Public WithEvents lblLegend As Label
-    Public WithEvents Label1 As Label
+    Public WithEvents lblCenter As Label
     Public WithEvents lblGraphHigh As Label
     Public WithEvents lblGraphLow As Label
 End Class

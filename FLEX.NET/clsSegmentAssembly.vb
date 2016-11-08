@@ -82,11 +82,6 @@ Friend Class clsSegmentAssembly
         End Get
     End Property
     ''' <summary>
-    ''' セグメント組立パターンリスト
-    ''' </summary>
-    ''' <returns></returns>
-    'Public ReadOnly Property AssemblyPatternList As New List(Of String)
-    ''' <summary>
     ''' セグメント種類リスト
     ''' </summary>
     ''' <returns></returns>

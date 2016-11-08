@@ -72,13 +72,13 @@ Partial Class frmMain
         Me.LineShape1 = New Microsoft.VisualBasic.PowerPacks.LineShape()
         Me.btnLossZerooCancel = New System.Windows.Forms.Button()
         Me.btnPieceConfirm = New System.Windows.Forms.Button()
+        Me.ucnVerLineChart = New FLEX.NET.ucnChart2()
+        Me.ucnHorLineChart = New FLEX.NET.ucnChart2()
         Me.ucnVerDevChart = New FLEX.NET.ucnChart()
         Me.ucnVerMomentChart = New FLEX.NET.ucnChart()
         Me.ucnHorDevChart = New FLEX.NET.ucnChart()
         Me.ucnHorMomentChart = New FLEX.NET.ucnChart()
         Me.DspMachinComErr = New FLEX.NET.ucnDspBit()
-        Me.ucnVerLineChart = New FLEX.NET.ucnChart2()
-        Me.ucnHorLineChart = New FLEX.NET.ucnChart2()
         Me.ucnAssemblyFinish = New FLEX.NET.ucnDspBit()
         Me.ucnPullBackFinish = New FLEX.NET.ucnDspBit()
         Me.ucnReduceFinish = New FLEX.NET.ucnDspBit()
@@ -548,15 +548,67 @@ Partial Class frmMain
         Me.btnPieceConfirm.Text = "同時施 組立ピース確認"
         Me.btnPieceConfirm.UseVisualStyleBackColor = False
         '
+        'ucnVerLineChart
+        '
+        Me.ucnVerLineChart.BackColor = System.Drawing.Color.Transparent
+        Me.ucnVerLineChart.CenterColor = System.Drawing.Color.MistyRose
+        Me.ucnVerLineChart.ChartBakColor = System.Drawing.Color.Black
+        Me.ucnVerLineChart.ChartCenAbsValue = 0.5!
+        Me.ucnVerLineChart.ChartCenterValue = 360.0!
+        Me.ucnVerLineChart.ChartHeight = 100
+        Me.ucnVerLineChart.ChartHighScale = 1000.0!
+        Me.ucnVerLineChart.ChartPanPenColor = System.Drawing.Color.RoyalBlue
+        Me.ucnVerLineChart.ChartPenColor = System.Drawing.Color.White
+        Me.ucnVerLineChart.ChartTargetPenColor = System.Drawing.Color.Lime
+        Me.ucnVerLineChart.CorrectData = 360.0!
+        Me.ucnVerLineChart.DecimalPlaces = CType(2, Short)
+        Me.ucnVerLineChart.FieldName = "ピッチ角(deg)"
+        Me.ucnVerLineChart.GraphData = Nothing
+        Me.ucnVerLineChart.Location = New System.Drawing.Point(810, 896)
+        Me.ucnVerLineChart.Margin = New System.Windows.Forms.Padding(2)
+        Me.ucnVerLineChart.Name = "ucnVerLineChart"
+        Me.ucnVerLineChart.PlanData = 360.0!
+        Me.ucnVerLineChart.RealData = 360.0!
+        Me.ucnVerLineChart.Size = New System.Drawing.Size(488, 172)
+        Me.ucnVerLineChart.StrokeWidth = 2000
+        Me.ucnVerLineChart.TabIndex = 124
+        Me.ucnVerLineChart.TargetData = 360.0!
+        '
+        'ucnHorLineChart
+        '
+        Me.ucnHorLineChart.BackColor = System.Drawing.Color.Transparent
+        Me.ucnHorLineChart.CenterColor = System.Drawing.Color.Yellow
+        Me.ucnHorLineChart.ChartBakColor = System.Drawing.Color.Black
+        Me.ucnHorLineChart.ChartCenAbsValue = 1.0!
+        Me.ucnHorLineChart.ChartCenterValue = 360.0!
+        Me.ucnHorLineChart.ChartHeight = 180
+        Me.ucnHorLineChart.ChartHighScale = 1000.0!
+        Me.ucnHorLineChart.ChartPanPenColor = System.Drawing.Color.RoyalBlue
+        Me.ucnHorLineChart.ChartPenColor = System.Drawing.Color.White
+        Me.ucnHorLineChart.ChartTargetPenColor = System.Drawing.Color.Lime
+        Me.ucnHorLineChart.CorrectData = 360.0!
+        Me.ucnHorLineChart.DecimalPlaces = CType(2, Short)
+        Me.ucnHorLineChart.FieldName = "方位角(deg)"
+        Me.ucnHorLineChart.GraphData = Nothing
+        Me.ucnHorLineChart.Location = New System.Drawing.Point(810, 663)
+        Me.ucnHorLineChart.Margin = New System.Windows.Forms.Padding(2)
+        Me.ucnHorLineChart.Name = "ucnHorLineChart"
+        Me.ucnHorLineChart.PlanData = 360.0!
+        Me.ucnHorLineChart.RealData = 360.0!
+        Me.ucnHorLineChart.Size = New System.Drawing.Size(488, 232)
+        Me.ucnHorLineChart.StrokeWidth = 2000
+        Me.ucnHorLineChart.TabIndex = 125
+        Me.ucnHorLineChart.TargetData = 360.0!
+        '
         'ucnVerDevChart
         '
         Me.ucnVerDevChart.BackColor = System.Drawing.Color.Transparent
         Me.ucnVerDevChart.CenterColor = System.Drawing.Color.Yellow
         Me.ucnVerDevChart.ChartBakColor = System.Drawing.Color.Black
+        Me.ucnVerDevChart.ChartHighScale = 2.0!
         Me.ucnVerDevChart.ChartPenColor = System.Drawing.Color.White
         Me.ucnVerDevChart.DecimalPlaces = CType(2, Short)
         Me.ucnVerDevChart.FieldName = "鉛直偏角(deg)"
-        Me.ucnVerDevChart.GraphHeight = 2.0!
         Me.ucnVerDevChart.Location = New System.Drawing.Point(416, 904)
         Me.ucnVerDevChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnVerDevChart.Name = "ucnVerDevChart"
@@ -569,10 +621,10 @@ Partial Class frmMain
         Me.ucnVerMomentChart.BackColor = System.Drawing.Color.Transparent
         Me.ucnVerMomentChart.CenterColor = System.Drawing.Color.Black
         Me.ucnVerMomentChart.ChartBakColor = System.Drawing.Color.White
+        Me.ucnVerMomentChart.ChartHighScale = 10000.0!
         Me.ucnVerMomentChart.ChartPenColor = System.Drawing.Color.Red
         Me.ucnVerMomentChart.DecimalPlaces = CType(0, Short)
         Me.ucnVerMomentChart.FieldName = "鉛直ｼﾞｬｯｷﾓｰﾒﾝﾄ(kN･m)"
-        Me.ucnVerMomentChart.GraphHeight = 10000.0!
         Me.ucnVerMomentChart.Location = New System.Drawing.Point(19, 904)
         Me.ucnVerMomentChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnVerMomentChart.Name = "ucnVerMomentChart"
@@ -585,10 +637,10 @@ Partial Class frmMain
         Me.ucnHorDevChart.BackColor = System.Drawing.Color.Transparent
         Me.ucnHorDevChart.CenterColor = System.Drawing.Color.Yellow
         Me.ucnHorDevChart.ChartBakColor = System.Drawing.Color.Black
+        Me.ucnHorDevChart.ChartHighScale = 2.0!
         Me.ucnHorDevChart.ChartPenColor = System.Drawing.Color.White
         Me.ucnHorDevChart.DecimalPlaces = CType(2, Short)
         Me.ucnHorDevChart.FieldName = "水平偏角(deg)"
-        Me.ucnHorDevChart.GraphHeight = 2.0!
         Me.ucnHorDevChart.Location = New System.Drawing.Point(416, 765)
         Me.ucnHorDevChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnHorDevChart.Name = "ucnHorDevChart"
@@ -601,10 +653,10 @@ Partial Class frmMain
         Me.ucnHorMomentChart.BackColor = System.Drawing.Color.Transparent
         Me.ucnHorMomentChart.CenterColor = System.Drawing.Color.Black
         Me.ucnHorMomentChart.ChartBakColor = System.Drawing.Color.White
+        Me.ucnHorMomentChart.ChartHighScale = 10000.0!
         Me.ucnHorMomentChart.ChartPenColor = System.Drawing.Color.Red
         Me.ucnHorMomentChart.DecimalPlaces = CType(0, Short)
         Me.ucnHorMomentChart.FieldName = "水平ｼﾞｬｯｷﾓｰﾒﾝﾄ(kN･m)"
-        Me.ucnHorMomentChart.GraphHeight = 10000.0!
         Me.ucnHorMomentChart.Location = New System.Drawing.Point(22, 765)
         Me.ucnHorMomentChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnHorMomentChart.Name = "ucnHorMomentChart"
@@ -626,48 +678,6 @@ Partial Class frmMain
         Me.DspMachinComErr.Size = New System.Drawing.Size(302, 30)
         Me.DspMachinComErr.TabIndex = 74
         Me.DspMachinComErr.Visible = False
-        '
-        'ucnVerLineChart
-        '
-        Me.ucnVerLineChart.BackColor = System.Drawing.Color.Transparent
-        Me.ucnVerLineChart.CenterColor = System.Drawing.Color.MistyRose
-        Me.ucnVerLineChart.ChartBakColor = System.Drawing.Color.Black
-        Me.ucnVerLineChart.ChartHeight = 100
-        Me.ucnVerLineChart.ChartPenColor = System.Drawing.Color.Red
-        Me.ucnVerLineChart.CorrectData = 360.0!
-        Me.ucnVerLineChart.DecimalPlaces = CType(2, Short)
-        Me.ucnVerLineChart.FieldName = "ピッチ角(deg)"
-        Me.ucnVerLineChart.GraphHeight = 2.0!
-        Me.ucnVerLineChart.Location = New System.Drawing.Point(798, 889)
-        Me.ucnVerLineChart.Margin = New System.Windows.Forms.Padding(2)
-        Me.ucnVerLineChart.Name = "ucnVerLineChart"
-        Me.ucnVerLineChart.PlanData = 360.0!
-        Me.ucnVerLineChart.RealData = 360.0!
-        Me.ucnVerLineChart.Size = New System.Drawing.Size(488, 172)
-        Me.ucnVerLineChart.StrokeWidth = 2000
-        Me.ucnVerLineChart.TabIndex = 124
-        Me.ucnVerLineChart.TargetData = 360.0!
-        '
-        'ucnHorLineChart
-        '
-        Me.ucnHorLineChart.BackColor = System.Drawing.Color.Transparent
-        Me.ucnHorLineChart.CenterColor = System.Drawing.Color.Silver
-        Me.ucnHorLineChart.ChartBakColor = System.Drawing.Color.Black
-        Me.ucnHorLineChart.ChartHeight = 180
-        Me.ucnHorLineChart.ChartPenColor = System.Drawing.Color.Red
-        Me.ucnHorLineChart.CorrectData = 360.0!
-        Me.ucnHorLineChart.DecimalPlaces = CType(2, Short)
-        Me.ucnHorLineChart.FieldName = "方位角(deg)"
-        Me.ucnHorLineChart.GraphHeight = 2.0!
-        Me.ucnHorLineChart.Location = New System.Drawing.Point(802, 679)
-        Me.ucnHorLineChart.Margin = New System.Windows.Forms.Padding(2)
-        Me.ucnHorLineChart.Name = "ucnHorLineChart"
-        Me.ucnHorLineChart.PlanData = 360.0!
-        Me.ucnHorLineChart.RealData = 360.0!
-        Me.ucnHorLineChart.Size = New System.Drawing.Size(488, 232)
-        Me.ucnHorLineChart.StrokeWidth = 2000
-        Me.ucnHorLineChart.TabIndex = 125
-        Me.ucnHorLineChart.TargetData = 360.0!
         '
         'ucnAssemblyFinish
         '
@@ -2230,14 +2240,14 @@ Partial Class frmMain
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ucnVerLineChart)
+        Me.Controls.Add(Me.ucnHorLineChart)
         Me.Controls.Add(Me.ucnVerDevChart)
         Me.Controls.Add(Me.ucnVerMomentChart)
         Me.Controls.Add(Me.ucnHorDevChart)
         Me.Controls.Add(Me.ucnHorMomentChart)
         Me.Controls.Add(Me.btnPieceConfirm)
         Me.Controls.Add(Me.DspMachinComErr)
-        Me.Controls.Add(Me.ucnVerLineChart)
-        Me.Controls.Add(Me.ucnHorLineChart)
         Me.Controls.Add(Me.btnLossZerooCancel)
         Me.Controls.Add(Me.pnlLosZero)
         Me.Controls.Add(Me.Panel2)

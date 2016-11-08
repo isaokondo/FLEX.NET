@@ -126,10 +126,15 @@ Module mdlFLEX
         Handles PlcIf.ExcavationStatusChange
         '組立パターンの情報を取得
         SegmentAssemblyData.SegmentAssemblyDataRead(PlcIf.RingNo)
+        '姿勢トレンドのデータ取得
+        My.Forms.frmMain.DirectionChartD.StartRing = PlcIf.RingNo - ControlParameter.LineDevStartRing
 
         'If PreStatus = -1 Then Exit Sub
         '待機中から掘進
         If PreStatus = cTaiki And NowStatus = cKussin Then
+
+            My.Forms.frmMain.DirectionChartD.StartRing = PlcIf.RingNo - ControlParameter.LineDevStartRing
+
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
             PlcIf.LosZeroSts_FLEX = 0
             WriteEventData(PlcIf.RingNo & "リング 掘進開始しました", Color.CornflowerBlue)
@@ -165,7 +170,10 @@ Module mdlFLEX
             PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
             PlcIf.LosZeroDataWrite("押込みジャッキ②", Nothing)
             PlcIf.LosZeroEnable = False   '同時施工可OFF
-            ElapsedTime.WaingStart()
+            ElapsedTime.WaingStart() '経過時間の算出
+
+
+
         End If
         '掘進中で手動方向制御
         If NowStatus = cKussin And ControlParameter.AutoDirectionControl = False Then

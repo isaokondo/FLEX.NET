@@ -614,7 +614,7 @@ Public Class clsPlcIf
 
         'Call PLC_Open() 'オープン処理
 
-        Debug.Write(System.DateTime.Now.ToString("HH:mm:ss.fff  "))
+        'Debug.Write(System.DateTime.Now.ToString("HH:mm:ss.fff  "))
 
         Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
         Dim szDeviceName As String = ""         'デバイス名称
@@ -814,7 +814,7 @@ Public Class clsPlcIf
         t = t Or mblnBlink
         iReturnCode = com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
 
-        Debug.WriteLine(System.DateTime.Now.ToString("HH:mm:ss.fff"))
+        'Debug.WriteLine(System.DateTime.Now.ToString("HH:mm:ss.fff"))
 
 
         'PLC読込イベント

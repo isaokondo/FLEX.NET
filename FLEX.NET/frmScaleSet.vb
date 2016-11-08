@@ -36,19 +36,19 @@
         'チャートの設定
         With My.Forms.frmMain.ucnHorMomentChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .GraphHeight = ControlParameter.HorMomentTrendWidth
+            .ChartHighScale = ControlParameter.HorMomentTrendWidth
         End With
         With My.Forms.frmMain.ucnVerMomentChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .GraphHeight = ControlParameter.VerMomentTrendWidth
+            .ChartHighScale = ControlParameter.VerMomentTrendWidth
         End With
         With My.Forms.frmMain.ucnHorDevChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .GraphHeight = ControlParameter.HorDevDegTrendWidth
+            .ChartHighScale = ControlParameter.HorDevDegTrendWidth
         End With
         With My.Forms.frmMain.ucnVerDevChart
             .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .GraphHeight = ControlParameter.VerDevDegTrendWidth
+            .ChartHighScale = ControlParameter.VerDevDegTrendWidth
         End With
 
         My.Forms.frmMain.UcnGpPvBarGraph.PresBarGraphWidt = ControlParameter.PresBarGraphWidt

@@ -52,20 +52,17 @@ Partial Class ucnChart2
         Me.lblLegend.Size = New System.Drawing.Size(84, 13)
         Me.lblLegend.Text = "ピッチ角(deg)"
         '
-        'Label1
+        'lblCenter
         '
-        Me.Label1.Location = New System.Drawing.Point(23, 89)
-        Me.Label1.Visible = False
+        Me.lblCenter.Location = New System.Drawing.Point(-15, 89)
         '
         'lblGraphHigh
         '
-        Me.lblGraphHigh.Location = New System.Drawing.Point(-8, 41)
-        Me.lblGraphHigh.Visible = False
+        Me.lblGraphHigh.Location = New System.Drawing.Point(-15, 41)
         '
         'lblGraphLow
         '
-        Me.lblGraphLow.Location = New System.Drawing.Point(-13, 134)
-        Me.lblGraphLow.Visible = False
+        Me.lblGraphLow.Location = New System.Drawing.Point(-15, 134)
         '
         'lblTarget
         '
@@ -182,7 +179,7 @@ Partial Class ucnChart2
         Me.FieldName = "ピッチ角(deg)"
         Me.Name = "ucnChart2"
         Me.Size = New System.Drawing.Size(470, 162)
-        Me.Controls.SetChildIndex(Me.Label1, 0)
+        Me.Controls.SetChildIndex(Me.lblCenter, 0)
         Me.Controls.SetChildIndex(Me.lblGraphHigh, 0)
         Me.Controls.SetChildIndex(Me.lblGraphLow, 0)
         Me.Controls.SetChildIndex(Me.lblData, 0)
@@ -206,8 +203,8 @@ Partial Class ucnChart2
     Friend WithEvents lblReal As Label
     Friend WithEvents lblCorrection As Label
     Friend WithEvents lblPlan As Label
-    Public WithEvents Label6 As Label
-    Public WithEvents Label7 As Label
-    Public WithEvents Label8 As Label
-    Public WithEvents Label9 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Label9 As Label
 End Class

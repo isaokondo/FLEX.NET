@@ -6,8 +6,8 @@ Public Class ucnChart
     ''' </summary>
     ''' <remarks></remarks>
     Friend _DecimalPlaces As Short = 0
-    Private _StrokeWidth As Integer = 1500
-    Friend _GraphHeight As Single = 1000
+    Protected _StrokeWidth As Integer = 1500
+    Friend _ChartHeight As Single = 1000
     ''' <summary>
     ''' チャート背景色
     ''' </summary>
@@ -60,14 +60,14 @@ Public Class ucnChart
         End Set
     End Property
     <Browsable(True), Description("グラフ高さ（工業値)")>
-    Public Property GraphHeight As Single
+    Public Property ChartHighScale As Single
         Get
-            Return _GraphHeight
+            Return _ChartHeight
         End Get
         Set(value As Single)
-            _GraphHeight = value
-            lblGraphHigh.Text = "+" & _GraphHeight.ToString
-            lblGraphLow.Text = "-" & _GraphHeight.ToString
+            _ChartHeight = value
+            lblGraphHigh.Text = "+" & _ChartHeight.ToString
+            lblGraphLow.Text = "-" & _ChartHeight.ToString
         End Set
     End Property
     <Browsable(True), Description("チャート背景色")>
@@ -114,7 +114,7 @@ Public Class ucnChart
     ''' <summary>
     ''' チャート更新
     ''' </summary>
-    Private Sub ChartUp()
+    Protected Overridable Sub ChartUp()
         Dim canvas As New Bitmap(picChart.Width, picChart.Height)
         Dim g As Graphics = Graphics.FromImage(canvas)
 
@@ -124,7 +124,7 @@ Public Class ucnChart
         For Each p In ChartList
             Dim pt2 As Point
             pt2.X = p.Key / _StrokeWidth * picChart.Width
-            pt2.Y = -p.Value / (_GraphHeight * 2) * picChart.Height + picChart.Height / 2
+            pt2.Y = -p.Value / (_ChartHeight * 2) * picChart.Height + picChart.Height / 2
             If ChartList.Count > 1 And Pt0 <> New Point(0, 0) And pt2.X >= Pt0.X Then
                 g.DrawLine(New Pen(ChartPenColor, 2), Pt0, pt2)
             End If
