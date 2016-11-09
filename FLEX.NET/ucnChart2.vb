@@ -225,7 +225,6 @@ Public Class ucnChart2
         st(2) = New List(Of Point)
         Dim stInit As Integer = _GraphData(0).Distance
         Dim StRingNo As Integer = _GraphData(0).RingNo
-        Dim dis As Integer  '掘進ストローク（保持用）
         '_StrokeWidth = _GraphData(_GraphData.Count - 1).Distance
         Dim stMax As Integer = _GraphData.Last.Distance '最終値の掘進距離をMAX
         '最終目標値を中心値に
@@ -240,42 +239,40 @@ Public Class ucnChart2
         End If
         _ChartCenAbsValue = Math.Round(_ChartCenAbsValue, 1)
         DspScale()
+        PlanData = _GraphData.Last.PlanDr
+        TargetData = _GraphData.Last.TargetDr
+        RealData = _GraphData.Last.RealDr
+        CorrectData = _GraphData.Last.PlanDr - _GraphData.Last.TargetDr
 
         For Each p In _GraphData
 
             Dim pt As Point
             pt.X = p.Distance / stMax * picChart.Width
-
-            pt.Y = (-p.PlanDr + _ChartCenterValue + _ChartCenAbsValue) / (_ChartCenAbsValue * 2) * picChart.Height ' + picChart.Height / 2
+            Dim Bunbo As Single = 1 / (_ChartCenAbsValue * 2) * picChart.Height
+            pt.Y = (-p.PlanDr + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
             st(0).Add(pt) '計画方向
-            pt.Y = (-p.TargetDr + _ChartCenterValue + _ChartCenAbsValue) / (_ChartCenAbsValue * 2) * picChart.Height '+ picChart.Height / 2
+            pt.Y = (-p.TargetDr + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
             st(1).Add(pt) '目標方向
-            pt.Y = (-p.RealDr + _ChartCenterValue + _ChartCenAbsValue) / (_ChartCenAbsValue * 2) * picChart.Height ' + picChart.Height / 2
+            pt.Y = (-p.RealDr + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
             st(2).Add(pt) '実測方向
         Next
         '計画方向
-        Dim p0 As Point = Nothing
+        Dim p0 As Point = st(0).First
         For Each p In st(0)
-            If Not IsNothing(p0) Then
-                g.DrawLine(New Pen(_ChartPlanPenColor, 2), p0, p)
-                p0 = New Point(p)
-            End If
+            g.DrawLine(New Pen(_ChartPlanPenColor, 2), p0, p)
+            p0 = New Point(p)
         Next
         '目標方向
-        p0 = Nothing
+        p0 = st(1).First
         For Each p In st(1)
-            If Not IsNothing(p0) Then
-                g.DrawLine(New Pen(_ChartTargetPenColor, 2), p0, p)
-                p0 = New Point(p)
-            End If
+            g.DrawLine(New Pen(_ChartTargetPenColor, 2), p0, p)
+            p0 = New Point(p)
         Next
         '実測方向
-        p0 = Nothing
+        p0 = st(2).First
         For Each p In st(2)
-            If Not IsNothing(p0) Then
-                g.DrawLine(New Pen(ChartPenColor, 2), p0, p)
-                p0 = New Point(p)
-            End If
+            g.DrawLine(New Pen(ChartPenColor, 2), p0, p)
+            p0 = New Point(p)
         Next
 
 

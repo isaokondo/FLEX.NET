@@ -109,7 +109,7 @@ Partial Class ucnChart
         Me.Controls.Add(Me.lblData)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "ucnChart"
-        Me.Size = New System.Drawing.Size(435, 197)
+        Me.Size = New System.Drawing.Size(435, 158)
         CType(Me.picChart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

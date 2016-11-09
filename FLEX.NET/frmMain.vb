@@ -327,28 +327,12 @@
             UcnDspDevImg.HorDev = .平面偏角
             UcnDspDevImg.VerDev = .縦断偏角
 
-
-            ucnHorLineChart.PlanData = .平面計画方位
-            ucnHorLineChart.CorrectData = ControlParameter.水平入力補正値
-            ucnHorLineChart.TargetData = DspTargetDirection.Value
-            ucnHorLineChart.RealData = DspDirection.Value
-
-            ucnHorLineChart.GraphData = DirectionChartD.HorRData
-
-
-
-
-
-            ucnVerLineChart.PlanData = .縦断計画方位
-            ucnVerLineChart.CorrectData = ControlParameter.鉛直入力補正値
-            ucnVerLineChart.TargetData = DspTargetPitching.Value
-            ucnVerLineChart.RealData = DspPitching.Value
-
-            ucnVerLineChart.GraphData = DirectionChartD.VerRData
-
-
-
         End With
+
+        '姿勢角トレンドトレンド　データセット
+        ucnHorLineChart.GraphData = DirectionChartD.HorRData
+        ucnVerLineChart.GraphData = DirectionChartD.VerRData
+
     End Sub
     ''' <summary>
     ''' 同時施工組立パターン情報表示

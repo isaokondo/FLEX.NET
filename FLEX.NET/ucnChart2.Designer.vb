@@ -36,33 +36,36 @@ Partial Class ucnChart2
         'picChart
         '
         Me.picChart.BackColor = System.Drawing.Color.Gray
-        Me.picChart.Location = New System.Drawing.Point(47, 45)
+        Me.picChart.Location = New System.Drawing.Point(41, 39)
         Me.picChart.Size = New System.Drawing.Size(405, 101)
         '
         'lblData
         '
         Me.lblData.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblData.Location = New System.Drawing.Point(90, 2)
+        Me.lblData.Location = New System.Drawing.Point(84, 14)
         Me.lblData.Size = New System.Drawing.Size(59, 18)
         Me.lblData.Visible = False
         '
         'lblLegend
         '
-        Me.lblLegend.Location = New System.Drawing.Point(45, 26)
+        Me.lblLegend.Location = New System.Drawing.Point(39, 20)
         Me.lblLegend.Size = New System.Drawing.Size(84, 13)
         Me.lblLegend.Text = "ピッチ角(deg)"
         '
         'lblCenter
         '
-        Me.lblCenter.Location = New System.Drawing.Point(-15, 89)
+        Me.lblCenter.Location = New System.Drawing.Point(-4, 85)
+        Me.lblCenter.Size = New System.Drawing.Size(42, 13)
         '
         'lblGraphHigh
         '
-        Me.lblGraphHigh.Location = New System.Drawing.Point(-15, 41)
+        Me.lblGraphHigh.Location = New System.Drawing.Point(-4, 37)
+        Me.lblGraphHigh.Size = New System.Drawing.Size(42, 13)
         '
         'lblGraphLow
         '
-        Me.lblGraphLow.Location = New System.Drawing.Point(-15, 134)
+        Me.lblGraphLow.Location = New System.Drawing.Point(-4, 130)
+        Me.lblGraphLow.Size = New System.Drawing.Size(42, 13)
         '
         'lblTarget
         '
@@ -70,7 +73,7 @@ Partial Class ucnChart2
         Me.lblTarget.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblTarget.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblTarget.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblTarget.Location = New System.Drawing.Point(311, 20)
+        Me.lblTarget.Location = New System.Drawing.Point(305, 14)
         Me.lblTarget.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblTarget.Name = "lblTarget"
         Me.lblTarget.Size = New System.Drawing.Size(65, 22)
@@ -84,7 +87,7 @@ Partial Class ucnChart2
         Me.lblReal.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblReal.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblReal.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblReal.Location = New System.Drawing.Point(385, 20)
+        Me.lblReal.Location = New System.Drawing.Point(379, 14)
         Me.lblReal.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblReal.Name = "lblReal"
         Me.lblReal.Size = New System.Drawing.Size(65, 22)
@@ -98,7 +101,7 @@ Partial Class ucnChart2
         Me.lblCorrection.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblCorrection.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblCorrection.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblCorrection.Location = New System.Drawing.Point(237, 20)
+        Me.lblCorrection.Location = New System.Drawing.Point(231, 14)
         Me.lblCorrection.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblCorrection.Name = "lblCorrection"
         Me.lblCorrection.Size = New System.Drawing.Size(65, 22)
@@ -112,7 +115,7 @@ Partial Class ucnChart2
         Me.lblPlan.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblPlan.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblPlan.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblPlan.Location = New System.Drawing.Point(163, 20)
+        Me.lblPlan.Location = New System.Drawing.Point(157, 14)
         Me.lblPlan.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblPlan.Name = "lblPlan"
         Me.lblPlan.Size = New System.Drawing.Size(65, 22)
@@ -123,7 +126,7 @@ Partial Class ucnChart2
         'Label6
         '
         Me.Label6.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label6.Location = New System.Drawing.Point(183, 7)
+        Me.Label6.Location = New System.Drawing.Point(177, 1)
         Me.Label6.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(33, 13)
@@ -134,7 +137,7 @@ Partial Class ucnChart2
         'Label7
         '
         Me.Label7.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label7.Location = New System.Drawing.Point(257, 7)
+        Me.Label7.Location = New System.Drawing.Point(251, 1)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(33, 13)
@@ -145,7 +148,7 @@ Partial Class ucnChart2
         'Label8
         '
         Me.Label8.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label8.Location = New System.Drawing.Point(324, 7)
+        Me.Label8.Location = New System.Drawing.Point(318, 1)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(33, 13)
@@ -156,7 +159,7 @@ Partial Class ucnChart2
         'Label9
         '
         Me.Label9.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label9.Location = New System.Drawing.Point(401, 7)
+        Me.Label9.Location = New System.Drawing.Point(395, 1)
         Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(33, 13)
