@@ -302,13 +302,13 @@ Friend Class clsReducePress
 
 
         '減圧グループ
-        LstRd = SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+        LstRd = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
 
         For Each GpNo As Short In LstRd
             '減圧開始時の操作出力
             _MvOut(GpNo - 1) = PlcIf.GroupMV(GpNo - 1)
             '１秒毎の減圧量を算出
-            ReduceDev(GpNo - 1) = _MvOut(GpNo - 1) / ControlParameter.ReduceTime
+            ReduceDev(GpNo - 1) = _MvOut(GpNo - 1) / CtlParameter.ReduceTime
             If ReduceDev(GpNo - 1) = 0 Then ReduceDev(GpNo - 1) = 1
         Next
 
@@ -334,7 +334,7 @@ Friend Class clsReducePress
         End If
         For Each GpNp As Short In LstRd
             '減圧判断
-            ReduceFlg = ReduceFlg And (PlcIf.GroupPv(GpNp - 1) < ControlParameter.ReduceJudgePress)
+            ReduceFlg = ReduceFlg And (PlcIf.GroupPv(GpNp - 1) < CtlParameter.ReduceJudgePress)
             MvZero += _MvOut(GpNp - 1)
         Next
         '減圧完了

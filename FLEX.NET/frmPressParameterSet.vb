@@ -12,7 +12,7 @@
 
         End With
 
-        With ControlParameter
+        With CtlParameter
             PresFileterFactor.Value = .元圧フィルタ係数
             ControlStartThrustOn.rdbtnValue = .圧力制御開始推力値有効フラグ
             ControlStartThrustData.Value = .圧力制御開始推力値
@@ -29,7 +29,7 @@
             PlcIf.減圧弁制御D定数 = PID_D.Value
         End With
 
-        With ControlParameter
+        With CtlParameter
             .元圧フィルタ係数 = PresFileterFactor.Value
             .圧力制御開始推力値有効フラグ = ControlStartThrustOn.rdbtnValue
             .圧力制御開始推力値 = ControlStartThrustData.Value

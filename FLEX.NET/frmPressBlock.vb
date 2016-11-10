@@ -8,7 +8,7 @@
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
 
-        With ControlParameter
+        With CtlParameter
             FullPowerMinimumEnable.rdbtnValue = .全開グループ制限
             MinimumFullPowerBlock.Value = .最低全開グループ数
             FullPowerValue.Value = .全開作動指令値
@@ -22,7 +22,7 @@
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
 
-        With ControlParameter
+        With CtlParameter
             .全開グループ制限 = FullPowerMinimumEnable.rdbtnValue
             .最低全開グループ数 = MinimumFullPowerBlock.Value
             .全開作動指令値 = FullPowerValue.Value

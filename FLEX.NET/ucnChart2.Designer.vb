@@ -30,6 +30,9 @@ Partial Class ucnChart2
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.lblPlanColor = New System.Windows.Forms.Label()
+        Me.lblTargetColor = New System.Windows.Forms.Label()
+        Me.lblRealColor = New System.Windows.Forms.Label()
         CType(Me.picChart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -54,7 +57,7 @@ Partial Class ucnChart2
         '
         'lblCenter
         '
-        Me.lblCenter.Location = New System.Drawing.Point(-4, 85)
+        Me.lblCenter.Location = New System.Drawing.Point(-4, 87)
         Me.lblCenter.Size = New System.Drawing.Size(42, 13)
         '
         'lblGraphHigh
@@ -64,7 +67,7 @@ Partial Class ucnChart2
         '
         'lblGraphLow
         '
-        Me.lblGraphLow.Location = New System.Drawing.Point(-4, 130)
+        Me.lblGraphLow.Location = New System.Drawing.Point(-4, 133)
         Me.lblGraphLow.Size = New System.Drawing.Size(42, 13)
         '
         'lblTarget
@@ -126,7 +129,7 @@ Partial Class ucnChart2
         'Label6
         '
         Me.Label6.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label6.Location = New System.Drawing.Point(177, 1)
+        Me.Label6.Location = New System.Drawing.Point(157, 1)
         Me.Label6.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(33, 13)
@@ -137,7 +140,7 @@ Partial Class ucnChart2
         'Label7
         '
         Me.Label7.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label7.Location = New System.Drawing.Point(251, 1)
+        Me.Label7.Location = New System.Drawing.Point(242, 1)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(33, 13)
@@ -148,7 +151,7 @@ Partial Class ucnChart2
         'Label8
         '
         Me.Label8.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label8.Location = New System.Drawing.Point(318, 1)
+        Me.Label8.Location = New System.Drawing.Point(298, 1)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(33, 13)
@@ -159,7 +162,7 @@ Partial Class ucnChart2
         'Label9
         '
         Me.Label9.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label9.Location = New System.Drawing.Point(395, 1)
+        Me.Label9.Location = New System.Drawing.Point(375, 1)
         Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(33, 13)
@@ -167,10 +170,40 @@ Partial Class ucnChart2
         Me.Label9.Text = "実測"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
+        'lblPlanColor
+        '
+        Me.lblPlanColor.BackColor = System.Drawing.Color.Lime
+        Me.lblPlanColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPlanColor.Location = New System.Drawing.Point(190, 2)
+        Me.lblPlanColor.Name = "lblPlanColor"
+        Me.lblPlanColor.Size = New System.Drawing.Size(25, 10)
+        Me.lblPlanColor.TabIndex = 22
+        '
+        'lblTargetColor
+        '
+        Me.lblTargetColor.BackColor = System.Drawing.Color.Lime
+        Me.lblTargetColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblTargetColor.Location = New System.Drawing.Point(336, 2)
+        Me.lblTargetColor.Name = "lblTargetColor"
+        Me.lblTargetColor.Size = New System.Drawing.Size(25, 10)
+        Me.lblTargetColor.TabIndex = 23
+        '
+        'lblRealColor
+        '
+        Me.lblRealColor.BackColor = System.Drawing.Color.White
+        Me.lblRealColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblRealColor.Location = New System.Drawing.Point(413, 2)
+        Me.lblRealColor.Name = "lblRealColor"
+        Me.lblRealColor.Size = New System.Drawing.Size(25, 10)
+        Me.lblRealColor.TabIndex = 24
+        '
         'ucnChart2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.lblRealColor)
+        Me.Controls.Add(Me.lblTargetColor)
+        Me.Controls.Add(Me.lblPlanColor)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label7)
@@ -196,6 +229,9 @@ Partial Class ucnChart2
         Me.Controls.SetChildIndex(Me.Label7, 0)
         Me.Controls.SetChildIndex(Me.Label8, 0)
         Me.Controls.SetChildIndex(Me.Label9, 0)
+        Me.Controls.SetChildIndex(Me.lblPlanColor, 0)
+        Me.Controls.SetChildIndex(Me.lblTargetColor, 0)
+        Me.Controls.SetChildIndex(Me.lblRealColor, 0)
         CType(Me.picChart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -210,4 +246,7 @@ Partial Class ucnChart2
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents Label9 As Label
+    Friend WithEvents lblPlanColor As Label
+    Friend WithEvents lblTargetColor As Label
+    Friend WithEvents lblRealColor As Label
 End Class

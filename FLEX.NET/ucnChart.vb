@@ -11,13 +11,13 @@ Public Class ucnChart
     ''' <summary>
     ''' チャート背景色
     ''' </summary>
-    Private _ChartBakColor As Color = Color.White
+    Protected _ChartBakColor As Color = Color.White
     ''' <summary>
     ''' チャート　ペンの色
     ''' </summary>
-    Private _ChartPenColor As Color = Color.Red
+    Protected _ChartPenColor As Color = Color.Red
 
-    Private _CenterColor As Color = Color.Black
+    Protected _CenterColor As Color = Color.Black
 
     Public ChartList As New Dictionary(Of Integer, Single)
 
@@ -118,8 +118,8 @@ Public Class ucnChart
         Dim canvas As New Bitmap(picChart.Width, picChart.Height)
         Dim g As Graphics = Graphics.FromImage(canvas)
 
-        g.Clear(ChartBakColor)
-        g.DrawLine(New Pen(CenterColor, 2), New Point(0, picChart.Height / 2), New Point(picChart.Width, picChart.Height / 2))
+        g.Clear(_ChartBakColor)
+        g.DrawLine(New Pen(_CenterColor, 1), New Point(0, picChart.Height / 2), New Point(picChart.Width, picChart.Height / 2))
         Pt0 = Nothing
         For Each p In ChartList
             Dim pt2 As Point

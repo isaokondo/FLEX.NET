@@ -36,20 +36,25 @@ Public Class ucnChart2
         Dim RealDr As Single '実測方位
     End Structure
 
-    Private _GraphData As List(Of gData)
+    Private _ExecData As List(Of gData)
+    Private _PlanData As Dictionary(Of Integer, Single)
     ''' <summary>
-    ''' グラフデータ
+    ''' 掘削データ
     ''' </summary>
-    ''' <returns></returns>
-    Public Property GraphData As List(Of gData)
-        Get
-            Return _GraphData
-        End Get
+    Public WriteOnly Property ExecData As List(Of gData)
         Set(value As List(Of gData))
-            _GraphData = value
+            _ExecData = value
             ChartUp() 'グラフ更新
         End Set
     End Property
+
+    Public WriteOnly Property PlanData As Dictionary(Of Integer, Single)
+        Set(value As Dictionary(Of Integer, Single))
+            _PlanData = value
+        End Set
+    End Property
+
+
 
     <Browsable(True), Description("計画方向　ペンカラー")>
     Public Property ChartPanPenColor As Color
@@ -58,6 +63,7 @@ Public Class ucnChart2
         End Get
         Set(value As Color)
             _ChartPlanPenColor = value
+            lblPlanColor.BackColor = value
         End Set
     End Property
     <Browsable(True), Description("目標方向　ペンカラー")>
@@ -67,6 +73,7 @@ Public Class ucnChart2
         End Get
         Set(value As Color)
             _ChartTargetPenColor = value
+            lblTargetColor.BackColor = value
         End Set
     End Property
 
@@ -99,7 +106,7 @@ Public Class ucnChart2
     ''' <returns></returns>
     ''' 
     <Browsable(True), Description("計画データの数値表示")>
-    Public Property PlanData As Single
+    Public Property PlanNumData As Single
         Get
             Return lblPlan.Text
         End Get
@@ -209,11 +216,11 @@ Public Class ucnChart2
         Dim canvas As New Bitmap(picChart.Width, picChart.Height)
         Dim g As Graphics = Graphics.FromImage(canvas)
 
-        g.Clear(ChartBakColor)
+        g.Clear(_ChartBakColor)
         '中心線
-        g.DrawLine(New Pen(CenterColor, 2), New Point(0, picChart.Height / 2), New Point(picChart.Width, picChart.Height / 2))
+        g.DrawLine(New Pen(_CenterColor, 1), New Point(0, picChart.Height / 2), New Point(picChart.Width, picChart.Height / 2))
 
-        If IsNothing(_GraphData) Then
+        If IsNothing(_ExecData) OrElse _ExecData.Count < 10 Then
             g.Dispose()
             picChart.Image = canvas
             Exit Sub
@@ -223,14 +230,14 @@ Public Class ucnChart2
         st(0) = New List(Of Point)
         st(1) = New List(Of Point)
         st(2) = New List(Of Point)
-        Dim stInit As Integer = _GraphData(0).Distance
-        Dim StRingNo As Integer = _GraphData(0).RingNo
+        Dim stInit As Integer = _ExecData(0).Distance
+        Dim StRingNo As Integer = _ExecData(0).RingNo
         '_StrokeWidth = _GraphData(_GraphData.Count - 1).Distance
-        Dim stMax As Integer = _GraphData.Last.Distance '最終値の掘進距離をMAX
+        Dim stMax As Integer = _ExecData.Last.Distance + _PlanData.Last.Key '最終値の掘進距離をMAX
         '最終目標値を中心値に
-        _ChartCenterValue = Math.Round(_GraphData.Last.TargetDr, 1)
-        Dim tarMax As Single = _GraphData.Max(Function(gdata) gdata.TargetDr)
-        Dim tarMin As Single = _GraphData.Min(Function(gdata) gdata.TargetDr)
+        _ChartCenterValue = Math.Round(_ExecData.Last.TargetDr, 1)
+        Dim tarMax As Single = _ExecData.Max(Function(gdata) gdata.TargetDr)
+        Dim tarMin As Single = _ExecData.Min(Function(gdata) gdata.TargetDr)
         If _ChartCenAbsValue < Math.Abs(tarMax - _ChartCenterValue) Then
             _ChartCenAbsValue = Math.Abs(tarMax - _ChartCenterValue)
         End If
@@ -239,21 +246,23 @@ Public Class ucnChart2
         End If
         _ChartCenAbsValue = Math.Round(_ChartCenAbsValue, 1)
         DspScale()
-        PlanData = _GraphData.Last.PlanDr
-        TargetData = _GraphData.Last.TargetDr
-        RealData = _GraphData.Last.RealDr
-        CorrectData = _GraphData.Last.PlanDr - _GraphData.Last.TargetDr
+        PlanNumData = _ExecData.Last.PlanDr
+        TargetData = _ExecData.Last.TargetDr
+        RealData = _ExecData.Last.RealDr
+        CorrectData = _ExecData.Last.PlanDr - _ExecData.Last.TargetDr
 
-        For Each p In _GraphData
+        Dim Bunbo As Single = 1 / (_ChartCenAbsValue * 2) * picChart.Height
+
+        '掘進済みデータのグラフ表示
+        For Each eData In _ExecData
 
             Dim pt As Point
-            pt.X = p.Distance / stMax * picChart.Width
-            Dim Bunbo As Single = 1 / (_ChartCenAbsValue * 2) * picChart.Height
-            pt.Y = (-p.PlanDr + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
+            pt.X = eData.Distance / stMax * picChart.Width
+            pt.Y = (-eData.PlanDr + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
             st(0).Add(pt) '計画方向
-            pt.Y = (-p.TargetDr + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
+            pt.Y = (-eData.TargetDr + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
             st(1).Add(pt) '目標方向
-            pt.Y = (-p.RealDr + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
+            pt.Y = (-eData.RealDr + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
             st(2).Add(pt) '実測方向
         Next
         '計画方向
@@ -275,6 +284,26 @@ Public Class ucnChart2
             p0 = New Point(p)
         Next
 
+        p0 = st(0).Last
+        '計画方向の表示（これから掘削する指定リング先まで）
+        For Each pData In _PlanData
+            Dim pt As Point
+            pt.X = st(0).Last.X + pData.Key / stMax * picChart.Width
+            pt.Y = (-pData.Value + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
+            g.DrawLine(New Pen(_ChartPlanPenColor, 2), p0, pt)
+            p0 = New Point(pt)
+        Next
+
+        p0 = st(1).Last
+        '目標方向の表示（これから掘削する指定リング先まで）
+        For Each pData In _PlanData
+            Dim pt As Point
+            pt.X = st(0).Last.X + pData.Key / stMax * picChart.Width
+            '計画方向から補正値を引いた値
+            pt.Y = (-(pData.Value - CorrectData) + _ChartCenterValue + _ChartCenAbsValue) * Bunbo
+            g.DrawLine(New Pen(_ChartTargetPenColor, 2), p0, pt)
+            p0 = New Point(pt)
+        Next
 
         g.Dispose()
         picChart.Image = canvas

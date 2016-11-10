@@ -638,7 +638,7 @@ Public Class clsPlcIf
 
                 _jkPress = GetAnalogData("ジャッキ圧力", AnalogTag)
 
-                _FilterJkPress = _jkPress + ControlParameter.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
+                _FilterJkPress = _jkPress + CtlParameter.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
 
                 _nakaoreLR = GetAnalogData("中折左右角", AnalogTag)
                 _nakaoreTB = GetAnalogData("中折上下角", AnalogTag)
@@ -774,7 +774,7 @@ Public Class clsPlcIf
                 If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
 
             Else    'エラー発生
-                    RaiseEvent PLCErrOccur(sender, e, "デジタル読込エラー", iReturnCode)
+                RaiseEvent PLCErrOccur(sender, e, "デジタル読込エラー", iReturnCode)
             End If
         Catch exException As Exception
             '例外処理	
@@ -1017,10 +1017,10 @@ Public Class clsPlcIf
         Dim intPressWrData(InitParameter.NumberGroup - 1) As Short
         Dim intPressWrFlg(InitParameter.NumberGroup - 1) As Short
         For i As Short = 0 To InitParameter.NumberGroup - 1
-            If ControlParameter.最大全開出力時の目標圧力 <> 0 Then
+            If CtlParameter.最大全開出力時の目標圧力 <> 0 Then
                 '' PLCに0-4000でSVを出力
 
-                intPressWrData(i) = Int(sngPres(i) / ControlParameter.最大全開出力時の目標圧力 * 4000)
+                intPressWrData(i) = Int(sngPres(i) / CtlParameter.最大全開出力時の目標圧力 * 4000)
 
             End If
 

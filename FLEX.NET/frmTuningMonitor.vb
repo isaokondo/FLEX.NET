@@ -8,13 +8,11 @@
 
     Private Sub frmTuningMonitor_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        'ReDim GpData(InitParameter.NumberGroup - 1)
 
-        Dim i As Integer
-        For i = 0 To InitParameter.NumberGroup - 1
+        For i As Short = 0 To InitParameter.NumberGroup - 1
             GpData(i) = New ucnTuningComp
             GpData(i).GpNo = i + 1
-            GpData(i).PressScale = ControlParameter.最大全開出力時の目標圧力
+            GpData(i).PressScale = CtlParameter.PresBarGraphWidt
             GpData(i).Location = New Point(0, GpData(i).Height * i)
             picDsp.Controls.Add(GpData(i))
         Next
@@ -32,8 +30,7 @@
     ''' 画面更新
     ''' </summary>
     Private Sub GpUpdate()
-        Dim i As Integer
-        For i = 0 To InitParameter.NumberGroup - 1
+        For i As Short = 0 To InitParameter.NumberGroup - 1
             GpData(i).GpPv = PlcIf.GroupPv(i)
             GpData(i).GpSv = PlcIf.GroupSV(i)
             GpData(i).GpMv = PlcIf.GroupMV(i)

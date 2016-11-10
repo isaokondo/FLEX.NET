@@ -3,7 +3,7 @@
     ''' <summary>
     ''' 姿勢トレンドデータ
     ''' </summary>
-    Public DirectionChartD As New DirectionChartData
+    Public Shared DirectionChartD As New DirectionChartData
 
     Private DspGp() As ucnDspGpPres
     Private BlinkFlg As Boolean
@@ -120,7 +120,7 @@
 
 
         End With
-        With ControlParameter
+        With CtlParameter
             UcnJackDsp.FlexAutoManual = .AutoDirectionControl
             DspFlexAuto.BitStatus = .AutoDirectionControl
 
@@ -194,7 +194,7 @@
         DspLosZeroElapsedTime.Value = ElapsedTime.LozeroExcavationTime
         DspWatingElapsedTime.Value = ElapsedTime.WatingTime
         DspCycleTime.Value = ElapsedTime.CycleTime
-
+        lblNowDate.Text = Now.ToString("yyyy/MM/dd HH:mm:ss")
 
         'TODO:線形データ画面更新　LineDistanceChage に記述したい
         'Call LineDataUpdate()
@@ -218,14 +218,14 @@
 
 
         InitParameter = New clsInitParameter '初期値パラメータ
-        ControlParameter = New clsControlParameter  '制御パラメータ
+        CtlParameter = New clsControlParameter  '制御パラメータ
 
         HorPlan = New clsHorPanData '平面掘進計画線
         VerPlan = New clsVerPlanData '縦断掘進計画線
 
         MachineSpec = New clsMachinSpec
 
-        SegmentAssemblyData = New clsSegmentAssembly ''セグメント組立データ
+        SegAsmblyData = New clsSegmentAssembly ''セグメント組立データ
 
         DataSave = New clsDataSave 'データ保存
 
@@ -250,35 +250,35 @@
             .JackGroupPos = InitParameter.JackGroupPos
             .NumberJack = InitParameter.NumberJack
 
-            .FlexPointX = ControlParameter.PointX
-            .FlexPointY = ControlParameter.PointY
+            .FlexPointX = CtlParameter.PointX
+            .FlexPointY = CtlParameter.PointY
 
-            .FlexPointR = ControlParameter.操作強
-            .FlexPointSeater = ControlParameter.操作角
+            .FlexPointR = CtlParameter.操作強
+            .FlexPointSeater = CtlParameter.操作角
 
             Call .DspInitBaseImg()
         End With
 
         'チャートの設定
         With ucnHorMomentChart
-            .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .ChartHighScale = ControlParameter.HorMomentTrendWidth
+            .StrokeWidth = CtlParameter.GraphStrokeWidth
+            .ChartHighScale = CtlParameter.HorMomentTrendWidth
         End With
         With ucnVerMomentChart
-            .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .ChartHighScale = ControlParameter.HorMomentTrendWidth
+            .StrokeWidth = CtlParameter.GraphStrokeWidth
+            .ChartHighScale = CtlParameter.HorMomentTrendWidth
         End With
         With ucnHorDevChart
-            .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .ChartHighScale = ControlParameter.HorDevDegTrendWidth
+            .StrokeWidth = CtlParameter.GraphStrokeWidth
+            .ChartHighScale = CtlParameter.HorDevDegTrendWidth
         End With
         With ucnVerDevChart
-            .StrokeWidth = ControlParameter.GraphStrokeWidth
-            .ChartHighScale = ControlParameter.HorDevDegTrendWidth
+            .StrokeWidth = CtlParameter.GraphStrokeWidth
+            .ChartHighScale = CtlParameter.HorDevDegTrendWidth
         End With
 
         '
-        UcnGpPvBarGraph.PresBarGraphWidt = ControlParameter.PresBarGraphWidt
+        UcnGpPvBarGraph.PresBarGraphWidt = CtlParameter.PresBarGraphWidt
 
         'フォームの大きさを画面
 
@@ -330,8 +330,11 @@
         End With
 
         '姿勢角トレンドトレンド　データセット
-        ucnHorLineChart.GraphData = DirectionChartD.HorRData
-        ucnVerLineChart.GraphData = DirectionChartD.VerRData
+        ucnHorLineChart.PlanData = DirectionChartD.HorPData
+        ucnHorLineChart.ExecData = DirectionChartD.HorRData
+
+        ucnVerLineChart.PlanData = DirectionChartD.VerPData
+        ucnVerLineChart.ExecData = DirectionChartD.VerRData
 
     End Sub
     ''' <summary>
@@ -343,21 +346,21 @@
         'Dim p As Short = 0
         If PlcIf.AssemblyPieceNo <= 0 Then PlcIf.AssemblyPieceNo = 1
 
-        DspTypeName.Value = SegmentAssemblyData.TypeData(PlcIf.RingNo).TypeName 'セグメント種類
+        DspTypeName.Value = SegAsmblyData.TypeData(PlcIf.RingNo).TypeName 'セグメント種類
 
-        With SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo)
+        With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
             'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
             DspAssemblyPattern.Value = .PatternName '組立パターン名
             DspBoltPitch.Value = .BoltPitch '組立ボルトピッチ
             DspAssemblyPieace.Value = .PieceName  '組立ピース名称
-            DspPullBackJack.Value = SegmentAssemblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
-            DspClosetJack.Value = SegmentAssemblyData.JackListDsp(.ClosetJack) '押込みジャッキ
-            DspAddClosetThrustJack.Value = SegmentAssemblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
+            DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
+            DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
+            DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
         End With
         'MAXのピース番号内で表示
-        If SegmentAssemblyData.AssemblyPieceNumber > PlcIf.AssemblyPieceNo Then
+        If SegAsmblyData.AssemblyPieceNumber > PlcIf.AssemblyPieceNo Then
             DspNextPieceName.Value =
-            SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).PieceName '組立次ピース名称
+            SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).PieceName '組立次ピース名称
         Else
             DspNextPieceName.Value = "-------"
         End If
@@ -368,7 +371,7 @@
         UcnJackDsp.AssemblyOrder.Clear()
 
         For Each pca As clsSegmentAssembly.AsseblyProcess
-                                        In SegmentAssemblyData.ProcessData.Values
+                                        In SegAsmblyData.ProcessData.Values
             UcnJackDsp.PieceName.Add(pca.PieceName)
             UcnJackDsp.PieceAngle.Add(pca.PieceAngle)
             UcnJackDsp.PieceCenterAngle.Add(pca.PieceCenterAngle)
@@ -436,7 +439,6 @@
     Private Sub SystemEnd_Click(sender As Object, e As EventArgs) Handles SystemEnd.Click
         If MsgBox("FLEXシステムを終了します。", MsgBoxStyle.OkCancel + MsgBoxStyle.Exclamation, "FLEX") = MsgBoxResult.Ok Then
             Me.Close()
-            'Application.Exit()
         End If
 
     End Sub
@@ -526,7 +528,7 @@
     ''' ポイント座標が入力され演算完了したイベント
     ''' </summary>
     Private Sub UcnJackDsp_ManualPointChange() Handles UcnJackDsp.ManualPointChange
-        With ControlParameter
+        With CtlParameter
             .PointX = UcnJackDsp.FlexPointX
             .PointY = UcnJackDsp.FlexPointY
 
@@ -563,7 +565,7 @@
     ''' FLEX自動方向制御ON/OFF
     ''' </summary>
     Private Sub UcnJackDsp_FlexAutoManualChange() Handles UcnJackDsp.FlexAutoManualChange
-        ControlParameter.AutoDirectionControl = Not ControlParameter.AutoDirectionControl
+        CtlParameter.AutoDirectionControl = Not CtlParameter.AutoDirectionControl
     End Sub
     ''' <summary>
     ''' イベントログ更新
@@ -607,20 +609,13 @@
     ''' </summary>
     Public Class DirectionChartData
         Inherits clsDataBase
-
+        '掘進データ
         Private _HorRData As New List(Of ucnChart2.gData)
         Private _VerRData As New List(Of ucnChart2.gData)
+        '計画データ
+        Private _HorPData As New Dictionary(Of Integer, Single)
+        Private _VerPData As New Dictionary(Of Integer, Single)
 
-        Private Shared _StartRing As Integer
-        ''' <summary>
-        ''' 表示開始リング
-        ''' </summary>
-        Public WriteOnly Property StartRing As Integer
-            Set(value As Integer)
-                _StartRing = value
-                DataGet()
-            End Set
-        End Property
         ''' <summary>
         ''' 平面掘進データ
         ''' </summary>
@@ -640,27 +635,44 @@
             End Get
         End Property
 
+        Public ReadOnly Property HorPData As Dictionary(Of Integer, Single)
+            Get
+                Return _HorPData
+            End Get
+        End Property
+        Public ReadOnly Property VerPData As Dictionary(Of Integer, Single)
+            Get
+                Return _VerPData
+            End Get
+        End Property
 
+
+        ''' <summary>
+        ''' 平面と縦断のチャートデータを取得
+        ''' </summary>
         Public Sub DataGet()
+            '過去の掘進データ 10mm毎
             Dim rsData As Odbc.OdbcDataReader =
-                ExecuteSql(String.Format("SELECT * FROM flex掘削データ WHERE `リング番号`>='{0}' AND `リング番号`<'{1}' AND MOD(掘進ストローク,10)=0;", _StartRing, PlcIf.RingNo))
+                ExecuteSql(String.Format("SELECT * FROM flex掘削データ WHERE `リング番号`>='{0}' AND `リング番号`<'{1}' AND MOD(掘進ストローク,10)=0;" _
+                                         , PlcIf.RingNo - CtlParameter.LineDevStartRing, PlcIf.RingNo))
             _HorRData.Clear()
             _VerRData.Clear()
             Dim RingNo As Integer = Nothing
-            Dim OffsetStroke As Integer = 0
+            Dim OffsetStroke As Integer = 0 'リング毎に加算する距離
             Dim TmpStrk As Integer
+            Dim g As ucnChart2.gData
+            Dim LastDistance As Single
             While rsData.Read
                 If RingNo <> rsData.Item("リング番号") Then
                     OffsetStroke += TmpStrk
                 End If
-                Dim g As ucnChart2.gData
                 g.RingNo = rsData("リング番号")
                 g.Distance = OffsetStroke + rsData.Item("掘進ストローク")
                 g.PlanDr = rsData.Item("前胴方位角")
                 g.TargetDr = rsData.Item("平面姿勢角管理値")
                 g.RealDr = rsData.Item("ジャイロ方位角")
                 _HorRData.Add(g)
-                Debug.Print(String.Format("RingNo={0},ストローク={1}  平面姿勢角管理値={2}", g.RingNo.ToString, g.Distance.ToString, g.TargetDr.ToString))
+                'Debug.Print(String.Format("RingNo={0},ストローク={1}  平面姿勢角管理値={2}", g.RingNo.ToString, g.Distance.ToString, g.TargetDr.ToString))
 
                 g.PlanDr = rsData.Item("前胴鉛直角")
                 g.TargetDr = rsData.Item("縦断姿勢角管理値")
@@ -668,9 +680,26 @@
                 _VerRData.Add(g)
                 RingNo = g.RingNo
                 TmpStrk = rsData.Item("掘進ストローク")
+
+                LastDistance = rsData.Item("平面発進から発旋回中心までの距離")
             End While
 
+            'これから掘削する計画方位データ
+            _HorPData.Clear()
+            _VerPData.Clear()
 
+            Dim Distance As Integer = 0 '掘進距離（単位mm)　リング分のセグメント幅を加算
+            For i As Integer = PlcIf.RingNo To PlcIf.RingNo + CtlParameter.LineDevLastRing
+                Distance += SegAsmblyData.TypeData(i).CenterWidth * 1000
+            Next
+            '線形
+            Dim dis As New clsLineMake
+
+            For i As Integer = 0 To Distance Step 10
+                dis.掘進累積距離 = i / 1000 + LastDistance
+                _HorPData.Add(i, Hoko2Hoi(dis.軌道中心方位角 + HorPlan.X軸方位角))
+                _VerPData.Add(i, dis.鉛直角)
+            Next
 
         End Sub
 

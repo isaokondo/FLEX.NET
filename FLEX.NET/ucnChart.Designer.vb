@@ -115,10 +115,10 @@ Partial Class ucnChart
         Me.PerformLayout()
 
     End Sub
-    Public WithEvents picChart As PictureBox
-    Public WithEvents lblData As Label
-    Public WithEvents lblLegend As Label
-    Public WithEvents lblCenter As Label
-    Public WithEvents lblGraphHigh As Label
-    Public WithEvents lblGraphLow As Label
+    Protected WithEvents picChart As PictureBox
+    Protected WithEvents lblData As Label
+    Protected WithEvents lblLegend As Label
+    Protected WithEvents lblCenter As Label
+    Protected WithEvents lblGraphHigh As Label
+    Protected WithEvents lblGraphLow As Label
 End Class

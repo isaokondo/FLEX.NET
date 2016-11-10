@@ -164,7 +164,7 @@ Friend Class clsCulKijun
         Dim dblKodoMae As Double
         dblKodoMae = MachineSpec.HorKodoCenter - MachineSpec.HorZendoCenter
 
-        With ControlParameter
+        With CtlParameter
             If PlcIf.RingNo <> 0 Then
                 Distance.現在のリング番号 = PlcIf.RingNo
                 Distance.測量ポイントリング番号 = .測量ポイントリング番号
@@ -310,7 +310,7 @@ Friend Class clsCulKijun
 
         '01/06/28 修正
         'mdbl平面基準方位 = Hoi2Hoko(mdbl平面計画方位 + PlcIf.水平入力補正値 + clsPlanLine.HorPlan.X軸方位角)
-        mdbl平面基準方位 = (mdbl平面計画方位 + ControlParameter.水平入力補正値 + HorPlan.X軸方位角)
+        mdbl平面基準方位 = (mdbl平面計画方位 + CtlParameter.水平入力補正値 + HorPlan.X軸方位角)
         mdbl平面旋回中心 = HorSentanKijun.掘進累積距離 - HorZendoKijun.掘進累積距離
 
 
@@ -381,7 +381,7 @@ Friend Class clsCulKijun
                     mdbl縦断計画方位 = .基準方位
                     mdbl縦断中折角度 = VerNakaCul.中折角度
                     ''補正値の換算
-                    mdbl縦断基準方位 = .基準方位 + ControlParameter.鉛直入力補正値
+                    mdbl縦断基準方位 = .基準方位 + CtlParameter.鉛直入力補正値
                 End With
 
             Else
@@ -411,7 +411,7 @@ Friend Class clsCulKijun
             mdbl縦断中折角度 = 0
 
         End If
-        mdbl縦断基準方位 = mdbl縦断計画方位 + ControlParameter.鉛直入力補正値
+        mdbl縦断基準方位 = mdbl縦断計画方位 + CtlParameter.鉛直入力補正値
         mdbl縦断旋回中心 = VerSentanKijun.掘進累積距離 - VerZendoKijun.掘進累積距離
 
     End Sub

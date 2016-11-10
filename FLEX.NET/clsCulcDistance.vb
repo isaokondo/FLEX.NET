@@ -107,7 +107,7 @@ Friend Class clsCulcDistance
 
             Else
                 ''現在のリング番号-測量リング>1　のとき
-                With SegmentAssemblyData
+                With SegAsmblyData
                     For i = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 2)
                         'SegMakDat.RingNo = intCnt
                         mdbl掘進総距離 +=
@@ -121,7 +121,7 @@ Friend Class clsCulcDistance
 
         Else
             ''掘進中or中断中
-            With SegmentAssemblyData
+            With SegAsmblyData
                 If mblnChangeFlg Then ''リング番号、測量ポイントのリング番号および総距離が変化した時のみ演算　負荷削減のため
                     For i = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 1)
                         'SegMakDat.RingNo = intCnt

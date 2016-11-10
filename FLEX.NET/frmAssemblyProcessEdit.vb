@@ -49,9 +49,9 @@ Public Class frmAssemblyProcessEdit
             DspAssemblyPattern.Value = .PatternName
             DspBoltPitch.Value = .BoltPitch
             DspAssemblyPieace.Value = .PieceName  '組立ピース名称
-            DspPullBackJack.Value = SegmentAssemblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
-            DspClosetJack.Value = SegmentAssemblyData.JackListDsp(.ClosetJack) '押込みジャッキ
-            DspAddClosetThrustJack.Value = SegmentAssemblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
+            DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
+            DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
+            DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
 
             AssemblyPieceNo.MaxValue = SegAsbly.AssemblyPieceNumber '組立ピース番号MAX値設定
@@ -79,9 +79,9 @@ Public Class frmAssemblyProcessEdit
 
         End With
         'MAXのピース番号内で表示
-        If SegmentAssemblyData.AssemblyPieceNumber > AssemblyPieceNo.Value Then
+        If SegAsmblyData.AssemblyPieceNumber > AssemblyPieceNo.Value Then
             DspNextPieceName.Value =
-            SegmentAssemblyData.ProcessData(AssemblyPieceNo.Value + 1).PieceName '組立次ピース名称
+            SegAsmblyData.ProcessData(AssemblyPieceNo.Value + 1).PieceName '組立次ピース名称
         Else
             DspNextPieceName.Value = "-------"
         End If

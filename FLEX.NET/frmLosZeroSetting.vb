@@ -11,7 +11,7 @@
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
         'TODO:ダイレクト指令制御の取込
-        With ControlParameter
+        With CtlParameter
             LosZeroRollingTake.rdbtnValue = .LosZeroRollingTake
             LosZeroOpposeJack.rdbtnValue = .LosZeroOpposeJack
             LosZeroOpposeControl.rdbtnValue = .LosZeroOpposeControl
@@ -29,7 +29,7 @@
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
 
-        With ControlParameter
+        With CtlParameter
 
             .LosZeroRollingTake = LosZeroRollingTake.rdbtnValue
             .LosZeroOpposeJack = LosZeroOpposeJack.rdbtnValue

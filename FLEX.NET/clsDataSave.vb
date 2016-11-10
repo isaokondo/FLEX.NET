@@ -155,7 +155,7 @@ Friend Class clsDataSave
         Data(ColumnList.IndexOf("縦断姿勢角管理値")) = RefernceDirection.縦断基準方位.ToString("F4")
 
 
-        With ControlParameter
+        With CtlParameter
 
             Data(ColumnList.IndexOf("力点Ｘ")) = .PointX.ToString
             Data(ColumnList.IndexOf("力点Ｙ")) = .PointY.ToString
@@ -200,7 +200,7 @@ Friend Class clsDataSave
 
 
         Data(ColumnList.IndexOf("組立ピース")) = PlcIf.AssemblyPieceNo
-        With SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo)
+        With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
             'TODO:Data(ColumnList.IndexOf("組立セグメント")) = 
             Data(ColumnList.IndexOf("組立ボルトピッチ")) = .BoltPitch
             Data(ColumnList.IndexOf("組立パターン")) = .PatternName

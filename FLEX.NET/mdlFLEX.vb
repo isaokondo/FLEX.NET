@@ -11,9 +11,9 @@ Module mdlFLEX
     ''' </summary>
     Public MachineSpec As clsMachinSpec
 
-    Public SegmentAssemblyData As clsSegmentAssembly ''セグメント組立データ
+    Public SegAsmblyData As clsSegmentAssembly ''セグメント組立データ
 
-    Public WithEvents ControlParameter As clsControlParameter  '制御パラメータ
+    Public WithEvents CtlParameter As clsControlParameter  '制御パラメータ
 
     Public CulcMoment As clsCulMoment ''モーメント、推力の演算
 
@@ -125,15 +125,13 @@ Module mdlFLEX
     Private Sub PlcIf_ExcavationStatusChange(PreStatus As Integer, NowStatus As Integer) _
         Handles PlcIf.ExcavationStatusChange
         '組立パターンの情報を取得
-        SegmentAssemblyData.SegmentAssemblyDataRead(PlcIf.RingNo)
+        SegAsmblyData.SegmentAssemblyDataRead(PlcIf.RingNo)
         '姿勢トレンドのデータ取得
-        My.Forms.frmMain.DirectionChartD.StartRing = PlcIf.RingNo - ControlParameter.LineDevStartRing
+        frmMain.DirectionChartD.DataGet()
 
         'If PreStatus = -1 Then Exit Sub
         '待機中から掘進
         If PreStatus = cTaiki And NowStatus = cKussin Then
-
-            My.Forms.frmMain.DirectionChartD.StartRing = PlcIf.RingNo - ControlParameter.LineDevStartRing
 
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
             PlcIf.LosZeroSts_FLEX = 0
@@ -176,15 +174,15 @@ Module mdlFLEX
 
         End If
         '掘進中で手動方向制御
-        If NowStatus = cKussin And ControlParameter.AutoDirectionControl = False Then
+        If NowStatus = cKussin And CtlParameter.AutoDirectionControl = False Then
             '保持してる作用点
-            JackManual.PutPointXY(ControlParameter.PointX, ControlParameter.PointY)
+            JackManual.PutPointXY(CtlParameter.PointX, CtlParameter.PointY)
         End If
 
         '掘進してないときは、自動方向制御停止
         If NowStatus <> cKussin Then JackMvAuto.MvAutoStop()
 
-        If NowStatus = cKussin And ControlParameter.AutoDirectionControl Then
+        If NowStatus = cKussin And CtlParameter.AutoDirectionControl Then
             'JackMvAuto.MvAutoStart()
         End If
 
@@ -204,7 +202,7 @@ Module mdlFLEX
         'マシンからのステータス
         If FromDev Then
 
-            With SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo)
+            With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
                 Select Case NowSts
                     Case 1 'マシンからの減圧開始
                         PlcIf.LosZeroSts_FLEX = 1 '1ピース目の減圧開始
@@ -243,8 +241,8 @@ Module mdlFLEX
                         PlaySound(My.Resources.SegmentAsem)
 
                         'TODO:推進圧力がある程度たってから
-                        If PlcIf.AssemblyPieceNo < SegmentAssemblyData.AssemblyPieceNumber Then '最終ピース到達前
-                            If ControlParameter.NextPieceConfirm Then
+                        If PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber Then '最終ピース到達前
+                            If CtlParameter.NextPieceConfirm Then
                                 '同時施工継続メッセージ出力
                                 My.Forms.frmNextPieceConfirm.Show()
                             Else
@@ -266,11 +264,11 @@ Module mdlFLEX
             'FLEXからのステータス
             Select Case NowSts
                 Case 1  '減圧開始
-                    If PlcIf.LosZeroSts_M <> 1 And PlcIf.AssemblyPieceNo < SegmentAssemblyData.AssemblyPieceNumber Then
+                    If PlcIf.LosZeroSts_M <> 1 And PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber Then
                         PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
                     End If
                     My.Forms.frmNextPieceConfirm.Close() '継続確認画面を閉じる
-                    With SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo)
+                    With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
                         '減圧グループ
                         WriteEventData(PlcIf.AssemblyPieceNo & "ピース目 " & String.Join(",", .ReduceGroup) & "グループの減圧開始します。", Color.Blue)
 
@@ -350,14 +348,14 @@ Module mdlFLEX
     ''' <summary>
     ''' マシン先端距離の変化時の処理
     ''' </summary>
-    Private Sub LineDistanceChage() Handles PlcIf.LineDistanceChage, ControlParameter.ReferChnge
+    Private Sub LineDistanceChage() Handles PlcIf.LineDistanceChage, CtlParameter.ReferChnge
 
         '        RefernceDirection.Distance.測量ポイントリング番号
-        Call RefernceDirection.sbCulKijun()
+        RefernceDirection.sbCulKijun()
 
         My.Forms.frmMain.LineDataUpdate()
 
-        If ControlParameter.AutoDirectionControl Then
+        If CtlParameter.AutoDirectionControl Then
             JackMvAuto.水平偏差角 = RefernceDirection.平面偏角
             JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
         End If
@@ -373,23 +371,23 @@ Module mdlFLEX
 
         With DivCul
             'パラメータセット
-            .最低全開グループ数 = ControlParameter.最低全開グループ数
-            .全開作動指令値 = ControlParameter.全開作動指令値
-            .全開作動範囲 = ControlParameter.全開作動範囲
-            .全開グループ制限 = ControlParameter.全開グループ制限
+            .最低全開グループ数 = CtlParameter.最低全開グループ数
+            .全開作動指令値 = CtlParameter.全開作動指令値
+            .全開作動範囲 = CtlParameter.全開作動範囲
+            .全開グループ制限 = CtlParameter.全開グループ制限
 
-            If ControlParameter.AutoDirectionControl Then
+            If CtlParameter.AutoDirectionControl Then
                 .操作角 = JackMvAuto.操作角
                 .操作強 = JackMvAuto.操作強
-                ControlParameter.PointX = JackMvAuto.PointX
-                ControlParameter.PointY = JackMvAuto.PointY
-                ControlParameter.操作角 = JackMvAuto.操作角
-                ControlParameter.操作強 = JackMvAuto.操作強
+                CtlParameter.PointX = JackMvAuto.PointX
+                CtlParameter.PointY = JackMvAuto.PointY
+                CtlParameter.操作角 = JackMvAuto.操作角
+                CtlParameter.操作強 = JackMvAuto.操作強
             Else
                 .操作角 = JackManual.操作角
                 .操作強 = JackManual.操作強
-                ControlParameter.操作角 = JackManual.操作角
-                ControlParameter.操作強 = JackManual.操作強
+                CtlParameter.操作角 = JackManual.操作角
+                CtlParameter.操作強 = JackManual.操作強
             End If
 
             .sbCul() ''推力分担率の演算
@@ -422,10 +420,10 @@ Module mdlFLEX
                     '減圧中から組立完了
                     If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
                         Dim Gp As List(Of Short) =
-                        SegmentAssemblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+                        SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
                         For Each R As Short In Gp
                             sngGpSV(R - 1) =
-                        Reduce.MvOut(R - 1) * ControlParameter.最大全開出力時の目標圧力 / 100
+                        Reduce.MvOut(R - 1) * CtlParameter.最大全開出力時の目標圧力 / 100
                             intGpFl(R - 1) = cTracking
                         Next
                     End If
@@ -433,12 +431,12 @@ Module mdlFLEX
                     For i = 0 To InitParameter.NumberGroup - 1
                         If intGpFl(i) <> cTracking Then
                             If .分担率指令値(i) > 99 Then ''全開出力
-                                sngGpSV(i) = ControlParameter.最大全開出力時の目標圧力
+                                sngGpSV(i) = CtlParameter.最大全開出力時の目標圧力
                                 intGpFl(i) = cFillPower
                             Else
                                 sngGpSV(i) = .分担率指令値(i) / 100 * PlcIf.FilterJkPress
-                                If Math.Abs(PlcIf.GroupPv(i) - PlcIf.GroupSV(i)) < ControlParameter.PIDShiftDefl _
-                                    Or ControlParameter.DirectControl = False Then
+                                If Math.Abs(PlcIf.GroupPv(i) - PlcIf.GroupSV(i)) < CtlParameter.PIDShiftDefl _
+                                    Or CtlParameter.DirectControl = False Then
                                     intGpFl(i) = cPIDOut ''ＰＩＤ出力
                                 Else
                                     intGpFl(i) = cDirect  'ダイレクト指令制御
@@ -497,18 +495,18 @@ Module mdlFLEX
             ("INSERT INTO FLEXイベントデータ(Time,イベントデータ,イベント種類) VALUES('" _
              & Now & "','" & EventMsg & "','" & Colorlng & "')")
 
-        My.Forms.frmMain.EventlogUpdate()
+        frmMain.EventlogUpdate()
 
     End Sub
     ''' <summary>
     ''' 姿勢制御自動手動の切替時の処理
     ''' </summary>
     ''' 
-    Private Sub ControlParameter_FlexAutoManualChange() Handles ControlParameter.FlexAutoManualChange ', PlcIf.ExcavationStatusChange
+    Private Sub ControlParameter_FlexAutoManualChange() Handles CtlParameter.FlexAutoManualChange ', PlcIf.ExcavationStatusChange
         '掘進中以外はスキップ
         'If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
-        If ControlParameter.AutoDirectionControl Then
+        If CtlParameter.AutoDirectionControl Then
             If PlcIf.ExcaStatus = cKussin Then
                 WriteEventData("自動方向制御開始しました。", Color.Orange)
             End If
@@ -517,12 +515,12 @@ Module mdlFLEX
             ''手動→自動切替時
             With JackMvAuto
 
-                .水平P定数 = ControlParameter.水平ジャッキ制御P定数
-                .水平I定数 = ControlParameter.水平ジャッキ制御I定数
-                .水平D定数 = ControlParameter.水平ジャッキ制御D定数
-                .鉛直P定数 = ControlParameter.鉛直ジャッキ制御P定数
-                .鉛直I定数 = ControlParameter.鉛直ジャッキ制御I定数
-                .鉛直D定数 = ControlParameter.鉛直ジャッキ制御D定数
+                .水平P定数 = CtlParameter.水平ジャッキ制御P定数
+                .水平I定数 = CtlParameter.水平ジャッキ制御I定数
+                .水平D定数 = CtlParameter.水平ジャッキ制御D定数
+                .鉛直P定数 = CtlParameter.鉛直ジャッキ制御P定数
+                .鉛直I定数 = CtlParameter.鉛直ジャッキ制御I定数
+                .鉛直D定数 = CtlParameter.鉛直ジャッキ制御D定数
                 .水平偏差角 = RefernceDirection.平面偏角
                 .鉛直偏差角 = RefernceDirection.縦断偏角
                 ''自動から手動時のトラッキング処理

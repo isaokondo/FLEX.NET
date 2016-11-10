@@ -41,7 +41,13 @@ Friend Class clsSegmentAssembly
     ''' <returns></returns>
     Public ReadOnly Property TypeData(ByVal RingNo As Integer) As SegmentType
         Get
-            Return _TypeList(_TypeNo(RingNo))
+            If RingNo <> 0 Then
+                Return _TypeList(_TypeNo(RingNo))
+            Else
+                Return New SegmentType
+            End If
+
+
         End Get
     End Property
     ''' <summary>
@@ -263,7 +269,7 @@ Friend Class clsSegmentAssembly
         Dim rsData As Odbc.OdbcDataReader
 
         rsData = ExecuteSql _
-            ("SELECT * FROM `flexセグメント組立データ` Inner Join `セグメント組立パターンベース`") ' ON `セグメント組立パターンベース`.`組立パターンNo` = `flexセグメント組立データ`.`組立パターンNo`;")
+            ("SELECT * FROM `flexセグメント組立データ` Inner Join `セグメント組立パターンベース`")
 
         While rsData.Read()
             Dim i As Integer = rsData.Item("リング番号")

@@ -5,7 +5,7 @@
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
         'TODO:ダイレクト指令制御の取込
-        With ControlParameter
+        With CtlParameter
             HorPID_P.Value = .水平ジャッキ制御P定数
             HorPID_I.Value = .水平ジャッキ制御I定数
             HorPID_D.Value = .水平ジャッキ制御I定数
@@ -18,7 +18,7 @@
     End Sub
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
-        With ControlParameter
+        With CtlParameter
             .水平ジャッキ制御P定数 = HorPID_P.Value
             .水平ジャッキ制御I定数 = HorPID_I.Value
             .水平ジャッキ制御I定数 = HorPID_D.Value
