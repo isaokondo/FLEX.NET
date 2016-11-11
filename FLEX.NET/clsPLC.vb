@@ -671,10 +671,6 @@ Public Class clsPlcIf
                     RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
                 End If
 
-
-
-
-
                 Dim i As Integer
                 For i = 0 To InitParameter.NumberGroup - 1
                     _groupPv(i) = GetAnalogData("グループ" & (i + 1) & "圧力", AnalogTag)
@@ -687,8 +683,6 @@ Public Class clsPlcIf
                     _JackStatus(i) = GetAnalogData("ジャッキステータス" & (i + 1), AnalogTag)
                     _jackSelect(i) = (_JackStatus(i) And 1)
                 Next
-
-
 
                 frmMain.tmrDataDsp.Enabled = True
             Else    'エラー発生

@@ -101,7 +101,7 @@ Public Class ucnChart
         End Set
     End Property
     ''' <summary>
-    ''' チャートデータ
+    ''' チャートデータ追加　表示更新
     ''' </summary>
     ''' <param name="Stroke">ストローク</param>
     ''' <param name="Value">データ</param>
@@ -141,7 +141,7 @@ Public Class ucnChart
     ''' チャート初期化
     ''' </summary>
     Public Sub ChartClear()
-        ChartList.Clear()
+        'ChartList.Clear()
         Pt0 = Nothing
         ChartUp()
     End Sub

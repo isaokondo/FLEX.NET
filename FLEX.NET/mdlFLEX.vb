@@ -151,6 +151,7 @@ Module mdlFLEX
         End If
         '中断
         If NowStatus = cChudan Then
+            JackManual.ManualOn = False
             WriteEventData("掘進中断しました", Color.Black)
             ElapsedTime.ExcavationStop()
         End If
@@ -364,7 +365,7 @@ Module mdlFLEX
 
     End Sub
     ''' <summary>
-    ''' 操作点手動操作時の処理
+    ''' 操作出力の処理
     ''' </summary>
     Private Sub JackManual_PointChanges() Handles JackManual.PointChanges,
         PlcIf.ExcavationStatusChange, JackMvAuto.AutoDirectionCulc, Reduce.ReduceOn, PlcIf.LosZeroStsChange
@@ -507,6 +508,7 @@ Module mdlFLEX
         'If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
         If CtlParameter.AutoDirectionControl Then
+            JackManual.ManualOn = False
             If PlcIf.ExcaStatus = cKussin Then
                 WriteEventData("自動方向制御開始しました。", Color.Orange)
             End If

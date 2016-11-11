@@ -5,8 +5,8 @@
     ''' </summary>
     Public Shared DirectionChartD As New DirectionChartData
 
-    Private DspGp() As ucnDspGpPres
-    Private BlinkFlg As Boolean
+    Private DspGp() As ucnDspGpPres 'グループ圧PV数値表示用
+    Private BlinkFlg As Boolean '点滅フラグ
     ''' <summary>
     ''' 画面のちらつきをなくす
     ''' </summary>
@@ -90,8 +90,8 @@
             DspVerBroken.Value = .NakaoreTB         '中折上下
 
 
-            DspThrust.Value = CulcMoment.Thrust
-            DspMoment.Value = CulcMoment.MomentR
+            DspThrust.Value = CulcMoment.Thrust '推力
+            DspMoment.Value = CulcMoment.MomentR 'モーメント
 
 
             DspFlexControlOn.BitStatus = .FlexControlOn 'FLEXの制御ON/OFF
@@ -114,16 +114,17 @@
             UcnJackDsp.CopyAngle = .CopyAngle
             UcnJackDsp.CopyStroke = .CopyStroke
 
-
+            'グループ圧バーグラフ
             UcnGpPvBarGraph.GpFlg = .GroupFlg
             UcnGpPvBarGraph.GpPv = .GroupPv
 
 
         End With
         With CtlParameter
+            '自動方向制御ON／OFF
             UcnJackDsp.FlexAutoManual = .AutoDirectionControl
             DspFlexAuto.BitStatus = .AutoDirectionControl
-
+            '力点座標数値表示
             UcnJackDsp.FlexPointX = .PointX
             UcnJackDsp.FlexPointY = .PointY
 
@@ -131,7 +132,7 @@
             UcnJackDsp.FlexPointSeater = .操作角
         End With
 
-
+        '圧力調整用フラグ
         DspJackPress.Blink = JackMvAuto.圧力超
         DspMoment.Blink = JackMvAuto.モーメント上限超
 
@@ -179,7 +180,7 @@
 
         '点滅用フラグ
         BlinkFlg = Not BlinkFlg
-
+        'ロスゼロ工程表示
         For Each cControl As Control In pnlLosZero.Controls
             If TypeOf cControl Is ucnDspBit Then
                 Dim u As ucnDspBit = DirectCast(cControl, ucnDspBit)
@@ -206,41 +207,31 @@
     ''' 待機中から掘進中の時に実行
     ''' </summary>
     Public Sub ChartClear()
-        ucnHorMomentChart.ChartClear()
-        ucnVerMomentChart.ChartClear()
-        ucnHorDevChart.ChartClear()
-        ucnVerDevChart.ChartClear()
+        ucnHorMomentChart.ChartList.Clear()
+        ucnVerMomentChart.ChartList.Clear()
+        ucnHorDevChart.ChartList.Clear()
+        ucnVerDevChart.ChartList.Clear()
     End Sub
 
 
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-
+        'インスタンス作成
         InitParameter = New clsInitParameter '初期値パラメータ
         CtlParameter = New clsControlParameter  '制御パラメータ
-
         HorPlan = New clsHorPanData '平面掘進計画線
         VerPlan = New clsVerPlanData '縦断掘進計画線
-
         MachineSpec = New clsMachinSpec
-
         SegAsmblyData = New clsSegmentAssembly ''セグメント組立データ
-
         DataSave = New clsDataSave 'データ保存
-
         CulcMoment = New clsCulMoment ''モーメント、推力の演算
-
         JackMvAuto = New clsCulJackMv ''ジャッキ操作量の演算
-        DivCul = New clsThrustDiv ''
-        RefernceDirection = New clsCulKijun
-        JackManual = New clsJkManualOut
-
-        'PLCインターフェース
-        PlcIf = New clsPlcIf
-
-        Reduce = New clsReducePress
-
+        DivCul = New clsThrustDiv ''推力分担
+        RefernceDirection = New clsCulKijun '基準方位演算
+        JackManual = New clsJkManualOut 'ジャッキ手動操作出力
+        PlcIf = New clsPlcIf 'PLCインターフェース
+        Reduce = New clsReducePress 'ロスゼロ減圧処理
 
         'ジャッキ稼働画面の初期データ
         With UcnJackDsp
@@ -259,22 +250,40 @@
             Call .DspInitBaseImg()
         End With
 
-        'チャートの設定
+        '---------------チャートの設定------------------------
+        '偏角、モーメントグラフ
+        Dim LastRingNoGet As New ChartDataGet   '最終のリング番号を取得
+
+        Dim HorMomentData As New ChartDataGet("水平モーメント")
+        Dim VerMomentData As New ChartDataGet("鉛直モーメント")
+        Dim HorDevData As New ChartDataGet("水平偏角")
+        Dim VerDevData As New ChartDataGet("鉛直偏角")
+
+
+        '水平モーメント
         With ucnHorMomentChart
             .StrokeWidth = CtlParameter.GraphStrokeWidth
             .ChartHighScale = CtlParameter.HorMomentTrendWidth
+            .ChartList = HorMomentData.DList
+
         End With
+        '鉛直モーメント
         With ucnVerMomentChart
             .StrokeWidth = CtlParameter.GraphStrokeWidth
             .ChartHighScale = CtlParameter.HorMomentTrendWidth
+            ucnVerMomentChart.ChartList = VerMomentData.DList
         End With
+        '水平偏角
         With ucnHorDevChart
             .StrokeWidth = CtlParameter.GraphStrokeWidth
             .ChartHighScale = CtlParameter.HorDevDegTrendWidth
+            .ChartList = HorDevData.DList
         End With
+        '鉛直偏角
         With ucnVerDevChart
             .StrokeWidth = CtlParameter.GraphStrokeWidth
             .ChartHighScale = CtlParameter.HorDevDegTrendWidth
+            .ChartList = VerDevData.DList
         End With
 
         '
@@ -289,6 +298,10 @@
         'PLCにグループ数、ジャッキ本数書込
         PlcIf.ParameterWrite("グループ数", InitParameter.NumberGroup)
         PlcIf.ParameterWrite("ジャッキ本数", InitParameter.NumberJack)
+
+
+
+
 
 
 
@@ -496,8 +509,8 @@
         My.Forms.frmOtherSetting.Show()
     End Sub
 
-    Private Sub ReloadPlanData_Click(sender As Object, e As EventArgs) Handles ReloadPlanData.Click
-
+    Private Sub ReloadPlanData_Click(sender As Object, e As EventArgs) Handles PlanDataView.Click
+        My.Forms.frmHorPlanData.Show()
     End Sub
 
     Private Sub SegmentEdit_Click(sender As Object, e As EventArgs) Handles SegmentEdit.Click
@@ -672,7 +685,6 @@
                 g.TargetDr = rsData.Item("平面姿勢角管理値")
                 g.RealDr = rsData.Item("ジャイロ方位角")
                 _HorRData.Add(g)
-                'Debug.Print(String.Format("RingNo={0},ストローク={1}  平面姿勢角管理値={2}", g.RingNo.ToString, g.Distance.ToString, g.TargetDr.ToString))
 
                 g.PlanDr = rsData.Item("前胴鉛直角")
                 g.TargetDr = rsData.Item("縦断姿勢角管理値")
@@ -702,10 +714,40 @@
             Next
 
         End Sub
+    End Class
 
+    ''' <summary>
+    ''' 偏角、モーメントのトレンドグラフのデータを取得
+    ''' 立ち上げ時の表示用
+    ''' </summary>
+    Private Class ChartDataGet
+        Inherits clsDataBase
 
+        Public Shared RingNo As Integer
+        Private _DList As Dictionary(Of Integer, Single)
+        Sub New(FldName As String)
+            _DList = New Dictionary(Of Integer, Single)
+            Dim rsData As Odbc.OdbcDataReader =
+                ExecuteSql(String.Format("SELECT * FROM flex掘削データ WHERE `リング番号`='{0}';", RingNo))
+            While rsData.Read
+                _DList.Add(rsData.Item("掘進ストローク"), rsData.Item(FldName))
+            End While
+        End Sub
 
+        Sub New()
+            Dim rsData As Odbc.OdbcDataReader =
+                ExecuteSql(String.Format("SELECT * FROM flex掘削データ ORDER BY `時間` LIMIT 0,1"))
+            While rsData.Read
+                RingNo = rsData.Item("リング番号")
+            End While
 
+        End Sub
+
+        Public ReadOnly Property DList As Dictionary(Of Integer, Single)
+            Get
+                Return _DList
+            End Get
+        End Property
 
 
     End Class

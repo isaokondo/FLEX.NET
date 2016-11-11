@@ -52,7 +52,7 @@ Partial Class frmMain
         Me.LossZeroConcern = New System.Windows.Forms.ToolStripMenuItem()
         Me.OterSetting = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ReloadPlanData = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PlanDataView = New System.Windows.Forms.ToolStripMenuItem()
         Me.SegmentEdit = New System.Windows.Forms.ToolStripMenuItem()
         Me.AssemblyProcessEdit = New System.Windows.Forms.ToolStripMenuItem()
         Me.目標ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -280,7 +280,7 @@ Partial Class frmMain
         '
         '設定ToolStripMenuItem
         '
-        Me.設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PressParameter, Me.OneDirectionParameter, Me.OneDirectionLimit, Me.ToolStripMenuItem4, Me.PresBlock, Me.ManagmentMethd, Me.LossZeroConcern, Me.OterSetting, Me.ToolStripMenuItem5, Me.ReloadPlanData, Me.SegmentEdit, Me.AssemblyProcessEdit})
+        Me.設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PressParameter, Me.OneDirectionParameter, Me.OneDirectionLimit, Me.ToolStripMenuItem4, Me.PresBlock, Me.ManagmentMethd, Me.LossZeroConcern, Me.OterSetting, Me.ToolStripMenuItem5, Me.PlanDataView, Me.SegmentEdit, Me.AssemblyProcessEdit})
         Me.設定ToolStripMenuItem.Name = "設定ToolStripMenuItem"
         Me.設定ToolStripMenuItem.Size = New System.Drawing.Size(57, 20)
         Me.設定ToolStripMenuItem.Text = "設定(&R)"
@@ -288,71 +288,71 @@ Partial Class frmMain
         'PressParameter
         '
         Me.PressParameter.Name = "PressParameter"
-        Me.PressParameter.Size = New System.Drawing.Size(164, 22)
+        Me.PressParameter.Size = New System.Drawing.Size(152, 22)
         Me.PressParameter.Text = "圧力パラメータ"
         '
         'OneDirectionParameter
         '
         Me.OneDirectionParameter.Name = "OneDirectionParameter"
-        Me.OneDirectionParameter.Size = New System.Drawing.Size(164, 22)
+        Me.OneDirectionParameter.Size = New System.Drawing.Size(152, 22)
         Me.OneDirectionParameter.Text = "片押パラメータ"
         '
         'OneDirectionLimit
         '
         Me.OneDirectionLimit.Name = "OneDirectionLimit"
-        Me.OneDirectionLimit.Size = New System.Drawing.Size(164, 22)
+        Me.OneDirectionLimit.Size = New System.Drawing.Size(152, 22)
         Me.OneDirectionLimit.Text = "片押し制限"
         '
         'ToolStripMenuItem4
         '
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(161, 6)
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(149, 6)
         '
         'PresBlock
         '
         Me.PresBlock.Name = "PresBlock"
-        Me.PresBlock.Size = New System.Drawing.Size(164, 22)
+        Me.PresBlock.Size = New System.Drawing.Size(152, 22)
         Me.PresBlock.Text = "圧力ブロック"
         '
         'ManagmentMethd
         '
         Me.ManagmentMethd.Name = "ManagmentMethd"
-        Me.ManagmentMethd.Size = New System.Drawing.Size(164, 22)
+        Me.ManagmentMethd.Size = New System.Drawing.Size(152, 22)
         Me.ManagmentMethd.Text = "管理方法"
         '
         'LossZeroConcern
         '
         Me.LossZeroConcern.Name = "LossZeroConcern"
-        Me.LossZeroConcern.Size = New System.Drawing.Size(164, 22)
+        Me.LossZeroConcern.Size = New System.Drawing.Size(152, 22)
         Me.LossZeroConcern.Text = "同時施工関連"
         '
         'OterSetting
         '
         Me.OterSetting.Name = "OterSetting"
-        Me.OterSetting.Size = New System.Drawing.Size(164, 22)
+        Me.OterSetting.Size = New System.Drawing.Size(152, 22)
         Me.OterSetting.Text = "その他"
         '
         'ToolStripMenuItem5
         '
         Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(161, 6)
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(149, 6)
         '
-        'ReloadPlanData
+        'PlanDataView
         '
-        Me.ReloadPlanData.Name = "ReloadPlanData"
-        Me.ReloadPlanData.Size = New System.Drawing.Size(164, 22)
-        Me.ReloadPlanData.Text = "計画路線の再読込"
+        Me.PlanDataView.Name = "PlanDataView"
+        Me.PlanDataView.Size = New System.Drawing.Size(152, 22)
+        Me.PlanDataView.Text = "計画路線表示"
         '
         'SegmentEdit
         '
         Me.SegmentEdit.Name = "SegmentEdit"
-        Me.SegmentEdit.Size = New System.Drawing.Size(164, 22)
+        Me.SegmentEdit.Size = New System.Drawing.Size(152, 22)
         Me.SegmentEdit.Text = "セグメントの割付"
         '
         'AssemblyProcessEdit
         '
         Me.AssemblyProcessEdit.Name = "AssemblyProcessEdit"
-        Me.AssemblyProcessEdit.Size = New System.Drawing.Size(164, 22)
+        Me.AssemblyProcessEdit.Size = New System.Drawing.Size(152, 22)
         Me.AssemblyProcessEdit.Text = "組立工程の編集"
         '
         '目標ToolStripMenuItem
@@ -2387,7 +2387,7 @@ Partial Class frmMain
     Friend WithEvents ManagmentMethd As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents LossZeroConcern As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OterSetting As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ReloadPlanData As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents PlanDataView As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SegmentEdit As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AssemblyProcessEdit As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 目標ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem

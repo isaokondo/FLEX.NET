@@ -14,6 +14,29 @@ Friend Class clsJkManualOut
     Private _操作角 As Single 'ﾛｰｶﾙ ｺﾋﾟｰ
     Private _操作強 As Single 'ﾛｰｶﾙ ｺﾋﾟｰ
 
+    Private timer As Timer = New Timer()
+
+
+    Public Sub New()
+        '手動操作時は、1秒ごとに演算
+        AddHandler Timer.Tick, New EventHandler(AddressOf sbCul)
+        Timer.Interval = 1000   '1秒ごとの処理
+
+    End Sub
+    ''' <summary>
+    ''' 手動操作演算ON
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ManualOn As Boolean
+        Get
+            Return timer.Enabled
+        End Get
+        Set(value As Boolean)
+            timer.Enabled = value
+        End Set
+    End Property
+
+
     ''ポイント座標が入力されたイベント
     Public Event PointChanges()
 
@@ -54,6 +77,7 @@ Friend Class clsJkManualOut
         _PointX = dblPointX
         _PointY = dblPointY
         Call sbCul() ''操作強、操作角度算出
+        timer.Enabled = True
     End Sub
 
 

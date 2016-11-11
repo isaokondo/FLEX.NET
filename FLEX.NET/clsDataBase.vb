@@ -1,5 +1,4 @@
-﻿'Imports MySql.Data.MySqlClient
-Imports System.Data.Odbc
+﻿Imports System.Data.Odbc
 
 Public Class clsDataBase
 
