@@ -13,11 +13,11 @@
         Inherits clsDataBase
 
         Sub New()
-            Dim rsData As Odbc.OdbcDataReader =
-                            ExecuteSql(String.Format("SELECT * FROM `平面線形` WHERE `シートID='{0}';", RingNo))
-            While rsData.Read
-                _DList.Add(rsData.Item("掘進ストローク"), rsData.Item(FldName))
-            End While
+            'Dim rsData As Odbc.OdbcDataReader =
+            '                ExecuteSql(String.Format("SELECT * FROM `平面線形` WHERE `シートID='{0}';", RingNo))
+            'While rsData.Read
+            '_DList.Add(rsData.Item("掘進ストローク"), rsData.Item(FldName))
+            'End While
 
 
 

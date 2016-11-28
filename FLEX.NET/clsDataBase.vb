@@ -214,6 +214,8 @@ Public Class clsInitParameter
     Private _sheetID As Integer = 20                 ''計画路線のシートID（10:計画路線　20:掘進計画線)
     'Private _planDataMdb As String '計画路線（線形データ）のファイルパス
 
+    Private _mesureJack As New Dictionary(Of Short, Single) '計測ジャッキの角度
+
     Private WithEvents Htb As New clsHashtableRead
     ''' <summary>
     ''' ジャッキ本数
@@ -305,6 +307,19 @@ Public Class clsInitParameter
             Return _firstJackLoc
         End Get
     End Property
+    ''' <summary>
+    ''' 計測ジャッキ　角度
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MesureJacj As Dictionary(Of Short, Single)
+        Get
+            Return _mesureJack
+        End Get
+    End Property
+
+
+
+
 
     'Public ReadOnly Property PlanMdbPath As String
     '    Get
@@ -372,6 +387,15 @@ Public Class clsInitParameter
             For i = 0 To _numberGroup - 1
                 _faiGroup(i) = _faiGroup(i) / _numberJackOfGroup(i)
             Next
+
+            For Each mj As String In ht.Keys
+                If mj.IndexOf("計測ジャッキ") >= 0 Then
+                    _mesureJack.Add(mj.Replace("計測ジャッキ", ""), ht(mj))
+                End If
+            Next
+
+
+
 
         Catch ex As Exception
 
