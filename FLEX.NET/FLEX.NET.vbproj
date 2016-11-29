@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="ActDefine.vb" />
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="clsCalcuStroke.vb" />
     <Compile Include="clsControlParameter.vb" />
     <Compile Include="clsElapsedTime.vb" />
     <Compile Include="clsMachinSpec.vb" />

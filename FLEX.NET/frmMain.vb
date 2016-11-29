@@ -232,6 +232,7 @@
         JackManual = New clsJkManualOut 'ジャッキ手動操作出力
         PlcIf = New clsPlcIf 'PLCインターフェース
         Reduce = New clsReducePress 'ロスゼロ減圧処理
+        CalcStroke = New clsCalcuStroke   'ロスゼロ時の計算ストローク
 
         'ジャッキ稼働画面の初期データ
         With UcnJackDsp

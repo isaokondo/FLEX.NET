@@ -38,6 +38,10 @@ Module mdlFLEX
     ''' 減圧処理
     ''' </summary>
     Public WithEvents Reduce As clsReducePress
+    ''' <summary>
+    ''' ロスゼロ時の計算ストローク
+    ''' </summary>
+    Public CalcStroke As clsCalcuStroke
 
     ''' <summary>
     ''' ロスゼロステータス（工程表示用)
@@ -230,7 +234,7 @@ Module mdlFLEX
                             String.Join(",", .ClosetJack)
                         WriteEventData("No." & ClosetJk & " のジャッキ押込み開始しました。", Color.Blue)
                         LosZeroSts = 5
-
+                        'ボイスメッセージ出力
                         PlaySound(My.Resources.ClosetStart)
 
                     Case 5
@@ -238,7 +242,7 @@ Module mdlFLEX
                         WriteEventData("[" & .PieceName & "] セグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
-
+                        'ボイスメッセージ出力
                         PlaySound(My.Resources.SegmentAsem)
 
                         'TODO:推進圧力がある程度たってから

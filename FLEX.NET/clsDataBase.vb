@@ -311,7 +311,7 @@ Public Class clsInitParameter
     ''' 計測ジャッキ　角度
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property MesureJacj As Dictionary(Of Short, Single)
+    Public ReadOnly Property MesureJack As Dictionary(Of Short, Single)
         Get
             Return _mesureJack
         End Get
@@ -387,15 +387,12 @@ Public Class clsInitParameter
             For i = 0 To _numberGroup - 1
                 _faiGroup(i) = _faiGroup(i) / _numberJackOfGroup(i)
             Next
-
+            '計測ジャッキの番号と角度を取得
             For Each mj As String In ht.Keys
                 If mj.IndexOf("計測ジャッキ") >= 0 Then
                     _mesureJack.Add(mj.Replace("計測ジャッキ", ""), ht(mj))
                 End If
             Next
-
-
-
 
         Catch ex As Exception
 

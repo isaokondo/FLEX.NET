@@ -10,21 +10,21 @@ Public Class clsPlcIf
     Private _groupMv() As Single
     Private _groupFlg() As Short
 
-    Private _gyro As Single           ''ジャイロ方位角
-    Private _gyroPitching As Single         ''ジャイロピッチング
-    Private _gyroRolling As Single          ''ジャイロローリング
+    Private _gyro As Single                 'ジャイロ方位角
+    Private _gyroPitching As Single         'ジャイロピッチング
+    Private _gyroRolling As Single              'ジャイロローリング
     Private _machinePitching As Single         ''マシンピッチング
     Private _mashineRolling As Single          ''マシンローリング
-    Private _nakaoreLR As Single           ''中折左右角
-    Private _nakaoreTB As Single           ''中折上下角
-    Private _jkPress As Single           ''シールド元圧
-    Private _rightStroke As Integer          ''右ストローク
-    Private _leftStroke As Integer          ''左ストローク
-    Private _topStroke As Integer          ''上ストローク
-    Private _botomStroke As Integer          ''下ストローク
-    Private _rightSpeed As Integer           ''右スピード
-    Private _leftSpeed As Integer           ''左スピード
-    Private _topSpeed As Integer           ''上スピード
+    Private _nakaoreLR As Single           '中折左右角
+    Private _nakaoreTB As Single           '中折上下角
+    Private _jkPress As Single           'シールド元圧
+    Private _rightStroke As Integer         '右ストローク
+    Private _leftStroke As Integer          '左ストローク
+    Private _topStroke As Integer          '上ストローク
+    Private _botomStroke As Integer         '下ストローク
+    Private _rightSpeed As Integer          '右スピード
+    Private _leftSpeed As Integer           '左スピード
+    Private _topSpeed As Integer           '上スピード
     Private _botomSpeed As Integer           ''下スピード
     Private _realStroke As Integer       ''掘進実ストローク
     Private _beforeStroke As Integer       ''前スキャンの掘進実ストローク
@@ -36,6 +36,10 @@ Public Class clsPlcIf
     '    Private _autoDirectionContorolFLG As Boolean ''自動方向制御フラグ
     Private _contorolModeFLG As Boolean ''制御モードフラグ
     Private _excaStatus As Integer     ''掘進ステータス
+    '計測ジャッキ番号、値　Dictionary
+    Private _mesureJackStroke As Dictionary(Of Short, Integer) '計測ジャッキストローク
+    Private _mesureJackSpeed As Dictionary(Of Short, Integer) '計測ジャッキスピード
+
     ''' <summary>
     ''' 掘進ストローク
     ''' </summary>
@@ -512,6 +516,27 @@ Public Class clsPlcIf
             _感度調整設定圧力偏差 = value
         End Set
     End Property
+    ''' <summary>
+    ''' 計測ジャッキストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MesureJackStroke As Dictionary(Of Short, Integer)
+        Get
+            Return _mesureJackStroke
+        End Get
+    End Property
+    ''' <summary>
+    ''' 計測ジャッキスピード
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MesureJackSpeed As Dictionary(Of Short, Integer)
+        Get
+            Return _mesureJackSpeed
+        End Get
+    End Property
+
+
+
 
     ''' <summary>
     ''' 組立ピース番号
@@ -578,6 +603,13 @@ Public Class clsPlcIf
         ReDim _groupFlg(InitParameter.NumberGroup - 1) 'グループ圧力Flg
         ReDim _jackSelect(InitParameter.NumberJack - 1) 'ジャッキ選択
         ReDim _JackStatus(InitParameter.NumberJack - 1)
+        '計測ジャッキのDictionary 初期化
+        _mesureJackStroke = New Dictionary(Of Short, Integer)
+        For Each i As KeyValuePair(Of Short, Single) In InitParameter.MesureJack
+            _mesureJackStroke.Add(i.Key, 0)
+            _mesureJackSpeed.Add(i.Key, 0)
+        Next
+
 
         Dim iRet As Long = PLC_Open() 'オープン処理
         If iRet <> 0 Then
@@ -654,6 +686,13 @@ Public Class clsPlcIf
                 _excaStatus = GetAnalogData("掘進ステータス", AnalogTag)
                 _CopyAngle = GetAnalogData("コピー角度", AnalogTag)
                 _CopyStroke = GetAnalogData("コピーストローク", AnalogTag)
+
+                For Each mj In InitParameter.MesureJack.Keys
+                    _mesureJackStroke(mj) = GetAnalogData("ジャッキストローク" & mj, AnalogTag)
+                    _mesureJackSpeed(mj) = GetAnalogData("ジャッキスピード" & mj, AnalogTag)
+                Next
+
+
 
                 '同時施工ステータス読込
                 Dim p As Short
