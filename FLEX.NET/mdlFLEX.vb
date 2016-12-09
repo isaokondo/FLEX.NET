@@ -132,6 +132,10 @@ Module mdlFLEX
         SegAsmblyData.SegmentAssemblyDataRead(PlcIf.RingNo)
         '姿勢トレンドのデータ取得
         frmMain.DirectionChartD.DataGet()
+        'TODO:最大テーパーの算出
+        CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
+        'セグメント幅
+        CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
 
         'If PreStatus = -1 Then Exit Sub
         '待機中から掘進
@@ -143,6 +147,8 @@ Module mdlFLEX
             My.Forms.frmMain.ChartClear() 'チャート初期化
             My.Forms.frmMain.DspExcavStartDay(Now)
             ElapsedTime.Reset() '掘進時間計算開始
+            CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
+            CalcStroke.StartMesureStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
         End If
         If PreStatus = cChudan And NowStatus = cKussin Then
             WriteEventData("掘進再開しました", Color.Magenta)
@@ -242,6 +248,9 @@ Module mdlFLEX
                         WriteEventData("[" & .PieceName & "] セグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
+                        '計算ストローク用に組立ジャッキの設定
+                        CalcStroke.SetAsembleJack(.ClosetJack)
+
                         'ボイスメッセージ出力
                         PlaySound(My.Resources.SegmentAsem)
 
@@ -288,8 +297,11 @@ Module mdlFLEX
                     Reduce.Start()
                     LosZeroSts = 1
 
-                    PlaySound(My.Resources.ReduceStart)
+                    PlaySound(My.Resources.ReduceStart) 'ボイスメッセージ
 
+                    '計算ストローク用セグメント幅等設定
+                    CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+                    'todo:テーパー量等？
 
                 Case 2
                     WriteEventData("減圧完了しました。", Color.Magenta)
@@ -319,12 +331,7 @@ Module mdlFLEX
             LosZeroSts = 0
             ElapsedTime.LosZeroStop()
         End If
-
-
-
     End Sub
-
-
     ''' <summary>
     ''' 同時施工キャンセル
     ''' </summary>
@@ -335,6 +342,17 @@ Module mdlFLEX
         WriteEventData("同時施工キャンセルされました。", Color.Red)
 
     End Sub
+    ''' <summary>
+    ''' 計測ストロークの変化時
+    ''' </summary>
+    Private Sub PlcIf_MesureStrokeChange() Handles PlcIf.MesureStrokeChange
+        CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
+        CalcStroke.MesureJackSpeed = PlcIf.MesureJackSpeed
+        CalcStroke.Calc()
+    End Sub
+
+
+
     ''' <summary>
     ''' 同時施工データ初期化
     ''' </summary>
@@ -610,5 +628,4 @@ Module mdlFLEX
         g.FillEllipse(pen, rect)
 
     End Sub
-
 End Module

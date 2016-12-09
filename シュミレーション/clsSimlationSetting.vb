@@ -39,7 +39,9 @@ Public Class clsSimlationSetting
     Public ReadOnly Property LosZeroStFlex As String
     Public ReadOnly Property LosZeroModeMachine As String
     Public ReadOnly Property LosZeroEnable As String
-
+    Public ReadOnly Property MesureJackStroke As New List(Of String)
+    Public ReadOnly Property MesureJackSpeed As New List(Of String)
+    Public ReadOnly Property MesureJackNo As New List(Of Short)
 
 
 
@@ -118,6 +120,18 @@ Public Class clsSimlationSetting
                         _LosZeroEnable = .Item("値")
 
                 End Select
+                '計測ジャッキの取込
+                If .Item("項目").ToString.IndexOf("MesureJackStroke") >= 0 Then
+                    _MesureJackStroke.Add(.Item("値"))
+                    _MesureJackNo.Add(CShort(.Item("項目").ToString.Replace("MesureJackStroke", "")))
+                End If
+
+                If .Item("項目").ToString.IndexOf("MesureJackSpeed") >= 0 Then
+                    _MesureJackSpeed.Add(.Item("値"))
+                End If
+
+
+
             End While
         End With
 

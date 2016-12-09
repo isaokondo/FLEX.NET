@@ -117,27 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAABAAIAICAQAAAAAADoAgAAJgAAABAQEAAAAAAAKAEAAA4DAAAoAAAAIAAAAEAAAAABAAQAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAgAAAAICAAIAAAACAAIAAgIAAAICAgADAwMAAAAD/AAD/
-        AAAA//8A/wAAAAAAAAD//wAA////AN3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d0zMzPM
-        zMzMzMzMyN3d3d3dOzszzMzMzOzMzMjd3d3d3TOzs8zs7M7+zs7I3d3d3d07uzPOzszIiMzsyN3d3d3d
-        M7uzzOzshzfOzs3d3d3d3Tu7MzzOzIg3fOzd3d3d3d0zs7P4h0B3dzPN3d3d3d3dOzs4h4gAd4c33d3d
-        3d3d3dOziHN4c3iId93d3d3d3d3dMHh3c3d4iIczPd3d3d3d3dAXiHMTeIh3szPd3d3d3d3XN4iHADd3
-        Fzgz3d3d3d3d13eIhwABMQGzM93d3d3d3dEXeIcQAAALODPd3d3d3d3QAXdxEAAAeLMz3d3d3d3d0AAT
-        EHcAB4s4M93d3d3d3dEAAACL//i4szPd3d3d3d3dAAADOPuPizgz3d3d3d3d3dd3c4v/+LizM93d3d3d
-        3d3d3dM4+4+LODPd3d3d3d3d3d3Ti//4uLMz3d3d3d3d3d3d0zj7j4s4M93d3d3d3d3d3dOL+/v7szPd
-        3d3d3d3d3d3TP7+/v7sz3d3d3d3d3d3d3TP7+/vzPd3d3d3d3d3d3d3dMzMzPd3d3d3d3d3d3d3d3d3d
-        3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d////////
-        ///wAAA/8AAAP/AAAD/wAAA/8AAAf/AAAP/wAAH/8AAD//gAA//8AAB//gAAP/4AAD/+AAA//gAAP/4A
-        AD/+AAA//gAAP/8AAD//gAA///gAP//4AD//+AA///gAP//4AD///AB///8B////////////////////
-        //8oAAAAEAAAACAAAAABAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAgAAAAICAAIAA
-        AACAAIAAgIAAAICAgADAwMAAAAD/AAD/AAAA//8A/wAAAAAAAAD//wAA////ADMzzMzMzMzNO7vM7O/s
-        7M0zs87Ox37OzTu7jMzIPMzNM7O4wHdzfN07OIOBOIdz3dMIdzd4iHM93ROIcDeDcz3dd4iAATCDPd0D
-        eDAAAIM93QATCAAIgz3dAAADv/iDPd3QANO/+IM93d3d07u4gz3d3d3Tv/u4Pd3d3d0zMzPdAAEzswAB
-        h0AAATPNAAHd3QADOzsAA4gAgAE33cAB3d3AAdOzwAF4c8ABd93AAd3d4gHdMP4Bc3f+AYcz/wPd3Q==
-</value>
-  </data>
+  <metadata name="Timer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="JackNo.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="RealStrokeLen.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="CalcStrokeLen.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="CalcLogcalStroke.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="StartStroke.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="JackSpeed.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Angle.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="JackState.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

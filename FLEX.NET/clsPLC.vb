@@ -117,11 +117,6 @@ Public Class clsPlcIf
 
 
 
-
-
-
-
-
     Private WithEvents com_ReferencesEasyIF As ACTMULTILib.ActEasyIF
 
     Public Event PLCRead() 'PLC読込イベント
@@ -132,6 +127,10 @@ Public Class clsPlcIf
     ''' <param name="PreStatus">変化前の値</param>
     ''' <param name="NowStatus">変化後の値</param>
     Public Event ExcavationStatusChange(PreStatus As Integer, NowStatus As Integer)
+    ''' <summary>
+    ''' 計測ジャッキが変化
+    ''' </summary>
+    Public Event MesureStrokeChange()
 
     ''' <summary>
     ''' 基準値が変化　掘進ステータス、掘進ストローク
@@ -605,6 +604,7 @@ Public Class clsPlcIf
         ReDim _JackStatus(InitParameter.NumberJack - 1)
         '計測ジャッキのDictionary 初期化
         _mesureJackStroke = New Dictionary(Of Short, Integer)
+        _mesureJackSpeed = New Dictionary(Of Short, Integer)
         For Each i As KeyValuePair(Of Short, Single) In InitParameter.MesureJack
             _mesureJackStroke.Add(i.Key, 0)
             _mesureJackSpeed.Add(i.Key, 0)
@@ -617,7 +617,7 @@ Public Class clsPlcIf
             End
         End If
 
-        '初期状態読込
+        '初期状態読込 イベントを発生させないため
         _LosZeroSts_FLEX = AnalogPlcRead("同時施工ステータス_FLEX")
         _LosZeroSts_M = AnalogPlcRead("同時施工ステータス_Machine")
         _excaStatus = AnalogPlcRead("掘進ステータス")
@@ -625,6 +625,10 @@ Public Class clsPlcIf
 
         PreExcaStatus = _excaStatus
         _LosZeroMode = DigtalPlcRead("同時施工モード")
+        '計測ジャッキ読込
+        For Each mj In InitParameter.MesureJack.Keys
+            _mesureJackStroke(mj) = AnalogPlcRead("ジャッキストローク" & mj)
+        Next
 
         TimerRun()
 
@@ -687,12 +691,20 @@ Public Class clsPlcIf
                 _CopyAngle = GetAnalogData("コピー角度", AnalogTag)
                 _CopyStroke = GetAnalogData("コピーストローク", AnalogTag)
 
+                '計測ジャッキ取込
+                Dim st As New Dictionary(Of Short, Integer)(_mesureJackStroke)
+                'st = New Dictionary(Of Short, Integer)(_mesureJackStroke) '前スキャンの読込
                 For Each mj In InitParameter.MesureJack.Keys
                     _mesureJackStroke(mj) = GetAnalogData("ジャッキストローク" & mj, AnalogTag)
                     _mesureJackSpeed(mj) = GetAnalogData("ジャッキスピード" & mj, AnalogTag)
                 Next
-
-
+                '計測ストロークのいずれかが変化した時のイベント
+                For Each mj In InitParameter.MesureJack.Keys
+                    If _mesureJackStroke(mj) <> st(mj) Then
+                        RaiseEvent MesureStrokeChange()
+                        Exit For
+                    End If
+                Next
 
                 '同時施工ステータス読込
                 Dim p As Short

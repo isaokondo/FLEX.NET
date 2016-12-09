@@ -618,6 +618,10 @@
         PlcIf.LosZeroEnable = False '同時施工キャンセル
     End Sub
 
+    Private Sub StrokeMonitor_Click(sender As Object, e As EventArgs) Handles StrokeMonitor.Click
+        My.Forms.frmCalcStrokeConfirm.Show()
+    End Sub
+
     ''' <summary>
     ''' 姿勢トレンドのデータ取得
     ''' </summary>

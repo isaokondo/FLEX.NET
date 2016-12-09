@@ -133,6 +133,12 @@
     <Compile Include="clsPlanData.vb" />
     <Compile Include="clsPLC.vb" />
     <Compile Include="CommonMdl.vb" />
+    <Compile Include="frmCalcStrokeConfirm.Designer.vb">
+      <DependentUpon>frmCalcStrokeConfirm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCalcStrokeConfirm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmHorPlanData.Designer.vb">
       <DependentUpon>frmHorPlanData.vb</DependentUpon>
     </Compile>
@@ -348,6 +354,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmCalcStrokeConfirm.resx">
+      <DependentUpon>frmCalcStrokeConfirm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmHorPlanData.resx">
       <DependentUpon>frmHorPlanData.vb</DependentUpon>
     </EmbeddedResource>

@@ -110,6 +110,13 @@ Public Class frmSim
             DgvLosZero.Rows.Add()
             DgvLosZero.Rows(i).Cells(0).Value = (i + 1).ToString
         Next
+
+
+        For Each jkn In SimlationSetting.MesureJackNo
+            DgvJackStroke.Rows.Add(jkn, 0, 0)
+        Next
+
+
         'フォームに情報表示
         Me.Text &= "　論理局番=[" & ComPlc.ActLogicalStationNumber & "] DBName=[" & My.Settings.DataBaseName & "] HostName=[" & My.Settings.HostName & "]"
 
@@ -134,6 +141,9 @@ Public Class frmSim
         'PLC読込
         Dim iRet As Long
         Dim plcData As Integer
+
+        Dim i As Integer
+
 
         '掘進中
         iRet = ComPlc.GetDevice(SimlationSetting.KussinOn, plcData)
@@ -171,6 +181,23 @@ Public Class frmSim
         '右ｽﾋﾟｰﾄﾞ
         iRet = ComPlc.GetDevice(SimlationSetting.RightSpeedAdr, plcData)
         nudRightSpeed.Value = fnChangeSpeedAnalogIn(plcData)
+
+        '計測ジャッキの取込
+        For i = 0 To SimlationSetting.MesureJackNo.Count - 1
+
+            iRet = ComPlc.GetDevice(SimlationSetting.MesureJackStroke(i), plcData)
+            DgvJackStroke.Rows(i).Cells(1).Value = fnChangeStrokeAnalogIn(plcData)
+
+            iRet = ComPlc.GetDevice(SimlationSetting.MesureJackSpeed(i), plcData)
+            DgvJackStroke.Rows(i).Cells(2).Value = fnChangeSpeedAnalogIn(plcData)
+
+
+        Next
+
+
+
+
+
         'ピッチング
         iRet = ComPlc.GetDevice2(SimlationSetting.PitchingAdr, plcData)
         nudPitching.Value = plcData / 100
@@ -206,7 +233,6 @@ Public Class frmSim
 
 
 
-        Dim i As Integer
 
         'グループ圧PV
         Dim plcGpPv() As Integer
@@ -323,7 +349,7 @@ Public Class frmSim
     ''' </summary>
     ''' <param name="PlcData"></param>
     ''' <returns>PLCからの    ''' データ</returns>
-    Private Function fnChangeStrokeAnalogIn(PlcData As Integer) As Single
+    Private Function fnChangeStrokeAnalogIn(PlcData As Integer) As Integer
         Return PlcData / SimlationSetting.StrokePlcScale * SimlationSetting.StrokeEngScale
     End Function
 
@@ -589,4 +615,15 @@ CatchError:  '例外処理
 
     End Sub
 
+    Private Sub DgvJackStroke_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvJackStroke.CellContentClick
+
+    End Sub
+
+    Private Sub DgvJackStroke_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles DgvJackStroke.CellValueChanged
+
+    End Sub
+
+    Private Sub DgvJackStroke_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvJackStroke.KeyDown
+
+    End Sub
 End Class

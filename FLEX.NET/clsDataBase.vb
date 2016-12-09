@@ -394,12 +394,18 @@ Public Class clsInitParameter
                 End If
             Next
 
+
+
         Catch ex As Exception
 
         End Try
 
 
     End Sub
+    Function KeySelector(ByVal pair As KeyValuePair(Of String, Integer)) As String
+        ' 並べ替えの際のキーにKeyの値を使用する
+        Return pair.Key
+    End Function
     ''' <summary>
     ''' ジャッキ取付角度の演算(degree)
     ''' </summary>

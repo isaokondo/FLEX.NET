@@ -20,40 +20,45 @@ Public Class clsCalcuStroke
     ''' 計算平均ジャッキストローク
     ''' </summary>
     Private _mesureCalcAveJackStroke As Integer
-    ''' <summary>
-    ''' 後胴部ローリング
-    ''' </summary>
-    Private _rearDrumRolling As Single
-    ''' <summary>
-    ''' セグメントローリング
-    ''' </summary>
-    Private _segmentRolling As Single
+
+
     ''' <summary>
     ''' ジャッキステータス　掘進中、組立中、組み立て後の掘進中
     ''' </summary>
     Private _jackStatus As Short()
     ''' <summary>
-    ''' セグメント中心幅
-    ''' </summary>
-    Private _segnebtCenterWidth As Single
-    ''' <summary>
-    ''' セグメントテーパー量
-    ''' </summary>
-    Private _segmentTaperValue As Single
-    ''' <summary>
-    ''' セグメント最大テーパー位置
-    ''' </summary>
-    Private _segmentMaxTaperLoc As Single
-    ''' <summary>
     ''' 組立完了のジャッキ
     ''' </summary>
     Private asembleFinishedJack As New List(Of Short)
+    ''' <summary>
+    ''' 後胴部ローリング
+    ''' </summary>
+    Public Property rearDrumRolling As Single
+    ''' <summary>
+    ''' セグメントローリング
+    ''' </summary>
+    Public Property segmentRolling As Single
+
+    ''' <summary>
+    ''' セグメント中心幅
+    ''' </summary>
+    Public Property SegnebtCenterWidth As Single
+    ''' <summary>
+    ''' セグメントテーパー量
+    ''' </summary>
+    Public Property SegmentTaperValue As Single
+    ''' <summary>
+    ''' セグメント最大テーパー位置
+    ''' </summary>
+    ''' 
+    Public Property SegmentMaxTaperLoc As Single
+
     ''' <summary>
     ''' 計測ジャッキストローク
     ''' </summary>
     Public WriteOnly Property MesureJackStroke As Dictionary(Of Short, Integer)
         Set(value As Dictionary(Of Short, Integer))
-            _mesureCalcJackStroke = value
+            _mesureJackStroke = value
         End Set
     End Property
     ''' <summary>
@@ -83,6 +88,27 @@ Public Class clsCalcuStroke
         End Get
     End Property
     ''' <summary>
+    ''' 計算平均掘進ストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property CalcAveLogicalStroke As Integer
+    ''' <summary>
+    ''' 計算計測掘進ストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MesureCalcLOgocalStroke As New Dictionary(Of Short, Integer)
+    ''' <summary>
+    ''' 計測ジャッキ平均スピード
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MesureAveSpeed As Integer
+    ''' <summary>
+    ''' 掘進開始時の計測ｼﾞｬｯｷｽﾄﾛｰｸ
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property StartMesureStroke As New Dictionary(Of Short, Integer)
+
+    ''' <summary>
     ''' 組立完了ジャッキのセット
     ''' </summary>
     Public Sub SetAsembleJack(jk As List(Of Short))
@@ -103,6 +129,10 @@ Public Class clsCalcuStroke
         '計算ジャッキストロークの初期化
         For Each i As Short In InitParameter.MesureJack.Keys
             _mesureCalcJackStroke.Add(i, 0)
+            _mesureJackStroke.Add(i, 0)
+            _mesureJackSpeed.Add(i, 0)
+            _StartMesureStroke.Add(i, 0)
+            _MesureCalcLOgocalStroke.Add(i, 0)
         Next
     End Sub
 
@@ -118,33 +148,84 @@ Public Class clsCalcuStroke
                 If mjJkNo = asJkNo Then
                     'セグメント幅分を加算
                     _mesureCalcJackStroke(mjJkNo) +=
-                    _segnebtCenterWidth +
-                    _segmentTaperValue / 2 *
-                    Math.Cos((_segmentMaxTaperLoc + _rearDrumRolling - _segmentRolling - InitParameter.MesureJack(mjJkNo)) _
+                    _SegnebtCenterWidth +
+                    _SegmentTaperValue / 2 *
+                    Math.Cos((_SegmentMaxTaperLoc + _rearDrumRolling - _segmentRolling - InitParameter.MesureJack(mjJkNo)) _
                     / 180 * Math.PI)
                 End If
             Next
+            '掘進ストローク
+            _MesureCalcLOgocalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - _StartMesureStroke(mjJkNo)
         Next
-        '計算平均ジャッキストロークの演算
-        Dim cnt As Short = 0
-        Dim st As Integer = 0
-        For i As Short = 0 To InitParameter.NumberJack - 1
-            If PlcIf.JackStatus(i) And 1 Then   '掘進モードのみ
-                For Each s In _mesureCalcJackStroke
-                    If s.Key = i + 1 Then
-                        cnt += 1
-                        st += s.Value
-                    End If
-                Next
-            End If
-        Next
-        If cnt <> 0 Then
-            _mesureCalcAveJackStroke = st / cnt
-        End If
+        ''計算平均ジャッキストロークの演算
+        Dim CalcSt As New clsGetAvg(_mesureCalcJackStroke)
+        _mesureCalcAveJackStroke = CalcSt.AvgData
+
+        ''計算平均掘進ストロークの演算
+        Dim CalcLogicalSt As New clsGetAvg(_MesureCalcLOgocalStroke)
+        _CalcAveLogicalStroke = CalcLogicalSt.AvgData
 
 
+        ''平均計測ジャッキスピードの演算
+        Dim CalcSpeed As New clsGetAvg(_mesureJackSpeed)
+        _MesureAveSpeed = CalcSpeed.AvgData
+
+        ''計算平均ジャッキストロークの演算
+        'Dim CalcSt As New List(Of Integer)
+        'For Each s In _mesureCalcJackStroke
+        '    '掘進モードのみ
+        '    If PlcIf.JackStatus(s.Key - 1) And 2 Then
+        '        CalcSt.Add(s.Value)
+        '    End If
+        'Next
+        'If CalcSt.Count > 0 Then
+        '    _mesureCalcAveJackStroke = CalcSt.Average
+        'End If
+
+        ''平均計測ジャッキスピードの演算
+        'Dim CalcSpeed As New List(Of Integer)
+        'For Each sp In _mesureJackSpeed
+        '    '掘進モードのみでゼロ以上
+        '    If PlcIf.JackStatus(sp.Key - 1) And 2 And sp.Value > 0 Then
+        '        CalcSpeed.Add(sp.Value)
+        '    End If
+        'Next
+        'If CalcSpeed.Count > 0 Then
+        '    _MesureAveSpeed = CalcSpeed.Average
+        'End If
 
     End Sub
+
+    Private Class clsGetAvg
+
+        Private JackData As Dictionary(Of Short, Integer)
+        Public ReadOnly Property AvgData As Integer
+            Get
+                Dim jkD As New List(Of Integer)
+                For Each sp In JackData
+                    '掘進モードのみでゼロ以上
+                    If PlcIf.JackStatus(sp.Key - 1) And 2 And sp.Value > 0 Then
+                        jkD.Add(sp.Value)
+                    End If
+                Next
+                If jkD.Count > 0 Then
+                    Return jkD.Average
+                Else
+                    Return 0
+                End If
+            End Get
+        End Property
+
+        Public Sub New(t As Dictionary(Of Short, Integer))
+            JackData = t
+        End Sub
+
+
+
+    End Class
+
+
+
 
 
 
