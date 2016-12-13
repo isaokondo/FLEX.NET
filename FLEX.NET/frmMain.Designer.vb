@@ -42,6 +42,7 @@ Partial Class frmMain
         Me.表示ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DspSetting = New System.Windows.Forms.ToolStripMenuItem()
         Me.ScaleSetting = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StrokeMonitor = New System.Windows.Forms.ToolStripMenuItem()
         Me.設定ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PressParameter = New System.Windows.Forms.ToolStripMenuItem()
         Me.OneDirectionParameter = New System.Windows.Forms.ToolStripMenuItem()
@@ -102,6 +103,21 @@ Partial Class frmMain
         Me.btnLossZerooCancel = New System.Windows.Forms.Button()
         Me.btnPieceConfirm = New System.Windows.Forms.Button()
         Me.lblNowDate = New System.Windows.Forms.Label()
+        Me.DspCopyStroke2 = New FLEX.NET.ucnDspDataMin2()
+        Me.DspCopyStroke1 = New FLEX.NET.ucnDspDataMin2()
+        Me.DspSegmentRolling = New FLEX.NET.ucnDspDataMin2()
+        Me.DspMachineRolling = New FLEX.NET.ucnDspDataMin2()
+        Me.DspUpRealStroke = New FLEX.NET.ucnDspDataMin()
+        Me.UcnGpPvBarGraph = New FLEX.NET.ucnGpPvBarGraph()
+        Me.DspRightClearance = New FLEX.NET.ucnDspDataMin()
+        Me.DspLeftClearance = New FLEX.NET.ucnDspDataMin()
+        Me.DspBottomSpeed = New FLEX.NET.ucnDspDataMin()
+        Me.DspBottomClearance = New FLEX.NET.ucnDspDataMin()
+        Me.DspTopClearance = New FLEX.NET.ucnDspDataMin()
+        Me.DspRightRawStroke = New FLEX.NET.ucnDspDataMin()
+        Me.DspBottomRawStroke = New FLEX.NET.ucnDspDataMin()
+        Me.DspLeftRawStroke = New FLEX.NET.ucnDspDataMin()
+        Me.DspUpRawStroke = New FLEX.NET.ucnDspDataMin()
         Me.ucnVerLineChart = New FLEX.NET.ucnChart2()
         Me.ucnHorLineChart = New FLEX.NET.ucnChart2()
         Me.ucnVerDevChart = New FLEX.NET.ucnChart()
@@ -120,16 +136,13 @@ Partial Class frmMain
         Me.DspAssemblyPieace = New FLEX.NET.ucnDspData()
         Me.DspBoltPitch = New FLEX.NET.ucnDspData()
         Me.DspTypeName = New FLEX.NET.ucnDspData()
-        Me.UcnGpPvBarGraph = New FLEX.NET.ucnGpPvBarGraph()
         Me.UcnDspDevImg = New FLEX.NET.ucnDspDevImg()
         Me.DspRightSpeed = New FLEX.NET.ucnDspDataMin()
         Me.DspRightRealStroke = New FLEX.NET.ucnDspDataMin()
         Me.DspLeftSpeed = New FLEX.NET.ucnDspDataMin()
         Me.DspLeftRealStroke = New FLEX.NET.ucnDspDataMin()
         Me.DspUpSpeed = New FLEX.NET.ucnDspDataMin()
-        Me.DspUpRealStroke = New FLEX.NET.ucnDspDataMin()
-        Me.DspBottomSpeed = New FLEX.NET.ucnDspDataMin()
-        Me.DspRealBottomStroke = New FLEX.NET.ucnDspDataMin()
+        Me.DspBottomRealStroke = New FLEX.NET.ucnDspDataMin()
         Me.UcnDspData9 = New FLEX.NET.ucnDspData()
         Me.UcnDspData10 = New FLEX.NET.ucnDspData()
         Me.UcnDspData11 = New FLEX.NET.ucnDspData()
@@ -163,7 +176,6 @@ Partial Class frmMain
         Me.DspDirection = New FLEX.NET.ucnDspData()
         Me.DspVerDev = New FLEX.NET.ucnDspData()
         Me.DspHorDev = New FLEX.NET.ucnDspData()
-        Me.StrokeMonitor = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -278,6 +290,12 @@ Partial Class frmMain
         Me.ScaleSetting.Name = "ScaleSetting"
         Me.ScaleSetting.Size = New System.Drawing.Size(164, 22)
         Me.ScaleSetting.Text = "スケール"
+        '
+        'StrokeMonitor
+        '
+        Me.StrokeMonitor.Name = "StrokeMonitor"
+        Me.StrokeMonitor.Size = New System.Drawing.Size(164, 22)
+        Me.StrokeMonitor.Text = "計算ストロークモニタ"
         '
         '設定ToolStripMenuItem
         '
@@ -1051,6 +1069,202 @@ Partial Class frmMain
         Me.lblNowDate.Text = "9999／99／99　99：99：99"
         Me.lblNowDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'DspCopyStroke2
+        '
+        Me.DspCopyStroke2.BackColor = System.Drawing.Color.Transparent
+        Me.DspCopyStroke2.DecimalPlaces = CType(0, Short)
+        Me.DspCopyStroke2.FieldName = "余掘 2 "
+        Me.DspCopyStroke2.Location = New System.Drawing.Point(876, 613)
+        Me.DspCopyStroke2.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspCopyStroke2.Name = "DspCopyStroke2"
+        Me.DspCopyStroke2.Size = New System.Drawing.Size(193, 30)
+        Me.DspCopyStroke2.TabIndex = 150
+        Me.DspCopyStroke2.Unit = "mm"
+        Me.DspCopyStroke2.Value = 0R
+        '
+        'DspCopyStroke1
+        '
+        Me.DspCopyStroke1.BackColor = System.Drawing.Color.Transparent
+        Me.DspCopyStroke1.DecimalPlaces = CType(0, Short)
+        Me.DspCopyStroke1.FieldName = "余掘 1 "
+        Me.DspCopyStroke1.Location = New System.Drawing.Point(876, 581)
+        Me.DspCopyStroke1.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspCopyStroke1.Name = "DspCopyStroke1"
+        Me.DspCopyStroke1.Size = New System.Drawing.Size(193, 30)
+        Me.DspCopyStroke1.TabIndex = 149
+        Me.DspCopyStroke1.Unit = "mm"
+        Me.DspCopyStroke1.Value = 0R
+        '
+        'DspSegmentRolling
+        '
+        Me.DspSegmentRolling.BackColor = System.Drawing.Color.Transparent
+        Me.DspSegmentRolling.DecimalPlaces = CType(2, Short)
+        Me.DspSegmentRolling.FieldName = "SG ﾛｰﾘﾝｸﾞ"
+        Me.DspSegmentRolling.Location = New System.Drawing.Point(876, 231)
+        Me.DspSegmentRolling.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspSegmentRolling.Name = "DspSegmentRolling"
+        Me.DspSegmentRolling.Size = New System.Drawing.Size(193, 30)
+        Me.DspSegmentRolling.TabIndex = 148
+        Me.DspSegmentRolling.Unit = "deg"
+        Me.DspSegmentRolling.Value = 0R
+        '
+        'DspMachineRolling
+        '
+        Me.DspMachineRolling.BackColor = System.Drawing.Color.Transparent
+        Me.DspMachineRolling.DecimalPlaces = CType(2, Short)
+        Me.DspMachineRolling.FieldName = "ﾏｼﾝﾛｰﾘﾝｸﾞ"
+        Me.DspMachineRolling.Location = New System.Drawing.Point(876, 199)
+        Me.DspMachineRolling.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspMachineRolling.Name = "DspMachineRolling"
+        Me.DspMachineRolling.Size = New System.Drawing.Size(193, 30)
+        Me.DspMachineRolling.TabIndex = 147
+        Me.DspMachineRolling.Unit = "deg"
+        Me.DspMachineRolling.Value = 0R
+        '
+        'DspUpRealStroke
+        '
+        Me.DspUpRealStroke.BackColor = System.Drawing.Color.Transparent
+        Me.DspUpRealStroke.DecimalPlaces = CType(0, Short)
+        Me.DspUpRealStroke.FieldName = "上ST実"
+        Me.DspUpRealStroke.Location = New System.Drawing.Point(102, 131)
+        Me.DspUpRealStroke.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspUpRealStroke.Name = "DspUpRealStroke"
+        Me.DspUpRealStroke.Size = New System.Drawing.Size(138, 46)
+        Me.DspUpRealStroke.TabIndex = 42
+        Me.DspUpRealStroke.Unit = "mm"
+        Me.DspUpRealStroke.Value = 1234.0R
+        '
+        'UcnGpPvBarGraph
+        '
+        Me.UcnGpPvBarGraph.AutoSize = True
+        Me.UcnGpPvBarGraph.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.UcnGpPvBarGraph.GpFlg = Nothing
+        Me.UcnGpPvBarGraph.GpPv = Nothing
+        Me.UcnGpPvBarGraph.Location = New System.Drawing.Point(27, 145)
+        Me.UcnGpPvBarGraph.Margin = New System.Windows.Forms.Padding(0)
+        Me.UcnGpPvBarGraph.Name = "UcnGpPvBarGraph"
+        Me.UcnGpPvBarGraph.NumberGroup = 26
+        Me.UcnGpPvBarGraph.PresBarGraphWidt = 50.0!
+        Me.UcnGpPvBarGraph.Size = New System.Drawing.Size(78, 555)
+        Me.UcnGpPvBarGraph.TabIndex = 96
+        '
+        'DspRightClearance
+        '
+        Me.DspRightClearance.BackColor = System.Drawing.Color.Transparent
+        Me.DspRightClearance.DecimalPlaces = CType(0, Short)
+        Me.DspRightClearance.FieldName = "右ｸﾘｱ"
+        Me.DspRightClearance.Location = New System.Drawing.Point(928, 465)
+        Me.DspRightClearance.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspRightClearance.Name = "DspRightClearance"
+        Me.DspRightClearance.Size = New System.Drawing.Size(138, 46)
+        Me.DspRightClearance.TabIndex = 146
+        Me.DspRightClearance.Unit = "mm"
+        Me.DspRightClearance.Value = 1234.0R
+        '
+        'DspLeftClearance
+        '
+        Me.DspLeftClearance.BackColor = System.Drawing.Color.Transparent
+        Me.DspLeftClearance.DecimalPlaces = CType(0, Short)
+        Me.DspLeftClearance.FieldName = "左ｸﾘｱ"
+        Me.DspLeftClearance.Location = New System.Drawing.Point(104, 485)
+        Me.DspLeftClearance.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspLeftClearance.Name = "DspLeftClearance"
+        Me.DspLeftClearance.Size = New System.Drawing.Size(138, 46)
+        Me.DspLeftClearance.TabIndex = 145
+        Me.DspLeftClearance.Unit = "mm"
+        Me.DspLeftClearance.Value = 1234.0R
+        '
+        'DspBottomSpeed
+        '
+        Me.DspBottomSpeed.BackColor = System.Drawing.Color.Transparent
+        Me.DspBottomSpeed.DecimalPlaces = CType(0, Short)
+        Me.DspBottomSpeed.FieldName = "下速度"
+        Me.DspBottomSpeed.Location = New System.Drawing.Point(114, 677)
+        Me.DspBottomSpeed.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspBottomSpeed.Name = "DspBottomSpeed"
+        Me.DspBottomSpeed.Size = New System.Drawing.Size(138, 46)
+        Me.DspBottomSpeed.TabIndex = 47
+        Me.DspBottomSpeed.Unit = "mm/min"
+        Me.DspBottomSpeed.Value = 1234.0R
+        '
+        'DspBottomClearance
+        '
+        Me.DspBottomClearance.BackColor = System.Drawing.Color.Transparent
+        Me.DspBottomClearance.DecimalPlaces = CType(0, Short)
+        Me.DspBottomClearance.FieldName = "下ｸﾘｱ"
+        Me.DspBottomClearance.Location = New System.Drawing.Point(198, 677)
+        Me.DspBottomClearance.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspBottomClearance.Name = "DspBottomClearance"
+        Me.DspBottomClearance.Size = New System.Drawing.Size(138, 46)
+        Me.DspBottomClearance.TabIndex = 144
+        Me.DspBottomClearance.Unit = "mm"
+        Me.DspBottomClearance.Value = 1234.0R
+        '
+        'DspUpClearance
+        '
+        Me.DspTopClearance.BackColor = System.Drawing.Color.Transparent
+        Me.DspTopClearance.DecimalPlaces = CType(0, Short)
+        Me.DspTopClearance.FieldName = "上ｸﾘｱ"
+        Me.DspTopClearance.Location = New System.Drawing.Point(191, 131)
+        Me.DspTopClearance.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspTopClearance.Name = "DspUpClearance"
+        Me.DspTopClearance.Size = New System.Drawing.Size(143, 46)
+        Me.DspTopClearance.TabIndex = 143
+        Me.DspTopClearance.Unit = "mm"
+        Me.DspTopClearance.Value = 1234.0R
+        '
+        'DspRightRawStroke
+        '
+        Me.DspRightRawStroke.BackColor = System.Drawing.Color.Transparent
+        Me.DspRightRawStroke.DecimalPlaces = CType(0, Short)
+        Me.DspRightRawStroke.FieldName = "右ST読"
+        Me.DspRightRawStroke.Location = New System.Drawing.Point(928, 368)
+        Me.DspRightRawStroke.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspRightRawStroke.Name = "DspRightRawStroke"
+        Me.DspRightRawStroke.Size = New System.Drawing.Size(138, 46)
+        Me.DspRightRawStroke.TabIndex = 142
+        Me.DspRightRawStroke.Unit = "mm"
+        Me.DspRightRawStroke.Value = 1234.0R
+        '
+        'DspBottomRawStroke
+        '
+        Me.DspBottomRawStroke.BackColor = System.Drawing.Color.Transparent
+        Me.DspBottomRawStroke.DecimalPlaces = CType(0, Short)
+        Me.DspBottomRawStroke.FieldName = "下ST読"
+        Me.DspBottomRawStroke.Location = New System.Drawing.Point(114, 629)
+        Me.DspBottomRawStroke.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspBottomRawStroke.Name = "DspBottomRawStroke"
+        Me.DspBottomRawStroke.Size = New System.Drawing.Size(138, 46)
+        Me.DspBottomRawStroke.TabIndex = 141
+        Me.DspBottomRawStroke.Unit = "mm"
+        Me.DspBottomRawStroke.Value = 1234.0R
+        '
+        'DspLeftRawStroke
+        '
+        Me.DspLeftRawStroke.BackColor = System.Drawing.Color.Transparent
+        Me.DspLeftRawStroke.DecimalPlaces = CType(0, Short)
+        Me.DspLeftRawStroke.FieldName = "左ST実"
+        Me.DspLeftRawStroke.Location = New System.Drawing.Point(104, 383)
+        Me.DspLeftRawStroke.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspLeftRawStroke.Name = "DspLeftRawStroke"
+        Me.DspLeftRawStroke.Size = New System.Drawing.Size(138, 46)
+        Me.DspLeftRawStroke.TabIndex = 140
+        Me.DspLeftRawStroke.Unit = "mm"
+        Me.DspLeftRawStroke.Value = 1234.0R
+        '
+        'DspUpRawStroke
+        '
+        Me.DspUpRawStroke.BackColor = System.Drawing.Color.Transparent
+        Me.DspUpRawStroke.DecimalPlaces = CType(0, Short)
+        Me.DspUpRawStroke.FieldName = "上ST読"
+        Me.DspUpRawStroke.Location = New System.Drawing.Point(102, 181)
+        Me.DspUpRawStroke.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspUpRawStroke.Name = "DspUpRawStroke"
+        Me.DspUpRawStroke.Size = New System.Drawing.Size(138, 46)
+        Me.DspUpRawStroke.TabIndex = 139
+        Me.DspUpRawStroke.Unit = "mm"
+        Me.DspUpRawStroke.Value = 1234.0R
+        '
         'ucnVerLineChart
         '
         Me.ucnVerLineChart.BackColor = System.Drawing.Color.Transparent
@@ -1411,20 +1625,6 @@ Partial Class frmMain
         Me.DspTypeName.Value = "RC20ST"
         Me.DspTypeName.ValueType = True
         '
-        'UcnGpPvBarGraph
-        '
-        Me.UcnGpPvBarGraph.AutoSize = True
-        Me.UcnGpPvBarGraph.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.UcnGpPvBarGraph.GpFlg = Nothing
-        Me.UcnGpPvBarGraph.GpPv = Nothing
-        Me.UcnGpPvBarGraph.Location = New System.Drawing.Point(34, 145)
-        Me.UcnGpPvBarGraph.Margin = New System.Windows.Forms.Padding(0)
-        Me.UcnGpPvBarGraph.Name = "UcnGpPvBarGraph"
-        Me.UcnGpPvBarGraph.NumberGroup = 26
-        Me.UcnGpPvBarGraph.PresBarGraphWidt = 50.0!
-        Me.UcnGpPvBarGraph.Size = New System.Drawing.Size(78, 555)
-        Me.UcnGpPvBarGraph.TabIndex = 96
-        '
         'UcnDspDevImg
         '
         Me.UcnDspDevImg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
@@ -1441,7 +1641,7 @@ Partial Class frmMain
         Me.DspRightSpeed.BackColor = System.Drawing.Color.Transparent
         Me.DspRightSpeed.DecimalPlaces = CType(0, Short)
         Me.DspRightSpeed.FieldName = "右速度"
-        Me.DspRightSpeed.Location = New System.Drawing.Point(907, 362)
+        Me.DspRightSpeed.Location = New System.Drawing.Point(926, 415)
         Me.DspRightSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRightSpeed.Name = "DspRightSpeed"
         Me.DspRightSpeed.Size = New System.Drawing.Size(138, 46)
@@ -1454,7 +1654,7 @@ Partial Class frmMain
         Me.DspRightRealStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspRightRealStroke.DecimalPlaces = CType(0, Short)
         Me.DspRightRealStroke.FieldName = "右ST実"
-        Me.DspRightRealStroke.Location = New System.Drawing.Point(912, 311)
+        Me.DspRightRealStroke.Location = New System.Drawing.Point(926, 318)
         Me.DspRightRealStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRightRealStroke.Name = "DspRightRealStroke"
         Me.DspRightRealStroke.Size = New System.Drawing.Size(138, 46)
@@ -1467,7 +1667,7 @@ Partial Class frmMain
         Me.DspLeftSpeed.BackColor = System.Drawing.Color.Transparent
         Me.DspLeftSpeed.DecimalPlaces = CType(0, Short)
         Me.DspLeftSpeed.FieldName = "左速度"
-        Me.DspLeftSpeed.Location = New System.Drawing.Point(112, 362)
+        Me.DspLeftSpeed.Location = New System.Drawing.Point(102, 433)
         Me.DspLeftSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.DspLeftSpeed.Name = "DspLeftSpeed"
         Me.DspLeftSpeed.Size = New System.Drawing.Size(138, 46)
@@ -1480,7 +1680,7 @@ Partial Class frmMain
         Me.DspLeftRealStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspLeftRealStroke.DecimalPlaces = CType(0, Short)
         Me.DspLeftRealStroke.FieldName = "左ST実"
-        Me.DspLeftRealStroke.Location = New System.Drawing.Point(112, 311)
+        Me.DspLeftRealStroke.Location = New System.Drawing.Point(102, 333)
         Me.DspLeftRealStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspLeftRealStroke.Name = "DspLeftRealStroke"
         Me.DspLeftRealStroke.Size = New System.Drawing.Size(138, 46)
@@ -1493,7 +1693,7 @@ Partial Class frmMain
         Me.DspUpSpeed.BackColor = System.Drawing.Color.Transparent
         Me.DspUpSpeed.DecimalPlaces = CType(0, Short)
         Me.DspUpSpeed.FieldName = "上速度"
-        Me.DspUpSpeed.Location = New System.Drawing.Point(112, 183)
+        Me.DspUpSpeed.Location = New System.Drawing.Point(102, 231)
         Me.DspUpSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.DspUpSpeed.Name = "DspUpSpeed"
         Me.DspUpSpeed.Size = New System.Drawing.Size(138, 46)
@@ -1501,44 +1701,18 @@ Partial Class frmMain
         Me.DspUpSpeed.Unit = "mm/min"
         Me.DspUpSpeed.Value = 1234.0R
         '
-        'DspUpRealStroke
+        'DspBottomRealStroke
         '
-        Me.DspUpRealStroke.BackColor = System.Drawing.Color.Transparent
-        Me.DspUpRealStroke.DecimalPlaces = CType(0, Short)
-        Me.DspUpRealStroke.FieldName = "上ST実"
-        Me.DspUpRealStroke.Location = New System.Drawing.Point(112, 132)
-        Me.DspUpRealStroke.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspUpRealStroke.Name = "DspUpRealStroke"
-        Me.DspUpRealStroke.Size = New System.Drawing.Size(138, 46)
-        Me.DspUpRealStroke.TabIndex = 42
-        Me.DspUpRealStroke.Unit = "mm"
-        Me.DspUpRealStroke.Value = 1234.0R
-        '
-        'DspBottomSpeed
-        '
-        Me.DspBottomSpeed.BackColor = System.Drawing.Color.Transparent
-        Me.DspBottomSpeed.DecimalPlaces = CType(0, Short)
-        Me.DspBottomSpeed.FieldName = "下速度"
-        Me.DspBottomSpeed.Location = New System.Drawing.Point(124, 639)
-        Me.DspBottomSpeed.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspBottomSpeed.Name = "DspBottomSpeed"
-        Me.DspBottomSpeed.Size = New System.Drawing.Size(138, 46)
-        Me.DspBottomSpeed.TabIndex = 47
-        Me.DspBottomSpeed.Unit = "mm/min"
-        Me.DspBottomSpeed.Value = 1234.0R
-        '
-        'DspRealBottomStroke
-        '
-        Me.DspRealBottomStroke.BackColor = System.Drawing.Color.Transparent
-        Me.DspRealBottomStroke.DecimalPlaces = CType(0, Short)
-        Me.DspRealBottomStroke.FieldName = "下ST実"
-        Me.DspRealBottomStroke.Location = New System.Drawing.Point(124, 588)
-        Me.DspRealBottomStroke.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspRealBottomStroke.Name = "DspRealBottomStroke"
-        Me.DspRealBottomStroke.Size = New System.Drawing.Size(138, 46)
-        Me.DspRealBottomStroke.TabIndex = 46
-        Me.DspRealBottomStroke.Unit = "mm"
-        Me.DspRealBottomStroke.Value = 1234.0R
+        Me.DspBottomRealStroke.BackColor = System.Drawing.Color.Transparent
+        Me.DspBottomRealStroke.DecimalPlaces = CType(0, Short)
+        Me.DspBottomRealStroke.FieldName = "下ST実"
+        Me.DspBottomRealStroke.Location = New System.Drawing.Point(114, 579)
+        Me.DspBottomRealStroke.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspBottomRealStroke.Name = "DspBottomRealStroke"
+        Me.DspBottomRealStroke.Size = New System.Drawing.Size(138, 46)
+        Me.DspBottomRealStroke.TabIndex = 46
+        Me.DspBottomRealStroke.Unit = "mm"
+        Me.DspBottomRealStroke.Value = 1234.0R
         '
         'UcnDspData9
         '
@@ -2243,12 +2417,6 @@ Partial Class frmMain
         Me.DspHorDev.Value = "123.45 "
         Me.DspHorDev.ValueType = False
         '
-        'StrokeMonitor
-        '
-        Me.StrokeMonitor.Name = "StrokeMonitor"
-        Me.StrokeMonitor.Size = New System.Drawing.Size(164, 22)
-        Me.StrokeMonitor.Text = "計算ストロークモニタ"
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -2257,6 +2425,21 @@ Partial Class frmMain
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
         Me.ControlBox = False
+        Me.Controls.Add(Me.DspCopyStroke2)
+        Me.Controls.Add(Me.DspCopyStroke1)
+        Me.Controls.Add(Me.DspSegmentRolling)
+        Me.Controls.Add(Me.DspMachineRolling)
+        Me.Controls.Add(Me.DspUpRealStroke)
+        Me.Controls.Add(Me.UcnGpPvBarGraph)
+        Me.Controls.Add(Me.DspRightClearance)
+        Me.Controls.Add(Me.DspLeftClearance)
+        Me.Controls.Add(Me.DspBottomSpeed)
+        Me.Controls.Add(Me.DspBottomClearance)
+        Me.Controls.Add(Me.DspTopClearance)
+        Me.Controls.Add(Me.DspRightRawStroke)
+        Me.Controls.Add(Me.DspBottomRawStroke)
+        Me.Controls.Add(Me.DspLeftRawStroke)
+        Me.Controls.Add(Me.DspUpRawStroke)
         Me.Controls.Add(Me.lblNowDate)
         Me.Controls.Add(Me.ucnVerLineChart)
         Me.Controls.Add(Me.ucnHorLineChart)
@@ -2281,16 +2464,13 @@ Partial Class frmMain
         Me.Controls.Add(Me.DspAssemblyPieace)
         Me.Controls.Add(Me.DspBoltPitch)
         Me.Controls.Add(Me.DspTypeName)
-        Me.Controls.Add(Me.UcnGpPvBarGraph)
         Me.Controls.Add(Me.UcnDspDevImg)
         Me.Controls.Add(Me.DspRightSpeed)
         Me.Controls.Add(Me.DspRightRealStroke)
         Me.Controls.Add(Me.DspLeftSpeed)
         Me.Controls.Add(Me.DspLeftRealStroke)
         Me.Controls.Add(Me.DspUpSpeed)
-        Me.Controls.Add(Me.DspUpRealStroke)
-        Me.Controls.Add(Me.DspBottomSpeed)
-        Me.Controls.Add(Me.DspRealBottomStroke)
+        Me.Controls.Add(Me.DspBottomRealStroke)
         Me.Controls.Add(Me.UcnDspData9)
         Me.Controls.Add(Me.UcnDspData10)
         Me.Controls.Add(Me.UcnDspData11)
@@ -2371,7 +2551,7 @@ Partial Class frmMain
     Friend WithEvents DspUpSpeed As FLEX.NET.ucnDspDataMin
     Friend WithEvents DspLeftSpeed As FLEX.NET.ucnDspDataMin
     Friend WithEvents DspBottomSpeed As FLEX.NET.ucnDspDataMin
-    Friend WithEvents DspRealBottomStroke As FLEX.NET.ucnDspDataMin
+    Friend WithEvents DspBottomRealStroke As FLEX.NET.ucnDspDataMin
     Friend WithEvents DspRightSpeed As FLEX.NET.ucnDspDataMin
     Friend WithEvents DspRightRealStroke As FLEX.NET.ucnDspDataMin
     Public WithEvents tmrDataDsp As System.Windows.Forms.Timer
@@ -2484,6 +2664,18 @@ Partial Class frmMain
     Public WithEvents rtbEventLog As RichTextBox
     Friend WithEvents lblNowDate As Label
     Friend WithEvents StrokeMonitor As ToolStripMenuItem
+    Friend WithEvents DspUpRawStroke As ucnDspDataMin
+    Public WithEvents DspLeftRawStroke As ucnDspDataMin
+    Friend WithEvents DspBottomRawStroke As ucnDspDataMin
+    Friend WithEvents DspRightRawStroke As ucnDspDataMin
+    Friend WithEvents DspTopClearance As ucnDspDataMin
+    Friend WithEvents DspBottomClearance As ucnDspDataMin
+    Friend WithEvents DspLeftClearance As ucnDspDataMin
+    Friend WithEvents DspRightClearance As ucnDspDataMin
+    Friend WithEvents DspMachineRolling As ucnDspDataMin2
+    Friend WithEvents DspSegmentRolling As ucnDspDataMin2
+    Friend WithEvents DspCopyStroke2 As ucnDspDataMin2
+    Friend WithEvents DspCopyStroke1 As ucnDspDataMin2
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

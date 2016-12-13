@@ -24,19 +24,18 @@ Friend Class clsDataSave
 
 
     End Sub
-
+    ''' <summary>
+    ''' FLEX掘削データ作成
+    ''' </summary>
     Public Sub Save()
-
-
-
         Dim recDataSave As Odbc.OdbcDataReader =
             ExecuteSql("REPLACE INTO FLEX掘削データ VALUES(" & getSqlData() & ")")
-
-
-
     End Sub
 
-
+    ''' <summary>
+    ''' SQL作成
+    ''' </summary>
+    ''' <returns></returns>
     Private Function getSqlData() As String
 
         Dim Data(ColumnList.Count - 1) As String
@@ -77,7 +76,7 @@ Friend Class clsDataSave
                 Data(ColumnList.IndexOf("右ジャッキ速度")) = .RightStroke.ToString
                 Data(ColumnList.IndexOf("上ジャッキ速度")) = .TopSpeed.ToString
                 Data(ColumnList.IndexOf("下ジャッキ速度")) = .BotomSpeed.ToString
-                Data(ColumnList.IndexOf("コピー角度1")) = .CopyStroke.ToString
+                Data(ColumnList.IndexOf("コピー角度1")) = .CopyStroke1.ToString
                 Data(ColumnList.IndexOf("コピーストローク1")) = .CopyAngle.ToString
                 'TODO:未割り当て
                 'Data(ColumnList.IndexOf("コピー角度2")) = .RealStroke.ToString
@@ -179,7 +178,7 @@ Friend Class clsDataSave
                 Data(ColumnList.IndexOf("鉛直ジャッキ制御D定数")) = .鉛直ジャッキ制御I定数
                 'Data(ColumnList.IndexOf("制御モード切替作動範囲")) = .
                 Data(ColumnList.IndexOf("片押し制限フラグ")) = IIf(.片押し制限フラグ, 1, 0)
-                Data(ColumnList.IndexOf("圧力許容値")) = .鉛直ジャッキ制御I定数
+                Data(ColumnList.IndexOf("圧力許容値")) = .圧力許容値
                 Data(ColumnList.IndexOf("全開グループ制限")) = IIf(.全開グループ制限, 1, 0)
                 Data(ColumnList.IndexOf("最低全開グループ数")) = .最低全開グループ数
                 'TODO:偏角許容値のエラーメッセージ未処理　音声がいいか！

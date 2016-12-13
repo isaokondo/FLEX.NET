@@ -50,7 +50,7 @@ Partial Class ucnDspDataMin
         Me.lblFieldName.Size = New System.Drawing.Size(111, 18)
         Me.lblFieldName.TabIndex = 6
         Me.lblFieldName.Text = "上ST実(mm/min)"
-        Me.lblFieldName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblFieldName.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'ucnDspDataMin
         '
@@ -65,7 +65,6 @@ Partial Class ucnDspDataMin
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents lblData As System.Windows.Forms.Label
-    Friend WithEvents lblFieldName As System.Windows.Forms.Label
-
+    Protected WithEvents lblData As Label
+    Protected WithEvents lblFieldName As Label
 End Class

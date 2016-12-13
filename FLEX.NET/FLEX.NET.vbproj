@@ -133,6 +133,12 @@
     <Compile Include="clsPlanData.vb" />
     <Compile Include="clsPLC.vb" />
     <Compile Include="CommonMdl.vb" />
+    <Compile Include="ucnDspDataMin2.Designer.vb">
+      <DependentUpon>ucnDspDataMin2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucnDspDataMin2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="frmCalcStrokeConfirm.Designer.vb">
       <DependentUpon>frmCalcStrokeConfirm.vb</DependentUpon>
     </Compile>
@@ -354,6 +360,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ucnDspDataMin2.resx">
+      <DependentUpon>ucnDspDataMin2.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCalcStrokeConfirm.resx">
       <DependentUpon>frmCalcStrokeConfirm.vb</DependentUpon>
     </EmbeddedResource>

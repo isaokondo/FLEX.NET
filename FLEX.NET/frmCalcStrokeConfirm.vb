@@ -12,13 +12,13 @@ Public Class frmCalcStrokeConfirm
 
     Private Sub frmCalcStrokeConfirm_Load(sender As Object, e As EventArgs) Handles Me.Load
         '計測ジャッキ番号でソート
-        Dim MsJk As IOrderedEnumerable(Of KeyValuePair(Of Short, Single)) = InitParameter.MesureJack.OrderBy(Function(pair) pair.Key)
+        Dim MsJk As IOrderedEnumerable(Of KeyValuePair(Of Short, Single)) = InitParameter.MesureJackAngle.OrderBy(Function(pair) pair.Key)
 
         '計測ジャッキ番号と取付角度を表示
         For Each i In MsJk
             DgvJackStroke.Rows.Add(i.Key, 0, 0, 0, i.Value)
         Next
-
+        'ヘッダーの書式をmiddlecenterに
         DgvJackStroke.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
 
     End Sub
@@ -29,9 +29,11 @@ Public Class frmCalcStrokeConfirm
             Dim JkNo As Short = DgvJackStroke.Rows(i).Cells(JackNo.Index).Value '計測ジャッキ番号
             DgvJackStroke.Rows(i).Cells(RealStrokeLen.Index).Value = PlcIf.MesureJackStroke(JkNo) '計測実ストローク
             DgvJackStroke.Rows(i).Cells(CalcLogcalStroke.Index).Value = CalcStroke.MesureCalcLOgocalStroke(JkNo)
-            DgvJackStroke.Rows(i).Cells(StartStroke.Index).Value = CalcStroke.StartMesureStroke(JkNo)
+            DgvJackStroke.Rows(i).Cells(StartStroke.Index).Value = CtlParameter.StartJackStroke(JkNo)
             DgvJackStroke.Rows(i).Cells(JackSpeed.Index).Value = PlcIf.MesureJackSpeed(JkNo)    '計測ジャッキスピード
             DgvJackStroke.Rows(i).Cells(CalcStrokeLen.Index).Value = CalcStroke.MesureCalcJackStroke(JkNo)  '計算計測ジャッキストローク
+            DgvJackStroke.Rows(i).Cells(Angle.Index).Value = InitParameter.MesureJackAngle(JkNo) 'ジャッキ取付角度
+            DgvJackStroke.Rows(i).Cells(JackState.Index).Value = CalcStroke.JackState(JkNo) 'ジャッキステータス
         Next
 
         DspAveStroke.Value = CalcStroke.MesureCalcAveJackStroke '平均ストローク表示

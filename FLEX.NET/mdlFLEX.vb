@@ -148,7 +148,7 @@ Module mdlFLEX
             My.Forms.frmMain.DspExcavStartDay(Now)
             ElapsedTime.Reset() '掘進時間計算開始
             CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
-            CalcStroke.StartMesureStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
+            CtlParameter.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
         End If
         If PreStatus = cChudan And NowStatus = cKussin Then
             WriteEventData("掘進再開しました", Color.Magenta)
@@ -348,7 +348,9 @@ Module mdlFLEX
     Private Sub PlcIf_MesureStrokeChange() Handles PlcIf.MesureStrokeChange
         CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
         CalcStroke.MesureJackSpeed = PlcIf.MesureJackSpeed
-        CalcStroke.Calc()
+        CalcStroke.Calc() '計算ストローク演算
+        PlcIf.AnalogPlcWrite("掘進ストローク", CalcStroke.CalcAveLogicalStroke)
+        PlcIf.AnalogPlcWrite("掘進スピード", CalcStroke.MesureAveSpeed)
     End Sub
 
 

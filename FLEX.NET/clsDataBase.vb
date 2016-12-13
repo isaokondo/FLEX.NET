@@ -214,7 +214,9 @@ Public Class clsInitParameter
     Private _sheetID As Integer = 20                 ''計画路線のシートID（10:計画路線　20:掘進計画線)
     'Private _planDataMdb As String '計画路線（線形データ）のファイルパス
 
-    Private _mesureJack As New Dictionary(Of Short, Single) '計測ジャッキの角度
+    Private _mesureJackAngle As New Dictionary(Of Short, Single) '計測ジャッキの角度
+
+    Private _mesureJackNo As New List(Of Short) '計測ジャッキ番号
 
     Private WithEvents Htb As New clsHashtableRead
     ''' <summary>
@@ -311,12 +313,20 @@ Public Class clsInitParameter
     ''' 計測ジャッキ　角度
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property MesureJack As Dictionary(Of Short, Single)
+    Public ReadOnly Property MesureJackAngle As Dictionary(Of Short, Single)
         Get
-            Return _mesureJack
+            Return _mesureJackAngle
         End Get
     End Property
-
+    ''' <summary>
+    ''' 計測ジャッキ番号
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property mesureJackNo As List(Of Short)
+        Get
+            Return _mesureJackNo
+        End Get
+    End Property
 
 
 
@@ -389,9 +399,13 @@ Public Class clsInitParameter
             Next
             '計測ジャッキの番号と角度を取得
             For Each mj As String In ht.Keys
-                If mj.IndexOf("計測ジャッキ") >= 0 Then
-                    _mesureJack.Add(mj.Replace("計測ジャッキ", ""), ht(mj))
+                If mj.IndexOf("計測ジャッキNo") >= 0 Then
+                    _mesureJackAngle.Add(mj.Replace("計測ジャッキNo", ""), ht(mj))
                 End If
+            Next
+            '計測ジャッキ番号
+            For Each JkNo In Htb.GetValue("計測ジャッキ上右下左").ToString.Split(",")
+                _mesureJackNo.Add(JkNo)
             Next
 
 

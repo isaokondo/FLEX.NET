@@ -88,6 +88,43 @@ Public Class clsCalcuStroke
         End Get
     End Property
     ''' <summary>
+    ''' 上計算ジャッキストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property TopCalcStroke As Integer
+        Get
+            Return _mesureCalcJackStroke(InitParameter.mesureJackNo(0))
+        End Get
+    End Property
+    ''' <summary>
+    ''' 右計算ジャッキストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property RightCalcStroke As Integer
+        Get
+            Return _mesureCalcJackStroke(InitParameter.mesureJackNo(1))
+        End Get
+    End Property
+    ''' <summary>
+    ''' 下計算ジャッキストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property BottomCalcStroke As Integer
+        Get
+            Return _mesureCalcJackStroke(InitParameter.mesureJackNo(2))
+        End Get
+    End Property
+    ''' <summary>
+    ''' 左計算ジャッキストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property LeftCalcStroke As Integer
+        Get
+            Return _mesureCalcJackStroke(InitParameter.mesureJackNo(3))
+        End Get
+    End Property
+
+    ''' <summary>
     ''' 計算平均掘進ストローク
     ''' </summary>
     ''' <returns></returns>
@@ -102,11 +139,30 @@ Public Class clsCalcuStroke
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property MesureAveSpeed As Integer
-    ''' <summary>
-    ''' 掘進開始時の計測ｼﾞｬｯｷｽﾄﾛｰｸ
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property StartMesureStroke As New Dictionary(Of Short, Integer)
+    'Public Property StartMesureStroke As New Dictionary(Of Short, Integer)
+
+    Public ReadOnly Property JackState As Dictionary(Of Short, String)
+        Get
+            Dim jk As New Dictionary(Of Short, String)
+            For Each j In InitParameter.MesureJackAngle.Keys
+                Dim st As String
+                If asembleFinishedJack.Contains(j) Then
+                    st = "組立完了"
+                Else
+                    If (PlcIf.JackStatus(j - 1) And 2) Then
+                        st = "掘進モード"
+                    Else
+                        st = "組立中"
+                    End If
+                End If
+                jk.Add(j, st)
+            Next
+
+            Return jk
+        End Get
+    End Property
+
+
 
     ''' <summary>
     ''' 組立完了ジャッキのセット
@@ -127,11 +183,10 @@ Public Class clsCalcuStroke
 
     Public Sub New()
         '計算ジャッキストロークの初期化
-        For Each i As Short In InitParameter.MesureJack.Keys
+        For Each i As Short In InitParameter.MesureJackAngle.Keys
             _mesureCalcJackStroke.Add(i, 0)
             _mesureJackStroke.Add(i, 0)
             _mesureJackSpeed.Add(i, 0)
-            _StartMesureStroke.Add(i, 0)
             _MesureCalcLOgocalStroke.Add(i, 0)
         Next
     End Sub
@@ -141,7 +196,7 @@ Public Class clsCalcuStroke
     ''' </summary>
     Public Sub Calc()
         '計測ジャッキ
-        For Each mjJkNo As Short In InitParameter.MesureJack.Keys
+        For Each mjJkNo As Short In InitParameter.MesureJackAngle.Keys
             _mesureCalcJackStroke(mjJkNo) = _mesureJackStroke(mjJkNo)
             '組立完了ジャッキ
             For Each asJkNo As Short In asembleFinishedJack
@@ -150,12 +205,12 @@ Public Class clsCalcuStroke
                     _mesureCalcJackStroke(mjJkNo) +=
                     _SegnebtCenterWidth +
                     _SegmentTaperValue / 2 *
-                    Math.Cos((_SegmentMaxTaperLoc + _rearDrumRolling - _segmentRolling - InitParameter.MesureJack(mjJkNo)) _
+                    Math.Cos((_SegmentMaxTaperLoc + _rearDrumRolling - _segmentRolling - InitParameter.MesureJackAngle(mjJkNo)) _
                     / 180 * Math.PI)
                 End If
             Next
             '掘進ストローク
-            _MesureCalcLOgocalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - _StartMesureStroke(mjJkNo)
+            _MesureCalcLOgocalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - CtlParameter.StartJackStroke(mjJkNo)
         Next
         ''計算平均ジャッキストロークの演算
         Dim CalcSt As New clsGetAvg(_mesureCalcJackStroke)
@@ -170,29 +225,6 @@ Public Class clsCalcuStroke
         Dim CalcSpeed As New clsGetAvg(_mesureJackSpeed)
         _MesureAveSpeed = CalcSpeed.AvgData
 
-        ''計算平均ジャッキストロークの演算
-        'Dim CalcSt As New List(Of Integer)
-        'For Each s In _mesureCalcJackStroke
-        '    '掘進モードのみ
-        '    If PlcIf.JackStatus(s.Key - 1) And 2 Then
-        '        CalcSt.Add(s.Value)
-        '    End If
-        'Next
-        'If CalcSt.Count > 0 Then
-        '    _mesureCalcAveJackStroke = CalcSt.Average
-        'End If
-
-        ''平均計測ジャッキスピードの演算
-        'Dim CalcSpeed As New List(Of Integer)
-        'For Each sp In _mesureJackSpeed
-        '    '掘進モードのみでゼロ以上
-        '    If PlcIf.JackStatus(sp.Key - 1) And 2 And sp.Value > 0 Then
-        '        CalcSpeed.Add(sp.Value)
-        '    End If
-        'Next
-        'If CalcSpeed.Count > 0 Then
-        '    _MesureAveSpeed = CalcSpeed.Average
-        'End If
 
     End Sub
 

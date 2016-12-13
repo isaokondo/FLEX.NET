@@ -64,62 +64,61 @@
 
             DspRingNo.Text = .RingNo 'リングNo
 
-            DspAveStroke.Value = .RealStroke        '平均ストローク
-
             DspDirection.Value = .Gyro              '方位角
 
-            DspRealBottomStroke.Value = .BotomStroke '下ｽﾄﾛｰｸ
+            DspBottomRealStroke.Value = CalcStroke.BottomCalcStroke '下ｽﾄﾛｰｸ
+            DspBottomRawStroke.Value = .BotomStroke '下ｽﾄﾛｰｸ
             DspBottomSpeed.Value = .BotomSpeed      '下ｽﾋﾟｰﾄﾞ
 
-            DspUpRealStroke.Value = .TopStroke      '上ｽﾄﾛｰｸ
+            DspUpRealStroke.Value = CalcStroke.TopCalcStroke      '上ｽﾄﾛｰｸ
+            DspUpRawStroke.Value = .TopStroke      '上ｽﾄﾛｰｸ
             DspUpSpeed.Value = .TopSpeed            '上ｽﾋﾟｰﾄﾞ
 
-            DspRightRealStroke.Value = .RightStroke '右ｽﾄﾛｰｸ
+            DspRightRealStroke.Value = CalcStroke.RightCalcStroke '右ｽﾄﾛｰｸ
+            DspRightRawStroke.Value = .RightStroke '右ｽﾄﾛｰｸ
             DspRightSpeed.Value = .RightSpeed       '右ｽﾋﾟｰﾄﾞ
 
-            DspLeftRealStroke.Value = .LeftStroke   '左ｽﾄﾛｰｸ
+            DspLeftRealStroke.Value = CalcStroke.LeftCalcStroke   '左ｽﾄﾛｰｸ
+            DspLeftRawStroke.Value = .LeftStroke   '左ｽﾄﾛｰｸ
             DspLeftSpeed.Value = .LeftSpeed         '左ｽﾋﾟｰﾄﾞ
 
             DspJackPress.Value = .JkPress           'ジャッキ圧力
-            'TODO:取り敢えず、左右の平均を算出
-            DspExcvSpeed.Value = (.RightSpeed + .LeftSpeed) / 2
-
-
             DspPitching.Value = .Pitching           'ピッチング
             DspHorBroken.Value = .NakaoreLR         '中折左右
             DspVerBroken.Value = .NakaoreTB         '中折上下
 
+            DspCopyStroke1.Value = .CopyStroke1 'コピーストローク
+            DspCopyStroke2.Value = .CopyStroke2
+
+            DspBottomClearance.Value = .botomClearance
+            DspTopClearance.Value = .topClearance
+            DspRightClearance.Value = .rightClearance
+            DspLeftClearance.Value = .leftClearance
 
             DspThrust.Value = CulcMoment.Thrust '推力
             DspMoment.Value = CulcMoment.MomentR 'モーメント
-
-
-            DspFlexControlOn.BitStatus = .FlexControlOn 'FLEXの制御ON/OFF
-
-
-
+            'FLEXの制御ON/OFF
+            DspFlexControlOn.BitStatus = .FlexControlOn
             '掘進ステータス　掘進中、中断中、待機中
             DspExcavingOn.BitStatus = (.ExcaStatus = cKussin)
             DspExcavingStop.BitStatus = (.ExcaStatus = cChudan)
             DspExcaWaiting.BitStatus = (.ExcaStatus = cTaiki)
-
             'ジャッキステータス表示
             UcnJackDsp.JackStatus = .JackStatus
-
             'グループ圧PV
             UcnJackDsp.GroupPV = .GroupPv
             UcnJackDsp.JackOrgPress = .JkPress
-
             'コピー角度、ストローク
             UcnJackDsp.CopyAngle = .CopyAngle
-            UcnJackDsp.CopyStroke = .CopyStroke
-
+            UcnJackDsp.CopyStroke = .CopyStroke1
             'グループ圧バーグラフ
             UcnGpPvBarGraph.GpFlg = .GroupFlg
             UcnGpPvBarGraph.GpPv = .GroupPv
-
-
         End With
+
+        DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
+        DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均ストローク
+
         With CtlParameter
             '自動方向制御ON／OFF
             UcnJackDsp.FlexAutoManual = .AutoDirectionControl

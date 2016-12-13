@@ -18,14 +18,10 @@ Public Class clsPlcIf
     Private _nakaoreLR As Single           '中折左右角
     Private _nakaoreTB As Single           '中折上下角
     Private _jkPress As Single           'シールド元圧
-    Private _rightStroke As Integer         '右ストローク
-    Private _leftStroke As Integer          '左ストローク
-    Private _topStroke As Integer          '上ストローク
-    Private _botomStroke As Integer         '下ストローク
-    Private _rightSpeed As Integer          '右スピード
-    Private _leftSpeed As Integer           '左スピード
-    Private _topSpeed As Integer           '上スピード
-    Private _botomSpeed As Integer           ''下スピード
+    Private _rightClearance As Integer         '右ｸﾘｱﾗﾝｽ
+    Private _leftClearance As Integer          '左ｸﾘｱﾗﾝｽ
+    Private _topClearance As Integer          '上ｸﾘｱﾗﾝｽ
+    Private _botomClearance As Integer         '下ｸﾘｱﾗﾝｽ
     Private _realStroke As Integer       ''掘進実ストローク
     Private _beforeStroke As Integer       ''前スキャンの掘進実ストローク
     Private _jackSelect() As Boolean         ''稼働ジャッキ
@@ -54,7 +50,8 @@ Public Class clsPlcIf
     Private _mintIPAdress As Integer         ''操作権のあるＩＰアドレス（下位）
 
     Private _CopyAngle As Integer   'コピー角度
-    Private _CopyStroke As Integer 'コピーストローク
+    Private _CopyStroke1 As Integer 'コピーストローク1
+    Private _CopyStroke2 As Integer 'コピーストローク1
 
 
     'パラメータ　Rレジスタ
@@ -261,42 +258,50 @@ Public Class clsPlcIf
     End Property
     Public ReadOnly Property RightStroke As Single
         Get
-            Return _rightStroke
+            Return _mesureJackStroke(InitParameter.mesureJackNo(1))
+            'Return _rightStroke
         End Get
     End Property
     Public ReadOnly Property LeftStroke As Single
         Get
-            Return _leftStroke
+            Return _mesureJackStroke(InitParameter.mesureJackNo(3))
+            'Return _leftStroke
         End Get
     End Property
     Public ReadOnly Property TopStroke As Single
         Get
-            Return _topStroke
+            Return _mesureJackStroke(InitParameter.mesureJackNo(0))
+            'Return _topStroke
         End Get
     End Property
     Public ReadOnly Property BotomStroke As Single
         Get
-            Return _botomStroke
+            Return _mesureJackStroke(InitParameter.mesureJackNo(2))
+            'Return _botomStroke
         End Get
     End Property
     Public ReadOnly Property RightSpeed As Single
         Get
-            Return _rightSpeed
+            Return _mesureJackSpeed(InitParameter.mesureJackNo(1))
+            'Return _rightSpeed
         End Get
     End Property
     Public ReadOnly Property LeftSpeed As Single
         Get
-            Return _leftSpeed
+            Return _mesureJackSpeed(InitParameter.mesureJackNo(3))
+            'Return _leftSpeed
         End Get
     End Property
     Public ReadOnly Property TopSpeed As Single
         Get
-            Return _topSpeed
+            Return _mesureJackSpeed(InitParameter.mesureJackNo(0))
+            'Return _topSpeed
         End Get
     End Property
     Public ReadOnly Property BotomSpeed As Single
         Get
-            Return _botomSpeed
+            Return _mesureJackSpeed(InitParameter.mesureJackNo(2))
+            'Return _botomSpeed
         End Get
     End Property
     Public ReadOnly Property RealStroke As Integer
@@ -316,9 +321,14 @@ Public Class clsPlcIf
         End Get
     End Property
 
-    Public ReadOnly Property CopyStroke As Integer
+    Public ReadOnly Property CopyStroke1 As Integer
         Get
-            Return _CopyStroke
+            Return _CopyStroke1
+        End Get
+    End Property
+    Public ReadOnly Property CopyStroke2 As Integer
+        Get
+            Return _CopyStroke2
         End Get
     End Property
 
@@ -367,7 +377,26 @@ Public Class clsPlcIf
     End Property
 
 
-
+    Public ReadOnly Property rightClearance As Integer
+        Get
+            Return _rightClearance
+        End Get
+    End Property
+    Public ReadOnly Property leftClearance As Integer
+        Get
+            Return _leftClearance
+        End Get
+    End Property
+    Public ReadOnly Property topClearance As Integer
+        Get
+            Return _topClearance
+        End Get
+    End Property
+    Public ReadOnly Property botomClearance As Integer
+        Get
+            Return _botomClearance
+        End Get
+    End Property
     Public Property RingNo As Integer
         Get
             Return _RingNo
@@ -605,7 +634,7 @@ Public Class clsPlcIf
         '計測ジャッキのDictionary 初期化
         _mesureJackStroke = New Dictionary(Of Short, Integer)
         _mesureJackSpeed = New Dictionary(Of Short, Integer)
-        For Each i As KeyValuePair(Of Short, Single) In InitParameter.MesureJack
+        For Each i As KeyValuePair(Of Short, Single) In InitParameter.MesureJackAngle
             _mesureJackStroke.Add(i.Key, 0)
             _mesureJackSpeed.Add(i.Key, 0)
         Next
@@ -626,9 +655,11 @@ Public Class clsPlcIf
         PreExcaStatus = _excaStatus
         _LosZeroMode = DigtalPlcRead("同時施工モード")
         '計測ジャッキ読込
-        For Each mj In InitParameter.MesureJack.Keys
+        For Each mj In InitParameter.MesureJackAngle.Keys
             _mesureJackStroke(mj) = AnalogPlcRead("ジャッキストローク" & mj)
         Next
+        '計算ジャッキストロークの演算
+        RaiseEvent MesureStrokeChange()
 
         TimerRun()
 
@@ -678,28 +709,34 @@ Public Class clsPlcIf
 
                 _nakaoreLR = GetAnalogData("中折左右角", AnalogTag)
                 _nakaoreTB = GetAnalogData("中折上下角", AnalogTag)
-                _leftStroke = GetAnalogData("左ストローク", AnalogTag)
-                _rightStroke = GetAnalogData("右ストローク", AnalogTag)
-                _topStroke = GetAnalogData("上ストローク", AnalogTag)
-                _botomStroke = GetAnalogData("下ストローク", AnalogTag)
-                _leftSpeed = GetAnalogData("左ジャッキ速度", AnalogTag)
-                _rightSpeed = GetAnalogData("右ジャッキ速度", AnalogTag)
-                _topSpeed = GetAnalogData("上ジャッキ速度", AnalogTag)
-                _botomSpeed = GetAnalogData("下ジャッキ速度", AnalogTag)
+                '_leftStroke = GetAnalogData("左ストローク", AnalogTag)
+                '_rightStroke = GetAnalogData("右ストローク", AnalogTag)
+                '_topStroke = GetAnalogData("上ストローク", AnalogTag)
+                '_botomStroke = GetAnalogData("下ストローク", AnalogTag)
+                '_leftSpeed = GetAnalogData("左ジャッキ速度", AnalogTag)
+                '_rightSpeed = GetAnalogData("右ジャッキ速度", AnalogTag)
+                '_topSpeed = GetAnalogData("上ジャッキ速度", AnalogTag)
+                '_botomSpeed = GetAnalogData("下ジャッキ速度", AnalogTag)
                 _realStroke = GetAnalogData("掘進ストローク", AnalogTag)
                 _excaStatus = GetAnalogData("掘進ステータス", AnalogTag)
                 _CopyAngle = GetAnalogData("コピー角度", AnalogTag)
-                _CopyStroke = GetAnalogData("コピーストローク", AnalogTag)
+                _CopyStroke1 = GetAnalogData("コピーストローク1", AnalogTag)
+                _CopyStroke2 = GetAnalogData("コピーストローク2", AnalogTag)
+
+                _leftClearance = GetAnalogData("クリアランス左", AnalogTag)
+                _topClearance = GetAnalogData("クリアランス上", AnalogTag)
+                _rightClearance = GetAnalogData("クリアランス右", AnalogTag)
+                _botomClearance = GetAnalogData("クリアランス下", AnalogTag)
 
                 '計測ジャッキ取込
                 Dim st As New Dictionary(Of Short, Integer)(_mesureJackStroke)
                 'st = New Dictionary(Of Short, Integer)(_mesureJackStroke) '前スキャンの読込
-                For Each mj In InitParameter.MesureJack.Keys
+                For Each mj In InitParameter.MesureJackAngle.Keys
                     _mesureJackStroke(mj) = GetAnalogData("ジャッキストローク" & mj, AnalogTag)
                     _mesureJackSpeed(mj) = GetAnalogData("ジャッキスピード" & mj, AnalogTag)
                 Next
                 '計測ストロークのいずれかが変化した時のイベント
-                For Each mj In InitParameter.MesureJack.Keys
+                For Each mj In InitParameter.MesureJackAngle.Keys
                     If _mesureJackStroke(mj) <> st(mj) Then
                         RaiseEvent MesureStrokeChange()
                         Exit For
@@ -837,11 +874,10 @@ Public Class clsPlcIf
         If _excaStatus <> PreExcaStatus Then
             RaiseEvent ExcavationStatusChange(PreExcaStatus, _excaStatus)
         End If
-
+        '掘削データ保存　ストロークが掘進中に伸びたとき
         If (_realStroke > PreRealStroke Or _excaStatus <> PreExcaStatus) And _excaStatus = cKussin Then
             DataSave.Save()
         End If
-
 
 
         '掘進ストローク保持
@@ -989,8 +1025,14 @@ Public Class clsPlcIf
     ''' <param name="TagName"></param>
     ''' <param name="Value"></param>
     Public Sub AnalogPlcWrite(TagName As String, ByVal Value As Short)
-        Dim PlcAdress As String = AnalogTag.TagData(TagName).Address
-        PLC_Write(PlcAdress, Value)
+        With AnalogTag.TagData(TagName)
+            Dim PlcAdress As String = .Address
+            'アナログデータをPLC書込データに変換
+            Dim wD As Integer =
+                (Value - .EngLow) / (.EngHight - .EngLow) * (.ScaleHigh - .ScaleLow) + .ScaleLow
+            'PLC書込
+            PLC_Write(PlcAdress, wD)
+        End With
     End Sub
 
 
@@ -1004,6 +1046,7 @@ Public Class clsPlcIf
     Private Sub PLC_Write(PlcAdress As String, Value As Integer)
         Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
         Try
+
             iReturnCode = com_ReferencesEasyIF.SetDevice(PlcAdress, Value)
         Catch exException As Exception
             '例外処理	

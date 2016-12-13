@@ -24,7 +24,6 @@ Public Class clsControlParameter
 
 
 
-
     Private _片押しR制限 As Single = 2
     Private _圧力許容値 As Single = 35
     Private _片押し制限フラグ As Boolean = True
@@ -699,7 +698,25 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+    Private _StartJackStroke As New Dictionary(Of Short, Integer)
+    ''' <summary>
+    ''' 掘進開始時の計測ジャッキストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property StartJackStroke As Dictionary(Of Short, Integer)
+        Get
+            Return _StartJackStroke
+        End Get
+        Set(value As Dictionary(Of Short, Integer))
+            For Each v In value
+                Dim DB As New clsDataBase
+                Dim tb As Odbc.OdbcDataReader =
+        DB.ExecuteSql("UPDATE FLEX制御パラメータ SET`値`='" & v.Value &
+                      "' WHERE `項目名称`='開始ジャッキストローク" & v.Key & "'")
 
+            Next
+        End Set
+    End Property
 
     ''' <summary>
     ''' パラメータ読み込み
@@ -816,6 +833,12 @@ Public Class clsControlParameter
                         Case "DirectControl"
                             _DirectControl = fnBoolean(.Item("値"))
                     End Select
+
+                    If .Item("項目名称").ToString.IndexOf("開始ジャッキストローク") >= 0 Then
+                        _StartJackStroke(CShort(.Item("項目名称").ToString.Replace("開始ジャッキストローク", ""))) = .Item("値")
+                    End If
+
+
                 Catch ex As Exception
                     Debug.WriteLine("Err" & .Item("項目名称").ToString)
                 End Try
@@ -858,6 +881,12 @@ Public Class clsControlParameter
     End Function
 
     Public Sub New()
+
+        '計測ジャッキストローク　初期化
+        For Each i As KeyValuePair(Of Short, Single) In InitParameter.MesureJackAngle
+            _StartJackStroke.Add(i.Key, 0)
+        Next
+        'パラメータ読込
         ReadParameter()
         TimerRun()
     End Sub
