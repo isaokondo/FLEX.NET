@@ -58,6 +58,10 @@ Module mdlFLEX
     ''' </summary>
     Public DataSave As clsDataSave
 
+    ''' <summary>
+    ''' テーブル更新日付取得
+    ''' </summary>
+    Public TableUpdateConfirm As clsTableUpdateConfirm
 
     ''' <summary>
     ''' MP3再生

@@ -478,5 +478,72 @@ Public Class clsHashtableRead
 
 
 End Class
+''' <summary>
+''' テーブルの更新イベント
+''' </summary>
+Public Class clsTableUpdateConfirm
+    Inherits clsDataBase
+
+    Dim tbTime As Dictionary(Of String, Date)
 
 
+    Public Sub New()
+
+        tbTime = GetUpdateTIme()
+
+        TimerRun()
+
+    End Sub
+
+    Public Sub TimerRun()
+
+
+        Dim timer As Timer = New Timer()
+        AddHandler timer.Tick, New EventHandler(AddressOf TableUpdateTimeGet)
+        timer.Interval = 5000   '5秒ごとの処理
+        timer.Enabled = True ' timer.Start()と同じ
+
+    End Sub
+
+    Private Sub TableUpdateTimeGet()
+        '更新時刻を取得
+        Dim NewUpTime As Dictionary(Of String, Date) = GetUpdateTIme()
+
+        For Each t In NewUpTime
+            If t.Value <> tbTime(t.Key) Then '更新時刻が変化
+                Select Case t.Key
+                    Case "flexアナログtag", "flexデジタルtag"
+                        PlcIf.TagRead()
+                    Case "flex初期パラメータ"
+                        InitParameter = New clsInitParameter
+                        'Case "flex制御パラメータ"
+                        '    CtlParameter = New clsControlParameter
+                End Select
+            End If
+        Next
+        '現在の更新時刻を保持
+        tbTime = New Dictionary(Of String, Date)(NewUpTime)
+
+    End Sub
+
+
+    Private Function GetUpdateTIme() As Dictionary(Of String, Date)
+        '更新時間を取得　MISAMのみ
+        Dim tableUpTime As OdbcDataReader
+        Dim gup As New Dictionary(Of String, Date)
+        tableUpTime = ExecuteSql("flush tables")
+        tableUpTime = ExecuteSql("show table status;")
+
+        While tableUpTime.Read
+            If tableUpTime.Item("TYPE") = "MyISAM" Then
+                gup.Add(tableUpTime.Item("Name").ToString, CDate(tableUpTime.Item("Update_time")))
+            End If
+
+        End While
+
+        Return gup
+
+    End Function
+
+
+End Class

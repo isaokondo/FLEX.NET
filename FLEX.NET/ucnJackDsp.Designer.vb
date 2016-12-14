@@ -61,7 +61,7 @@ Partial Class ucnJackDsp
         Me.lblPointX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblPointX.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblPointX.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblPointX.Location = New System.Drawing.Point(339, 220)
+        Me.lblPointX.Location = New System.Drawing.Point(337, 220)
         Me.lblPointX.Margin = New System.Windows.Forms.Padding(0)
         Me.lblPointX.Name = "lblPointX"
         Me.lblPointX.Size = New System.Drawing.Size(50, 24)
@@ -150,7 +150,7 @@ Partial Class ucnJackDsp
         Me.lblY.AutoSize = True
         Me.lblY.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblY.ForeColor = System.Drawing.Color.White
-        Me.lblY.Location = New System.Drawing.Point(450, 202)
+        Me.lblY.Location = New System.Drawing.Point(448, 202)
         Me.lblY.Name = "lblY"
         Me.lblY.Size = New System.Drawing.Size(12, 12)
         Me.lblY.TabIndex = 122
@@ -230,6 +230,7 @@ Partial Class ucnJackDsp
         Me.imgPointXUP.Size = New System.Drawing.Size(32, 32)
         Me.imgPointXUP.TabIndex = 132
         Me.imgPointXUP.TabStop = False
+        Me.imgPointXUP.Visible = False
         '
         'lblPointDspRate
         '

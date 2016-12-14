@@ -151,10 +151,19 @@ Public Class clsPlcIf
     Public Event LosZeroModeChange()
 
 
-    Private AnalogTag As New clsTag("FLEXアナログtag", "D")
-    Public ParameterTag As New clsTag("FLEXアナログtag", "R")
-    Private DigtalTag As New clsTag("FLEXデジタルtag", "M")
+    Private AnalogTag As clsTag
+    Public ParameterTag As clsTag
+    Private DigtalTag As clsTag
     Private sharrDeviceValue() As Short         'デバイス値
+    ''' <summary>
+    ''' TAGの読込
+    ''' </summary>
+    Public Sub TagRead()
+        AnalogTag = New clsTag("FLEXアナログtag", "D")
+        ParameterTag = New clsTag("FLEXアナログtag", "R")
+        DigtalTag = New clsTag("FLEXデジタルtag", "M")
+    End Sub
+
 
 
     Public ReadOnly Property Gyro() As Single
@@ -621,6 +630,8 @@ Public Class clsPlcIf
 
 
     Public Sub New()
+
+        TagRead() 'tagの読込
         '* ACTコントロール用インスタンスの生成*************************************/
         com_ReferencesEasyIF = New ACTMULTILib.ActEasyIF
         com_ReferencesEasyIF.ActLogicalStationNumber = InitParameter.ActLogicalStationNumber   'PLC論理局
@@ -655,11 +666,9 @@ Public Class clsPlcIf
         PreExcaStatus = _excaStatus
         _LosZeroMode = DigtalPlcRead("同時施工モード")
         '計測ジャッキ読込
-        For Each mj In InitParameter.MesureJackAngle.Keys
-            _mesureJackStroke(mj) = AnalogPlcRead("ジャッキストローク" & mj)
-        Next
-        '計算ジャッキストロークの演算
-        RaiseEvent MesureStrokeChange()
+        'For Each mj In InitParameter.MesureJackAngle.Keys
+        '    _mesureJackStroke(mj) = AnalogPlcRead("ジャッキストローク" & mj)
+        'Next
 
         TimerRun()
 
@@ -668,12 +677,12 @@ Public Class clsPlcIf
 
     Public Sub TimerRun()
 
-
         Dim timer As Timer = New Timer()
         AddHandler timer.Tick, New EventHandler(AddressOf PLC_Read)
         timer.Interval = 1000   '1秒ごとの処理
         timer.Enabled = True ' timer.Start()と同じ
-
+        '計算ジャッキストロークの演算
+        'RaiseEvent MesureStrokeChange()
     End Sub
 
     Public Sub PLC_Read(sender As Object, e As EventArgs)

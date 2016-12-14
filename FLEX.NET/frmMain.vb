@@ -99,6 +99,8 @@
             DspMoment.Value = CulcMoment.MomentR 'モーメント
             'FLEXの制御ON/OFF
             DspFlexControlOn.BitStatus = .FlexControlOn
+            UcnJackDsp.FlexOn = .FlexControlOn
+
             '掘進ステータス　掘進中、中断中、待機中
             DspExcavingOn.BitStatus = (.ExcaStatus = cKussin)
             DspExcavingStop.BitStatus = (.ExcaStatus = cChudan)
@@ -229,9 +231,10 @@
         DivCul = New clsThrustDiv ''推力分担
         RefernceDirection = New clsCulKijun '基準方位演算
         JackManual = New clsJkManualOut 'ジャッキ手動操作出力
+        CalcStroke = New clsCalcuStroke   'ロスゼロ時の計算ストローク
         PlcIf = New clsPlcIf 'PLCインターフェース
         Reduce = New clsReducePress 'ロスゼロ減圧処理
-        CalcStroke = New clsCalcuStroke   'ロスゼロ時の計算ストローク
+        TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
 
         'ジャッキ稼働画面の初期データ
         With UcnJackDsp

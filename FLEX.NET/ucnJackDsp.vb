@@ -91,7 +91,10 @@ Public Class ucnJackDsp
     ''' 5度ピッチ
     ''' </summary>
     Private CopyStatus(72) As Boolean
-
+    ''' <summary>
+    ''' FLEX表示用コントロール
+    ''' </summary>
+    Private _flexVisible As New List(Of Control)
 
     ''' <summary>
     ''' グループ圧表示コントロール
@@ -344,6 +347,21 @@ Public Class ucnJackDsp
     ''' </summary>
     ''' <returns></returns>
     Public Property JackAutoOneWayLimit = False
+    ''' <summary>
+    ''' FLEX用コントロールの表示、非表示
+    ''' </summary>
+    Public WriteOnly Property FlexOn As Boolean
+        Set(value As Boolean)
+            For Each t In _flexVisible
+                t.Visible = value
+                t.Enabled = value
+
+            Next
+
+
+        End Set
+
+    End Property
 
 
 
@@ -380,8 +398,23 @@ Public Class ucnJackDsp
         imgPoint.Image = bmp
         picPoint.Controls.Add(imgPoint)
 
-
-
+        'FLEX表示用コントロールの設定
+        _flexVisible.Add(lblPointX)
+        _flexVisible.Add(lblPointY)
+        _flexVisible.Add(lblX)
+        _flexVisible.Add(lblY)
+        _flexVisible.Add(imgPoint)
+        _flexVisible.Add(imgPointXDOWN)
+        _flexVisible.Add(imgPointXUP)
+        _flexVisible.Add(imgPointYDOWN)
+        _flexVisible.Add(imgPointYUP)
+        _flexVisible.Add(btnPointAutoMan)
+        _flexVisible.Add(btnPointCenter)
+        _flexVisible.Add(lblPointR)
+        _flexVisible.Add(lblSeater)
+        _flexVisible.Add(lblr)
+        _flexVisible.Add(lblS)
+        _flexVisible.Add(lblPointDspRate)
     End Sub
 
 
