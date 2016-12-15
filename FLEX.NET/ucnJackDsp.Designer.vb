@@ -38,17 +38,17 @@ Partial Class ucnJackDsp
         Me.imgPoint = New System.Windows.Forms.PictureBox()
         Me.imgPointYUP = New System.Windows.Forms.PictureBox()
         Me.imgPointXDOWN = New System.Windows.Forms.PictureBox()
-        Me.imgPointYDOWN = New System.Windows.Forms.PictureBox()
         Me.imgPointXUP = New System.Windows.Forms.PictureBox()
         Me.lblPointDspRate = New System.Windows.Forms.Label()
         Me.picPoint = New System.Windows.Forms.PictureBox()
         Me.tmrBlink = New System.Windows.Forms.Timer(Me.components)
+        Me.imgPointYDOWN = New System.Windows.Forms.PictureBox()
         CType(Me.imgPoint, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.imgPointYUP, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.imgPointXDOWN, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.imgPointYDOWN, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.imgPointXUP, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picPoint, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.imgPointYDOWN, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tmrCenter
@@ -211,16 +211,6 @@ Partial Class ucnJackDsp
         Me.imgPointXDOWN.TabIndex = 134
         Me.imgPointXDOWN.TabStop = False
         '
-        'imgPointYDOWN
-        '
-        Me.imgPointYDOWN.Cursor = System.Windows.Forms.Cursors.Default
-        Me.imgPointYDOWN.Image = CType(resources.GetObject("imgPointYDOWN.Image"), System.Drawing.Image)
-        Me.imgPointYDOWN.Location = New System.Drawing.Point(392, 417)
-        Me.imgPointYDOWN.Name = "imgPointYDOWN"
-        Me.imgPointYDOWN.Size = New System.Drawing.Size(32, 32)
-        Me.imgPointYDOWN.TabIndex = 133
-        Me.imgPointYDOWN.TabStop = False
-        '
         'imgPointXUP
         '
         Me.imgPointXUP.Cursor = System.Windows.Forms.Cursors.Default
@@ -257,6 +247,16 @@ Partial Class ucnJackDsp
         Me.tmrBlink.Enabled = True
         Me.tmrBlink.Interval = 1000
         '
+        'imgPointYDOWN
+        '
+        Me.imgPointYDOWN.Cursor = System.Windows.Forms.Cursors.Default
+        Me.imgPointYDOWN.Image = CType(resources.GetObject("imgPointYDOWN.Image"), System.Drawing.Image)
+        Me.imgPointYDOWN.Location = New System.Drawing.Point(392, 417)
+        Me.imgPointYDOWN.Name = "imgPointYDOWN"
+        Me.imgPointYDOWN.Size = New System.Drawing.Size(32, 32)
+        Me.imgPointYDOWN.TabIndex = 133
+        Me.imgPointYDOWN.TabStop = False
+        '
         'ucnJackDsp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 14.0!)
@@ -286,9 +286,9 @@ Partial Class ucnJackDsp
         CType(Me.imgPoint, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.imgPointYUP, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.imgPointXDOWN, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.imgPointYDOWN, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.imgPointXUP, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picPoint, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.imgPointYDOWN, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -307,9 +307,9 @@ Partial Class ucnJackDsp
     Public WithEvents imgPoint As PictureBox
     Public WithEvents imgPointYUP As PictureBox
     Private WithEvents imgPointXDOWN As PictureBox
-    Public WithEvents imgPointYDOWN As PictureBox
     Public WithEvents imgPointXUP As PictureBox
     Friend WithEvents lblPointDspRate As Label
     Friend WithEvents picPoint As PictureBox
     Friend WithEvents tmrBlink As Timer
+    Public WithEvents imgPointYDOWN As PictureBox
 End Class

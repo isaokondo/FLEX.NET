@@ -675,6 +675,7 @@
             Dim rsData As Odbc.OdbcDataReader =
                 ExecuteSql(String.Format("SELECT * FROM flex掘削データ WHERE `リング番号`>='{0}' AND `リング番号`<'{1}' AND MOD(掘進ストローク,10)=0;" _
                                          , PlcIf.RingNo - CtlParameter.LineDevStartRing, PlcIf.RingNo))
+            Console.WriteLine()
             _HorRData.Clear()
             _VerRData.Clear()
             Dim RingNo As Integer = Nothing

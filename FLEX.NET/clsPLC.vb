@@ -5,6 +5,10 @@ Public Class clsPlcIf
 
     Private mblnBlink As Boolean 'ブリンク
 
+
+    Private _EngValue As Dictionary(Of String, Double) 'アナログの工業値
+
+
     Private _groupPv() As Single 'グループ圧力データ
     Private _groupSv() As Single
     Private _groupMv() As Single
@@ -151,7 +155,7 @@ Public Class clsPlcIf
     Public Event LosZeroModeChange()
 
 
-    Private AnalogTag As clsTag
+    Public AnalogTag As clsTag
     Public ParameterTag As clsTag
     Private DigtalTag As clsTag
     Private sharrDeviceValue() As Short         'デバイス値
@@ -649,7 +653,11 @@ Public Class clsPlcIf
             _mesureJackStroke.Add(i.Key, 0)
             _mesureJackSpeed.Add(i.Key, 0)
         Next
-
+        _EngValue = New Dictionary(Of String, Double)
+        '工業値のDictionary 初期化
+        For Each an In AnalogTag.Tag
+            _EngValue.Add(an.FieldName, 0)
+        Next
 
         Dim iRet As Long = PLC_Open() 'オープン処理
         If iRet <> 0 Then
@@ -705,44 +713,41 @@ Public Class clsPlcIf
                                                         AnalogTag.DeviceSize + 1,
                                                         sharrDeviceValue(0))
             If iReturnCode = 0 Then '通信OK
-                _gyro = GetAnalogData("ジャイロ方位", AnalogTag)
-                _gyroPitching = GetAnalogData("ジャイロピッチング", AnalogTag)
-                _gyroRolling = GetAnalogData("ジャイロローリング", AnalogTag)
+                For Each at In AnalogTag.Tag
+                    _EngValue(at.FieldName) = GetAnalogData(at.FieldName, AnalogTag)
+                Next
 
-                _machinePitching = GetAnalogData("マシンピッチング", AnalogTag)
-                _mashineRolling = GetAnalogData("マシンローリング", AnalogTag)
 
-                _jkPress = GetAnalogData("ジャッキ圧力", AnalogTag)
+                _gyro = _EngValue("ジャイロ方位")
+                _gyroPitching = _EngValue("ジャイロピッチング")
+                _gyroRolling = _EngValue("ジャイロローリング")
+
+                _machinePitching = _EngValue("マシンピッチング")
+                _mashineRolling = _EngValue("マシンローリング")
+
+                _jkPress = _EngValue("ジャッキ圧力")
 
                 _FilterJkPress = _jkPress + CtlParameter.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
 
-                _nakaoreLR = GetAnalogData("中折左右角", AnalogTag)
-                _nakaoreTB = GetAnalogData("中折上下角", AnalogTag)
-                '_leftStroke = GetAnalogData("左ストローク", AnalogTag)
-                '_rightStroke = GetAnalogData("右ストローク", AnalogTag)
-                '_topStroke = GetAnalogData("上ストローク", AnalogTag)
-                '_botomStroke = GetAnalogData("下ストローク", AnalogTag)
-                '_leftSpeed = GetAnalogData("左ジャッキ速度", AnalogTag)
-                '_rightSpeed = GetAnalogData("右ジャッキ速度", AnalogTag)
-                '_topSpeed = GetAnalogData("上ジャッキ速度", AnalogTag)
-                '_botomSpeed = GetAnalogData("下ジャッキ速度", AnalogTag)
-                _realStroke = GetAnalogData("掘進ストローク", AnalogTag)
-                _excaStatus = GetAnalogData("掘進ステータス", AnalogTag)
-                _CopyAngle = GetAnalogData("コピー角度", AnalogTag)
-                _CopyStroke1 = GetAnalogData("コピーストローク1", AnalogTag)
-                _CopyStroke2 = GetAnalogData("コピーストローク2", AnalogTag)
+                _nakaoreLR = _EngValue("中折左右角")
+                _nakaoreTB = _EngValue("中折上下角")
+                _realStroke = _EngValue("掘進ストローク")
+                _excaStatus = _EngValue("掘進ステータス")
+                _CopyAngle = _EngValue("コピー角度")
+                _CopyStroke1 = _EngValue("コピーストローク1")
+                _CopyStroke2 = _EngValue("コピーストローク2")
 
-                _leftClearance = GetAnalogData("クリアランス左", AnalogTag)
-                _topClearance = GetAnalogData("クリアランス上", AnalogTag)
-                _rightClearance = GetAnalogData("クリアランス右", AnalogTag)
-                _botomClearance = GetAnalogData("クリアランス下", AnalogTag)
+                _leftClearance = _EngValue("クリアランス左")
+                _topClearance = _EngValue("クリアランス上")
+                _rightClearance = _EngValue("クリアランス右")
+                _botomClearance = _EngValue("クリアランス下")
 
                 '計測ジャッキ取込
                 Dim st As New Dictionary(Of Short, Integer)(_mesureJackStroke)
                 'st = New Dictionary(Of Short, Integer)(_mesureJackStroke) '前スキャンの読込
                 For Each mj In InitParameter.MesureJackAngle.Keys
-                    _mesureJackStroke(mj) = GetAnalogData("ジャッキストローク" & mj, AnalogTag)
-                    _mesureJackSpeed(mj) = GetAnalogData("ジャッキスピード" & mj, AnalogTag)
+                    _mesureJackStroke(mj) = _EngValue("ジャッキストローク" & mj)
+                    _mesureJackSpeed(mj) = _EngValue("ジャッキスピード" & mj)
                 Next
                 '計測ストロークのいずれかが変化した時のイベント
                 For Each mj In InitParameter.MesureJackAngle.Keys
@@ -755,14 +760,14 @@ Public Class clsPlcIf
                 '同時施工ステータス読込
                 Dim p As Short
                 p = _LosZeroSts_FLEX
-                _LosZeroSts_FLEX = GetAnalogData("同時施工ステータス_FLEX", AnalogTag)
+                _LosZeroSts_FLEX = _EngValue("同時施工ステータス_FLEX")
                 '同時施工モードでステータス変化時
                 If _LosZeroMode And p <> _LosZeroSts_FLEX Then
                     RaiseEvent LosZeroStsChange(p, _LosZeroSts_FLEX, False)
                 End If
 
                 p = _LosZeroSts_M
-                _LosZeroSts_M = GetAnalogData("同時施工ステータス_Machine", AnalogTag)
+                _LosZeroSts_M = _EngValue("同時施工ステータス_Machine")
                 '同時施工モードでステータス変化時
                 If _LosZeroMode And p <> _LosZeroSts_M Then
                     RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
@@ -770,14 +775,14 @@ Public Class clsPlcIf
 
                 Dim i As Integer
                 For i = 0 To InitParameter.NumberGroup - 1
-                    _groupPv(i) = GetAnalogData("グループ" & (i + 1) & "圧力", AnalogTag)
-                    _groupMv(i) = GetAnalogData("グループ" & (i + 1) & "圧力MV", AnalogTag)
-                    _groupSv(i) = GetAnalogData("グループ" & (i + 1) & "圧力SV", AnalogTag)
-                    _groupFlg(i) = GetAnalogData("グループ" & (i + 1) & "制御フラグ", AnalogTag)
+                    _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
+                    _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
+                    _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
+                    _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
                 Next
 
                 For i = 0 To InitParameter.NumberJack - 1
-                    _JackStatus(i) = GetAnalogData("ジャッキステータス" & (i + 1), AnalogTag)
+                    _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
                     _jackSelect(i) = (_JackStatus(i) And 1)
                 Next
 
@@ -941,6 +946,9 @@ Public Class clsPlcIf
     Private Function GetAnalogData(ByVal FieldName As String, Tag As clsTag) As Single
         'アナログデータのスケール変換
         With Tag.TagData(FieldName)
+            If .ScaleHigh - .ScaleLow = 0 Then
+                Return 0
+            End If
             Dim tData As Single
             If .ScaleHigh > 32767 Then  '2wordの時
                 Dim TmpHigh As Single = sharrDeviceValue(.OffsetAddress + 1)

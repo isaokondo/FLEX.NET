@@ -102,15 +102,15 @@ Public Class clsControlParameter
 
     'Private Event UpdateData(ByVal sender As Object, ByVale As EventArgs, ByVal Value As Double)
 
-    Public Sub TimerRun()
+    'Public Sub TimerRun()
 
-        'TODO:テーブルの更新時のみ読みこむようにしたい
-        Dim timer As Timer = New Timer()
-        AddHandler timer.Tick, New EventHandler(AddressOf ReadParameter)
-        timer.Interval = 1000   '1秒ごとの処理
-        timer.Enabled = True ' timer.Start()と同じ
+    '    'TODO:テーブルの更新時のみ読みこむようにしたい
+    '    Dim timer As Timer = New Timer()
+    '    AddHandler timer.Tick, New EventHandler(AddressOf ReadParameter)
+    '    timer.Interval = 1000   '1秒ごとの処理
+    '    timer.Enabled = True ' timer.Start()と同じ
 
-    End Sub
+    'End Sub
     Public Property 最低全開グループ数() As Short
         Get
             Return _最低全開グループ数
@@ -722,7 +722,7 @@ Public Class clsControlParameter
     ''' パラメータ読み込み
     ''' </summary>
     ''' <remarks></remarks>
-    Private Sub ReadParameter()
+    Public Sub ReadParameter()
         Dim DB As New clsDataBase
 
         Dim tb As Odbc.OdbcDataReader = DB.ExecuteSql("SELECT * FROM FLEX制御パラメータ ")
@@ -888,6 +888,6 @@ Public Class clsControlParameter
         Next
         'パラメータ読込
         ReadParameter()
-        TimerRun()
+        'TimerRun()
     End Sub
 End Class

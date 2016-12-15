@@ -98,23 +98,39 @@ Public Structure _tag
     Public EngHight As Single       '工業値上限
     Public ScaleLow As Single       'スケール下限
     Public ScaleHigh As Single      'スケール上限
-    Public Value As Double          '値
+    Public EngValue As Double       '工業値
 End Structure
 
 
 Public Class clsTag
     Inherits clsDataBase
 
-    Private _Tag() As _tag
+    Private _TagList As New List(Of _tag)
+    Private tagDic As Dictionary(Of String, Short)
     Private _startAddress As String  '読み込み開始アドレス
     Private _devicesize As Integer = 0   'アドレス読込個数
 
     Private WithEvents Htb As New clsHashtableRead
 
-
-    Public ReadOnly Property TagData(ByVal strFldName As String) As _tag
+    Public Property Tag As List(Of _tag)
         Get
-            Return _Tag(Htb.GetValue(strFldName))
+            Return _TagList
+        End Get
+        Set(value As List(Of _tag))
+            _TagList = value
+        End Set
+    End Property
+
+    Public ReadOnly Property TagData(FldName As String) As _tag
+        Get
+            Return _TagList(tagDic(FldName))
+        End Get
+    End Property
+
+
+    Public ReadOnly Property TagEngValue(ByVal FldName As String) As Double
+        Get
+            Return _TagList(tagDic(FldName)).EngValue
         End Get
     End Property
 
@@ -139,7 +155,7 @@ Public Class clsTag
         Dim TableAndWhere As String = " " & TableName & " WHERE `アドレス` LIKE '" & PLCAdressClass & "%'"
         Dim MaxID As OdbcDataReader = ExecuteSql("SELECT COUNT(*) FROM " & TableAndWhere)
         MaxID.Read()
-        ReDim _Tag(MaxID.Item(0) + 1)
+        'ReDim _TagList(MaxID.Item(0) + 1)
 
         Dim StartAd As OdbcDataReader = ExecuteSql("SELECT Min(`アドレス`) FROM" & TableAndWhere)
         StartAd.Read()
@@ -156,30 +172,34 @@ Public Class clsTag
 
         Dim StartAdress As Integer = CInt(_startAddress.Substring(1))
 
+        tagDic = New Dictionary(Of String, Short)
+
         Dim i As Integer = 0 ' anaTag("ID")
         While anaTag.Read()
-            'If Not IsDBNull(anaTag("項目名")) Then
-            _Tag(i).FieldName = anaTag("項目名").ToString
-            _Tag(i).Address = anaTag("アドレス").ToString
-            If TableName = "FLEXアナログtag" Then
-                _Tag(i).DigitLoc = CInt(anaTag("小数点位置"))
-                _Tag(i).Unit = anaTag("単位").ToString
-                _Tag(i).EngLow = CSng(anaTag("下限"))
-                _Tag(i).EngHight = CSng(anaTag("上限"))
-                _Tag(i).ScaleLow = CSng(anaTag("スケール下限"))
-                _Tag(i).ScaleHigh = CSng(anaTag("スケール上限"))
-            End If
-            Dim ad As String = _Tag(i).Address 'アドレスからオフセットを算出
-            If Not ad.Equals("") AndAlso IsNumeric(ad.Substring(1)) Then
-                _Tag(i).OffsetAddress = CInt(ad.Substring(1)) - StartAdress
-            End If
+            If anaTag("項目名") <> "" Then
+                Dim t As _tag
+                t.FieldName = anaTag("項目名").ToString
+                t.Address = anaTag("アドレス").ToString
+                If TableName = "FLEXアナログtag" Then
+                    t.DigitLoc = CInt(anaTag("小数点位置"))
+                    t.Unit = anaTag("単位").ToString
+                    t.EngLow = CSng(anaTag("下限"))
+                    t.EngHight = CSng(anaTag("上限"))
+                    t.ScaleLow = CSng(anaTag("スケール下限"))
+                    t.ScaleHigh = CSng(anaTag("スケール上限"))
+                End If
+                Dim ad As String = t.Address 'アドレスからオフセットを算出
+                If Not ad.Equals("") AndAlso IsNumeric(ad.Substring(1)) Then
+                    t.OffsetAddress = CInt(ad.Substring(1)) - StartAdress
+                End If
+                _TagList.Add(t)
+                tagDic.Add(t.FieldName, i)
+                ht(anaTag("項目名")) = i
 
-            ht(anaTag("項目名")) = i
-
-            'オフセットの最大値取得
-            If _devicesize < _Tag(i).OffsetAddress Then _devicesize = _Tag(i).OffsetAddress
-            i = i + 1
-            'End If
+                'オフセットの最大値取得
+                If _devicesize < t.OffsetAddress Then _devicesize = t.OffsetAddress
+                i += 1
+            End If
         End While
 
         Htb.htb = ht    'ハッシュテーブルの設定
@@ -516,8 +536,8 @@ Public Class clsTableUpdateConfirm
                         PlcIf.TagRead()
                     Case "flex初期パラメータ"
                         InitParameter = New clsInitParameter
-                        'Case "flex制御パラメータ"
-                        '    CtlParameter = New clsControlParameter
+                    Case "flex制御パラメータ"
+                        CtlParameter.ReadParameter()
                 End Select
             End If
         Next

@@ -355,10 +355,7 @@ Public Class ucnJackDsp
             For Each t In _flexVisible
                 t.Visible = value
                 t.Enabled = value
-
             Next
-
-
         End Set
 
     End Property
