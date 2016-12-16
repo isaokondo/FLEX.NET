@@ -23,6 +23,9 @@ Public Class ucnDspData
     'ブリンクフラグ
     Private flg As Boolean
 
+    Public Shadows Event DoubleClick(sender As Object, e As EventArgs)
+
+
     Public Sub New()
 
         ' この呼び出しはデザイナーで必要です。
@@ -186,5 +189,17 @@ Public Class ucnDspData
     Private Sub tmrBlink_Tick(sender As Object, e As EventArgs) Handles tmrBlink.Tick
         flg = Not flg
         lblData.BackColor = IIf(flg, Color.Black, BlinkColor)
+    End Sub
+
+    Private Sub lblFieldName_Click(sender As Object, e As EventArgs) Handles lblFieldName.Click
+
+    End Sub
+
+    Private Sub lblFieldName_DoubleClick(sender As Object, e As EventArgs) Handles lblFieldName.DoubleClick
+        RaiseEvent DoubleClick(sender, e)
+    End Sub
+
+    Private Sub lblData_DoubleClick(sender As Object, e As EventArgs) Handles lblData.DoubleClick
+        RaiseEvent DoubleClick(sender, e)
     End Sub
 End Class

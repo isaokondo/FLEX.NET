@@ -143,18 +143,18 @@ Partial Class frmMain
         Me.DspLeftRealStroke = New FLEX.NET.ucnDspDataMin()
         Me.DspUpSpeed = New FLEX.NET.ucnDspDataMin()
         Me.DspBottomRealStroke = New FLEX.NET.ucnDspDataMin()
-        Me.UcnDspData9 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData10 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData11 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData12 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData13 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData14 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData7 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData8 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData5 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData6 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData4 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData3 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse11 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse10 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse9 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse8 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse7 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse6 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse5 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse4 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse3 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse2 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse1 = New FLEX.NET.ucnDspData()
+        Me.DspWideUse0 = New FLEX.NET.ucnDspData()
         Me.UcnJackDsp = New FLEX.NET.ucnJackDsp()
         Me.DspExcvSpeed = New FLEX.NET.ucnDspData()
         Me.DspAveStroke = New FLEX.NET.ucnDspData()
@@ -1200,14 +1200,14 @@ Partial Class frmMain
         Me.DspBottomClearance.Unit = "mm"
         Me.DspBottomClearance.Value = 1234.0R
         '
-        'DspUpClearance
+        'DspTopClearance
         '
         Me.DspTopClearance.BackColor = System.Drawing.Color.Transparent
         Me.DspTopClearance.DecimalPlaces = CType(0, Short)
         Me.DspTopClearance.FieldName = "上ｸﾘｱ"
         Me.DspTopClearance.Location = New System.Drawing.Point(191, 131)
         Me.DspTopClearance.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspTopClearance.Name = "DspUpClearance"
+        Me.DspTopClearance.Name = "DspTopClearance"
         Me.DspTopClearance.Size = New System.Drawing.Size(143, 46)
         Me.DspTopClearance.TabIndex = 143
         Me.DspTopClearance.Unit = "mm"
@@ -1714,257 +1714,257 @@ Partial Class frmMain
         Me.DspBottomRealStroke.Unit = "mm"
         Me.DspBottomRealStroke.Value = 1234.0R
         '
-        'UcnDspData9
+        'DspWideUse11
         '
-        Me.UcnDspData9.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData9.Blink = False
-        Me.UcnDspData9.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData9.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData9.DataWidth = 93
-        Me.UcnDspData9.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData9.FieldName = ""
-        Me.UcnDspData9.FieldNameWidth = 146
-        Me.UcnDspData9.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData9.Location = New System.Drawing.Point(1408, 382)
-        Me.UcnDspData9.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData9.Name = "UcnDspData9"
-        Me.UcnDspData9.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData9.TabIndex = 80
-        Me.UcnDspData9.Unit = ""
-        Me.UcnDspData9.UnitVisible = True
-        Me.UcnDspData9.Value = "123.45 "
-        Me.UcnDspData9.ValueType = False
+        Me.DspWideUse11.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse11.Blink = False
+        Me.DspWideUse11.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse11.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse11.DataWidth = 93
+        Me.DspWideUse11.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse11.FieldName = ""
+        Me.DspWideUse11.FieldNameWidth = 146
+        Me.DspWideUse11.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse11.Location = New System.Drawing.Point(1408, 382)
+        Me.DspWideUse11.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse11.Name = "DspWideUse11"
+        Me.DspWideUse11.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse11.TabIndex = 80
+        Me.DspWideUse11.Unit = ""
+        Me.DspWideUse11.UnitVisible = True
+        Me.DspWideUse11.Value = "123.45 "
+        Me.DspWideUse11.ValueType = False
         '
-        'UcnDspData10
+        'DspWideUse10
         '
-        Me.UcnDspData10.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData10.Blink = False
-        Me.UcnDspData10.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData10.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData10.DataWidth = 93
-        Me.UcnDspData10.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData10.FieldName = ""
-        Me.UcnDspData10.FieldNameWidth = 146
-        Me.UcnDspData10.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData10.Location = New System.Drawing.Point(1408, 350)
-        Me.UcnDspData10.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData10.Name = "UcnDspData10"
-        Me.UcnDspData10.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData10.TabIndex = 79
-        Me.UcnDspData10.Unit = ""
-        Me.UcnDspData10.UnitVisible = True
-        Me.UcnDspData10.Value = "123.45 "
-        Me.UcnDspData10.ValueType = False
+        Me.DspWideUse10.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse10.Blink = False
+        Me.DspWideUse10.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse10.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse10.DataWidth = 93
+        Me.DspWideUse10.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse10.FieldName = ""
+        Me.DspWideUse10.FieldNameWidth = 146
+        Me.DspWideUse10.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse10.Location = New System.Drawing.Point(1408, 350)
+        Me.DspWideUse10.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse10.Name = "DspWideUse10"
+        Me.DspWideUse10.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse10.TabIndex = 79
+        Me.DspWideUse10.Unit = ""
+        Me.DspWideUse10.UnitVisible = True
+        Me.DspWideUse10.Value = "123.45 "
+        Me.DspWideUse10.ValueType = False
         '
-        'UcnDspData11
+        'DspWideUse9
         '
-        Me.UcnDspData11.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData11.Blink = False
-        Me.UcnDspData11.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData11.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData11.DataWidth = 93
-        Me.UcnDspData11.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData11.FieldName = ""
-        Me.UcnDspData11.FieldNameWidth = 146
-        Me.UcnDspData11.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData11.Location = New System.Drawing.Point(1408, 318)
-        Me.UcnDspData11.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData11.Name = "UcnDspData11"
-        Me.UcnDspData11.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData11.TabIndex = 78
-        Me.UcnDspData11.Unit = ""
-        Me.UcnDspData11.UnitVisible = True
-        Me.UcnDspData11.Value = "123.45 "
-        Me.UcnDspData11.ValueType = False
+        Me.DspWideUse9.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse9.Blink = False
+        Me.DspWideUse9.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse9.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse9.DataWidth = 93
+        Me.DspWideUse9.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse9.FieldName = ""
+        Me.DspWideUse9.FieldNameWidth = 146
+        Me.DspWideUse9.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse9.Location = New System.Drawing.Point(1408, 318)
+        Me.DspWideUse9.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse9.Name = "DspWideUse9"
+        Me.DspWideUse9.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse9.TabIndex = 78
+        Me.DspWideUse9.Unit = ""
+        Me.DspWideUse9.UnitVisible = True
+        Me.DspWideUse9.Value = "123.45 "
+        Me.DspWideUse9.ValueType = False
         '
-        'UcnDspData12
+        'DspWideUse8
         '
-        Me.UcnDspData12.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData12.Blink = False
-        Me.UcnDspData12.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData12.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData12.DataWidth = 93
-        Me.UcnDspData12.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData12.FieldName = ""
-        Me.UcnDspData12.FieldNameWidth = 146
-        Me.UcnDspData12.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData12.Location = New System.Drawing.Point(1408, 286)
-        Me.UcnDspData12.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData12.Name = "UcnDspData12"
-        Me.UcnDspData12.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData12.TabIndex = 77
-        Me.UcnDspData12.Unit = ""
-        Me.UcnDspData12.UnitVisible = True
-        Me.UcnDspData12.Value = "123.45 "
-        Me.UcnDspData12.ValueType = False
+        Me.DspWideUse8.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse8.Blink = False
+        Me.DspWideUse8.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse8.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse8.DataWidth = 93
+        Me.DspWideUse8.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse8.FieldName = ""
+        Me.DspWideUse8.FieldNameWidth = 146
+        Me.DspWideUse8.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse8.Location = New System.Drawing.Point(1408, 286)
+        Me.DspWideUse8.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse8.Name = "DspWideUse8"
+        Me.DspWideUse8.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse8.TabIndex = 77
+        Me.DspWideUse8.Unit = ""
+        Me.DspWideUse8.UnitVisible = True
+        Me.DspWideUse8.Value = "123.45 "
+        Me.DspWideUse8.ValueType = False
         '
-        'UcnDspData13
+        'DspWideUse7
         '
-        Me.UcnDspData13.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData13.Blink = False
-        Me.UcnDspData13.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData13.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData13.DataWidth = 93
-        Me.UcnDspData13.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData13.FieldName = ""
-        Me.UcnDspData13.FieldNameWidth = 146
-        Me.UcnDspData13.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData13.Location = New System.Drawing.Point(1408, 254)
-        Me.UcnDspData13.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData13.Name = "UcnDspData13"
-        Me.UcnDspData13.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData13.TabIndex = 76
-        Me.UcnDspData13.Unit = ""
-        Me.UcnDspData13.UnitVisible = True
-        Me.UcnDspData13.Value = "123.45 "
-        Me.UcnDspData13.ValueType = False
+        Me.DspWideUse7.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse7.Blink = False
+        Me.DspWideUse7.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse7.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse7.DataWidth = 93
+        Me.DspWideUse7.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse7.FieldName = ""
+        Me.DspWideUse7.FieldNameWidth = 146
+        Me.DspWideUse7.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse7.Location = New System.Drawing.Point(1408, 254)
+        Me.DspWideUse7.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse7.Name = "DspWideUse7"
+        Me.DspWideUse7.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse7.TabIndex = 76
+        Me.DspWideUse7.Unit = ""
+        Me.DspWideUse7.UnitVisible = True
+        Me.DspWideUse7.Value = "123.45 "
+        Me.DspWideUse7.ValueType = False
         '
-        'UcnDspData14
+        'DspWideUse6
         '
-        Me.UcnDspData14.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData14.Blink = False
-        Me.UcnDspData14.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData14.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData14.DataWidth = 93
-        Me.UcnDspData14.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData14.FieldName = ""
-        Me.UcnDspData14.FieldNameWidth = 146
-        Me.UcnDspData14.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData14.Location = New System.Drawing.Point(1408, 222)
-        Me.UcnDspData14.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData14.Name = "UcnDspData14"
-        Me.UcnDspData14.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData14.TabIndex = 75
-        Me.UcnDspData14.Unit = ""
-        Me.UcnDspData14.UnitVisible = True
-        Me.UcnDspData14.Value = "123.45 "
-        Me.UcnDspData14.ValueType = False
+        Me.DspWideUse6.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse6.Blink = False
+        Me.DspWideUse6.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse6.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse6.DataWidth = 93
+        Me.DspWideUse6.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse6.FieldName = ""
+        Me.DspWideUse6.FieldNameWidth = 146
+        Me.DspWideUse6.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse6.Location = New System.Drawing.Point(1408, 222)
+        Me.DspWideUse6.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse6.Name = "DspWideUse6"
+        Me.DspWideUse6.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse6.TabIndex = 75
+        Me.DspWideUse6.Unit = ""
+        Me.DspWideUse6.UnitVisible = True
+        Me.DspWideUse6.Value = "123.45 "
+        Me.DspWideUse6.ValueType = False
         '
-        'UcnDspData7
+        'DspWideUse5
         '
-        Me.UcnDspData7.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData7.Blink = False
-        Me.UcnDspData7.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData7.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData7.DataWidth = 93
-        Me.UcnDspData7.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData7.FieldName = ""
-        Me.UcnDspData7.FieldNameWidth = 146
-        Me.UcnDspData7.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData7.Location = New System.Drawing.Point(1408, 190)
-        Me.UcnDspData7.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData7.Name = "UcnDspData7"
-        Me.UcnDspData7.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData7.TabIndex = 74
-        Me.UcnDspData7.Unit = ""
-        Me.UcnDspData7.UnitVisible = True
-        Me.UcnDspData7.Value = "123.45 "
-        Me.UcnDspData7.ValueType = False
+        Me.DspWideUse5.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse5.Blink = False
+        Me.DspWideUse5.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse5.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse5.DataWidth = 93
+        Me.DspWideUse5.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse5.FieldName = ""
+        Me.DspWideUse5.FieldNameWidth = 146
+        Me.DspWideUse5.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse5.Location = New System.Drawing.Point(1408, 190)
+        Me.DspWideUse5.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse5.Name = "DspWideUse5"
+        Me.DspWideUse5.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse5.TabIndex = 74
+        Me.DspWideUse5.Unit = ""
+        Me.DspWideUse5.UnitVisible = True
+        Me.DspWideUse5.Value = "123.45 "
+        Me.DspWideUse5.ValueType = False
         '
-        'UcnDspData8
+        'DspWideUse4
         '
-        Me.UcnDspData8.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData8.Blink = False
-        Me.UcnDspData8.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData8.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData8.DataWidth = 93
-        Me.UcnDspData8.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData8.FieldName = ""
-        Me.UcnDspData8.FieldNameWidth = 146
-        Me.UcnDspData8.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData8.Location = New System.Drawing.Point(1408, 158)
-        Me.UcnDspData8.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData8.Name = "UcnDspData8"
-        Me.UcnDspData8.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData8.TabIndex = 73
-        Me.UcnDspData8.Unit = ""
-        Me.UcnDspData8.UnitVisible = True
-        Me.UcnDspData8.Value = "123.45 "
-        Me.UcnDspData8.ValueType = False
+        Me.DspWideUse4.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse4.Blink = False
+        Me.DspWideUse4.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse4.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse4.DataWidth = 93
+        Me.DspWideUse4.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse4.FieldName = ""
+        Me.DspWideUse4.FieldNameWidth = 146
+        Me.DspWideUse4.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse4.Location = New System.Drawing.Point(1408, 158)
+        Me.DspWideUse4.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse4.Name = "DspWideUse4"
+        Me.DspWideUse4.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse4.TabIndex = 73
+        Me.DspWideUse4.Unit = ""
+        Me.DspWideUse4.UnitVisible = True
+        Me.DspWideUse4.Value = "123.45 "
+        Me.DspWideUse4.ValueType = False
         '
-        'UcnDspData5
+        'DspWideUse3
         '
-        Me.UcnDspData5.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData5.Blink = False
-        Me.UcnDspData5.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData5.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData5.DataWidth = 93
-        Me.UcnDspData5.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData5.FieldName = ""
-        Me.UcnDspData5.FieldNameWidth = 146
-        Me.UcnDspData5.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData5.Location = New System.Drawing.Point(1408, 126)
-        Me.UcnDspData5.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData5.Name = "UcnDspData5"
-        Me.UcnDspData5.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData5.TabIndex = 72
-        Me.UcnDspData5.Unit = ""
-        Me.UcnDspData5.UnitVisible = True
-        Me.UcnDspData5.Value = "123.45 "
-        Me.UcnDspData5.ValueType = False
+        Me.DspWideUse3.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse3.Blink = False
+        Me.DspWideUse3.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse3.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse3.DataWidth = 93
+        Me.DspWideUse3.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse3.FieldName = ""
+        Me.DspWideUse3.FieldNameWidth = 146
+        Me.DspWideUse3.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse3.Location = New System.Drawing.Point(1408, 126)
+        Me.DspWideUse3.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse3.Name = "DspWideUse3"
+        Me.DspWideUse3.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse3.TabIndex = 72
+        Me.DspWideUse3.Unit = ""
+        Me.DspWideUse3.UnitVisible = True
+        Me.DspWideUse3.Value = "123.45 "
+        Me.DspWideUse3.ValueType = False
         '
-        'UcnDspData6
+        'DspWideUse2
         '
-        Me.UcnDspData6.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData6.Blink = False
-        Me.UcnDspData6.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData6.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData6.DataWidth = 93
-        Me.UcnDspData6.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData6.FieldName = ""
-        Me.UcnDspData6.FieldNameWidth = 146
-        Me.UcnDspData6.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData6.Location = New System.Drawing.Point(1408, 94)
-        Me.UcnDspData6.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData6.Name = "UcnDspData6"
-        Me.UcnDspData6.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData6.TabIndex = 71
-        Me.UcnDspData6.Unit = ""
-        Me.UcnDspData6.UnitVisible = True
-        Me.UcnDspData6.Value = "123.45 "
-        Me.UcnDspData6.ValueType = False
+        Me.DspWideUse2.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse2.Blink = False
+        Me.DspWideUse2.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse2.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse2.DataWidth = 93
+        Me.DspWideUse2.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse2.FieldName = ""
+        Me.DspWideUse2.FieldNameWidth = 146
+        Me.DspWideUse2.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse2.Location = New System.Drawing.Point(1408, 94)
+        Me.DspWideUse2.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse2.Name = "DspWideUse2"
+        Me.DspWideUse2.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse2.TabIndex = 71
+        Me.DspWideUse2.Unit = ""
+        Me.DspWideUse2.UnitVisible = True
+        Me.DspWideUse2.Value = "123.45 "
+        Me.DspWideUse2.ValueType = False
         '
-        'UcnDspData4
+        'DspWideUse1
         '
-        Me.UcnDspData4.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData4.Blink = False
-        Me.UcnDspData4.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData4.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData4.DataWidth = 93
-        Me.UcnDspData4.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData4.FieldName = ""
-        Me.UcnDspData4.FieldNameWidth = 146
-        Me.UcnDspData4.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData4.Location = New System.Drawing.Point(1408, 62)
-        Me.UcnDspData4.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData4.Name = "UcnDspData4"
-        Me.UcnDspData4.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData4.TabIndex = 70
-        Me.UcnDspData4.Unit = ""
-        Me.UcnDspData4.UnitVisible = True
-        Me.UcnDspData4.Value = "123.45 "
-        Me.UcnDspData4.ValueType = False
+        Me.DspWideUse1.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse1.Blink = False
+        Me.DspWideUse1.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse1.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse1.DataWidth = 93
+        Me.DspWideUse1.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse1.FieldName = ""
+        Me.DspWideUse1.FieldNameWidth = 146
+        Me.DspWideUse1.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse1.Location = New System.Drawing.Point(1408, 62)
+        Me.DspWideUse1.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse1.Name = "DspWideUse1"
+        Me.DspWideUse1.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse1.TabIndex = 70
+        Me.DspWideUse1.Unit = ""
+        Me.DspWideUse1.UnitVisible = True
+        Me.DspWideUse1.Value = "123.45 "
+        Me.DspWideUse1.ValueType = False
         '
-        'UcnDspData3
+        'DspWideUse0
         '
-        Me.UcnDspData3.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData3.Blink = False
-        Me.UcnDspData3.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData3.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData3.DataWidth = 93
-        Me.UcnDspData3.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData3.FieldName = ""
-        Me.UcnDspData3.FieldNameWidth = 146
-        Me.UcnDspData3.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData3.Location = New System.Drawing.Point(1408, 30)
-        Me.UcnDspData3.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData3.Name = "UcnDspData3"
-        Me.UcnDspData3.Size = New System.Drawing.Size(310, 32)
-        Me.UcnDspData3.TabIndex = 69
-        Me.UcnDspData3.Unit = ""
-        Me.UcnDspData3.UnitVisible = True
-        Me.UcnDspData3.Value = "123.45 "
-        Me.UcnDspData3.ValueType = False
+        Me.DspWideUse0.BackColor = System.Drawing.Color.Transparent
+        Me.DspWideUse0.Blink = False
+        Me.DspWideUse0.BlinkColor = System.Drawing.Color.Red
+        Me.DspWideUse0.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWideUse0.DataWidth = 93
+        Me.DspWideUse0.DecimalPlaces = CType(2, Short)
+        Me.DspWideUse0.FieldName = ""
+        Me.DspWideUse0.FieldNameWidth = 146
+        Me.DspWideUse0.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWideUse0.Location = New System.Drawing.Point(1408, 30)
+        Me.DspWideUse0.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWideUse0.Name = "DspWideUse0"
+        Me.DspWideUse0.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse0.TabIndex = 69
+        Me.DspWideUse0.Unit = ""
+        Me.DspWideUse0.UnitVisible = True
+        Me.DspWideUse0.Value = "123.45 "
+        Me.DspWideUse0.ValueType = False
         '
         'UcnJackDsp
         '
@@ -2471,18 +2471,18 @@ Partial Class frmMain
         Me.Controls.Add(Me.DspLeftRealStroke)
         Me.Controls.Add(Me.DspUpSpeed)
         Me.Controls.Add(Me.DspBottomRealStroke)
-        Me.Controls.Add(Me.UcnDspData9)
-        Me.Controls.Add(Me.UcnDspData10)
-        Me.Controls.Add(Me.UcnDspData11)
-        Me.Controls.Add(Me.UcnDspData12)
-        Me.Controls.Add(Me.UcnDspData13)
-        Me.Controls.Add(Me.UcnDspData14)
-        Me.Controls.Add(Me.UcnDspData7)
-        Me.Controls.Add(Me.UcnDspData8)
-        Me.Controls.Add(Me.UcnDspData5)
-        Me.Controls.Add(Me.UcnDspData6)
-        Me.Controls.Add(Me.UcnDspData4)
-        Me.Controls.Add(Me.UcnDspData3)
+        Me.Controls.Add(Me.DspWideUse11)
+        Me.Controls.Add(Me.DspWideUse10)
+        Me.Controls.Add(Me.DspWideUse9)
+        Me.Controls.Add(Me.DspWideUse8)
+        Me.Controls.Add(Me.DspWideUse7)
+        Me.Controls.Add(Me.DspWideUse6)
+        Me.Controls.Add(Me.DspWideUse5)
+        Me.Controls.Add(Me.DspWideUse4)
+        Me.Controls.Add(Me.DspWideUse3)
+        Me.Controls.Add(Me.DspWideUse2)
+        Me.Controls.Add(Me.DspWideUse1)
+        Me.Controls.Add(Me.DspWideUse0)
         Me.Controls.Add(Me.UcnJackDsp)
         Me.Controls.Add(Me.DspExcvSpeed)
         Me.Controls.Add(Me.DspAveStroke)
@@ -2588,18 +2588,18 @@ Partial Class frmMain
     Friend WithEvents ToolStripMenuItem4 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripMenuItem5 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents UcnJackDsp As FLEX.NET.ucnJackDsp
-    Friend WithEvents UcnDspData3 As ucnDspData
-    Friend WithEvents UcnDspData4 As ucnDspData
-    Friend WithEvents UcnDspData5 As ucnDspData
-    Friend WithEvents UcnDspData6 As ucnDspData
-    Friend WithEvents UcnDspData7 As ucnDspData
-    Friend WithEvents UcnDspData8 As ucnDspData
-    Friend WithEvents UcnDspData9 As ucnDspData
-    Friend WithEvents UcnDspData10 As ucnDspData
-    Friend WithEvents UcnDspData11 As ucnDspData
-    Friend WithEvents UcnDspData12 As ucnDspData
-    Friend WithEvents UcnDspData13 As ucnDspData
-    Friend WithEvents UcnDspData14 As ucnDspData
+    Friend WithEvents DspWideUse0 As ucnDspData
+    Friend WithEvents DspWideUse1 As ucnDspData
+    Friend WithEvents DspWideUse3 As ucnDspData
+    Friend WithEvents DspWideUse2 As ucnDspData
+    Friend WithEvents DspWideUse5 As ucnDspData
+    Friend WithEvents DspWideUse4 As ucnDspData
+    Friend WithEvents DspWideUse11 As ucnDspData
+    Friend WithEvents DspWideUse10 As ucnDspData
+    Friend WithEvents DspWideUse9 As ucnDspData
+    Friend WithEvents DspWideUse8 As ucnDspData
+    Friend WithEvents DspWideUse7 As ucnDspData
+    Friend WithEvents DspWideUse6 As ucnDspData
     Friend WithEvents TuningMonitorClicｋ As ToolStripMenuItem
     Friend WithEvents UcnDspDevImg As ucnDspDevImg
     Friend WithEvents UcnGpPvBarGraph As ucnGpPvBarGraph

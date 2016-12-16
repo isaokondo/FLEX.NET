@@ -94,6 +94,11 @@ Public Class clsControlParameter
     ''' パラメータに対応するPLCアドレスのハッシュテーブル
     ''' </summary>
     Private htPlcAdr As Hashtable = New Hashtable
+    ''' <summary>
+    ''' 汎用データ表示設定
+    ''' </summary>
+    Private _wideUse As Dictionary(Of Short, String)
+
 
     ''' <summary>
     ''' 線形が変化した時
@@ -718,11 +723,26 @@ Public Class clsControlParameter
         End Set
     End Property
 
+    Public Property WideUse As Dictionary(Of Short, String)
+        Get
+            Return _wideUse
+        End Get
+        Set(value As Dictionary(Of Short, String))
+            _wideUse = value
+            sbUpdateData(value) 'データ更新
+        End Set
+    End Property
+
+
+
     ''' <summary>
     ''' パラメータ読み込み
     ''' </summary>
     ''' <remarks></remarks>
     Public Sub ReadParameter()
+
+        _wideUse = New Dictionary(Of Short, String)
+
         Dim DB As New clsDataBase
 
         Dim tb As Odbc.OdbcDataReader = DB.ExecuteSql("SELECT * FROM FLEX制御パラメータ ")
@@ -839,6 +859,11 @@ Public Class clsControlParameter
                     End If
 
 
+                    If .Item("項目名称").ToString.IndexOf("wideuse") >= 0 Then
+                        _wideUse(CShort(.Item("項目名称").ToString.Replace("wideuse", ""))) = .Item("値")
+                    End If
+
+
                 Catch ex As Exception
                     Debug.WriteLine("Err" & .Item("項目名称").ToString)
                 End Try
@@ -849,6 +874,10 @@ Public Class clsControlParameter
 
 
 
+    End Sub
+
+    Private Sub sbUpdateData(value As Dictionary(Of Short, String))
+        'TODO:これから
     End Sub
 
     Private Sub sbUpdateData(ByRef value As Object)

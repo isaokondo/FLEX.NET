@@ -7,6 +7,8 @@
 
     Private DspGp() As ucnDspGpPres 'グループ圧PV数値表示用
     Private BlinkFlg As Boolean '点滅フラグ
+    'Private WideUse As New List(Of ucnDspData) '汎用データ表示用
+    'Private WideUseDsp() As ucnDspData
     ''' <summary>
     ''' 画面のちらつきをなくす
     ''' </summary>
@@ -120,6 +122,17 @@
 
         DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
         DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均ストローク
+
+
+        '汎用データ表示
+        For Each wu In CtlParameter.WideUse
+            Dim dd As ucnDspData = Me.Controls("DspWideUse" & wu.Key)
+            If wu.Value <> "" Then
+                dd.Value = PlcIf.EngValue(dd.FieldName)
+            Else
+                dd.Value = "----------"
+            End If
+        Next
 
         With CtlParameter
             '自動方向制御ON／OFF
@@ -302,13 +315,28 @@
         PlcIf.ParameterWrite("グループ数", InitParameter.NumberGroup)
         PlcIf.ParameterWrite("ジャッキ本数", InitParameter.NumberJack)
 
-
-
-
-
-
+        '汎用データ表示項目セット
+        WideDataFldSet()
 
     End Sub
+    ''' <summary>
+    ''' 汎用データ表示項目セット
+    ''' </summary>
+    Private Sub WideDataFldSet()
+        For Each wu In CtlParameter.WideUse
+            Dim dd As ucnDspData = Me.Controls("DspWideUse" & wu.Key)
+            dd.FieldName = wu.Value
+            If wu.Value <> "" Then
+                dd.Unit = PlcIf.AnalogTag.TagData(wu.Value).Unit
+                dd.DecimalPlaces = PlcIf.AnalogTag.TagData(wu.Value).DigitLoc
+            End If
+        Next
+
+    End Sub
+
+
+
+
     ''' <summary>
     ''' 線形データ画面更新
     ''' </summary>
@@ -400,8 +428,6 @@
 
 
     End Sub
-
-
 
 
     Private Sub MenuSystem_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles MenuSystem.ItemClicked

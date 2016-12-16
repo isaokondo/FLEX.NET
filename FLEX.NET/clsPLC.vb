@@ -158,6 +158,7 @@ Public Class clsPlcIf
     Public AnalogTag As clsTag
     Public ParameterTag As clsTag
     Private DigtalTag As clsTag
+
     Private sharrDeviceValue() As Short         'デバイス値
     ''' <summary>
     ''' TAGの読込
@@ -167,6 +168,16 @@ Public Class clsPlcIf
         ParameterTag = New clsTag("FLEXアナログtag", "R")
         DigtalTag = New clsTag("FLEXデジタルtag", "M")
     End Sub
+    ''' <summary>
+    ''' アナログ入力（工業値)
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property EngValue As Dictionary(Of String, Double)
+        Get
+            Return _EngValue
+        End Get
+    End Property
+
 
 
 
