@@ -23,13 +23,17 @@ Public Class ucnDspData
     'ブリンクフラグ
     Private flg As Boolean
 
-    Public Shadows Event DoubleClick(sender As Object, e As EventArgs)
+    Public Shadows Event DoubleClick(sender As Object, e As EventArgs, ctlName As String)
+    '既定のフォントサイズ
+    Private DefaultFiledFont As Font
 
 
     Public Sub New()
 
         ' この呼び出しはデザイナーで必要です。
         InitializeComponent()
+
+        DefaultFiledFont = lblFieldName.Font
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
@@ -45,6 +49,20 @@ Public Class ucnDspData
         End Set
     End Property
 
+    Public Property FieldNameWidth As Integer
+        Get
+            Return lblFieldName.Width
+        End Get
+        Set(value As Integer)
+            lblFieldName.Width = value
+            lblData.Left = lblFieldName.Location.X + lblFieldName.Width
+
+            AdjustFontSiza()
+
+        End Set
+    End Property
+
+
 
     <Browsable(True), Description("項目名の設定")>
     Public Property FieldName As String
@@ -54,18 +72,29 @@ Public Class ucnDspData
         Set(value As String)
             _FieldName = value
             lblFieldName.Text = Space(1) & value
+
+            AdjustFontSiza()
+
         End Set
     End Property
 
-    Public Property FieldNameWidth As Integer
-        Get
-            Return lblFieldName.Width
-        End Get
-        Set(value As Integer)
-            lblFieldName.Width = value
-            lblData.Left = lblFieldName.Location.X + lblFieldName.Width
-        End Set
-    End Property
+    ''' <summary>
+    ''' フォントサイズの調整
+    ''' </summary>
+    Private Sub AdjustFontSiza()
+        With lblFieldName
+
+            If .Width > TextRenderer.MeasureText(.Text, .Font).Width Then
+                .Font = DefaultFiledFont
+            Else
+                Do Until .Width >= TextRenderer.MeasureText(.Text, .Font).Width
+                    .Font = New Font(.Font.FontFamily, .Font.Size - 1, .Font.Style)
+                Loop
+            End If
+        End With
+
+    End Sub
+
     Public Property DataWidth As Integer
         Get
             Return lblData.Width
@@ -195,11 +224,8 @@ Public Class ucnDspData
 
     End Sub
 
-    Private Sub lblFieldName_DoubleClick(sender As Object, e As EventArgs) Handles lblFieldName.DoubleClick
-        RaiseEvent DoubleClick(sender, e)
+    Private Sub lblFieldName_DoubleClick(sender As Object, e As EventArgs) Handles lblFieldName.DoubleClick, lblData.DoubleClick, lblUnit.DoubleClick
+        RaiseEvent DoubleClick(sender, e, Me.Name)
     End Sub
 
-    Private Sub lblData_DoubleClick(sender As Object, e As EventArgs) Handles lblData.DoubleClick
-        RaiseEvent DoubleClick(sender, e)
-    End Sub
 End Class

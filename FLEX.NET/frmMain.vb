@@ -130,7 +130,7 @@
             If wu.Value <> "" Then
                 dd.Value = PlcIf.EngValue(dd.FieldName)
             Else
-                dd.Value = "----------"
+                dd.Value = "-------"
             End If
         Next
 
@@ -322,7 +322,7 @@
     ''' <summary>
     ''' 汎用データ表示項目セット
     ''' </summary>
-    Private Sub WideDataFldSet()
+    Public Sub WideDataFldSet()
         For Each wu In CtlParameter.WideUse
             Dim dd As ucnDspData = Me.Controls("DspWideUse" & wu.Key)
             dd.FieldName = wu.Value
@@ -787,5 +787,15 @@
     End Class
 
 
+    Private Sub DspWideUse0_DoubleClick(sender As Object, e As EventArgs, ctlName As String) _
+        Handles DspWideUse0.DoubleClick, DspWideUse1.DoubleClick, DspWideUse2.DoubleClick,
+        DspWideUse3.DoubleClick, DspWideUse4.DoubleClick, DspWideUse5.DoubleClick,
+        DspWideUse6.DoubleClick, DspWideUse7.DoubleClick, DspWideUse8.DoubleClick,
+        DspWideUse9.DoubleClick, DspWideUse10.DoubleClick, DspWideUse11.DoubleClick
 
+        MsgBox(ctlName)
+
+
+
+    End Sub
 End Class
