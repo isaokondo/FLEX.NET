@@ -12,10 +12,8 @@ Public Class frmCalcStrokeConfirm
 
     Private Sub frmCalcStrokeConfirm_Load(sender As Object, e As EventArgs) Handles Me.Load
         '計測ジャッキ番号でソート
-        Dim MsJk As IOrderedEnumerable(Of KeyValuePair(Of Short, Single)) = InitParameter.MesureJackAngle.OrderBy(Function(pair) pair.Key)
-
         '計測ジャッキ番号と取付角度を表示
-        For Each i In MsJk
+        For Each i In InitParameter.MesureJackAngle
             DgvJackStroke.Rows.Add(i.Key, 0, 0, 0, i.Value)
         Next
         'ヘッダーの書式をmiddlecenterに

@@ -23,7 +23,7 @@ Public Class ucnDspData
     'ブリンクフラグ
     Private flg As Boolean
 
-    Public Shadows Event DoubleClick(sender As Object, e As EventArgs, ctlName As String)
+    Public Shadows Event DoubleClick(sender As Object, e As EventArgs)
     '既定のフォントサイズ
     Private DefaultFiledFont As Font
 
@@ -83,14 +83,15 @@ Public Class ucnDspData
     ''' </summary>
     Private Sub AdjustFontSiza()
         With lblFieldName
+            Debug.WriteLine("{0},{1},{2}", lblFieldName.Text, .Width, TextRenderer.MeasureText(.Text, .Font).Width)
+            .Font = DefaultFiledFont
 
-            If .Width > TextRenderer.MeasureText(.Text, .Font).Width Then
-                .Font = DefaultFiledFont
-            Else
-                Do Until .Width >= TextRenderer.MeasureText(.Text, .Font).Width
-                    .Font = New Font(.Font.FontFamily, .Font.Size - 1, .Font.Style)
-                Loop
-            End If
+            '            If .Width > TextRenderer.MeasureText(.Text, DefaultFont).Width Then
+            '           Else
+            Do Until .Width >= TextRenderer.MeasureText(.Text, .Font).Width
+                .Font = New Font(.Font.FontFamily, .Font.Size - 1, .Font.Style)
+            Loop
+            '          End If
         End With
 
     End Sub
@@ -225,7 +226,7 @@ Public Class ucnDspData
     End Sub
 
     Private Sub lblFieldName_DoubleClick(sender As Object, e As EventArgs) Handles lblFieldName.DoubleClick, lblData.DoubleClick, lblUnit.DoubleClick
-        RaiseEvent DoubleClick(sender, e, Me.Name)
+        RaiseEvent DoubleClick(Me, e)
     End Sub
 
 End Class

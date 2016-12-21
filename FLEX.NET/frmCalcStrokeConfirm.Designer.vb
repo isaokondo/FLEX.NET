@@ -279,7 +279,7 @@ Partial Class frmCalcStrokeConfirm
         DataGridViewCellStyle3.NullValue = "0"
         Me.RealStrokeLen.DefaultCellStyle = DataGridViewCellStyle3
         Me.RealStrokeLen.Frozen = True
-        Me.RealStrokeLen.HeaderText = "実ｽﾄﾛｰｸ"
+        Me.RealStrokeLen.HeaderText = "読ジャッキｽﾄﾛｰｸ"
         Me.RealStrokeLen.Name = "RealStrokeLen"
         Me.RealStrokeLen.ReadOnly = True
         Me.RealStrokeLen.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
@@ -292,7 +292,7 @@ Partial Class frmCalcStrokeConfirm
         DataGridViewCellStyle4.NullValue = Nothing
         Me.CalcStrokeLen.DefaultCellStyle = DataGridViewCellStyle4
         Me.CalcStrokeLen.Frozen = True
-        Me.CalcStrokeLen.HeaderText = "計算ｼﾞｬｯｷｽﾄﾛｰｸ"
+        Me.CalcStrokeLen.HeaderText = "実ｼﾞｬｯｷｽﾄﾛｰｸ"
         Me.CalcStrokeLen.Name = "CalcStrokeLen"
         Me.CalcStrokeLen.ReadOnly = True
         Me.CalcStrokeLen.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
@@ -304,7 +304,7 @@ Partial Class frmCalcStrokeConfirm
         DataGridViewCellStyle5.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.CalcLogcalStroke.DefaultCellStyle = DataGridViewCellStyle5
         Me.CalcLogcalStroke.Frozen = True
-        Me.CalcLogcalStroke.HeaderText = "計算掘進ｽﾄﾛｰｸ"
+        Me.CalcLogcalStroke.HeaderText = "推進量"
         Me.CalcLogcalStroke.Name = "CalcLogcalStroke"
         Me.CalcLogcalStroke.ReadOnly = True
         Me.CalcLogcalStroke.Resizable = System.Windows.Forms.DataGridViewTriState.[False]

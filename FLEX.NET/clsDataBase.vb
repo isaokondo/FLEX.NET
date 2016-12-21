@@ -5,48 +5,101 @@ Public Class clsDataBase
     ''' <summary>
     ''' ホスト名
     ''' </summary>
-    Private _HostName As String = My.Settings.HostName
+    Private Shared HostName As String = My.Settings.HostName
     ''' <summary>
     ''' データベース名
     ''' </summary>
-    Private _DataBaseName As String = My.Settings.DataBaseName
+    Private Shared DataBaseName As String = My.Settings.DataBaseName
 
     ''' <summary>
-    ''' ホスト名
+    ''' ポート番号
     ''' </summary>
-    ''' <returns></returns>
-    Public Property HostName As String
-        Get
-            Return _HostName
-        End Get
-        Set(value As String)
-            _HostName = value
-        End Set
-    End Property
+    Private Shared PortNo As Integer = My.Settings.Port
+
+
+
+    Private Shared MySQLVersion As String
+
+    Public Sub New()
+
+
+    End Sub
     ''' <summary>
-    ''' データベース名
+    ''' MYSQLのバージョン取得
     ''' </summary>
-    ''' <returns></returns>
-    Public Property DataBaseName As String
-        Get
-            Return _DataBaseName
-        End Get
-        Set(value As String)
-            _DataBaseName = value
-        End Set
-    End Property
+    Public Shared Sub GetMySQKVersion()
+
+        ' ソケット生成
+        Dim objSck As New System.Net.Sockets.TcpClient
+        Dim objStm As System.Net.Sockets.NetworkStream
+
+        Try
+            ' TCP/IP接続
+            objSck.Connect(HostName, PortNo)
+        Catch ex As System.Net.Sockets.SocketException '
+            '接続出来ない場合
+            MsgBox(ex.Message,
+                   MsgBoxStyle.Exclamation,
+                   "データベース接続エラー" & "ホスト名:" & HostName & vbCrLf & "  ポート番号:" & PortNo)
+            End
+        End Try
+
+        objStm = objSck.GetStream()
+
+            ' TCP/IP接続待ち 
+            Do While objSck.Connected = False
+            System.Threading.Thread.Sleep(500)
+        Loop
+
+
+        ' データ受信
+        Do
+            System.Threading.Thread.Sleep(500)
+            If objSck.Available > 0 Then
+                ' Byte配列にデータ受信
+                Dim rdat As Byte() =
+            New Byte(objSck.Available - 1) {}
+                objStm.Read(rdat, 0, rdat.GetLength(0))
+                ' Byte配列を文字列に変換して表示
+                Dim rString As String = System.Text.Encoding.GetEncoding("SHIFT-JIS").GetString(rdat)
+
+                If rString.IndexOf("4.0.25") >= 0 Then
+                    MySQLVersion = "4.0.25"
+                End If
+                If rString.IndexOf("MariaDB") >= 0 Then
+                    MySQLVersion = "MariaDB"
+                End If
+                Exit Do
+            End If
+        Loop
+
+
+
+
+        ' TCP/IP切断
+        objSck.Close()
+
+
+    End Sub
+
 
 
     'データベースコネクション
     Private Function conDB() As OdbcConnection
-        'TODO MariDB以外対応も検討、ポート番号指定しよう！
+
+        Dim DriverVersion As String = ""
+        Select Case MySQLVersion
+            Case "4.0.25"
+                DriverVersion = "{MySQL ODBC 3.51 Driver}"
+            Case "MariaDB"
+                DriverVersion = "{MySQL ODBC 5.3 Unicode Driver}"
+        End Select
+
+
         Dim ConnectionString As String =
-        "DRIVER={MySQL ODBC 3.51 Driver};server=" & _HostName &
-        "; database=" & _DataBaseName &
-        "; uid= toyo;pwd= yanagi;OPTION=3"
-        'Dim ConnectionString As String =
-        '"DRIVER={MySQL ODBC 5.3 Unicode Driver};server=" & My.Settings.HostName &
-        ' "; database=" & My.Settings.DataseName & "; uid= toyo;pwd= yanagi;OPTION=3"
+            String.Format("DRIVER={0};server={1}; database={2}; port={3}; uid= toyo;pwd= yanagi;OPTION=3",
+                          DriverVersion, HostName, DataBaseName, PortNo)
+
         Dim cn As New OdbcConnection(ConnectionString)
         Try
             cn.Open()
@@ -124,6 +177,16 @@ Public Class clsTag
     Public ReadOnly Property TagData(FldName As String) As _tag
         Get
             Return _TagList(tagDic(FldName))
+        End Get
+    End Property
+    ''' <summary>
+    ''' TAGがそんざいするかどうか？
+    ''' </summary>
+    ''' <param name="TagName"></param>
+    ''' <returns></returns>
+    Public ReadOnly Property TagExist(TagName As String) As Boolean
+        Get
+            Return tagDic.ContainsKey(TagName)
         End Get
     End Property
 
@@ -234,7 +297,7 @@ Public Class clsInitParameter
     Private _sheetID As Integer = 20                 ''計画路線のシートID（10:計画路線　20:掘進計画線)
     'Private _planDataMdb As String '計画路線（線形データ）のファイルパス
 
-    Private _mesureJackAngle As New Dictionary(Of Short, Single) '計測ジャッキの角度
+    Private _mesureJackAngle As New SortedDictionary(Of Short, Single) '計測ジャッキの角度
 
     Private _mesureJackNo As New List(Of Short) '計測ジャッキ番号
 
@@ -333,7 +396,7 @@ Public Class clsInitParameter
     ''' 計測ジャッキ　角度
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property MesureJackAngle As Dictionary(Of Short, Single)
+    Public ReadOnly Property MesureJackAngle As SortedDictionary(Of Short, Single)
         Get
             Return _mesureJackAngle
         End Get
@@ -349,13 +412,6 @@ Public Class clsInitParameter
     End Property
 
 
-
-
-    'Public ReadOnly Property PlanMdbPath As String
-    '    Get
-    '        Return _planDataMdb
-    '    End Get
-    'End Property
     Public Sub New()
         Dim paraDB As OdbcDataReader
         paraDB = ExecuteSql("SELECT * FROM FLEX初期パラメータ")
@@ -418,11 +474,16 @@ Public Class clsInitParameter
                 _faiGroup(i) = _faiGroup(i) / _numberJackOfGroup(i)
             Next
             '計測ジャッキの番号と角度を取得
+            'Dim _mJ As New Dictionary(Of Short, Single) '計測ジャッキの角度
+
             For Each mj As String In ht.Keys
                 If mj.IndexOf("計測ジャッキNo") >= 0 Then
                     _mesureJackAngle.Add(mj.Replace("計測ジャッキNo", ""), ht(mj))
                 End If
             Next
+
+
+
             '計測ジャッキ番号
             For Each JkNo In Htb.GetValue("計測ジャッキ上右下左").ToString.Split(",")
                 _mesureJackNo.Add(JkNo)
@@ -538,6 +599,7 @@ Public Class clsTableUpdateConfirm
                         InitParameter = New clsInitParameter
                     Case "flex制御パラメータ"
                         CtlParameter.ReadParameter()
+                        My.Forms.frmMain.WideDataFldSet() '汎用データの更新
                 End Select
             End If
         Next

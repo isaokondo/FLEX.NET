@@ -714,24 +714,28 @@ Public Class clsControlParameter
         End Get
         Set(value As Dictionary(Of Short, Integer))
             For Each v In value
-                Dim DB As New clsDataBase
                 Dim tb As Odbc.OdbcDataReader =
-        DB.ExecuteSql("UPDATE FLEX制御パラメータ SET`値`='" & v.Value &
+        ExecuteSql("UPDATE FLEX制御パラメータ SET`値`='" & v.Value &
                       "' WHERE `項目名称`='開始ジャッキストローク" & v.Key & "'")
-
             Next
         End Set
     End Property
 
-    Public Property WideUse As Dictionary(Of Short, String)
+    Public ReadOnly Property WideUse As Dictionary(Of Short, String)
         Get
             Return _wideUse
         End Get
-        Set(value As Dictionary(Of Short, String))
-            _wideUse = value
-            sbUpdateData(value) 'データ更新
-        End Set
     End Property
+
+    Public Sub WideUseUpdate(iKey As Short, value As String)
+        _wideUse.Item(iKey) = value
+        Dim tb As Odbc.OdbcDataReader =
+        ExecuteSql("UPDATE FLEX制御パラメータ SET`値`='" & value &
+                      "' WHERE `項目名称`='wideuse" & iKey & "'")
+
+    End Sub
+
+
 
 
 
@@ -878,6 +882,7 @@ Public Class clsControlParameter
 
     Private Sub sbUpdateData(value As Dictionary(Of Short, String))
         'TODO:これから
+        MsgBox("'TODO:これから")
     End Sub
 
     Private Sub sbUpdateData(ByRef value As Object)

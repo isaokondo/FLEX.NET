@@ -127,7 +127,7 @@
         '汎用データ表示
         For Each wu In CtlParameter.WideUse
             Dim dd As ucnDspData = Me.Controls("DspWideUse" & wu.Key)
-            If wu.Value <> "" Then
+            If dd.FieldName <> "" Then
                 dd.Value = PlcIf.EngValue(dd.FieldName)
             Else
                 dd.Value = "-------"
@@ -231,6 +231,9 @@
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+
+        clsDataBase.GetMySQKVersion()
+
         'インスタンス作成
         InitParameter = New clsInitParameter '初期値パラメータ
         CtlParameter = New clsControlParameter  '制御パラメータ
@@ -325,10 +328,12 @@
     Public Sub WideDataFldSet()
         For Each wu In CtlParameter.WideUse
             Dim dd As ucnDspData = Me.Controls("DspWideUse" & wu.Key)
-            dd.FieldName = wu.Value
             If wu.Value <> "" Then
-                dd.Unit = PlcIf.AnalogTag.TagData(wu.Value).Unit
-                dd.DecimalPlaces = PlcIf.AnalogTag.TagData(wu.Value).DigitLoc
+                If PlcIf.AnalogTag.TagExist(wu.Value) Then
+                    dd.FieldName = wu.Value
+                    dd.Unit = PlcIf.AnalogTag.TagData(wu.Value).Unit
+                    dd.DecimalPlaces = PlcIf.AnalogTag.TagData(wu.Value).DigitLoc
+                End If
             End If
         Next
 
@@ -786,16 +791,43 @@
 
     End Class
 
-
-    Private Sub DspWideUse0_DoubleClick(sender As Object, e As EventArgs, ctlName As String) _
+    ''' <summary>
+    ''' 汎用データ項目変更
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub DspWideUse0_DoubleClick(sender As ucnDspData, e As EventArgs) _
         Handles DspWideUse0.DoubleClick, DspWideUse1.DoubleClick, DspWideUse2.DoubleClick,
         DspWideUse3.DoubleClick, DspWideUse4.DoubleClick, DspWideUse5.DoubleClick,
         DspWideUse6.DoubleClick, DspWideUse7.DoubleClick, DspWideUse8.DoubleClick,
         DspWideUse9.DoubleClick, DspWideUse10.DoubleClick, DspWideUse11.DoubleClick
 
-        MsgBox(ctlName)
+        cmbWideSelct.Tag = sender
+        cmbWideSelct.Visible = True
+        '選択用アイテムをセット
+        cmbWideSelct.Items.Clear()
+        'アナログtagより項目名を列挙
+        cmbWideSelct.Items.AddRange((From n In PlcIf.AnalogTag.Tag Select n.FieldName).ToArray)
+        cmbWideSelct.Text = sender.FieldName
+        '位置を調整
+        cmbWideSelct.Top = sender.Top + 5
 
 
+    End Sub
+    ''' <summary>
+    ''' 項目名が変更された時
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub cmbWideSelct_Click(sender As Object, e As EventArgs) Handles cmbWideSelct.SelectionChangeCommitted
+        cmbWideSelct.Visible = False
+        Dim WideUse As ucnDspData = DirectCast(cmbWideSelct.Tag, ucnDspData)
+        WideUse.FieldName = cmbWideSelct.SelectedItem
+        CtlParameter.WideUseUpdate(CShort(WideUse.Name.Replace("DspWideUse", "")), WideUse.FieldName)
+        WideDataFldSet() '汎用データ・セット
+    End Sub
+
+    Private Sub DspWideUse0_DoubleClick(sender As Object, e As EventArgs) Handles DspWideUse9.DoubleClick, DspWideUse8.DoubleClick, DspWideUse7.DoubleClick, DspWideUse6.DoubleClick, DspWideUse5.DoubleClick, DspWideUse4.DoubleClick, DspWideUse3.DoubleClick, DspWideUse2.DoubleClick, DspWideUse11.DoubleClick, DspWideUse10.DoubleClick, DspWideUse1.DoubleClick, DspWideUse0.DoubleClick
 
     End Sub
 End Class

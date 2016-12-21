@@ -74,6 +74,7 @@ Partial Class frmMain
         Me.btnLossZerooCancel = New System.Windows.Forms.Button()
         Me.btnPieceConfirm = New System.Windows.Forms.Button()
         Me.lblNowDate = New System.Windows.Forms.Label()
+        Me.cmbWideSelct = New System.Windows.Forms.ComboBox()
         Me.UcnGpPvBarGraph = New FLEX.NET.ucnGpPvBarGraph()
         Me.DspCopyStroke2 = New FLEX.NET.ucnDspDataMin2()
         Me.DspCopyStroke1 = New FLEX.NET.ucnDspDataMin2()
@@ -578,6 +579,17 @@ Partial Class frmMain
         Me.lblNowDate.TabIndex = 138
         Me.lblNowDate.Text = "9999／99／99　99：99：99"
         Me.lblNowDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'cmbWideSelct
+        '
+        Me.cmbWideSelct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbWideSelct.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.cmbWideSelct.FormattingEnabled = True
+        Me.cmbWideSelct.Location = New System.Drawing.Point(1414, 36)
+        Me.cmbWideSelct.Name = "cmbWideSelct"
+        Me.cmbWideSelct.Size = New System.Drawing.Size(145, 21)
+        Me.cmbWideSelct.TabIndex = 151
+        Me.cmbWideSelct.Visible = False
         '
         'UcnGpPvBarGraph
         '
@@ -2425,6 +2437,7 @@ Partial Class frmMain
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
         Me.ControlBox = False
+        Me.Controls.Add(Me.cmbWideSelct)
         Me.Controls.Add(Me.UcnGpPvBarGraph)
         Me.Controls.Add(Me.DspCopyStroke2)
         Me.Controls.Add(Me.DspCopyStroke1)
@@ -2676,6 +2689,7 @@ Partial Class frmMain
     Friend WithEvents DspSegmentRolling As ucnDspDataMin2
     Friend WithEvents DspCopyStroke2 As ucnDspDataMin2
     Friend WithEvents DspCopyStroke1 As ucnDspDataMin2
+    Friend WithEvents cmbWideSelct As ComboBox
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog
