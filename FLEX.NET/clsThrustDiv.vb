@@ -135,9 +135,8 @@ Friend Class clsThrustDiv
 
             Dim intIg(.NumberGroup - 1) As Short
             Dim intJg(.NumberGroup - 1) As Short
-            Dim dblPj(.NumberJack - 1) As Double
+            Dim dblPj(.NumberJack - 1) As Double    '各ジャッキの圧力分布率
 
-            Dim dblPgMax As Double
 
             '============================= page Ⅲ－２８ ===============================
             mbln最小数全開調整フラグ = False
@@ -161,18 +160,22 @@ Friend Class clsThrustDiv
             '============================= page Ⅲ－２９ ===============================
 
             For i = 0 To .NumberJack - 1
-                mdbl分担率計算値(.JackGroupPos(i) - 1) = mdbl分担率計算値(.JackGroupPos(i) - 1) + dblPj(i)
-                intIg(.JackGroupPos(i) - 1) = intIg(.JackGroupPos(i) - 1) + 1
+                If PlcIf.JackExecMode(i) Then
+                    mdbl分担率計算値(.JackGroupPos(i) - 1) += dblPj(i)
+                    intIg(.JackGroupPos(i) - 1) += 1
+                End If
             Next i
 
             For i = 0 To .NumberGroup - 1
-                mdbl分担率計算値(i) = mdbl分担率計算値(i) / intIg(i)
+                If intIg(i) <> 0 Then
+                    mdbl分担率計算値(i) = mdbl分担率計算値(i) / intIg(i)
+                End If
             Next i
 
             ''最大値を求める
+            Dim dblPgMax As Double = mdbl分担率計算値.Max
 
-            dblPgMax = mdbl分担率計算値.Max
-
+            'mdbl分担率計算値を0-100に
             For i = 0 To .NumberGroup - 1
                 mdbl分担率計算値(i) = mdbl分担率計算値(i) / dblPgMax * 100
             Next i

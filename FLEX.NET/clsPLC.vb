@@ -356,12 +356,27 @@ Public Class clsPlcIf
         End Get
     End Property
 
+
+
+
     Public ReadOnly Property JackStatus() As Short()
         Get
             Return _JackStatus
 
         End Get
     End Property
+    ''' <summary>
+    ''' 各ジャッキの掘進モード
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property JackExecMode As Boolean()
+        Get
+            Dim JkEx As Boolean() = _JackStatus.Select(Of Boolean)(Function(i) i And 2).ToArray
+            Return JkEx
+        End Get
+    End Property
+
+
     ''' <summary>
     ''' FLEX姿勢制御自動
     ''' </summary>

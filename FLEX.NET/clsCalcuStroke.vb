@@ -149,11 +149,7 @@ Public Class clsCalcuStroke
                 If asembleFinishedJack.Contains(j) Then
                     st = "組立完了"
                 Else
-                    If (PlcIf.JackStatus(j - 1) And 2) Then
-                        st = "掘進モード"
-                    Else
-                        st = "組立中"
-                    End If
+                    st = IIf(PlcIf.JackExecMode(j - 1), "掘進モード", "組立中")
                 End If
                 jk.Add(j, st)
             Next
