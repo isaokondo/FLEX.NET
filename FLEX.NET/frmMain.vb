@@ -231,7 +231,7 @@
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-
+        'MYSQLのバージョン取得
         clsDataBase.GetMySQKVersion()
 
         'インスタンス作成
@@ -589,7 +589,8 @@
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub ExcavingStatusEnfoce(sender As Object, e As EventArgs) Handles ExcavEnforceStart.Click, ExcavEnforceStop.Click
+    Private Sub ExcavingStatusEnfoce(sender As Object, e As EventArgs)
+        Handles ExcavEnforceStart.Click, ExcavEnforceStop.Click
         Dim MsgText As String = ""
         Select Case sender.Name
             Case "ExcavEnforceStart"
@@ -598,7 +599,8 @@
                 MsgText = "掘進強制終了"
         End Select
 
-        If MsgBox(MsgText & "よろしいですか?", MsgBoxStyle.OkCancel + MsgBoxStyle.Exclamation, MsgText) = MsgBoxResult.Ok Then
+        If MsgBox($"{MsgText}よろしいですか?",
+                  MsgBoxStyle.OkCancel + MsgBoxStyle.Exclamation, MsgText) = MsgBoxResult.Ok Then
             PlcIf.DigtalPlcWrite(MsgText, True) 'PLC書込
             WriteEventData(MsgText & "されました。", Color.BlueViolet)
         End If
@@ -704,8 +706,10 @@
         Public Sub DataGet()
             '過去の掘進データ 10mm毎
             Dim rsData As Odbc.OdbcDataReader =
-                ExecuteSql(String.Format("SELECT * FROM flex掘削データ WHERE `リング番号`>='{0}' AND `リング番号`<'{1}' AND MOD(掘進ストローク,10)=0;" _
-                                         , PlcIf.RingNo - CtlParameter.LineDevStartRing, PlcIf.RingNo))
+                ExecuteSql($"SELECT * FROM flex掘削データ WHERE `リング番号`>=
+                '{PlcIf.RingNo - CtlParameter.LineDevStartRing}
+                ' AND `リング番号`<'{PlcIf.RingNo}' AND MOD(掘進ストローク,10)=0;")
+
             Console.WriteLine()
             _HorRData.Clear()
             _VerRData.Clear()
@@ -767,7 +771,7 @@
         Sub New(FldName As String)
             _DList = New Dictionary(Of Integer, Single)
             Dim rsData As Odbc.OdbcDataReader =
-                ExecuteSql(String.Format("SELECT * FROM flex掘削データ WHERE `リング番号`='{0}';", RingNo))
+                ExecuteSql($"SELECT * FROM flex掘削データ WHERE `リング番号`='{RingNo}';")
             While rsData.Read
                 _DList.Add(rsData.Item("掘進ストローク"), rsData.Item(FldName))
             End While
@@ -775,7 +779,7 @@
 
         Sub New()
             Dim rsData As Odbc.OdbcDataReader =
-                ExecuteSql(String.Format("SELECT * FROM flex掘削データ ORDER BY `時間` LIMIT 0,1"))
+                ExecuteSql("SELECT * FROM flex掘削データ ORDER BY `時間` LIMIT 0,1")
             While rsData.Read
                 RingNo = rsData.Item("リング番号")
             End While

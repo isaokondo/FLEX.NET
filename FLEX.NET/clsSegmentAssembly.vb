@@ -143,7 +143,7 @@ Friend Class clsSegmentAssembly
     ''' 組立パターンの情報を取得
     ''' </summary>
     ''' <param name="RingNo">リング番号</param>
-    Public Sub SegmentAssemblyDataRead(RingNo As Integer)
+    Public Sub AssemblyDataRead(RingNo As Integer)
         _AssenblyPtnList.Clear()
         'パターンリストの取得
         Dim rsPtLst As Odbc.OdbcDataReader = ExecuteSql("SELECT * FROM セグメント組立パターンベース")
@@ -157,13 +157,10 @@ Friend Class clsSegmentAssembly
         '検索
         'Dim rsData As Odbc.OdbcDataReader =
         Dim rsData As Odbc.OdbcDataReader =
-            ExecuteSql("SELECT * FROM `セグメント組立パターンベース`" &
-            " Inner Join `セグメント組立パターンリスト` " &
-            "ON `セグメント組立パターンリスト`.`組立パターンNo` = `セグメント組立パターンベース`.`組立パターンNo` " &
-            "Inner Join `セグメント分割仕様リスト` " &
-            "ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンベース`.`分割No` " &
-            "WHERE `セグメント組立パターンベース`.`組立パターンNo` = '" & Id _
-            & "' ORDER BY `セグメント組立パターンリスト`.`組立順序` ASC")
+            ExecuteSql($"SELECT * FROM `セグメント組立パターンベース` 
+            Inner Join `セグメント組立パターンリスト` ON `セグメント組立パターンリスト`.`組立パターンNo` = `セグメント組立パターンベース`.`組立パターンNo` 
+            Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンベース`.`分割No` 
+            WHERE `セグメント組立パターンベース`.`組立パターンNo` = '{Id}' ORDER BY `セグメント組立パターンリスト`.`組立順序` ASC")
         _AssemblyPieceNumber = 0
         _ProcessData.Clear()
         'データ読込
@@ -275,7 +272,7 @@ Friend Class clsSegmentAssembly
             Dim i As Integer = rsData.Item("リング番号")
             _TypeNo(i) = rsData.Item("セグメントNo")
             If Not _TypeList.ContainsKey(_TypeNo(i)) Then
-                MsgBox(String.Format("{0}リングのセグメントNoが未登録です", i))
+                MsgBox($"{i}リングのセグメントNoが未登録です")
             Else
                 '_SegmentWidth(i) = _SegmentTypeList(rsData.Item("セグメントNo")).CenterWidth * 1000
             End If

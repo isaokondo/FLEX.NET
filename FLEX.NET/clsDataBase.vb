@@ -97,8 +97,9 @@ Public Class clsDataBase
 
 
         Dim ConnectionString As String =
-            String.Format("DRIVER={0};server={1}; database={2}; port={3}; uid= toyo;pwd= yanagi;OPTION=3",
-                          DriverVersion, HostName, DataBaseName, PortNo)
+            $"DRIVER={DriverVersion};server={HostName}; 
+            database={DataBaseName}; port={PortNo}; 
+            uid= toyo;pwd= yanagi;OPTION=3"
 
         Dim cn As New OdbcConnection(ConnectionString)
         Try
@@ -215,12 +216,12 @@ Public Class clsTag
     ''' <param name="PLCAdressClass">PLCアドレスの先頭文字 M or D or R</param>
     ''' <remarks></remarks>
     Public Sub New(ByVal TableName As String, ByVal PLCAdressClass As String)
-        Dim TableAndWhere As String = " " & TableName & " WHERE `アドレス` LIKE '" & PLCAdressClass & "%'"
-        Dim MaxID As OdbcDataReader = ExecuteSql("SELECT COUNT(*) FROM " & TableAndWhere)
+        Dim TableAndWhere As String = $" {TableName} WHERE `アドレス` LIKE '{PLCAdressClass}%'"
+        Dim MaxID As OdbcDataReader = ExecuteSql($"SELECT COUNT(*) FROM {TableAndWhere}")
         MaxID.Read()
         'ReDim _TagList(MaxID.Item(0) + 1)
 
-        Dim StartAd As OdbcDataReader = ExecuteSql("SELECT Min(`アドレス`) FROM" & TableAndWhere)
+        Dim StartAd As OdbcDataReader = ExecuteSql($"SELECT Min(`アドレス`) FROM {TableAndWhere}")
         StartAd.Read()
         _startAddress = StartAd.Item(0)
         'ビットデータの時は、16の倍数からアドレスを介し
@@ -229,7 +230,7 @@ Public Class clsTag
         End If
 
         Dim anaTag As OdbcDataReader
-        anaTag = ExecuteSql("SELECT * FROM " & TableAndWhere)
+        anaTag = ExecuteSql($"SELECT * FROM {TableAndWhere}")
 
         Dim ht As Hashtable = New Hashtable
 

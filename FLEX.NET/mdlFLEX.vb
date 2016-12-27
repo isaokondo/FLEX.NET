@@ -118,7 +118,7 @@ Module mdlFLEX
 
     Private Sub PlcIf_PLCErrOccur(sender As Object, ByVale As EventArgs, ErrMsg As String, ErrCode As Long) Handles PlcIf.PLCErrOccur
         If ErrCode <> 0 Then
-            Dim response = MsgBox("PLC通信エラー:" & ErrMsg, MsgBoxStyle.AbortRetryIgnore)
+            Dim response = MsgBox($"PLC通信エラー:{ErrMsg}", MsgBoxStyle.AbortRetryIgnore)
             If response = MsgBoxResult.Abort Then End
         Else
             WriteEventData(ErrMsg, Color.Red)
@@ -133,7 +133,7 @@ Module mdlFLEX
     Private Sub PlcIf_ExcavationStatusChange(PreStatus As Integer, NowStatus As Integer) _
         Handles PlcIf.ExcavationStatusChange
         '組立パターンの情報を取得
-        SegAsmblyData.SegmentAssemblyDataRead(PlcIf.RingNo)
+        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
         '姿勢トレンドのデータ取得
         frmMain.DirectionChartD.DataGet()
         'TODO:最大テーパーの算出
@@ -229,8 +229,9 @@ Module mdlFLEX
                         Dim PullJk As String =
                             String.Join(",", .PullBackJack)
 
-                        WriteEventData("No." & PullJk & " のジャッキの引戻し開始しました。", Color.Blue)
+                        WriteEventData($"No.{PullJk} のジャッキの引戻し開始しました。", Color.Blue)
                         LosZeroSts = 3
+                        Reduce.LstR.Clear() '減圧グループ　クリア
 
                         PlaySound(My.Resources.PullStart)
                     Case 3
@@ -242,14 +243,14 @@ Module mdlFLEX
                         '押込みジャッキ
                         Dim ClosetJk As String =
                             String.Join(",", .ClosetJack)
-                        WriteEventData("No." & ClosetJk & " のジャッキ押込み開始しました。", Color.Blue)
+                        WriteEventData($"No.{ClosetJk} のジャッキ押込み開始しました。", Color.Blue)
                         LosZeroSts = 5
                         'ボイスメッセージ出力
                         PlaySound(My.Resources.ClosetStart)
 
                     Case 5
 
-                        WriteEventData("[" & .PieceName & "] セグメント組立完了しました。", Color.Magenta)
+                        WriteEventData($"[{ .PieceName}] セグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
                         '計算ストローク用に組立ジャッキの設定
@@ -288,7 +289,7 @@ Module mdlFLEX
                     My.Forms.frmNextPieceConfirm.Close() '継続確認画面を閉じる
                     With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
                         '減圧グループ
-                        WriteEventData(PlcIf.AssemblyPieceNo & "ピース目 " & String.Join(",", .ReduceGroup) & "グループの減圧開始します。", Color.Blue)
+                        WriteEventData($"{PlcIf.AssemblyPieceNo}ピース目 {String.Join(",", .ReduceGroup)}グループの減圧開始します。", Color.Blue)
 
                         'マシンへ指令　
                         PlcIf.LosZeroDataWrite("減圧ジャッキ", .ReduceJack)
@@ -521,8 +522,8 @@ Module mdlFLEX
         Dim db As New clsDataBase
 
         Dim tb As Odbc.OdbcDataReader = db.ExecuteSql _
-            ("INSERT INTO FLEXイベントデータ(Time,イベントデータ,イベント種類) VALUES('" _
-             & Now & "','" & EventMsg & "','" & Colorlng & "')")
+            ($"INSERT INTO FLEXイベントデータ
+            (Time,イベントデータ,イベント種類) VALUES('{Now}','{EventMsg}','{Colorlng}')")
 
         frmMain.EventlogUpdate()
 

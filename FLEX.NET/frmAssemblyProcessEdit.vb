@@ -31,7 +31,7 @@ Public Class frmAssemblyProcessEdit
         If IsNothing(OperattionJackSel.SelectItem) Then Exit Sub
 
         '入力されたリング番号より組立パターン読込
-        SegAsbly.SegmentAssemblyDataRead(ConfirmRingNo.Value)
+        SegAsbly.AssemblyDataRead(ConfirmRingNo.Value)
 
         AssemblyPatternSel.SelectItem =
             String.Join(",", SegAsbly.AssenblyPtnLst.Values.ToArray) '組立パターンリスト　選択用

@@ -158,9 +158,10 @@ Friend Class clsThrustDiv
             Next i
 
             '============================= page Ⅲ－２９ ===============================
-
+            'ジャッキ掘進モード　AND 減圧中でない
+            'TODO:同時施工のみ
             For i = 0 To .NumberJack - 1
-                If PlcIf.JackExecMode(i) Then
+                If PlcIf.JackExecMode(i) And Not Reduce.LstR.Contains(InitParameter.JackGroupPos(i)) Then
                     mdbl分担率計算値(.JackGroupPos(i) - 1) += dblPj(i)
                     intIg(.JackGroupPos(i) - 1) += 1
                 End If
@@ -268,7 +269,7 @@ Friend Class clsReducePress
     ''' <summary>
     ''' 減圧グループ
     ''' </summary>
-    Private LstRd As List(Of Short)
+    Private _LstRd As New List(Of Short)
     ''' <summary>
     ''' 減圧処理タイマ
     ''' </summary>
@@ -297,6 +298,17 @@ Friend Class clsReducePress
             Return _MvOut
         End Get
     End Property
+    ''' <summary>
+    ''' 現在の減圧グループ
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property LstR As List(Of Short)
+        Get
+            Return _LstRd
+        End Get
+    End Property
+
+
 
     ''' <summary>
     ''' 減圧開始
@@ -305,9 +317,9 @@ Friend Class clsReducePress
 
 
         '減圧グループ
-        LstRd = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+        _LstRd = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
 
-        For Each GpNo As Short In LstRd
+        For Each GpNo As Short In _LstRd
             '減圧開始時の操作出力
             _MvOut(GpNo - 1) = PlcIf.GroupMV(GpNo - 1)
             '１秒毎の減圧量を算出
@@ -335,7 +347,7 @@ Friend Class clsReducePress
         If tCount < 5 Then
             tCount += 1
         End If
-        For Each GpNp As Short In LstRd
+        For Each GpNp As Short In _LstRd
             '減圧判断
             ReduceFlg = ReduceFlg And (PlcIf.GroupPv(GpNp - 1) < CtlParameter.ReduceJudgePress)
             MvZero += _MvOut(GpNp - 1)
@@ -361,6 +373,7 @@ Friend Class clsReducePress
     ''' </summary>
     Public Sub Cancel()
         timer.Stop()
+        _LstRd.Clear()
     End Sub
 
 
