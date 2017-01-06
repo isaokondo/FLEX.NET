@@ -1038,7 +1038,7 @@ Public Class clsPlcIf
             'アナログデータをPLC書込データに変換
             Dim wD As Integer = (value - .EngLow) / (.EngHight - .EngLow) * (.ScaleHigh - .ScaleLow) + .ScaleLow
             'PLC書込
-            Call PLC_Write(.Address, wD)
+            PLC_Write(.Address, wD)
         End With
     End Sub
 

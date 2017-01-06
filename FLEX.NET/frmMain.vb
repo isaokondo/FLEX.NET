@@ -425,6 +425,14 @@
             UcnJackDsp.PieceAngle.Add(pca.PieceAngle)
             UcnJackDsp.PieceCenterAngle.Add(pca.PieceCenterAngle)
             UcnJackDsp.AssemblyOrder.Add(pca.AssemblyOrder)
+
+            '同時施工モード時のみ
+            If PlcIf.LosZeroMode Then
+                'TODO:ローリングの考慮なし　マシンメーカーへ出力
+                PlcIf.AnalogPlcWrite(pca.AssemblyOrder & "ピースセグメント位置角度", 90 - pca.PieceCenterAngle)
+            End If
+
+
         Next
         UcnJackDsp.AssemblyPieceNo = PlcIf.AssemblyPieceNo
 
@@ -589,8 +597,7 @@
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub ExcavingStatusEnfoce(sender As Object, e As EventArgs)
-        Handles ExcavEnforceStart.Click, ExcavEnforceStop.Click
+    Private Sub ExcavingStatusEnfoce(sender As Object, e As EventArgs) Handles ExcavEnforceStart.Click, ExcavEnforceStop.Click
         Dim MsgText As String = ""
         Select Case sender.Name
             Case "ExcavEnforceStart"

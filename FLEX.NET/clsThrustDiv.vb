@@ -133,7 +133,7 @@ Friend Class clsThrustDiv
 
         With InitParameter
 
-            Dim intIg(.NumberGroup - 1) As Short
+            Dim intIg(.NumberGroup - 1) As Short    '各グループの有効ジャッキ本数
             Dim intJg(.NumberGroup - 1) As Short
             Dim dblPj(.NumberJack - 1) As Double    '各ジャッキの圧力分布率
 
@@ -159,9 +159,9 @@ Friend Class clsThrustDiv
 
             '============================= page Ⅲ－２９ ===============================
             'ジャッキ掘進モード　AND 減圧中でない
-            'TODO:同時施工のみ
+            '同時施工のみ
             For i = 0 To .NumberJack - 1
-                If PlcIf.JackExecMode(i) And Not Reduce.LstR.Contains(InitParameter.JackGroupPos(i)) Then
+                If Not PlcIf.LosZeroMode Or (PlcIf.JackExecMode(i) And Not Reduce.LstR.Contains(InitParameter.JackGroupPos(i))) Then
                     mdbl分担率計算値(.JackGroupPos(i) - 1) += dblPj(i)
                     intIg(.JackGroupPos(i) - 1) += 1
                 End If
@@ -176,10 +176,10 @@ Friend Class clsThrustDiv
             ''最大値を求める
             Dim dblPgMax As Double = mdbl分担率計算値.Max
 
-            'mdbl分担率計算値を0-100に
-            For i = 0 To .NumberGroup - 1
-                mdbl分担率計算値(i) = mdbl分担率計算値(i) / dblPgMax * 100
-            Next i
+            'mdbl分担率計算値を0-100（百分率)
+            If dblPgMax <> 0 Then
+                mdbl分担率計算値 = (From ti In mdbl分担率計算値 Select ti / dblPgMax * 100).ToArray
+            End If
 
             '============================= page Ⅲ－３０ ===============================
 
@@ -204,30 +204,41 @@ Friend Class clsThrustDiv
 
             Next i
 
-            Dim dblD(.NumberGroup - 1) As Double
+            Dim dblD() As Double = mdbl分担率計算値.Clone
+
+
+            Dim buntang As New Dictionary(Of Short, Double)
 
             For i = 0 To .NumberGroup - 1
-                dblD(i) = mdbl分担率計算値(i)
+                buntang.Add(i, mdbl分担率計算値(i))
             Next i
+            '分担率計算値を降順に並べ変え
+            Dim ttt = From qqq In buntang Select qqq.Key, qqq.Value Order By Value Descending
+            i = 0
+            For Each jj In ttt
+                intJg(i) = jj.Key
+                i += 1
+            Next
 
 
-            Dim intCntI, intCntJ As Short
-            Dim dblSt As Double
-            Dim intSt As Short
 
-            For intCntI = 0 To .NumberGroup - 2
-                For intCntJ = intCntI + 1 To .NumberGroup - 1
-                    If dblD(intCntJ) > dblD(intCntI) Then
-                        dblSt = dblD(intCntI)
-                        dblD(intCntI) = dblD(intCntJ)
-                        dblD(intCntJ) = dblSt
+            'Dim intCntI, intCntJ As Short
+            'Dim dblSt As Double
+            'Dim intSt As Short
 
-                        intSt = intJg(intCntI)
-                        intJg(intCntI) = intJg(intCntJ)
-                        intJg(intCntJ) = intSt
-                    End If
-                Next intCntJ
-            Next intCntI
+            'For intCntI = 0 To .NumberGroup - 2
+            '    For intCntJ = intCntI + 1 To .NumberGroup - 1
+            '        If dblD(intCntJ) > dblD(intCntI) Then
+            '            dblSt = dblD(intCntI)
+            '            dblD(intCntI) = dblD(intCntJ)
+            '            dblD(intCntJ) = dblSt
+
+            '            intSt = intJg(intCntI)
+            '            intJg(intCntI) = intJg(intCntJ)
+            '            intJg(intCntJ) = intSt
+            '        End If
+            '    Next intCntJ
+            'Next intCntI
 
 
             '============================= page Ⅲ－３１===============================

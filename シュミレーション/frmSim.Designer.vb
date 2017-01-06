@@ -540,7 +540,7 @@ Partial Class frmSim
         DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DgvJackStroke.DefaultCellStyle = DataGridViewCellStyle14
-        Me.DgvJackStroke.Location = New System.Drawing.Point(893, 586)
+        Me.DgvJackStroke.Location = New System.Drawing.Point(884, 447)
         Me.DgvJackStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DgvJackStroke.MultiSelect = False
         Me.DgvJackStroke.Name = "DgvJackStroke"
@@ -549,7 +549,7 @@ Partial Class frmSim
         Me.DgvJackStroke.RowTemplate.Height = 24
         Me.DgvJackStroke.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.DgvJackStroke.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DgvJackStroke.Size = New System.Drawing.Size(234, 249)
+        Me.DgvJackStroke.Size = New System.Drawing.Size(252, 409)
         Me.DgvJackStroke.TabIndex = 26
         '
         'DataGridViewTextBoxColumn1
