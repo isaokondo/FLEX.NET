@@ -190,20 +190,20 @@ Public Class frmAssemblyProcessEdit
                 Dim p As New Pen(Color.Cyan, 17) '幅10
                 Dim d As Integer = Rd * 0.957
                 g.DrawArc(p, New RectangleF(CenterPos.X - d, CenterPos.Y - d, d * 2, d * 2),
-                          Qw.PieceCenterAngle - Qw.PieceAngle / 2 - 90, Qw.PieceAngle)
+                         -Qw.PieceCenterAngle + Qw.PieceAngle / 2, -Qw.PieceAngle)
 
             End If
 
             'TODO:同じような処理が2つあるので　簡潔に！
             'セグメント区切り線
-            Dim Angle As Single = (90 - Qw.PieceAngle / 2 - Qw.PieceCenterAngle) * PI / 180
+            Dim Angle As Single = (-Qw.PieceAngle / 2 + Qw.PieceCenterAngle) * PI / 180
             Dim pX As Integer = CenterPos.X + Rd * Cos(Angle)
             Dim pY As Integer = CenterPos.Y - Rd * Sin(Angle)
             Dim p2X As Integer = CenterPos.X + (Rd - 20) * Cos(Angle)
             Dim p2Y As Integer = CenterPos.Y - (Rd - 20) * Sin(Angle)
             g.DrawLine(Pens.Black, New Point(p2X, p2Y), New Point(pX, pY))
 
-            Angle = (90 + Qw.PieceAngle / 2 - Qw.PieceCenterAngle) * PI / 180
+            Angle = (Qw.PieceAngle / 2 + Qw.PieceCenterAngle) * PI / 180
             Dim pX2 As Integer = CenterPos.X + Rd * Cos(Angle)
             Dim pY2 As Integer = CenterPos.Y - Rd * Sin(Angle)
             Dim p2X2 As Integer = CenterPos.X + (Rd - 20) * Cos(Angle)
@@ -211,9 +211,9 @@ Public Class frmAssemblyProcessEdit
             g.DrawLine(Pens.Black, New Point(p2X2, p2Y2), New Point(pX2, pY2))
 
             '文字回転用
-            g.TranslateTransform(Rd * 0.98 * Cos((90 - Qw.PieceCenterAngle) * PI / 180) + CenterPos.X,
-                      -Rd * 0.98 * Sin((90 - Qw.PieceCenterAngle) * PI / 180) + CenterPos.Y)
-            g.RotateTransform(Qw.PieceCenterAngle)
+            g.TranslateTransform(Rd * 0.98 * Cos(Qw.PieceCenterAngle * PI / 180) + CenterPos.X,
+                      -Rd * 0.98 * Sin(Qw.PieceCenterAngle * PI / 180) + CenterPos.Y)
+            g.RotateTransform(90-Qw.PieceCenterAngle)
 
 
 

@@ -463,14 +463,14 @@ Public Class ucnJackDsp
                 Dim p As New Pen(cl, 17)
                 Dim d As Integer = MaxRadios * 0.97
                 g.DrawArc(p, New RectangleF(CenterPos.X - d, CenterPos.Y - d, d * 2, d * 2),
-                          _PieceCenterAngle(i) - _PieceAngle(i) / 2 - 90, _PieceAngle(i))
+                          -_PieceCenterAngle(i) + _PieceAngle(i) / 2, -_PieceAngle(i))
 
             End If
             Dim Rd As Integer = MaxRadios - 1
 
             'TODO:同じような処理が2つあるので　簡潔に！
             'セグメント区切り線
-            Dim Angle As Single = (90 - _PieceAngle(i) / 2 - _PieceCenterAngle(i)) * PI / 180
+            Dim Angle As Single = (-_PieceAngle(i) / 2 + _PieceCenterAngle(i)) * PI / 180
             Dim pX As Integer = CenterPos.X + Rd * Cos(Angle)
             Dim pY As Integer = CenterPos.Y - Rd * Sin(Angle)
             Dim p2X As Integer = CenterPos.X + (Rd - sWidth) * Cos(Angle)
@@ -478,7 +478,7 @@ Public Class ucnJackDsp
 
             g.DrawLine(Pens.Black, New Point(p2X, p2Y), New Point(pX, pY))
 
-            Angle = (90 + _PieceAngle(i) / 2 - _PieceCenterAngle(i)) * PI / 180
+            Angle = (_PieceAngle(i) / 2 + _PieceCenterAngle(i)) * PI / 180
             Dim pX2 As Integer = CenterPos.X + Rd * Cos(Angle)
             Dim pY2 As Integer = CenterPos.Y - Rd * Sin(Angle)
             Dim p2X2 As Integer = CenterPos.X + (Rd - 20) * Cos(Angle)
@@ -488,17 +488,20 @@ Public Class ucnJackDsp
 
 
 
-            Rd -= 2
+            Rd -= 1
             '文字回転用
-            g.TranslateTransform(Rd * Cos((90 - _PieceCenterAngle(i)) * PI / 180) + CenterPos.X,
-                      -Rd * Sin((90 - _PieceCenterAngle(i)) * PI / 180) + CenterPos.Y)
-            g.RotateTransform(PieceCenterAngle(i))
+            g.TranslateTransform(Rd * Cos((_PieceCenterAngle(i)) * PI / 180) + CenterPos.X,
+                      -Rd * Sin((_PieceCenterAngle(i)) * PI / 180) + CenterPos.Y)
+            g.RotateTransform(90 - PieceCenterAngle(i))
 
 
             'Dim StColor As Brush = IIf(AssemblyPieceNo.Value = Qw.AssemblyOrder, Brushes.Red, Brushes.Black)
-            Dim fnt As New Font("MS UI Gothic", 12) 'ジャッキ番号の表示フォント
+            Dim fnt As New Font("MS UI Gothic", 13) 'ジャッキ番号の表示フォント
             '組立順序、ピース名称表示
-            g.DrawString("[" & _AssemblyOrder(i) & "] " & _PieceName(i), fnt, Brushes.Black, New Point(-_PieceName(i).Length * fnt.Size / 2, 0))
+            'g.DrawString(_PieceName(i), fnt, Brushes.Black, New Point(-_PieceName(i).Length * fnt.Size / 2, 0))
+            '組立順序を丸手囲まれた数値表示
+            g.DrawString(ChrW(9311 + _AssemblyOrder(i)) & _PieceName(i), fnt,
+                         Brushes.Black, New Point((-_PieceName(i).Length - 1) * fnt.Size / 2, 0))
 
 
         Next
@@ -587,6 +590,14 @@ Public Class ucnJackDsp
             'グループ圧の表示位置
             GroupPvDsp(i).Location = New Point(MaxRadios * GpWakuRate * Cos(r * PI / 180) + CenterPos.X - GroupPvDsp(i).Width / 2,
                                -MaxRadios * GpWakuRate * Sin(r * PI / 180) + CenterPos.Y - GroupPvDsp(i).Height / 2)
+
+            'グループ圧の表示が重なるときは縦位置を調整する
+            If i > 0 Then
+                If Math.Abs(GroupPvDsp(i).Top - GroupPvDsp(i - 1).Top) < 4 Then
+                    GroupPvDsp(i).Top = GroupPvDsp(i - 1).Top + GroupPvDsp(i - 1).Height + 2
+                End If
+
+            End If
 
             GroupPvDsp(i).Value = i + 1
             'ワールド座標系リセット

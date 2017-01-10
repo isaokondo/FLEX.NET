@@ -429,7 +429,12 @@
             '同時施工モード時のみ
             If PlcIf.LosZeroMode Then
                 'TODO:ローリングの考慮なし　マシンメーカーへ出力
-                PlcIf.AnalogPlcWrite(pca.AssemblyOrder & "ピースセグメント位置角度", 90 - pca.PieceCenterAngle)
+                '天を０度で時計回りに
+                Dim angle As Single
+                angle = 90 - pca.PieceCenterAngle
+                If angle < 0 Then angle += 360
+
+                PlcIf.AnalogPlcWrite(pca.AssemblyOrder & "ピースセグメント位置角度", angle)
             End If
 
 

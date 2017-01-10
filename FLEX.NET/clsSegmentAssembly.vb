@@ -186,7 +186,8 @@ Friend Class clsSegmentAssembly
                 SegDat.PieceCenterAngle = rsData.Item(PieaceNo & "中心")
             End If
             SegDat.PieceCenterAngle -= 360 / rsData.Item("ﾎﾞﾙﾄ  数") * rsData("組立ピッチ")
-            SegDat.PieceCenterAngle = 90 - SegDat.PieceCenterAngle
+            'TODO:線形管理の角度はPC系
+            'SegDat.PieceCenterAngle = 90 - SegDat.PieceCenterAngle
             SegDat.PullBackJack = JkList(rsData.Item("引戻"))
             'SegDat.OpposeJack = JkList(rsData.Item("対抗ジャッキ"))
             SegDat.ClosetJack = JkList(rsData.Item("押込"))
@@ -207,7 +208,7 @@ Friend Class clsSegmentAssembly
 
         Dim lst As New List(Of Short)
 
-        If TypeName(tmpS) = "DBNull" Or tmpS = "" Then
+        If TypeName(tmpS) = "DBNull" OrElse tmpS = "" Then
             Return lst
         End If
 
@@ -518,6 +519,9 @@ Friend Class clsSegmentAssembly
         'データないとき
         If IsNothing(t) OrElse t.Count = 0 Then
             Return "-"
+            'データ１つのとき
+        ElseIf t.Count = 1 Then
+            Return t(0)
         Else
             Return t(0) & "-" & t(t.Count - 1)
 
