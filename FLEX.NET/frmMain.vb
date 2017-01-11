@@ -620,8 +620,19 @@
     End Sub
 
     Private Sub TuningMonitorClicｋ_Click(sender As Object, e As EventArgs) Handles TuningMonitorClicｋ.Click
-        My.Forms.frmTuningMonitor.Show()
+        If (Control.ModifierKeys And Keys.Shift) = Keys.Shift Then
+            My.Forms.frmTuningTrend.Show() 'シフトキーが押されてたときは、チューニングトレンド画面を出す
+        Else
+            My.Forms.frmTuningMonitor.Show()
+        End If
     End Sub
+
+    Private Sub TuningTrend_Click(sender As Object, e As EventArgs) Handles TuningMonitorClicｋ.DoubleClick
+
+    End Sub
+
+
+
     ''' <summary>
     ''' FLEX自動方向制御ON/OFF
     ''' </summary>
