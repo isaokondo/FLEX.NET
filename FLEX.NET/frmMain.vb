@@ -616,7 +616,10 @@
     Private Sub TuningMonitorClicｋ_Click(sender As Object, e As EventArgs) Handles TuningMonitorClicｋ.Click
         If (Control.ModifierKeys And Keys.Shift) = Keys.Shift Then
             My.Forms.frmTuningTrend.Show() 'シフトキーが押されてたときは、チューニングトレンド画面を出す
+        ElseIf (Control.ModifierKeys And Keys.Control) = Keys.Control Then
+            My.Forms.frmDirControlChek.Show() 'コントロールキーが押されてたときは、姿勢制御確認画面を出す
         Else
+
             My.Forms.frmTuningMonitor.Show()
         End If
     End Sub

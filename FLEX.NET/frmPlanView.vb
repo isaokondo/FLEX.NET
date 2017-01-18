@@ -37,7 +37,7 @@
             If TypeOf DspData Is Double Then
                 Dspformt = DirectCast(DspData, Double).ToString("F3")
             End If
-            If TypeOf DspData Is Integer Then
+            If TypeOf DspData Is Integer Or TypeOf DspData Is Short Then
                 Dspformt = DspData.ToString
             End If
 

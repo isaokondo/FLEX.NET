@@ -133,6 +133,12 @@
     <Compile Include="clsPlanData.vb" />
     <Compile Include="clsPLC.vb" />
     <Compile Include="CommonMdl.vb" />
+    <Compile Include="frmDirControlChek.Designer.vb">
+      <DependentUpon>frmDirControlChek.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDirControlChek.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmPlanView.Designer.vb">
       <DependentUpon>frmPlanView.vb</DependentUpon>
     </Compile>
@@ -378,6 +384,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmDirControlChek.resx">
+      <DependentUpon>frmDirControlChek.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPlanView.resx">
       <DependentUpon>frmPlanView.vb</DependentUpon>
     </EmbeddedResource>

@@ -71,9 +71,10 @@ Partial Class frmPlanView
         Me.dgv.ReadOnly = True
         Me.dgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.dgv.RowsDefaultCellStyle = DataGridViewCellStyle3
-        Me.dgv.RowTemplate.Height = 21
+        Me.dgv.RowTemplate.Height = 18
+        Me.dgv.RowTemplate.ReadOnly = True
         Me.dgv.ShowCellErrors = False
         Me.dgv.Size = New System.Drawing.Size(1267, 416)
         Me.dgv.TabIndex = 10
@@ -94,5 +95,5 @@ Partial Class frmPlanView
 
     End Sub
 
-    Friend WithEvents dgv As DataGridView
+    Protected WithEvents dgv As DataGridView
 End Class

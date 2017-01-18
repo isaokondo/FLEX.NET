@@ -180,9 +180,9 @@ Friend Class clsThrustDiv
             If dblPgMax <> 0 Then
                 mdbl分担率計算値 = (From ti In mdbl分担率計算値 Select ti / dblPgMax * 100).ToArray
             End If
-
+            mdbl分担率計算値.AsEnumerable.Where(Function(n) n > 90).Select(Function(n) n = 100).ToArray
             '============================= page Ⅲ－３０ ===============================
-
+            Dim bbb = mdbl分担率計算値.Select(Function(n) 100 And n > 95).ToArray
             ''全開調整
             For i = 0 To .NumberGroup - 1
 
