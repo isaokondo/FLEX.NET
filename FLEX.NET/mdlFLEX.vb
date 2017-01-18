@@ -407,6 +407,7 @@ Module mdlFLEX
             .全開グループ制限 = CtlParameter.全開グループ制限
 
             If CtlParameter.AutoDirectionControl Then
+                '力点自動
                 .操作角 = JackMvAuto.操作角
                 .操作強 = JackMvAuto.操作強
                 CtlParameter.PointX = JackMvAuto.PointX
@@ -414,6 +415,7 @@ Module mdlFLEX
                 CtlParameter.操作角 = JackMvAuto.操作角
                 CtlParameter.操作強 = JackMvAuto.操作強
             Else
+                '力点手動操作時
                 .操作角 = JackManual.操作角
                 .操作強 = JackManual.操作強
                 CtlParameter.操作角 = JackManual.操作角

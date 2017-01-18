@@ -69,6 +69,11 @@ Public Class clsDataBase
                 If rString.IndexOf("MariaDB") >= 0 Then
                     MySQLVersion = "MariaDB"
                 End If
+                If IsNothing(MySQLVersion) Then
+                    MsgBox($"データベースが異常です　{rString}",,)
+
+                End If
+
                 Exit Do
             End If
         Loop

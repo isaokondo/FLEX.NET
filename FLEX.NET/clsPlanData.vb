@@ -14,7 +14,7 @@ Public Class clsPlanData
     Public Property 線形 As Integer()    '線形の種類
     Public Property 前胴中心 As Double()   '前胴中心
     Public Property 後胴中心 As Double()
-    Public Property 中折 As Double()        '中折
+    Public Property 中折 As Integer()        '中折
     Public Property 中折開始 As Double()
     Public Property 戻し開始 As Double()
     Public Property 最大中折れ角 As Double()
@@ -274,8 +274,8 @@ Public Class clsVerPlanData
             .Read()
             発進Z座標 = .Item("発進Z座標")
             発進勾配 = .Item("発進勾配")
-            到達Z座標 = .Item("到達勾配")
-            到達勾配 = .Item("到達Z座標")
+            到達Z座標 = .Item("到達Z座標")
+            到達勾配 = .Item("到達勾配")
         End With
         '        db.Disconnect()
 

@@ -133,10 +133,22 @@
     <Compile Include="clsPlanData.vb" />
     <Compile Include="clsPLC.vb" />
     <Compile Include="CommonMdl.vb" />
+    <Compile Include="frmPlanView.Designer.vb">
+      <DependentUpon>frmPlanView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPlanView.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmTuningTrend.Designer.vb">
       <DependentUpon>frmTuningTrend.vb</DependentUpon>
     </Compile>
     <Compile Include="frmTuningTrend.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVerPlanData.Designer.vb">
+      <DependentUpon>frmVerPlanData.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmVerPlanData.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ucnDspDataMin2.Designer.vb">
@@ -366,8 +378,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmPlanView.resx">
+      <DependentUpon>frmPlanView.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmTuningTrend.resx">
       <DependentUpon>frmTuningTrend.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVerPlanData.resx">
+      <DependentUpon>frmVerPlanData.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucnDspDataMin2.resx">
       <DependentUpon>ucnDspDataMin2.vb</DependentUpon>

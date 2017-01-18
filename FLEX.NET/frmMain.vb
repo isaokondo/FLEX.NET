@@ -448,13 +448,7 @@
     End Sub
 
 
-    Private Sub MenuSystem_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles MenuSystem.ItemClicked
 
-    End Sub
-
-    Private Sub PlanDataSetting_Click(sender As Object, e As EventArgs) Handles PlanDataSetting.Click
-
-    End Sub
     ''' <summary>
     ''' リング番号変更
     ''' </summary>
@@ -856,5 +850,13 @@
 
     Private Sub DspWideUse0_DoubleClick(sender As Object, e As EventArgs) Handles DspWideUse9.DoubleClick, DspWideUse8.DoubleClick, DspWideUse7.DoubleClick, DspWideUse6.DoubleClick, DspWideUse5.DoubleClick, DspWideUse4.DoubleClick, DspWideUse3.DoubleClick, DspWideUse2.DoubleClick, DspWideUse11.DoubleClick, DspWideUse10.DoubleClick, DspWideUse1.DoubleClick, DspWideUse0.DoubleClick
 
+    End Sub
+
+    Private Sub 平面ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 平面ToolStripMenuItem.Click
+        frmHorPlanData.Show()
+    End Sub
+
+    Private Sub 縦断ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 縦断ToolStripMenuItem.Click
+        frmVerPlanData.Show()
     End Sub
 End Class

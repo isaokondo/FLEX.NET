@@ -137,7 +137,6 @@ Friend Class clsThrustDiv
             Dim intJg(.NumberGroup - 1) As Short
             Dim dblPj(.NumberJack - 1) As Double    '各ジャッキの圧力分布率
 
-
             '============================= page Ⅲ－２８ ===============================
             mbln最小数全開調整フラグ = False
             mbln設定値全開調整フラグ = False
@@ -161,7 +160,8 @@ Friend Class clsThrustDiv
             'ジャッキ掘進モード　AND 減圧中でない
             '同時施工のみ
             For i = 0 To .NumberJack - 1
-                If Not PlcIf.LosZeroMode Or (PlcIf.JackExecMode(i) And Not Reduce.LstR.Contains(InitParameter.JackGroupPos(i))) Then
+                If Not PlcIf.LosZeroMode Or (PlcIf.JackExecMode(i) And
+                    Not Reduce.LstR.Contains(InitParameter.JackGroupPos(i))) Then
                     mdbl分担率計算値(.JackGroupPos(i) - 1) += dblPj(i)
                     intIg(.JackGroupPos(i) - 1) += 1
                 End If

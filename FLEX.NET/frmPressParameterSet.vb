@@ -1,4 +1,5 @@
 ﻿Public Class frmPressParameterSet
+
     Public Sub New()
         ' この呼び出しはデザイナーで必要です。
         InitializeComponent()
@@ -39,6 +40,8 @@
 
 
     End Sub
+
+
 
 
 End Class

@@ -18,6 +18,17 @@ Module CommonMdl
     ''' ダイレクト指令制御
     ''' </summary>
     Public Const cDirect As Short = &H33S
+
+    ''' <summary>
+    ''' 減圧弁特性取得モード 増加　ダイレクト制御時のパラメータを取得
+    ''' </summary>
+    Public Const cReducePropertyGetAdd As Short = &H60S
+    ''' <summary>
+    ''' 減圧弁特性取得モード　減少　ダイレクト制御時のパラメータを取得
+    ''' </summary>
+    Public Const cReducePropertyGetSub As Short = &H61S
+
+
     Public Const c全押しスタート As Short = 0
     Public Const c前回値保持 As Short = 1
     Public Const c減圧前 As Short = 2

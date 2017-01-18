@@ -72,6 +72,9 @@ Public Class clsPlcIf
     Private _減圧弁制御I定数 As Integer
     Private _減圧弁制御D定数 As Integer
 
+    '減圧弁の特性値取得テスト用
+    Private _減圧弁特性増減時間 As Integer
+
     ''偏差過大の時の設定値　
     Private _感度調整減圧弁制御Ｐ定数 As Integer
     Private _感度調整減圧弁制御Ｉ定数 As Integer
@@ -522,6 +525,18 @@ Public Class clsPlcIf
         End Set
     End Property
 
+    Public Property 減圧弁特性増減時間 As Integer
+        Get
+            Return _減圧弁特性増減時間
+        End Get
+        Set(value As Integer)
+            _減圧弁特性増減時間 = value
+            Call ParameterWrite(value)
+
+        End Set
+    End Property
+
+
     Public Property 減圧弁制御I定数 As Integer
         Get
             Return _減圧弁制御I定数
@@ -845,6 +860,8 @@ Public Class clsPlcIf
                 _減圧弁制御I定数 = GetAnalogData("減圧弁制御I定数", ParameterTag)
                 _減圧弁制御D定数 = GetAnalogData("減圧弁制御D定数", ParameterTag)
                 _中断判定速度 = GetAnalogData("中断判定速度", ParameterTag)
+                _減圧弁特性増減時間 = GetAnalogData("減圧弁特性増減時間", ParameterTag)
+
 
                 ''偏差過大の時の設定値　
                 _感度調整減圧弁制御Ｐ定数 = GetAnalogData("感度調整減圧弁制御P定数", ParameterTag)

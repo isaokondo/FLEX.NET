@@ -4,6 +4,7 @@
     ''' </summary>
     Private NumberData As Integer = 360
     Dim tmrData As Timer
+    Private ID As Integer
 
     Private Structure GroupPress
         Dim SmplTime As Date    '時刻
@@ -21,7 +22,9 @@
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
+
         GroupSelect.MaxValue = InitParameter.NumberGroup
+
 
     End Sub
 
@@ -59,18 +62,27 @@
             LstGroupPress.RemoveAt(0)
         End If
 
-        'Debug.Print("MVの最後       " & LstGroupPress(LstGroupPress.Count - 1).Mv(0))
-        'Debug.Print("MVの最後-100   " & LstGroupPress(LstGroupPress.Count - 100).Mv(0))
-
-        'Debug.Print("SVの最後       " & LstGroupPress(LstGroupPress.Count - 1).Sv(0))
-        'Debug.Print("SVの最後-100   " & LstGroupPress(LstGroupPress.Count - 100).Sv(0))
 
         '時刻の表示
         lblNowTime.Text = Now.ToLongTimeString
 
         lbl5minBefore.Text = Now.AddMinutes(-5).ToLongTimeString
 
-        ChartUp()
+
+        '        データグリッドに表示
+        For i As Short = 0 To InitParameter.NumberGroup - 1
+            DgvGroup.Rows(i).Cells(1).Value = PlcIf.GroupSV(i).ToString("F1")
+            DgvGroup.Rows(i).Cells(2).Value = PlcIf.GroupPv(i).ToString("F1")
+            DgvGroup.Rows(i).Cells(3).Value = PlcIf.GroupMV(i).ToString("F1")
+        Next
+
+
+        ChartUp() 'チャート表示
+        'データ保存識別用ID
+
+        Dim dsave As New clsDataSave(ID, GpData)
+
+        ID += 1
 
 
     End Sub
@@ -91,19 +103,21 @@
 
         Dim x As Single = picChart.Width * (1 - LstGroupPress.Count / NumberData)
         For Each gp In LstGroupPress
+            Dim gpNo As Short = GroupSelect.Value - 1
+
             x += picChart.Width / NumberData
 
             Dim y As Integer
-            y = (1 - gp.Sv(GroupSelect.Value) / InitParameter.JackMaxOilPres) * picChart.Height
+            y = (1 - gp.Sv(gpNo) / InitParameter.JackMaxOilPres) * picChart.Height
             psSv.Add(New Point(x, y))
 
-            y = (1 - gp.Pv(GroupSelect.Value) / InitParameter.JackMaxOilPres) * picChart.Height
+            y = (1 - gp.Pv(gpNo) / InitParameter.JackMaxOilPres) * picChart.Height
             psPv.Add(New Point(x, y))
 
             y = (1 - gp.JkPress / InitParameter.JackMaxOilPres) * picChart.Height
             psPress.Add(New Point(x, y))
 
-            y = (1 - gp.Mv(GroupSelect.Value) / 100) * picChart.Height
+            y = (1 - gp.Mv(gpNo) / 100) * picChart.Height
             psMv.Add(New Point(x, y))
 
 
@@ -123,6 +137,16 @@
 
     End Sub
 
+    ''' <summary>
+    ''' テストデータの保存
+    ''' </summary>
+    Private Sub DataSave()
+
+
+
+
+
+    End Sub
 
 
 
@@ -131,10 +155,91 @@
         lblHighPress.Text = InitParameter.JackMaxOilPres.ToString("F1") & " Mpa"
 
 
+        For i = 0 To InitParameter.NumberGroup - 1
+            DgvGroup.Rows.Add()
+            DgvGroup.Rows(i).Cells(0).Value = (i + 1).ToString
+        Next
+
+        nudMVUpDownTime.Value = PlcIf.減圧弁特性増減時間
+
+        DgvGroup.CurrentCell = Nothing
+
+        ID = 1
+
+
         TimerRun()
     End Sub
 
     Private Sub frmTuningTrend_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        PlcIf.減圧弁特性増減時間 = nudMVUpDownTime.Value
+
         tmrData.Stop()
     End Sub
+
+    Private Sub nudMVUpDownTime_ValueChanged(sender As Object, e As EventArgs) Handles nudMVUpDownTime.ValueChanged
+    End Sub
+    ''' <summary>
+    ''' 増圧開始
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnMvUpStart_Click(sender As Object, e As EventArgs) Handles btnMvUpStart.Click, btnDownStart.Click
+
+        PlcIf.減圧弁特性増減時間 = nudMVUpDownTime.Value
+        Dim OutFlg As Integer
+        'Select Case sender.GetType
+        '    Case btnMvUpStart
+        '        OutFlg = &H60
+        '    Case btnDownStart
+        '        OutFlg = &H61
+        'End Select
+        If sender Is btnMvUpStart Then
+            OutFlg = &H60
+        End If
+        If sender Is btnDownStart Then
+            OutFlg = &H61
+        End If
+        '増圧のフラグをPLCへ出力
+        PlcIf.AnalogPlcWrite($"グループ{GroupSelect.Value}制御フラグ", OutFlg)
+    End Sub
+
+    'Private Sub btnDownStart_Click(sender As Object, e As EventArgs) Handles btnDownStart.Click
+    '    PlcIf.減圧弁特性増減時間 = nudMVUpDownTime.Value
+    '    '減圧のフラグをPLCへ出力
+    '    PlcIf.AnalogPlcWrite($"グループ{GroupSelect.Value}制御フラグ", &H61)
+
+    'End Sub
+
+
+    Private Class clsDataSave
+        Inherits clsDataBase
+
+        Public Sub New(id As Integer, GpData As GroupPress)
+            Dim LstColumn As New List(Of String)
+            Dim LstData As New List(Of String)
+
+            LstData.Add(id)
+            LstData.Add($"'{GpData.SmplTime}'")
+
+
+            For i As Short = 1 To InitParameter.NumberGroup
+                LstColumn.Add($"`ｸﾞﾙｰﾌﾟ{i}圧力`")
+                LstColumn.Add($"`ｸﾞﾙｰﾌﾟ{i}SV`")
+                LstColumn.Add($"`ｸﾞﾙｰﾌﾟ{i}MV`")
+
+                LstData.Add($"'{GpData.Pv(i - 1)}'")
+                LstData.Add($"'{GpData.Sv(i - 1)}'")
+                LstData.Add($"'{GpData.Mv(i - 1)}'")
+
+            Next
+            LstColumn.Add("シールドジャッキ圧力")
+            LstData.Add(GpData.JkPress)
+
+
+            Dim recDataSave As Odbc.OdbcDataReader =
+                ExecuteSql($"REPLACE INTO flex減圧弁テストデータ (`ID`,`時間`,{String.Join(",", LstColumn.ToArray)  }) VALUES({String.Join(",", LstData.ToArray)}  )")
+
+        End Sub
+    End Class
+
 End Class
