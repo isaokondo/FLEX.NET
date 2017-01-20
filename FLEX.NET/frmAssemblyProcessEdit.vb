@@ -11,8 +11,8 @@ Public Class frmAssemblyProcessEdit
 
         ConfirmRingNo.Value = PlcIf.RingNo
         OperattionJackSel.SelectItem = "引戻,押込,押込推進,追加推進,RL考慮"
-        StartJackNo.MaxValue = InitParameter.NumberJack
-        LastJackNo.MaxValue = InitParameter.NumberJack
+        StartJackNo.MaxValue = InitPara.NumberJack
+        LastJackNo.MaxValue = InitPara.NumberJack
         OperattionJackSel.ComboBox.SelectedIndex = 0    '未選択時の処理
 
     End Sub
@@ -144,9 +144,9 @@ Public Class frmAssemblyProcessEdit
 
 
         'ジャッキ番号の表示
-        For i = 0 To InitParameter.NumberJack - 1
+        For i = 0 To InitPara.NumberJack - 1
 
-            Dim FaiJ As Single = InitParameter.FaiJack(i)
+            Dim FaiJ As Single = InitPara.FaiJack(i)
 
             'ワールド座標系リセット
             g.ResetTransform()
@@ -168,8 +168,8 @@ Public Class frmAssemblyProcessEdit
             '移動
             g.TranslateTransform(MaxRadios * 0.7 * Cos(FaiJ * PI / 180) + CenterPos.X,
                                  -MaxRadios * 0.7 * Sin(FaiJ * PI / 180) + CenterPos.Y)
-            g.RotateTransform(360 / InitParameter.NumberJack * i + IIf(InitParameter.FirstJackLoc = "top",
-                                                                       0, 360 / InitParameter.NumberJack / 2)) '回転
+            g.RotateTransform(360 / InitPara.NumberJack * i + IIf(InitPara.FirstJackLoc = "top",
+                                                                       0, 360 / InitPara.NumberJack / 2)) '回転
             'ジャッキ番号の表示
             g.DrawString((i + 1).ToString,
                          fnt, Brushes.Black,

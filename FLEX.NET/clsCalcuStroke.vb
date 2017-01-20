@@ -93,7 +93,7 @@ Public Class clsCalcuStroke
     ''' <returns></returns>
     Public ReadOnly Property TopCalcStroke As Integer
         Get
-            Return _mesureCalcJackStroke(InitParameter.mesureJackNo(0))
+            Return _mesureCalcJackStroke(InitPara.mesureJackNo(0))
         End Get
     End Property
     ''' <summary>
@@ -102,7 +102,7 @@ Public Class clsCalcuStroke
     ''' <returns></returns>
     Public ReadOnly Property RightCalcStroke As Integer
         Get
-            Return _mesureCalcJackStroke(InitParameter.mesureJackNo(1))
+            Return _mesureCalcJackStroke(InitPara.mesureJackNo(1))
         End Get
     End Property
     ''' <summary>
@@ -111,7 +111,7 @@ Public Class clsCalcuStroke
     ''' <returns></returns>
     Public ReadOnly Property BottomCalcStroke As Integer
         Get
-            Return _mesureCalcJackStroke(InitParameter.mesureJackNo(2))
+            Return _mesureCalcJackStroke(InitPara.mesureJackNo(2))
         End Get
     End Property
     ''' <summary>
@@ -120,7 +120,7 @@ Public Class clsCalcuStroke
     ''' <returns></returns>
     Public ReadOnly Property LeftCalcStroke As Integer
         Get
-            Return _mesureCalcJackStroke(InitParameter.mesureJackNo(3))
+            Return _mesureCalcJackStroke(InitPara.mesureJackNo(3))
         End Get
     End Property
 
@@ -144,7 +144,7 @@ Public Class clsCalcuStroke
     Public ReadOnly Property JackState As Dictionary(Of Short, String)
         Get
             Dim jk As New Dictionary(Of Short, String)
-            For Each j In InitParameter.MesureJackAngle.Keys
+            For Each j In InitPara.MesureJackAngle.Keys
                 Dim st As String
                 If asembleFinishedJack.Contains(j) Then
                     st = "組立完了"
@@ -179,7 +179,7 @@ Public Class clsCalcuStroke
 
     Public Sub New()
         '計算ジャッキストロークの初期化
-        For Each i As Short In InitParameter.MesureJackAngle.Keys
+        For Each i As Short In InitPara.MesureJackAngle.Keys
             _mesureCalcJackStroke.Add(i, 0)
             _mesureJackStroke.Add(i, 0)
             _mesureJackSpeed.Add(i, 0)
@@ -192,7 +192,7 @@ Public Class clsCalcuStroke
     ''' </summary>
     Public Sub Calc()
         '計測ジャッキ
-        For Each mjJkNo As Short In InitParameter.MesureJackAngle.Keys
+        For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
             _mesureCalcJackStroke(mjJkNo) = _mesureJackStroke(mjJkNo)
             '組立完了ジャッキ
             For Each asJkNo As Short In asembleFinishedJack
@@ -201,7 +201,7 @@ Public Class clsCalcuStroke
                     _mesureCalcJackStroke(mjJkNo) +=
                     _SegnebtCenterWidth +
                     _SegmentTaperValue / 2 *
-                    Math.Cos((_SegmentMaxTaperLoc + _rearDrumRolling - _segmentRolling - InitParameter.MesureJackAngle(mjJkNo)) _
+                    Math.Cos((_SegmentMaxTaperLoc + _rearDrumRolling - _segmentRolling - InitPara.MesureJackAngle(mjJkNo)) _
                     / 180 * Math.PI)
                 End If
             Next

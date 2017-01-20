@@ -285,49 +285,49 @@ Public Class clsPlcIf
     End Property
     Public ReadOnly Property RightStroke As Single
         Get
-            Return _mesureJackStroke(InitParameter.mesureJackNo(1))
+            Return _mesureJackStroke(InitPara.mesureJackNo(1))
             'Return _rightStroke
         End Get
     End Property
     Public ReadOnly Property LeftStroke As Single
         Get
-            Return _mesureJackStroke(InitParameter.mesureJackNo(3))
+            Return _mesureJackStroke(InitPara.mesureJackNo(3))
             'Return _leftStroke
         End Get
     End Property
     Public ReadOnly Property TopStroke As Single
         Get
-            Return _mesureJackStroke(InitParameter.mesureJackNo(0))
+            Return _mesureJackStroke(InitPara.mesureJackNo(0))
             'Return _topStroke
         End Get
     End Property
     Public ReadOnly Property BotomStroke As Single
         Get
-            Return _mesureJackStroke(InitParameter.mesureJackNo(2))
+            Return _mesureJackStroke(InitPara.mesureJackNo(2))
             'Return _botomStroke
         End Get
     End Property
     Public ReadOnly Property RightSpeed As Single
         Get
-            Return _mesureJackSpeed(InitParameter.mesureJackNo(1))
+            Return _mesureJackSpeed(InitPara.mesureJackNo(1))
             'Return _rightSpeed
         End Get
     End Property
     Public ReadOnly Property LeftSpeed As Single
         Get
-            Return _mesureJackSpeed(InitParameter.mesureJackNo(3))
+            Return _mesureJackSpeed(InitPara.mesureJackNo(3))
             'Return _leftSpeed
         End Get
     End Property
     Public ReadOnly Property TopSpeed As Single
         Get
-            Return _mesureJackSpeed(InitParameter.mesureJackNo(0))
+            Return _mesureJackSpeed(InitPara.mesureJackNo(0))
             'Return _topSpeed
         End Get
     End Property
     Public ReadOnly Property BotomSpeed As Single
         Get
-            Return _mesureJackSpeed(InitParameter.mesureJackNo(2))
+            Return _mesureJackSpeed(InitPara.mesureJackNo(2))
             'Return _botomSpeed
         End Get
     End Property
@@ -679,18 +679,18 @@ Public Class clsPlcIf
         TagRead() 'tagの読込
         '* ACTコントロール用インスタンスの生成*************************************/
         com_ReferencesEasyIF = New ACTMULTILib.ActEasyIF
-        com_ReferencesEasyIF.ActLogicalStationNumber = InitParameter.ActLogicalStationNumber   'PLC論理局
+        com_ReferencesEasyIF.ActLogicalStationNumber = InitPara.ActLogicalStationNumber   'PLC論理局
 
-        ReDim _groupPv(InitParameter.NumberGroup - 1) 'グループ圧力Pv
-        ReDim _groupSv(InitParameter.NumberGroup - 1) 'グループ圧力Sv
-        ReDim _groupMv(InitParameter.NumberGroup - 1) 'グループ圧力Mv
-        ReDim _groupFlg(InitParameter.NumberGroup - 1) 'グループ圧力Flg
-        ReDim _jackSelect(InitParameter.NumberJack - 1) 'ジャッキ選択
-        ReDim _JackStatus(InitParameter.NumberJack - 1)
+        ReDim _groupPv(InitPara.NumberGroup - 1) 'グループ圧力Pv
+        ReDim _groupSv(InitPara.NumberGroup - 1) 'グループ圧力Sv
+        ReDim _groupMv(InitPara.NumberGroup - 1) 'グループ圧力Mv
+        ReDim _groupFlg(InitPara.NumberGroup - 1) 'グループ圧力Flg
+        ReDim _jackSelect(InitPara.NumberJack - 1) 'ジャッキ選択
+        ReDim _JackStatus(InitPara.NumberJack - 1)
         '計測ジャッキのDictionary 初期化
         _mesureJackStroke = New Dictionary(Of Short, Integer)
         _mesureJackSpeed = New Dictionary(Of Short, Integer)
-        For Each i As KeyValuePair(Of Short, Single) In InitParameter.MesureJackAngle
+        For Each i As KeyValuePair(Of Short, Single) In InitPara.MesureJackAngle
             _mesureJackStroke.Add(i.Key, 0)
             _mesureJackSpeed.Add(i.Key, 0)
         Next
@@ -786,12 +786,12 @@ Public Class clsPlcIf
                 '計測ジャッキ取込
                 Dim st As New Dictionary(Of Short, Integer)(_mesureJackStroke)
                 'st = New Dictionary(Of Short, Integer)(_mesureJackStroke) '前スキャンの読込
-                For Each mj In InitParameter.MesureJackAngle.Keys
+                For Each mj In InitPara.MesureJackAngle.Keys
                     _mesureJackStroke(mj) = _EngValue("ジャッキストローク" & mj)
                     _mesureJackSpeed(mj) = _EngValue("ジャッキスピード" & mj)
                 Next
                 '計測ストロークのいずれかが変化した時のイベント
-                For Each mj In InitParameter.MesureJackAngle.Keys
+                For Each mj In InitPara.MesureJackAngle.Keys
                     If _mesureJackStroke(mj) <> st(mj) Then
                         RaiseEvent MesureStrokeChange()
                         Exit For
@@ -815,14 +815,14 @@ Public Class clsPlcIf
                 End If
 
                 Dim i As Integer
-                For i = 0 To InitParameter.NumberGroup - 1
+                For i = 0 To InitPara.NumberGroup - 1
                     _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
                     _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
                     _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
                     _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
                 Next
 
-                For i = 0 To InitParameter.NumberJack - 1
+                For i = 0 To InitPara.NumberJack - 1
                     _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
                     _jackSelect(i) = (_JackStatus(i) And 1)
                 Next
@@ -967,7 +967,7 @@ Public Class clsPlcIf
     ''' <param name="WrData">書込データ</param>
     Public Sub LosZeroDataWrite(ByVal TagName As String, ByVal WrData As List(Of Short))
         Dim PlcAdress As String = DigtalTag.TagData(TagName & "1").Address  'PLC書込アドレス
-        Dim Bit(InitParameter.NumberJack - 1) As Boolean
+        Dim Bit(InitPara.NumberJack - 1) As Boolean
         If Not IsNothing(WrData) Then
             For Each i As Short In WrData
                 Bit(i - 1) = True
@@ -1162,9 +1162,9 @@ Public Class clsPlcIf
         '
         ' 備考      :
 
-        Dim intPressWrData(InitParameter.NumberGroup - 1) As Short
-        Dim intPressWrFlg(InitParameter.NumberGroup - 1) As Short
-        For i As Short = 0 To InitParameter.NumberGroup - 1
+        Dim intPressWrData(InitPara.NumberGroup - 1) As Short
+        Dim intPressWrFlg(InitPara.NumberGroup - 1) As Short
+        For i As Short = 0 To InitPara.NumberGroup - 1
             If CtlParameter.最大全開出力時の目標圧力 <> 0 Then
                 '' PLCに0-4000でSVを出力
 
@@ -1175,10 +1175,10 @@ Public Class clsPlcIf
         Next i
 
         Dim iReturnCode As Long = com_ReferencesEasyIF.WriteDeviceBlock2(AnalogTag.TagData("グループ1圧力SV").Address,
-                                                        InitParameter.NumberGroup,
+                                                        InitPara.NumberGroup,
                                                         intPressWrData(0))
         iReturnCode = com_ReferencesEasyIF.WriteDeviceBlock2(AnalogTag.TagData("グループ1制御フラグ").Address,
-                                                        InitParameter.NumberGroup,
+                                                        InitPara.NumberGroup,
                                                         intPresFLg(0))
         _groupSv = sngPres
         _groupFlg = intPresFLg

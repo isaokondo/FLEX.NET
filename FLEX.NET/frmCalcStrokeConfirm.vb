@@ -13,7 +13,7 @@ Public Class frmCalcStrokeConfirm
     Private Sub frmCalcStrokeConfirm_Load(sender As Object, e As EventArgs) Handles Me.Load
         '計測ジャッキ番号でソート
         '計測ジャッキ番号と取付角度を表示
-        For Each i In InitParameter.MesureJackAngle
+        For Each i In InitPara.MesureJackAngle
             DgvJackStroke.Rows.Add(i.Key, 0, 0, 0, i.Value)
         Next
         'ヘッダーの書式をmiddlecenterに
@@ -30,7 +30,7 @@ Public Class frmCalcStrokeConfirm
             DgvJackStroke.Rows(i).Cells(StartStroke.Index).Value = CtlParameter.StartJackStroke(JkNo)
             DgvJackStroke.Rows(i).Cells(JackSpeed.Index).Value = PlcIf.MesureJackSpeed(JkNo)    '計測ジャッキスピード
             DgvJackStroke.Rows(i).Cells(CalcStrokeLen.Index).Value = CalcStroke.MesureCalcJackStroke(JkNo)  '計算計測ジャッキストローク
-            DgvJackStroke.Rows(i).Cells(Angle.Index).Value = InitParameter.MesureJackAngle(JkNo) 'ジャッキ取付角度
+            DgvJackStroke.Rows(i).Cells(Angle.Index).Value = InitPara.MesureJackAngle(JkNo) 'ジャッキ取付角度
             DgvJackStroke.Rows(i).Cells(JackState.Index).Value = CalcStroke.JackState(JkNo) 'ジャッキステータス
         Next
 

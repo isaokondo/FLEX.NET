@@ -602,7 +602,7 @@ Public Class clsTableUpdateConfirm
                     Case "flexアナログtag", "flexデジタルtag"
                         PlcIf.TagRead()
                     Case "flex初期パラメータ"
-                        InitParameter = New clsInitParameter
+                        InitPara = New clsInitParameter
                     Case "flex制御パラメータ"
                         CtlParameter.ReadParameter()
                         My.Forms.frmMain.WideDataFldSet() '汎用データの更新

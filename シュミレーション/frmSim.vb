@@ -626,4 +626,8 @@ CatchError:  '例外処理
     Private Sub DgvJackStroke_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvJackStroke.KeyDown
 
     End Sub
+
+    Private Sub DgvLosZero_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvLosZero.CellContentClick
+
+    End Sub
 End Class

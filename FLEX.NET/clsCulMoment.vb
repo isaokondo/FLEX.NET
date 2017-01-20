@@ -63,29 +63,34 @@ Friend Class clsCulMoment
 
 
         Dim i As Short
-        With InitParameter
-            For i = 0 To .NumberJack - 1
-                If PlcIf.JackSel(i) Then
-                    ''水平方向のモーメントの演算    01/09/11 変更
-                    _MomentX += Cos(.FaiJack(i) / 180 * PI) * PlcIf.GroupPv(.JackGroupPos(i) - 1) / .JackMaxOilPres * .JackPower * .JackRadius
-                    ''鉛直方向のモーメントの演算    01/09/11 変更
-                    _MomentY += Sin(.FaiJack(i) / 180 * PI) * PlcIf.GroupPv(.JackGroupPos(i) - 1) / .JackMaxOilPres * .JackPower * .JackRadius
-                    ''推力の演算
-                    If PlcIf.FlexControlOn Then
-                        '' 01/09/04 変更    神谷部長指摘による
-                        _Thrust += PlcIf.GroupPv(.JackGroupPos(i) - 1) / .JackMaxOilPres * .JackPower
-                    Else
-                        ''04/05/11 FLEXモードでないときの推力演算追加
-                        If PlcIf.JackSel(i) Then _Thrust += .JackPower * PlcIf.JkPress / .JackMaxOilPres
-
+        For i = 0 To InitPara.NumberJack - 1
+            If PlcIf.JackSel(i) Then
+                Dim GpPv As Single = PlcIf.GroupPv(InitPara.JackGroupPos(i) - 1)
+                ''水平方向のモーメントの演算    01/09/11 変更
+                _MomentX +=
+                    Cos(InitPara.FaiJack(i) / 180 * PI) * GpPv / InitPara.JackMaxOilPres * InitPara.JackPower * InitPara.JackRadius
+                ''鉛直方向のモーメントの演算    01/09/11 変更
+                _MomentY +=
+                    Sin(InitPara.FaiJack(i) / 180 * PI) * GpPv / InitPara.JackMaxOilPres * InitPara.JackPower * InitPara.JackRadius
+                ''推力の演算
+                If PlcIf.FlexControlOn Then
+                    '' 01/09/04 変更    神谷部長指摘による
+                    _Thrust +=
+                        GpPv / InitPara.JackMaxOilPres * InitPara.JackPower
+                Else
+                    ''04/05/11 FLEXモードでないときの推力演算追加
+                    If PlcIf.JackSel(i) Then
+                        _Thrust +=
+                            InitPara.JackPower * PlcIf.JkPress / InitPara.JackMaxOilPres
                     End If
+
                 End If
-            Next i
-            '方向を掘削管理のデータと合わせる
-            _MomentX = -_MomentX
+            End If
+        Next i
+        '方向を掘削管理のデータと合わせる
+        _MomentX = -_MomentX
             _MomentY = -_MomentY
 
-        End With
         ''合成値の演算
         _MomentR = Sqrt(_MomentX ^ 2 + _MomentY ^ 2)
 

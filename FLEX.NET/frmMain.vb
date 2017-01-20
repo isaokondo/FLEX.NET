@@ -235,7 +235,7 @@
         clsDataBase.GetMySQKVersion()
 
         'インスタンス作成
-        InitParameter = New clsInitParameter '初期値パラメータ
+        InitPara = New clsInitParameter '初期値パラメータ
         CtlParameter = New clsControlParameter  '制御パラメータ
         HorPlan = New clsHorPanData '平面掘進計画線
         VerPlan = New clsVerPlanData '縦断掘進計画線
@@ -254,11 +254,11 @@
 
         'ジャッキ稼働画面の初期データ
         With UcnJackDsp
-            .NumberGroup = InitParameter.NumberGroup
-            .FirstJackLoc = InitParameter.FirstJackLoc
-            .FaiJack = InitParameter.FaiJack
-            .JackGroupPos = InitParameter.JackGroupPos
-            .NumberJack = InitParameter.NumberJack
+            .NumberGroup = InitPara.NumberGroup
+            .FirstJackLoc = InitPara.FirstJackLoc
+            .FaiJack = InitPara.FaiJack
+            .JackGroupPos = InitPara.JackGroupPos
+            .NumberJack = InitPara.NumberJack
 
             .FlexPointX = CtlParameter.PointX
             .FlexPointY = CtlParameter.PointY
@@ -310,13 +310,13 @@
 
         'フォームの大きさを画面
 
-        ReDim DspGp(InitParameter.NumberGroup)
+        ReDim DspGp(InitPara.NumberGroup)
         'イベントログ更新
         EventlogUpdate()
 
         'PLCにグループ数、ジャッキ本数書込
-        PlcIf.ParameterWrite("グループ数", InitParameter.NumberGroup)
-        PlcIf.ParameterWrite("ジャッキ本数", InitParameter.NumberJack)
+        PlcIf.ParameterWrite("グループ数", InitPara.NumberGroup)
+        PlcIf.ParameterWrite("ジャッキ本数", InitPara.NumberJack)
 
         '汎用データ表示項目セット
         WideDataFldSet()

@@ -1,7 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmDirControlChek
-    Inherits frmPlanView
-
+    Inherits frmSettingBase
     'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
@@ -22,6 +21,9 @@ Partial Class frmDirControlChek
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.lblPointX = New System.Windows.Forms.Label()
         Me.lblX = New System.Windows.Forms.Label()
         Me.lblPointY = New System.Windows.Forms.Label()
@@ -39,11 +41,17 @@ Partial Class frmDirControlChek
         Me.label999 = New System.Windows.Forms.Label()
         Me.lblMomentX = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
+        Me.dgv = New System.Windows.Forms.DataGridView()
+        CType(Me.dgv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(1307, 979)
+        Me.btnOK.Location = New System.Drawing.Point(1337, 626)
+        '
+        'btnCancel
+        '
+        Me.btnCancel.Location = New System.Drawing.Point(1350, 570)
         '
         'lblPointX
         '
@@ -53,9 +61,9 @@ Partial Class frmDirControlChek
         Me.lblPointX.Location = New System.Drawing.Point(241, 7)
         Me.lblPointX.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblPointX.Name = "lblPointX"
-        Me.lblPointX.Size = New System.Drawing.Size(60, 19)
+        Me.lblPointX.Size = New System.Drawing.Size(75, 19)
         Me.lblPointX.TabIndex = 19
-        Me.lblPointX.Text = "-32353.0934"
+        Me.lblPointX.Text = "-32353.09"
         Me.lblPointX.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lblX
@@ -79,9 +87,9 @@ Partial Class frmDirControlChek
         Me.lblPointY.Location = New System.Drawing.Point(241, 26)
         Me.lblPointY.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblPointY.Name = "lblPointY"
-        Me.lblPointY.Size = New System.Drawing.Size(60, 19)
+        Me.lblPointY.Size = New System.Drawing.Size(75, 19)
         Me.lblPointY.TabIndex = 21
-        Me.lblPointY.Text = "-32353.0934"
+        Me.lblPointY.Text = "-32353.09"
         Me.lblPointY.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label2
@@ -105,9 +113,9 @@ Partial Class frmDirControlChek
         Me.lblR.Location = New System.Drawing.Point(241, 45)
         Me.lblR.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblR.Name = "lblR"
-        Me.lblR.Size = New System.Drawing.Size(60, 19)
+        Me.lblR.Size = New System.Drawing.Size(75, 19)
         Me.lblR.TabIndex = 23
-        Me.lblR.Text = "-32353.0934"
+        Me.lblR.Text = "-32353.09"
         Me.lblR.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label4
@@ -131,9 +139,9 @@ Partial Class frmDirControlChek
         Me.lblTheater.Location = New System.Drawing.Point(241, 64)
         Me.lblTheater.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblTheater.Name = "lblTheater"
-        Me.lblTheater.Size = New System.Drawing.Size(60, 19)
+        Me.lblTheater.Size = New System.Drawing.Size(75, 19)
         Me.lblTheater.TabIndex = 25
-        Me.lblTheater.Text = "-32353.0934"
+        Me.lblTheater.Text = "-32353.09"
         Me.lblTheater.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label6
@@ -157,9 +165,9 @@ Partial Class frmDirControlChek
         Me.lblRealThrustPower.Location = New System.Drawing.Point(241, 83)
         Me.lblRealThrustPower.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblRealThrustPower.Name = "lblRealThrustPower"
-        Me.lblRealThrustPower.Size = New System.Drawing.Size(60, 19)
+        Me.lblRealThrustPower.Size = New System.Drawing.Size(75, 19)
         Me.lblRealThrustPower.TabIndex = 27
-        Me.lblRealThrustPower.Text = "-32353.0934"
+        Me.lblRealThrustPower.Text = "-32353.09"
         Me.lblRealThrustPower.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label8
@@ -183,9 +191,9 @@ Partial Class frmDirControlChek
         Me.lblRealJackPress.Location = New System.Drawing.Point(241, 102)
         Me.lblRealJackPress.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblRealJackPress.Name = "lblRealJackPress"
-        Me.lblRealJackPress.Size = New System.Drawing.Size(60, 19)
+        Me.lblRealJackPress.Size = New System.Drawing.Size(75, 19)
         Me.lblRealJackPress.TabIndex = 29
-        Me.lblRealJackPress.Text = "-32353.0934"
+        Me.lblRealJackPress.Text = "-32353.09"
         Me.lblRealJackPress.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label10
@@ -216,12 +224,12 @@ Partial Class frmDirControlChek
         Me.lblMomentY.BackColor = System.Drawing.Color.White
         Me.lblMomentY.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblMomentY.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblMomentY.Location = New System.Drawing.Point(379, 26)
+        Me.lblMomentY.Location = New System.Drawing.Point(389, 26)
         Me.lblMomentY.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblMomentY.Name = "lblMomentY"
-        Me.lblMomentY.Size = New System.Drawing.Size(60, 19)
+        Me.lblMomentY.Size = New System.Drawing.Size(75, 19)
         Me.lblMomentY.TabIndex = 34
-        Me.lblMomentY.Text = "-32353.0934"
+        Me.lblMomentY.Text = "-32353.09"
         Me.lblMomentY.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'label999
@@ -229,7 +237,7 @@ Partial Class frmDirControlChek
         Me.label999.BackColor = System.Drawing.SystemColors.Control
         Me.label999.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.label999.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.label999.Location = New System.Drawing.Point(315, 26)
+        Me.label999.Location = New System.Drawing.Point(325, 26)
         Me.label999.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.label999.Name = "label999"
         Me.label999.Size = New System.Drawing.Size(64, 19)
@@ -242,12 +250,12 @@ Partial Class frmDirControlChek
         Me.lblMomentX.BackColor = System.Drawing.Color.White
         Me.lblMomentX.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblMomentX.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblMomentX.Location = New System.Drawing.Point(379, 7)
+        Me.lblMomentX.Location = New System.Drawing.Point(389, 7)
         Me.lblMomentX.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblMomentX.Name = "lblMomentX"
-        Me.lblMomentX.Size = New System.Drawing.Size(60, 19)
+        Me.lblMomentX.Size = New System.Drawing.Size(75, 19)
         Me.lblMomentX.TabIndex = 32
-        Me.lblMomentX.Text = "-32353.0934"
+        Me.lblMomentX.Text = "-32353.09"
         Me.lblMomentX.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label7
@@ -255,7 +263,7 @@ Partial Class frmDirControlChek
         Me.Label7.BackColor = System.Drawing.SystemColors.Control
         Me.Label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label7.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label7.Location = New System.Drawing.Point(315, 7)
+        Me.Label7.Location = New System.Drawing.Point(325, 7)
         Me.Label7.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(64, 19)
@@ -263,12 +271,52 @@ Partial Class frmDirControlChek
         Me.Label7.Text = "MomentX"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'dgv
+        '
+        Me.dgv.AllowUserToAddRows = False
+        Me.dgv.AllowUserToDeleteRows = False
+        Me.dgv.AllowUserToResizeColumns = False
+        Me.dgv.AllowUserToResizeRows = False
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.dgv.ColumnHeadersHeight = 46
+        Me.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv.DefaultCellStyle = DataGridViewCellStyle2
+        Me.dgv.Location = New System.Drawing.Point(65, 136)
+        Me.dgv.MultiSelect = False
+        Me.dgv.Name = "dgv"
+        Me.dgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.dgv.RowsDefaultCellStyle = DataGridViewCellStyle3
+        Me.dgv.RowTemplate.Height = 18
+        Me.dgv.RowTemplate.ReadOnly = True
+        Me.dgv.ShowCellErrors = False
+        Me.dgv.Size = New System.Drawing.Size(1267, 486)
+        Me.dgv.TabIndex = 35
+        '
         'frmDirControlChek
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
-        Me.ClientSize = New System.Drawing.Size(1453, 673)
+        Me.ClientSize = New System.Drawing.Size(1463, 673)
+        Me.Controls.Add(Me.dgv)
         Me.Controls.Add(Me.lblMomentY)
         Me.Controls.Add(Me.label999)
         Me.Controls.Add(Me.lblMomentX)
@@ -307,6 +355,8 @@ Partial Class frmDirControlChek
         Me.Controls.SetChildIndex(Me.lblMomentX, 0)
         Me.Controls.SetChildIndex(Me.label999, 0)
         Me.Controls.SetChildIndex(Me.lblMomentY, 0)
+        Me.Controls.SetChildIndex(Me.dgv, 0)
+        CType(Me.dgv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -328,4 +378,5 @@ Partial Class frmDirControlChek
     Friend WithEvents label999 As Label
     Friend WithEvents lblMomentX As Label
     Friend WithEvents Label7 As Label
+    Private WithEvents dgv As DataGridView
 End Class

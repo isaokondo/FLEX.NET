@@ -2,7 +2,7 @@
 
 Module mdlFLEX
 
-    Public InitParameter As clsInitParameter '初期値パラメータ
+    Public InitPara As clsInitParameter '初期値パラメータ
 
     Public HorPlan As clsHorPanData '平面掘進計画線
     Public VerPlan As clsVerPlanData '縦断掘進計画線
@@ -421,7 +421,9 @@ Module mdlFLEX
                 CtlParameter.操作角 = JackManual.操作角
                 CtlParameter.操作強 = JackManual.操作強
             End If
-
+            'TODO:ジャッキステータスを追加するように
+            '掘進モードをセット
+            .OnJack = PlcIf.JackExecMode
             .sbCul() ''推力分担率の演算
 
 
@@ -440,8 +442,8 @@ Module mdlFLEX
 
         With DivCul
 
-            Dim sngGpSV(InitParameter.NumberGroup - 1) As Single
-            Dim intGpFl(InitParameter.NumberGroup - 1) As Short
+            Dim sngGpSV(InitPara.NumberGroup - 1) As Single
+            Dim intGpFl(InitPara.NumberGroup - 1) As Short
 
 
 
@@ -460,7 +462,7 @@ Module mdlFLEX
                         Next
                     End If
 
-                    For i = 0 To InitParameter.NumberGroup - 1
+                    For i = 0 To InitPara.NumberGroup - 1
                         If intGpFl(i) <> cTracking Then
                             If .分担率指令値(i) > 99 Then ''全開出力
                                 sngGpSV(i) = CtlParameter.最大全開出力時の目標圧力
@@ -486,7 +488,7 @@ Module mdlFLEX
                     Next i
                     ''中断中及び待機中の処理
                 Case cChudan, cTaiki
-                    For intCnt = 0 To InitParameter.NumberGroup - 1
+                    For intCnt = 0 To InitPara.NumberGroup - 1
                         intGpFl(intCnt) = cIgnoreOut
                     Next intCnt
 

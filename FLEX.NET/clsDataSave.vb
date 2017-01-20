@@ -47,14 +47,14 @@ Friend Class clsDataSave
                 Data(ColumnList.IndexOf("掘進ストローク")) = .RealStroke.ToString
                 Data(ColumnList.IndexOf("時間")) = Now.ToString
 
-                For i As Short = 0 To InitParameter.NumberGroup - 1
+                For i As Short = 0 To InitPara.NumberGroup - 1
                     Data(ColumnList.IndexOf("ｸﾞﾙｰﾌﾟ" & (i + 1) & "圧力")) = .GroupPv(i).ToString
                     Data(ColumnList.IndexOf("ｸﾞﾙｰﾌﾟ" & (i + 1) & "指令値")) = .GroupMV(i).ToString
                     Data(ColumnList.IndexOf("ｸﾞﾙｰﾌﾟ" & (i + 1) & "制御指令フラグ")) = .GroupFlg(i).ToString
                     Data(ColumnList.IndexOf("ｸﾞﾙｰﾌﾟ" & (i + 1) & "圧力分担値")) = .GroupSV(i).ToString
                 Next
 
-                For i As Short = 0 To InitParameter.NumberJack - 1
+                For i As Short = 0 To InitPara.NumberJack - 1
                     Data(ColumnList.IndexOf("ジャッキステータス" & (i + 1))) = .JackStatus(i)
                 Next
 

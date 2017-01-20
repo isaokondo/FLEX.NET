@@ -23,7 +23,7 @@
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
 
-        GroupSelect.MaxValue = InitParameter.NumberGroup
+        GroupSelect.MaxValue = InitPara.NumberGroup
 
 
     End Sub
@@ -70,7 +70,7 @@
 
 
         '        データグリッドに表示
-        For i As Short = 0 To InitParameter.NumberGroup - 1
+        For i As Short = 0 To InitPara.NumberGroup - 1
             DgvGroup.Rows(i).Cells(1).Value = PlcIf.GroupSV(i).ToString("F1")
             DgvGroup.Rows(i).Cells(2).Value = PlcIf.GroupPv(i).ToString("F1")
             DgvGroup.Rows(i).Cells(3).Value = PlcIf.GroupMV(i).ToString("F1")
@@ -108,13 +108,13 @@
             x += picChart.Width / NumberData
 
             Dim y As Integer
-            y = (1 - gp.Sv(gpNo) / InitParameter.JackMaxOilPres) * picChart.Height
+            y = (1 - gp.Sv(gpNo) / InitPara.JackMaxOilPres) * picChart.Height
             psSv.Add(New Point(x, y))
 
-            y = (1 - gp.Pv(gpNo) / InitParameter.JackMaxOilPres) * picChart.Height
+            y = (1 - gp.Pv(gpNo) / InitPara.JackMaxOilPres) * picChart.Height
             psPv.Add(New Point(x, y))
 
-            y = (1 - gp.JkPress / InitParameter.JackMaxOilPres) * picChart.Height
+            y = (1 - gp.JkPress / InitPara.JackMaxOilPres) * picChart.Height
             psPress.Add(New Point(x, y))
 
             y = (1 - gp.Mv(gpNo) / 100) * picChart.Height
@@ -152,10 +152,10 @@
 
     Private Sub frmTuningTrend_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        lblHighPress.Text = InitParameter.JackMaxOilPres.ToString("F1") & " Mpa"
+        lblHighPress.Text = InitPara.JackMaxOilPres.ToString("F1") & " Mpa"
 
 
-        For i = 0 To InitParameter.NumberGroup - 1
+        For i = 0 To InitPara.NumberGroup - 1
             DgvGroup.Rows.Add()
             DgvGroup.Rows(i).Cells(0).Value = (i + 1).ToString
         Next
@@ -222,7 +222,7 @@
             LstData.Add($"'{GpData.SmplTime}'")
 
 
-            For i As Short = 1 To InitParameter.NumberGroup
+            For i As Short = 1 To InitPara.NumberGroup
                 LstColumn.Add($"`ｸﾞﾙｰﾌﾟ{i}圧力`")
                 LstColumn.Add($"`ｸﾞﾙｰﾌﾟ{i}SV`")
                 LstColumn.Add($"`ｸﾞﾙｰﾌﾟ{i}MV`")

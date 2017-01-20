@@ -718,27 +718,27 @@ ErrTrap:
             Dim dblMaxBuntan As Double = mdbl分担率指令値.Max
 
             ''各グループ毎のジャッキ本数を求める
-            Dim intGpJk(InitParameter.NumberGroup - 1) As Integer '各グループ毎のジャッキ本数
+            Dim intGpJk(InitPara.NumberGroup - 1) As Integer '各グループ毎のジャッキ本数
 
             '稼働ジャッキのみの条件を追加
-            For i = 0 To InitParameter.NumberJack - 1
+            For i = 0 To InitPara.NumberJack - 1
                 If PlcIf.JackSel(i) Then
-                    intGpJk(InitParameter.JackGroupPos(i) - 1) += 1
+                    intGpJk(InitPara.JackGroupPos(i) - 1) += 1
                 End If
             Next i
             If dblMaxBuntan = 0 Then Exit Sub
 
             ''②その分担率の最大推力を計算する。
-            Dim dblEachThrust(InitParameter.NumberGroup - 1) As Double ''各グループの推力
-            For i = 0 To InitParameter.NumberGroup - 1
+            Dim dblEachThrust(InitPara.NumberGroup - 1) As Double ''各グループの推力
+            For i = 0 To InitPara.NumberGroup - 1
                 mdbl分担率指令値(i) = mdbl分担率指令値(i) / dblMaxBuntan
-                dblEachThrust(i) = mdbl分担率指令値(i) * InitParameter.JackPower * intGpJk(i)
+                dblEachThrust(i) = mdbl分担率指令値(i) * InitPara.JackPower * intGpJk(i)
             Next i
 
             Dim dblMaxThrust As Double = dblEachThrust.Sum ''最大推力
 
             ''01/09/18 修正
-            mdbl元圧予測 = CulcMoment.Thrust / dblMaxThrust * InitParameter.JackMaxOilPres
+            mdbl元圧予測 = CulcMoment.Thrust / dblMaxThrust * InitPara.JackMaxOilPres
 
             ''圧力補正の算出
             ''⑤最低ジャッキ圧力を考慮してI欄の圧力を補正する｡
@@ -748,7 +748,7 @@ ErrTrap:
             Dim dblMomentX As Single
             Dim dblMomentY As Single
             'グループの終了角度 ''グループの開始角度
-            With InitParameter
+            With InitPara
 
                 Dim dblHosePres(.NumberGroup - 1) As Double
                 Dim dblEachJkThrust(.NumberGroup - 1) As Double

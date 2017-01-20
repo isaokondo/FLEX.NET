@@ -11,7 +11,16 @@
             textColumn.Name = cName
             textColumn.HeaderText = cName.Replace(" ", vbCrLf)
             dgv.Columns.Add(textColumn)
+
         Next
+    End Sub
+
+    Private Sub dgv_Click(sender As Object, e As EventArgs) Handles dgv.Click
+
+    End Sub
+
+    Protected Overridable Sub dgv_DoubleClick(sender As Object, e As EventArgs) Handles dgv.DoubleClick
+
     End Sub
 
     Private Sub frmPlanView_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -40,12 +49,15 @@
             If TypeOf DspData Is Integer Or TypeOf DspData Is Short Then
                 Dspformt = DspData.ToString
             End If
-
+            If TypeOf DspData Is String Then
+                Dspformt = DirectCast(DspData, String)
+            End If
             If IsNumeric(DspData) AndAlso DspData < 0 Then
                 dgvR.Cells(Col).Style.ForeColor = Color.Red
             End If
+
             'ゼロは非表示　ゾーンNo以外
-            If Col <> 0 And DspData = 0 Then
+            If TypeOf DspData IsNot String And Col <> 0 AndAlso DspData = 0 Then
                 Dspformt = ""
             End If
 

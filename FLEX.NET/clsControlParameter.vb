@@ -917,7 +917,7 @@ Public Class clsControlParameter
     Public Sub New()
 
         '計測ジャッキストローク　初期化
-        For Each i As KeyValuePair(Of Short, Single) In InitParameter.MesureJackAngle
+        For Each i As KeyValuePair(Of Short, Single) In InitPara.MesureJackAngle
             _StartJackStroke.Add(i.Key, 0)
         Next
         'パラメータ読込

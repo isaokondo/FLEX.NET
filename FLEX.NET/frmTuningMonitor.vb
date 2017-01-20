@@ -1,6 +1,6 @@
 ﻿Public Class frmTuningMonitor
 
-    Private GpData(InitParameter.NumberGroup - 1) As ucnTuningComp
+    Private GpData(InitPara.NumberGroup - 1) As ucnTuningComp
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Me.Close()
@@ -9,14 +9,14 @@
     Private Sub frmTuningMonitor_Load(sender As Object, e As EventArgs) Handles Me.Load
 
 
-        For i As Short = 0 To InitParameter.NumberGroup - 1
+        For i As Short = 0 To InitPara.NumberGroup - 1
             GpData(i) = New ucnTuningComp
             GpData(i).GpNo = i + 1
             GpData(i).PressScale = CtlParameter.PresBarGraphWidt
             GpData(i).Location = New Point(0, GpData(i).Height * i)
             picDsp.Controls.Add(GpData(i))
         Next
-        picDsp.Height = GpData(0).Height * InitParameter.NumberGroup + 30
+        picDsp.Height = GpData(0).Height * InitPara.NumberGroup + 30
         Me.Height = picDsp.Top + picDsp.Height + 60
 
         GpUpdate() '画面更新
@@ -30,7 +30,7 @@
     ''' 画面更新
     ''' </summary>
     Private Sub GpUpdate()
-        For i As Short = 0 To InitParameter.NumberGroup - 1
+        For i As Short = 0 To InitPara.NumberGroup - 1
             GpData(i).GpPv = PlcIf.GroupPv(i)
             GpData(i).GpSv = PlcIf.GroupSV(i)
             GpData(i).GpMv = PlcIf.GroupMV(i)

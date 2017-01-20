@@ -482,28 +482,28 @@ Friend Class clsSegmentAssembly
             _ReduceJack = New List(Of Short)
             _ReduceGroup = New List(Of Short)
 
-            Dim Gr As Boolean() = Enumerable.Repeat(Of Boolean)(True, InitParameter.NumberGroup).ToArray()
-            Dim Jk(InitParameter.NumberJack - 1) As Boolean
+            Dim Gr As Boolean() = Enumerable.Repeat(Of Boolean)(True, InitPara.NumberGroup).ToArray()
+            Dim Jk(InitPara.NumberJack - 1) As Boolean
             Dim i As Short
             'リストを配列に
             For i = 0 To _PullBackJack.Count - 1
                 Jk(_PullBackJack(i) - 1) = True
             Next
             '引戻しジャッキから減圧グループを
-            For i = 0 To InitParameter.NumberJack - 1
+            For i = 0 To InitPara.NumberJack - 1
                 If Not Jk(i) Then
-                    Gr(InitParameter.JackGroupPos(i) - 1) = False
+                    Gr(InitPara.JackGroupPos(i) - 1) = False
                 End If
             Next
             '減圧グループリスト作成
-            For i = 0 To InitParameter.NumberGroup - 1
+            For i = 0 To InitPara.NumberGroup - 1
                 If Gr(i) Then
                     _ReduceGroup.Add(i + 1)
                 End If
             Next
             '減圧グループを減圧ジャッキに
-            For i = 0 To InitParameter.NumberJack - 1
-                If Gr(InitParameter.JackGroupPos(i) - 1) Then
+            For i = 0 To InitPara.NumberJack - 1
+                If Gr(InitPara.JackGroupPos(i) - 1) Then
                     _ReduceJack.Add(i + 1)
                 End If
             Next
