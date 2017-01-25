@@ -858,12 +858,12 @@ Public Class clsControlParameter
                             _DirectControl = fnBoolean(.Item("値"))
                     End Select
 
-                    If .Item("項目名称").ToString.IndexOf("開始ジャッキストローク") >= 0 Then
+                    If .Item("項目名称").ToString.Contains("開始ジャッキストローク") Then
                         _StartJackStroke(CShort(.Item("項目名称").ToString.Replace("開始ジャッキストローク", ""))) = .Item("値")
                     End If
 
 
-                    If .Item("項目名称").ToString.IndexOf("wideuse") >= 0 Then
+                    If .Item("項目名称").ToString.Contains("wideuse") Then
                         _wideUse(CShort(.Item("項目名称").ToString.Replace("wideuse", ""))) = .Item("値")
                     End If
 

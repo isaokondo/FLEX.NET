@@ -396,6 +396,7 @@
         If PlcIf.AssemblyPieceNo <= 0 Then PlcIf.AssemblyPieceNo = 1
 
         DspTypeName.Value = SegAsmblyData.TypeData(PlcIf.RingNo).TypeName 'セグメント種類
+        PlcIf.AnalogPlcWrite("ｾｸﾞﾒﾝﾄの種類信号", SegAsmblyData.TypeData(PlcIf.RingNo).TypeNameID) 'セグメント種類
 
         With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
             'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
@@ -405,6 +406,9 @@
             DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
             DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
             DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
+
+            PlcIf.AnalogPlcWrite("甲乙表示用信号", .PatternKouOtuID)
+
         End With
         'MAXのピース番号内で表示
         If SegAsmblyData.AssemblyPieceNumber > PlcIf.AssemblyPieceNo Then
@@ -426,16 +430,16 @@
             UcnJackDsp.PieceCenterAngle.Add(pca.PieceCenterAngle)
             UcnJackDsp.AssemblyOrder.Add(pca.AssemblyOrder)
 
-            '同時施工モード時のみ
-            If PlcIf.LosZeroMode Then
-                'TODO:ローリングの考慮なし　マシンメーカーへ出力
-                '天を０度で時計回りに
-                Dim angle As Single
+            '同時施工モード時のみ　同時施工に関係なしに
+            'If PlcIf.LosZeroMode Then
+            'TODO:ローリングの考慮なし　マシンメーカーへ出力
+            '天を０度で時計回りに
+            Dim angle As Single
                 angle = 90 - pca.PieceCenterAngle
                 If angle < 0 Then angle += 360
 
                 PlcIf.AnalogPlcWrite(pca.AssemblyOrder & "ピースセグメント位置角度", angle)
-            End If
+            'End If
 
 
         Next

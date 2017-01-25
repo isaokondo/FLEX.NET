@@ -63,10 +63,10 @@ Public Class clsDataBase
                 ' Byte配列を文字列に変換して表示
                 Dim rString As String = System.Text.Encoding.GetEncoding("SHIFT-JIS").GetString(rdat)
 
-                If rString.IndexOf("4.0.25") >= 0 Then
+                If rString.Contains("4.0.25") Then
                     MySQLVersion = "4.0.25"
                 End If
-                If rString.IndexOf("MariaDB") >= 0 Then
+                If rString.Contains("MariaDB") Then
                     MySQLVersion = "MariaDB"
                 End If
                 If IsNothing(MySQLVersion) Then
@@ -112,13 +112,13 @@ Public Class clsDataBase
 
         Catch ex As OdbcException
             Dim ErrMsg As String = vbNullString
-            If ex.Message.IndexOf("ドライバーが見つかりません") >= 0 Then
+            If ex.Message.Contains("ドライバーが見つかりません") Then
                 ErrMsg = "MySQL ODBC 5.3 Unicode Driver を　インストールしてください"
             End If
-            If ex.Message.IndexOf("Unknown MySQL server host") >= 0 Then
+            If ex.Message.Contains("Unknown MySQL server host") Then
                 ErrMsg = My.Settings.HostName & ":ホスト名が見つかりません！"
             End If
-            If ex.Message.IndexOf("Unknown MySQL server host") >= 0 Then
+            If ex.Message.Contains("Unknown MySQL server host") Then
                 ErrMsg = My.Settings.HostName & ":ホスト名が見つかりません！"
             End If
             MessageBox.Show("Connect Error:" & ex.Message & vbCrLf & ErrMsg, "FLEX.NET", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -483,7 +483,7 @@ Public Class clsInitParameter
             'Dim _mJ As New Dictionary(Of Short, Single) '計測ジャッキの角度
 
             For Each mj As String In ht.Keys
-                If mj.IndexOf("計測ジャッキNo") >= 0 Then
+                If mj.Contains("計測ジャッキNo") Then
                     _mesureJackAngle.Add(mj.Replace("計測ジャッキNo", ""), ht(mj))
                 End If
             Next

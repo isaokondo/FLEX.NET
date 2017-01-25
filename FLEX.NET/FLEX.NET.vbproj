@@ -84,6 +84,9 @@
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>1473bf5de9784b3e3a32fa31f3f03eb4_xxo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic.PowerPacks, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -568,6 +571,7 @@
     <None Include="Resources\PullFInish.wav" />
     <None Include="Resources\ReduceFinish.wav" />
     <None Include="Resources\PullStart.wav" />
+    <Content Include="1473bf5de9784b3e3a32fa31f3f03eb4_xxo.ico" />
     <Content Include="Resources\ReduceFinished.mp3" />
     <Content Include="Resources\ReduceStart.mp3" />
   </ItemGroup>

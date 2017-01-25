@@ -1,11 +1,17 @@
 ﻿
 Public Class frmSegmentEdit
+    ''' <summary>
+    ''' 更新した行
+    ''' </summary>
+    Private lstChangeRow As New List(Of Integer)
 
     Public Sub New()
+
 
         ' この呼び出しはデザイナーで必要です。
         InitializeComponent()
 
+        RemoveHandler DgvSegAssign.CellValueChanged, AddressOf DgvSegAssign_CellValueChanged
 
         'セグメント種類のコンボボックス選択用
         For Each i In SegAsmblyData.TypeNameList
@@ -30,7 +36,17 @@ Public Class frmSegmentEdit
         DgvSegAssign.FirstDisplayedScrollingRowIndex = PlcIf.RingNo
 
 
+        AddHandler DgvSegAssign.CellValueChanged, AddressOf DgvSegAssign_CellValueChanged
 
+    End Sub
 
+    Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
+        SegAsmblyData.SegmentAsemblyDataUpdat(10, 1, 1)
+    End Sub
+
+    Private Sub DgvSegAssign_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles DgvSegAssign.CellValueChanged
+        If e.RowIndex <> -1 Then
+            lstChangeRow.Add(e.RowIndex)
+        End If
     End Sub
 End Class

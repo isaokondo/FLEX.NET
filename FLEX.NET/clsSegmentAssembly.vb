@@ -320,26 +320,25 @@ Friend Class clsSegmentAssembly
 
 
 
-    'Public Sub sbDataUpdat()
-    '    ' @(f)
-    '    '
-    '    ' 機能      :データ更新
-    '    '
-    '    ' 返り値    :
-    '    '
-    '    '
-    '    ' 機能説明  :04/01/16 修正
-    '    '
-    '    ' 備考      :Findだとパフォーマンスが不足のため変更
+    Public Sub SegmentAsemblyDataUpdat(RingNo As Integer, PatternName As String, TypeName As String)
+        ' @(f)
+        '
+        ' 機能      :データ更新
+        '
+        ' 返り値    :
+        '
+        '
+        ' 機能説明  :04/01/16 修正
+        '
+        ' 備考      :Findだとパフォーマンスが不足のため変更
 
 
-    '    Dim rsData As Odbc.OdbcDataReader =
-    '        ExecuteSql("UPDATE セグメント組立データ SET セグメント幅 = " & _SegmentWidth(mintRingno) &
-    '             " WHERE リング番号 = " & mintRingno & ";")
+        Dim rsData As Odbc.OdbcDataReader =
+            ExecuteSql($"UPDATE flexセグメント組立データ SET 組立パターンNo =(SELECT 組立パターンNo FROM セグメント組立パターンベース WHERE 組立パターン名='{PatternName}'),SET セグメントNo =(SELECT セグメントNo FROM セグメントリスト WHERE 種類='{TypeName}') WHERE リング番号 = {RingNo};")
 
 
-    '    '
-    'End Sub
+        '
+    End Sub
 
 
 
@@ -440,6 +439,23 @@ Friend Class clsSegmentAssembly
         ''' </summary>
         Public Property OpposeJack As List(Of Short)
         ''' <summary>
+        ''' 甲組乙組の識別
+        ''' </summary>
+        ''' <returns>０:甲組　１:乙組 どちらでもないとき　-1</returns>
+        Public ReadOnly Property PatternKouOtuID As Short
+            Get
+                If _PatternName.Contains("甲") Then
+                    Return 0
+                ElseIf _PatternName.Contains("乙") Then
+                    Return 1
+                Else
+                    Return -1
+                End If
+            End Get
+        End Property
+
+
+        ''' <summary>
         ''' 引戻しジャッキ
         ''' </summary>
         Public Property PullBackJack As List(Of Short)
@@ -537,6 +553,25 @@ Friend Class clsSegmentAssembly
         ''' </summary>
         ''' <returns></returns>
         Public Property TypeName As String
+        ''' <summary>
+        ''' セグメント種類ID
+        ''' </summary>
+        ''' <returns>０:RC１:合成 ２:スチール(鋼)</returns>
+        Public ReadOnly Property TypeNameID As Short
+            Get
+                If _TypeName.Contains("RC") Then
+                    Return 0
+                ElseIf _TypeName.Contains("合成") Then
+                    Return 1
+                ElseIf _TypeName.IndexOfAny(New Char() {"鋼", "ST"}) >= 0 Then
+                    Return 2
+                Else
+                    Return -1
+                End If
+            End Get
+        End Property
+
+
         ''' <summary>
         ''' セグメント中心幅(m)
         ''' </summary>
