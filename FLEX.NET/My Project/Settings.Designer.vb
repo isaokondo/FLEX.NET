@@ -56,7 +56,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("flex鹿島外環")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("flex大成外環大泉")>  _
         Public ReadOnly Property DataBaseName() As String
             Get
                 Return CType(Me("DataBaseName"),String)

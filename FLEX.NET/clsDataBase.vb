@@ -572,10 +572,13 @@ Public Class clsTableUpdateConfirm
     Inherits clsDataBase
 
     Dim tbTime As Dictionary(Of String, Date)
-
+    Private MisamTable() As String =
+        {"flexアナログtag", "flexデジタルtag", "flex初期パラメータ", "flex制御パラメータ", "flexセグメント組立データ"}
 
     Public Sub New()
-
+        'MyISAMのチェック
+        CheckMisam()
+        '更新時刻の取得
         tbTime = GetUpdateTIme()
 
         TimerRun()
@@ -606,6 +609,8 @@ Public Class clsTableUpdateConfirm
                     Case "flex制御パラメータ"
                         CtlParameter.ReadParameter()
                         My.Forms.frmMain.WideDataFldSet() '汎用データの更新
+                    Case "flexセグメント組立データ"
+                        SegAsmblyData.SegmentRingDataRead()
                 End Select
             End If
         Next
@@ -632,6 +637,23 @@ Public Class clsTableUpdateConfirm
         Return gup
 
     End Function
+    ''' <summary>
+    ''' テーブルがMyISAMかどうか、チェック！
+    ''' </summary>
+    Private Sub CheckMisam()
+        Dim misamTb As OdbcDataReader
+        misamTb = ExecuteSql("flush tables")
+        misamTb = ExecuteSql("show table status;")
 
+        While misamTb.Read
+            For Each tb In MisamTable
+                If tb = misamTb.Item("Name") Then
+                    If misamTb.Item("TYPE") <> "MyISAM" Then
+                        MsgBox($"テーブル {tb} を　エンジンMyISAMにしてください。", vbCritical)
+                    End If
+                End If
+            Next
+        End While
+    End Sub
 
 End Class

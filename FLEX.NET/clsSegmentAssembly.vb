@@ -261,7 +261,7 @@ Friend Class clsSegmentAssembly
     ''' <summary>
     ''' データベース読込
     ''' </summary>
-    Public Sub sbSegmentRingDataRead()
+    Public Sub SegmentRingDataRead()
 
 
         Dim rsData As Odbc.OdbcDataReader
@@ -316,8 +316,19 @@ Friend Class clsSegmentAssembly
 
 
     End Sub
-
-
+    ''' <summary>
+    ''' セグメント種類名から情報を取得
+    ''' </summary>
+    ''' <param name="TpName"></param>
+    ''' <returns></returns>
+    Public ReadOnly Property GetSegmentType(TpName As String) As SegmentType
+        Get
+            For Each t In _TypeList
+                If t.Value.TypeName = TpName Then Return t.Value
+            Next
+            Return Nothing
+        End Get
+    End Property
 
 
     Public Sub SegmentAsemblyDataUpdat(RingNo As Integer, PatternName As String, TypeName As String)
@@ -334,15 +345,30 @@ Friend Class clsSegmentAssembly
 
 
         Dim rsData As Odbc.OdbcDataReader =
-            ExecuteSql($"UPDATE flexセグメント組立データ SET 組立パターンNo =(SELECT 組立パターンNo FROM セグメント組立パターンベース WHERE 組立パターン名='{PatternName}'),SET セグメントNo =(SELECT セグメントNo FROM セグメントリスト WHERE 種類='{TypeName}') WHERE リング番号 = {RingNo};")
-
+            ExecuteSql($"UPDATE flexセグメント組立データ SET 組立パターンNo ='{GetPtNameID(PatternName)}' ,セグメントNo ='{GetTypeNameId(TypeName)}' WHERE リング番号 = {RingNo};")
 
         '
     End Sub
 
+    Private Function GetTypeNameId(TpName As String) As Short
+        For Each nM In _TypeList
+            If nM.Value.TypeName = TpName Then
+                Return nM.Key
+            End If
+        Next
+        Return 0
+    End Function
 
 
 
+    Private Function GetPtNameID(PtName As String) As Short
+        For Each pT In _AssenblyPtnList
+            If pT.Value = PtName Then
+                Return pT.Key
+            End If
+        Next
+        Return 0
+    End Function
 
 
 
@@ -396,7 +422,7 @@ Friend Class clsSegmentAssembly
     Public Sub New()
 
         SegmentListRead() 'セグメントリスト読込
-        sbSegmentRingDataRead() ''データベース読込
+        SegmentRingDataRead() ''データベース読込
 
     End Sub
 
