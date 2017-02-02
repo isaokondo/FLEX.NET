@@ -136,7 +136,7 @@ Public Class frmSim
         Dim iRet = ComPlc.SetDevice(Jadr, IIf(J.Checked, 1, 0))
 
     End Sub
-    Private Sub tmrPlcWR_Tick(sender As Object, e As EventArgs) Handles tmrPlcWR.Tick
+    Private Sub tmrPlcWR_Tick(sender As Object, e As EventArgs) Handles tmfrPlcWR.Tick
 
         'PLC読込
         Dim iRet As Long

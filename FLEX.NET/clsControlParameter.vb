@@ -889,7 +889,6 @@ Public Class clsControlParameter
         'Debug.Print(New StackFrame(1).GetMethod.Name)
         '呼び出し元のプロパティをフィールド名に
         Dim FieldName As String = New StackFrame(1).GetMethod.Name.Replace("set_", "")
-        Dim DB As New clsDataBase
         Dim WrValue As String
         If TypeOf value Is Boolean Then
             WrValue = IIf(value, "TRUE", "False")
@@ -898,7 +897,7 @@ Public Class clsControlParameter
         End If
 
         Dim tb As Odbc.OdbcDataReader =
-        DB.ExecuteSql("UPDATE FLEX制御パラメータ SET`値`='" & WrValue &
+        ExecuteSql("UPDATE FLEX制御パラメータ SET`値`='" & WrValue &
                       "' WHERE `項目名称`='" & FieldName & "'")
 
 
@@ -916,9 +915,16 @@ Public Class clsControlParameter
 
     Public Sub New()
 
-        '計測ジャッキストローク　初期化
+        '計測ジャッキストローク　初期化,フィールドの存在チェック
         For Each i As KeyValuePair(Of Short, Single) In InitPara.MesureJackAngle
             _StartJackStroke.Add(i.Key, 0)
+            Dim tbchk As Odbc.OdbcDataReader =
+                ExecuteSql($"SELECT * FROM FLEX制御パラメータ WHERE `項目名称`='開始ジャッキストローク{i.Key}'")
+            If Not tbchk.HasRows Then
+                MsgBox($"項目名　開始ジャッキストローク{i.Key}が、存在しません。{vbCrLf}テーブル「FLEX制御パラメータ」に追加してください", vbExclamation)
+            End If
+
+
         Next
         'パラメータ読込
         ReadParameter()

@@ -248,7 +248,7 @@ Module mdlFLEX
                         'ボイスメッセージ出力
                         PlaySound(My.Resources.ClosetStart)
 
-                    Case 5
+                    Case 5, 7
 
                         WriteEventData($"[{ .PieceName}] セグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認

@@ -1085,6 +1085,7 @@ Public Class clsPlcIf
     ''' <param name="TagName"></param>
     ''' <param name="Value"></param>
     Public Sub AnalogPlcWrite(TagName As String, ByVal Value As Single)
+        _EngValue(TagName) = Value
         With AnalogTag.TagData(TagName)
             Dim PlcAdress As String = .Address
             'アナログデータをPLC書込データに変換
