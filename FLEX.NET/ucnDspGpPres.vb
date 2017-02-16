@@ -6,10 +6,13 @@
 Public Class ucnDspGpPres
     Private _Value As Double
 
+    Public Event ValueClick(cName As String)
+
+
     <Browsable(True)>
     Public Property Value As Double
         Get
-            Return lblData.Text
+            Return _Value
         End Get
         Set(value As Double)
             _Value = value
@@ -27,5 +30,9 @@ Public Class ucnDspGpPres
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
+    End Sub
+
+    Private Sub lblData_Click(sender As Object, e As EventArgs) Handles lblData.Click
+        RaiseEvent ValueClick(Me.Name)
     End Sub
 End Class

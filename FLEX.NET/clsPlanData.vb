@@ -120,22 +120,20 @@ Public Class clsHorPanData
         'db.Connect()
         Dim db As New clsDataBase
 
-        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql("SELECT * FROM 平面起点 WHERE `シートID` = " & InitPara.SheetID)
+        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql($"SELECT * FROM 平面起点 WHERE `シートID` = {InitPara.SheetID}")
         tb.Read()
-        With tb
-            _座標系 = .Item("座標系")
-            _発進X座標 = .Item("発進X座標")
-            _発進Y座標 = .Item("発進Y座標") * _座標系
-            _到達X座標 = .Item("到達X座標")
-            _到達Y座標 = .Item("到達Y座標") * _座標系
-            _到達方位角 = .Item("到達方位角")
-            _X軸方位角 = .Item("X軸方位角")
+        _座標系 = tb.Item("座標系")
+        _発進X座標 = tb.Item("発進X座標")
+        _発進Y座標 = tb.Item("発進Y座標") * _座標系
+        _到達X座標 = tb.Item("到達X座標")
+        _到達Y座標 = tb.Item("到達Y座標") * _座標系
+        _到達方位角 = tb.Item("到達方位角")
+        _X軸方位角 = tb.Item("X軸方位角")
 
-            '起点座標
-            _起点X座標 = .Item("起点X座標")
-            _起点Y座標 = .Item("起点Y座標") * _座標系
-            _起点方位角 = .Item("起点方位角")
-        End With
+        '起点座標
+        _起点X座標 = tb.Item("起点X座標")
+        _起点Y座標 = tb.Item("起点Y座標") * _座標系
+        _起点方位角 = tb.Item("起点方位角")
         'db.Disconnect()
 
         'ゾーン総数を求める
@@ -147,7 +145,7 @@ Public Class clsHorPanData
 
         Call RedimData()
 
-        tb = db.ExecuteSql("SELECT * FROM 平面線形 WHERE `シートID` = " & InitPara.SheetID & " ORDER BY `ゾーン№`;")
+        tb = db.ExecuteSql($"SELECT * FROM 平面線形 WHERE `シートID` = {InitPara.SheetID} ORDER BY `ゾーン№`;")
         ' Dim i As Integer
 
         'For i = 0 To tb.Rows.Count - 1
@@ -185,8 +183,8 @@ Public Class clsHorPanData
                 _終点Y座標(zoneNo) = .Item("終点Y座標") * _座標系
                 _始点構築X座標(zoneNo) = .Item("始点X構築")
                 _終点構築X座標(zoneNo) = .Item("終点X構築")
-                _始点構築Y座標(zoneNo) = .Item("始点Y構築")
-                _終点構築Y座標(zoneNo) = .Item("終点Y構築")
+                _始点構築Y座標(zoneNo) = .Item("始点Y構築") * _座標系
+                _終点構築Y座標(zoneNo) = .Item("終点Y構築") * _座標系
                 'Catch ex As InvalidCastException
                 'Exit Try
                 'End Try
@@ -197,12 +195,12 @@ Public Class clsHorPanData
         'db.Disconnect()
 
         'ゾーン総数を求める
-        tb = db.ExecuteSql("SELECT MAX(`シフト№`) FROM 平面シフト WHERE `シートID` = " & InitPara.SheetID)
+        tb = db.ExecuteSql($"SELECT MAX(`シフト№`) FROM 平面シフト WHERE `シートID` = {InitPara.SheetID}")
         tb.Read()
         シフトゾーン総数 = tb.Item(0)
         'db.Disconnect()
 
-        tb = db.ExecuteSql("SELECT * FROM 平面シフト WHERE `シートID` = " & InitPara.SheetID & " ORDER BY `シフト№`;")
+        tb = db.ExecuteSql($"SELECT * FROM 平面シフト WHERE `シートID` = {InitPara.SheetID} ORDER BY `シフト№`;")
         'For i = 0 To tb.Rows.Count - 1
 
         With tb
@@ -269,7 +267,7 @@ Public Class clsVerPlanData
         'Dim tb As DataTable
         'db.Connect()
         Dim db As New clsDataBase
-        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql("SELECT * FROM 縦断発進 WHERE `シートID` = " & InitPara.SheetID)
+        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql($"SELECT * FROM 縦断発進 WHERE `シートID` = {InitPara.SheetID}")
         With tb
             .Read()
             発進Z座標 = .Item("発進Z座標")
@@ -280,7 +278,7 @@ Public Class clsVerPlanData
         '        db.Disconnect()
 
         'ゾーン総数を求める
-        tb = db.ExecuteSql("SELECT MAX(`ゾーン№`) FROM 縦断線形 WHERE `シートID` = " & InitPara.SheetID)
+        tb = db.ExecuteSql($"SELECT MAX(`ゾーン№`) FROM 縦断線形 WHERE `シートID` = {InitPara.SheetID}")
         tb.Read()
         ゾーン総数 = CInt(tb.Item(0))
         'db.Disconnect()
@@ -309,8 +307,8 @@ Public Class clsVerPlanData
                 End If
                 _始点累積水平距離(zoneNo) = .Item("始点累積距離")
                 _終点累積累積距離(zoneNo) = .Item("終点累積距離")
-                _始点勾配(zoneNo) = Hoi2Hoko(.Item("始点勾配"))
-                _終点勾配(zoneNo) = Hoi2Hoko(.Item("終点勾配"))
+                _始点勾配(zoneNo) = .Item("始点勾配")
+                _終点勾配(zoneNo) = .Item("終点勾配")
                 _始点Z座標(zoneNo) = .Item("始点Z座標")
                 _終点Z座標(zoneNo) = .Item("終点Z座標")
                 _中心位置Z座標(zoneNo) = db.CheckItemData(.Item("中心Z"))

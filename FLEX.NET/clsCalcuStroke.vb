@@ -133,7 +133,7 @@ Public Class clsCalcuStroke
     ''' 計算計測掘進ストローク
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property MesureCalcLOgocalStroke As New Dictionary(Of Short, Integer)
+    Public ReadOnly Property MesureCalcLogicalStroke As New Dictionary(Of Short, Integer)
     ''' <summary>
     ''' 計測ジャッキ平均スピード
     ''' </summary>
@@ -183,7 +183,7 @@ Public Class clsCalcuStroke
             _mesureCalcJackStroke.Add(i, 0)
             _mesureJackStroke.Add(i, 0)
             _mesureJackSpeed.Add(i, 0)
-            _MesureCalcLOgocalStroke.Add(i, 0)
+            _MesureCalcLogicalStroke.Add(i, 0)
         Next
     End Sub
 
@@ -205,15 +205,17 @@ Public Class clsCalcuStroke
                     / 180 * Math.PI)
                 End If
             Next
-            '掘進ストローク
-            _MesureCalcLOgocalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - CtlParameter.StartJackStroke(mjJkNo)
+            If PlcIf.ExecMode Then
+                '掘進ストローク 掘進モードのときのみ演算
+                _MesureCalcLogicalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - CtlPara.StartJackStroke(mjJkNo)
+            End If
         Next
         ''計算平均ジャッキストロークの演算
         Dim CalcSt As New clsGetAvg(_mesureCalcJackStroke)
         _mesureCalcAveJackStroke = CalcSt.AvgData
 
         ''計算平均掘進ストロークの演算
-        Dim CalcLogicalSt As New clsGetAvg(_MesureCalcLOgocalStroke)
+        Dim CalcLogicalSt As New clsGetAvg(_MesureCalcLogicalStroke)
         _CalcAveLogicalStroke = CalcLogicalSt.AvgData
 
 

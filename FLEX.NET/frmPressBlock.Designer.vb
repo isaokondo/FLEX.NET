@@ -30,6 +30,9 @@ Partial Class frmPressBlock
         Me.MinimumContorolPress = New FLEX.NET.ucnNumEdit()
         Me.FullPowerRange = New FLEX.NET.ucnNumEdit()
         Me.FullPowerValue = New FLEX.NET.ucnNumEdit()
+        Me.picPressBlock = New System.Windows.Forms.PictureBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        CType(Me.picPressBlock, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnOK
@@ -86,7 +89,7 @@ Partial Class frmPressBlock
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(480, 424)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(1149, 665)
         Me.ShapeContainer1.TabIndex = 24
         Me.ShapeContainer1.TabStop = False
         '
@@ -166,12 +169,34 @@ Partial Class frmPressBlock
         Me.FullPowerValue.Unit = "%"
         Me.FullPowerValue.Value = 90.0R
         '
+        'picPressBlock
+        '
+        Me.picPressBlock.BackColor = System.Drawing.Color.Transparent
+        Me.picPressBlock.Location = New System.Drawing.Point(478, 14)
+        Me.picPressBlock.Margin = New System.Windows.Forms.Padding(2)
+        Me.picPressBlock.Name = "picPressBlock"
+        Me.picPressBlock.Size = New System.Drawing.Size(653, 640)
+        Me.picPressBlock.TabIndex = 139
+        Me.picPressBlock.TabStop = False
+        '
+        'Label1
+        '
+        Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.Label1.Location = New System.Drawing.Point(507, 23)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(261, 25)
+        Me.Label1.TabIndex = 140
+        Me.Label1.Text = "低圧推進ブロックの設定"
+        '
         'frmPressBlock
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
-        Me.ClientSize = New System.Drawing.Size(480, 424)
+        Me.ClientSize = New System.Drawing.Size(1149, 665)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.picPressBlock)
         Me.Controls.Add(Me.MaxContorolPress)
         Me.Controls.Add(Me.MinimumContorolPress)
         Me.Controls.Add(Me.FullPowerRange)
@@ -190,6 +215,9 @@ Partial Class frmPressBlock
         Me.Controls.SetChildIndex(Me.MaxContorolPress, 0)
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
+        Me.Controls.SetChildIndex(Me.picPressBlock, 0)
+        Me.Controls.SetChildIndex(Me.Label1, 0)
+        CType(Me.picPressBlock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -202,4 +230,6 @@ Partial Class frmPressBlock
     Friend WithEvents MinimumContorolPress As ucnNumEdit
     Friend WithEvents FullPowerRange As ucnNumEdit
     Friend WithEvents FullPowerValue As ucnNumEdit
+    Friend WithEvents picPressBlock As PictureBox
+    Friend WithEvents Label1 As Label
 End Class

@@ -155,7 +155,7 @@ Friend Class clsDataSave
             Data(ColumnList.IndexOf("縦断姿勢角管理値")) = RefernceDirection.縦断基準方位.ToString("F4")
 
 
-            With CtlParameter
+            With CtlPara
 
                 Data(ColumnList.IndexOf("力点Ｘ")) = .PointX.ToString
                 Data(ColumnList.IndexOf("力点Ｙ")) = .PointY.ToString
@@ -229,6 +229,7 @@ Friend Class clsDataSave
         Catch ex As Exception
 
             MessageBox.Show(ex.Message)
+            Return "'" & String.Join("','", Data) & "'"
         End Try
 
 

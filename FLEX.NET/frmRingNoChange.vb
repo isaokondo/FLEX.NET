@@ -12,9 +12,10 @@
         RingNoEdt.Value = PlcIf.RingNo
     End Sub
 
-    Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
+    Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
         '設定変更を反映
         PlcIf.RingNo = RingNoEdt.Value
+        Me.Close()
     End Sub
 
     Private Sub RingNoEdt_Load(sender As Object, e As EventArgs) Handles RingNoEdt.Load

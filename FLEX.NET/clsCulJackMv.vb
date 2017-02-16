@@ -496,20 +496,20 @@ Friend Class clsCulJackMv
         ''制御モードの判定
 
         ''ver 1.1でこのコメントを外す
-        _圧力超 = EstValue.元圧予測 > CtlParameter.圧力許容値
+        _圧力超 = EstValue.元圧予測 > CtlPara.圧力許容値
 
-        _モーメント上限超 = (EstValue.モーメント予測 > CtlParameter.ジャッキモーメント上限値) _
+        _モーメント上限超 = (EstValue.モーメント予測 > CtlPara.ジャッキモーメント上限値) _
             And mblnモーメント制御 = False
 
         ''半径がある一定値を越えたらロックする。
         ''片押し制限
-        _片押しR上限超 = mdblRcDash > CtlParameter.片押しR制限
+        _片押しR上限超 = mdblRcDash > CtlPara.片押しR制限
 
         ''片押制御フラグをすべてに反映
         ''モーメント上限超えを変数に
         Dim LimitOn As Boolean = _圧力調整中
         _圧力調整中 = ((_圧力超 Or _モーメント上限超 Or _片押しR上限超)
-            ) And CtlParameter.片押し制限フラグ And Not mblnStartTraking
+            ) And CtlPara.片押し制限フラグ And Not mblnStartTraking
         If LimitOn <> _圧力調整中 Then
             RaiseEvent OneWayLimitModeChanges(_圧力調整中)
         End If

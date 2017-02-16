@@ -46,7 +46,7 @@ Public Class frmSegmentEdit
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Friend Sub btnOK_Click(sender As Object, e As EventArgs) 'Handles btnOK.Click
+    Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
         For Each i In lstChangeRow.Distinct
             Dim RingNo As Integer = DgvSegAssign("RingNo", i).Value
             Dim PtName As String = DgvSegAssign("AssemblyPtnName", i).Value
@@ -76,5 +76,7 @@ Public Class frmSegmentEdit
         DgvSegAssign.CommitEdit(DataGridViewDataErrorContexts.Commit)
     End Sub
 
+    Private Sub frmSegmentEdit_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+    End Sub
 End Class

@@ -6,7 +6,7 @@
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
-        With CtlParameter
+        With CtlPara
             nudHorMomentTrendWidth.Value = .HorMomentTrendWidth
             nudVerMomentTrendWidth.Value = .VerMomentTrendWidth
             nudHorDevDegTrendWidth.Value = .HorDevDegTrendWidth
@@ -20,9 +20,9 @@
 
     End Sub
 
-    Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
+    Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
 
-        With CtlParameter
+        With CtlPara
             .HorMomentTrendWidth = nudHorMomentTrendWidth.Value
             .VerMomentTrendWidth = nudVerMomentTrendWidth.Value
             .HorDevDegTrendWidth = nudHorDevDegTrendWidth.Value
@@ -35,23 +35,25 @@
 
         'チャートの設定
         With My.Forms.frmMain.ucnHorMomentChart
-            .StrokeWidth = CtlParameter.GraphStrokeWidth
-            .ChartHighScale = CtlParameter.HorMomentTrendWidth
+            .StrokeWidth = CtlPara.GraphStrokeWidth
+            .ChartHighScale = CtlPara.HorMomentTrendWidth
         End With
         With My.Forms.frmMain.ucnVerMomentChart
-            .StrokeWidth = CtlParameter.GraphStrokeWidth
-            .ChartHighScale = CtlParameter.VerMomentTrendWidth
+            .StrokeWidth = CtlPara.GraphStrokeWidth
+            .ChartHighScale = CtlPara.VerMomentTrendWidth
         End With
         With My.Forms.frmMain.ucnHorDevChart
-            .StrokeWidth = CtlParameter.GraphStrokeWidth
-            .ChartHighScale = CtlParameter.HorDevDegTrendWidth
+            .StrokeWidth = CtlPara.GraphStrokeWidth
+            .ChartHighScale = CtlPara.HorDevDegTrendWidth
         End With
         With My.Forms.frmMain.ucnVerDevChart
-            .StrokeWidth = CtlParameter.GraphStrokeWidth
-            .ChartHighScale = CtlParameter.VerDevDegTrendWidth
+            .StrokeWidth = CtlPara.GraphStrokeWidth
+            .ChartHighScale = CtlPara.VerDevDegTrendWidth
         End With
 
-        My.Forms.frmMain.UcnGpPvBarGraph.PresBarGraphWidt = CtlParameter.PresBarGraphWidt
+        My.Forms.frmMain.UcnGpPvBarGraph.PresBarGraphWidt = CtlPara.PresBarGraphWidt
+
+        Me.Close()
 
     End Sub
 End Class

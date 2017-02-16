@@ -484,7 +484,7 @@ Public Class clsLineMake
                 Case 1 ''直線の場合
                     mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + (mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) * Tan(.始点勾配(mint縦断ゾーン番号) * PI / 180)
                 Case 2 ''曲線の場合
-                    mdbl鉛直角軌道中心 = Arcsin((mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) / .曲率半径(mint縦断ゾーン番号) + Sin(.始点勾配(mint縦断ゾーン番号) * PI / 180)) * 180 / PI
+                    mdbl鉛直角軌道中心 = Asin((mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) / .曲率半径(mint縦断ゾーン番号) + Sin(.始点勾配(mint縦断ゾーン番号) * PI / 180)) * 180 / PI
                     mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + .曲率半径(mint縦断ゾーン番号) * (Cos(.始点勾配(mint縦断ゾーン番号) * PI / 180) - Cos(mdbl鉛直角軌道中心 * PI / 180))
                 Case Else
             End Select
@@ -550,7 +550,7 @@ Public Class clsLineMake
                 Case 2 ''曲線の場合
                     mdbl縦断半径 = .曲率半径(mint縦断ゾーン番号)
                     '                                                                                       FZv→FVz ミス？
-                    mdbl鉛直角軌道中心 = Arcsin((mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) / .曲率半径(mint縦断ゾーン番号) + Sin(.始点勾配(mint縦断ゾーン番号) * PI / 180)) * 180 / PI
+                    mdbl鉛直角軌道中心 = Asin((mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) / .曲率半径(mint縦断ゾーン番号) + Sin(.始点勾配(mint縦断ゾーン番号) * PI / 180)) * 180 / PI
                     mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + .曲率半径(mint縦断ゾーン番号) * (Cos(.始点勾配(mint縦断ゾーン番号) * PI / 180) - Cos(mdbl鉛直角軌道中心 * PI / 180))
                 Case Else
             End Select
@@ -713,36 +713,32 @@ Friend Class clsCorToDist
 
     Inherits clsLineMake
 
-    Private mdblXp As Double ''対象のX座標
-    Private mdblYp As Double ''対象のY座標
-    Private mint抽出Zone As Integer
-    Private mdbl累積距離 As Double
+    Private _Xp As Double ''対象のX座標
+    Private _Yp As Double ''対象のY座標
+    Private _抽出Zone As Integer
+    Private _累積距離 As Double
+
+    Public Sub New(xp As Double, yp As Double)
+        _Xp = xp
+        _Yp = yp
+        sbFindZone()
+    End Sub
 
     Public WriteOnly Property Xp() As Double
         Set(ByVal Value As Double)
-            mdblXp = Value
+            _Xp = Value
         End Set
     End Property
     Public WriteOnly Property Yp() As Double
         Set(ByVal Value As Double)
-            mdblYp = Value
+            _Yp = Value
         End Set
     End Property
     Public ReadOnly Property 累積距離() As Double
         Get
-            累積距離 = mdbl累積距離
+            累積距離 = _累積距離
         End Get
     End Property
-
-
-    Public Sub sbCulc()
-
-        Call sbFindZone() ''ゾーンを抽出
-
-        'Call sbCulcDistance ''累積距離の演算
-
-    End Sub
-
 
 
     Private Sub sbFindZone()
@@ -778,54 +774,54 @@ Friend Class clsCorToDist
         Dim dblL0 As Double, dblL1 As Double
         With HorPlan
 
-            dblDeltaL = Sqrt((mdblXp - .始点X座標(0)) ^ 2 + (mdblYp - .始点Y座標(0)) ^ 2)
+            dblDeltaL = Sqrt((_Xp - .始点X座標(0)) ^ 2 + (_Yp - .始点Y座標(0)) ^ 2)
 
             For intZone = 1 To HorPlan.ゾーン総数
-                If dblDeltaL > Sqrt((mdblXp - .始点X座標(intZone)) ^ 2 + (mdblYp - .始点Y座標(intZone)) ^ 2) Then
-                    dblDeltaL = Sqrt((mdblXp - .始点X座標(intZone)) ^ 2 + (mdblYp - .始点Y座標(intZone)) ^ 2)
+                If dblDeltaL > Sqrt((_Xp - .始点X座標(intZone)) ^ 2 + (_Yp - .始点Y座標(intZone)) ^ 2) Then
+                    dblDeltaL = Sqrt((_Xp - .始点X座標(intZone)) ^ 2 + (_Yp - .始点Y座標(intZone)) ^ 2)
                     intKDash = intZone
                 End If
             Next
 
             With HorPlan
-                Call sbZahyoGtoL(dblXDk_1, dblDum, mdblXp, mdblYp, .始点X座標(intKDash - 1), .始点Y座標(intKDash - 1), .始点方向角(intKDash - 1))
-                Call sbZahyoGtoL(dblXDk, dblDum, mdblXp, mdblYp, .始点X座標(intKDash), .始点Y座標(intKDash), .始点方向角(intKDash))
+                Call sbZahyoGtoL(dblXDk_1, dblDum, _Xp, _Yp, .始点X座標(intKDash - 1), .始点Y座標(intKDash - 1), .始点方向角(intKDash - 1))
+                Call sbZahyoGtoL(dblXDk, dblDum, _Xp, _Yp, .始点X座標(intKDash), .始点Y座標(intKDash), .始点方向角(intKDash))
             End With
             If dblXDk_1 * dblXDk >= 0 Then
-                mint抽出Zone = intKDash
+                _抽出Zone = intKDash
             Else
-                mint抽出Zone = intKDash - 1
+                _抽出Zone = intKDash - 1
             End If
 
             dblEp = 0.00001
 
-            Select Case mint抽出Zone
+            Select Case _抽出Zone
 
                 Case 1 ''直線-----------------------------
-                    Call sbZahyoGtoL(dblXD, dblYD, mdblXp, mdblYp, .始点X座標(mint抽出Zone), .始点Y座標(mint抽出Zone), .始点方向角(mint抽出Zone))
-                    mdbl累積距離 = .始点累積距離(mint抽出Zone) + dblXD
+                    Call sbZahyoGtoL(dblXD, dblYD, _Xp, _Yp, .始点X座標(_抽出Zone), .始点Y座標(_抽出Zone), .始点方向角(_抽出Zone))
+                    _累積距離 = .始点累積距離(_抽出Zone) + dblXD
 
                 Case 2 ''単曲線<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                    Call sbZahyoGtoL(dblXD_s, dblYD_s, mdblXp, mdblYp, .始点X座標(mint抽出Zone), .始点Y座標(mint抽出Zone), .始点方向角(mint抽出Zone))
-                    Call sbZahyoGtoL(dblXD_l, dblYD_l, mdblXp, mdblYp, .終点X座標(mint抽出Zone), .終点Y座標(mint抽出Zone), .終点方向角(mint抽出Zone))
+                    Call sbZahyoGtoL(dblXD_s, dblYD_s, _Xp, _Yp, .始点X座標(_抽出Zone), .始点Y座標(_抽出Zone), .始点方向角(_抽出Zone))
+                    Call sbZahyoGtoL(dblXD_l, dblYD_l, _Xp, _Yp, .終点X座標(_抽出Zone), .終点Y座標(_抽出Zone), .終点方向角(_抽出Zone))
                     If Abs(dblXD_s) <= dblEp Then '計測点は始点上にある（結果は始点のﾃﾞｰﾀ）
                         dblLC = 0
                     Else
                         If Abs(dblXD_l) <= dblEp Then '計測点は終点上にある（結果は終点のﾃﾞｰﾀ）
-                            dblLC = .終点累積距離(mint抽出Zone)
+                            dblLC = .終点累積距離(_抽出Zone)
                         Else '計測点はｿﾞｰﾝ内にある（始点と終点を比較し、収束計算）
                             dblL0 = 0
-                            dblL1 = .線分長(mint抽出Zone)
-                            dblR = .始点曲率半径(mint抽出Zone)
+                            dblL1 = .線分長(_抽出Zone)
+                            dblR = .始点曲率半径(_抽出Zone)
                             intLL = 0
                             Do
                                 intLL = intLL + 1 'ﾙｰﾌﾟ数ｶｳﾝﾄ
                                 dblLC = (dblL0 + dblL1) * 0.5 '次の検討位置を近い側の半分へ移動（ｽﾀｰﾄ時は始点終点間の真ん中）
                                 dblSheatC = dblLC / dblR * 180 / PI '検討位置の中心角
-                                dblAlfaC = .始点方向角(mint抽出Zone) + dblSheatC
-                                dblXc = .始点中心X座標(mint抽出Zone) + dblR * Sin(Lim180(dblAlfaC) * PI / 180)
-                                dblYc = .始点中心Y座標(mint抽出Zone) - dblR * Cos(Lim180(dblAlfaC) * PI / 180)
-                                Call sbZahyoGtoL(dblXDc, dblYDc, mdblXp, mdblYp, dblXc, dblYc, dblAlfaC)
+                                dblAlfaC = .始点方向角(_抽出Zone) + dblSheatC
+                                dblXc = .始点中心X座標(_抽出Zone) + dblR * Sin(Lim180(dblAlfaC) * PI / 180)
+                                dblYc = .始点中心Y座標(_抽出Zone) - dblR * Cos(Lim180(dblAlfaC) * PI / 180)
+                                Call sbZahyoGtoL(dblXDc, dblYDc, _Xp, _Yp, dblXc, dblYc, dblAlfaC)
 
                                 If Abs(dblXDc) <= dblEp Then '距離を検討し、きわめて近いとき
                                     Exit Do 'ここで終わり
@@ -839,25 +835,25 @@ Friend Class clsCorToDist
                         End If
                     End If
 
-                    mdbl累積距離 = .始点累積距離(mint抽出Zone) + dblLC
+                    _累積距離 = .始点累積距離(_抽出Zone) + dblLC
 
                 Case 3 ''クロソイド<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                    Call sbZahyoGtoL(dblXD_s, dblYD_s, mdblXp, mdblYp, .始点X座標(mint抽出Zone), .始点Y座標(mint抽出Zone), .始点方向角(mint抽出Zone))
-                    Call sbZahyoGtoL(dblXD_l, dblYD_l, mdblXp, mdblYp, .終点X座標(mint抽出Zone), .終点Y座標(mint抽出Zone), .終点方向角(mint抽出Zone))
-                    If .クロソイドパラメータ(mint抽出Zone) >= 0 Then
-                        dblA2 = .クロソイドパラメータ(mint抽出Zone) ^ 2
+                    Call sbZahyoGtoL(dblXD_s, dblYD_s, _Xp, _Yp, .始点X座標(_抽出Zone), .始点Y座標(_抽出Zone), .始点方向角(_抽出Zone))
+                    Call sbZahyoGtoL(dblXD_l, dblYD_l, _Xp, _Yp, .終点X座標(_抽出Zone), .終点Y座標(_抽出Zone), .終点方向角(_抽出Zone))
+                    If .クロソイドパラメータ(_抽出Zone) >= 0 Then
+                        dblA2 = .クロソイドパラメータ(_抽出Zone) ^ 2
                     Else
-                        dblA2 = -.クロソイドパラメータ(mint抽出Zone) ^ 2
+                        dblA2 = - .クロソイドパラメータ(_抽出Zone) ^ 2
                     End If
-                    If .始点曲率半径(mint抽出Zone) = 0 Then
+                    If .始点曲率半径(_抽出Zone) = 0 Then
                         dblTR0 = 0
                     Else
-                        dblTR0 = 1 / .始点曲率半径(mint抽出Zone)
+                        dblTR0 = 1 / .始点曲率半径(_抽出Zone)
                     End If
-                    If .終点曲率半径(mint抽出Zone) = 0 Then
+                    If .終点曲率半径(_抽出Zone) = 0 Then
                         dblTR0 = 0
                     Else
-                        dblTR0 = 1 / .終点曲率半径(mint抽出Zone)
+                        dblTR0 = 1 / .終点曲率半径(_抽出Zone)
                     End If
                     If Abs(dblXD_s) <= dblEp Then '計測点は始点上にある（結果は始点のﾃﾞｰﾀ）
                         dblLC = dblA2 * dblTR0 '曲線長
@@ -871,10 +867,10 @@ Friend Class clsCorToDist
                             dblTauDash1 = dblL1 * dblTR1 / 2 * 180 / PI
                             intLL = 0
 
-                            dblXdash0 = userFunctionG(dblL0, .始点曲率半径(mint抽出Zone))
-                            dblYdash0 = userFunctionF(dblL0, .始点曲率半径(mint抽出Zone))
+                            dblXdash0 = userFunctionG(dblL0, .始点曲率半径(_抽出Zone))
+                            dblYdash0 = userFunctionF(dblL0, .始点曲率半径(_抽出Zone))
 
-                            dblAlfadash = Lim180(.始点方向角(mint抽出Zone) - dblTauDash0)
+                            dblAlfadash = Lim180(.始点方向角(_抽出Zone) - dblTauDash0)
                             Do
                                 intLL = CShort(intLL + 1) 'ﾙｰﾌﾟ数ｶｳﾝﾄ
                                 dblLC = (dblL0 + dblL1) * 0.5 '次の検討位置を近い側の半分へ移動（ｽﾀｰﾄ時は始点終点間の真ん中）
@@ -886,9 +882,9 @@ Friend Class clsCorToDist
                                 dblYdash = dblYdashC - dblYdash0
                                 dblTauDashC = dblLC / dblTRc / 2 * 180 / PI
                                 dblAlfaC = Lim180(dblAlfadash + dblTauDashC)
-                                dblXc = .始点中心X座標(mint抽出Zone) + dblXdash * Cos(dblAlfadash * PI / 180) - dblYdash * Sin(dblAlfadash * PI / 180)
-                                dblYc = .始点中心Y座標(mint抽出Zone) + dblXdash * Sin(dblAlfadash * PI / 180) + dblYdash * Cos(dblAlfadash * PI / 180)
-                                Call sbZahyoGtoL(dblXDc, dblYDc, mdblXp, mdblYp, dblXc, dblYc, dblAlfaC)
+                                dblXc = .始点中心X座標(_抽出Zone) + dblXdash * Cos(dblAlfadash * PI / 180) - dblYdash * Sin(dblAlfadash * PI / 180)
+                                dblYc = .始点中心Y座標(_抽出Zone) + dblXdash * Sin(dblAlfadash * PI / 180) + dblYdash * Cos(dblAlfadash * PI / 180)
+                                Call sbZahyoGtoL(dblXDc, dblYDc, _Xp, _Yp, dblXc, dblYc, dblAlfaC)
 
                                 If Abs(dblXDc) <= dblEp Then '距離を検討し、きわめて近いとき
                                     Exit Do 'ここで終わり
@@ -905,7 +901,7 @@ Friend Class clsCorToDist
 
 
                     End If
-                    mdbl累積距離 = .始点累積距離(mint抽出Zone) + dblLC
+                    _累積距離 = .始点累積距離(_抽出Zone) + dblLC
             End Select
 
         End With

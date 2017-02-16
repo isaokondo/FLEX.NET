@@ -33,7 +33,7 @@
 
 
 
-    Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
+    Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
         With PlcIf
             .ストローク管理法 = StrokeManag.Value
             .掘進判定ストローク = StartStokeEdt.Value
@@ -42,7 +42,7 @@
             .終了判定ストローク = CloseStokeEdt.Value
             .中断判定速度 = StopJudgeSpeed.Value
         End With
-
+        Me.Close()
 
     End Sub
 

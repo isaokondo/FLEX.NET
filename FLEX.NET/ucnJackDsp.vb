@@ -260,8 +260,7 @@ Public Class ucnJackDsp
 
             ReDim GroupPvDsp(_numberGroup)
 
-            Dim i As Short
-            For i = 0 To _numberGroup - 1
+            For i As Integer = 0 To _numberGroup - 1
                 GroupPvDsp(i) = New ucnDspGpPres
                 GroupPvDsp(i).Visible = True
                 GroupPvDsp(i).Name = "GroupPvDsp" & i
@@ -518,9 +517,9 @@ Public Class ucnJackDsp
     ''' </summary>
     Public Sub DspInitBaseImg()
 
-        If IsNothing(_JackGroupPos) Or IsNothing(_faiJack) Or IsNothing(GrDgree) Or IsNothing(GroupPvDsp) Then Exit Sub
 
         '最大半径及び中心位置
+
 
         imgJackBase = New Bitmap(Me.Width, Me.Height)
 
@@ -533,8 +532,7 @@ Public Class ucnJackDsp
         FillACircle(New SolidBrush(Color.FromArgb(224, 219, 215)), g, CenterPos, MaxRadios * 0.8)
 
         'グループの区切り線
-        Dim i As Integer
-        For i = 0 To _numberJack - 1
+        For i As Integer = 0 To _numberJack - 1
             ''グループの区切り線
             If _JackGroupPos(i) <> _JackGroupPos(IIf((i + 1) = _numberJack, 0, i + 1)) Then
                 Dim St As Single = (_faiJack(i) - 360 / _numberJack / 2)

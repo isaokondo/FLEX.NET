@@ -118,6 +118,10 @@
             'グループ圧バーグラフ
             UcnGpPvBarGraph.GpFlg = .GroupFlg
             UcnGpPvBarGraph.GpPv = .GroupPv
+
+            '掘進モード／セグメントモードの表示
+            lblMachineMode.Text = IIf(.ExecMode, "掘進", "セグメント") & "モード"
+            lblMachineMode.BackColor = IIf(.ExecMode, Color.Magenta, Color.Aqua)
         End With
 
         DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
@@ -125,7 +129,7 @@
 
 
         '汎用データ表示
-        For Each wu In CtlParameter.WideUse
+        For Each wu In CtlPara.WideUse
             Dim dd As ucnDspData = Me.Controls("DspWideUse" & wu.Key)
             If dd.FieldName <> "" Then
                 dd.Value = PlcIf.EngValue(dd.FieldName)
@@ -134,7 +138,7 @@
             End If
         Next
 
-        With CtlParameter
+        With CtlPara
             '自動方向制御ON／OFF
             UcnJackDsp.FlexAutoManual = .AutoDirectionControl
             DspFlexAuto.BitStatus = .AutoDirectionControl
@@ -236,7 +240,7 @@
 
         'インスタンス作成
         InitPara = New clsInitParameter '初期値パラメータ
-        CtlParameter = New clsControlParameter  '制御パラメータ
+        CtlPara = New clsControlParameter  '制御パラメータ
         HorPlan = New clsHorPanData '平面掘進計画線
         VerPlan = New clsVerPlanData '縦断掘進計画線
         MachineSpec = New clsMachinSpec
@@ -252,6 +256,10 @@
         Reduce = New clsReducePress 'ロスゼロ減圧処理
         TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
 
+        Dim ReportTbl As New clsRingReport
+        ReportTbl.CheckRingItem()
+
+
         'ジャッキ稼働画面の初期データ
         With UcnJackDsp
             .NumberGroup = InitPara.NumberGroup
@@ -260,11 +268,11 @@
             .JackGroupPos = InitPara.JackGroupPos
             .NumberJack = InitPara.NumberJack
 
-            .FlexPointX = CtlParameter.PointX
-            .FlexPointY = CtlParameter.PointY
+            .FlexPointX = CtlPara.PointX
+            .FlexPointY = CtlPara.PointY
 
-            .FlexPointR = CtlParameter.操作強
-            .FlexPointSeater = CtlParameter.操作角
+            .FlexPointR = CtlPara.操作強
+            .FlexPointSeater = CtlPara.操作角
 
             Call .DspInitBaseImg()
         End With
@@ -281,32 +289,32 @@
 
         '水平モーメント
         With ucnHorMomentChart
-            .StrokeWidth = CtlParameter.GraphStrokeWidth
-            .ChartHighScale = CtlParameter.HorMomentTrendWidth
+            .StrokeWidth = CtlPara.GraphStrokeWidth
+            .ChartHighScale = CtlPara.HorMomentTrendWidth
             .ChartList = HorMomentData.DList
 
         End With
         '鉛直モーメント
         With ucnVerMomentChart
-            .StrokeWidth = CtlParameter.GraphStrokeWidth
-            .ChartHighScale = CtlParameter.HorMomentTrendWidth
+            .StrokeWidth = CtlPara.GraphStrokeWidth
+            .ChartHighScale = CtlPara.HorMomentTrendWidth
             ucnVerMomentChart.ChartList = VerMomentData.DList
         End With
         '水平偏角
         With ucnHorDevChart
-            .StrokeWidth = CtlParameter.GraphStrokeWidth
-            .ChartHighScale = CtlParameter.HorDevDegTrendWidth
+            .StrokeWidth = CtlPara.GraphStrokeWidth
+            .ChartHighScale = CtlPara.HorDevDegTrendWidth
             .ChartList = HorDevData.DList
         End With
         '鉛直偏角
         With ucnVerDevChart
-            .StrokeWidth = CtlParameter.GraphStrokeWidth
-            .ChartHighScale = CtlParameter.HorDevDegTrendWidth
+            .StrokeWidth = CtlPara.GraphStrokeWidth
+            .ChartHighScale = CtlPara.HorDevDegTrendWidth
             .ChartList = VerDevData.DList
         End With
 
         '
-        UcnGpPvBarGraph.PresBarGraphWidt = CtlParameter.PresBarGraphWidt
+        UcnGpPvBarGraph.PresBarGraphWidt = CtlPara.PresBarGraphWidt
 
         'フォームの大きさを画面
 
@@ -326,7 +334,7 @@
     ''' 汎用データ表示項目セット
     ''' </summary>
     Public Sub WideDataFldSet()
-        For Each wu In CtlParameter.WideUse
+        For Each wu In CtlPara.WideUse
             Dim dd As ucnDspData = Me.Controls("DspWideUse" & wu.Key)
             If wu.Value <> "" Then
                 If PlcIf.AnalogTag.TagExist(wu.Value) Then
@@ -435,10 +443,10 @@
             'TODO:ローリングの考慮なし　マシンメーカーへ出力
             '天を０度で時計回りに
             Dim angle As Single
-                angle = 90 - pca.PieceCenterAngle
-                If angle < 0 Then angle += 360
+            angle = 90 - pca.PieceCenterAngle
+            If angle < 0 Then angle += 360
 
-                PlcIf.AnalogPlcWrite(pca.AssemblyOrder & "ピースセグメント位置角度", angle)
+            PlcIf.AnalogPlcWrite(pca.AssemblyOrder & "ピースセグメント位置角度", angle)
             'End If
 
 
@@ -483,6 +491,7 @@
     End Sub
 
     Private Sub ReportOut_Click(sender As Object, e As EventArgs) Handles ReportOut.Click
+        '帳票出力
 
     End Sub
 
@@ -586,7 +595,7 @@
     ''' ポイント座標が入力され演算完了したイベント
     ''' </summary>
     Private Sub UcnJackDsp_ManualPointChange() Handles UcnJackDsp.ManualPointChange
-        With CtlParameter
+        With CtlPara
             .PointX = UcnJackDsp.FlexPointX
             .PointY = UcnJackDsp.FlexPointY
 
@@ -625,6 +634,7 @@
         Else
 
             My.Forms.frmTuningMonitor.Show()
+            My.Forms.frmTuningMonitor.TopMost = True
         End If
     End Sub
 
@@ -638,7 +648,7 @@
     ''' FLEX自動方向制御ON/OFF
     ''' </summary>
     Private Sub UcnJackDsp_FlexAutoManualChange() Handles UcnJackDsp.FlexAutoManualChange
-        CtlParameter.AutoDirectionControl = Not CtlParameter.AutoDirectionControl
+        CtlPara.AutoDirectionControl = Not CtlPara.AutoDirectionControl
     End Sub
     ''' <summary>
     ''' イベントログ更新
@@ -731,7 +741,7 @@
             '過去の掘進データ 10mm毎
             Dim rsData As Odbc.OdbcDataReader =
                 ExecuteSql($"SELECT * FROM flex掘削データ WHERE `リング番号`>=
-                '{PlcIf.RingNo - CtlParameter.LineDevStartRing}
+                '{PlcIf.RingNo - CtlPara.LineDevStartRing}
                 ' AND `リング番号`<'{PlcIf.RingNo}' AND MOD(掘進ストローク,10)=0;")
 
             Console.WriteLine()
@@ -768,7 +778,7 @@
             _VerPData.Clear()
 
             Dim Distance As Integer = 0 '掘進距離（単位mm)　リング分のセグメント幅を加算
-            For i As Integer = PlcIf.RingNo To PlcIf.RingNo + CtlParameter.LineDevLastRing
+            For i As Integer = PlcIf.RingNo To PlcIf.RingNo + CtlPara.LineDevLastRing
                 Distance += SegAsmblyData.TypeData(i).CenterWidth * 1000
             Next
             '線形
@@ -851,7 +861,7 @@
         cmbWideSelct.Visible = False
         Dim WideUse As ucnDspData = DirectCast(cmbWideSelct.Tag, ucnDspData)
         WideUse.FieldName = cmbWideSelct.SelectedItem
-        CtlParameter.WideUseUpdate(CShort(WideUse.Name.Replace("DspWideUse", "")), WideUse.FieldName)
+        CtlPara.WideUseUpdate(CShort(WideUse.Name.Replace("DspWideUse", "")), WideUse.FieldName)
         WideDataFldSet() '汎用データ・セット
     End Sub
 
@@ -865,5 +875,9 @@
 
     Private Sub 縦断ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 縦断ToolStripMenuItem.Click
         frmVerPlanData.Show()
+    End Sub
+
+    Private Sub ｌｂｌMachineMode_Click(sender As Object, e As EventArgs) Handles lblMachineMode.Click
+
     End Sub
 End Class

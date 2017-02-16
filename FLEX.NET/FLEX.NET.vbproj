@@ -148,6 +148,12 @@
     <Compile Include="frmPlanView.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmReportOut.Designer.vb">
+      <DependentUpon>frmReportOut.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportOut.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmTuningTrend.Designer.vb">
       <DependentUpon>frmTuningTrend.vb</DependentUpon>
     </Compile>
@@ -393,6 +399,9 @@
     <EmbeddedResource Include="frmPlanView.resx">
       <DependentUpon>frmPlanView.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmReportOut.resx">
+      <DependentUpon>frmReportOut.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmTuningTrend.resx">
       <DependentUpon>frmTuningTrend.vb</DependentUpon>
     </EmbeddedResource>
@@ -557,23 +566,40 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\FLEXリング報.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\point.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\FLEX_SPLASH.jpg" />
+    <None Include="Resources\FLEX_SPLASH.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ReduceStart.wav" />
     <None Include="Resources\SegmentAsem.wav" />
-    <None Include="Resources\ClosetStart.wav" />
-    <None Include="Resources\PullFInish.wav" />
-    <None Include="Resources\ReduceFinish.wav" />
-    <None Include="Resources\PullStart.wav" />
+    <None Include="Resources\ClosetStart.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\PullFInish.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\ReduceFinish.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\PullStart.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="1473bf5de9784b3e3a32fa31f3f03eb4_xxo.ico" />
-    <Content Include="Resources\ReduceFinished.mp3" />
-    <Content Include="Resources\ReduceStart.mp3" />
+    <Content Include="Resources\ReduceFinished.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ReduceStart.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

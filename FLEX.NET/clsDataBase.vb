@@ -182,7 +182,13 @@ Public Class clsTag
 
     Public ReadOnly Property TagData(FldName As String) As _tag
         Get
-            Return _TagList(tagDic(FldName))
+            Try
+                Return _TagList(tagDic(FldName))
+            Catch ex As System.Collections.Generic.KeyNotFoundException
+                MsgBox($"{FldName}がTAGに見つかりません。設定をしてください{vbCrLf}プログラムを終了します。", vbCritical)
+                Application.Exit()
+                Return Nothing
+            End Try
         End Get
     End Property
     ''' <summary>
@@ -566,6 +572,69 @@ Public Class clsHashtableRead
 
 End Class
 ''' <summary>
+''' リング報に関するDB
+''' </summary>
+Public Class clsRingReport
+    Inherits clsDataBase
+    ''' <summary>
+    ''' テーブル「flexリング報項目}のチェック
+    ''' </summary>
+    Public Sub CheckRingItem()
+        'テーブル　flex掘削データより　フィールドの存在チェック
+        Dim FldLst As Odbc.OdbcDataReader =
+            ExecuteSql("SHOW COLUMNS FROM flex掘削データ")
+        Dim i As Integer = 0
+
+        While FldLst.Read
+            '除外Field名
+            Dim ExceptFld() As String = {"リング番号", "掘進ストローク", "時間"}
+            Dim FldName As String = FldLst.Item("Field").ToString
+
+            If Not ExceptFld.Contains(FldLst.Item("Field")) Then
+                Dim ExitFld As Odbc.OdbcDataReader =
+                ExecuteSql($"SELECT * FROM flexリング報項目 WHERE 項目名='{FldName}'")
+
+                If Not ExitFld.HasRows Then
+                    Dim InsertFld As Odbc.OdbcDataReader =
+                    ExecuteSql($"INSERT INTO flexリング報項目(ID,項目名) VALUES({i},'{FldName}')")
+                Else
+                    'アナログTAGより小数点、単位を更新
+                    Dim AnaTag As Odbc.OdbcDataReader =
+                        ExecuteSql($"SELECT * FROM flexアナログtag WHERE 項目名='{FldName}'")
+                    If AnaTag.HasRows Then
+                        Dim UpFld As OdbcDataReader =
+                        ExecuteSql($"UPDATE flexリング報項目 SET 小数点位置='{AnaTag.Item("小数点位置")},単位='{AnaTag.Item("単位")}'
+                         WHERE  項目名='{FldName}'")
+                        UpFld.Close()
+                    End If
+                    AnaTag.Close()
+                End If
+                ExitFld.Close()
+                i += 1
+
+                'Dim ExitFld As Odbc.OdbcDataReader =
+                'ExecuteSql($"INSERT INTO flexリング報項目(ID,項目名) VALUES({i},{FldLst.Item("Field")}) 
+                'WHERE NOT SELECT EXISTS( SELECT * FROM flexリング報項目 WHERE 項目名='{FldLst.Item("Field")})")
+
+            End If
+
+
+        End While
+
+
+
+    End Sub
+
+
+
+
+
+
+
+End Class
+
+
+''' <summary>
 ''' テーブルの更新イベント
 ''' </summary>
 Public Class clsTableUpdateConfirm
@@ -607,10 +676,15 @@ Public Class clsTableUpdateConfirm
                     Case "flex初期パラメータ"
                         InitPara = New clsInitParameter
                     Case "flex制御パラメータ"
-                        CtlParameter.ReadParameter()
+                        CtlPara.ReadParameter()
                         My.Forms.frmMain.WideDataFldSet() '汎用データの更新
                     Case "flexセグメント組立データ"
                         SegAsmblyData.SegmentRingDataRead()
+                        '組立パターンの情報を取得
+                        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+
+                        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+
                 End Select
             End If
         Next

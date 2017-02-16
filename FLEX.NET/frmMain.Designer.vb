@@ -54,6 +54,8 @@ Partial Class frmMain
         Me.OterSetting = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripSeparator()
         Me.PlanDataView = New System.Windows.Forms.ToolStripMenuItem()
+        Me.平面ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.縦断ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SegmentEdit = New System.Windows.Forms.ToolStripMenuItem()
         Me.AssemblyProcessEdit = New System.Windows.Forms.ToolStripMenuItem()
         Me.目標ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -104,6 +106,7 @@ Partial Class frmMain
         Me.btnPieceConfirm = New System.Windows.Forms.Button()
         Me.lblNowDate = New System.Windows.Forms.Label()
         Me.cmbWideSelct = New System.Windows.Forms.ComboBox()
+        Me.lblMachineMode = New System.Windows.Forms.Label()
         Me.UcnGpPvBarGraph = New FLEX.NET.ucnGpPvBarGraph()
         Me.DspCopyStroke2 = New FLEX.NET.ucnDspDataMin2()
         Me.DspCopyStroke1 = New FLEX.NET.ucnDspDataMin2()
@@ -177,8 +180,6 @@ Partial Class frmMain
         Me.DspDirection = New FLEX.NET.ucnDspData()
         Me.DspVerDev = New FLEX.NET.ucnDspData()
         Me.DspHorDev = New FLEX.NET.ucnDspData()
-        Me.平面ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.縦断ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -365,6 +366,18 @@ Partial Class frmMain
         Me.PlanDataView.Name = "PlanDataView"
         Me.PlanDataView.Size = New System.Drawing.Size(152, 22)
         Me.PlanDataView.Text = "計画路線表示"
+        '
+        '平面ToolStripMenuItem
+        '
+        Me.平面ToolStripMenuItem.Name = "平面ToolStripMenuItem"
+        Me.平面ToolStripMenuItem.Size = New System.Drawing.Size(94, 22)
+        Me.平面ToolStripMenuItem.Text = "平面"
+        '
+        '縦断ToolStripMenuItem
+        '
+        Me.縦断ToolStripMenuItem.Name = "縦断ToolStripMenuItem"
+        Me.縦断ToolStripMenuItem.Size = New System.Drawing.Size(94, 22)
+        Me.縦断ToolStripMenuItem.Text = "縦断"
         '
         'SegmentEdit
         '
@@ -1084,6 +1097,18 @@ Partial Class frmMain
         Me.cmbWideSelct.TabIndex = 151
         Me.cmbWideSelct.Visible = False
         '
+        'lblMachineMode
+        '
+        Me.lblMachineMode.BackColor = System.Drawing.Color.HotPink
+        Me.lblMachineMode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblMachineMode.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblMachineMode.Location = New System.Drawing.Point(797, 111)
+        Me.lblMachineMode.Name = "lblMachineMode"
+        Me.lblMachineMode.Size = New System.Drawing.Size(100, 20)
+        Me.lblMachineMode.TabIndex = 152
+        Me.lblMachineMode.Text = "セグメントモード"
+        Me.lblMachineMode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'UcnGpPvBarGraph
         '
         Me.UcnGpPvBarGraph.AutoSize = True
@@ -1258,7 +1283,7 @@ Partial Class frmMain
         '
         Me.DspLeftRawStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspLeftRawStroke.DecimalPlaces = CType(0, Short)
-        Me.DspLeftRawStroke.FieldName = "左ST実"
+        Me.DspLeftRawStroke.FieldName = "左ST読"
         Me.DspLeftRawStroke.Location = New System.Drawing.Point(104, 383)
         Me.DspLeftRawStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspLeftRawStroke.Name = "DspLeftRawStroke"
@@ -2432,18 +2457,6 @@ Partial Class frmMain
         Me.DspHorDev.Value = "123.45 "
         Me.DspHorDev.ValueType = False
         '
-        '平面ToolStripMenuItem
-        '
-        Me.平面ToolStripMenuItem.Name = "平面ToolStripMenuItem"
-        Me.平面ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.平面ToolStripMenuItem.Text = "平面"
-        '
-        '縦断ToolStripMenuItem
-        '
-        Me.縦断ToolStripMenuItem.Name = "縦断ToolStripMenuItem"
-        Me.縦断ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.縦断ToolStripMenuItem.Text = "縦断"
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -2452,6 +2465,7 @@ Partial Class frmMain
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
         Me.ControlBox = False
+        Me.Controls.Add(Me.lblMachineMode)
         Me.Controls.Add(Me.cmbWideSelct)
         Me.Controls.Add(Me.UcnGpPvBarGraph)
         Me.Controls.Add(Me.DspCopyStroke2)
@@ -2552,6 +2566,11 @@ Partial Class frmMain
         Me.PerformLayout()
 
     End Sub
+
+    Private Sub ReportOut_DisplayStyleChanged(sender As Object, e As EventArgs) Handles ReportOut.DisplayStyleChanged
+
+    End Sub
+
     Friend WithEvents MenuSystem As System.Windows.Forms.MenuStrip
     Friend WithEvents ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RingNoChange As System.Windows.Forms.ToolStripMenuItem
@@ -2707,6 +2726,7 @@ Partial Class frmMain
     Friend WithEvents cmbWideSelct As ComboBox
     Friend WithEvents 平面ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 縦断ToolStripMenuItem As ToolStripMenuItem
+    Private WithEvents lblMachineMode As Label
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

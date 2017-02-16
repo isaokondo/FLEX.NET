@@ -20,7 +20,7 @@ Friend Class clsCulKijun
     Public HorKodoKijun As clsLineMake ''後胴中心
     Public NakaoreKijun As clsLineMake ''中折位置
 
-
+    Private _toStartDistance As Double ''起点から発進座標までの累積距離
 
     ''平面
     Public HorZendoKijun As clsLineMake ''前銅中心
@@ -130,6 +130,15 @@ Friend Class clsCulKijun
             Return PlcIf.Pitching - mdbl縦断基準方位
         End Get
     End Property
+    ''' <summary>
+    ''' 起点から発進座標までの累積距離
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property toStartDistance As Double
+        Get
+            Return _toStartDistance
+        End Get
+    End Property
 
 
 
@@ -164,7 +173,7 @@ Friend Class clsCulKijun
         Dim dblKodoMae As Double
         dblKodoMae = MachineSpec.HorKodoCenter - MachineSpec.HorZendoCenter
 
-        With CtlParameter
+        With CtlPara
             If PlcIf.RingNo <> 0 Then
                 Distance.現在のリング番号 = PlcIf.RingNo
                 Distance.測量ポイントリング番号 = .測量ポイントリング番号
@@ -310,7 +319,7 @@ Friend Class clsCulKijun
 
         '01/06/28 修正
         'mdbl平面基準方位 = Hoi2Hoko(mdbl平面計画方位 + PlcIf.水平入力補正値 + clsPlanLine.HorPlan.X軸方位角)
-        mdbl平面基準方位 = (mdbl平面計画方位 + CtlParameter.水平入力補正値 + HorPlan.X軸方位角)
+        mdbl平面基準方位 = (mdbl平面計画方位 + CtlPara.水平入力補正値 + HorPlan.X軸方位角)
         mdbl平面旋回中心 = HorSentanKijun.掘進累積距離 - HorZendoKijun.掘進累積距離
 
 
@@ -381,7 +390,7 @@ Friend Class clsCulKijun
                     mdbl縦断計画方位 = .基準方位
                     mdbl縦断中折角度 = VerNakaCul.中折角度
                     ''補正値の換算
-                    mdbl縦断基準方位 = .基準方位 + CtlParameter.鉛直入力補正値
+                    mdbl縦断基準方位 = .基準方位 + CtlPara.鉛直入力補正値
                 End With
 
             Else
@@ -411,7 +420,7 @@ Friend Class clsCulKijun
             mdbl縦断中折角度 = 0
 
         End If
-        mdbl縦断基準方位 = mdbl縦断計画方位 + CtlParameter.鉛直入力補正値
+        mdbl縦断基準方位 = mdbl縦断計画方位 + CtlPara.鉛直入力補正値
         mdbl縦断旋回中心 = VerSentanKijun.掘進累積距離 - VerZendoKijun.掘進累積距離
 
     End Sub
@@ -462,7 +471,7 @@ Friend Class clsCulKijun
 
 
 
-    'UPGRADE_NOTE: Class_Initialize は Class_Initialize_Renamed にアップグレードされました。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"' をクリックしてください。
+
     Private Sub Class_Initialize_Renamed()
 
         Distance = New clsCulcDistance
@@ -471,14 +480,18 @@ Friend Class clsCulKijun
         With HorPlan
             StartKijun.掘進累積距離 = System.Math.Sqrt((.発進X座標 - .起点X座標) ^ 2 + (.発進Y座標 - .起点Y座標) ^ 2)
 
-
         End With
-        'Debug.Print StartKijun.平面ゾーン掘進距離
 
     End Sub
     Public Sub New()
         MyBase.New()
         Class_Initialize_Renamed()
+        '起点から発進座標までの累積距離を求める
+        ''発進座標までの累積距離を演算
+        Dim StartDist As New clsCorToDist(HorPlan.発進X座標, HorPlan.発進Y座標)
+
+        _toStartDistance = StartDist.累積距離
+
     End Sub
 
     Private Function fnGetKodoCenter() As Double

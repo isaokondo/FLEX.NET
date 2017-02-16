@@ -32,6 +32,9 @@ Public Class clsPlcIf
 
     Private _JackStatus() As Short      ''ジャッキのステータス
 
+    Private _execMode As Boolean    'マシン掘進モード
+    Private _segmentMode As Boolean 'マシンセグメントモード
+
     Private _flexControlOn As Boolean         ''FLEX制御ON
     '    Private _autoDirectionContorolFLG As Boolean ''自動方向制御フラグ
     Private _contorolModeFLG As Boolean ''制御モードフラグ
@@ -397,6 +400,25 @@ Public Class clsPlcIf
     Public ReadOnly Property GyiroError As Boolean
         Get
             Return _gyiroError
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 掘進モード
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ExecMode As Boolean
+        Get
+            Return _execMode
+        End Get
+    End Property
+    ''' <summary>
+    ''' セグメントモード
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property SegmentMode As Boolean
+        Get
+            Return _segmentMode
         End Get
     End Property
     ''' <summary>
@@ -768,7 +790,7 @@ Public Class clsPlcIf
 
                 _jkPress = _EngValue("ジャッキ圧力")
 
-                _FilterJkPress = _jkPress + CtlParameter.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
+                _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
 
                 _nakaoreLR = _EngValue("中折左右角")
                 _nakaoreTB = _EngValue("中折上下角")
@@ -897,6 +919,11 @@ Public Class clsPlcIf
                 'FLEXON（圧力制御中)
                 _flexControlOn = bit(DigtalTag.TagData("圧力制御").OffsetAddress)
                 _gyiroError = bit(DigtalTag.TagData("ジャイロ異常").OffsetAddress)
+
+                '掘進モード、セグメントモード 
+                _execMode = bit(DigtalTag.TagData("掘進モード").OffsetAddress)
+                _segmentMode = bit(DigtalTag.TagData("セグメントモード").OffsetAddress)
+
 
                 Dim tmp As Boolean
                 '同時施工モード
@@ -1166,10 +1193,10 @@ Public Class clsPlcIf
         Dim intPressWrData(InitPara.NumberGroup - 1) As Short
         Dim intPressWrFlg(InitPara.NumberGroup - 1) As Short
         For i As Short = 0 To InitPara.NumberGroup - 1
-            If CtlParameter.最大全開出力時の目標圧力 <> 0 Then
+            If CtlPara.最大全開出力時の目標圧力 <> 0 Then
                 '' PLCに0-4000でSVを出力
 
-                intPressWrData(i) = Int(sngPres(i) / CtlParameter.最大全開出力時の目標圧力 * 4000)
+                intPressWrData(i) = Int(sngPres(i) / CtlPara.最大全開出力時の目標圧力 * 4000)
 
             End If
 

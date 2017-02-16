@@ -19,7 +19,7 @@
     End Sub
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click, btnCLose.Click
-        With CtlParameter
+        With CtlPara
             .測量ポイントリング番号 = ConfirmRingNo.Value
             .測量ポイント総距離 = TipDistance.Value
 
@@ -42,7 +42,7 @@
     Private Sub frmCorrectionValueManagement_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
 
-        With CtlParameter
+        With CtlPara
             ConfirmRingNo.Value = .測量ポイントリング番号
             TipDistance.Value = .測量ポイント総距離
             'PuchUpStroke.Value=.

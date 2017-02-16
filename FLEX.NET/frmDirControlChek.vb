@@ -66,8 +66,8 @@ Public Class frmDirControlChek
         lblR.Text = DivCul.操作強.ToString("F3")
         lblTheater.Text = DivCul.操作角.ToString("F2")
 
-        lblPointX.Text = CtlParameter.PointX.ToString("F5")
-        lblPointY.Text = CtlParameter.PointY.ToString("F5")
+        lblPointX.Text = CtlPara.PointX.ToString("F5")
+        lblPointY.Text = CtlPara.PointY.ToString("F5")
 
 
         'lblRealJackPress.Text = PlcIf.JkPress.ToString("F1")

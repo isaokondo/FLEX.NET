@@ -17,9 +17,9 @@ Public Class frmAssemblyProcessEdit
 
     End Sub
 
-    Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
+    'Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
 
-    End Sub
+    'End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
 

@@ -5,7 +5,7 @@
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
         'TODO:ダイレクト指令制御の取込
-        With CtlParameter
+        With CtlPara
             DirectDirectionControl.rdbtnValue = .片押し制限フラグ
             PressPermitValue.Value = .圧力許容値
             MomentPermitValue.Value = .ジャッキモーメント上限値
@@ -17,8 +17,8 @@
 
     End Sub
 
-    Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
-        With CtlParameter
+    Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
+        With CtlPara
             .片押し制限フラグ = DirectDirectionControl.rdbtnValue
             .圧力許容値 = PressPermitValue.Value
             .ジャッキモーメント上限値 = MomentPermitValue.Value

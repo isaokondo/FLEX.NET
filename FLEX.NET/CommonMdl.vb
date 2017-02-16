@@ -33,10 +33,6 @@ Module CommonMdl
     Public Const c前回値保持 As Short = 1
     Public Const c減圧前 As Short = 2
 
-    'Public Const cMAX_Ring As Short = 10000
-
-    ''04/08/11 仮リング対応
-    'Public Const cStart_Ring As Short = -10
 
     ''掘進ステータス定数
     Public Const cTaiki As Short = 1 ''待機中
@@ -47,21 +43,6 @@ Module CommonMdl
     Public gdblToStartDistance As Double ''起点から発進座標までの累積距離
 
 
-    Public Function Arcsin(ByRef x As Double) As Double
-        ''アークサイン
-
-        If x <= -1 Then
-            Arcsin = -PI / 2
-            Exit Function
-        End If
-        If x >= 1 Then
-            Arcsin = PI / 2
-            Exit Function
-        End If
-
-        Arcsin = Atan(x / Sqrt(-x * x + 1))
-
-    End Function
     ''' <summary>
     ''' 左回りを右回りに変換し、値を０～３６０に調整
     ''' </summary>
@@ -132,33 +113,19 @@ Module CommonMdl
 
     End Function
 
-
+    ''' <summary>
+    ''' 限りなき小さい値はゼロにする
+    ''' </summary>
+    ''' <param name="vData"></param>
+    ''' <returns>実数判定用幅ΔCの範囲内の値の時は真</returns>
     Public Function fnNearZero(ByVal vData As Double) As Boolean
-        ' @(f)
-        '
-        ' 機能      :限りなき小さい値はゼロにする
-        '
-        '
-        ' 返り値    :ゼロかどうか？
-        ' 　　　    :
-        '
-        ' 機能説明  :実数判定用幅ΔCの範囲内の値の時は真
-        '
-        ' 備考      :
-
-
         Const cDeltaC As Double = 0.0001
-
-        If vData >= -cDeltaC And vData <= cDeltaC Then
-            fnNearZero = True
-        Else
-            fnNearZero = False
-        End If
-
-
-
-
-
+        Return vData >= -cDeltaC And vData <= cDeltaC
+        'If vData >= -cDeltaC And vData <= cDeltaC Then
+        '    fnNearZero = True
+        'Else
+        '    fnNearZero = False
+        'End If
     End Function
 
 

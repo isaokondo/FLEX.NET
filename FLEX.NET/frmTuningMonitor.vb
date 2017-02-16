@@ -12,7 +12,7 @@
         For i As Short = 0 To InitPara.NumberGroup - 1
             GpData(i) = New ucnTuningComp
             GpData(i).GpNo = i + 1
-            GpData(i).PressScale = CtlParameter.PresBarGraphWidt
+            GpData(i).PressScale = CtlPara.PresBarGraphWidt
             GpData(i).Location = New Point(0, GpData(i).Height * i)
             picDsp.Controls.Add(GpData(i))
         Next
@@ -58,5 +58,17 @@
     Private Sub AlwaysTopMost_Click(sender As Object, e As EventArgs) Handles AlwaysTopMost.Click
         AlwaysTopMost.Checked = Not AlwaysTopMost.Checked
         Me.TopMost = AlwaysTopMost.Checked
+    End Sub
+
+    Private Sub frmTuningMonitor_MenuComplete(sender As Object, e As EventArgs) Handles Me.MenuComplete
+
+    End Sub
+
+    Private Sub frmTuningMonitor_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+
+    End Sub
+
+    Private Sub frmTuningMonitor_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+
     End Sub
 End Class

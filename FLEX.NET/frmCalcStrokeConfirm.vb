@@ -26,8 +26,8 @@ Public Class frmCalcStrokeConfirm
         For i As Short = 0 To DgvJackStroke.Rows.Count - 1
             Dim JkNo As Short = DgvJackStroke.Rows(i).Cells(JackNo.Index).Value '計測ジャッキ番号
             DgvJackStroke.Rows(i).Cells(RealStrokeLen.Index).Value = PlcIf.MesureJackStroke(JkNo) '計測実ストローク
-            DgvJackStroke.Rows(i).Cells(CalcLogcalStroke.Index).Value = CalcStroke.MesureCalcLOgocalStroke(JkNo)
-            DgvJackStroke.Rows(i).Cells(StartStroke.Index).Value = CtlParameter.StartJackStroke(JkNo)
+            DgvJackStroke.Rows(i).Cells(CalcLogcalStroke.Index).Value = CalcStroke.MesureCalcLogicalStroke(JkNo)
+            DgvJackStroke.Rows(i).Cells(StartStroke.Index).Value = CtlPara.StartJackStroke(JkNo)
             DgvJackStroke.Rows(i).Cells(JackSpeed.Index).Value = PlcIf.MesureJackSpeed(JkNo)    '計測ジャッキスピード
             DgvJackStroke.Rows(i).Cells(CalcStrokeLen.Index).Value = CalcStroke.MesureCalcJackStroke(JkNo)  '計算計測ジャッキストローク
             DgvJackStroke.Rows(i).Cells(Angle.Index).Value = InitPara.MesureJackAngle(JkNo) 'ジャッキ取付角度
