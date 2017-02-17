@@ -581,47 +581,48 @@ Public Class clsRingReport
     ''' </summary>
     Public Sub CheckRingItem()
         'テーブル　flex掘削データより　フィールドの存在チェック
-        Dim FldLst As Odbc.OdbcDataReader =
+        Dim FldLstRd As Odbc.OdbcDataReader =
             ExecuteSql("SHOW COLUMNS FROM flex掘削データ")
         Dim i As Integer = 0
 
-        While FldLst.Read
+        Dim FldLst As New List(Of String)
+        While FldLstRd.Read
+            FldLst.Add(FldLstRd.Item("Field"))
+        End While
+        FldLstRd.Close()
+
+
+        For Each fName In FldLst
             '除外Field名
             Dim ExceptFld() As String = {"リング番号", "掘進ストローク", "時間"}
-            Dim FldName As String = FldLst.Item("Field").ToString
+            'Dim FldName As String = FldLstRd.Item("Field").ToString
 
-            If Not ExceptFld.Contains(FldLst.Item("Field")) Then
+            If Not ExceptFld.Contains(fName) Then
                 Dim ExitFld As Odbc.OdbcDataReader =
-                ExecuteSql($"SELECT * FROM flexリング報項目 WHERE 項目名='{FldName}'")
+                ExecuteSql($"SELECT * FROM flexリング報項目 WHERE 項目名='{fName}'")
 
                 If Not ExitFld.HasRows Then
                     Dim InsertFld As Odbc.OdbcDataReader =
-                    ExecuteSql($"INSERT INTO flexリング報項目(ID,項目名) VALUES({i},'{FldName}')")
-                Else
-                    'アナログTAGより小数点、単位を更新
-                    Dim AnaTag As Odbc.OdbcDataReader =
-                        ExecuteSql($"SELECT * FROM flexアナログtag WHERE 項目名='{FldName}'")
-                    If AnaTag.HasRows Then
-                        Dim UpFld As OdbcDataReader =
-                        ExecuteSql($"UPDATE flexリング報項目 SET 小数点位置='{AnaTag.Item("小数点位置")},単位='{AnaTag.Item("単位")}'
-                         WHERE  項目名='{FldName}'")
-                        UpFld.Close()
-                    End If
-                    AnaTag.Close()
+                    ExecuteSql($"INSERT INTO flexリング報項目(ID,項目名) VALUES({i},'{fName}')")
+                    InsertFld.Close()
                 End If
                 ExitFld.Close()
+
+                'アナログTAGより小数点、単位を更新
+                Dim AnaTag As Odbc.OdbcDataReader =
+                        ExecuteSql($"SELECT * FROM flexアナログtag WHERE 項目名='{fName}'")
+                If AnaTag.HasRows Then
+                    Dim UpFld As OdbcDataReader =
+                        ExecuteSql($"UPDATE flexリング報項目 SET 小数点位置='{AnaTag.Item("小数点位置")}',単位='{AnaTag.Item("単位")}'
+                         WHERE  項目名='{fName}'")
+                    UpFld.Close()
+                End If
+                AnaTag.Close()
                 i += 1
-
-                'Dim ExitFld As Odbc.OdbcDataReader =
-                'ExecuteSql($"INSERT INTO flexリング報項目(ID,項目名) VALUES({i},{FldLst.Item("Field")}) 
-                'WHERE NOT SELECT EXISTS( SELECT * FROM flexリング報項目 WHERE 項目名='{FldLst.Item("Field")})")
-
             End If
-
-
-        End While
-
-
+        Next
+        'TODO:ERROR 1040 (HY000): Too many connectionsが発生するので
+        'mysql> set global max_connections=500;を設定する必要がある！初期で自動で設定できないか！
 
     End Sub
 

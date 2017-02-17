@@ -48,10 +48,10 @@ Friend Class clsDataSave
                 Data(ColumnList.IndexOf("時間")) = Now.ToString
 
                 For i As Short = 0 To InitPara.NumberGroup - 1
-                    Data(ColumnList.IndexOf("ｸﾞﾙｰﾌﾟ" & (i + 1) & "圧力")) = .GroupPv(i).ToString
-                    Data(ColumnList.IndexOf("ｸﾞﾙｰﾌﾟ" & (i + 1) & "指令値")) = .GroupMV(i).ToString
-                    Data(ColumnList.IndexOf("ｸﾞﾙｰﾌﾟ" & (i + 1) & "制御指令フラグ")) = .GroupFlg(i).ToString
-                    Data(ColumnList.IndexOf("ｸﾞﾙｰﾌﾟ" & (i + 1) & "圧力分担値")) = .GroupSV(i).ToString
+                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "圧力")) = .GroupPv(i).ToString
+                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "MV")) = .GroupMV(i).ToString
+                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "制御フラグ")) = .GroupFlg(i).ToString
+                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "SV")) = .GroupSV(i).ToString
                 Next
 
                 For i As Short = 0 To InitPara.NumberJack - 1

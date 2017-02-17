@@ -257,7 +257,7 @@
         TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
 
         Dim ReportTbl As New clsRingReport
-        ReportTbl.CheckRingItem()
+        '        ReportTbl.CheckRingItem()
 
 
         'ジャッキ稼働画面の初期データ
@@ -492,6 +492,7 @@
 
     Private Sub ReportOut_Click(sender As Object, e As EventArgs) Handles ReportOut.Click
         '帳票出力
+        frmReportOut.Show()
 
     End Sub
 
