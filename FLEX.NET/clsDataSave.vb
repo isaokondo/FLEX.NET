@@ -41,6 +41,7 @@ Friend Class clsDataSave
         Dim Data(ColumnList.Count - 1) As String
 
         Try
+            'PLCからの読込
             With PlcIf
 
                 Data(ColumnList.IndexOf("リング番号")) = .RingNo.ToString
@@ -99,9 +100,6 @@ Friend Class clsDataSave
                 Data(ColumnList.IndexOf("同時施工モード")) = IIf(.LosZeroMode, 1, 0)
                 Data(ColumnList.IndexOf("同時施工可")) = IIf(.LosZeroEnable, 1, 0)
                 Data(ColumnList.IndexOf("ジャイロ異常")) = IIf(.GyiroError, 1, 0)
-
-
-
 
             End With
 
@@ -220,10 +218,23 @@ Friend Class clsDataSave
             Data(ColumnList.IndexOf("待機時間")) = ElapsedTime.WatingTime
             Data(ColumnList.IndexOf("サイクル時間")) = ElapsedTime.CycleTime
 
+            'コラムに入力されてない項目の抽出
+            Dim NothingLst As New List(Of Integer)
+            For i As Short = 0 To Data.Count - 1
+                If Data(i) Is Nothing Then
+                    NothingLst.Add(i)
+                End If
+            Next
+            'アナログTAGにある項目を入れる
+            For Each nlst In NothingLst
+                If PlcIf.EngValue.ContainsKey(ColumnList(nlst)) Then
+                    'tagデータより小数点位置を取得
+                    Dim DigLoc As Short =
+                        PlcIf.AnalogTag.TagData(ColumnList(nlst)).DigitLoc
+                    Data(nlst) = PlcIf.EngValue(ColumnList(nlst)).ToString($"F{DigLoc}")
 
-
-
-
+                End If
+            Next
             Return "'" & String.Join("','", Data) & "'"
 
         Catch ex As Exception

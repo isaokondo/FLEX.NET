@@ -79,4 +79,8 @@ Public Class frmSegmentEdit
     Private Sub frmSegmentEdit_Load(sender As Object, e As EventArgs) Handles Me.Load
 
     End Sub
+
+    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
+
+    End Sub
 End Class

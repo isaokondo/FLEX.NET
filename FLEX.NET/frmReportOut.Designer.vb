@@ -28,14 +28,14 @@ Partial Class frmReportOut
         Me.cmbRingSel = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DgvReportItemSet = New System.Windows.Forms.DataGridView()
+        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PrintOutItem = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.gpxPtnSelect = New System.Windows.Forms.GroupBox()
         Me.rtnPt3 = New System.Windows.Forms.RadioButton()
         Me.rtnPt2 = New System.Windows.Forms.RadioButton()
         Me.rtnPt1 = New System.Windows.Forms.RadioButton()
         Me.btnPrintOut = New System.Windows.Forms.Button()
         Me.btnFileSave = New System.Windows.Forms.Button()
-        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PrintOutItem = New System.Windows.Forms.DataGridViewComboBoxColumn()
         CType(Me.DgvReportItemSet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gpxPtnSelect.SuspendLayout()
         Me.SuspendLayout()
@@ -99,6 +99,24 @@ Partial Class frmReportOut
         Me.DgvReportItemSet.Size = New System.Drawing.Size(436, 402)
         Me.DgvReportItemSet.TabIndex = 19
         '
+        'ID
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.ID.DefaultCellStyle = DataGridViewCellStyle2
+        Me.ID.Frozen = True
+        Me.ID.HeaderText = "No"
+        Me.ID.Name = "ID"
+        Me.ID.ReadOnly = True
+        '
+        'PrintOutItem
+        '
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.PrintOutItem.DefaultCellStyle = DataGridViewCellStyle3
+        Me.PrintOutItem.HeaderText = "項目名称"
+        Me.PrintOutItem.Name = "PrintOutItem"
+        Me.PrintOutItem.Width = 300
+        '
         'gpxPtnSelect
         '
         Me.gpxPtnSelect.Controls.Add(Me.rtnPt3)
@@ -128,26 +146,26 @@ Partial Class frmReportOut
         'rtnPt2
         '
         Me.rtnPt2.AutoSize = True
-        Me.rtnPt2.Checked = True
         Me.rtnPt2.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.rtnPt2.ForeColor = System.Drawing.Color.White
         Me.rtnPt2.Location = New System.Drawing.Point(32, 54)
         Me.rtnPt2.Name = "rtnPt2"
         Me.rtnPt2.Size = New System.Drawing.Size(101, 23)
         Me.rtnPt2.TabIndex = 22
-        Me.rtnPt2.TabStop = True
         Me.rtnPt2.Text = "パターン2"
         Me.rtnPt2.UseVisualStyleBackColor = True
         '
         'rtnPt1
         '
         Me.rtnPt1.AutoSize = True
+        Me.rtnPt1.Checked = True
         Me.rtnPt1.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.rtnPt1.ForeColor = System.Drawing.Color.White
         Me.rtnPt1.Location = New System.Drawing.Point(32, 25)
         Me.rtnPt1.Name = "rtnPt1"
         Me.rtnPt1.Size = New System.Drawing.Size(101, 23)
         Me.rtnPt1.TabIndex = 21
+        Me.rtnPt1.TabStop = True
         Me.rtnPt1.Text = "パターン1"
         Me.rtnPt1.UseVisualStyleBackColor = True
         '
@@ -174,24 +192,6 @@ Partial Class frmReportOut
         Me.btnFileSave.TabIndex = 23
         Me.btnFileSave.Text = "ファイル保存"
         Me.btnFileSave.UseVisualStyleBackColor = False
-        '
-        'ID
-        '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.ID.DefaultCellStyle = DataGridViewCellStyle2
-        Me.ID.Frozen = True
-        Me.ID.HeaderText = "No"
-        Me.ID.Name = "ID"
-        Me.ID.ReadOnly = True
-        '
-        'PrintOutItem
-        '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.PrintOutItem.DefaultCellStyle = DataGridViewCellStyle3
-        Me.PrintOutItem.HeaderText = "項目名称"
-        Me.PrintOutItem.Name = "PrintOutItem"
-        Me.PrintOutItem.Width = 300
         '
         'frmReportOut
         '

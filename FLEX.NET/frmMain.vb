@@ -7,6 +7,11 @@
 
     Private DspGp() As ucnDspGpPres 'グループ圧PV数値表示用
     Private BlinkFlg As Boolean '点滅フラグ
+
+
+
+
+
     'Private WideUse As New List(Of ucnDspData) '汎用データ表示用
     'Private WideUseDsp() As ucnDspData
     ''' <summary>
@@ -881,4 +886,47 @@
     Private Sub ｌｂｌMachineMode_Click(sender As Object, e As EventArgs) Handles lblMachineMode.Click
 
     End Sub
+
+
+    ''' <summary>
+    ''' 閉じるボタンを無効　Win32 APIによる方法
+    ''' </summary>
+    ''' <param name="hWnd"></param>
+    ''' <param name="bRevert"></param>
+    ''' <returns></returns>
+    <System.Runtime.InteropServices.DllImport("user32.dll")>
+    Shared Function GetSystemMenu(ByVal hWnd As IntPtr,
+        ByVal bRevert As Boolean) As IntPtr
+    End Function
+
+    <System.Runtime.InteropServices.DllImport("user32.dll")>
+    Shared Function GetMenuItemCount(ByVal hMenu As IntPtr) As Integer
+    End Function
+
+    <System.Runtime.InteropServices.DllImport("user32.dll")>
+    Shared Function DrawMenuBar(ByVal hWnd As IntPtr) As Boolean
+    End Function
+
+    <System.Runtime.InteropServices.DllImport("user32.dll")>
+    Shared Function RemoveMenu(ByVal hMenu As IntPtr,
+        ByVal uPosition As Integer,
+        ByVal uFlags As Integer) As Boolean
+    End Function
+
+    Protected Overrides Sub OnLoad(ByVal e As EventArgs)
+        MyBase.OnLoad(e)
+
+        Const MF_BYPOSITION As Int32 = &H400
+        Const MF_REMOVE As Int32 = &H1000
+
+        Dim menu As IntPtr = GetSystemMenu(Me.Handle, False)
+        Dim menuCount As Integer = GetMenuItemCount(menu)
+        If menuCount > 1 Then
+            'メニューの「閉じる」とセパレータを削除
+            RemoveMenu(menu, menuCount - 1, MF_BYPOSITION Or MF_REMOVE)
+            RemoveMenu(menu, menuCount - 2, MF_BYPOSITION Or MF_REMOVE)
+            DrawMenuBar(Me.Handle)
+        End If
+    End Sub
+
 End Class
