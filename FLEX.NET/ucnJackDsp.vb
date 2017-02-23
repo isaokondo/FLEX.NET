@@ -429,6 +429,7 @@ Public Class ucnJackDsp
             DspCopy()
 
             DspGpPvImg()
+            Debug.WriteLine("ucnJackDsp_Paint" & Now)
         End If
 
 

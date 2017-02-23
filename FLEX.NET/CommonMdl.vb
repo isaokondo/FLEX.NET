@@ -130,13 +130,17 @@ Module CommonMdl
 
 
 
-
-    Public Function fnDegToPermili(ByRef dblDeg As Double) As Double
+    ''' <summary>
+    ''' ディグリーをパーミリへ変換
+    ''' </summary>
+    ''' <param name="dblDeg"></param>
+    ''' <returns></returns>
+    Public Function DegToPermili(ByRef dblDeg As Double) As Double
         ' @(f)
         '
         ' 機能      :単位の変換
         '
-        ' 機能説明  :ディグリーをパーミリへ変換
+        ' 機能説明  :
         '
         ' 引数      :
         '
@@ -147,8 +151,12 @@ Module CommonMdl
 
     End Function
 
-
-    Public Function fnPermiliToDeg(ByRef dblPermili As Double) As Double
+    ''' <summary>
+    ''' パーミリをディグリーへ変換
+    ''' </summary>
+    ''' <param name="dblPermili"></param>
+    ''' <returns></returns>
+    Public Function PermiliToDeg(ByRef dblPermili As Double) As Double
         ' @(f)
         '
         ' 機能      :単位の変換

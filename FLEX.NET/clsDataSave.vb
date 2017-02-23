@@ -49,10 +49,10 @@ Friend Class clsDataSave
                 Data(ColumnList.IndexOf("時間")) = Now.ToString
 
                 For i As Short = 0 To InitPara.NumberGroup - 1
-                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "圧力")) = .GroupPv(i).ToString
-                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "MV")) = .GroupMV(i).ToString
+                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "圧力")) = .GroupPv(i).ToString("F1")
+                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "MV")) = .GroupMV(i).ToString("F1")
                     Data(ColumnList.IndexOf("グループ" & (i + 1) & "制御フラグ")) = .GroupFlg(i).ToString
-                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "SV")) = .GroupSV(i).ToString
+                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "SV")) = .GroupSV(i).ToString("F1")
                 Next
 
                 For i As Short = 0 To InitPara.NumberJack - 1
@@ -155,8 +155,8 @@ Friend Class clsDataSave
 
             With CtlPara
 
-                Data(ColumnList.IndexOf("力点Ｘ")) = .PointX.ToString
-                Data(ColumnList.IndexOf("力点Ｙ")) = .PointY.ToString
+                Data(ColumnList.IndexOf("力点Ｘ")) = .PointX.ToString("F3")
+                Data(ColumnList.IndexOf("力点Ｙ")) = .PointY.ToString("F3")
 
                 Data(ColumnList.IndexOf("片押しγ")) = .操作強.ToString("F4")
                 Data(ColumnList.IndexOf("方向θ")) = .操作角.ToString("F4")

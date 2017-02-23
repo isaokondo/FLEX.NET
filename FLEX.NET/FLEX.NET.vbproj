@@ -604,6 +604,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="1473bf5de9784b3e3a32fa31f3f03eb4_xxo.ico" />
+    <Content Include="Resources\excelprt.vbs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\ReduceFinished.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

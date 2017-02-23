@@ -4,7 +4,6 @@ Public Class frmReportOut
 
     Private RprDB As New clsReportDb
 
-
     ''' <summary>
     ''' 印字項目変更時
     ''' </summary>
@@ -50,6 +49,9 @@ Public Class frmReportOut
             AddHandler rdBtn.Click, AddressOf SelectFldSetPtn
         Next
 
+        RprDB.RingRptPath =
+            $"{System.AppDomain.CurrentDomain.BaseDirectory}Resources\FLEXリング報.xlsx"
+
     End Sub
 
     ''' <summary>
@@ -94,21 +96,67 @@ Public Class frmReportOut
 
 
 
-
+    ''' <summary>
+    ''' リング報ファイル保存
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btnFileSave_Click(sender As Object, e As EventArgs) Handles btnFileSave.Click
-        Using ReportXml As New ClosedXML.Excel.XLWorkbook("FLEXリング報.xlsx", XLEventTracking.Disabled)
+        '選択されたリング番号を取得
+        Dim RingNo As Integer = RprDB.SelectRingNo(cmbRingSel.SelectedIndex)
 
-            Dim sheet As ClosedXML.Excel.IXLWorksheet = ReportXml.Worksheet("FLEX掘進リング報")
-            'シートにデータ書き込み
-            Dim RingNo As Integer = RprDB.SelectRingNo(cmbRingSel.SelectedIndex)
-            RprDB.ReportSheetWrite(sheet, RingNo, PtnSelNo)
+        '名前をつけて保存のダイアログ表示
+        Dim sfd As New SaveFileDialog
+
+        sfd.FileName = $"RingReport_Ptn{PtnSelNo()}_Ring{RingNo}.xlsx"
+        sfd.InitialDirectory = My.Settings.ReportFolder
+        sfd.Filter = "EXCELファイル|*.xlsx"
+        sfd.Title = "保存先のファイルを選択してください"
+        'ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+        sfd.RestoreDirectory = True
+
+        'ダイアログを表示する
+        If sfd.ShowDialog() = DialogResult.OK Then
+            'OKボタンがクリックされたとき、選択されたファイル名を表示する
+            'シートにデータ書き込み,保存する
+
+            RprDB.ReportSheetWrite(RingNo, PtnSelNo).SaveAs(sfd.FileName)
+
+            My.Settings.ReportFolder = System.IO.Path.GetDirectoryName(sfd.FileName)
+
+        End If
+
+    End Sub
+    ''' <summary>
+    '''リング報印刷
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnPrintOut_Click(sender As Object, e As EventArgs) Handles btnPrintOut.Click
+        'VB.net でエクセルを印刷するとバージョンの違いで
+        '他の環境のPCだとエラーになる可能でしがあるので
+        'VBSで実行する
+        '選択されたリング番号を取得
+        Dim RingNo As Integer = RprDB.SelectRingNo(cmbRingSel.SelectedIndex)
+        'テンポラリファイル名
+        Dim TmpPath As String =
+            $"{AppDomain.CurrentDomain.BaseDirectory}tmp\RingReport_Ptn{PtnSelNo()}_Ring{RingNo}_{Now.ToString("yyyymmddhhmmssff")}.xlsx"
+
+        'シートにデータ書き込み
+        'テンポラリファイルにリング報保存
+        RprDB.ReportSheetWrite(RingNo, PtnSelNo).SaveAs(TmpPath)
 
 
-            ReportXml.SaveAs($"report\RingReport_Ptn{PtnSelNo()}_Ring{RingNo}.xlsx")
+        '保存したエクセル（テンポラリファイル)を印刷　VBS経由で
+        Dim psi As New ProcessStartInfo("WScript.exe")
+        psi.Arguments =
+            $"{AppDomain.CurrentDomain.BaseDirectory}Resources\excelprt.vbs {TmpPath}"
 
-        End Using
-
-
+        Dim job As Process = Process.Start(psi) '("excelprt.vbs", TmpPath)
+        job.WaitForExit()
+        If job.ExitCode <> 0 Then
+            MsgBox("リング報印刷に失敗しました。", vbCritical)
+        End If
 
 
 
@@ -120,15 +168,16 @@ Public Class frmReportOut
 
 
 
-
-
-
-
-
-
+    ''' <summary>
+    ''' リング報関連のデータベース処理クラス
+    ''' </summary>
     Private Class clsReportDb
         Inherits clsDataBase
 
+        ''' <summary>
+        ''' リング報のフルパス
+        ''' </summary>
+        Public Property RingRptPath As String
 
         ''' <summary>
         ''' リング報行数
@@ -185,16 +234,22 @@ Public Class frmReportOut
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="sheet">書き込むシート</param>
         ''' <param name="RingNo">リング番号</param>
-        Public Sub ReportSheetWrite(sheet As IXLWorksheet, RingNo As Integer, PtNo As Short)
+        Public Function ReportSheetWrite(RingNo As Integer, PtNo As Short) As ClosedXML.Excel.XLWorkbook
+
+            Dim ReportXml As New ClosedXML.Excel.XLWorkbook(_RingRptPath, XLEventTracking.Disabled)
+
+            Dim sheet As ClosedXML.Excel.IXLWorksheet = ReportXml.Worksheet("FLEX掘進リング報")
+
 
             sheet.Range("リング№").Value = RingNo
 
-            Dim LastStroke As Integer
+            Dim LastStroke As Integer '最終ストローク
+            Dim ExecTime As Integer '掘進時間（中断時間含む)
+
 
             Dim RingRpt As OdbcDataReader =
-                ExecuteSql($"SELECT min(`時間`),max(`時間`),max(`掘進ストローク`),
+                ExecuteSql($"Select min(`時間`),max(`時間`),max(`掘進ストローク`),
                 max(`平面旋回中心`+`平面発進から発旋回中心までの距離`) FROM flex掘削データ
                  WHERE `リング番号`='{RingNo}' ORDER BY 時間")
             While RingRpt.Read
@@ -203,7 +258,16 @@ Public Class frmReportOut
                 sheet.Range("掘進ストローク").Value = RingRpt.Item(2)
                 sheet.Range("掘進総距離").Value = RingRpt.Item(3)
                 LastStroke = RingRpt.Item(2)
+
+                Dim tStt As DateTime = DateTime.Parse(RingRpt.Item(0))
+                Dim tLst As DateTime = DateTime.Parse(RingRpt.Item(1))
+
+                ExecTime = tLst.Subtract(tStt).TotalMinutes
+
             End While
+
+
+
 
             Dim StartRows As Integer = sheet.Range("データ名称").Cell(1, 1).Address.RowNumber
             Dim StartCols As Integer = sheet.Range("データ名称").Cell(1, 1).Address.ColumnNumber
@@ -252,6 +316,22 @@ Public Class frmReportOut
                     End If
                     Col += 1 '列番号更新
                 End If
+                If ExecStroke = LastStroke Then
+
+                    '最終ストローク
+                    sheet.Range("平面線形").Value =
+                    RingRptData.Item("平面半径（軌道中心）")
+                    'TODO:どんな値を表示するか神谷さんに確認　パーミリ？
+                    'パーミリに変換　一応
+                    sheet.Range("縦断勾配").Value =
+                    DegToPermili(RingRptData.Item("縦断線形")).ToString("F0")
+                    sheet.Range("掘進時間").Value =
+                    RingRptData.Item("掘進時間")
+                    sheet.Range("掘進中断時間").Value =
+                    ExecTime - RingRptData.Item("掘進時間")
+
+                End If
+
             End While
 
             '平均、最大、最小の表示
@@ -282,7 +362,9 @@ Public Class frmReportOut
                 End While
             Next
 
-        End Sub
+            Return ReportXml
+
+        End Function
 
 
 

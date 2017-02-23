@@ -351,8 +351,9 @@ Module mdlFLEX
     End Sub
     ''' <summary>
     ''' 計測ストロークの変化時
+    ''' ステータス変化時
     ''' </summary>
-    Private Sub PlcIf_MesureStrokeChange() Handles PlcIf.MesureStrokeChange
+    Private Sub PlcIf_MesureStrokeChange() Handles PlcIf.MesureStrokeChange, PlcIf.ExcavationStatusChange
         CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
         CalcStroke.MesureJackSpeed = PlcIf.MesureJackSpeed
         CalcStroke.Calc() '計算ストローク演算
