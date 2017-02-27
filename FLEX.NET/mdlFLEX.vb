@@ -169,8 +169,13 @@ Module mdlFLEX
             WriteEventData("掘進中断しました", Color.Black)
             ElapsedTime.ExcavationStop()
         End If
+
         '待機中
         If NowStatus = cTaiki Then
+
+            '自動印字　出力
+            ReportAutoPrintOut()
+
 
             LosZeroSts = 0
             If PreStatus <> -1 Then
@@ -599,7 +604,44 @@ Module mdlFLEX
             WriteEventData("PID制御に変わりました。", Color.Blue)
         End If
     End Sub
+    ''' <summary>
+    ''' リング報自動印字
+    ''' </summary>
+    Private Sub ReportAutoPrintOut()
 
+        Dim RprDB As New clsReportDb
+
+        '最新リング番号
+        Dim LstRingNo As Integer = RprDB.LastRing
+        'パターンリストを取得
+        Dim ptLst = From i In My.Settings.ReportAutoPrintPtn.Split(",") Where IsNumeric(i)
+
+        For Each PtnSelNo As Short In ptLst
+
+            'テンポラリファイル名
+            Dim TmpPath As String =
+            $"{AppDomain.CurrentDomain.BaseDirectory}tmp\RingReport_Ptn{PtnSelNo}_Ring{LstRingNo}_{Now.ToString("yyyymmddhhmmssff")}.xlsx"
+
+            'シートにデータ書き込み
+            'テンポラリファイルにリング報保存
+            RprDB.ReportSheetWrite(LstRingNo, PtnSelNo).SaveAs(TmpPath)
+
+
+            '保存したエクセル（テンポラリファイル)を印刷　VBS経由で
+            Dim psi As New ProcessStartInfo("WScript.exe")
+            psi.Arguments =
+            $"{AppDomain.CurrentDomain.BaseDirectory}Resources\excelprt.vbs {TmpPath}"
+
+            Dim job As Process = Process.Start(psi)
+            job.WaitForExit()
+            If job.ExitCode <> 0 Then
+                MsgBox("リング報自動印刷に失敗しました。", vbCritical)
+            End If
+
+        Next
+
+
+    End Sub
 
 
 

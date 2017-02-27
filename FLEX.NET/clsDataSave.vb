@@ -74,11 +74,11 @@ Friend Class clsDataSave
                 Data(ColumnList.IndexOf("上ジャッキストローク")) = .TopStroke.ToString
                 Data(ColumnList.IndexOf("下ジャッキストローク")) = .BotomStroke.ToString
                 Data(ColumnList.IndexOf("左ジャッキ速度")) = .LeftSpeed.ToString
-                Data(ColumnList.IndexOf("右ジャッキ速度")) = .RightStroke.ToString
+                Data(ColumnList.IndexOf("右ジャッキ速度")) = .RightSpeed.ToString
                 Data(ColumnList.IndexOf("上ジャッキ速度")) = .TopSpeed.ToString
                 Data(ColumnList.IndexOf("下ジャッキ速度")) = .BotomSpeed.ToString
-                Data(ColumnList.IndexOf("コピー角度1")) = .CopyStroke1.ToString
-                Data(ColumnList.IndexOf("コピーストローク1")) = .CopyAngle.ToString
+                Data(ColumnList.IndexOf("コピー角度1")) = .CopyAngle.ToString
+                Data(ColumnList.IndexOf("コピーストローク1")) = .CopyStroke1.ToString
                 'TODO:未割り当て
                 'Data(ColumnList.IndexOf("コピー角度2")) = .RealStroke.ToString
                 'Data(ColumnList.IndexOf("コピーストローク2")) = .RealStroke.ToString

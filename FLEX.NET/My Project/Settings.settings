@@ -44,5 +44,8 @@
     <Setting Name="ReportFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)">c:\</Value>
     </Setting>
+    <Setting Name="ReportAutoPrintPtn" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -136,13 +136,22 @@ Public Class frmSim
         Dim iRet = ComPlc.SetDevice(Jadr, IIf(J.Checked, 1, 0))
 
     End Sub
-    Private Sub tmrPlcWR_Tick(sender As Object, e As EventArgs) Handles tmfrPlcWR.Tick
+    Private Sub tmrPlcWR_Tick(sender As Object, e As EventArgs) Handles tmrPlcWR.Tick
 
         'PLC読込
         Dim iRet As Long
         Dim plcData As Integer
 
         Dim i As Integer
+
+
+        '掘進モード
+        iRet = ComPlc.GetDevice(SimlationSetting.ExecMode, plcData)
+        If iRet = 0 Then chkExecMode.Checked = plcData
+
+        'セグメントモード
+        iRet = ComPlc.GetDevice(SimlationSetting.SegmentMode, plcData)
+        If iRet = 0 Then chkSegmentMode.Checked = plcData
 
 
         '掘進中
@@ -177,10 +186,13 @@ Public Class frmSim
         '左ｽﾋﾟｰﾄﾞ
         iRet = ComPlc.GetDevice(SimlationSetting.LeftSpeedAdr, plcData)
         nudLeftSpeed.Value = fnChangeSpeedAnalogIn(plcData)
+        tmrLeftJack.Enabled = (nudLeftSpeed.Value <> 0) And chkExcavOn.Checked
+
 
         '右ｽﾋﾟｰﾄﾞ
         iRet = ComPlc.GetDevice(SimlationSetting.RightSpeedAdr, plcData)
         nudRightSpeed.Value = fnChangeSpeedAnalogIn(plcData)
+        tmrRightJack.Enabled = (nudRightSpeed.Value <> 0) And chkExcavOn.Checked
 
         '計測ジャッキの取込
         For i = 0 To SimlationSetting.MesureJackNo.Count - 1
@@ -378,7 +390,9 @@ Public Class frmSim
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub chkChange(sender As Object, e As EventArgs) Handles chkExcavOn.CheckedChanged, chkFlexOn.CheckedChanged, chkLosZeroEnable.CheckedChanged, chkLosZeroMode.CheckedChanged
+    Private Sub chkChange(sender As Object, e As EventArgs) Handles chkExcavOn.CheckedChanged,
+        chkFlexOn.CheckedChanged, chkLosZeroEnable.CheckedChanged, chkLosZeroMode.CheckedChanged,
+        chkSegmentMode.CheckedChanged, chkExecMode.CheckedChanged
 
 
         tmrPlcWR.Enabled = False
@@ -388,6 +402,16 @@ Public Class frmSim
         If sender Is chkFlexOn Then
             PlcAdr = SimlationSetting.FlexMode
         End If
+
+        If sender Is chkExecMode Then
+            PlcAdr = SimlationSetting.ExecMode
+        End If
+
+
+        If sender Is chkSegmentMode Then
+            PlcAdr = SimlationSetting.SegmentMode
+        End If
+
         '掘進中
         If sender Is chkExcavOn Then
             PlcAdr = SimlationSetting.KussinOn
@@ -498,12 +522,11 @@ Public Class frmSim
     End Sub
 
     Private Sub tmrLeftJack_Tick(sender As Object, e As EventArgs) Handles tmrLeftJack.Tick
-        nudLeftStroke.Value = nudLeftStroke.Value + 1
+        nudLeftStroke.Value += 1
     End Sub
 
     Private Sub tmrRightJack_Tick(sender As Object, e As EventArgs) Handles tmrRightJack.Tick
-        nudRightStroke.Value = nudRightStroke.Value + 1
-
+        nudRightStroke.Value += 1
     End Sub
     ''' <summary>
     ''' グループ圧のシュミレーション

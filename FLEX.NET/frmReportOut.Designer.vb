@@ -22,9 +22,9 @@ Partial Class frmReportOut
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.cmbRingSel = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DgvReportItemSet = New System.Windows.Forms.DataGridView()
@@ -36,8 +36,15 @@ Partial Class frmReportOut
         Me.rtnPt1 = New System.Windows.Forms.RadioButton()
         Me.btnPrintOut = New System.Windows.Forms.Button()
         Me.btnFileSave = New System.Windows.Forms.Button()
+        Me.btnPreview = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.gpxAutoPrtPtn = New System.Windows.Forms.GroupBox()
+        Me.cbxPtn3 = New System.Windows.Forms.CheckBox()
+        Me.cbxPtn2 = New System.Windows.Forms.CheckBox()
+        Me.cbxPtn1 = New System.Windows.Forms.CheckBox()
         CType(Me.DgvReportItemSet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gpxPtnSelect.SuspendLayout()
+        Me.gpxAutoPrtPtn.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnOK
@@ -76,14 +83,14 @@ Partial Class frmReportOut
         Me.DgvReportItemSet.AllowUserToResizeColumns = False
         Me.DgvReportItemSet.AllowUserToResizeRows = False
         Me.DgvReportItemSet.BackgroundColor = System.Drawing.SystemColors.ControlDark
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DgvReportItemSet.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DgvReportItemSet.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.DgvReportItemSet.ColumnHeadersHeight = 40
         Me.DgvReportItemSet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.DgvReportItemSet.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.PrintOutItem})
@@ -101,8 +108,8 @@ Partial Class frmReportOut
         '
         'ID
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.ID.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.ID.DefaultCellStyle = DataGridViewCellStyle5
         Me.ID.Frozen = True
         Me.ID.HeaderText = "No"
         Me.ID.Name = "ID"
@@ -110,9 +117,9 @@ Partial Class frmReportOut
         '
         'PrintOutItem
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.PrintOutItem.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.PrintOutItem.DefaultCellStyle = DataGridViewCellStyle6
         Me.PrintOutItem.HeaderText = "項目名称"
         Me.PrintOutItem.Name = "PrintOutItem"
         Me.PrintOutItem.Width = 300
@@ -173,7 +180,7 @@ Partial Class frmReportOut
         '
         Me.btnPrintOut.BackColor = System.Drawing.Color.Silver
         Me.btnPrintOut.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnPrintOut.Location = New System.Drawing.Point(441, 42)
+        Me.btnPrintOut.Location = New System.Drawing.Point(516, 42)
         Me.btnPrintOut.Margin = New System.Windows.Forms.Padding(2)
         Me.btnPrintOut.Name = "btnPrintOut"
         Me.btnPrintOut.Size = New System.Drawing.Size(102, 35)
@@ -185,7 +192,7 @@ Partial Class frmReportOut
         '
         Me.btnFileSave.BackColor = System.Drawing.Color.Silver
         Me.btnFileSave.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnFileSave.Location = New System.Drawing.Point(563, 42)
+        Me.btnFileSave.Location = New System.Drawing.Point(622, 42)
         Me.btnFileSave.Margin = New System.Windows.Forms.Padding(2)
         Me.btnFileSave.Name = "btnFileSave"
         Me.btnFileSave.Size = New System.Drawing.Size(102, 35)
@@ -193,11 +200,81 @@ Partial Class frmReportOut
         Me.btnFileSave.Text = "ファイル保存"
         Me.btnFileSave.UseVisualStyleBackColor = False
         '
+        'btnPreview
+        '
+        Me.btnPreview.BackColor = System.Drawing.Color.Silver
+        Me.btnPreview.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnPreview.Location = New System.Drawing.Point(410, 42)
+        Me.btnPreview.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnPreview.Name = "btnPreview"
+        Me.btnPreview.Size = New System.Drawing.Size(102, 35)
+        Me.btnPreview.TabIndex = 24
+        Me.btnPreview.Text = "プレビュー"
+        Me.btnPreview.UseVisualStyleBackColor = False
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(74, 561)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(89, 19)
+        Me.Label2.TabIndex = 25
+        Me.Label2.Text = "自動印字"
+        '
+        'gpxAutoPrtPtn
+        '
+        Me.gpxAutoPrtPtn.Controls.Add(Me.cbxPtn3)
+        Me.gpxAutoPrtPtn.Controls.Add(Me.cbxPtn2)
+        Me.gpxAutoPrtPtn.Controls.Add(Me.cbxPtn1)
+        Me.gpxAutoPrtPtn.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.gpxAutoPrtPtn.ForeColor = System.Drawing.Color.White
+        Me.gpxAutoPrtPtn.Location = New System.Drawing.Point(196, 537)
+        Me.gpxAutoPrtPtn.Name = "gpxAutoPrtPtn"
+        Me.gpxAutoPrtPtn.Size = New System.Drawing.Size(409, 63)
+        Me.gpxAutoPrtPtn.TabIndex = 24
+        Me.gpxAutoPrtPtn.TabStop = False
+        Me.gpxAutoPrtPtn.Text = "パターン選択"
+        '
+        'cbxPtn3
+        '
+        Me.cbxPtn3.AutoSize = True
+        Me.cbxPtn3.Location = New System.Drawing.Point(286, 25)
+        Me.cbxPtn3.Name = "cbxPtn3"
+        Me.cbxPtn3.Size = New System.Drawing.Size(102, 23)
+        Me.cbxPtn3.TabIndex = 26
+        Me.cbxPtn3.Text = "パターン3"
+        Me.cbxPtn3.UseVisualStyleBackColor = True
+        '
+        'cbxPtn2
+        '
+        Me.cbxPtn2.AutoSize = True
+        Me.cbxPtn2.Location = New System.Drawing.Point(153, 25)
+        Me.cbxPtn2.Name = "cbxPtn2"
+        Me.cbxPtn2.Size = New System.Drawing.Size(102, 23)
+        Me.cbxPtn2.TabIndex = 25
+        Me.cbxPtn2.Text = "パターン2"
+        Me.cbxPtn2.UseVisualStyleBackColor = True
+        '
+        'cbxPtn1
+        '
+        Me.cbxPtn1.AutoSize = True
+        Me.cbxPtn1.Location = New System.Drawing.Point(20, 25)
+        Me.cbxPtn1.Name = "cbxPtn1"
+        Me.cbxPtn1.Size = New System.Drawing.Size(102, 23)
+        Me.cbxPtn1.TabIndex = 24
+        Me.cbxPtn1.Text = "パターン1"
+        Me.cbxPtn1.UseVisualStyleBackColor = True
+        '
         'frmReportOut
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(778, 676)
+        Me.Controls.Add(Me.gpxAutoPrtPtn)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.btnPreview)
         Me.Controls.Add(Me.btnFileSave)
         Me.Controls.Add(Me.btnPrintOut)
         Me.Controls.Add(Me.gpxPtnSelect)
@@ -214,9 +291,14 @@ Partial Class frmReportOut
         Me.Controls.SetChildIndex(Me.gpxPtnSelect, 0)
         Me.Controls.SetChildIndex(Me.btnPrintOut, 0)
         Me.Controls.SetChildIndex(Me.btnFileSave, 0)
+        Me.Controls.SetChildIndex(Me.btnPreview, 0)
+        Me.Controls.SetChildIndex(Me.Label2, 0)
+        Me.Controls.SetChildIndex(Me.gpxAutoPrtPtn, 0)
         CType(Me.DgvReportItemSet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gpxPtnSelect.ResumeLayout(False)
         Me.gpxPtnSelect.PerformLayout()
+        Me.gpxAutoPrtPtn.ResumeLayout(False)
+        Me.gpxAutoPrtPtn.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -233,4 +315,10 @@ Partial Class frmReportOut
     Protected WithEvents btnFileSave As Button
     Friend WithEvents ID As DataGridViewTextBoxColumn
     Friend WithEvents PrintOutItem As DataGridViewComboBoxColumn
+    Protected WithEvents btnPreview As Button
+    Friend WithEvents Label2 As Label
+    Friend WithEvents gpxAutoPrtPtn As GroupBox
+    Friend WithEvents cbxPtn3 As CheckBox
+    Friend WithEvents cbxPtn2 As CheckBox
+    Friend WithEvents cbxPtn1 As CheckBox
 End Class

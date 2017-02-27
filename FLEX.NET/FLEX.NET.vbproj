@@ -111,6 +111,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
   <ItemGroup>
+    <Import Include="AcroPDFLib" />
     <Import Include="ACTMULTILib" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
@@ -160,6 +161,12 @@
       <DependentUpon>frmReportOut.vb</DependentUpon>
     </Compile>
     <Compile Include="frmReportOut.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportViewer.Designer.vb">
+      <DependentUpon>frmReportViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportViewer.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmTuningTrend.Designer.vb">
@@ -410,6 +417,9 @@
     <EmbeddedResource Include="frmReportOut.resx">
       <DependentUpon>frmReportOut.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmReportViewer.resx">
+      <DependentUpon>frmReportViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmTuningTrend.resx">
       <DependentUpon>frmTuningTrend.vb</DependentUpon>
     </EmbeddedResource>
@@ -547,6 +557,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="AcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="ACTMULTILib">
       <Guid>{A306B141-AE98-11D3-83AE-00A024BDBF2B}</Guid>
       <VersionMajor>3</VersionMajor>
@@ -555,6 +574,14 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="AxAcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
     </COMReference>
   </ItemGroup>
   <ItemGroup>
@@ -604,6 +631,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="1473bf5de9784b3e3a32fa31f3f03eb4_xxo.ico" />
+    <Content Include="Resources\excelpdfout.vbs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\excelprt.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

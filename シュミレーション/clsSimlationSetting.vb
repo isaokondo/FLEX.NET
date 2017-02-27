@@ -43,6 +43,11 @@ Public Class clsSimlationSetting
     Public ReadOnly Property MesureJackSpeed As New List(Of String)
     Public ReadOnly Property MesureJackNo As New List(Of Short)
 
+    Public ReadOnly Property ExecMode As String
+    Public ReadOnly Property SegmentMode As String
+
+
+
 
 
     Public Sub New()
@@ -119,6 +124,10 @@ Public Class clsSimlationSetting
                     Case "LosZeroEnable"
                         _LosZeroEnable = .Item("値")
 
+                    Case "ExecMode"
+                        _ExecMode = .Item("値")
+                    Case "SegmentMode"
+                        _SegmentMode = .Item("値")
                 End Select
                 '計測ジャッキの取込
                 If .Item("項目").ToString.IndexOf("MesureJackStroke") >= 0 Then

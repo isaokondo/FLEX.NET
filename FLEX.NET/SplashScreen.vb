@@ -22,9 +22,10 @@
         '  "Version {0}.{1:  00}.{2}.{3}" のように変更したりすることによって含めることができます。
         '  詳細については、ヘルプの String.Format() を参照してください。
         '
-        '    Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build, My.Application.Info.Version.Revision)
+        Version.Text +=
+            $"{My.Application.Info.Version.Major}.{My.Application.Info.Version.Minor}.{My.Application.Info.Version.Build}.{My.Application.Info.Version.Revision}"
 
-        Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor)
+        'Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor)
 
         '著作権情報
         Copyright.Text = My.Application.Info.Copyright

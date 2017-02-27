@@ -81,6 +81,9 @@ Partial Class frmSim
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RealStrokeLen = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.JackSpeed = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.chkExecMode = New System.Windows.Forms.CheckBox()
+        Me.chkSegmentMode = New System.Windows.Forms.CheckBox()
+        Me.Label11 = New System.Windows.Forms.Label()
         CType(Me.nudSoucePressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudLeftStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudRightStroke, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -345,6 +348,7 @@ Partial Class frmSim
         Me.ExcavOrSegment.ReadOnly = True
         Me.ExcavOrSegment.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.ExcavOrSegment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ExcavOrSegment.ToolTipText = "シフトキーを押しながらダブルクリックですべてON"
         Me.ExcavOrSegment.Width = 50
         '
         'PullBakOn
@@ -357,6 +361,7 @@ Partial Class frmSim
         Me.PullBakOn.ReadOnly = True
         Me.PullBakOn.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.PullBakOn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.PullBakOn.ToolTipText = "シフトキーを押しながらダブルクリックですべてON"
         Me.PullBakOn.Width = 50
         '
         'PullBackAns
@@ -369,6 +374,7 @@ Partial Class frmSim
         Me.PullBackAns.ReadOnly = True
         Me.PullBackAns.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.PullBackAns.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.PullBackAns.ToolTipText = "シフトキーを押しながらダブルクリックですべてON"
         Me.PullBackAns.Width = 50
         '
         'ClosetOn
@@ -381,6 +387,7 @@ Partial Class frmSim
         Me.ClosetOn.ReadOnly = True
         Me.ClosetOn.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.ClosetOn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ClosetOn.ToolTipText = "シフトキーを押しながらダブルクリックですべてON"
         Me.ClosetOn.Width = 50
         '
         'ClosetAns
@@ -588,11 +595,47 @@ Partial Class frmSim
         Me.JackSpeed.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.JackSpeed.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
+        'chkExecMode
+        '
+        Me.chkExecMode.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.chkExecMode.Location = New System.Drawing.Point(287, 303)
+        Me.chkExecMode.Margin = New System.Windows.Forms.Padding(2)
+        Me.chkExecMode.Name = "chkExecMode"
+        Me.chkExecMode.Size = New System.Drawing.Size(104, 19)
+        Me.chkExecMode.TabIndex = 27
+        Me.chkExecMode.Text = "掘進モード"
+        Me.chkExecMode.UseVisualStyleBackColor = True
+        '
+        'chkSegmentMode
+        '
+        Me.chkSegmentMode.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.chkSegmentMode.Location = New System.Drawing.Point(415, 303)
+        Me.chkSegmentMode.Margin = New System.Windows.Forms.Padding(2)
+        Me.chkSegmentMode.Name = "chkSegmentMode"
+        Me.chkSegmentMode.Size = New System.Drawing.Size(144, 19)
+        Me.chkSegmentMode.TabIndex = 28
+        Me.chkSegmentMode.Text = "セグメントモード"
+        Me.chkSegmentMode.UseVisualStyleBackColor = True
+        '
+        'Label11
+        '
+        Me.Label11.BackColor = System.Drawing.Color.Gold
+        Me.Label11.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label11.Location = New System.Drawing.Point(934, 15)
+        Me.Label11.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(202, 32)
+        Me.Label11.TabIndex = 29
+        Me.Label11.Text = "Shift+ダブルクリックですべてON" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ctrl+ダブルクリックですべてOFF" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
         'frmSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.ClientSize = New System.Drawing.Size(1594, 876)
+        Me.Controls.Add(Me.Label11)
+        Me.Controls.Add(Me.chkSegmentMode)
+        Me.Controls.Add(Me.chkExecMode)
         Me.Controls.Add(Me.DgvJackStroke)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.Label9)
@@ -670,6 +713,12 @@ Partial Class frmSim
     Friend WithEvents chkLosZeroMode As CheckBox
     Friend WithEvents Label9 As Label
     Friend WithEvents Label10 As Label
+    Friend WithEvents DgvJackStroke As DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents RealStrokeLen As DataGridViewTextBoxColumn
+    Friend WithEvents JackSpeed As DataGridViewTextBoxColumn
+    Friend WithEvents chkExecMode As CheckBox
+    Friend WithEvents chkSegmentMode As CheckBox
     Friend WithEvents JackNo As DataGridViewTextBoxColumn
     Friend WithEvents ExcavOrSegment As DataGridViewTextBoxColumn
     Friend WithEvents PullBakOn As DataGridViewTextBoxColumn
@@ -679,8 +728,5 @@ Partial Class frmSim
     Friend WithEvents PullBackCommand As DataGridViewTextBoxColumn
     Friend WithEvents ClosetCommand As DataGridViewTextBoxColumn
     Friend WithEvents AddClosetCommand As DataGridViewTextBoxColumn
-    Friend WithEvents DgvJackStroke As DataGridView
-    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
-    Friend WithEvents RealStrokeLen As DataGridViewTextBoxColumn
-    Friend WithEvents JackSpeed As DataGridViewTextBoxColumn
+    Friend WithEvents Label11 As Label
 End Class

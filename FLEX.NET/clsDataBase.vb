@@ -635,6 +635,9 @@ Public Class clsRingReport
 End Class
 
 
+
+
+
 ''' <summary>
 ''' テーブルの更新イベント
 ''' </summary>

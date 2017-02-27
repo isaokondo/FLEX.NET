@@ -109,14 +109,10 @@ Public Class clsControlParameter
     ''' </summary>
     Private _optGpSv(InitPara.NumberGroup - 1) As Single
 
-
-
     ''' <summary>
     ''' 線形が変化した時
     ''' </summary>
     Public Event ReferChnge()
-
-
 
 
     'Private Event UpdateData(ByVal sender As Object, ByVale As EventArgs, ByVal Value As Double)
@@ -156,6 +152,8 @@ Public Class clsControlParameter
 
         End Set
     End Property
+
+
 
     Public Property optGpEn As List(Of Short)
         Get

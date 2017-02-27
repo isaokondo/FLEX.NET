@@ -37,7 +37,7 @@ Partial Class SplashScreen
         Me.Version.Name = "Version"
         Me.Version.Size = New System.Drawing.Size(244, 20)
         Me.Version.TabIndex = 3
-        Me.Version.Text = "バージョン {0}.{1:00}"
+        Me.Version.Text = "バージョン"
         '
         'Copyright
         '
@@ -63,7 +63,7 @@ Partial Class SplashScreen
         Me.Controls.Add(Me.Copyright)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "SplashScreen"
