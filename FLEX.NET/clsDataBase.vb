@@ -311,7 +311,7 @@ Public Class clsInitParameter
 
     Private _mesureJackAngle As New SortedDictionary(Of Short, Single) '計測ジャッキの角度
 
-    Private _mesureJackNo As New List(Of Short) '計測ジャッキ番号
+    Private _mesureJackNo As New List(Of Short) '計測ジャッキ番号 上右下左の順番
 
     Private WithEvents Htb As New clsHashtableRead
     ''' <summary>

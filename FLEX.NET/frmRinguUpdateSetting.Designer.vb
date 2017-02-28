@@ -22,12 +22,20 @@ Partial Class frmRinguUpdateSetting
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.StrokeManag = New FLEX.NET.ucnNumEdit()
-        Me.StopJudgeSpeed = New FLEX.NET.ucnNumEdit()
-        Me.CloseJudgeTime = New FLEX.NET.ucnNumEdit()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.CloseJudgePullStroke = New FLEX.NET.ucnNumEdit()
-        Me.CloseStokeEdt = New FLEX.NET.ucnNumEdit()
-        Me.StartStokeEdt = New FLEX.NET.ucnNumEdit()
+        Me.DgvJackStroke = New System.Windows.Forms.DataGridView()
+        Me.JackNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Angle = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.JackEnable = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.SelectDsp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        CType(Me.DgvJackStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnOK
@@ -38,63 +46,6 @@ Partial Class frmRinguUpdateSetting
         '
         Me.btnCancel.Location = New System.Drawing.Point(312, 380)
         '
-        'StrokeManag
-        '
-        Me.StrokeManag.DataDspWidth = 110
-        Me.StrokeManag.DecimalPlaces = CType(0, Short)
-        Me.StrokeManag.DspFieldName = True
-        Me.StrokeManag.FieldName = "ストローク取得方法"
-        Me.StrokeManag.Increment = 1.0!
-        Me.StrokeManag.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.SelectType
-        Me.StrokeManag.Location = New System.Drawing.Point(14, 31)
-        Me.StrokeManag.Margin = New System.Windows.Forms.Padding(2)
-        Me.StrokeManag.MaxValue = "0"
-        Me.StrokeManag.MinValue = "0"
-        Me.StrokeManag.Name = "StrokeManag"
-        Me.StrokeManag.SelectItem = "MAX,右,左,左右平均"
-        Me.StrokeManag.Size = New System.Drawing.Size(410, 39)
-        Me.StrokeManag.TabIndex = 11
-        Me.StrokeManag.Unit = "mm"
-        Me.StrokeManag.Value = 0R
-        '
-        'StopJudgeSpeed
-        '
-        Me.StopJudgeSpeed.DataDspWidth = 110
-        Me.StopJudgeSpeed.DecimalPlaces = CType(0, Short)
-        Me.StopJudgeSpeed.DspFieldName = True
-        Me.StopJudgeSpeed.FieldName = "中断判定速度"
-        Me.StopJudgeSpeed.Increment = 1.0!
-        Me.StopJudgeSpeed.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.StopJudgeSpeed.Location = New System.Drawing.Point(14, 296)
-        Me.StopJudgeSpeed.Margin = New System.Windows.Forms.Padding(2)
-        Me.StopJudgeSpeed.MaxValue = "100"
-        Me.StopJudgeSpeed.MinValue = "0"
-        Me.StopJudgeSpeed.Name = "StopJudgeSpeed"
-        Me.StopJudgeSpeed.SelectItem = Nothing
-        Me.StopJudgeSpeed.Size = New System.Drawing.Size(427, 39)
-        Me.StopJudgeSpeed.TabIndex = 9
-        Me.StopJudgeSpeed.Unit = "mm/min"
-        Me.StopJudgeSpeed.Value = 0R
-        '
-        'CloseJudgeTime
-        '
-        Me.CloseJudgeTime.DataDspWidth = 110
-        Me.CloseJudgeTime.DecimalPlaces = CType(0, Short)
-        Me.CloseJudgeTime.DspFieldName = True
-        Me.CloseJudgeTime.FieldName = "終了判定時間"
-        Me.CloseJudgeTime.Increment = 1.0!
-        Me.CloseJudgeTime.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.CloseJudgeTime.Location = New System.Drawing.Point(14, 243)
-        Me.CloseJudgeTime.Margin = New System.Windows.Forms.Padding(2)
-        Me.CloseJudgeTime.MaxValue = "100"
-        Me.CloseJudgeTime.MinValue = "0"
-        Me.CloseJudgeTime.Name = "CloseJudgeTime"
-        Me.CloseJudgeTime.SelectItem = Nothing
-        Me.CloseJudgeTime.Size = New System.Drawing.Size(410, 39)
-        Me.CloseJudgeTime.TabIndex = 8
-        Me.CloseJudgeTime.Unit = "分"
-        Me.CloseJudgeTime.Value = 0R
-        '
         'CloseJudgePullStroke
         '
         Me.CloseJudgePullStroke.DataDspWidth = 110
@@ -103,7 +54,7 @@ Partial Class frmRinguUpdateSetting
         Me.CloseJudgePullStroke.FieldName = "終了判定引きストローク"
         Me.CloseJudgePullStroke.Increment = 1.0!
         Me.CloseJudgePullStroke.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.CloseJudgePullStroke.Location = New System.Drawing.Point(14, 190)
+        Me.CloseJudgePullStroke.Location = New System.Drawing.Point(29, 31)
         Me.CloseJudgePullStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.CloseJudgePullStroke.MaxValue = "0"
         Me.CloseJudgePullStroke.MinValue = "0"
@@ -114,43 +65,94 @@ Partial Class frmRinguUpdateSetting
         Me.CloseJudgePullStroke.Unit = "mm"
         Me.CloseJudgePullStroke.Value = 0R
         '
-        'CloseStokeEdt
+        'DgvJackStroke
         '
-        Me.CloseStokeEdt.DataDspWidth = 110
-        Me.CloseStokeEdt.DecimalPlaces = CType(0, Short)
-        Me.CloseStokeEdt.DspFieldName = True
-        Me.CloseStokeEdt.FieldName = "終了ストローク"
-        Me.CloseStokeEdt.Increment = 1.0!
-        Me.CloseStokeEdt.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.CloseStokeEdt.Location = New System.Drawing.Point(14, 137)
-        Me.CloseStokeEdt.Margin = New System.Windows.Forms.Padding(2)
-        Me.CloseStokeEdt.MaxValue = "0"
-        Me.CloseStokeEdt.MinValue = "0"
-        Me.CloseStokeEdt.Name = "CloseStokeEdt"
-        Me.CloseStokeEdt.SelectItem = Nothing
-        Me.CloseStokeEdt.Size = New System.Drawing.Size(410, 39)
-        Me.CloseStokeEdt.TabIndex = 6
-        Me.CloseStokeEdt.Unit = "mm"
-        Me.CloseStokeEdt.Value = 0R
+        Me.DgvJackStroke.AllowUserToAddRows = False
+        Me.DgvJackStroke.AllowUserToDeleteRows = False
+        Me.DgvJackStroke.AllowUserToResizeColumns = False
+        Me.DgvJackStroke.AllowUserToResizeRows = False
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.DgvJackStroke.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DgvJackStroke.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        Me.DgvJackStroke.ColumnHeadersHeight = 40
+        Me.DgvJackStroke.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        Me.DgvJackStroke.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.JackNo, Me.Angle, Me.JackEnable, Me.SelectDsp})
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle7.NullValue = Nothing
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DgvJackStroke.DefaultCellStyle = DataGridViewCellStyle7
+        Me.DgvJackStroke.Location = New System.Drawing.Point(29, 104)
+        Me.DgvJackStroke.Margin = New System.Windows.Forms.Padding(2)
+        Me.DgvJackStroke.MultiSelect = False
+        Me.DgvJackStroke.Name = "DgvJackStroke"
+        Me.DgvJackStroke.RowHeadersVisible = False
+        Me.DgvJackStroke.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
+        Me.DgvJackStroke.RowTemplate.DefaultCellStyle.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.DgvJackStroke.RowTemplate.Height = 24
+        Me.DgvJackStroke.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.DgvJackStroke.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.DgvJackStroke.Size = New System.Drawing.Size(385, 249)
+        Me.DgvJackStroke.TabIndex = 19
         '
-        'StartStokeEdt
+        'JackNo
         '
-        Me.StartStokeEdt.DataDspWidth = 110
-        Me.StartStokeEdt.DecimalPlaces = CType(0, Short)
-        Me.StartStokeEdt.DspFieldName = True
-        Me.StartStokeEdt.FieldName = "開始ストローク"
-        Me.StartStokeEdt.Increment = 1.0!
-        Me.StartStokeEdt.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.StartStokeEdt.Location = New System.Drawing.Point(14, 84)
-        Me.StartStokeEdt.Margin = New System.Windows.Forms.Padding(2)
-        Me.StartStokeEdt.MaxValue = "0"
-        Me.StartStokeEdt.MinValue = "0"
-        Me.StartStokeEdt.Name = "StartStokeEdt"
-        Me.StartStokeEdt.SelectItem = Nothing
-        Me.StartStokeEdt.Size = New System.Drawing.Size(410, 39)
-        Me.StartStokeEdt.TabIndex = 5
-        Me.StartStokeEdt.Unit = "mm"
-        Me.StartStokeEdt.Value = 0R
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle3.Format = "N0"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.JackNo.DefaultCellStyle = DataGridViewCellStyle3
+        Me.JackNo.DividerWidth = 1
+        Me.JackNo.Frozen = True
+        Me.JackNo.HeaderText = "計測ジャッキNo"
+        Me.JackNo.Name = "JackNo"
+        Me.JackNo.ReadOnly = True
+        '
+        'Angle
+        '
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.Angle.DefaultCellStyle = DataGridViewCellStyle4
+        Me.Angle.Frozen = True
+        Me.Angle.HeaderText = "取付角度(deg)"
+        Me.Angle.Name = "Angle"
+        Me.Angle.ReadOnly = True
+        Me.Angle.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Angle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'JackEnable
+        '
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle5.NullValue = False
+        Me.JackEnable.DefaultCellStyle = DataGridViewCellStyle5
+        Me.JackEnable.Frozen = True
+        Me.JackEnable.HeaderText = "有効"
+        Me.JackEnable.Name = "JackEnable"
+        Me.JackEnable.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.JackEnable.Width = 50
+        '
+        'SelectDsp
+        '
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SelectDsp.DefaultCellStyle = DataGridViewCellStyle6
+        Me.SelectDsp.Frozen = True
+        Me.SelectDsp.HeaderText = "選択表示  （上下左右）"
+        Me.SelectDsp.Name = "SelectDsp"
+        Me.SelectDsp.ReadOnly = True
+        Me.SelectDsp.Width = 90
         '
         'frmRinguUpdateSetting
         '
@@ -158,29 +160,22 @@ Partial Class frmRinguUpdateSetting
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
         Me.ClientSize = New System.Drawing.Size(452, 452)
-        Me.Controls.Add(Me.StrokeManag)
-        Me.Controls.Add(Me.StopJudgeSpeed)
-        Me.Controls.Add(Me.CloseJudgeTime)
+        Me.Controls.Add(Me.DgvJackStroke)
         Me.Controls.Add(Me.CloseJudgePullStroke)
-        Me.Controls.Add(Me.CloseStokeEdt)
-        Me.Controls.Add(Me.StartStokeEdt)
         Me.Name = "frmRinguUpdateSetting"
         Me.Text = "リング更新設定"
-        Me.Controls.SetChildIndex(Me.StartStokeEdt, 0)
-        Me.Controls.SetChildIndex(Me.CloseStokeEdt, 0)
         Me.Controls.SetChildIndex(Me.CloseJudgePullStroke, 0)
-        Me.Controls.SetChildIndex(Me.CloseJudgeTime, 0)
-        Me.Controls.SetChildIndex(Me.StopJudgeSpeed, 0)
-        Me.Controls.SetChildIndex(Me.StrokeManag, 0)
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
+        Me.Controls.SetChildIndex(Me.DgvJackStroke, 0)
+        CType(Me.DgvJackStroke, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents StartStokeEdt As FLEX.NET.ucnNumEdit
-    Friend WithEvents CloseStokeEdt As FLEX.NET.ucnNumEdit
     Friend WithEvents CloseJudgePullStroke As FLEX.NET.ucnNumEdit
-    Friend WithEvents CloseJudgeTime As FLEX.NET.ucnNumEdit
-    Friend WithEvents StopJudgeSpeed As FLEX.NET.ucnNumEdit
-    Friend WithEvents StrokeManag As FLEX.NET.ucnNumEdit
+    Friend WithEvents DgvJackStroke As DataGridView
+    Friend WithEvents JackNo As DataGridViewTextBoxColumn
+    Friend WithEvents Angle As DataGridViewTextBoxColumn
+    Friend WithEvents JackEnable As DataGridViewCheckBoxColumn
+    Friend WithEvents SelectDsp As DataGridViewTextBoxColumn
 End Class

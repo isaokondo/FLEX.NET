@@ -14,25 +14,23 @@ Public Class frmCalcStrokeConfirm
         '計測ジャッキ番号でソート
         '計測ジャッキ番号と取付角度を表示
         For Each i In InitPara.MesureJackAngle
-            DgvJackStroke.Rows.Add(i.Key, 0, 0, 0, i.Value)
+            DgvJackStroke.Rows.Add(i.Key, 0, 0, 0, 0, 0, i.Value, "", Not CtlPara.ExceptMesureJackNo.Contains(i.Key))
         Next
-        'ヘッダーの書式をmiddlecenterに
-        DgvJackStroke.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
 
     End Sub
 
-    Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
-
-        For i As Short = 0 To DgvJackStroke.Rows.Count - 1
-            Dim JkNo As Short = DgvJackStroke.Rows(i).Cells(JackNo.Index).Value '計測ジャッキ番号
-            DgvJackStroke.Rows(i).Cells(RealStrokeLen.Index).Value = PlcIf.MesureJackStroke(JkNo) '計測実ストローク
-            DgvJackStroke.Rows(i).Cells(CalcLogcalStroke.Index).Value = CalcStroke.MesureCalcLogicalStroke(JkNo)
-            DgvJackStroke.Rows(i).Cells(StartStroke.Index).Value = CtlPara.StartJackStroke(JkNo)
-            DgvJackStroke.Rows(i).Cells(JackSpeed.Index).Value = PlcIf.MesureJackSpeed(JkNo)    '計測ジャッキスピード
-            DgvJackStroke.Rows(i).Cells(CalcStrokeLen.Index).Value = CalcStroke.MesureCalcJackStroke(JkNo)  '計算計測ジャッキストローク
-            DgvJackStroke.Rows(i).Cells(Angle.Index).Value = InitPara.MesureJackAngle(JkNo) 'ジャッキ取付角度
-            DgvJackStroke.Rows(i).Cells(JackState.Index).Value = CalcStroke.JackState(JkNo) 'ジャッキステータス
+    Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick, Me.Load
+        'リアルタイムに表示
+        For Each dv As DataGridViewRow In DgvJackStroke.Rows
+            Dim jkNo As Short = dv.Cells(JackNo.Index).Value
+            dv.Cells(RealStrokeLen.Index).Value = PlcIf.MesureJackStroke(jkNo) '計測実ストローク
+            dv.Cells(CalcLogcalStroke.Index).Value = CalcStroke.MesureCalcLogicalStroke(jkNo)
+            dv.Cells(StartStroke.Index).Value = CtlPara.StartJackStroke(jkNo)
+            dv.Cells(JackSpeed.Index).Value = PlcIf.MesureJackSpeed(jkNo)    '計測ジャッキスピード
+            dv.Cells(CalcStrokeLen.Index).Value = CalcStroke.MesureCalcJackStroke(jkNo)  '計算計測ジャッキストローク
+            dv.Cells(JackState.Index).Value = CalcStroke.JackState(jkNo) 'ジャッキステータス
         Next
+
 
         DspAveStroke.Value = CalcStroke.MesureCalcAveJackStroke '平均ストローク表示
         DspCenterWidth.Value = CalcStroke.SegnebtCenterWidth    'セグメント幅

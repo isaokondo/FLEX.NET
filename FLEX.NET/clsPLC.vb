@@ -64,12 +64,13 @@ Public Class clsPlcIf
     'パラメータ　Rレジスタ
     Private _RingNo As Integer           ''リング番号
 
-    Private _ストローク管理法 As Integer    'ストローク管理法0:MAX 1:右 2:左 3:左右平均
-    Private _掘進判定ストローク As Integer
-    Private _終了判定ストローク As Integer
+    'リング更新は、各ジャッキの平均（選択式）とする
+    'Private _ストローク管理法 As Integer    'ストローク管理法0:MAX 1:右 2:左 3:左右平均
+    'Private _掘進判定ストローク As Integer
+    'Private _終了判定ストローク As Integer
     Private _終了判定引きストローク As Integer
-    Private _中断判定速度 As Single
-    Private _終了判定時間 As Integer
+    'Private _中断判定速度 As Single
+    'Private _終了判定時間 As Integer
 
     Private _減圧弁制御P定数 As Integer
     Private _減圧弁制御I定数 As Integer
@@ -471,38 +472,38 @@ Public Class clsPlcIf
         End Set
     End Property
 
-    Public Property ストローク管理法 As Integer
-        Get
-            Return _ストローク管理法
-        End Get
-        Set(value As Integer)
-            _ストローク管理法 = value
-            Call ParameterWrite(value)
+    'Public Property ストローク管理法 As Integer
+    '    Get
+    '        Return _ストローク管理法
+    '    End Get
+    '    Set(value As Integer)
+    '        _ストローク管理法 = value
+    '        Call ParameterWrite(value)
 
-        End Set
-    End Property
+    '    End Set
+    'End Property
 
-    Public Property 掘進判定ストローク As Integer
-        Get
-            Return _掘進判定ストローク
-        End Get
-        Set(value As Integer)
-            _掘進判定ストローク = value
-            Call ParameterWrite(value)
+    'Public Property 掘進判定ストローク As Integer
+    '    Get
+    '        Return _掘進判定ストローク
+    '    End Get
+    '    Set(value As Integer)
+    '        _掘進判定ストローク = value
+    '        Call ParameterWrite(value)
 
-        End Set
-    End Property
+    '    End Set
+    'End Property
 
-    Public Property 終了判定ストローク As Integer
-        Get
-            Return _終了判定ストローク
-        End Get
-        Set(value As Integer)
-            _終了判定ストローク = value
-            Call ParameterWrite(value)
+    'Public Property 終了判定ストローク As Integer
+    '    Get
+    '        Return _終了判定ストローク
+    '    End Get
+    '    Set(value As Integer)
+    '        _終了判定ストローク = value
+    '        Call ParameterWrite(value)
 
-        End Set
-    End Property
+    '    End Set
+    'End Property
     Public Property 終了判定引きストローク As Integer
         Get
             Return _終了判定引きストローク
@@ -514,27 +515,27 @@ Public Class clsPlcIf
         End Set
     End Property
 
-    Public Property 中断判定速度 As Integer
-        Get
-            Return _中断判定速度
-        End Get
-        Set(value As Integer)
-            _中断判定速度 = value
-            Call ParameterWrite(value)
+    'Public Property 中断判定速度 As Integer
+    '    Get
+    '        Return _中断判定速度
+    '    End Get
+    '    Set(value As Integer)
+    '        _中断判定速度 = value
+    '        Call ParameterWrite(value)
 
-        End Set
-    End Property
+    '    End Set
+    'End Property
 
-    Public Property 終了判定時間 As Integer
-        Get
-            Return _終了判定時間
-        End Get
-        Set(value As Integer)
-            _終了判定時間 = value
-            Call ParameterWrite(value)
+    'Public Property 終了判定時間 As Integer
+    '    Get
+    '        Return _終了判定時間
+    '    End Get
+    '    Set(value As Integer)
+    '        _終了判定時間 = value
+    '        Call ParameterWrite(value)
 
-        End Set
-    End Property
+    '    End Set
+    'End Property
 
     Public Property 減圧弁制御P定数 As Integer
         Get
@@ -872,16 +873,16 @@ Public Class clsPlcIf
 
                 End If
 
-                _ストローク管理法 = GetAnalogData("ストローク管理法", ParameterTag)   'ストローク管理方法
-                _掘進判定ストローク = GetAnalogData("掘進判定ストローク", ParameterTag)
-                _終了判定ストローク = GetAnalogData("終了判定ストローク", ParameterTag)
+                '_ストローク管理法 = GetAnalogData("ストローク管理法", ParameterTag)   'ストローク管理方法
+                '_掘進判定ストローク = GetAnalogData("掘進判定ストローク", ParameterTag)
+                '_終了判定ストローク = GetAnalogData("終了判定ストローク", ParameterTag)
                 _終了判定引きストローク = GetAnalogData("終了判定引きストローク", ParameterTag)
-                _終了判定時間 = GetAnalogData("終了判定時間", ParameterTag)
+                '_終了判定時間 = GetAnalogData("終了判定時間", ParameterTag)
 
                 _減圧弁制御P定数 = GetAnalogData("減圧弁制御P定数", ParameterTag)
                 _減圧弁制御I定数 = GetAnalogData("減圧弁制御I定数", ParameterTag)
                 _減圧弁制御D定数 = GetAnalogData("減圧弁制御D定数", ParameterTag)
-                _中断判定速度 = GetAnalogData("中断判定速度", ParameterTag)
+                '_中断判定速度 = GetAnalogData("中断判定速度", ParameterTag)
                 _減圧弁特性増減時間 = GetAnalogData("減圧弁特性増減時間", ParameterTag)
 
 

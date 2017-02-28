@@ -110,6 +110,11 @@ Public Class clsControlParameter
     Private _optGpSv(InitPara.NumberGroup - 1) As Single
 
     ''' <summary>
+    ''' ストローク演算で除外する計測ジャッキ
+    ''' </summary>
+    Private _ExceptMesureJackNo As List(Of Short)
+
+    ''' <summary>
     ''' 線形が変化した時
     ''' </summary>
     Public Event ReferChnge()
@@ -165,6 +170,19 @@ Public Class clsControlParameter
             Dim tb As Odbc.OdbcDataReader =
                 ExecuteSql($"UPDATE FLEX制御パラメータ SET`値`='{String.Join(",", _optGpEn.ToArray)}'
                 WHERE `項目名称`='OptinalGroupSetNumber'")
+        End Set
+    End Property
+
+    Public Property ExceptMesureJackNo As List(Of Short)
+        Get
+            Return _ExceptMesureJackNo
+        End Get
+        Set(value As List(Of Short))
+            _ExceptMesureJackNo = value
+
+            Dim tb As Odbc.OdbcDataReader =
+                ExecuteSql($"UPDATE FLEX制御パラメータ SET`値`='{String.Join(",", _ExceptMesureJackNo.ToArray)}'
+                WHERE `項目名称`='ExceptMesureJackNo'")
         End Set
     End Property
 
@@ -747,7 +765,13 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+    ''' <summary>
+    ''' 掘進開始時の平均ストローク
+    ''' </summary>
+    Private _StartAveJackStroke As Integer
+
     Private _StartJackStroke As New Dictionary(Of Short, Integer)
+
     ''' <summary>
     ''' 掘進開始時の計測ジャッキストローク
     ''' </summary>
@@ -757,12 +781,27 @@ Public Class clsControlParameter
             Return _StartJackStroke
         End Get
         Set(value As Dictionary(Of Short, Integer))
+            _StartJackStroke = value
+
             For Each v In value
                 Dim tb As Odbc.OdbcDataReader =
-        ExecuteSql($"UPDATE FLEX制御パラメータ SET`値`='{v.Value}' WHERE `項目名称`='開始ジャッキストローク{v.Key}'")
+        ExecuteSql($"UPDATE FLEX制御パラメータ SET`値`='{v.Value}' 
+        WHERE `項目名称`='開始ジャッキストローク{v.Key}'")
             Next
+            '平均開始ストロークの算出
+            '_StartAveJackStroke =
+            '    (From i In _StartJackStroke Where Not _ExceptMesureJackNo.Contains(i.Key) Select (i.Value)).Average
         End Set
     End Property
+
+
+    Public ReadOnly Property StartAveStroke As Integer
+        Get
+            Return _StartAveJackStroke
+        End Get
+    End Property
+
+
 
     Public ReadOnly Property WideUse As Dictionary(Of Short, String)
         Get
@@ -900,14 +939,13 @@ Public Class clsControlParameter
                         _DirectControl = fnBoolean(tb.Item("値"))
 
                     Case "OptinalGroupSetNumber"
-                        Dim re As String() = Split(tb.Item("値"), ",")
+                        _optGpEn =
+                            (From k In Split(tb.Item("値"), ",") Where IsNumeric(k) Select CShort(k)).ToList
 
-                        _optGpEn = (From k In Split(tb.Item("値"), ",") Where IsNumeric(k) Select CShort(k)).ToList
+                    Case "ExceptMesureJackNo"
+                        _ExceptMesureJackNo =
+                            (From k In Split(tb.Item("値"), ",") Where IsNumeric(k) Select CShort(k)).ToList
 
-                        '_optGpEn = New List(Of Short)
-                        'For Each i In re
-                        '    _optGpEn.Add(Val(i))
-                        'Next
 
                 End Select
 
@@ -931,8 +969,11 @@ Public Class clsControlParameter
                     Debug.WriteLine("Err" & tb.Item("項目名称").ToString)
                 End Try
 
-            End While
+        End While
 
+        '平均開始ストロークの算出
+        _StartAveJackStroke =
+                (From i In _StartJackStroke Where Not _ExceptMesureJackNo.Contains(i.Key) Select (i.Value)).Average
 
 
     End Sub

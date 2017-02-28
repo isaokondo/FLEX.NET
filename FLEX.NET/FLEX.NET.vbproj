@@ -151,6 +151,12 @@
     <Compile Include="frmDirControlChek.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmDspSetting.Designer.vb">
+      <DependentUpon>frmDspSetting.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDspSetting.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmPlanView.Designer.vb">
       <DependentUpon>frmPlanView.vb</DependentUpon>
     </Compile>
@@ -410,6 +416,9 @@
   <ItemGroup>
     <EmbeddedResource Include="frmDirControlChek.resx">
       <DependentUpon>frmDirControlChek.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDspSetting.resx">
+      <DependentUpon>frmDspSetting.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPlanView.resx">
       <DependentUpon>frmPlanView.vb</DependentUpon>

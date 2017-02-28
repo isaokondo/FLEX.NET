@@ -205,7 +205,7 @@ Public Class clsCalcuStroke
                     / 180 * Math.PI)
                 End If
             Next
-            If PlcIf.ExecMode Then
+            If PlcIf.ExecMode AndAlso _mesureCalcJackStroke(mjJkNo) > CtlPara.StartJackStroke(mjJkNo) Then
                 '掘進ストローク 掘進モードのときのみ演算
                 _MesureCalcLogicalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - CtlPara.StartJackStroke(mjJkNo)
             End If
@@ -227,19 +227,21 @@ Public Class clsCalcuStroke
     End Sub
 
     Private Class clsGetAvg
-
+        'ジャッキ番号、データ
         Private JackData As Dictionary(Of Short, Integer)
         Public ReadOnly Property AvgData As Integer
             Get
-                Dim jkD As New List(Of Integer)
+                Dim jkD As New List(Of Integer) '合計データ
                 For Each sp In JackData
-                    '掘進モードのみでゼロ以上
-                    If PlcIf.JackStatus(sp.Key - 1) And 2 And sp.Value > 0 Then
+                    '掘進モードのみでゼロ以上 　有効ジャッキ（設定)
+                    'TODO:ゼロ以上の条件は必要なし？
+                    If (PlcIf.JackStatus(sp.Key - 1) And 2) And
+                        Not CtlPara.ExceptMesureJackNo.Contains(sp.Key) Then
                         jkD.Add(sp.Value)
                     End If
                 Next
                 If jkD.Count > 0 Then
-                    Return jkD.Average
+                    Return jkD.Average '平均処理
                 Else
                     Return 0
                 End If

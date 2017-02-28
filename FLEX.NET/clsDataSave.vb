@@ -88,13 +88,13 @@ Friend Class clsDataSave
 
                 Data(ColumnList.IndexOf("減圧弁制御Ｐ定数")) = .感度調整減圧弁制御Ｐ定数
                 Data(ColumnList.IndexOf("減圧弁制御Ｉ定数")) = .感度調整減圧弁制御Ｉ定数
-                Data(ColumnList.IndexOf("ストローク管理法")) = .ストローク管理法
-                Data(ColumnList.IndexOf("掘進判定ストローク")) = .掘進判定ストローク
-                Data(ColumnList.IndexOf("終了判定ストローク")) = .終了判定ストローク
+                'Data(ColumnList.IndexOf("ストローク管理法")) = .ストローク管理法
+                'Data(ColumnList.IndexOf("掘進判定ストローク")) = .掘進判定ストローク
+                'Data(ColumnList.IndexOf("終了判定ストローク")) = .終了判定ストローク
                 Data(ColumnList.IndexOf("終了判定引きストローク")) = .終了判定引きストローク
-                Data(ColumnList.IndexOf("終了判定時間")) = .終了判定時間
+                'Data(ColumnList.IndexOf("終了判定時間")) = .終了判定時間
                 'Data(ColumnList.IndexOf("開始判定速度")) = .
-                Data(ColumnList.IndexOf("中断判定速度")) = .中断判定速度
+                'Data(ColumnList.IndexOf("中断判定速度")) = .中断判定速度
 
                 Data(ColumnList.IndexOf("圧力制御")) = IIf(.FlexControlOn, 1, 0)
                 Data(ColumnList.IndexOf("同時施工モード")) = IIf(.LosZeroMode, 1, 0)

@@ -152,6 +152,7 @@ Module mdlFLEX
             My.Forms.frmMain.DspExcavStartDay(Now)
             ElapsedTime.Reset() '掘進時間計算開始
             CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
+            '掘進開始時のストローク取り込み
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
         End If
         If PreStatus = cChudan And NowStatus = cKussin Then
@@ -190,6 +191,8 @@ Module mdlFLEX
             PlcIf.LosZeroEnable = False   '同時施工可OFF
             ElapsedTime.WaingStart() '経過時間の算出
 
+            '掘進開始時のストローク取り込み
+            CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
 
 
         End If

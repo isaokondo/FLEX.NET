@@ -129,6 +129,7 @@
             lblMachineMode.BackColor = IIf(.ExecMode, Color.Magenta, Color.Aqua)
         End With
 
+        DspAveStartStroke.Value = CtlPara.StartAveStroke '平均開始ストローク
         DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
         DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均ストローク
 
@@ -491,7 +492,7 @@
 
     End Sub
 
-    Private Sub InitialSetting_Click(sender As Object, e As EventArgs) Handles InitialSetting.Click
+    Private Sub InitialSetting_Click(sender As Object, e As EventArgs)
 
     End Sub
 
