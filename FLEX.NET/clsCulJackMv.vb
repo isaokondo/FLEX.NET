@@ -492,13 +492,14 @@ Friend Class clsCulJackMv
         '
 
         EstValue.sbCulc() ''予測値の演算
+        '予測値は使わない！　.netより
 
         ''制御モードの判定
 
         ''ver 1.1でこのコメントを外す
-        _圧力超 = EstValue.元圧予測 > CtlPara.圧力許容値
+        _圧力超 = PlcIf.JkPress > CtlPara.圧力許容値
 
-        _モーメント上限超 = (EstValue.モーメント予測 > CtlPara.ジャッキモーメント上限値) _
+        _モーメント上限超 = (CulcMoment.MomentR > CtlPara.ジャッキモーメント上限値) _
             And mblnモーメント制御 = False
 
         ''半径がある一定値を越えたらロックする。
@@ -750,10 +751,10 @@ ErrTrap:
             'グループの終了角度 ''グループの開始角度
             With InitPara
 
-                Dim dblHosePres(.NumberGroup - 1) As Double
-                Dim dblEachJkThrust(.NumberGroup - 1) As Double
+                Dim dblHosePres(InitPara.NumberGroup - 1) As Double
+                Dim dblEachJkThrust(InitPara.NumberGroup - 1) As Double
 
-                For i = 0 To .NumberGroup - 1
+                For i = 0 To InitPara.NumberGroup - 1
                     ''圧力補正を求める
                     dblHosePres(i) = mdbl元圧予測 * mdbl分担率指令値(i)
                     ''最低ジャッキ圧力を考慮
@@ -761,12 +762,15 @@ ErrTrap:
                     If dblHosePres(i) <= 2 Then dblHosePres(i) = 2
                     ''各ジャッキ推力を計算する。
                     '        dblEachJkThrust(intCnt) = _
-                    dblEachJkThrust(i) = dblHosePres(i) / .JackMaxOilPres * .JackPower * intGpJk(i)
+                    dblEachJkThrust(i) =
+                        dblHosePres(i) / InitPara.JackMaxOilPres * InitPara.JackPower * intGpJk(i)
 
                     ''X方向モーメント計算,各グループ毎の加算
-                    dblMomentX -= dblEachJkThrust(i) * .JackRadius * Math.Cos(.FaiGroup(i) * PI / 180)
+                    dblMomentX -=
+                        dblEachJkThrust(i) * InitPara.JackRadius * Math.Cos(.FaiGroup(i) * PI / 180)
                     ''Y方向モーメント計算,各グループ毎の加算
-                    dblMomentY += dblEachJkThrust(i) * .JackRadius * Math.Sin(.FaiGroup(i) * PI / 180)
+                    dblMomentY +=
+                        dblEachJkThrust(i) * InitPara.JackRadius * Math.Sin(.FaiGroup(i) * PI / 180)
                 Next i
             End With
 

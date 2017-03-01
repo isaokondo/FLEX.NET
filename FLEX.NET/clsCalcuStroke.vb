@@ -205,7 +205,7 @@ Public Class clsCalcuStroke
                     / 180 * Math.PI)
                 End If
             Next
-            If PlcIf.ExecMode AndAlso _mesureCalcJackStroke(mjJkNo) > CtlPara.StartJackStroke(mjJkNo) Then
+            If PlcIf.ExecMode AndAlso _mesureCalcJackStroke(mjJkNo) >= CtlPara.StartJackStroke(mjJkNo) Then
                 '掘進ストローク 掘進モードのときのみ演算
                 _MesureCalcLogicalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - CtlPara.StartJackStroke(mjJkNo)
             End If

@@ -297,6 +297,8 @@ Friend Class clsThrustDiv
             '分担率計算値を降順に並べ変え,最低全開グループ数分の番号を取得
             _FullOpenGruop =
                     (From q In buntang Order By q.Value Descending Select q.Key).Take(_最低全開グループ数).ToList
+            '分担率　100%も追加
+            _FullOpenGruop.AddRange(From q In buntang Where q.Value = 100 Select q.Key)
             '全開にセット
             For Each g In _FullOpenGruop
                 _分担率指令値(g) = 100

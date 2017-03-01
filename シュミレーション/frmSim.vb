@@ -466,13 +466,13 @@ Public Class frmSim
                     PlcAdress = .LeftSpeedAdr
                     PlcWriteData = fnChangeSpeedAnalogOut(NumObj.Value)
                     If nudLeftSpeed.Value <> 0 Then
-                        tmrLeftJack.Interval = 60000 / nudLeftSpeed.Value
+                        tmrLeftJack.Interval = 6000 / nudLeftSpeed.Value
                     End If
                 Case nudRightSpeed.Name
                     PlcAdress = .RightSpeedAdr
                     PlcWriteData = fnChangeSpeedAnalogOut(NumObj.Value)
                     If nudRightSpeed.Value <> 0 Then
-                        tmrRightJack.Interval = 60000 / nudRightSpeed.Value
+                        tmrRightJack.Interval = 6000 / nudRightSpeed.Value
                     End If
 
                 Case nudSoucePressure.Name

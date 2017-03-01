@@ -159,7 +159,10 @@ Public Class clsControlParameter
     End Property
 
 
-
+    ''' <summary>
+    ''' 任意圧力設定有効グループ
+    ''' </summary>
+    ''' <returns></returns>
     Public Property optGpEn As List(Of Short)
         Get
             Return _optGpEn

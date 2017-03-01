@@ -413,30 +413,30 @@ Module mdlFLEX
 
         With DivCul
             'パラメータセット
-            .最低全開グループ数 = CtlPara.最低全開グループ数
-            .全開作動指令値 = CtlPara.全開作動指令値
-            .全開作動範囲 = CtlPara.全開作動範囲
-            .全開グループ制限 = CtlPara.全開グループ制限
+            DivCul.最低全開グループ数 = CtlPara.最低全開グループ数
+            DivCul.全開作動指令値 = CtlPara.全開作動指令値
+            DivCul.全開作動範囲 = CtlPara.全開作動範囲
+            DivCul.全開グループ制限 = CtlPara.全開グループ制限
 
             If CtlPara.AutoDirectionControl Then
                 '力点自動
-                .操作角 = JackMvAuto.操作角
-                .操作強 = JackMvAuto.操作強
+                DivCul.操作角 = JackMvAuto.操作角
+                DivCul.操作強 = JackMvAuto.操作強
                 CtlPara.PointX = JackMvAuto.PointX
                 CtlPara.PointY = JackMvAuto.PointY
                 CtlPara.操作角 = JackMvAuto.操作角
                 CtlPara.操作強 = JackMvAuto.操作強
             Else
                 '力点手動操作時
-                .操作角 = JackManual.操作角
-                .操作強 = JackManual.操作強
+                DivCul.操作角 = JackManual.操作角
+                DivCul.操作強 = JackManual.操作強
                 CtlPara.操作角 = JackManual.操作角
                 CtlPara.操作強 = JackManual.操作強
             End If
             'TODO:ジャッキステータスを追加するように
             '掘進モードをセット
-            .OnJack = PlcIf.JackExecMode
-            .sbCul() ''推力分担率の演算
+            DivCul.OnJack = PlcIf.JackExecMode
+            DivCul.sbCul() ''推力分担率の演算
 
 
         End With

@@ -768,6 +768,9 @@ Public Class clsPlcIf
         Dim szDeviceName As String = ""         'デバイス名称
         Dim iNumberOfDeviceName As Integer = 0  'デバイス・サイズ
 
+        '計測ジャッキ取込 '前スキャンの読込
+        Dim st As New Dictionary(Of Short, Integer)(_mesureJackStroke)
+
 
         Try
             'デバイス値用の領域を割り当て
@@ -806,19 +809,10 @@ Public Class clsPlcIf
                 _rightClearance = _EngValue("クリアランス右")
                 _botomClearance = _EngValue("クリアランス下")
 
-                '計測ジャッキ取込
-                Dim st As New Dictionary(Of Short, Integer)(_mesureJackStroke)
-                'st = New Dictionary(Of Short, Integer)(_mesureJackStroke) '前スキャンの読込
+
                 For Each mj In InitPara.MesureJackAngle.Keys
                     _mesureJackStroke(mj) = _EngValue("ジャッキストローク" & mj)
                     _mesureJackSpeed(mj) = _EngValue("ジャッキスピード" & mj)
-                Next
-                '計測ストロークのいずれかが変化した時のイベント
-                For Each mj In InitPara.MesureJackAngle.Keys
-                    If _mesureJackStroke(mj) <> st(mj) Then
-                        RaiseEvent MesureStrokeChange()
-                        Exit For
-                    End If
                 Next
 
                 '同時施工ステータス読込
@@ -948,6 +942,15 @@ Public Class clsPlcIf
             MessageBox.Show(exException.Message, "PLC_READ", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End Try
+
+        '計測ストロークのいずれかが変化した時のイベント
+        For Each mj In InitPara.MesureJackAngle.Keys
+            If _mesureJackStroke(mj) <> st(mj) Then
+                RaiseEvent MesureStrokeChange()
+                Exit For
+            End If
+        Next
+
         '掘進スロトーク、ステータスの変化　基準方向の変更
         If _realStroke <> PreRealStroke Or _excaStatus <> PreExcaStatus _
             Or _gyro <> _PreJyairo Or _PrePitching <> _gyroPitching Then
