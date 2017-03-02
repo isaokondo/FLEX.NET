@@ -113,7 +113,7 @@ Friend Class clsDataSave
 
             With RefernceDirection.HorZendoKijun
                 Data(ColumnList.IndexOf("平面旋回中心")) = RefernceDirection.平面旋回中心.ToString("F4")
-                Data(ColumnList.IndexOf("平面発進から発旋回中心までの距離")) = (.掘進累積距離 - gdblToStartDistance).ToString("F4")
+                Data(ColumnList.IndexOf("平面発進から発旋回中心までの距離")) = (.掘進累積距離 - RefernceDirection.toStartDistance).ToString("F4")
                 Data(ColumnList.IndexOf("平面基点から発旋回中心までの距離")) = .掘進累積距離.ToString("F4")
                 Data(ColumnList.IndexOf("平面ｿﾞｰﾝ")) = .平面ゾーン番号
                 Data(ColumnList.IndexOf("平面線形")) = .平面線形
@@ -137,7 +137,7 @@ Friend Class clsDataSave
 
             Data(ColumnList.IndexOf("縦断旋回中心")) = RefernceDirection.縦断旋回中心.ToString("F4")
             With RefernceDirection.VerZendoKijun
-                Data(ColumnList.IndexOf("縦断発進から発旋回中心までの距離")) = (.掘進累積距離 - gdblToStartDistance).ToString("F4")
+                Data(ColumnList.IndexOf("縦断発進から発旋回中心までの距離")) = (.掘進累積距離 - RefernceDirection.toStartDistance).ToString("F4")
                 Data(ColumnList.IndexOf("縦断基点から発旋回中心までの距離")) = .掘進累積距離.ToString("F4")
                 Data(ColumnList.IndexOf("縦断ｿﾞｰﾝ")) = .縦断ゾーン番号
                 Data(ColumnList.IndexOf("縦断線形")) = .縦断線形

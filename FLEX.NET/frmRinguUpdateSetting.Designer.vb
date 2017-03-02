@@ -51,7 +51,7 @@ Partial Class frmRinguUpdateSetting
         Me.CloseJudgePullStroke.DataDspWidth = 110
         Me.CloseJudgePullStroke.DecimalPlaces = CType(0, Short)
         Me.CloseJudgePullStroke.DspFieldName = True
-        Me.CloseJudgePullStroke.FieldName = "終了判定引きストローク"
+        Me.CloseJudgePullStroke.FieldName = "終了判定平均引きストローク"
         Me.CloseJudgePullStroke.Increment = 1.0!
         Me.CloseJudgePullStroke.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.CloseJudgePullStroke.Location = New System.Drawing.Point(29, 31)

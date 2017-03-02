@@ -181,7 +181,7 @@ Friend Class clsCulKijun
 
                 'dblSentanDistance = clsDistance.掘進総距離
                 ''鹿島品川線対応　 計画線起点、発進点に伴う変更
-                dblSentanDistance = Distance.掘進総距離 '+ gdblToStartDistance
+                dblSentanDistance = Distance.掘進総距離 '+ _toStartDistance
 
             End If
         End With
@@ -207,7 +207,7 @@ Friend Class clsCulKijun
                 '計画線ｿﾞｰﾝ毎の中折れﾃﾞｰﾀを採用
                 '○先端位置
                 '品川線対応変更　07/12/08 計画線起点、発進点に伴う変更
-                HorSentanKijun.掘進累積距離 = dblSentanDistance + gdblToStartDistance
+                HorSentanKijun.掘進累積距離 = dblSentanDistance + _toStartDistance
 
                 '○後胴中心位置の抽出（中折れ点位置より計画線データから最も近い位置の後胴中心設定データを探す）
                 '        HorKodoKijun.掘進累積距離 = HorSentanKijun.掘進累積距離 _
@@ -289,7 +289,7 @@ Friend Class clsCulKijun
                 'ｼｰﾙﾄﾞ機諸元ﾃﾞｰﾀを採用
 
                 '○先端位置
-                HorSentanKijun.掘進累積距離 = dblSentanDistance + gdblToStartDistance
+                HorSentanKijun.掘進累積距離 = dblSentanDistance + _toStartDistance
 
                 '○後胴位置 '後胴前長さ（平面後胴中心－前胴長）
                 HorKodoKijun.掘進累積距離 = HorSentanKijun.掘進累積距離 - (MachineSpec.ZendoLen + (MachineSpec.HorKodoCenter - MachineSpec.ZendoLen))
@@ -305,7 +305,7 @@ Friend Class clsCulKijun
             '単胴ｼｰﾙﾄﾞの場合
             '○先端位置
             '品川線対応変更　07/12/08 計画線起点、発進点に伴う変更
-            HorSentanKijun.掘進累積距離 = dblSentanDistance + gdblToStartDistance
+            HorSentanKijun.掘進累積距離 = dblSentanDistance + _toStartDistance
 
             '○単胴時旋回中心位置
             HorZendoKijun.掘進累積距離 = HorSentanKijun.掘進累積距離 - MachineSpec.HorSenkaiCyuushin
@@ -340,7 +340,7 @@ Friend Class clsCulKijun
 
                 '計画線ｿﾞｰﾝ毎の中折れﾃﾞｰﾀを採用
                 '○先端位置
-                VerSentanKijun.掘進累積距離 = dblSentanDistance + gdblToStartDistance '品川線対応変更　07/12/08 計画線起点、発進点に伴う変更
+                VerSentanKijun.掘進累積距離 = dblSentanDistance + _toStartDistance '品川線対応変更　07/12/08 計画線起点、発進点に伴う変更
 
                 '○後胴中心位置の抽出（中折れ点位置より計画線データから最も近い位置の後胴中心設定データを探す）
                 VerKodoCenTmp = New clsLineMake
@@ -395,7 +395,7 @@ Friend Class clsCulKijun
 
             Else
                 '○先端位置
-                VerSentanKijun.掘進累積距離 = dblSentanDistance + gdblToStartDistance
+                VerSentanKijun.掘進累積距離 = dblSentanDistance + _toStartDistance
 
                 '○後胴位置（ｴﾚｸﾀｰ中心）
                 VerKodoKijun.掘進累積距離 = VerSentanKijun.掘進累積距離 - MachineSpec.VerKodoCenter
@@ -411,7 +411,7 @@ Friend Class clsCulKijun
         Else
             '単胴ｼｰﾙﾄﾞの場合
             '○先端位置
-            VerSentanKijun.掘進累積距離 = dblSentanDistance + gdblToStartDistance
+            VerSentanKijun.掘進累積距離 = dblSentanDistance + _toStartDistance
 
             '○単胴時旋回中心位置
             VerZendoKijun.掘進累積距離 = VerSentanKijun.掘進累積距離 - MachineSpec.VerSenkaiCyuushin

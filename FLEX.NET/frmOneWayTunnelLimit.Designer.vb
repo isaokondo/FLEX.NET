@@ -69,7 +69,7 @@ Partial Class frmOneWayTunnelLimit
         Me.MomentPermitValue.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.MomentPermitValue.Location = New System.Drawing.Point(29, 103)
         Me.MomentPermitValue.Margin = New System.Windows.Forms.Padding(2)
-        Me.MomentPermitValue.MaxValue = "100000"
+        Me.MomentPermitValue.MaxValue = "1000000"
         Me.MomentPermitValue.MinValue = "0"
         Me.MomentPermitValue.Name = "MomentPermitValue"
         Me.MomentPermitValue.SelectItem = Nothing

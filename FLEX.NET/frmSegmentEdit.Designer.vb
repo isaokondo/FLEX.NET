@@ -24,9 +24,11 @@ Partial Class frmSegmentEdit
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.DgvSegAssign = New System.Windows.Forms.DataGridView()
         Me.RingNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SegmentType = New System.Windows.Forms.DataGridViewComboBoxColumn()
@@ -49,15 +51,17 @@ Partial Class frmSegmentEdit
         Me.DgvSegAssign.AllowUserToDeleteRows = False
         Me.DgvSegAssign.AllowUserToResizeColumns = False
         Me.DgvSegAssign.AllowUserToResizeRows = False
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.DgvSegAssign.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DgvSegAssign.BackgroundColor = System.Drawing.SystemColors.ControlDark
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DgvSegAssign.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DgvSegAssign.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.DgvSegAssign.ColumnHeadersHeight = 40
         Me.DgvSegAssign.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.DgvSegAssign.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RingNo, Me.SegmentType, Me.SegWidth, Me.AssemblyPtnName})
@@ -67,6 +71,8 @@ Partial Class frmSegmentEdit
         Me.DgvSegAssign.Name = "DgvSegAssign"
         Me.DgvSegAssign.RowHeadersVisible = False
         Me.DgvSegAssign.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.DgvSegAssign.RowsDefaultCellStyle = DataGridViewCellStyle7
         Me.DgvSegAssign.RowTemplate.Height = 24
         Me.DgvSegAssign.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.DgvSegAssign.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
@@ -75,9 +81,9 @@ Partial Class frmSegmentEdit
         '
         'RingNo
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.RingNo.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.RingNo.DefaultCellStyle = DataGridViewCellStyle3
         Me.RingNo.Frozen = True
         Me.RingNo.HeaderText = "リングNo"
         Me.RingNo.Name = "RingNo"
@@ -88,8 +94,8 @@ Partial Class frmSegmentEdit
         '
         'SegmentType
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SegmentType.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SegmentType.DefaultCellStyle = DataGridViewCellStyle4
         Me.SegmentType.Frozen = True
         Me.SegmentType.HeaderText = "セグメント種類"
         Me.SegmentType.Name = "SegmentType"
@@ -98,9 +104,9 @@ Partial Class frmSegmentEdit
         '
         'SegWidth
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.SegWidth.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.SegWidth.DefaultCellStyle = DataGridViewCellStyle5
         Me.SegWidth.Frozen = True
         Me.SegWidth.HeaderText = "セグメント幅(mm)"
         Me.SegWidth.Name = "SegWidth"
@@ -112,8 +118,8 @@ Partial Class frmSegmentEdit
         'AssemblyPtnName
         '
         Me.AssemblyPtnName.AutoComplete = False
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.AssemblyPtnName.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.AssemblyPtnName.DefaultCellStyle = DataGridViewCellStyle6
         Me.AssemblyPtnName.Frozen = True
         Me.AssemblyPtnName.HeaderText = "組立パターン"
         Me.AssemblyPtnName.Name = "AssemblyPtnName"

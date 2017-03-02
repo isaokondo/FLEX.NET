@@ -64,11 +64,40 @@ Partial Class frmMain
         Me.ヘルプToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.UcnDspData15 = New FLEX.NET.ucnDspData()
+        Me.UcnDspData16 = New FLEX.NET.ucnDspData()
+        Me.UcnDspData32 = New FLEX.NET.ucnDspData()
+        Me.UcnDspData33 = New FLEX.NET.ucnDspData()
+        Me.UcnDspData34 = New FLEX.NET.ucnDspData()
+        Me.UcnDspData35 = New FLEX.NET.ucnDspData()
+        Me.DspCycleTime = New FLEX.NET.ucnDspData()
+        Me.DspWatingElapsedTime = New FLEX.NET.ucnDspData()
+        Me.DspLosZeroElapsedTime = New FLEX.NET.ucnDspData()
+        Me.DspExcationElapsedTime = New FLEX.NET.ucnDspData()
+        Me.DspExcavStartTime = New FLEX.NET.ucnDspData()
+        Me.DspExcavStartDate = New FLEX.NET.ucnDspData()
         Me.rtbEventLog = New System.Windows.Forms.RichTextBox()
         Me.lblUnit = New System.Windows.Forms.Label()
         Me.DspRingNo = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.DspFlexGyiroControl = New FLEX.NET.ucnDspBit()
+        Me.DspFlexAutoAzurControl = New FLEX.NET.ucnDspBit()
+        Me.DspExcavingStop = New FLEX.NET.ucnDspBit()
+        Me.UcnDspBit2 = New FLEX.NET.ucnDspBit()
+        Me.UcnDspBit3 = New FLEX.NET.ucnDspBit()
+        Me.DspExcavingOn = New FLEX.NET.ucnDspBit()
+        Me.DspFlexAuto = New FLEX.NET.ucnDspBit()
+        Me.DspFlexControlOn = New FLEX.NET.ucnDspBit()
+        Me.DspExcaWaiting = New FLEX.NET.ucnDspBit()
         Me.pnlLosZero = New System.Windows.Forms.Panel()
+        Me.ucnAssemblyFinish = New FLEX.NET.ucnDspBit()
+        Me.ucnPullBackFinish = New FLEX.NET.ucnDspBit()
+        Me.ucnReduceFinish = New FLEX.NET.ucnDspBit()
+        Me.ucnAssemblyPieceNo = New FLEX.NET.ucnDspBit()
+        Me.UcnDspBit5 = New FLEX.NET.ucnDspBit()
+        Me.UcnDspBit4 = New FLEX.NET.ucnDspBit()
+        Me.UcnDspBit1 = New FLEX.NET.ucnDspBit()
+        Me.ucnLosZeroMode = New FLEX.NET.ucnDspBit()
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
         Me.LineShape1 = New Microsoft.VisualBasic.PowerPacks.LineShape()
         Me.btnLossZerooCancel = New System.Windows.Forms.Button()
@@ -101,35 +130,6 @@ Partial Class frmMain
         Me.ucnHorDevChart = New FLEX.NET.ucnChart()
         Me.ucnHorMomentChart = New FLEX.NET.ucnChart()
         Me.DspMachinComErr = New FLEX.NET.ucnDspBit()
-        Me.ucnAssemblyFinish = New FLEX.NET.ucnDspBit()
-        Me.ucnPullBackFinish = New FLEX.NET.ucnDspBit()
-        Me.ucnReduceFinish = New FLEX.NET.ucnDspBit()
-        Me.ucnAssemblyPieceNo = New FLEX.NET.ucnDspBit()
-        Me.UcnDspBit5 = New FLEX.NET.ucnDspBit()
-        Me.UcnDspBit4 = New FLEX.NET.ucnDspBit()
-        Me.UcnDspBit1 = New FLEX.NET.ucnDspBit()
-        Me.ucnLosZeroMode = New FLEX.NET.ucnDspBit()
-        Me.DspFlexGyiroControl = New FLEX.NET.ucnDspBit()
-        Me.DspFlexAutoAzurControl = New FLEX.NET.ucnDspBit()
-        Me.DspExcavingStop = New FLEX.NET.ucnDspBit()
-        Me.UcnDspBit2 = New FLEX.NET.ucnDspBit()
-        Me.UcnDspBit3 = New FLEX.NET.ucnDspBit()
-        Me.DspExcavingOn = New FLEX.NET.ucnDspBit()
-        Me.DspFlexAuto = New FLEX.NET.ucnDspBit()
-        Me.DspFlexControlOn = New FLEX.NET.ucnDspBit()
-        Me.DspExcaWaiting = New FLEX.NET.ucnDspBit()
-        Me.UcnDspData15 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData16 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData32 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData33 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData34 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData35 = New FLEX.NET.ucnDspData()
-        Me.DspCycleTime = New FLEX.NET.ucnDspData()
-        Me.DspWatingElapsedTime = New FLEX.NET.ucnDspData()
-        Me.DspLosZeroElapsedTime = New FLEX.NET.ucnDspData()
-        Me.DspExcationElapsedTime = New FLEX.NET.ucnDspData()
-        Me.DspExcavStartTime = New FLEX.NET.ucnDspData()
-        Me.DspExcavStartDate = New FLEX.NET.ucnDspData()
         Me.DspAssemblyPattern = New FLEX.NET.ucnDspData()
         Me.DspNextPieceName = New FLEX.NET.ucnDspData()
         Me.UcnDspData24 = New FLEX.NET.ucnDspData()
@@ -454,6 +454,258 @@ Partial Class frmMain
         Me.Label1.Text = "同時施工実績"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'UcnDspData15
+        '
+        Me.UcnDspData15.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspData15.Blink = False
+        Me.UcnDspData15.BlinkColor = System.Drawing.Color.Red
+        Me.UcnDspData15.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.UcnDspData15.DataWidth = 91
+        Me.UcnDspData15.DecimalPlaces = CType(0, Short)
+        Me.UcnDspData15.FieldName = "短縮効果(日)"
+        Me.UcnDspData15.FieldNameWidth = 175
+        Me.UcnDspData15.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.UcnDspData15.Location = New System.Drawing.Point(297, 211)
+        Me.UcnDspData15.Margin = New System.Windows.Forms.Padding(1)
+        Me.UcnDspData15.Name = "UcnDspData15"
+        Me.UcnDspData15.Size = New System.Drawing.Size(275, 32)
+        Me.UcnDspData15.TabIndex = 133
+        Me.UcnDspData15.Unit = "deg"
+        Me.UcnDspData15.UnitVisible = False
+        Me.UcnDspData15.Value = "20"
+        Me.UcnDspData15.ValueType = False
+        '
+        'UcnDspData16
+        '
+        Me.UcnDspData16.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspData16.Blink = False
+        Me.UcnDspData16.BlinkColor = System.Drawing.Color.Red
+        Me.UcnDspData16.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.UcnDspData16.DataWidth = 91
+        Me.UcnDspData16.DecimalPlaces = CType(0, Short)
+        Me.UcnDspData16.FieldName = "累計同時掘進(分)"
+        Me.UcnDspData16.FieldNameWidth = 175
+        Me.UcnDspData16.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.UcnDspData16.Location = New System.Drawing.Point(297, 179)
+        Me.UcnDspData16.Margin = New System.Windows.Forms.Padding(1)
+        Me.UcnDspData16.Name = "UcnDspData16"
+        Me.UcnDspData16.Size = New System.Drawing.Size(275, 32)
+        Me.UcnDspData16.TabIndex = 132
+        Me.UcnDspData16.Unit = "deg"
+        Me.UcnDspData16.UnitVisible = False
+        Me.UcnDspData16.Value = "20"
+        Me.UcnDspData16.ValueType = False
+        '
+        'UcnDspData32
+        '
+        Me.UcnDspData32.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspData32.Blink = False
+        Me.UcnDspData32.BlinkColor = System.Drawing.Color.Red
+        Me.UcnDspData32.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.UcnDspData32.DataWidth = 91
+        Me.UcnDspData32.DecimalPlaces = CType(0, Short)
+        Me.UcnDspData32.FieldName = "平均同時掘進(分)"
+        Me.UcnDspData32.FieldNameWidth = 175
+        Me.UcnDspData32.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.UcnDspData32.Location = New System.Drawing.Point(297, 147)
+        Me.UcnDspData32.Margin = New System.Windows.Forms.Padding(1)
+        Me.UcnDspData32.Name = "UcnDspData32"
+        Me.UcnDspData32.Size = New System.Drawing.Size(275, 32)
+        Me.UcnDspData32.TabIndex = 131
+        Me.UcnDspData32.Unit = "deg"
+        Me.UcnDspData32.UnitVisible = False
+        Me.UcnDspData32.Value = "20"
+        Me.UcnDspData32.ValueType = False
+        '
+        'UcnDspData33
+        '
+        Me.UcnDspData33.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspData33.Blink = False
+        Me.UcnDspData33.BlinkColor = System.Drawing.Color.Red
+        Me.UcnDspData33.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.UcnDspData33.DataWidth = 91
+        Me.UcnDspData33.DecimalPlaces = CType(0, Short)
+        Me.UcnDspData33.FieldName = "累計組立ﾋﾟｰｽ数"
+        Me.UcnDspData33.FieldNameWidth = 175
+        Me.UcnDspData33.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.UcnDspData33.Location = New System.Drawing.Point(297, 115)
+        Me.UcnDspData33.Margin = New System.Windows.Forms.Padding(1)
+        Me.UcnDspData33.Name = "UcnDspData33"
+        Me.UcnDspData33.Size = New System.Drawing.Size(275, 32)
+        Me.UcnDspData33.TabIndex = 130
+        Me.UcnDspData33.Unit = "deg"
+        Me.UcnDspData33.UnitVisible = False
+        Me.UcnDspData33.Value = "20"
+        Me.UcnDspData33.ValueType = False
+        '
+        'UcnDspData34
+        '
+        Me.UcnDspData34.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspData34.Blink = False
+        Me.UcnDspData34.BlinkColor = System.Drawing.Color.Red
+        Me.UcnDspData34.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.UcnDspData34.DataWidth = 91
+        Me.UcnDspData34.DecimalPlaces = CType(0, Short)
+        Me.UcnDspData34.FieldName = "平均組立ﾋﾟｰｽ数"
+        Me.UcnDspData34.FieldNameWidth = 175
+        Me.UcnDspData34.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.UcnDspData34.Location = New System.Drawing.Point(297, 83)
+        Me.UcnDspData34.Margin = New System.Windows.Forms.Padding(1)
+        Me.UcnDspData34.Name = "UcnDspData34"
+        Me.UcnDspData34.Size = New System.Drawing.Size(275, 32)
+        Me.UcnDspData34.TabIndex = 129
+        Me.UcnDspData34.Unit = "deg"
+        Me.UcnDspData34.UnitVisible = False
+        Me.UcnDspData34.Value = "20"
+        Me.UcnDspData34.ValueType = False
+        '
+        'UcnDspData35
+        '
+        Me.UcnDspData35.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspData35.Blink = False
+        Me.UcnDspData35.BlinkColor = System.Drawing.Color.Red
+        Me.UcnDspData35.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.UcnDspData35.DataWidth = 91
+        Me.UcnDspData35.DecimalPlaces = CType(0, Short)
+        Me.UcnDspData35.FieldName = "平均ｻｲｸﾙ(分)"
+        Me.UcnDspData35.FieldNameWidth = 175
+        Me.UcnDspData35.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.UcnDspData35.Location = New System.Drawing.Point(297, 51)
+        Me.UcnDspData35.Margin = New System.Windows.Forms.Padding(1)
+        Me.UcnDspData35.Name = "UcnDspData35"
+        Me.UcnDspData35.Size = New System.Drawing.Size(275, 32)
+        Me.UcnDspData35.TabIndex = 128
+        Me.UcnDspData35.Unit = "deg"
+        Me.UcnDspData35.UnitVisible = False
+        Me.UcnDspData35.Value = "20"
+        Me.UcnDspData35.ValueType = False
+        '
+        'DspCycleTime
+        '
+        Me.DspCycleTime.BackColor = System.Drawing.Color.Transparent
+        Me.DspCycleTime.Blink = False
+        Me.DspCycleTime.BlinkColor = System.Drawing.Color.Red
+        Me.DspCycleTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspCycleTime.DataWidth = 91
+        Me.DspCycleTime.DecimalPlaces = CType(0, Short)
+        Me.DspCycleTime.FieldName = "ｻｲｸﾙ時間(分)"
+        Me.DspCycleTime.FieldNameWidth = 175
+        Me.DspCycleTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspCycleTime.Location = New System.Drawing.Point(21, 211)
+        Me.DspCycleTime.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspCycleTime.Name = "DspCycleTime"
+        Me.DspCycleTime.Size = New System.Drawing.Size(275, 32)
+        Me.DspCycleTime.TabIndex = 127
+        Me.DspCycleTime.Unit = "deg"
+        Me.DspCycleTime.UnitVisible = False
+        Me.DspCycleTime.Value = "20"
+        Me.DspCycleTime.ValueType = False
+        '
+        'DspWatingElapsedTime
+        '
+        Me.DspWatingElapsedTime.BackColor = System.Drawing.Color.Transparent
+        Me.DspWatingElapsedTime.Blink = False
+        Me.DspWatingElapsedTime.BlinkColor = System.Drawing.Color.Red
+        Me.DspWatingElapsedTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspWatingElapsedTime.DataWidth = 91
+        Me.DspWatingElapsedTime.DecimalPlaces = CType(0, Short)
+        Me.DspWatingElapsedTime.FieldName = "待機時間(分)"
+        Me.DspWatingElapsedTime.FieldNameWidth = 175
+        Me.DspWatingElapsedTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspWatingElapsedTime.Location = New System.Drawing.Point(21, 179)
+        Me.DspWatingElapsedTime.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspWatingElapsedTime.Name = "DspWatingElapsedTime"
+        Me.DspWatingElapsedTime.Size = New System.Drawing.Size(275, 32)
+        Me.DspWatingElapsedTime.TabIndex = 126
+        Me.DspWatingElapsedTime.Unit = "deg"
+        Me.DspWatingElapsedTime.UnitVisible = False
+        Me.DspWatingElapsedTime.Value = "20"
+        Me.DspWatingElapsedTime.ValueType = False
+        '
+        'DspLosZeroElapsedTime
+        '
+        Me.DspLosZeroElapsedTime.BackColor = System.Drawing.Color.Transparent
+        Me.DspLosZeroElapsedTime.Blink = False
+        Me.DspLosZeroElapsedTime.BlinkColor = System.Drawing.Color.Red
+        Me.DspLosZeroElapsedTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspLosZeroElapsedTime.DataWidth = 91
+        Me.DspLosZeroElapsedTime.DecimalPlaces = CType(0, Short)
+        Me.DspLosZeroElapsedTime.FieldName = "同時掘進時間(分)"
+        Me.DspLosZeroElapsedTime.FieldNameWidth = 175
+        Me.DspLosZeroElapsedTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspLosZeroElapsedTime.Location = New System.Drawing.Point(21, 147)
+        Me.DspLosZeroElapsedTime.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspLosZeroElapsedTime.Name = "DspLosZeroElapsedTime"
+        Me.DspLosZeroElapsedTime.Size = New System.Drawing.Size(275, 32)
+        Me.DspLosZeroElapsedTime.TabIndex = 125
+        Me.DspLosZeroElapsedTime.Unit = "deg"
+        Me.DspLosZeroElapsedTime.UnitVisible = False
+        Me.DspLosZeroElapsedTime.Value = "20"
+        Me.DspLosZeroElapsedTime.ValueType = False
+        '
+        'DspExcationElapsedTime
+        '
+        Me.DspExcationElapsedTime.BackColor = System.Drawing.Color.Transparent
+        Me.DspExcationElapsedTime.Blink = False
+        Me.DspExcationElapsedTime.BlinkColor = System.Drawing.Color.Red
+        Me.DspExcationElapsedTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspExcationElapsedTime.DataWidth = 91
+        Me.DspExcationElapsedTime.DecimalPlaces = CType(0, Short)
+        Me.DspExcationElapsedTime.FieldName = "掘進時間(分)"
+        Me.DspExcationElapsedTime.FieldNameWidth = 175
+        Me.DspExcationElapsedTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspExcationElapsedTime.Location = New System.Drawing.Point(21, 115)
+        Me.DspExcationElapsedTime.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspExcationElapsedTime.Name = "DspExcationElapsedTime"
+        Me.DspExcationElapsedTime.Size = New System.Drawing.Size(275, 32)
+        Me.DspExcationElapsedTime.TabIndex = 124
+        Me.DspExcationElapsedTime.Unit = "deg"
+        Me.DspExcationElapsedTime.UnitVisible = False
+        Me.DspExcationElapsedTime.Value = "20"
+        Me.DspExcationElapsedTime.ValueType = False
+        '
+        'DspExcavStartTime
+        '
+        Me.DspExcavStartTime.BackColor = System.Drawing.Color.Transparent
+        Me.DspExcavStartTime.Blink = False
+        Me.DspExcavStartTime.BlinkColor = System.Drawing.Color.Red
+        Me.DspExcavStartTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.DspExcavStartTime.DataWidth = 141
+        Me.DspExcavStartTime.DecimalPlaces = CType(2, Short)
+        Me.DspExcavStartTime.FieldName = "開始時刻"
+        Me.DspExcavStartTime.FieldNameWidth = 125
+        Me.DspExcavStartTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspExcavStartTime.Location = New System.Drawing.Point(21, 83)
+        Me.DspExcavStartTime.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspExcavStartTime.Name = "DspExcavStartTime"
+        Me.DspExcavStartTime.Size = New System.Drawing.Size(275, 32)
+        Me.DspExcavStartTime.TabIndex = 123
+        Me.DspExcavStartTime.Unit = "deg"
+        Me.DspExcavStartTime.UnitVisible = False
+        Me.DspExcavStartTime.Value = "23:01:01"
+        Me.DspExcavStartTime.ValueType = True
+        '
+        'DspExcavStartDate
+        '
+        Me.DspExcavStartDate.BackColor = System.Drawing.Color.Transparent
+        Me.DspExcavStartDate.Blink = False
+        Me.DspExcavStartDate.BlinkColor = System.Drawing.Color.Red
+        Me.DspExcavStartDate.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.DspExcavStartDate.DataWidth = 141
+        Me.DspExcavStartDate.DecimalPlaces = CType(2, Short)
+        Me.DspExcavStartDate.FieldName = "開始日"
+        Me.DspExcavStartDate.FieldNameWidth = 125
+        Me.DspExcavStartDate.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspExcavStartDate.Location = New System.Drawing.Point(21, 51)
+        Me.DspExcavStartDate.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspExcavStartDate.Name = "DspExcavStartDate"
+        Me.DspExcavStartDate.Size = New System.Drawing.Size(275, 32)
+        Me.DspExcavStartDate.TabIndex = 122
+        Me.DspExcavStartDate.Unit = "deg"
+        Me.DspExcavStartDate.UnitVisible = False
+        Me.DspExcavStartDate.Value = "216/05/01"
+        Me.DspExcavStartDate.ValueType = True
+        '
         'rtbEventLog
         '
         Me.rtbEventLog.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
@@ -510,6 +762,132 @@ Partial Class frmMain
         Me.Panel2.Size = New System.Drawing.Size(580, 75)
         Me.Panel2.TabIndex = 120
         '
+        'DspFlexGyiroControl
+        '
+        Me.DspFlexGyiroControl.BackColor = System.Drawing.Color.Transparent
+        Me.DspFlexGyiroControl.BitStatus = True
+        Me.DspFlexGyiroControl.Blink = False
+        Me.DspFlexGyiroControl.FieldName = "ジャイロ"
+        Me.DspFlexGyiroControl.Location = New System.Drawing.Point(481, 40)
+        Me.DspFlexGyiroControl.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspFlexGyiroControl.Name = "DspFlexGyiroControl"
+        Me.DspFlexGyiroControl.OffBackColor = System.Drawing.Color.LightGray
+        Me.DspFlexGyiroControl.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DspFlexGyiroControl.Size = New System.Drawing.Size(90, 30)
+        Me.DspFlexGyiroControl.TabIndex = 73
+        '
+        'DspFlexAutoAzurControl
+        '
+        Me.DspFlexAutoAzurControl.BackColor = System.Drawing.Color.Transparent
+        Me.DspFlexAutoAzurControl.BitStatus = False
+        Me.DspFlexAutoAzurControl.Blink = False
+        Me.DspFlexAutoAzurControl.FieldName = "自動測量"
+        Me.DspFlexAutoAzurControl.Location = New System.Drawing.Point(387, 40)
+        Me.DspFlexAutoAzurControl.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspFlexAutoAzurControl.Name = "DspFlexAutoAzurControl"
+        Me.DspFlexAutoAzurControl.OffBackColor = System.Drawing.Color.LightGray
+        Me.DspFlexAutoAzurControl.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DspFlexAutoAzurControl.Size = New System.Drawing.Size(90, 30)
+        Me.DspFlexAutoAzurControl.TabIndex = 72
+        '
+        'DspExcavingStop
+        '
+        Me.DspExcavingStop.BackColor = System.Drawing.Color.Transparent
+        Me.DspExcavingStop.BitStatus = False
+        Me.DspExcavingStop.Blink = False
+        Me.DspExcavingStop.FieldName = "中　断"
+        Me.DspExcavingStop.Location = New System.Drawing.Point(387, 7)
+        Me.DspExcavingStop.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspExcavingStop.Name = "DspExcavingStop"
+        Me.DspExcavingStop.OffBackColor = System.Drawing.Color.LightGray
+        Me.DspExcavingStop.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DspExcavingStop.Size = New System.Drawing.Size(185, 30)
+        Me.DspExcavingStop.TabIndex = 71
+        '
+        'UcnDspBit2
+        '
+        Me.UcnDspBit2.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspBit2.BitStatus = False
+        Me.UcnDspBit2.Blink = False
+        Me.UcnDspBit2.FieldName = "自動更新"
+        Me.UcnDspBit2.Location = New System.Drawing.Point(292, 40)
+        Me.UcnDspBit2.Margin = New System.Windows.Forms.Padding(2)
+        Me.UcnDspBit2.Name = "UcnDspBit2"
+        Me.UcnDspBit2.OffBackColor = System.Drawing.Color.LightGray
+        Me.UcnDspBit2.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.UcnDspBit2.Size = New System.Drawing.Size(90, 30)
+        Me.UcnDspBit2.TabIndex = 70
+        '
+        'UcnDspBit3
+        '
+        Me.UcnDspBit3.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspBit3.BitStatus = True
+        Me.UcnDspBit3.Blink = False
+        Me.UcnDspBit3.FieldName = "補正値管"
+        Me.UcnDspBit3.Location = New System.Drawing.Point(197, 40)
+        Me.UcnDspBit3.Margin = New System.Windows.Forms.Padding(2)
+        Me.UcnDspBit3.Name = "UcnDspBit3"
+        Me.UcnDspBit3.OffBackColor = System.Drawing.Color.LightGray
+        Me.UcnDspBit3.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.UcnDspBit3.Size = New System.Drawing.Size(90, 30)
+        Me.UcnDspBit3.TabIndex = 69
+        '
+        'DspExcavingOn
+        '
+        Me.DspExcavingOn.BackColor = System.Drawing.Color.Transparent
+        Me.DspExcavingOn.BitStatus = True
+        Me.DspExcavingOn.Blink = False
+        Me.DspExcavingOn.FieldName = "掘　進"
+        Me.DspExcavingOn.Location = New System.Drawing.Point(197, 6)
+        Me.DspExcavingOn.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspExcavingOn.Name = "DspExcavingOn"
+        Me.DspExcavingOn.OffBackColor = System.Drawing.Color.LightGray
+        Me.DspExcavingOn.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DspExcavingOn.Size = New System.Drawing.Size(185, 30)
+        Me.DspExcavingOn.TabIndex = 68
+        '
+        'DspFlexAuto
+        '
+        Me.DspFlexAuto.BackColor = System.Drawing.Color.Transparent
+        Me.DspFlexAuto.BitStatus = False
+        Me.DspFlexAuto.Blink = False
+        Me.DspFlexAuto.FieldName = "自動運転"
+        Me.DspFlexAuto.Location = New System.Drawing.Point(102, 41)
+        Me.DspFlexAuto.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspFlexAuto.Name = "DspFlexAuto"
+        Me.DspFlexAuto.OffBackColor = System.Drawing.Color.LightGray
+        Me.DspFlexAuto.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DspFlexAuto.Size = New System.Drawing.Size(90, 30)
+        Me.DspFlexAuto.TabIndex = 67
+        '
+        'DspFlexControlOn
+        '
+        Me.DspFlexControlOn.BackColor = System.Drawing.Color.Transparent
+        Me.DspFlexControlOn.BitStatus = True
+        Me.DspFlexControlOn.Blink = False
+        Me.DspFlexControlOn.FieldName = "FLEX制御"
+        Me.DspFlexControlOn.Location = New System.Drawing.Point(7, 40)
+        Me.DspFlexControlOn.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspFlexControlOn.Name = "DspFlexControlOn"
+        Me.DspFlexControlOn.OffBackColor = System.Drawing.Color.LightGray
+        Me.DspFlexControlOn.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DspFlexControlOn.Size = New System.Drawing.Size(90, 30)
+        Me.DspFlexControlOn.TabIndex = 66
+        '
+        'DspExcaWaiting
+        '
+        Me.DspExcaWaiting.BackColor = System.Drawing.Color.Transparent
+        Me.DspExcaWaiting.BitStatus = False
+        Me.DspExcaWaiting.Blink = False
+        Me.DspExcaWaiting.FieldName = "待　機"
+        Me.DspExcaWaiting.Location = New System.Drawing.Point(7, 6)
+        Me.DspExcaWaiting.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspExcaWaiting.Name = "DspExcaWaiting"
+        Me.DspExcaWaiting.OffBackColor = System.Drawing.Color.LightGray
+        Me.DspExcaWaiting.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DspExcaWaiting.Size = New System.Drawing.Size(185, 30)
+        Me.DspExcaWaiting.TabIndex = 65
+        '
         'pnlLosZero
         '
         Me.pnlLosZero.BackColor = System.Drawing.Color.DarkGray
@@ -528,6 +906,118 @@ Partial Class frmMain
         Me.pnlLosZero.Name = "pnlLosZero"
         Me.pnlLosZero.Size = New System.Drawing.Size(156, 343)
         Me.pnlLosZero.TabIndex = 121
+        '
+        'ucnAssemblyFinish
+        '
+        Me.ucnAssemblyFinish.BackColor = System.Drawing.Color.Transparent
+        Me.ucnAssemblyFinish.BitStatus = True
+        Me.ucnAssemblyFinish.Blink = False
+        Me.ucnAssemblyFinish.FieldName = "組立完了"
+        Me.ucnAssemblyFinish.Location = New System.Drawing.Point(10, 296)
+        Me.ucnAssemblyFinish.Margin = New System.Windows.Forms.Padding(2)
+        Me.ucnAssemblyFinish.Name = "ucnAssemblyFinish"
+        Me.ucnAssemblyFinish.OffBackColor = System.Drawing.Color.LightGray
+        Me.ucnAssemblyFinish.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ucnAssemblyFinish.Size = New System.Drawing.Size(131, 37)
+        Me.ucnAssemblyFinish.TabIndex = 133
+        '
+        'ucnPullBackFinish
+        '
+        Me.ucnPullBackFinish.BackColor = System.Drawing.Color.Transparent
+        Me.ucnPullBackFinish.BitStatus = True
+        Me.ucnPullBackFinish.Blink = False
+        Me.ucnPullBackFinish.FieldName = "引戻完了"
+        Me.ucnPullBackFinish.Location = New System.Drawing.Point(10, 256)
+        Me.ucnPullBackFinish.Margin = New System.Windows.Forms.Padding(2)
+        Me.ucnPullBackFinish.Name = "ucnPullBackFinish"
+        Me.ucnPullBackFinish.OffBackColor = System.Drawing.Color.LightGray
+        Me.ucnPullBackFinish.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ucnPullBackFinish.Size = New System.Drawing.Size(131, 37)
+        Me.ucnPullBackFinish.TabIndex = 132
+        '
+        'ucnReduceFinish
+        '
+        Me.ucnReduceFinish.BackColor = System.Drawing.Color.Transparent
+        Me.ucnReduceFinish.BitStatus = True
+        Me.ucnReduceFinish.Blink = False
+        Me.ucnReduceFinish.FieldName = "減圧完了"
+        Me.ucnReduceFinish.Location = New System.Drawing.Point(10, 216)
+        Me.ucnReduceFinish.Margin = New System.Windows.Forms.Padding(2)
+        Me.ucnReduceFinish.Name = "ucnReduceFinish"
+        Me.ucnReduceFinish.OffBackColor = System.Drawing.Color.LightGray
+        Me.ucnReduceFinish.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ucnReduceFinish.Size = New System.Drawing.Size(131, 37)
+        Me.ucnReduceFinish.TabIndex = 131
+        '
+        'ucnAssemblyPieceNo
+        '
+        Me.ucnAssemblyPieceNo.BackColor = System.Drawing.Color.Transparent
+        Me.ucnAssemblyPieceNo.BitStatus = True
+        Me.ucnAssemblyPieceNo.Blink = False
+        Me.ucnAssemblyPieceNo.FieldName = "2ピース目"
+        Me.ucnAssemblyPieceNo.Location = New System.Drawing.Point(10, 176)
+        Me.ucnAssemblyPieceNo.Margin = New System.Windows.Forms.Padding(2)
+        Me.ucnAssemblyPieceNo.Name = "ucnAssemblyPieceNo"
+        Me.ucnAssemblyPieceNo.OffBackColor = System.Drawing.Color.White
+        Me.ucnAssemblyPieceNo.OnBackColor = System.Drawing.Color.White
+        Me.ucnAssemblyPieceNo.Size = New System.Drawing.Size(131, 37)
+        Me.ucnAssemblyPieceNo.TabIndex = 129
+        '
+        'UcnDspBit5
+        '
+        Me.UcnDspBit5.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspBit5.BitStatus = True
+        Me.UcnDspBit5.Blink = False
+        Me.UcnDspBit5.FieldName = "ﾛｰﾘﾝｸﾞ考慮"
+        Me.UcnDspBit5.Location = New System.Drawing.Point(10, 125)
+        Me.UcnDspBit5.Margin = New System.Windows.Forms.Padding(2)
+        Me.UcnDspBit5.Name = "UcnDspBit5"
+        Me.UcnDspBit5.OffBackColor = System.Drawing.Color.LightGray
+        Me.UcnDspBit5.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.UcnDspBit5.Size = New System.Drawing.Size(131, 37)
+        Me.UcnDspBit5.TabIndex = 72
+        '
+        'UcnDspBit4
+        '
+        Me.UcnDspBit4.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspBit4.BitStatus = True
+        Me.UcnDspBit4.Blink = False
+        Me.UcnDspBit4.FieldName = "対抗圧制御"
+        Me.UcnDspBit4.Location = New System.Drawing.Point(10, 86)
+        Me.UcnDspBit4.Margin = New System.Windows.Forms.Padding(2)
+        Me.UcnDspBit4.Name = "UcnDspBit4"
+        Me.UcnDspBit4.OffBackColor = System.Drawing.Color.LightGray
+        Me.UcnDspBit4.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.UcnDspBit4.Size = New System.Drawing.Size(131, 37)
+        Me.UcnDspBit4.TabIndex = 71
+        '
+        'UcnDspBit1
+        '
+        Me.UcnDspBit1.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspBit1.BitStatus = True
+        Me.UcnDspBit1.Blink = False
+        Me.UcnDspBit1.FieldName = "対抗J選択"
+        Me.UcnDspBit1.Location = New System.Drawing.Point(10, 47)
+        Me.UcnDspBit1.Margin = New System.Windows.Forms.Padding(2)
+        Me.UcnDspBit1.Name = "UcnDspBit1"
+        Me.UcnDspBit1.OffBackColor = System.Drawing.Color.LightGray
+        Me.UcnDspBit1.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.UcnDspBit1.Size = New System.Drawing.Size(131, 37)
+        Me.UcnDspBit1.TabIndex = 70
+        '
+        'ucnLosZeroMode
+        '
+        Me.ucnLosZeroMode.BackColor = System.Drawing.Color.Transparent
+        Me.ucnLosZeroMode.BitStatus = True
+        Me.ucnLosZeroMode.Blink = False
+        Me.ucnLosZeroMode.FieldName = "同時施工"
+        Me.ucnLosZeroMode.Location = New System.Drawing.Point(10, 8)
+        Me.ucnLosZeroMode.Margin = New System.Windows.Forms.Padding(2)
+        Me.ucnLosZeroMode.Name = "ucnLosZeroMode"
+        Me.ucnLosZeroMode.OffBackColor = System.Drawing.Color.LightGray
+        Me.ucnLosZeroMode.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ucnLosZeroMode.Size = New System.Drawing.Size(131, 37)
+        Me.ucnLosZeroMode.TabIndex = 69
         '
         'ShapeContainer1
         '
@@ -551,7 +1041,7 @@ Partial Class frmMain
         '
         Me.btnLossZerooCancel.BackColor = System.Drawing.Color.DarkGray
         Me.btnLossZerooCancel.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnLossZerooCancel.Location = New System.Drawing.Point(1741, 418)
+        Me.btnLossZerooCancel.Location = New System.Drawing.Point(1739, 422)
         Me.btnLossZerooCancel.Margin = New System.Windows.Forms.Padding(2)
         Me.btnLossZerooCancel.Name = "btnLossZerooCancel"
         Me.btnLossZerooCancel.Size = New System.Drawing.Size(135, 36)
@@ -564,7 +1054,7 @@ Partial Class frmMain
         Me.btnPieceConfirm.BackColor = System.Drawing.Color.DarkGray
         Me.btnPieceConfirm.Enabled = False
         Me.btnPieceConfirm.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnPieceConfirm.Location = New System.Drawing.Point(1408, 422)
+        Me.btnPieceConfirm.Location = New System.Drawing.Point(1398, 424)
         Me.btnPieceConfirm.Margin = New System.Windows.Forms.Padding(2)
         Me.btnPieceConfirm.Name = "btnPieceConfirm"
         Me.btnPieceConfirm.Size = New System.Drawing.Size(231, 31)
@@ -575,10 +1065,10 @@ Partial Class frmMain
         'lblNowDate
         '
         Me.lblNowDate.BackColor = System.Drawing.Color.Transparent
-        Me.lblNowDate.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblNowDate.Location = New System.Drawing.Point(1721, 5)
+        Me.lblNowDate.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblNowDate.Location = New System.Drawing.Point(1672, 3)
         Me.lblNowDate.Name = "lblNowDate"
-        Me.lblNowDate.Size = New System.Drawing.Size(188, 13)
+        Me.lblNowDate.Size = New System.Drawing.Size(240, 19)
         Me.lblNowDate.TabIndex = 138
         Me.lblNowDate.Text = "9999／99／99　99：99：99"
         Me.lblNowDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -588,7 +1078,7 @@ Partial Class frmMain
         Me.cmbWideSelct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbWideSelct.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.cmbWideSelct.FormattingEnabled = True
-        Me.cmbWideSelct.Location = New System.Drawing.Point(1414, 36)
+        Me.cmbWideSelct.Location = New System.Drawing.Point(1404, 36)
         Me.cmbWideSelct.Name = "cmbWideSelct"
         Me.cmbWideSelct.Size = New System.Drawing.Size(145, 21)
         Me.cmbWideSelct.TabIndex = 151
@@ -612,7 +1102,7 @@ Partial Class frmMain
         Me.DspAveStartStroke.Blink = False
         Me.DspAveStartStroke.BlinkColor = System.Drawing.Color.Red
         Me.DspAveStartStroke.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspAveStartStroke.DataWidth = 80
+        Me.DspAveStartStroke.DataWidth = 75
         Me.DspAveStartStroke.DecimalPlaces = CType(0, Short)
         Me.DspAveStartStroke.FieldName = "平均開始ストローク"
         Me.DspAveStartStroke.FieldNameWidth = 155
@@ -633,7 +1123,7 @@ Partial Class frmMain
         Me.DspExcvSpeed.Blink = False
         Me.DspExcvSpeed.BlinkColor = System.Drawing.Color.Red
         Me.DspExcvSpeed.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspExcvSpeed.DataWidth = 80
+        Me.DspExcvSpeed.DataWidth = 75
         Me.DspExcvSpeed.DecimalPlaces = CType(0, Short)
         Me.DspExcvSpeed.FieldName = "掘進速度"
         Me.DspExcvSpeed.FieldNameWidth = 155
@@ -641,7 +1131,7 @@ Partial Class frmMain
         Me.DspExcvSpeed.Location = New System.Drawing.Point(1, 95)
         Me.DspExcvSpeed.Margin = New System.Windows.Forms.Padding(1)
         Me.DspExcvSpeed.Name = "DspExcvSpeed"
-        Me.DspExcvSpeed.Size = New System.Drawing.Size(313, 35)
+        Me.DspExcvSpeed.Size = New System.Drawing.Size(300, 35)
         Me.DspExcvSpeed.TabIndex = 41
         Me.DspExcvSpeed.Unit = "mm/min"
         Me.DspExcvSpeed.UnitVisible = True
@@ -654,7 +1144,7 @@ Partial Class frmMain
         Me.DspAveStroke.Blink = False
         Me.DspAveStroke.BlinkColor = System.Drawing.Color.Red
         Me.DspAveStroke.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspAveStroke.DataWidth = 80
+        Me.DspAveStroke.DataWidth = 75
         Me.DspAveStroke.DecimalPlaces = CType(0, Short)
         Me.DspAveStroke.FieldName = "平均推進量"
         Me.DspAveStroke.FieldNameWidth = 155
@@ -994,496 +1484,6 @@ Partial Class frmMain
         Me.DspMachinComErr.TabIndex = 74
         Me.DspMachinComErr.Visible = False
         '
-        'ucnAssemblyFinish
-        '
-        Me.ucnAssemblyFinish.BackColor = System.Drawing.Color.Transparent
-        Me.ucnAssemblyFinish.BitStatus = True
-        Me.ucnAssemblyFinish.Blink = False
-        Me.ucnAssemblyFinish.FieldName = "組立完了"
-        Me.ucnAssemblyFinish.Location = New System.Drawing.Point(10, 296)
-        Me.ucnAssemblyFinish.Margin = New System.Windows.Forms.Padding(2)
-        Me.ucnAssemblyFinish.Name = "ucnAssemblyFinish"
-        Me.ucnAssemblyFinish.OffBackColor = System.Drawing.Color.LightGray
-        Me.ucnAssemblyFinish.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.ucnAssemblyFinish.Size = New System.Drawing.Size(131, 37)
-        Me.ucnAssemblyFinish.TabIndex = 133
-        '
-        'ucnPullBackFinish
-        '
-        Me.ucnPullBackFinish.BackColor = System.Drawing.Color.Transparent
-        Me.ucnPullBackFinish.BitStatus = True
-        Me.ucnPullBackFinish.Blink = False
-        Me.ucnPullBackFinish.FieldName = "引戻完了"
-        Me.ucnPullBackFinish.Location = New System.Drawing.Point(10, 256)
-        Me.ucnPullBackFinish.Margin = New System.Windows.Forms.Padding(2)
-        Me.ucnPullBackFinish.Name = "ucnPullBackFinish"
-        Me.ucnPullBackFinish.OffBackColor = System.Drawing.Color.LightGray
-        Me.ucnPullBackFinish.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.ucnPullBackFinish.Size = New System.Drawing.Size(131, 37)
-        Me.ucnPullBackFinish.TabIndex = 132
-        '
-        'ucnReduceFinish
-        '
-        Me.ucnReduceFinish.BackColor = System.Drawing.Color.Transparent
-        Me.ucnReduceFinish.BitStatus = True
-        Me.ucnReduceFinish.Blink = False
-        Me.ucnReduceFinish.FieldName = "減圧完了"
-        Me.ucnReduceFinish.Location = New System.Drawing.Point(10, 216)
-        Me.ucnReduceFinish.Margin = New System.Windows.Forms.Padding(2)
-        Me.ucnReduceFinish.Name = "ucnReduceFinish"
-        Me.ucnReduceFinish.OffBackColor = System.Drawing.Color.LightGray
-        Me.ucnReduceFinish.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.ucnReduceFinish.Size = New System.Drawing.Size(131, 37)
-        Me.ucnReduceFinish.TabIndex = 131
-        '
-        'ucnAssemblyPieceNo
-        '
-        Me.ucnAssemblyPieceNo.BackColor = System.Drawing.Color.Transparent
-        Me.ucnAssemblyPieceNo.BitStatus = True
-        Me.ucnAssemblyPieceNo.Blink = False
-        Me.ucnAssemblyPieceNo.FieldName = "2ピース目"
-        Me.ucnAssemblyPieceNo.Location = New System.Drawing.Point(10, 176)
-        Me.ucnAssemblyPieceNo.Margin = New System.Windows.Forms.Padding(2)
-        Me.ucnAssemblyPieceNo.Name = "ucnAssemblyPieceNo"
-        Me.ucnAssemblyPieceNo.OffBackColor = System.Drawing.Color.White
-        Me.ucnAssemblyPieceNo.OnBackColor = System.Drawing.Color.White
-        Me.ucnAssemblyPieceNo.Size = New System.Drawing.Size(131, 37)
-        Me.ucnAssemblyPieceNo.TabIndex = 129
-        '
-        'UcnDspBit5
-        '
-        Me.UcnDspBit5.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspBit5.BitStatus = True
-        Me.UcnDspBit5.Blink = False
-        Me.UcnDspBit5.FieldName = "ﾛｰﾘﾝｸﾞ考慮"
-        Me.UcnDspBit5.Location = New System.Drawing.Point(10, 125)
-        Me.UcnDspBit5.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnDspBit5.Name = "UcnDspBit5"
-        Me.UcnDspBit5.OffBackColor = System.Drawing.Color.LightGray
-        Me.UcnDspBit5.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.UcnDspBit5.Size = New System.Drawing.Size(131, 37)
-        Me.UcnDspBit5.TabIndex = 72
-        '
-        'UcnDspBit4
-        '
-        Me.UcnDspBit4.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspBit4.BitStatus = True
-        Me.UcnDspBit4.Blink = False
-        Me.UcnDspBit4.FieldName = "対抗圧制御"
-        Me.UcnDspBit4.Location = New System.Drawing.Point(10, 86)
-        Me.UcnDspBit4.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnDspBit4.Name = "UcnDspBit4"
-        Me.UcnDspBit4.OffBackColor = System.Drawing.Color.LightGray
-        Me.UcnDspBit4.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.UcnDspBit4.Size = New System.Drawing.Size(131, 37)
-        Me.UcnDspBit4.TabIndex = 71
-        '
-        'UcnDspBit1
-        '
-        Me.UcnDspBit1.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspBit1.BitStatus = True
-        Me.UcnDspBit1.Blink = False
-        Me.UcnDspBit1.FieldName = "対抗J選択"
-        Me.UcnDspBit1.Location = New System.Drawing.Point(10, 47)
-        Me.UcnDspBit1.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnDspBit1.Name = "UcnDspBit1"
-        Me.UcnDspBit1.OffBackColor = System.Drawing.Color.LightGray
-        Me.UcnDspBit1.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.UcnDspBit1.Size = New System.Drawing.Size(131, 37)
-        Me.UcnDspBit1.TabIndex = 70
-        '
-        'ucnLosZeroMode
-        '
-        Me.ucnLosZeroMode.BackColor = System.Drawing.Color.Transparent
-        Me.ucnLosZeroMode.BitStatus = True
-        Me.ucnLosZeroMode.Blink = False
-        Me.ucnLosZeroMode.FieldName = "同時施工"
-        Me.ucnLosZeroMode.Location = New System.Drawing.Point(10, 8)
-        Me.ucnLosZeroMode.Margin = New System.Windows.Forms.Padding(2)
-        Me.ucnLosZeroMode.Name = "ucnLosZeroMode"
-        Me.ucnLosZeroMode.OffBackColor = System.Drawing.Color.LightGray
-        Me.ucnLosZeroMode.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.ucnLosZeroMode.Size = New System.Drawing.Size(131, 37)
-        Me.ucnLosZeroMode.TabIndex = 69
-        '
-        'DspFlexGyiroControl
-        '
-        Me.DspFlexGyiroControl.BackColor = System.Drawing.Color.Transparent
-        Me.DspFlexGyiroControl.BitStatus = True
-        Me.DspFlexGyiroControl.Blink = False
-        Me.DspFlexGyiroControl.FieldName = "ジャイロ"
-        Me.DspFlexGyiroControl.Location = New System.Drawing.Point(481, 40)
-        Me.DspFlexGyiroControl.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspFlexGyiroControl.Name = "DspFlexGyiroControl"
-        Me.DspFlexGyiroControl.OffBackColor = System.Drawing.Color.LightGray
-        Me.DspFlexGyiroControl.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DspFlexGyiroControl.Size = New System.Drawing.Size(90, 30)
-        Me.DspFlexGyiroControl.TabIndex = 73
-        '
-        'DspFlexAutoAzurControl
-        '
-        Me.DspFlexAutoAzurControl.BackColor = System.Drawing.Color.Transparent
-        Me.DspFlexAutoAzurControl.BitStatus = False
-        Me.DspFlexAutoAzurControl.Blink = False
-        Me.DspFlexAutoAzurControl.FieldName = "自動測量"
-        Me.DspFlexAutoAzurControl.Location = New System.Drawing.Point(387, 40)
-        Me.DspFlexAutoAzurControl.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspFlexAutoAzurControl.Name = "DspFlexAutoAzurControl"
-        Me.DspFlexAutoAzurControl.OffBackColor = System.Drawing.Color.LightGray
-        Me.DspFlexAutoAzurControl.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DspFlexAutoAzurControl.Size = New System.Drawing.Size(90, 30)
-        Me.DspFlexAutoAzurControl.TabIndex = 72
-        '
-        'DspExcavingStop
-        '
-        Me.DspExcavingStop.BackColor = System.Drawing.Color.Transparent
-        Me.DspExcavingStop.BitStatus = False
-        Me.DspExcavingStop.Blink = False
-        Me.DspExcavingStop.FieldName = "中　断"
-        Me.DspExcavingStop.Location = New System.Drawing.Point(387, 7)
-        Me.DspExcavingStop.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspExcavingStop.Name = "DspExcavingStop"
-        Me.DspExcavingStop.OffBackColor = System.Drawing.Color.LightGray
-        Me.DspExcavingStop.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DspExcavingStop.Size = New System.Drawing.Size(185, 30)
-        Me.DspExcavingStop.TabIndex = 71
-        '
-        'UcnDspBit2
-        '
-        Me.UcnDspBit2.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspBit2.BitStatus = False
-        Me.UcnDspBit2.Blink = False
-        Me.UcnDspBit2.FieldName = "自動更新"
-        Me.UcnDspBit2.Location = New System.Drawing.Point(292, 40)
-        Me.UcnDspBit2.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnDspBit2.Name = "UcnDspBit2"
-        Me.UcnDspBit2.OffBackColor = System.Drawing.Color.LightGray
-        Me.UcnDspBit2.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.UcnDspBit2.Size = New System.Drawing.Size(90, 30)
-        Me.UcnDspBit2.TabIndex = 70
-        '
-        'UcnDspBit3
-        '
-        Me.UcnDspBit3.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspBit3.BitStatus = True
-        Me.UcnDspBit3.Blink = False
-        Me.UcnDspBit3.FieldName = "補正値管"
-        Me.UcnDspBit3.Location = New System.Drawing.Point(197, 40)
-        Me.UcnDspBit3.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnDspBit3.Name = "UcnDspBit3"
-        Me.UcnDspBit3.OffBackColor = System.Drawing.Color.LightGray
-        Me.UcnDspBit3.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.UcnDspBit3.Size = New System.Drawing.Size(90, 30)
-        Me.UcnDspBit3.TabIndex = 69
-        '
-        'DspExcavingOn
-        '
-        Me.DspExcavingOn.BackColor = System.Drawing.Color.Transparent
-        Me.DspExcavingOn.BitStatus = True
-        Me.DspExcavingOn.Blink = False
-        Me.DspExcavingOn.FieldName = "掘　進"
-        Me.DspExcavingOn.Location = New System.Drawing.Point(197, 6)
-        Me.DspExcavingOn.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspExcavingOn.Name = "DspExcavingOn"
-        Me.DspExcavingOn.OffBackColor = System.Drawing.Color.LightGray
-        Me.DspExcavingOn.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DspExcavingOn.Size = New System.Drawing.Size(185, 30)
-        Me.DspExcavingOn.TabIndex = 68
-        '
-        'DspFlexAuto
-        '
-        Me.DspFlexAuto.BackColor = System.Drawing.Color.Transparent
-        Me.DspFlexAuto.BitStatus = False
-        Me.DspFlexAuto.Blink = False
-        Me.DspFlexAuto.FieldName = "自動運転"
-        Me.DspFlexAuto.Location = New System.Drawing.Point(102, 41)
-        Me.DspFlexAuto.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspFlexAuto.Name = "DspFlexAuto"
-        Me.DspFlexAuto.OffBackColor = System.Drawing.Color.LightGray
-        Me.DspFlexAuto.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DspFlexAuto.Size = New System.Drawing.Size(90, 30)
-        Me.DspFlexAuto.TabIndex = 67
-        '
-        'DspFlexControlOn
-        '
-        Me.DspFlexControlOn.BackColor = System.Drawing.Color.Transparent
-        Me.DspFlexControlOn.BitStatus = True
-        Me.DspFlexControlOn.Blink = False
-        Me.DspFlexControlOn.FieldName = "FLEX制御"
-        Me.DspFlexControlOn.Location = New System.Drawing.Point(7, 40)
-        Me.DspFlexControlOn.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspFlexControlOn.Name = "DspFlexControlOn"
-        Me.DspFlexControlOn.OffBackColor = System.Drawing.Color.LightGray
-        Me.DspFlexControlOn.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DspFlexControlOn.Size = New System.Drawing.Size(90, 30)
-        Me.DspFlexControlOn.TabIndex = 66
-        '
-        'DspExcaWaiting
-        '
-        Me.DspExcaWaiting.BackColor = System.Drawing.Color.Transparent
-        Me.DspExcaWaiting.BitStatus = False
-        Me.DspExcaWaiting.Blink = False
-        Me.DspExcaWaiting.FieldName = "待　機"
-        Me.DspExcaWaiting.Location = New System.Drawing.Point(7, 6)
-        Me.DspExcaWaiting.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspExcaWaiting.Name = "DspExcaWaiting"
-        Me.DspExcaWaiting.OffBackColor = System.Drawing.Color.LightGray
-        Me.DspExcaWaiting.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DspExcaWaiting.Size = New System.Drawing.Size(185, 30)
-        Me.DspExcaWaiting.TabIndex = 65
-        '
-        'UcnDspData15
-        '
-        Me.UcnDspData15.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData15.Blink = False
-        Me.UcnDspData15.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData15.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData15.DataWidth = 91
-        Me.UcnDspData15.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData15.FieldName = "短縮効果(日)"
-        Me.UcnDspData15.FieldNameWidth = 175
-        Me.UcnDspData15.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData15.Location = New System.Drawing.Point(297, 211)
-        Me.UcnDspData15.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData15.Name = "UcnDspData15"
-        Me.UcnDspData15.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData15.TabIndex = 133
-        Me.UcnDspData15.Unit = "deg"
-        Me.UcnDspData15.UnitVisible = False
-        Me.UcnDspData15.Value = "20"
-        Me.UcnDspData15.ValueType = False
-        '
-        'UcnDspData16
-        '
-        Me.UcnDspData16.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData16.Blink = False
-        Me.UcnDspData16.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData16.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData16.DataWidth = 91
-        Me.UcnDspData16.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData16.FieldName = "累計同時掘進(分)"
-        Me.UcnDspData16.FieldNameWidth = 175
-        Me.UcnDspData16.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData16.Location = New System.Drawing.Point(297, 179)
-        Me.UcnDspData16.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData16.Name = "UcnDspData16"
-        Me.UcnDspData16.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData16.TabIndex = 132
-        Me.UcnDspData16.Unit = "deg"
-        Me.UcnDspData16.UnitVisible = False
-        Me.UcnDspData16.Value = "20"
-        Me.UcnDspData16.ValueType = False
-        '
-        'UcnDspData32
-        '
-        Me.UcnDspData32.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData32.Blink = False
-        Me.UcnDspData32.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData32.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData32.DataWidth = 91
-        Me.UcnDspData32.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData32.FieldName = "平均同時掘進(分)"
-        Me.UcnDspData32.FieldNameWidth = 175
-        Me.UcnDspData32.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData32.Location = New System.Drawing.Point(297, 147)
-        Me.UcnDspData32.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData32.Name = "UcnDspData32"
-        Me.UcnDspData32.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData32.TabIndex = 131
-        Me.UcnDspData32.Unit = "deg"
-        Me.UcnDspData32.UnitVisible = False
-        Me.UcnDspData32.Value = "20"
-        Me.UcnDspData32.ValueType = False
-        '
-        'UcnDspData33
-        '
-        Me.UcnDspData33.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData33.Blink = False
-        Me.UcnDspData33.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData33.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData33.DataWidth = 91
-        Me.UcnDspData33.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData33.FieldName = "累計組立ﾋﾟｰｽ数"
-        Me.UcnDspData33.FieldNameWidth = 175
-        Me.UcnDspData33.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData33.Location = New System.Drawing.Point(297, 115)
-        Me.UcnDspData33.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData33.Name = "UcnDspData33"
-        Me.UcnDspData33.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData33.TabIndex = 130
-        Me.UcnDspData33.Unit = "deg"
-        Me.UcnDspData33.UnitVisible = False
-        Me.UcnDspData33.Value = "20"
-        Me.UcnDspData33.ValueType = False
-        '
-        'UcnDspData34
-        '
-        Me.UcnDspData34.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData34.Blink = False
-        Me.UcnDspData34.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData34.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData34.DataWidth = 91
-        Me.UcnDspData34.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData34.FieldName = "平均組立ﾋﾟｰｽ数"
-        Me.UcnDspData34.FieldNameWidth = 175
-        Me.UcnDspData34.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData34.Location = New System.Drawing.Point(297, 83)
-        Me.UcnDspData34.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData34.Name = "UcnDspData34"
-        Me.UcnDspData34.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData34.TabIndex = 129
-        Me.UcnDspData34.Unit = "deg"
-        Me.UcnDspData34.UnitVisible = False
-        Me.UcnDspData34.Value = "20"
-        Me.UcnDspData34.ValueType = False
-        '
-        'UcnDspData35
-        '
-        Me.UcnDspData35.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData35.Blink = False
-        Me.UcnDspData35.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData35.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData35.DataWidth = 91
-        Me.UcnDspData35.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData35.FieldName = "平均ｻｲｸﾙ(分)"
-        Me.UcnDspData35.FieldNameWidth = 175
-        Me.UcnDspData35.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData35.Location = New System.Drawing.Point(297, 51)
-        Me.UcnDspData35.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData35.Name = "UcnDspData35"
-        Me.UcnDspData35.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData35.TabIndex = 128
-        Me.UcnDspData35.Unit = "deg"
-        Me.UcnDspData35.UnitVisible = False
-        Me.UcnDspData35.Value = "20"
-        Me.UcnDspData35.ValueType = False
-        '
-        'DspCycleTime
-        '
-        Me.DspCycleTime.BackColor = System.Drawing.Color.Transparent
-        Me.DspCycleTime.Blink = False
-        Me.DspCycleTime.BlinkColor = System.Drawing.Color.Red
-        Me.DspCycleTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspCycleTime.DataWidth = 91
-        Me.DspCycleTime.DecimalPlaces = CType(0, Short)
-        Me.DspCycleTime.FieldName = "ｻｲｸﾙ時間(分)"
-        Me.DspCycleTime.FieldNameWidth = 175
-        Me.DspCycleTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspCycleTime.Location = New System.Drawing.Point(21, 211)
-        Me.DspCycleTime.Margin = New System.Windows.Forms.Padding(1)
-        Me.DspCycleTime.Name = "DspCycleTime"
-        Me.DspCycleTime.Size = New System.Drawing.Size(275, 32)
-        Me.DspCycleTime.TabIndex = 127
-        Me.DspCycleTime.Unit = "deg"
-        Me.DspCycleTime.UnitVisible = False
-        Me.DspCycleTime.Value = "20"
-        Me.DspCycleTime.ValueType = False
-        '
-        'DspWatingElapsedTime
-        '
-        Me.DspWatingElapsedTime.BackColor = System.Drawing.Color.Transparent
-        Me.DspWatingElapsedTime.Blink = False
-        Me.DspWatingElapsedTime.BlinkColor = System.Drawing.Color.Red
-        Me.DspWatingElapsedTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspWatingElapsedTime.DataWidth = 91
-        Me.DspWatingElapsedTime.DecimalPlaces = CType(0, Short)
-        Me.DspWatingElapsedTime.FieldName = "待機時間(分)"
-        Me.DspWatingElapsedTime.FieldNameWidth = 175
-        Me.DspWatingElapsedTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWatingElapsedTime.Location = New System.Drawing.Point(21, 179)
-        Me.DspWatingElapsedTime.Margin = New System.Windows.Forms.Padding(1)
-        Me.DspWatingElapsedTime.Name = "DspWatingElapsedTime"
-        Me.DspWatingElapsedTime.Size = New System.Drawing.Size(275, 32)
-        Me.DspWatingElapsedTime.TabIndex = 126
-        Me.DspWatingElapsedTime.Unit = "deg"
-        Me.DspWatingElapsedTime.UnitVisible = False
-        Me.DspWatingElapsedTime.Value = "20"
-        Me.DspWatingElapsedTime.ValueType = False
-        '
-        'DspLosZeroElapsedTime
-        '
-        Me.DspLosZeroElapsedTime.BackColor = System.Drawing.Color.Transparent
-        Me.DspLosZeroElapsedTime.Blink = False
-        Me.DspLosZeroElapsedTime.BlinkColor = System.Drawing.Color.Red
-        Me.DspLosZeroElapsedTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspLosZeroElapsedTime.DataWidth = 91
-        Me.DspLosZeroElapsedTime.DecimalPlaces = CType(0, Short)
-        Me.DspLosZeroElapsedTime.FieldName = "同時掘進時間(分)"
-        Me.DspLosZeroElapsedTime.FieldNameWidth = 175
-        Me.DspLosZeroElapsedTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspLosZeroElapsedTime.Location = New System.Drawing.Point(21, 147)
-        Me.DspLosZeroElapsedTime.Margin = New System.Windows.Forms.Padding(1)
-        Me.DspLosZeroElapsedTime.Name = "DspLosZeroElapsedTime"
-        Me.DspLosZeroElapsedTime.Size = New System.Drawing.Size(275, 32)
-        Me.DspLosZeroElapsedTime.TabIndex = 125
-        Me.DspLosZeroElapsedTime.Unit = "deg"
-        Me.DspLosZeroElapsedTime.UnitVisible = False
-        Me.DspLosZeroElapsedTime.Value = "20"
-        Me.DspLosZeroElapsedTime.ValueType = False
-        '
-        'DspExcationElapsedTime
-        '
-        Me.DspExcationElapsedTime.BackColor = System.Drawing.Color.Transparent
-        Me.DspExcationElapsedTime.Blink = False
-        Me.DspExcationElapsedTime.BlinkColor = System.Drawing.Color.Red
-        Me.DspExcationElapsedTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspExcationElapsedTime.DataWidth = 91
-        Me.DspExcationElapsedTime.DecimalPlaces = CType(0, Short)
-        Me.DspExcationElapsedTime.FieldName = "掘進時間(分)"
-        Me.DspExcationElapsedTime.FieldNameWidth = 175
-        Me.DspExcationElapsedTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspExcationElapsedTime.Location = New System.Drawing.Point(21, 115)
-        Me.DspExcationElapsedTime.Margin = New System.Windows.Forms.Padding(1)
-        Me.DspExcationElapsedTime.Name = "DspExcationElapsedTime"
-        Me.DspExcationElapsedTime.Size = New System.Drawing.Size(275, 32)
-        Me.DspExcationElapsedTime.TabIndex = 124
-        Me.DspExcationElapsedTime.Unit = "deg"
-        Me.DspExcationElapsedTime.UnitVisible = False
-        Me.DspExcationElapsedTime.Value = "20"
-        Me.DspExcationElapsedTime.ValueType = False
-        '
-        'DspExcavStartTime
-        '
-        Me.DspExcavStartTime.BackColor = System.Drawing.Color.Transparent
-        Me.DspExcavStartTime.Blink = False
-        Me.DspExcavStartTime.BlinkColor = System.Drawing.Color.Red
-        Me.DspExcavStartTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspExcavStartTime.DataWidth = 141
-        Me.DspExcavStartTime.DecimalPlaces = CType(2, Short)
-        Me.DspExcavStartTime.FieldName = "開始時刻"
-        Me.DspExcavStartTime.FieldNameWidth = 125
-        Me.DspExcavStartTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspExcavStartTime.Location = New System.Drawing.Point(21, 83)
-        Me.DspExcavStartTime.Margin = New System.Windows.Forms.Padding(1)
-        Me.DspExcavStartTime.Name = "DspExcavStartTime"
-        Me.DspExcavStartTime.Size = New System.Drawing.Size(275, 32)
-        Me.DspExcavStartTime.TabIndex = 123
-        Me.DspExcavStartTime.Unit = "deg"
-        Me.DspExcavStartTime.UnitVisible = False
-        Me.DspExcavStartTime.Value = "23:01:01"
-        Me.DspExcavStartTime.ValueType = True
-        '
-        'DspExcavStartDate
-        '
-        Me.DspExcavStartDate.BackColor = System.Drawing.Color.Transparent
-        Me.DspExcavStartDate.Blink = False
-        Me.DspExcavStartDate.BlinkColor = System.Drawing.Color.Red
-        Me.DspExcavStartDate.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspExcavStartDate.DataWidth = 141
-        Me.DspExcavStartDate.DecimalPlaces = CType(2, Short)
-        Me.DspExcavStartDate.FieldName = "開始日"
-        Me.DspExcavStartDate.FieldNameWidth = 125
-        Me.DspExcavStartDate.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspExcavStartDate.Location = New System.Drawing.Point(21, 51)
-        Me.DspExcavStartDate.Margin = New System.Windows.Forms.Padding(1)
-        Me.DspExcavStartDate.Name = "DspExcavStartDate"
-        Me.DspExcavStartDate.Size = New System.Drawing.Size(275, 32)
-        Me.DspExcavStartDate.TabIndex = 122
-        Me.DspExcavStartDate.Unit = "deg"
-        Me.DspExcavStartDate.UnitVisible = False
-        Me.DspExcavStartDate.Value = "216/05/01"
-        Me.DspExcavStartDate.ValueType = True
-        '
         'DspAssemblyPattern
         '
         Me.DspAssemblyPattern.BackColor = System.Drawing.Color.Transparent
@@ -1495,7 +1495,7 @@ Partial Class frmMain
         Me.DspAssemblyPattern.FieldName = "組立パターン"
         Me.DspAssemblyPattern.FieldNameWidth = 292
         Me.DspAssemblyPattern.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAssemblyPattern.Location = New System.Drawing.Point(1408, 498)
+        Me.DspAssemblyPattern.Location = New System.Drawing.Point(1399, 498)
         Me.DspAssemblyPattern.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPattern.Name = "DspAssemblyPattern"
         Me.DspAssemblyPattern.Size = New System.Drawing.Size(472, 32)
@@ -1516,7 +1516,7 @@ Partial Class frmMain
         Me.DspNextPieceName.FieldName = "次の組立ﾋﾟｰｽ"
         Me.DspNextPieceName.FieldNameWidth = 146
         Me.DspNextPieceName.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspNextPieceName.Location = New System.Drawing.Point(1642, 625)
+        Me.DspNextPieceName.Location = New System.Drawing.Point(1633, 625)
         Me.DspNextPieceName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspNextPieceName.Name = "DspNextPieceName"
         Me.DspNextPieceName.Size = New System.Drawing.Size(243, 32)
@@ -1537,7 +1537,7 @@ Partial Class frmMain
         Me.UcnDspData24.FieldName = "RL考慮ｼﾞｬｯｷ"
         Me.UcnDspData24.FieldNameWidth = 146
         Me.UcnDspData24.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData24.Location = New System.Drawing.Point(1408, 626)
+        Me.UcnDspData24.Location = New System.Drawing.Point(1399, 626)
         Me.UcnDspData24.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData24.Name = "UcnDspData24"
         Me.UcnDspData24.Size = New System.Drawing.Size(243, 32)
@@ -1558,7 +1558,7 @@ Partial Class frmMain
         Me.DspAddClosetThrustJack.FieldName = "追加推進ｼﾞｬｯｷ"
         Me.DspAddClosetThrustJack.FieldNameWidth = 146
         Me.DspAddClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(1642, 593)
+        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(1633, 593)
         Me.DspAddClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAddClosetThrustJack.Name = "DspAddClosetThrustJack"
         Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(243, 32)
@@ -1579,7 +1579,7 @@ Partial Class frmMain
         Me.DspClosetThrustJack.FieldName = "押込推進ｼﾞｬｯｷ"
         Me.DspClosetThrustJack.FieldNameWidth = 146
         Me.DspClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetThrustJack.Location = New System.Drawing.Point(1408, 594)
+        Me.DspClosetThrustJack.Location = New System.Drawing.Point(1399, 594)
         Me.DspClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetThrustJack.Name = "DspClosetThrustJack"
         Me.DspClosetThrustJack.Size = New System.Drawing.Size(243, 32)
@@ -1600,7 +1600,7 @@ Partial Class frmMain
         Me.DspClosetJack.FieldName = "押込ｼﾞｬｯｷ"
         Me.DspClosetJack.FieldNameWidth = 146
         Me.DspClosetJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetJack.Location = New System.Drawing.Point(1642, 561)
+        Me.DspClosetJack.Location = New System.Drawing.Point(1633, 561)
         Me.DspClosetJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetJack.Name = "DspClosetJack"
         Me.DspClosetJack.Size = New System.Drawing.Size(243, 32)
@@ -1621,7 +1621,7 @@ Partial Class frmMain
         Me.DspPullBackJack.FieldName = "引戻ｼﾞｬｯｷ"
         Me.DspPullBackJack.FieldNameWidth = 146
         Me.DspPullBackJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspPullBackJack.Location = New System.Drawing.Point(1408, 562)
+        Me.DspPullBackJack.Location = New System.Drawing.Point(1399, 562)
         Me.DspPullBackJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspPullBackJack.Name = "DspPullBackJack"
         Me.DspPullBackJack.Size = New System.Drawing.Size(243, 32)
@@ -1642,7 +1642,7 @@ Partial Class frmMain
         Me.UcnDspData17.FieldName = "ﾛｰﾘﾝｸﾞ偏差"
         Me.UcnDspData17.FieldNameWidth = 146
         Me.UcnDspData17.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData17.Location = New System.Drawing.Point(1642, 529)
+        Me.UcnDspData17.Location = New System.Drawing.Point(1633, 529)
         Me.UcnDspData17.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData17.Name = "UcnDspData17"
         Me.UcnDspData17.Size = New System.Drawing.Size(243, 32)
@@ -1663,7 +1663,7 @@ Partial Class frmMain
         Me.DspAssemblyPieace.FieldName = "組立ﾋﾟｰｽ"
         Me.DspAssemblyPieace.FieldNameWidth = 146
         Me.DspAssemblyPieace.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAssemblyPieace.Location = New System.Drawing.Point(1408, 530)
+        Me.DspAssemblyPieace.Location = New System.Drawing.Point(1399, 530)
         Me.DspAssemblyPieace.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPieace.Name = "DspAssemblyPieace"
         Me.DspAssemblyPieace.Size = New System.Drawing.Size(243, 32)
@@ -1684,7 +1684,7 @@ Partial Class frmMain
         Me.DspBoltPitch.FieldName = "組立ﾎﾞﾙﾄﾋﾟｯﾁ"
         Me.DspBoltPitch.FieldNameWidth = 146
         Me.DspBoltPitch.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspBoltPitch.Location = New System.Drawing.Point(1642, 466)
+        Me.DspBoltPitch.Location = New System.Drawing.Point(1633, 466)
         Me.DspBoltPitch.Margin = New System.Windows.Forms.Padding(1)
         Me.DspBoltPitch.Name = "DspBoltPitch"
         Me.DspBoltPitch.Size = New System.Drawing.Size(243, 32)
@@ -1705,7 +1705,7 @@ Partial Class frmMain
         Me.DspTypeName.FieldName = "組立ｾｸﾞﾒﾝﾄ"
         Me.DspTypeName.FieldNameWidth = 146
         Me.DspTypeName.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspTypeName.Location = New System.Drawing.Point(1408, 466)
+        Me.DspTypeName.Location = New System.Drawing.Point(1399, 466)
         Me.DspTypeName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspTypeName.Name = "DspTypeName"
         Me.DspTypeName.Size = New System.Drawing.Size(243, 32)
@@ -1815,10 +1815,10 @@ Partial Class frmMain
         Me.DspWideUse11.FieldName = ""
         Me.DspWideUse11.FieldNameWidth = 146
         Me.DspWideUse11.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse11.Location = New System.Drawing.Point(1408, 382)
+        Me.DspWideUse11.Location = New System.Drawing.Point(1398, 382)
         Me.DspWideUse11.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse11.Name = "DspWideUse11"
-        Me.DspWideUse11.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse11.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse11.TabIndex = 80
         Me.DspWideUse11.Unit = ""
         Me.DspWideUse11.UnitVisible = True
@@ -1836,10 +1836,10 @@ Partial Class frmMain
         Me.DspWideUse10.FieldName = ""
         Me.DspWideUse10.FieldNameWidth = 146
         Me.DspWideUse10.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse10.Location = New System.Drawing.Point(1408, 350)
+        Me.DspWideUse10.Location = New System.Drawing.Point(1398, 350)
         Me.DspWideUse10.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse10.Name = "DspWideUse10"
-        Me.DspWideUse10.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse10.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse10.TabIndex = 79
         Me.DspWideUse10.Unit = ""
         Me.DspWideUse10.UnitVisible = True
@@ -1857,10 +1857,10 @@ Partial Class frmMain
         Me.DspWideUse9.FieldName = ""
         Me.DspWideUse9.FieldNameWidth = 146
         Me.DspWideUse9.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse9.Location = New System.Drawing.Point(1408, 318)
+        Me.DspWideUse9.Location = New System.Drawing.Point(1398, 318)
         Me.DspWideUse9.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse9.Name = "DspWideUse9"
-        Me.DspWideUse9.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse9.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse9.TabIndex = 78
         Me.DspWideUse9.Unit = ""
         Me.DspWideUse9.UnitVisible = True
@@ -1878,10 +1878,10 @@ Partial Class frmMain
         Me.DspWideUse8.FieldName = ""
         Me.DspWideUse8.FieldNameWidth = 146
         Me.DspWideUse8.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse8.Location = New System.Drawing.Point(1408, 286)
+        Me.DspWideUse8.Location = New System.Drawing.Point(1398, 286)
         Me.DspWideUse8.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse8.Name = "DspWideUse8"
-        Me.DspWideUse8.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse8.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse8.TabIndex = 77
         Me.DspWideUse8.Unit = ""
         Me.DspWideUse8.UnitVisible = True
@@ -1899,10 +1899,10 @@ Partial Class frmMain
         Me.DspWideUse7.FieldName = ""
         Me.DspWideUse7.FieldNameWidth = 146
         Me.DspWideUse7.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse7.Location = New System.Drawing.Point(1408, 254)
+        Me.DspWideUse7.Location = New System.Drawing.Point(1398, 254)
         Me.DspWideUse7.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse7.Name = "DspWideUse7"
-        Me.DspWideUse7.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse7.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse7.TabIndex = 76
         Me.DspWideUse7.Unit = ""
         Me.DspWideUse7.UnitVisible = True
@@ -1920,10 +1920,10 @@ Partial Class frmMain
         Me.DspWideUse6.FieldName = ""
         Me.DspWideUse6.FieldNameWidth = 146
         Me.DspWideUse6.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse6.Location = New System.Drawing.Point(1408, 222)
+        Me.DspWideUse6.Location = New System.Drawing.Point(1398, 222)
         Me.DspWideUse6.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse6.Name = "DspWideUse6"
-        Me.DspWideUse6.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse6.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse6.TabIndex = 75
         Me.DspWideUse6.Unit = ""
         Me.DspWideUse6.UnitVisible = True
@@ -1941,10 +1941,10 @@ Partial Class frmMain
         Me.DspWideUse5.FieldName = ""
         Me.DspWideUse5.FieldNameWidth = 146
         Me.DspWideUse5.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse5.Location = New System.Drawing.Point(1408, 190)
+        Me.DspWideUse5.Location = New System.Drawing.Point(1398, 190)
         Me.DspWideUse5.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse5.Name = "DspWideUse5"
-        Me.DspWideUse5.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse5.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse5.TabIndex = 74
         Me.DspWideUse5.Unit = ""
         Me.DspWideUse5.UnitVisible = True
@@ -1962,10 +1962,10 @@ Partial Class frmMain
         Me.DspWideUse4.FieldName = ""
         Me.DspWideUse4.FieldNameWidth = 146
         Me.DspWideUse4.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse4.Location = New System.Drawing.Point(1408, 158)
+        Me.DspWideUse4.Location = New System.Drawing.Point(1398, 158)
         Me.DspWideUse4.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse4.Name = "DspWideUse4"
-        Me.DspWideUse4.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse4.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse4.TabIndex = 73
         Me.DspWideUse4.Unit = ""
         Me.DspWideUse4.UnitVisible = True
@@ -1983,10 +1983,10 @@ Partial Class frmMain
         Me.DspWideUse3.FieldName = ""
         Me.DspWideUse3.FieldNameWidth = 146
         Me.DspWideUse3.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse3.Location = New System.Drawing.Point(1408, 126)
+        Me.DspWideUse3.Location = New System.Drawing.Point(1398, 126)
         Me.DspWideUse3.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse3.Name = "DspWideUse3"
-        Me.DspWideUse3.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse3.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse3.TabIndex = 72
         Me.DspWideUse3.Unit = ""
         Me.DspWideUse3.UnitVisible = True
@@ -2004,10 +2004,10 @@ Partial Class frmMain
         Me.DspWideUse2.FieldName = ""
         Me.DspWideUse2.FieldNameWidth = 146
         Me.DspWideUse2.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse2.Location = New System.Drawing.Point(1408, 94)
+        Me.DspWideUse2.Location = New System.Drawing.Point(1398, 94)
         Me.DspWideUse2.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse2.Name = "DspWideUse2"
-        Me.DspWideUse2.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse2.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse2.TabIndex = 71
         Me.DspWideUse2.Unit = ""
         Me.DspWideUse2.UnitVisible = True
@@ -2025,10 +2025,10 @@ Partial Class frmMain
         Me.DspWideUse1.FieldName = ""
         Me.DspWideUse1.FieldNameWidth = 146
         Me.DspWideUse1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse1.Location = New System.Drawing.Point(1408, 62)
+        Me.DspWideUse1.Location = New System.Drawing.Point(1398, 62)
         Me.DspWideUse1.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse1.Name = "DspWideUse1"
-        Me.DspWideUse1.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse1.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse1.TabIndex = 70
         Me.DspWideUse1.Unit = ""
         Me.DspWideUse1.UnitVisible = True
@@ -2046,10 +2046,10 @@ Partial Class frmMain
         Me.DspWideUse0.FieldName = ""
         Me.DspWideUse0.FieldNameWidth = 146
         Me.DspWideUse0.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWideUse0.Location = New System.Drawing.Point(1408, 30)
+        Me.DspWideUse0.Location = New System.Drawing.Point(1398, 30)
         Me.DspWideUse0.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWideUse0.Name = "DspWideUse0"
-        Me.DspWideUse0.Size = New System.Drawing.Size(310, 32)
+        Me.DspWideUse0.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse0.TabIndex = 69
         Me.DspWideUse0.Unit = ""
         Me.DspWideUse0.UnitVisible = True
@@ -2101,7 +2101,7 @@ Partial Class frmMain
         Me.DspTargetPitching.Location = New System.Drawing.Point(1070, 625)
         Me.DspTargetPitching.Margin = New System.Windows.Forms.Padding(1)
         Me.DspTargetPitching.Name = "DspTargetPitching"
-        Me.DspTargetPitching.Size = New System.Drawing.Size(305, 32)
+        Me.DspTargetPitching.Size = New System.Drawing.Size(320, 32)
         Me.DspTargetPitching.TabIndex = 39
         Me.DspTargetPitching.Unit = "deg"
         Me.DspTargetPitching.UnitVisible = True
@@ -2122,7 +2122,7 @@ Partial Class frmMain
         Me.DspTargetDirection.Location = New System.Drawing.Point(1070, 592)
         Me.DspTargetDirection.Margin = New System.Windows.Forms.Padding(1)
         Me.DspTargetDirection.Name = "DspTargetDirection"
-        Me.DspTargetDirection.Size = New System.Drawing.Size(305, 32)
+        Me.DspTargetDirection.Size = New System.Drawing.Size(320, 32)
         Me.DspTargetDirection.TabIndex = 38
         Me.DspTargetDirection.Unit = "deg"
         Me.DspTargetDirection.UnitVisible = True
@@ -2143,7 +2143,7 @@ Partial Class frmMain
         Me.DspVerRChangePoint.Location = New System.Drawing.Point(1070, 549)
         Me.DspVerRChangePoint.Margin = New System.Windows.Forms.Padding(1)
         Me.DspVerRChangePoint.Name = "DspVerRChangePoint"
-        Me.DspVerRChangePoint.Size = New System.Drawing.Size(305, 32)
+        Me.DspVerRChangePoint.Size = New System.Drawing.Size(320, 32)
         Me.DspVerRChangePoint.TabIndex = 37
         Me.DspVerRChangePoint.Unit = "m"
         Me.DspVerRChangePoint.UnitVisible = True
@@ -2164,7 +2164,7 @@ Partial Class frmMain
         Me.DspVerFChangePoint.Location = New System.Drawing.Point(1070, 517)
         Me.DspVerFChangePoint.Margin = New System.Windows.Forms.Padding(1)
         Me.DspVerFChangePoint.Name = "DspVerFChangePoint"
-        Me.DspVerFChangePoint.Size = New System.Drawing.Size(305, 32)
+        Me.DspVerFChangePoint.Size = New System.Drawing.Size(320, 32)
         Me.DspVerFChangePoint.TabIndex = 36
         Me.DspVerFChangePoint.Unit = "m"
         Me.DspVerFChangePoint.UnitVisible = True
@@ -2185,7 +2185,7 @@ Partial Class frmMain
         Me.DspVerLine.Location = New System.Drawing.Point(1070, 485)
         Me.DspVerLine.Margin = New System.Windows.Forms.Padding(1)
         Me.DspVerLine.Name = "DspVerLine"
-        Me.DspVerLine.Size = New System.Drawing.Size(305, 32)
+        Me.DspVerLine.Size = New System.Drawing.Size(320, 32)
         Me.DspVerLine.TabIndex = 35
         Me.DspVerLine.Unit = "m"
         Me.DspVerLine.UnitVisible = True
@@ -2206,7 +2206,7 @@ Partial Class frmMain
         Me.DspHorRChangePoint.Location = New System.Drawing.Point(1070, 445)
         Me.DspHorRChangePoint.Margin = New System.Windows.Forms.Padding(1)
         Me.DspHorRChangePoint.Name = "DspHorRChangePoint"
-        Me.DspHorRChangePoint.Size = New System.Drawing.Size(305, 32)
+        Me.DspHorRChangePoint.Size = New System.Drawing.Size(320, 32)
         Me.DspHorRChangePoint.TabIndex = 34
         Me.DspHorRChangePoint.Unit = "m"
         Me.DspHorRChangePoint.UnitVisible = True
@@ -2227,7 +2227,7 @@ Partial Class frmMain
         Me.DspHorFChangePoint.Location = New System.Drawing.Point(1070, 413)
         Me.DspHorFChangePoint.Margin = New System.Windows.Forms.Padding(1)
         Me.DspHorFChangePoint.Name = "DspHorFChangePoint"
-        Me.DspHorFChangePoint.Size = New System.Drawing.Size(305, 32)
+        Me.DspHorFChangePoint.Size = New System.Drawing.Size(320, 32)
         Me.DspHorFChangePoint.TabIndex = 33
         Me.DspHorFChangePoint.Unit = "m"
         Me.DspHorFChangePoint.UnitVisible = True
@@ -2248,7 +2248,7 @@ Partial Class frmMain
         Me.DspHorLine.Location = New System.Drawing.Point(1070, 381)
         Me.DspHorLine.Margin = New System.Windows.Forms.Padding(1)
         Me.DspHorLine.Name = "DspHorLine"
-        Me.DspHorLine.Size = New System.Drawing.Size(305, 32)
+        Me.DspHorLine.Size = New System.Drawing.Size(320, 32)
         Me.DspHorLine.TabIndex = 32
         Me.DspHorLine.Unit = "m"
         Me.DspHorLine.UnitVisible = True
@@ -2269,7 +2269,7 @@ Partial Class frmMain
         Me.DspDistance.Location = New System.Drawing.Point(1070, 343)
         Me.DspDistance.Margin = New System.Windows.Forms.Padding(1)
         Me.DspDistance.Name = "DspDistance"
-        Me.DspDistance.Size = New System.Drawing.Size(305, 32)
+        Me.DspDistance.Size = New System.Drawing.Size(320, 32)
         Me.DspDistance.TabIndex = 31
         Me.DspDistance.Unit = "m"
         Me.DspDistance.UnitVisible = True
@@ -2290,7 +2290,7 @@ Partial Class frmMain
         Me.DspMoment.Location = New System.Drawing.Point(1070, 301)
         Me.DspMoment.Margin = New System.Windows.Forms.Padding(1)
         Me.DspMoment.Name = "DspMoment"
-        Me.DspMoment.Size = New System.Drawing.Size(305, 32)
+        Me.DspMoment.Size = New System.Drawing.Size(320, 32)
         Me.DspMoment.TabIndex = 30
         Me.DspMoment.Unit = "kN･m"
         Me.DspMoment.UnitVisible = True
@@ -2311,7 +2311,7 @@ Partial Class frmMain
         Me.DspThrust.Location = New System.Drawing.Point(1070, 269)
         Me.DspThrust.Margin = New System.Windows.Forms.Padding(1)
         Me.DspThrust.Name = "DspThrust"
-        Me.DspThrust.Size = New System.Drawing.Size(305, 32)
+        Me.DspThrust.Size = New System.Drawing.Size(320, 32)
         Me.DspThrust.TabIndex = 29
         Me.DspThrust.Unit = "ｋN"
         Me.DspThrust.UnitVisible = True
@@ -2332,7 +2332,7 @@ Partial Class frmMain
         Me.DspJackPress.Location = New System.Drawing.Point(1070, 237)
         Me.DspJackPress.Margin = New System.Windows.Forms.Padding(1)
         Me.DspJackPress.Name = "DspJackPress"
-        Me.DspJackPress.Size = New System.Drawing.Size(305, 32)
+        Me.DspJackPress.Size = New System.Drawing.Size(320, 32)
         Me.DspJackPress.TabIndex = 28
         Me.DspJackPress.Unit = "MPa"
         Me.DspJackPress.UnitVisible = True
@@ -2353,7 +2353,7 @@ Partial Class frmMain
         Me.DspVerBroken.Location = New System.Drawing.Point(1070, 200)
         Me.DspVerBroken.Margin = New System.Windows.Forms.Padding(1)
         Me.DspVerBroken.Name = "DspVerBroken"
-        Me.DspVerBroken.Size = New System.Drawing.Size(305, 32)
+        Me.DspVerBroken.Size = New System.Drawing.Size(320, 32)
         Me.DspVerBroken.TabIndex = 27
         Me.DspVerBroken.Unit = "deg"
         Me.DspVerBroken.UnitVisible = True
@@ -2374,7 +2374,7 @@ Partial Class frmMain
         Me.DspHorBroken.Location = New System.Drawing.Point(1070, 168)
         Me.DspHorBroken.Margin = New System.Windows.Forms.Padding(1)
         Me.DspHorBroken.Name = "DspHorBroken"
-        Me.DspHorBroken.Size = New System.Drawing.Size(305, 32)
+        Me.DspHorBroken.Size = New System.Drawing.Size(320, 32)
         Me.DspHorBroken.TabIndex = 26
         Me.DspHorBroken.Unit = "deg"
         Me.DspHorBroken.UnitVisible = True
@@ -2395,7 +2395,7 @@ Partial Class frmMain
         Me.DspPitching.Location = New System.Drawing.Point(1070, 131)
         Me.DspPitching.Margin = New System.Windows.Forms.Padding(1)
         Me.DspPitching.Name = "DspPitching"
-        Me.DspPitching.Size = New System.Drawing.Size(305, 32)
+        Me.DspPitching.Size = New System.Drawing.Size(320, 32)
         Me.DspPitching.TabIndex = 25
         Me.DspPitching.Unit = "deg"
         Me.DspPitching.UnitVisible = True
@@ -2416,7 +2416,7 @@ Partial Class frmMain
         Me.DspDirection.Location = New System.Drawing.Point(1070, 99)
         Me.DspDirection.Margin = New System.Windows.Forms.Padding(1)
         Me.DspDirection.Name = "DspDirection"
-        Me.DspDirection.Size = New System.Drawing.Size(305, 32)
+        Me.DspDirection.Size = New System.Drawing.Size(320, 32)
         Me.DspDirection.TabIndex = 24
         Me.DspDirection.Unit = "deg"
         Me.DspDirection.UnitVisible = True
@@ -2437,7 +2437,7 @@ Partial Class frmMain
         Me.DspVerDev.Location = New System.Drawing.Point(1070, 62)
         Me.DspVerDev.Margin = New System.Windows.Forms.Padding(1)
         Me.DspVerDev.Name = "DspVerDev"
-        Me.DspVerDev.Size = New System.Drawing.Size(305, 32)
+        Me.DspVerDev.Size = New System.Drawing.Size(320, 32)
         Me.DspVerDev.TabIndex = 23
         Me.DspVerDev.Unit = "deg"
         Me.DspVerDev.UnitVisible = True
@@ -2458,7 +2458,7 @@ Partial Class frmMain
         Me.DspHorDev.Location = New System.Drawing.Point(1070, 30)
         Me.DspHorDev.Margin = New System.Windows.Forms.Padding(1)
         Me.DspHorDev.Name = "DspHorDev"
-        Me.DspHorDev.Size = New System.Drawing.Size(305, 32)
+        Me.DspHorDev.Size = New System.Drawing.Size(320, 32)
         Me.DspHorDev.TabIndex = 22
         Me.DspHorDev.Unit = "deg"
         Me.DspHorDev.UnitVisible = True

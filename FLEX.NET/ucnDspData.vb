@@ -58,6 +58,7 @@ Public Class ucnDspData
             lblData.Left = lblFieldName.Location.X + lblFieldName.Width
 
             AdjustFontSiza()
+            lblUnit.Left = lblData.Left + lblData.Width
 
         End Set
     End Property
@@ -102,6 +103,7 @@ Public Class ucnDspData
         End Get
         Set(value As Integer)
             lblData.Width = value
+            lblUnit.Left = lblData.Left + lblData.Width
         End Set
     End Property
 

@@ -27,7 +27,7 @@
             .引き戻し実施間隔 = OneReduceTime.Value
         End With
 
-
+        Me.Close()
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click

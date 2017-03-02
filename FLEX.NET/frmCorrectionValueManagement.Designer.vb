@@ -198,7 +198,7 @@ Partial Class frmCorrectionValueManagement
         '
         'VerPlan10
         '
-        Me.VerPlan10.DecimalPlaces = CType(3, Short)
+        Me.VerPlan10.DecimalPlaces = CType(0, Short)
         Me.VerPlan10.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
         Me.VerPlan10.FieldName = "シフト"
         Me.VerPlan10.ForeColor = System.Drawing.Color.Black
@@ -438,7 +438,7 @@ Partial Class frmCorrectionValueManagement
         '
         'HorPlan11
         '
-        Me.HorPlan11.DecimalPlaces = CType(3, Short)
+        Me.HorPlan11.DecimalPlaces = CType(0, Short)
         Me.HorPlan11.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
         Me.HorPlan11.FieldName = "シフト"
         Me.HorPlan11.ForeColor = System.Drawing.Color.Black

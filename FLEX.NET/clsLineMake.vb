@@ -795,7 +795,7 @@ Friend Class clsCorToDist
 
             dblEp = 0.00001
 
-            Select Case _抽出Zone
+            Select Case HorPlan.線形(_抽出Zone)
 
                 Case 1 ''直線-----------------------------
                     Call sbZahyoGtoL(dblXD, dblYD, _Xp, _Yp, .始点X座標(_抽出Zone), .始点Y座標(_抽出Zone), .始点方向角(_抽出Zone))
@@ -851,9 +851,9 @@ Friend Class clsCorToDist
                         dblTR0 = 1 / .始点曲率半径(_抽出Zone)
                     End If
                     If .終点曲率半径(_抽出Zone) = 0 Then
-                        dblTR0 = 0
+                        dblTR1 = 0
                     Else
-                        dblTR0 = 1 / .終点曲率半径(_抽出Zone)
+                        dblTR1 = 1 / .終点曲率半径(_抽出Zone)
                     End If
                     If Abs(dblXD_s) <= dblEp Then '計測点は始点上にある（結果は始点のﾃﾞｰﾀ）
                         dblLC = dblA2 * dblTR0 '曲線長
@@ -867,12 +867,12 @@ Friend Class clsCorToDist
                             dblTauDash1 = dblL1 * dblTR1 / 2 * 180 / PI
                             intLL = 0
 
-                            dblXdash0 = userFunctionG(dblL0, .始点曲率半径(_抽出Zone))
-                            dblYdash0 = userFunctionF(dblL0, .始点曲率半径(_抽出Zone))
+                            dblXdash0 = userFunctionG(dblL0, HorPlan.始点曲率半径(_抽出Zone))
+                            dblYdash0 = userFunctionF(dblL0, HorPlan.始点曲率半径(_抽出Zone))
 
                             dblAlfadash = Lim180(.始点方向角(_抽出Zone) - dblTauDash0)
                             Do
-                                intLL = CShort(intLL + 1) 'ﾙｰﾌﾟ数ｶｳﾝﾄ
+                                intLL += 1 'ﾙｰﾌﾟ数ｶｳﾝﾄ
                                 dblLC = (dblL0 + dblL1) * 0.5 '次の検討位置を近い側の半分へ移動（ｽﾀｰﾄ時は始点終点間の真ん中）
                                 dblRc = dblA2 / dblLC '検討位置の半径
                                 dblTRc = 1 / dblRc 'その逆数
@@ -880,10 +880,10 @@ Friend Class clsCorToDist
                                 dblYdashC = userFunctionF(dblLC, dblRc)
                                 dblXdash = dblXdashC - dblXdash0
                                 dblYdash = dblYdashC - dblYdash0
-                                dblTauDashC = dblLC / dblTRc / 2 * 180 / PI
+                                dblTauDashC = dblLC * dblTRc / 2 * 180 / PI
                                 dblAlfaC = Lim180(dblAlfadash + dblTauDashC)
-                                dblXc = .始点中心X座標(_抽出Zone) + dblXdash * Cos(dblAlfadash * PI / 180) - dblYdash * Sin(dblAlfadash * PI / 180)
-                                dblYc = .始点中心Y座標(_抽出Zone) + dblXdash * Sin(dblAlfadash * PI / 180) + dblYdash * Cos(dblAlfadash * PI / 180)
+                                dblXc = HorPlan.始点X座標(_抽出Zone) + dblXdash * Cos(dblAlfadash * PI / 180) - dblYdash * Sin(dblAlfadash * PI / 180)
+                                dblYc = HorPlan.始点Y座標(_抽出Zone) + dblXdash * Sin(dblAlfadash * PI / 180) + dblYdash * Cos(dblAlfadash * PI / 180)
                                 Call sbZahyoGtoL(dblXDc, dblYDc, _Xp, _Yp, dblXc, dblYc, dblAlfaC)
 
                                 If Abs(dblXDc) <= dblEp Then '距離を検討し、きわめて近いとき
@@ -901,7 +901,7 @@ Friend Class clsCorToDist
 
 
                     End If
-                    _累積距離 = .始点累積距離(_抽出Zone) + dblLC
+                    _累積距離 = .始点累積距離(_抽出Zone) + Abs(dblLC - dblA2 * dblTR0)
             End Select
 
         End With

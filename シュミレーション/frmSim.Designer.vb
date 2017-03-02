@@ -78,12 +78,17 @@ Partial Class frmSim
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.DgvJackStroke = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RealStrokeLen = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.JackSpeed = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.chkExecMode = New System.Windows.Forms.CheckBox()
         Me.chkSegmentMode = New System.Windows.Forms.CheckBox()
         Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.nudSumupSpeed = New System.Windows.Forms.NumericUpDown()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.nudSumupStroke = New System.Windows.Forms.NumericUpDown()
+        Me.btnAllSet = New System.Windows.Forms.Button()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RealStrokeLen = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.JackSpeed = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.nudSoucePressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudLeftStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudRightStroke, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -95,6 +100,8 @@ Partial Class frmSim
         CType(Me.nudLosZeroStatusMachin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudLosZeroStsFlex, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DgvJackStroke, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudSumupSpeed, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudSumupStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tmrPlcWR
@@ -441,7 +448,7 @@ Partial Class frmSim
         'nudLosZeroStatusMachin
         '
         Me.nudLosZeroStatusMachin.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.nudLosZeroStatusMachin.Location = New System.Drawing.Point(941, 98)
+        Me.nudLosZeroStatusMachin.Location = New System.Drawing.Point(911, 36)
         Me.nudLosZeroStatusMachin.Margin = New System.Windows.Forms.Padding(2)
         Me.nudLosZeroStatusMachin.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.nudLosZeroStatusMachin.Name = "nudLosZeroStatusMachin"
@@ -453,7 +460,7 @@ Partial Class frmSim
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label7.Location = New System.Drawing.Point(899, 58)
+        Me.Label7.Location = New System.Drawing.Point(766, 30)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(132, 32)
@@ -464,7 +471,7 @@ Partial Class frmSim
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label8.Location = New System.Drawing.Point(899, 291)
+        Me.Label8.Location = New System.Drawing.Point(810, 222)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(132, 32)
@@ -474,7 +481,7 @@ Partial Class frmSim
         'nudLosZeroStsFlex
         '
         Me.nudLosZeroStsFlex.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.nudLosZeroStsFlex.Location = New System.Drawing.Point(941, 332)
+        Me.nudLosZeroStsFlex.Location = New System.Drawing.Point(941, 222)
         Me.nudLosZeroStsFlex.Margin = New System.Windows.Forms.Padding(2)
         Me.nudLosZeroStsFlex.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.nudLosZeroStsFlex.Name = "nudLosZeroStsFlex"
@@ -508,7 +515,7 @@ Partial Class frmSim
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label9.Location = New System.Drawing.Point(890, 132)
+        Me.Label9.Location = New System.Drawing.Point(808, 64)
         Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(200, 128)
@@ -520,7 +527,7 @@ Partial Class frmSim
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label10.Location = New System.Drawing.Point(898, 366)
+        Me.Label10.Location = New System.Drawing.Point(908, 255)
         Me.Label10.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(137, 64)
@@ -534,6 +541,8 @@ Partial Class frmSim
         Me.DgvJackStroke.AllowUserToResizeColumns = False
         Me.DgvJackStroke.AllowUserToResizeRows = False
         DataGridViewCellStyle10.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle10.Format = "N0"
+        DataGridViewCellStyle10.NullValue = "0"
         Me.DgvJackStroke.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle10
         Me.DgvJackStroke.ColumnHeadersHeight = 40
         Me.DgvJackStroke.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
@@ -542,7 +551,8 @@ Partial Class frmSim
         DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle14.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle14.NullValue = Nothing
+        DataGridViewCellStyle14.Format = "N0"
+        DataGridViewCellStyle14.NullValue = "0"
         DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
@@ -558,42 +568,6 @@ Partial Class frmSim
         Me.DgvJackStroke.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.DgvJackStroke.Size = New System.Drawing.Size(252, 409)
         Me.DgvJackStroke.TabIndex = 26
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle11.Format = "N0"
-        DataGridViewCellStyle11.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle11
-        Me.DataGridViewTextBoxColumn1.DividerWidth = 1
-        Me.DataGridViewTextBoxColumn1.Frozen = True
-        Me.DataGridViewTextBoxColumn1.HeaderText = "No"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Width = 30
-        '
-        'RealStrokeLen
-        '
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle12.NullValue = "0"
-        Me.RealStrokeLen.DefaultCellStyle = DataGridViewCellStyle12
-        Me.RealStrokeLen.Frozen = True
-        Me.RealStrokeLen.HeaderText = "実ストローク(mm)"
-        Me.RealStrokeLen.Name = "RealStrokeLen"
-        Me.RealStrokeLen.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.RealStrokeLen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'JackSpeed
-        '
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle13.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.JackSpeed.DefaultCellStyle = DataGridViewCellStyle13
-        Me.JackSpeed.Frozen = True
-        Me.JackSpeed.HeaderText = "速度(mm/min)"
-        Me.JackSpeed.Name = "JackSpeed"
-        Me.JackSpeed.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.JackSpeed.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'chkExecMode
         '
@@ -621,18 +595,118 @@ Partial Class frmSim
         '
         Me.Label11.BackColor = System.Drawing.Color.Gold
         Me.Label11.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label11.Location = New System.Drawing.Point(934, 15)
+        Me.Label11.Location = New System.Drawing.Point(934, -2)
         Me.Label11.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(202, 32)
         Me.Label11.TabIndex = 29
         Me.Label11.Text = "Shift+ダブルクリックですべてON" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ctrl+ダブルクリックですべてOFF" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label12.Location = New System.Drawing.Point(866, 394)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(116, 16)
+        Me.Label12.TabIndex = 33
+        Me.Label12.Text = "ｽﾋﾟｰﾄﾞ(mm/min)"
+        '
+        'nudSumupSpeed
+        '
+        Me.nudSumupSpeed.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.nudSumupSpeed.Increment = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.nudSumupSpeed.Location = New System.Drawing.Point(884, 412)
+        Me.nudSumupSpeed.Margin = New System.Windows.Forms.Padding(2)
+        Me.nudSumupSpeed.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
+        Me.nudSumupSpeed.Name = "nudSumupSpeed"
+        Me.nudSumupSpeed.Size = New System.Drawing.Size(67, 26)
+        Me.nudSumupSpeed.TabIndex = 32
+        Me.nudSumupSpeed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label13.Location = New System.Drawing.Point(866, 346)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(101, 16)
+        Me.Label13.TabIndex = 31
+        Me.Label13.Text = "ストローク(mm)"
+        '
+        'nudSumupStroke
+        '
+        Me.nudSumupStroke.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.nudSumupStroke.Increment = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.nudSumupStroke.Location = New System.Drawing.Point(884, 364)
+        Me.nudSumupStroke.Margin = New System.Windows.Forms.Padding(2)
+        Me.nudSumupStroke.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
+        Me.nudSumupStroke.Name = "nudSumupStroke"
+        Me.nudSumupStroke.Size = New System.Drawing.Size(67, 26)
+        Me.nudSumupStroke.TabIndex = 30
+        Me.nudSumupStroke.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'btnAllSet
+        '
+        Me.btnAllSet.Location = New System.Drawing.Point(986, 379)
+        Me.btnAllSet.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnAllSet.Name = "btnAllSet"
+        Me.btnAllSet.Size = New System.Drawing.Size(108, 31)
+        Me.btnAllSet.TabIndex = 34
+        Me.btnAllSet.Text = "一括設定"
+        Me.btnAllSet.UseVisualStyleBackColor = True
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle11.Format = "N0"
+        DataGridViewCellStyle11.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle11
+        Me.DataGridViewTextBoxColumn1.DividerWidth = 1
+        Me.DataGridViewTextBoxColumn1.Frozen = True
+        Me.DataGridViewTextBoxColumn1.HeaderText = "No"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.Width = 30
+        '
+        'RealStrokeLen
+        '
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle12.Format = "N0"
+        DataGridViewCellStyle12.NullValue = "0"
+        Me.RealStrokeLen.DefaultCellStyle = DataGridViewCellStyle12
+        Me.RealStrokeLen.Frozen = True
+        Me.RealStrokeLen.HeaderText = "実ストローク(mm)"
+        Me.RealStrokeLen.Name = "RealStrokeLen"
+        Me.RealStrokeLen.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.RealStrokeLen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'JackSpeed
+        '
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle13.Format = "N0"
+        DataGridViewCellStyle13.NullValue = "0"
+        Me.JackSpeed.DefaultCellStyle = DataGridViewCellStyle13
+        Me.JackSpeed.Frozen = True
+        Me.JackSpeed.HeaderText = "速度(mm/min)"
+        Me.JackSpeed.Name = "JackSpeed"
+        Me.JackSpeed.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.JackSpeed.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
         'frmSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.ClientSize = New System.Drawing.Size(1594, 876)
+        Me.Controls.Add(Me.btnAllSet)
+        Me.Controls.Add(Me.Label12)
+        Me.Controls.Add(Me.nudSumupSpeed)
+        Me.Controls.Add(Me.Label13)
+        Me.Controls.Add(Me.nudSumupStroke)
         Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.chkSegmentMode)
         Me.Controls.Add(Me.chkExecMode)
@@ -678,6 +752,8 @@ Partial Class frmSim
         CType(Me.nudLosZeroStatusMachin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudLosZeroStsFlex, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DgvJackStroke, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudSumupSpeed, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudSumupStroke, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -714,9 +790,6 @@ Partial Class frmSim
     Friend WithEvents Label9 As Label
     Friend WithEvents Label10 As Label
     Friend WithEvents DgvJackStroke As DataGridView
-    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
-    Friend WithEvents RealStrokeLen As DataGridViewTextBoxColumn
-    Friend WithEvents JackSpeed As DataGridViewTextBoxColumn
     Friend WithEvents chkExecMode As CheckBox
     Friend WithEvents chkSegmentMode As CheckBox
     Friend WithEvents JackNo As DataGridViewTextBoxColumn
@@ -729,4 +802,12 @@ Partial Class frmSim
     Friend WithEvents ClosetCommand As DataGridViewTextBoxColumn
     Friend WithEvents AddClosetCommand As DataGridViewTextBoxColumn
     Friend WithEvents Label11 As Label
+    Friend WithEvents Label12 As Label
+    Friend WithEvents nudSumupSpeed As NumericUpDown
+    Friend WithEvents Label13 As Label
+    Friend WithEvents nudSumupStroke As NumericUpDown
+    Friend WithEvents btnAllSet As Button
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents RealStrokeLen As DataGridViewTextBoxColumn
+    Friend WithEvents JackSpeed As DataGridViewTextBoxColumn
 End Class

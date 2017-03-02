@@ -181,6 +181,15 @@ Public Class clsHorPanData
                 _終点X座標(zoneNo) = .Item("終点X座標")
                 _始点Y座標(zoneNo) = .Item("始点Y座標") * _座標系
                 _終点Y座標(zoneNo) = .Item("終点Y座標") * _座標系
+
+                If Not IsDBNull(.Item("始点中心X")) Then
+                    _始点中心X座標(zoneNo) = .Item("始点中心X")
+                    _終点中心X座標(zoneNo) = .Item("終点中心X")
+                    _始点中心Y座標(zoneNo) = .Item("始点中心Y") * _座標系
+                    _終点中心Y座標(zoneNo) = .Item("終点中心Y") * _座標系
+                End If
+
+
                 _始点構築X座標(zoneNo) = .Item("始点X構築")
                 _終点構築X座標(zoneNo) = .Item("終点X構築")
                 _始点構築Y座標(zoneNo) = .Item("始点Y構築") * _座標系

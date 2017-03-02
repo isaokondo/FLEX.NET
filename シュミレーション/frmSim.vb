@@ -194,18 +194,20 @@ Public Class frmSim
         nudRightSpeed.Value = fnChangeSpeedAnalogIn(plcData)
         tmrRightJack.Enabled = (nudRightSpeed.Value <> 0) And chkExcavOn.Checked
 
-        '計測ジャッキの取込
-        For i = 0 To SimlationSetting.MesureJackNo.Count - 1
+        If Not DgvJackStroke.IsCurrentCellInEditMode Then
+            '計測ジャッキの取込
+            For i = 0 To SimlationSetting.MesureJackNo.Count - 1
 
-            iRet = ComPlc.GetDevice(SimlationSetting.MesureJackStroke(i), plcData)
-            DgvJackStroke.Rows(i).Cells(1).Value = fnChangeStrokeAnalogIn(plcData)
+                iRet = ComPlc.GetDevice(SimlationSetting.MesureJackStroke(i), plcData)
+                DgvJackStroke.Rows(i).Cells(1).Value = fnChangeStrokeAnalogIn(plcData)
 
-            iRet = ComPlc.GetDevice(SimlationSetting.MesureJackSpeed(i), plcData)
-            DgvJackStroke.Rows(i).Cells(2).Value = fnChangeSpeedAnalogIn(plcData)
+                iRet = ComPlc.GetDevice(SimlationSetting.MesureJackSpeed(i), plcData)
+                DgvJackStroke.Rows(i).Cells(2).Value = fnChangeSpeedAnalogIn(plcData)
+
+            Next
 
 
-        Next
-
+        End If
 
 
 
@@ -521,13 +523,13 @@ Public Class frmSim
         Next
     End Sub
 
-    Private Sub tmrLeftJack_Tick(sender As Object, e As EventArgs) Handles tmrLeftJack.Tick
-        nudLeftStroke.Value += 1
-    End Sub
+    'Private Sub tmrLeftJack_Tick(sender As Object, e As EventArgs) Handles tmrLeftJack.Tick
+    '    nudLeftStroke.Value += 1
+    'End Sub
 
-    Private Sub tmrRightJack_Tick(sender As Object, e As EventArgs) Handles tmrRightJack.Tick
-        nudRightStroke.Value += 1
-    End Sub
+    'Private Sub tmrRightJack_Tick(sender As Object, e As EventArgs) Handles tmrRightJack.Tick
+    '    nudRightStroke.Value += 1
+    'End Sub
     ''' <summary>
     ''' グループ圧のシュミレーション
     ''' </summary>
@@ -638,19 +640,46 @@ CatchError:  '例外処理
 
     End Sub
 
-    Private Sub DgvJackStroke_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvJackStroke.CellContentClick
+
+
+    ''' <summary>
+    ''' ストローク、スピード一括設定
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnAllSet_Click(sender As Object, e As EventArgs) Handles btnAllSet.Click
+        '計測ジャッキの取込
+        Dim strokeData As Integer = fnChangePresAnalogOut(nudSumupStroke.Value)
+        Dim speedData As Integer = fnChangePresAnalogOut(nudSumupSpeed.Value)
+        For i As Short = 0 To SimlationSetting.MesureJackNo.Count - 1
+            Dim iRet As Long
+            iRet = ComPlc.SetDevice(SimlationSetting.MesureJackStroke(i), strokeData)
+            iRet = ComPlc.SetDevice(SimlationSetting.MesureJackSpeed(i), speedData)
+
+        Next
+
+    End Sub
+    ''' <summary>
+    ''' セル入力時にPLCへ出力
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub DgvJackStroke_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles DgvJackStroke.CellEnter
 
     End Sub
 
-    Private Sub DgvJackStroke_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles DgvJackStroke.CellValueChanged
+    Private Sub DgvJackStroke_CellParsing(sender As Object, e As DataGridViewCellParsingEventArgs) Handles DgvJackStroke.CellParsing
 
-    End Sub
+        If e.RowIndex = 0 Then Exit Sub
+        Dim PlcAdr As String = ""
+        If e.ColumnIndex = 1 Then
+            PlcAdr = SimlationSetting.MesureJackStroke(e.RowIndex)
+        End If
+        If e.ColumnIndex = 2 Then
+            PlcAdr = SimlationSetting.MesureJackSpeed(e.RowIndex)
+        End If
+        Dim iret = ComPlc.SetDevice(PlcAdr, fnChangePresAnalogOut(e.Value))
 
-    Private Sub DgvJackStroke_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvJackStroke.KeyDown
-
-    End Sub
-
-    Private Sub DgvLosZero_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvLosZero.CellContentClick
 
     End Sub
 End Class

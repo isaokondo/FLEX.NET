@@ -473,7 +473,7 @@
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     ''' <remarks></remarks>
-    Private Sub RingNoChange_Click(sender As Object, e As EventArgs) Handles RingNoChange.Click
+    Private Sub RingNoChange_Click(sender As Object, e As EventArgs) Handles RingNoChange.Click, DspRingNo.Click
         frmRingNoChange.Show()
     End Sub
 
@@ -582,9 +582,17 @@
     Private Sub AssemblyProcessEdit_Click(sender As Object, e As EventArgs) Handles AssemblyProcessEdit.Click
         My.Forms.frmAssemblyProcessEdit.Show()
     End Sub
+    ''' <summary>
+    ''' 補正値管理
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub CorrectionValMng_Click(sender As Object, e As EventArgs) Handles CorrectionValMng.Click, DspTargetDirection.DoubleClick,
+        DspTargetPitching.DoubleClick, DspHorFChangePoint.DoubleClick, DspDistance.DoubleClick, DspHorLine.DoubleClick, DspHorFChangePoint.DoubleClick,
+        DspHorRChangePoint.DoubleClick, DspVerLine.DoubleClick, DspVerFChangePoint.DoubleClick, DspVerRChangePoint.DoubleClick
 
-    Private Sub CorrectionValMng_Click(sender As Object, e As EventArgs) Handles CorrectionValMng.Click
         frmCorrectionValueManagement.Show()
+
     End Sub
 
     Private Sub RingCloseValueMng_Click(sender As Object, e As EventArgs) Handles RingCloseValueMng.Click
