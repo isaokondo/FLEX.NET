@@ -1,4 +1,6 @@
 ﻿Imports System.Math
+Imports System.Runtime.CompilerServices
+
 Module CommonMdl
     ''' <summary>
     ''' 圧力指令値のﾀﾞｲﾚｸﾄ出力(全開）
@@ -171,6 +173,38 @@ Module CommonMdl
 
 
     End Function
+
+
+    ''' <summary>
+    ''' 度をラジアンに変換
+    ''' </summary>
+    ''' <param name="Deg"></param>
+    ''' <returns></returns>
+    <Extension()>
+    Public Function ToRad(ByVal Deg As Object) As Double
+        If IsNumeric(Deg) Then
+            Return Deg * PI / 180
+        Else
+            Return 0
+        End If
+
+    End Function
+
+    ''' <summary>
+    ''' 文字列の数値はそのまま、それ以外は０の文字列を返す
+    ''' </summary>
+    ''' <param name="tmp"></param>
+    ''' <returns></returns>
+    <Extension()>
+    Public Function ToNum(ByVal tmp As Object) As Double
+        If IsNumeric(tmp) Then
+            Return tmp.ToString
+        Else
+            Return 0
+        End If
+
+    End Function
+
 
 
 End Module

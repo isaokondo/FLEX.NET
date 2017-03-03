@@ -119,7 +119,7 @@ Public Class ucnJackDsp
             'todo:値がへんかしたときのみ描画するように
             'If value.Equals(_JackStatus) = False Then
             _JackStatus = value
-            Call DspJackStatus()
+            'Call DspJackStatus()
             'End If
         End Set
     End Property
@@ -178,7 +178,7 @@ Public Class ucnJackDsp
             _CopyAngle = value
             If _CopyAngle > 360 Then _CopyAngle = 360
             If _CopyAngle < 0 Then _CopyAngle = 0
-            DspCopy()
+            'DspCopy()
         End Set
     End Property
     ''' <summary>
@@ -196,7 +196,7 @@ Public Class ucnJackDsp
         End Get
         Set(value As Integer)
             _CopyStrechSet = value
-            DspCopy()
+            'DspCopy()
         End Set
     End Property
     Public Property PieceName As New List(Of String)
@@ -319,7 +319,7 @@ Public Class ucnJackDsp
         End Get
         Set(value As Single())
             _GpPv = value
-            DspGpPvImg()
+            'DspGpPvImg()
         End Set
     End Property
     ''' <summary>
@@ -332,7 +332,7 @@ Public Class ucnJackDsp
         End Get
         Set(value As Single)
             _JackOrgPress = value
-            DspGpPvImg()
+            'DspGpPvImg()
         End Set
     End Property
 
@@ -424,6 +424,7 @@ Public Class ucnJackDsp
         If Not IsNothing(imgJackBase) Then
             'DspInitBaseImg()
             Me.BackgroundImage = imgJackBase
+
             DspJackStatus()
             SegmentPieceDsp()
             DspCopy()
@@ -470,7 +471,7 @@ Public Class ucnJackDsp
 
             'TODO:同じような処理が2つあるので　簡潔に！
             'セグメント区切り線
-            Dim Angle As Single = (-_PieceAngle(i) / 2 + _PieceCenterAngle(i)) * PI / 180
+            Dim Angle As Single = (-_PieceAngle(i) / 2 + _PieceCenterAngle(i)).torad
             Dim pX As Integer = CenterPos.X + Rd * Cos(Angle)
             Dim pY As Integer = CenterPos.Y - Rd * Sin(Angle)
             Dim p2X As Integer = CenterPos.X + (Rd - sWidth) * Cos(Angle)
@@ -478,7 +479,7 @@ Public Class ucnJackDsp
 
             g.DrawLine(Pens.Black, New Point(p2X, p2Y), New Point(pX, pY))
 
-            Angle = (_PieceAngle(i) / 2 + _PieceCenterAngle(i)) * PI / 180
+            Angle = (_PieceAngle(i) / 2 + _PieceCenterAngle(i)).torad
             Dim pX2 As Integer = CenterPos.X + Rd * Cos(Angle)
             Dim pY2 As Integer = CenterPos.Y - Rd * Sin(Angle)
             Dim p2X2 As Integer = CenterPos.X + (Rd - 20) * Cos(Angle)
@@ -490,8 +491,8 @@ Public Class ucnJackDsp
 
             Rd -= 1
             '文字回転用
-            g.TranslateTransform(Rd * Cos((_PieceCenterAngle(i)) * PI / 180) + CenterPos.X,
-                      -Rd * Sin((_PieceCenterAngle(i)) * PI / 180) + CenterPos.Y)
+            g.TranslateTransform(Rd * Cos((_PieceCenterAngle(i)).torad) + CenterPos.X,
+                      -Rd * Sin((_PieceCenterAngle(i)).torad) + CenterPos.Y)
             g.RotateTransform(90 - PieceCenterAngle(i))
 
 
@@ -539,8 +540,8 @@ Public Class ucnJackDsp
                 Dim St As Single = (_faiJack(i) - 360 / _numberJack / 2)
 
                 Dim ps As Point() =
-                    {New Point(MaxRadios * 0.8 * Cos(St * PI / 180) + CenterPos.X,
-                               -MaxRadios * 0.8 * Sin(St * PI / 180) + CenterPos.Y),
+                    {New Point(MaxRadios * 0.8 * Cos(St.torad) + CenterPos.X,
+                               -MaxRadios * 0.8 * Sin(St.torad) + CenterPos.Y),
                                CenterPos}
                 g.DrawLines(Pens.Black, ps)
 
@@ -571,8 +572,8 @@ Public Class ucnJackDsp
             'ワールド座標系リセット
             g.ResetTransform()
             '移動
-            g.TranslateTransform(MaxRadios * 0.85 * Cos(_faiJack(i) * PI / 180) + CenterPos.X,
-                                 -MaxRadios * 0.85 * Sin(_faiJack(i) * PI / 180) + CenterPos.Y)
+            g.TranslateTransform(MaxRadios * 0.85 * Cos(_faiJack(i).torad) + CenterPos.X,
+                                 -MaxRadios * 0.85 * Sin(_faiJack(i).torad) + CenterPos.Y)
             g.RotateTransform(360 / _numberJack * i + IIf(_firstJackLoc = "top", 0, 360 / _numberJack / 2)) '回転
             'ジャッキ番号の表示
             g.DrawString((i + 1).ToString, fnt, Brushes.Black, IIf(i + 1 >= 10, -fnt.Size, -fnt.Size / 2), -fnt.Size / 2)
@@ -587,8 +588,8 @@ Public Class ucnJackDsp
             Dim j As Integer = IIf(i - 1 < 0, _numberGroup - 1, i - 1)
             Dim r As Single = IIf(GrDgree(i) < GrDgree(j), (GrDgree(j) + GrDgree(i)) / 2, (GrDgree(j) + GrDgree(i) + 360) / 2)
             'グループ圧の表示位置
-            GroupPvDsp(i).Location = New Point(MaxRadios * GpWakuRate * Cos(r * PI / 180) + CenterPos.X - GroupPvDsp(i).Width / 2,
-                               -MaxRadios * GpWakuRate * Sin(r * PI / 180) + CenterPos.Y - GroupPvDsp(i).Height / 2)
+            GroupPvDsp(i).Location = New Point(MaxRadios * GpWakuRate * Cos(r.torad) + CenterPos.X - GroupPvDsp(i).Width / 2,
+                               -MaxRadios * GpWakuRate * Sin(r.torad) + CenterPos.Y - GroupPvDsp(i).Height / 2)
 
             'グループ圧の表示が重なるときは縦位置を調整する
             If i > 0 Then
@@ -602,8 +603,8 @@ Public Class ucnJackDsp
             'ワールド座標系リセット
             g.ResetTransform()
             '移動
-            g.TranslateTransform(MaxRadios * PointRate * Cos(r * PI / 180) + CenterPos.X,
-                                 -MaxRadios * PointRate * Sin(r * PI / 180) + CenterPos.Y)
+            g.TranslateTransform(MaxRadios * PointRate * Cos(r.torad) + CenterPos.X,
+                                 -MaxRadios * PointRate * Sin(r.torad) + CenterPos.Y)
             g.RotateTransform(90 - r) '回転
             'ジャッキ番号の表示
             g.DrawString((i + 1).ToString, fnt, Brushes.White, IIf(i + 1 >= 10, -fnt.Size, -fnt.Size / 2), -fnt.Size / 2)
@@ -636,8 +637,8 @@ Public Class ucnJackDsp
             '移動
             'g.TranslateTransform(CenterPos.X * 0.85 * Cos(_faiJack(i) * PI / 180) + CenterPos.X,
             '                     -CenterPos.Y * 0.85 * Sin(_faiJack(i) * PI / 180) + CenterPos.Y)
-            g.TranslateTransform(MaxRadios * 0.85 * Cos(_faiJack(i) * PI / 180) + CenterPos.X,
-                                 -MaxRadios * 0.85 * Sin(_faiJack(i) * PI / 180) + CenterPos.Y)
+            g.TranslateTransform(MaxRadios * 0.85 * Cos(_faiJack(i).torad) + CenterPos.X,
+                                 -MaxRadios * 0.85 * Sin(_faiJack(i).torad) + CenterPos.Y)
             g.RotateTransform(360 / _numberJack * i + IIf(_firstJackLoc = "top", 0, 360 / _numberJack / 2)) '回転
 
             'TODO:ロスゼロの表示色の割付
@@ -711,8 +712,8 @@ Public Class ucnJackDsp
             '円の表示ポイント
             Dim p As Point = CenterPos
             p.Offset _
-                (MaxRadios * CopyRadiousRate * Cos((i * 5 - 90) * PI / 180),
-                 MaxRadios * CopyRadiousRate * Sin((i * 5 - 90) * PI / 180))
+                (MaxRadios * CopyRadiousRate * Cos((i * 5 - 90).torad),
+                 MaxRadios * CopyRadiousRate * Sin((i * 5 - 90).torad))
 
             Dim Br As Brush '色の表示
             If k = i Then
@@ -771,10 +772,10 @@ Public Class ucnJackDsp
             g.DrawArc(p, New Rectangle(CenterPos.X - d, CenterPos.Y - d, d * 2, d * 2), startAng, endAng)
 
             Dim ps As Point() =
-    {New Point((d + 5) * Cos(GrDgree(i) * PI / 180) + CenterPos.X,
-               -(d + 5) * Sin(GrDgree(i) * PI / 180) + CenterPos.Y),
-               New Point((d - 5) * Cos(GrDgree(i) * PI / 180) + CenterPos.X,
-               -(d - 5) * Sin(GrDgree(i) * PI / 180) + CenterPos.Y)}
+    {New Point((d + 5) * Cos(GrDgree(i).torad) + CenterPos.X,
+               -(d + 5) * Sin(GrDgree(i).torad) + CenterPos.Y),
+               New Point((d - 5) * Cos(GrDgree(i).torad) + CenterPos.X,
+               -(d - 5) * Sin(GrDgree(i).torad) + CenterPos.Y)}
             g.DrawLines(Pens.Black, ps)
         Next
 

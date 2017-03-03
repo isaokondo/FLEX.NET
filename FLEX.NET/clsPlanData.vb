@@ -162,8 +162,8 @@ Public Class clsHorPanData
                     _始点カント(zoneNo) = db.CheckItemData(.Item("始点シフト")) * _座標系
                     _終点カント(zoneNo) = db.CheckItemData(.Item("終点シフト")) * _座標系
 
-                    中折(zoneNo) = db.CheckItemData(.Item("中折使用"))
-                    前胴中心(zoneNo) = db.CheckItemData(.Item("前胴中心"))
+                    中折(zoneNo) = .Item("中折使用").ToString.ToNum
+                    前胴中心(zoneNo) = .Item("前胴中心").ToString.ToNum
                     後胴中心(zoneNo) = db.CheckItemData(.Item("後胴中心"))
                     中折開始(zoneNo) = db.CheckItemData(.Item("中折開始"))
                     戻し開始(zoneNo) = db.CheckItemData(.Item("戻し開始"))

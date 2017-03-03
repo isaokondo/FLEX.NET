@@ -99,7 +99,7 @@
                                 p.Value = .平面旋回中心
                             Case "発進から旋回中心までの距離"
                                 p.Value = .HorZendoKijun.掘進累積距離 - .toStartDistance
-                            Case "基点から旋回中心までの距離"
+                            Case "起点から旋回中心までの距離"
                                 p.Value = .HorZendoKijun.掘進累積距離
                             Case "ゾーン"
                                 p.Value = .HorZendoKijun.平面ゾーン番号
@@ -142,7 +142,7 @@
                                 p.Value = .縦断旋回中心
                             Case "発進から旋回中心までの距離"
                                 p.Value = .VerZendoKijun.掘進累積距離 - .toStartDistance
-                            Case "基点から旋回中心までの距離"
+                            Case "起点から旋回中心までの距離"
                                 p.Value = .VerZendoKijun.掘進累積距離
                             Case "ゾーン"
                                 p.Value = .VerZendoKijun.縦断ゾーン番号

@@ -305,7 +305,7 @@ Partial Class frmCorrectionValueManagement
         '
         Me.VerPlan3.DecimalPlaces = CType(3, Short)
         Me.VerPlan3.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.VerPlan3.FieldName = "基点から旋回中心までの距離"
+        Me.VerPlan3.FieldName = "起点から旋回中心までの距離"
         Me.VerPlan3.ForeColor = System.Drawing.Color.Black
         Me.VerPlan3.HeaderColor = System.Drawing.Color.Empty
         Me.VerPlan3.Location = New System.Drawing.Point(471, 562)
@@ -560,7 +560,7 @@ Partial Class frmCorrectionValueManagement
         '
         Me.HorPlan3.DecimalPlaces = CType(3, Short)
         Me.HorPlan3.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.HorPlan3.FieldName = "基点から旋回中心までの距離"
+        Me.HorPlan3.FieldName = "起点から旋回中心までの距離"
         Me.HorPlan3.ForeColor = System.Drawing.Color.Black
         Me.HorPlan3.HeaderColor = System.Drawing.Color.Empty
         Me.HorPlan3.Location = New System.Drawing.Point(471, 205)

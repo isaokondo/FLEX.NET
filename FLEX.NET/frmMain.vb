@@ -459,7 +459,7 @@
         Next
         UcnJackDsp.AssemblyPieceNo = PlcIf.AssemblyPieceNo
 
-        UcnJackDsp.SegmentPieceDsp() 'ｾｸﾞﾒﾝﾄピース表示
+        'UcnJackDsp.SegmentPieceDsp() 'ｾｸﾞﾒﾝﾄピース表示
 
 
 
@@ -484,7 +484,8 @@
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     ''' <remarks></remarks>
-    Private Sub RingNoUpdate_Click(sender As Object, e As EventArgs) Handles RingNoUpdateSetting.Click
+    Private Sub RingNoUpdate_Click(sender As Object, e As EventArgs) Handles RingNoUpdateSetting.Click,
+        DspAveStartStroke.DoubleClick, DspAveStroke.DoubleClick, DspExcvSpeed.DoubleClick
         frmRinguUpdateSetting.Show()
     End Sub
 

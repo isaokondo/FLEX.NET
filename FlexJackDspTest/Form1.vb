@@ -24,15 +24,7 @@
 
     End Sub
 
-    Private Sub Form1_MouseClick(sender As Object, e As MouseEventArgs) Handles Me.MouseClick
-        Call UcnJackDsp1.DspInitBaseImg()
 
-    End Sub
-
-    Private Sub Form1_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
-        ' Call UcnJackDsp1.DspBaseJack()
-
-    End Sub
 
     Private Sub UcnJackDsp1_Load(sender As Object, e As EventArgs) Handles UcnJackDsp1.Load
 

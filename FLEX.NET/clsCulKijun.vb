@@ -226,12 +226,13 @@ Friend Class clsCulKijun
                 clsSetKoudouC.ゾーン番号 = HorKodoCenTmp.平面ゾーン番号
                 clsSetKoudouC.ゾーン掘進距離 = HorKodoCenTmp.掘進累積距離
                 clsSetKoudouC.ゾーン残距離 = HorKodoCenTmp.平面ゾーン内残距離
-                clsSetKoudouC.ゾーン総数 = HorPlan.ゾーン総数
-                clsSetKoudouC.線形 = CType(HorPlan.線形.Clone, Integer())
-                clsSetKoudouC.中折 = HorPlan.中折.Clone
-                clsSetKoudouC.前胴中心 = HorPlan.前胴中心.Clone
-                clsSetKoudouC.後胴中心 = HorPlan.後胴中心.Clone
-                clsSetKoudouC.線分長 = HorPlan.線分長.Clone
+                clsSetKoudouC.PlanData = HorPlan
+                'clsSetKoudouC.ゾーン総数 = HorPlan.ゾーン総数
+                'clsSetKoudouC.線形 = CType(HorPlan.線形.Clone, Integer())
+                'clsSetKoudouC.中折 = HorPlan.中折.Clone
+                'clsSetKoudouC.前胴中心 = HorPlan.前胴中心.Clone
+                'clsSetKoudouC.後胴中心 = HorPlan.後胴中心.Clone
+                'clsSetKoudouC.線分長 = HorPlan.線分長.Clone
                 clsSetKoudouC.sbCul()
                 If clsSetKoudouC.抽出フラグ = 1 And clsSetKoudouC.抽出ゾーン掘進距離 <= MachineSpec.MachiLength Then
                     mdbl平面後胴中心 = clsSetKoudouC.抽出後胴中心
@@ -346,6 +347,7 @@ Friend Class clsCulKijun
                 VerKodoCenTmp = New clsLineMake
                 VerKodoCenTmp.掘進累積距離 = VerSentanKijun.掘進累積距離 - MachineSpec.ZendoLen
 
+                clsSetKoudouC.PlanData = VerPlan
                 clsSetKoudouC.ゾーン番号 = VerKodoCenTmp.縦断ゾーン番号
                 clsSetKoudouC.ゾーン掘進距離 = VerKodoCenTmp.掘進累積距離
                 clsSetKoudouC.ゾーン残距離 = VerKodoCenTmp.縦断ゾーン内残距離
@@ -372,7 +374,8 @@ Friend Class clsCulKijun
                 End With
 
                 ''前胴中心の計算
-                VerZendoKijun.掘進累積距離 = dblSentanDistance - VerNakaKodo.現旋回中心
+                'VerZendoKijun.掘進累積距離 = dblSentanDistance - VerNakaKodo.現旋回中心
+                VerZendoKijun.掘進累積距離 = VerSentanKijun.掘進累積距離 - VerNakaKodo.現旋回中心
                 '
                 '中折れ計算2（構築中心の方向角で検討）
                 With VerNakaCul
@@ -634,7 +637,7 @@ Friend Class clsCulKijun
         'mint抽出フラグ=        抽出フラグ（0:非抽出 1:抽出）
 
 
-        Inherits clsPlanData
+        'Inherits clsPlanData
         ''入力項目
         Private mintゾーン番号 As Integer
         Private mdblゾーン掘進距離 As Double
@@ -646,6 +649,11 @@ Friend Class clsCulKijun
         Private mint抽出ゾーン番号 As Integer
         Private mdbl抽出ゾーン掘進距離 As Double
         Private mint抽出フラグ As Short '抽出フラグ（0:非抽出 1:抽出）
+
+        Public Property PlanData As clsPlanData
+
+
+
 
 
         Public WriteOnly Property ゾーン番号() As Integer
@@ -716,13 +724,9 @@ Friend Class clsCulKijun
             Else
                 '2以上のとき
                 For intZone = mintゾーン番号 To 1 Step -1 '過去に向かってチェック
-                    'UPGRADE_WARNING: オブジェクト objSenkei.後胴中心 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                    'UPGRADE_WARNING: オブジェクト objSenkei.中折 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                    'UPGRADE_WARNING: オブジェクト objSenkei.線形 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                    If (線形(intZone) = 2 Or 線形(intZone) = 3) And 中折(intZone) = 1 And 後胴中心(intZone) <> 0 Then '線形状、中折れ有無、後胴中心ﾃﾞｰﾀ有無のﾁｪｯｸ
+                    If (_PlanData.線形(intZone) = 2 Or _PlanData.線形(intZone) = 3) And _PlanData.中折(intZone) = 1 And _PlanData.後胴中心(intZone) <> 0 Then '線形状、中折れ有無、後胴中心ﾃﾞｰﾀ有無のﾁｪｯｸ
                         '曲線区間であり、なおかつ中折れ使用、後胴中心にデータあり
-                        'UPGRADE_WARNING: オブジェクト objSenkei_後胴中心 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS_VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                        dblDkc0 = 後胴中心(intZone) 'そのｿﾞｰﾝの後胴中心を候補として採用
+                        dblDkc0 = _PlanData.後胴中心(intZone) 'そのｿﾞｰﾝの後胴中心を候補として採用
                         intZkc0 = intZone '採用したｿﾞｰﾝ番号
                         intFkc0 = 1 '過去側一応見つかりました
                         Exit For
@@ -731,8 +735,7 @@ Friend Class clsCulKijun
                         If intZone = mintゾーン番号 Then
                             dblLkc0 = mdblゾーン掘進距離 'ｿﾞｰﾝ内距離を初期値
                         Else
-                            'UPGRADE_WARNING: オブジェクト objSenkei.線分長 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                            dblLkc0 = dblLkc0 + 線分長(intZone) 'ｿﾞｰﾝ距離を加算
+                            dblLkc0 = dblLkc0 + _PlanData.線分長(intZone) 'ｿﾞｰﾝ距離を加算
                         End If
                         intFkc0 = 0 '中折れありのｿﾞｰﾝがまだ見つからない
                     End If
@@ -740,21 +743,15 @@ Friend Class clsCulKijun
             End If
 
             '未来のｿﾞｰﾝ
-            'UPGRADE_WARNING: オブジェクト objSenkei.ゾーン総数 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS_VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-            If mintゾーン番号 >= MyBase.ゾーン総数 Then '現在のｿﾞｰﾝが最終ｿﾞｰﾝ以上か？
+            If mintゾーン番号 >= _PlanData.ゾーン総数 Then '現在のｿﾞｰﾝが最終ｿﾞｰﾝ以上か？
                 '最終ｿﾞｰﾝ以上のときは未来ｿｰﾝ側にはない
                 intFkc1 = 0
             Else
                 'HVk-1以下のとき
-                'UPGRADE_WARNING: オブジェクト objSenkei.ゾーン総数 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                For intZone = mintゾーン番号 To ゾーン総数 '未来に向かってチェック
-                    'UPGRADE_WARNING: オブジェクト objSenkei.後胴中心 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                    'UPGRADE_WARNING: オブジェクト objSenkei.中折 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                    'UPGRADE_WARNING: オブジェクト objSenkei.線形 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                    If (線形(intZone) = 2 Or 線形(intZone) = 3) And 中折(intZone) = 1 And 後胴中心(intZone) <> 0 Then '線形状、中折れ有無、後胴中心ﾃﾞｰﾀ有無のﾁｪｯｸ
+                For intZone = mintゾーン番号 To _PlanData.ゾーン総数 '未来に向かってチェック
+                    If (_PlanData.線形(intZone) = 2 Or _PlanData.線形(intZone) = 3) And _PlanData.中折(intZone) = 1 And _PlanData.後胴中心(intZone) <> 0 Then '線形状、中折れ有無、後胴中心ﾃﾞｰﾀ有無のﾁｪｯｸ
                         '曲線区間であり、なおかつ中折れ使用、後胴中心にデータあり
-                        'UPGRADE_WARNING: オブジェクト objSenkei.後胴中心 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                        dblDkc1 = 後胴中心(intZone) 'そのｿﾞｰﾝの後胴中心を候補として採用
+                        dblDkc1 = _PlanData.後胴中心(intZone) 'そのｿﾞｰﾝの後胴中心を候補として採用
                         intZkc1 = intZone '採用したｿﾞｰﾝ番号
                         intFkc1 = 1 '未来側一応見つかりました
                         Exit For
@@ -763,8 +760,7 @@ Friend Class clsCulKijun
                         If intZone = mintゾーン番号 Then
                             dblLkc1 = mdblゾーン残距離 'ｿﾞｰﾝ内残距離を初期値
                         Else
-                            'UPGRADE_WARNING: オブジェクト objSenkei.線分長 の既定プロパティを解決できませんでした。 詳細については、'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"' をクリックしてください。
-                            dblLkc1 = dblLkc1 + 線分長(intZone) 'ｿﾞｰﾝ距離を加算
+                            dblLkc1 = dblLkc1 + _PlanData.線分長(intZone) 'ｿﾞｰﾝ距離を加算
                         End If
                         intFkc1 = 0 '中折れありのｿﾞｰﾝがまだ見つからない
                     End If
