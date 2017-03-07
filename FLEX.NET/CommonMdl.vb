@@ -196,7 +196,7 @@ Module CommonMdl
     ''' <param name="tmp"></param>
     ''' <returns></returns>
     <Extension()>
-    Public Function ToNum(ByVal tmp As Object) As Double
+    Public Function ToNum(ByVal tmp As String) As Double
         If IsNumeric(tmp) Then
             Return tmp.ToString
         Else

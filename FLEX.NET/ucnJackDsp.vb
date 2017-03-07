@@ -705,19 +705,19 @@ Public Class ucnJackDsp
         'TODO:早い回転でうまく表示されない時がある
         Dim k As Integer = CInt(_CopyAngle / 5)
         CopyStatus(k) = (_CopyStroke > _CopyStrechSet)
-        Dim i As Integer
+        'Dim i As Integer
         '5度ピッチで７２分割
-        For i = 0 To 71
+        For i As Short = 0 To 71
 
             '円の表示ポイント
             Dim p As Point = CenterPos
             p.Offset _
-                (MaxRadios * CopyRadiousRate * Cos((i * 5 - 90).torad),
-                 MaxRadios * CopyRadiousRate * Sin((i * 5 - 90).torad))
+                (MaxRadios * CopyRadiousRate * Cos((i * 5 - 90).ToRad),
+                 MaxRadios * CopyRadiousRate * Sin((i * 5 - 90).ToRad))
 
             Dim Br As Brush '色の表示
             If k = i Then
-                Br = Brushes.Green  'コピー位置
+                Br = Brushes.LightGreen  'コピー位置
             Else
                 If CopyStatus(i) Then
                     Br = Brushes.Red    '伸びた位置
@@ -726,10 +726,9 @@ Public Class ucnJackDsp
                 End If
             End If
 
-            FillACircle(Br, g, p, 5)
+            FillACircle(Br, g, p, 7)
 
         Next
-
 
 
         g.Dispose()

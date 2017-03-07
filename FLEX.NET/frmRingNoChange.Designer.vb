@@ -40,9 +40,9 @@ Partial Class frmRingNoChange
         Me.RingNoEdt.DecimalPlaces = CType(0, Short)
         Me.RingNoEdt.DspFieldName = False
         Me.RingNoEdt.FieldName = Nothing
+        resources.ApplyResources(Me.RingNoEdt, "RingNoEdt")
         Me.RingNoEdt.Increment = 1.0!
         Me.RingNoEdt.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        resources.ApplyResources(Me.RingNoEdt, "RingNoEdt")
         Me.RingNoEdt.MaxValue = "10000"
         Me.RingNoEdt.MinValue = "-100"
         Me.RingNoEdt.Name = "RingNoEdt"

@@ -76,7 +76,7 @@ Partial Class frmSegmentEdit
         Me.DgvSegAssign.RowTemplate.Height = 24
         Me.DgvSegAssign.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.DgvSegAssign.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DgvSegAssign.Size = New System.Drawing.Size(444, 631)
+        Me.DgvSegAssign.Size = New System.Drawing.Size(607, 631)
         Me.DgvSegAssign.TabIndex = 18
         '
         'RingNo
@@ -100,7 +100,7 @@ Partial Class frmSegmentEdit
         Me.SegmentType.HeaderText = "セグメント種類"
         Me.SegmentType.Name = "SegmentType"
         Me.SegmentType.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.SegmentType.Width = 120
+        Me.SegmentType.Width = 200
         '
         'SegWidth
         '
@@ -124,7 +124,7 @@ Partial Class frmSegmentEdit
         Me.AssemblyPtnName.HeaderText = "組立パターン"
         Me.AssemblyPtnName.Name = "AssemblyPtnName"
         Me.AssemblyPtnName.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.AssemblyPtnName.Width = 120
+        Me.AssemblyPtnName.Width = 200
         '
         'frmSegmentEdit
         '

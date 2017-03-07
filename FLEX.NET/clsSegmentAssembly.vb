@@ -21,9 +21,9 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     Private _SegmentAssenblyPtnID As New Dictionary(Of Integer, Short)
     ''' <summary>
-    ''' セグメント組立パターン
+    ''' セグメント組立パターン Key:パターンNo Value:パターン名
     ''' </summary>
-    Private _AssenblyPtnList As New Dictionary(Of Short, String)
+    Private _AssenblyPtnDic As New Dictionary(Of Short, String)
 
     ''' <summary>
     ''' セグメント種類No　 リング番号がKey
@@ -68,7 +68,7 @@ Friend Class clsSegmentAssembly
     End Property
     Public ReadOnly Property AssenblyPtnLst As Dictionary(Of Short, String)
         Get
-            Return _AssenblyPtnList
+            Return _AssenblyPtnDic
         End Get
     End Property
     ''' <summary>
@@ -110,7 +110,7 @@ Friend Class clsSegmentAssembly
     ''' <returns></returns>
     Public ReadOnly Property AssemblyPtnName(RingNo As Integer) As String
         Get
-            Return _AssenblyPtnList(_SegmentAssenblyPtnID(RingNo))
+            Return _AssenblyPtnDic(_SegmentAssenblyPtnID(RingNo))
         End Get
     End Property
 
@@ -144,67 +144,86 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     ''' <param name="RingNo">リング番号</param>
     Public Sub AssemblyDataRead(RingNo As Integer)
-        _AssenblyPtnList.Clear()
+        _AssenblyPtnDic.Clear()
         'パターンリストの取得
-        Dim rsPtLst As Odbc.OdbcDataReader = ExecuteSql("SELECT * FROM セグメント組立パターンベース")
+        Dim rsPtLst As Odbc.OdbcDataReader =
+            ExecuteSql("SELECT * FROM セグメント組立パターンリスト")
         While rsPtLst.Read
-            _AssenblyPtnList.Add(rsPtLst.Item("組立パターンNo"), rsPtLst.Item("組立パターン名"))
+            _AssenblyPtnDic.Add(rsPtLst.Item("組立パターンNo"), rsPtLst.Item("組立パターン名"))
         End While
-
 
         ''当該リングのセグメント組立IDを取得
         Dim Id As Short = _SegmentAssenblyPtnID(RingNo)
         '検索
-        'Dim rsData As Odbc.OdbcDataReader =
-        Dim rsData As Odbc.OdbcDataReader =
-            ExecuteSql($"SELECT * FROM `セグメント組立パターンベース` 
-            Inner Join `セグメント組立パターンリスト` ON `セグメント組立パターンリスト`.`組立パターンNo` = `セグメント組立パターンベース`.`組立パターンNo` 
-            Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンベース`.`分割No` 
-            WHERE `セグメント組立パターンベース`.`組立パターンNo` = '{Id}' ORDER BY `セグメント組立パターンリスト`.`組立順序` ASC")
-        _AssemblyPieceNumber = 0
+
+        Dim dsSegAsm As DataSet =
+            GetDsfmSQL($"SELECT  * FROM `セグメント組立パターンリスト` 
+            Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンリスト`.`分割No` 
+            WHERE `組立パターンNo` = '{Id}'")
+
         _ProcessData.Clear()
-        'データ読込
-        While rsData.Read()
-            Dim SegDat As New AsseblyProcess
 
-            SegDat.PatternName = rsData.Item("組立パターン名")
-            SegDat.BoltPitch = rsData.Item("組立ピッチ")
-            Dim PieaceNo As String = rsData.Item("ピースNo")
-            If PieaceNo = "1" Then
-                PieaceNo = "K"
-            End If
+        For Each dRow As DataRow In dsSegAsm.Tables(0).Rows
 
-            If IsDBNull(rsData.Item("ピース名")) Then Exit While
+            For Each Col As DataColumn In dsSegAsm.Tables(0).Columns
+                Dim ColName As String = Col.ColumnName
+                'Debug.WriteLine(ColName & ":" & dRow(ColName).ToString)
 
-            SegDat.AssemblyOrder = rsData.Item("組立順序")
-            SegDat.PieceName = rsData.Item("ピース名")
+                If ColName.Contains("組立順序") AndAlso Not IsDBNull(dRow(ColName)) Then
 
-            SegDat.PieceAngle = rsData.Item(PieaceNo & "スパン")
-            If PieaceNo = "K" Then
-                SegDat.PieceCenterAngle = rsData.Item("基本位置")
-            Else
-                SegDat.PieceCenterAngle = rsData.Item(PieaceNo & "中心")
-            End If
-            SegDat.PieceCenterAngle -= 360 / rsData.Item("ﾎﾞﾙﾄ  数") * rsData("組立ピッチ")
-            'TODO:線形管理の角度はPC系
-            'SegDat.PieceCenterAngle = 90 - SegDat.PieceCenterAngle
-            SegDat.PullBackJack = JkList(rsData.Item("引戻"))
-            'SegDat.OpposeJack = JkList(rsData.Item("対抗ジャッキ"))
-            SegDat.ClosetJack = JkList(rsData.Item("押込"))
-            SegDat.AddClosetJack = JkList(rsData.Item("追加"))
-            'SegDat.RightRollingClosetJack = JkList(rsData.Item("右ローリング押込ジャッキ"))
-            'SegDat.LeftRollingClosetJack = JkList(rsData.Item("左ローリング押込ジャッキ"))
-            _ProcessData(rsData.Item("組立順序")) = SegDat
-            _AssemblyPieceNumber += 1   '組立ピース数
-        End While
+                    Dim SegDt As New AsseblyProcess '組み立手順データ
+
+                    SegDt.PatternName = dRow("組立パターン名")
+                    SegDt.BoltPitch = dRow("組立ピッチ")
+
+
+                    Dim AsOrder As Short = dRow(ColName)  '組立順番
+
+                    SegDt.AssemblyOrder = AsOrder
+
+                    Dim PieaceNo As String = GetNum(ColName).ToString
+                    If PieaceNo = "1" Then
+                        PieaceNo = "K"
+                        SegDt.PieceCenterAngle = dRow("基本位置")
+                    Else
+                        SegDt.PieceCenterAngle = dRow(PieaceNo & "中心")
+                    End If
+
+                    SegDt.PieceName = dRow($"{PieaceNo}名称")
+
+                    SegDt.PieceAngle = dRow(PieaceNo & "スパン")
+
+                    SegDt.PieceCenterAngle -= 360 / dRow("ﾎﾞﾙﾄ  数") * dRow("組立ピッチ")
+
+                    'If SegDt.PieceName <> "" Then
+                    SegDt.PullBackJack = JkList(dRow($"{AsOrder}引戻"))
+                    SegDt.ClosetJack = JkList(dRow($"{AsOrder}押込"))
+                    SegDt.AddClosetJack = JkList(dRow($"{AsOrder}追加"))
+
+                    _ProcessData(SegDt.AssemblyOrder) = SegDt
+
+                End If
+
+            Next
+
+        Next
+
+        '組立ピース数を取得
+        _AssemblyPieceNumber = (From i In _ProcessData Select i.Value.AssemblyOrder).Max
+
+
+
+
+
 
     End Sub
     ''' <summary>
     ''' ジャッキの連続した番号の表記をリスト形式に変換
+    ''' 文字位置が１である場合ON
     ''' </summary>
     ''' <param name="tmpS">文字列</param>
     ''' <returns></returns>
-    Private Function JkList(ByVal tmpS As Object) As List(Of Short)
+    Private Function JkList(ByVal tmpS As String) As List(Of Short)
 
         Dim lst As New List(Of Short)
 
@@ -212,43 +231,16 @@ Friend Class clsSegmentAssembly
             Return lst
         End If
 
-        Dim i As String() = tmpS.split(",")
-
-        For Each k As Short In i
-            lst.Add(k)
+        For i As Short = 0 To tmpS.Length - 1
+            If tmpS.Substring(i, 1) = "1" Then
+                lst.Add(i + 1)
+            End If
         Next
-        Return lst
 
-
-
-        'If tmpS.IndexOf(",") > 0 Then
-        '    Dim i As Integer
-        '    Dim j As String() = tmpS.Split(",")
-        '    '数値に変更可能か
-        '    If IsNumeric(j(0)) And IsNumeric(j(j.Count - 1)) Then
-        '        Dim St, Lt As Integer
-        '        St = CShort(j(0))
-        '        Lt = CShort(j(j.Count - 1))
-        '        If Lt > St Then
-        '            For i = St To Lt
-        '                lst.Add(i)
-        '            Next
-        '        Else
-        '            '天端ジャッキを含む場合
-        '            For i = St To InitParameter.NumberJack
-        '                lst.Add(i)
-        '            Next
-        '            For i = 1 To Lt
-        '                lst.Add(i)
-        '            Next
-        '        End If
-        '    End If
-        'Else
-        '    '数値ひとつの場合
-        '    If IsNumeric(tmpS) Then
-        '        lst.Add(CShort(tmpS))
-        '    End If
-        'End If
+        'Dim i As String() = tmpS.split(",")
+        'For Each k As Short In i
+        '    lst.Add(k)
+        'Next
 
         Return lst
 
@@ -266,8 +258,10 @@ Friend Class clsSegmentAssembly
 
         Dim rsData As Odbc.OdbcDataReader
 
+        'rsData = ExecuteSql _
+        '("SELECT * FROM `flexセグメント組立データ` Inner Join `セグメント組立パターンベース`")
         rsData = ExecuteSql _
-            ("SELECT * FROM `flexセグメント組立データ` Inner Join `セグメント組立パターンベース`")
+            ("SELECT * FROM `flexセグメント組立データ`")
 
         While rsData.Read()
             Dim i As Integer = rsData.Item("リング番号")
@@ -362,7 +356,7 @@ Friend Class clsSegmentAssembly
 
 
     Private Function GetPtNameID(PtName As String) As Short
-        For Each pT In _AssenblyPtnList
+        For Each pT In _AssenblyPtnDic
             If pT.Value = PtName Then
                 Return pT.Key
             End If

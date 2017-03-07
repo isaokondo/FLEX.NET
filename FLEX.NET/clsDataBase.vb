@@ -133,6 +133,18 @@ Public Class clsDataBase
         Return dr
     End Function
 
+    ''' <summary>
+    ''' SQLよりデータセットを取得
+    ''' </summary>
+    ''' <param name="SQLCommand"></param>
+    ''' <returns>SQL文</returns>
+    Public Function GetDsfmSQL(SQLCommand As String) As DataSet
+        Dim Adpter = New OdbcDataAdapter(SQLCommand, conDB)
+        Dim ds As New DataSet
+        Adpter.Fill(ds)
+        Return ds
+    End Function
+
 
     Public Function CheckItemData(tmp As Object) As String
         If IsNumeric(tmp) Then
@@ -252,27 +264,27 @@ Public Class clsTag
         Dim i As Integer = 0 ' anaTag("ID")
         While anaTag.Read()
             If anaTag("項目名") <> "" Then
-                Dim t As _tag
-                t.FieldName = anaTag("項目名").ToString
-                t.Address = anaTag("アドレス").ToString
+                Dim tag As New _tag
+                tag.FieldName = anaTag("項目名")
+                tag.Address = anaTag("アドレス")
                 If TableName = "FLEXアナログtag" Then
-                    t.DigitLoc = CInt(anaTag("小数点位置"))
-                    t.Unit = anaTag("単位").ToString
-                    t.EngLow = CSng(anaTag("下限"))
-                    t.EngHight = CSng(anaTag("上限"))
-                    t.ScaleLow = CSng(anaTag("スケール下限"))
-                    t.ScaleHigh = CSng(anaTag("スケール上限"))
+                    tag.DigitLoc = CInt(anaTag("小数点位置"))
+                    tag.Unit = anaTag("単位")
+                    tag.EngLow = anaTag("下限")
+                    tag.EngHight = anaTag("上限")
+                    tag.ScaleLow = anaTag("スケール下限")
+                    tag.ScaleHigh = anaTag("スケール上限")
                 End If
-                Dim ad As String = t.Address 'アドレスからオフセットを算出
+                Dim ad As String = tag.Address 'アドレスからオフセットを算出
                 If Not ad.Equals("") AndAlso IsNumeric(ad.Substring(1)) Then
-                    t.OffsetAddress = CInt(ad.Substring(1)) - StartAdress
+                    tag.OffsetAddress = CInt(ad.Substring(1)) - StartAdress
                 End If
-                _TagList.Add(t)
-                tagDic.Add(t.FieldName, i)
+                _TagList.Add(tag)
+                tagDic.Add(tag.FieldName, i)
                 ht(anaTag("項目名")) = i
 
                 'オフセットの最大値取得
-                If _devicesize < t.OffsetAddress Then _devicesize = t.OffsetAddress
+                If _devicesize < tag.OffsetAddress Then _devicesize = tag.OffsetAddress
                 i += 1
             End If
         End While

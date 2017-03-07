@@ -29,7 +29,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClosetThrustJack = New FLEX.NET.ucnDspData()
         Me.DspClosetJack = New FLEX.NET.ucnDspData()
         Me.DspPullBackJack = New FLEX.NET.ucnDspData()
-        Me.UcnDspData17 = New FLEX.NET.ucnDspData()
         Me.DspAssemblyPieace = New FLEX.NET.ucnDspData()
         Me.DspBoltPitch = New FLEX.NET.ucnDspData()
         Me.UcnDspData1 = New FLEX.NET.ucnDspData()
@@ -64,7 +63,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPattern.FieldName = "組立パターン"
         Me.DspAssemblyPattern.FieldNameWidth = 292
         Me.DspAssemblyPattern.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAssemblyPattern.Location = New System.Drawing.Point(455, 61)
+        Me.DspAssemblyPattern.Location = New System.Drawing.Point(513, 62)
         Me.DspAssemblyPattern.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPattern.Name = "DspAssemblyPattern"
         Me.DspAssemblyPattern.Size = New System.Drawing.Size(474, 32)
@@ -85,7 +84,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspNextPieceName.FieldName = "次の組立ﾋﾟｰｽ"
         Me.DspNextPieceName.FieldNameWidth = 146
         Me.DspNextPieceName.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspNextPieceName.Location = New System.Drawing.Point(685, 189)
+        Me.DspNextPieceName.Location = New System.Drawing.Point(743, 190)
         Me.DspNextPieceName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspNextPieceName.Name = "DspNextPieceName"
         Me.DspNextPieceName.Size = New System.Drawing.Size(244, 32)
@@ -106,7 +105,7 @@ Partial Class frmAssemblyProcessEdit
         Me.UcnDspData24.FieldName = "RL考慮ｼﾞｬｯｷ"
         Me.UcnDspData24.FieldNameWidth = 146
         Me.UcnDspData24.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData24.Location = New System.Drawing.Point(455, 189)
+        Me.UcnDspData24.Location = New System.Drawing.Point(513, 190)
         Me.UcnDspData24.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData24.Name = "UcnDspData24"
         Me.UcnDspData24.Size = New System.Drawing.Size(228, 32)
@@ -127,7 +126,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAddClosetThrustJack.FieldName = "追加推進ｼﾞｬｯｷ"
         Me.DspAddClosetThrustJack.FieldNameWidth = 146
         Me.DspAddClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(685, 157)
+        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(743, 158)
         Me.DspAddClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAddClosetThrustJack.Name = "DspAddClosetThrustJack"
         Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(244, 32)
@@ -148,7 +147,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClosetThrustJack.FieldName = "押込推進ｼﾞｬｯｷ"
         Me.DspClosetThrustJack.FieldNameWidth = 146
         Me.DspClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetThrustJack.Location = New System.Drawing.Point(455, 157)
+        Me.DspClosetThrustJack.Location = New System.Drawing.Point(513, 158)
         Me.DspClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetThrustJack.Name = "DspClosetThrustJack"
         Me.DspClosetThrustJack.Size = New System.Drawing.Size(228, 32)
@@ -169,7 +168,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClosetJack.FieldName = "押込ｼﾞｬｯｷ"
         Me.DspClosetJack.FieldNameWidth = 146
         Me.DspClosetJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetJack.Location = New System.Drawing.Point(685, 125)
+        Me.DspClosetJack.Location = New System.Drawing.Point(743, 126)
         Me.DspClosetJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetJack.Name = "DspClosetJack"
         Me.DspClosetJack.Size = New System.Drawing.Size(244, 32)
@@ -190,7 +189,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspPullBackJack.FieldName = "引戻ｼﾞｬｯｷ"
         Me.DspPullBackJack.FieldNameWidth = 146
         Me.DspPullBackJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspPullBackJack.Location = New System.Drawing.Point(455, 125)
+        Me.DspPullBackJack.Location = New System.Drawing.Point(513, 126)
         Me.DspPullBackJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspPullBackJack.Name = "DspPullBackJack"
         Me.DspPullBackJack.Size = New System.Drawing.Size(228, 32)
@@ -199,27 +198,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspPullBackJack.UnitVisible = False
         Me.DspPullBackJack.Value = "19-23"
         Me.DspPullBackJack.ValueType = True
-        '
-        'UcnDspData17
-        '
-        Me.UcnDspData17.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData17.Blink = False
-        Me.UcnDspData17.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData17.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData17.DataWidth = 91
-        Me.UcnDspData17.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData17.FieldName = "ﾛｰﾘﾝｸﾞ偏差"
-        Me.UcnDspData17.FieldNameWidth = 146
-        Me.UcnDspData17.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData17.Location = New System.Drawing.Point(685, 93)
-        Me.UcnDspData17.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData17.Name = "UcnDspData17"
-        Me.UcnDspData17.Size = New System.Drawing.Size(244, 32)
-        Me.UcnDspData17.TabIndex = 115
-        Me.UcnDspData17.Unit = "deg"
-        Me.UcnDspData17.UnitVisible = False
-        Me.UcnDspData17.Value = "0.1"
-        Me.UcnDspData17.ValueType = False
         '
         'DspAssemblyPieace
         '
@@ -232,7 +210,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPieace.FieldName = "組立ﾋﾟｰｽ"
         Me.DspAssemblyPieace.FieldNameWidth = 146
         Me.DspAssemblyPieace.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAssemblyPieace.Location = New System.Drawing.Point(455, 93)
+        Me.DspAssemblyPieace.Location = New System.Drawing.Point(513, 94)
         Me.DspAssemblyPieace.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPieace.Name = "DspAssemblyPieace"
         Me.DspAssemblyPieace.Size = New System.Drawing.Size(228, 32)
@@ -253,7 +231,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspBoltPitch.FieldName = "組立ﾎﾞﾙﾄﾋﾟｯﾁ"
         Me.DspBoltPitch.FieldNameWidth = 146
         Me.DspBoltPitch.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspBoltPitch.Location = New System.Drawing.Point(685, 29)
+        Me.DspBoltPitch.Location = New System.Drawing.Point(743, 96)
         Me.DspBoltPitch.Margin = New System.Windows.Forms.Padding(1)
         Me.DspBoltPitch.Name = "DspBoltPitch"
         Me.DspBoltPitch.Size = New System.Drawing.Size(244, 32)
@@ -269,15 +247,15 @@ Partial Class frmAssemblyProcessEdit
         Me.UcnDspData1.Blink = False
         Me.UcnDspData1.BlinkColor = System.Drawing.Color.Red
         Me.UcnDspData1.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.UcnDspData1.DataWidth = 91
+        Me.UcnDspData1.DataWidth = 175
         Me.UcnDspData1.DecimalPlaces = CType(0, Short)
         Me.UcnDspData1.FieldName = "組立ｾｸﾞﾒﾝﾄ"
-        Me.UcnDspData1.FieldNameWidth = 146
+        Me.UcnDspData1.FieldNameWidth = 292
         Me.UcnDspData1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData1.Location = New System.Drawing.Point(455, 29)
+        Me.UcnDspData1.Location = New System.Drawing.Point(513, 30)
         Me.UcnDspData1.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData1.Name = "UcnDspData1"
-        Me.UcnDspData1.Size = New System.Drawing.Size(228, 32)
+        Me.UcnDspData1.Size = New System.Drawing.Size(474, 32)
         Me.UcnDspData1.TabIndex = 112
         Me.UcnDspData1.Unit = "deg"
         Me.UcnDspData1.UnitVisible = False
@@ -286,7 +264,7 @@ Partial Class frmAssemblyProcessEdit
         '
         'AssemblyBoltPitchSel
         '
-        Me.AssemblyBoltPitchSel.DataDspWidth = 114
+        Me.AssemblyBoltPitchSel.DataDspWidth = 160
         Me.AssemblyBoltPitchSel.DecimalPlaces = CType(1, Short)
         Me.AssemblyBoltPitchSel.DspFieldName = True
         Me.AssemblyBoltPitchSel.FieldName = "組立ボルトピッチ"
@@ -305,7 +283,7 @@ Partial Class frmAssemblyProcessEdit
         '
         'DspSegmentTypeName
         '
-        Me.DspSegmentTypeName.DataDspWidth = 114
+        Me.DspSegmentTypeName.DataDspWidth = 160
         Me.DspSegmentTypeName.DecimalPlaces = CType(3, Short)
         Me.DspSegmentTypeName.DspFieldName = True
         Me.DspSegmentTypeName.FieldName = "組立セグメント"
@@ -324,7 +302,7 @@ Partial Class frmAssemblyProcessEdit
         '
         'ConfirmRingNo
         '
-        Me.ConfirmRingNo.DataDspWidth = 114
+        Me.ConfirmRingNo.DataDspWidth = 160
         Me.ConfirmRingNo.DecimalPlaces = CType(0, Short)
         Me.ConfirmRingNo.DspFieldName = True
         Me.ConfirmRingNo.FieldName = "リング"
@@ -336,14 +314,14 @@ Partial Class frmAssemblyProcessEdit
         Me.ConfirmRingNo.MinValue = "-100"
         Me.ConfirmRingNo.Name = "ConfirmRingNo"
         Me.ConfirmRingNo.SelectItem = Nothing
-        Me.ConfirmRingNo.Size = New System.Drawing.Size(391, 37)
+        Me.ConfirmRingNo.Size = New System.Drawing.Size(426, 37)
         Me.ConfirmRingNo.TabIndex = 123
         Me.ConfirmRingNo.Unit = "リング"
         Me.ConfirmRingNo.Value = 10.0R
         '
         'AssemblyPatternSel
         '
-        Me.AssemblyPatternSel.DataDspWidth = 114
+        Me.AssemblyPatternSel.DataDspWidth = 160
         Me.AssemblyPatternSel.DecimalPlaces = CType(3, Short)
         Me.AssemblyPatternSel.DspFieldName = True
         Me.AssemblyPatternSel.FieldName = "組立パターン"
@@ -362,7 +340,7 @@ Partial Class frmAssemblyProcessEdit
         '
         'LastJackNo
         '
-        Me.LastJackNo.DataDspWidth = 114
+        Me.LastJackNo.DataDspWidth = 160
         Me.LastJackNo.DecimalPlaces = CType(0, Short)
         Me.LastJackNo.DspFieldName = True
         Me.LastJackNo.FieldName = "終点ジャッキ番号"
@@ -382,7 +360,7 @@ Partial Class frmAssemblyProcessEdit
         '
         'StartJackNo
         '
-        Me.StartJackNo.DataDspWidth = 114
+        Me.StartJackNo.DataDspWidth = 160
         Me.StartJackNo.DecimalPlaces = CType(0, Short)
         Me.StartJackNo.DspFieldName = True
         Me.StartJackNo.FieldName = "始点ジャッキ番号"
@@ -401,7 +379,7 @@ Partial Class frmAssemblyProcessEdit
         '
         'OperattionJackSel
         '
-        Me.OperattionJackSel.DataDspWidth = 114
+        Me.OperattionJackSel.DataDspWidth = 160
         Me.OperattionJackSel.DecimalPlaces = CType(3, Short)
         Me.OperattionJackSel.DspFieldName = True
         Me.OperattionJackSel.FieldName = "作動ジャッキの種類"
@@ -420,7 +398,7 @@ Partial Class frmAssemblyProcessEdit
         '
         'AssemblyPieceNo
         '
-        Me.AssemblyPieceNo.DataDspWidth = 114
+        Me.AssemblyPieceNo.DataDspWidth = 160
         Me.AssemblyPieceNo.DecimalPlaces = CType(0, Short)
         Me.AssemblyPieceNo.DspFieldName = True
         Me.AssemblyPieceNo.FieldName = "組立ピース番号"
@@ -440,7 +418,7 @@ Partial Class frmAssemblyProcessEdit
         'picAssemblySeg
         '
         Me.picAssemblySeg.BackColor = System.Drawing.Color.Transparent
-        Me.picAssemblySeg.Location = New System.Drawing.Point(455, 253)
+        Me.picAssemblySeg.Location = New System.Drawing.Point(513, 253)
         Me.picAssemblySeg.Margin = New System.Windows.Forms.Padding(2)
         Me.picAssemblySeg.Name = "picAssemblySeg"
         Me.picAssemblySeg.Size = New System.Drawing.Size(465, 496)
@@ -451,7 +429,7 @@ Partial Class frmAssemblyProcessEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(969, 769)
+        Me.ClientSize = New System.Drawing.Size(1078, 769)
         Me.Controls.Add(Me.picAssemblySeg)
         Me.Controls.Add(Me.LastJackNo)
         Me.Controls.Add(Me.StartJackNo)
@@ -468,7 +446,6 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.Add(Me.DspClosetThrustJack)
         Me.Controls.Add(Me.DspClosetJack)
         Me.Controls.Add(Me.DspPullBackJack)
-        Me.Controls.Add(Me.UcnDspData17)
         Me.Controls.Add(Me.DspAssemblyPieace)
         Me.Controls.Add(Me.DspBoltPitch)
         Me.Controls.Add(Me.UcnDspData1)
@@ -479,7 +456,6 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.SetChildIndex(Me.UcnDspData1, 0)
         Me.Controls.SetChildIndex(Me.DspBoltPitch, 0)
         Me.Controls.SetChildIndex(Me.DspAssemblyPieace, 0)
-        Me.Controls.SetChildIndex(Me.UcnDspData17, 0)
         Me.Controls.SetChildIndex(Me.DspPullBackJack, 0)
         Me.Controls.SetChildIndex(Me.DspClosetJack, 0)
         Me.Controls.SetChildIndex(Me.DspClosetThrustJack, 0)
@@ -508,7 +484,6 @@ Partial Class frmAssemblyProcessEdit
     Friend WithEvents DspClosetThrustJack As ucnDspData
     Friend WithEvents DspClosetJack As ucnDspData
     Friend WithEvents DspPullBackJack As ucnDspData
-    Friend WithEvents UcnDspData17 As ucnDspData
     Friend WithEvents DspAssemblyPieace As ucnDspData
     Friend WithEvents DspBoltPitch As ucnDspData
     Friend WithEvents UcnDspData1 As ucnDspData

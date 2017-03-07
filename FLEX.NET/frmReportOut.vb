@@ -263,11 +263,10 @@ Public Class clsReportDb
                 ExecuteSql("Select `リング番号` FROM flex掘削データ ORDER BY 時間 DESC LIMIT 0,1")
             If LastRingNo.HasRows Then
                 While LastRingNo.Read
-                    Return LastRingNo.Item(0)
+                    Return LastRingNo.GetInt32(0)
                 End While
-            Else
-                Return 0
             End If
+            Return 0
         End Get
     End Property
 
