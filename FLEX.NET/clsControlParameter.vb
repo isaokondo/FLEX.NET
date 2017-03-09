@@ -978,6 +978,8 @@ Public Class clsControlParameter
         _StartAveJackStroke =
                 (From i In _StartJackStroke Where Not _ExceptMesureJackNo.Contains(i.Key) Select (i.Value)).Average
 
+        '
+        RaiseEvent ReferChnge()
 
     End Sub
 
@@ -987,7 +989,6 @@ Public Class clsControlParameter
     End Sub
 
     Private Sub sbUpdateData(ByRef value As Object)
-        'Debug.Print(New StackFrame(1).GetMethod.Name)
         '呼び出し元のプロパティをフィールド名に
         Dim FieldName As String = New StackFrame(1).GetMethod.Name.Replace("set_", "")
         Dim WrValue As String

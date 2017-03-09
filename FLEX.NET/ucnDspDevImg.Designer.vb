@@ -28,6 +28,7 @@ Partial Class ucnDspDevImg
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.DoubleBuffered = True
         Me.Name = "ucnDspDevImg"
         Me.Size = New System.Drawing.Size(190, 181)
         Me.ResumeLayout(False)

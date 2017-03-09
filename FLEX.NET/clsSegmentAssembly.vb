@@ -167,7 +167,6 @@ Friend Class clsSegmentAssembly
 
             For Each Col As DataColumn In dsSegAsm.Tables(0).Columns
                 Dim ColName As String = Col.ColumnName
-                'Debug.WriteLine(ColName & ":" & dRow(ColName).ToString)
 
                 If ColName.Contains("組立順序") AndAlso Not IsDBNull(dRow(ColName)) Then
 

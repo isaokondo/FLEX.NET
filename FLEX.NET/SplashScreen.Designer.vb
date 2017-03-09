@@ -32,10 +32,10 @@ Partial Class SplashScreen
         Me.Version.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Version.BackColor = System.Drawing.Color.Transparent
         Me.Version.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Version.Location = New System.Drawing.Point(39, 351)
+        Me.Version.Location = New System.Drawing.Point(6, 351)
         Me.Version.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Version.Name = "Version"
-        Me.Version.Size = New System.Drawing.Size(244, 20)
+        Me.Version.Size = New System.Drawing.Size(393, 20)
         Me.Version.TabIndex = 3
         Me.Version.Text = "バージョン"
         '
@@ -44,10 +44,10 @@ Partial Class SplashScreen
         Me.Copyright.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Copyright.BackColor = System.Drawing.Color.Transparent
         Me.Copyright.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Copyright.Location = New System.Drawing.Point(39, 381)
+        Me.Copyright.Location = New System.Drawing.Point(6, 381)
         Me.Copyright.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Copyright.Name = "Copyright"
-        Me.Copyright.Size = New System.Drawing.Size(244, 32)
+        Me.Copyright.Size = New System.Drawing.Size(277, 32)
         Me.Copyright.TabIndex = 5
         Me.Copyright.Text = "著作権"
         '

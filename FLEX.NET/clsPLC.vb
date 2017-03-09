@@ -758,7 +758,6 @@ Public Class clsPlcIf
     End Sub
 
     Public Sub PLC_Read(sender As Object, e As EventArgs)
-        'Console.WriteLine(DateTime.Now)
 
         'Call PLC_Open() 'オープン処理
 
@@ -983,7 +982,6 @@ Public Class clsPlcIf
         t = t Or mblnBlink
         iReturnCode = com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
 
-        'Debug.WriteLine(System.DateTime.Now.ToString("HH:mm:ss.fff"))
 
 
         'PLC読込イベント

@@ -658,7 +658,9 @@ Public Class clsTableUpdateConfirm
 
     Dim tbTime As Dictionary(Of String, Date)
     Private MisamTable() As String =
-        {"flexアナログtag", "flexデジタルtag", "flex初期パラメータ", "flex制御パラメータ", "flexセグメント組立データ"}
+        {"flexアナログtag", "flexデジタルtag", "flex初期パラメータ",
+        "flex制御パラメータ", "flexセグメント組立データ", "セグメント割付シュミレーション",
+    "セグメント組立パターンリスト", "セグメント分割仕様リスト", "セグメントリスト"}
 
     Public Sub New()
         'MyISAMのチェック
@@ -694,14 +696,20 @@ Public Class clsTableUpdateConfirm
                     Case "flex制御パラメータ"
                         CtlPara.ReadParameter()
                         My.Forms.frmMain.WideDataFldSet() '汎用データの更新
-                    Case "flexセグメント組立データ"
-                        SegAsmblyData.SegmentRingDataRead()
-                        '組立パターンの情報を取得
-                        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
-
-                        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
 
                 End Select
+
+                If t.Key.Contains("セグメント") Then
+                    SegAsmblyData.SegmentRingDataRead()
+                    '組立パターンの情報を取得
+                    SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+
+                    My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+
+                End If
+
+
+
             End If
         Next
         '現在の更新時刻を保持
@@ -739,7 +747,8 @@ Public Class clsTableUpdateConfirm
             For Each tb In MisamTable
                 If tb = misamTb.Item("Name") Then
                     If misamTb.Item("TYPE") <> "MyISAM" Then
-                        MsgBox($"テーブル {tb} を　エンジンMyISAMにしてください。", vbCritical)
+                        'MsgBox($"テーブル {tb} を　エンジンMyISAMにしてください。", vbCritical)
+                        Dim ChangeEngine As OdbcDataReader = ExecuteSql($"ALTER TABLE {tb} ENGINE=MyISAM;")
                     End If
                 End If
             Next

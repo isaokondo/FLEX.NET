@@ -52,7 +52,7 @@ Public Class frmPressBlock
     ''' 任意圧力設定のグループが変更
     ''' </summary>
     Private Sub GroupCheckChange(sender As Object, e As EventArgs)
-        Debug.WriteLine(CType(sender, CheckBox).Name)
+
         Dim chkBx As CheckBox = CType(sender, CheckBox)
         'チェックボックスのインデックス
         Dim ix As Short = GetNum(chkBx.Name)

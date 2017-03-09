@@ -129,6 +129,10 @@
             lblMachineMode.BackColor = IIf(.ExecMode, Color.Magenta, Color.Aqua)
         End With
 
+
+        UcnJackDsp.MakeBmp()
+
+
         DspAveStartStroke.Value = CtlPara.StartAveStroke '平均開始ストローク
         DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
         DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均ストローク
@@ -243,6 +247,8 @@
 
         'MYSQLのバージョン取得
         clsDataBase.GetMySQKVersion()
+
+        Me.Text += GetVersionNo()
 
         'インスタンス作成
         InitPara = New clsInitParameter '初期値パラメータ
@@ -459,7 +465,7 @@
         Next
         UcnJackDsp.AssemblyPieceNo = PlcIf.AssemblyPieceNo
 
-        'UcnJackDsp.SegmentPieceDsp() 'ｾｸﾞﾒﾝﾄピース表示
+        UcnJackDsp.SegmentPieceDsp() 'ｾｸﾞﾒﾝﾄピース表示
 
 
 
@@ -579,9 +585,17 @@
         My.Forms.frmSegmentEdit.Show()
 
     End Sub
+    ''' <summary>
+    ''' セグメント組立の編集
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub AssemblyProcessEdit_Click(sender As Object, e As EventArgs) Handles AssemblyProcessEdit.Click, DspTypeName.DoubleClick,
+        DspAssemblyPattern.DoubleClick, DspAssemblyPieace.DoubleClick, DspPullBackJack.DoubleClick,
+        DspClosetJack.DoubleClick, DspClosetThrustJack.DoubleClick, DspAddClosetThrustJack.DoubleClick, DspNextPieceName.DoubleClick
 
-    Private Sub AssemblyProcessEdit_Click(sender As Object, e As EventArgs) Handles AssemblyProcessEdit.Click
         My.Forms.frmAssemblyProcessEdit.Show()
+
     End Sub
     ''' <summary>
     ''' 補正値管理
@@ -760,7 +774,6 @@
                 '{PlcIf.RingNo - CtlPara.LineDevStartRing}
                 ' AND `リング番号`<'{PlcIf.RingNo}' AND MOD(掘進ストローク,10)=0;")
 
-            Console.WriteLine()
             _HorRData.Clear()
             _VerRData.Clear()
             Dim RingNo As Integer = Nothing

@@ -41,9 +41,9 @@ Public Class ucnJackDsp
     'Private _JackStatus() As Short    'ジャッキステータス表示 0:非選択　1:選択
 
     ''' <summary>
-    ''' 初期画面
+    ''' 画面
     ''' </summary>
-    Private imgJackBase As Image = Nothing
+    Private imgJack As Image = New Bitmap(Me.Width, Me.Height)
     ''' <summary>
     ''' ジャッキのステータス表示（選択、非選択、等の情報表示)
     ''' </summary>
@@ -107,19 +107,22 @@ Public Class ucnJackDsp
 
     Private BlinkFlag As Boolean    '点滅用フラグ
 
+
+
     ''' <summary>
     ''' ジャッキの状態表示
     ''' </summary>
     ''' <returns></returns>
-    Public Property JackStatus As Short()
+    Public Property JackStatus() As Short()
         Get
             Return _JackStatus
         End Get
-        Set(value As Short())
+        Set
+            'Debug.WriteLine($"{Value(0)},{_JackStatus(0)}")
             'todo:値がへんかしたときのみ描画するように
-            'If value.Equals(_JackStatus) = False Then
-            _JackStatus = value
-            'Call DspJackStatus()
+            'If Not Value.SequenceEqual(_JackStatus) Then
+            _JackStatus = Value
+            DspJackStatus()
             'End If
         End Set
     End Property
@@ -326,7 +329,7 @@ Public Class ucnJackDsp
     ''' ジャッキ元圧
     ''' </summary>
     ''' <returns></returns>
-    Public Property JackOrgPress As Single
+    Public Property JackOrgPress() As Single
         Get
             Return _JackOrgPress
         End Get
@@ -411,28 +414,26 @@ Public Class ucnJackDsp
         _flexVisible.Add(lblr)
         _flexVisible.Add(lblS)
         _flexVisible.Add(lblPointDspRate)
-    End Sub
 
+
+    End Sub
+    ''' <summary>
+    ''' ビットマップ作成
+    ''' </summary>
+    Public Sub MakeBmp()
+
+        DspCopy() 'コピー位置、ステータスの表示
+
+        DspGpPvImg() 'グループ圧のイメージ表示
+
+    End Sub
 
 
     Private Sub ucnJackDsp_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
 
-        'Dim g As Graphics = Me.CreateGraphics
-        'g.DrawEllipse(Pens.Black, 0, 0, Me.Width, Me.Height)
-        'g.Dispose)(
-        ' Call DspBaseJack()
-        If Not IsNothing(imgJackBase) Then
-            'DspInitBaseImg()
-            Me.BackgroundImage = imgJackBase
-
-            DspJackStatus()
-            SegmentPieceDsp()
-            DspCopy()
-
-            DspGpPvImg()
-            'Debug.WriteLine("ucnJackDsp_Paint" & Now)
+        If Not IsNothing(imgJack) Then
+            Me.BackgroundImage = imgJack
         End If
-
 
     End Sub
     ''' <summary>
@@ -440,7 +441,11 @@ Public Class ucnJackDsp
     ''' </summary>
     Public Sub SegmentPieceDsp()
 
-        Dim g As Graphics = Me.CreateGraphics
+
+        Dim bmpForDso As New Bitmap(imgJack)
+
+        Dim g As Graphics = Graphics.FromImage(bmpForDso)
+
 
         Dim sWidth As Short = 20
         '外周円表示
@@ -451,7 +456,6 @@ Public Class ucnJackDsp
         'セグメント　ピース名称表示
         For i As Short = 0 To PieceName.Count - 1
 
-            g.ResetTransform() 'ワールド座標系リセット
             '組み立てするピースの色付け
             If _AssemblyPieceNo >= _AssemblyOrder(i) Then
                 Dim cl As Color
@@ -471,7 +475,7 @@ Public Class ucnJackDsp
 
             'TODO:同じような処理が2つあるので　簡潔に！
             'セグメント区切り線
-            Dim Angle As Single = (-_PieceAngle(i) / 2 + _PieceCenterAngle(i)).torad
+            Dim Angle As Single = (-_PieceAngle(i) / 2 + _PieceCenterAngle(i)).ToRad
             Dim pX As Integer = CenterPos.X + Rd * Cos(Angle)
             Dim pY As Integer = CenterPos.Y - Rd * Sin(Angle)
             Dim p2X As Integer = CenterPos.X + (Rd - sWidth) * Cos(Angle)
@@ -479,7 +483,7 @@ Public Class ucnJackDsp
 
             g.DrawLine(Pens.Black, New Point(p2X, p2Y), New Point(pX, pY))
 
-            Angle = (_PieceAngle(i) / 2 + _PieceCenterAngle(i)).torad
+            Angle = (_PieceAngle(i) / 2 + _PieceCenterAngle(i)).ToRad
             Dim pX2 As Integer = CenterPos.X + Rd * Cos(Angle)
             Dim pY2 As Integer = CenterPos.Y - Rd * Sin(Angle)
             Dim p2X2 As Integer = CenterPos.X + (Rd - 20) * Cos(Angle)
@@ -487,12 +491,10 @@ Public Class ucnJackDsp
 
             g.DrawLine(Pens.Black, New Point(p2X2, p2Y2), New Point(pX2, pY2))
 
-
-
             Rd -= 1
             '文字回転用
-            g.TranslateTransform(Rd * Cos((_PieceCenterAngle(i)).torad) + CenterPos.X,
-                      -Rd * Sin((_PieceCenterAngle(i)).torad) + CenterPos.Y)
+            g.TranslateTransform(Rd * Cos((_PieceCenterAngle(i)).ToRad) + CenterPos.X,
+                      -Rd * Sin((_PieceCenterAngle(i)).ToRad) + CenterPos.Y)
             g.RotateTransform(90 - PieceCenterAngle(i))
 
 
@@ -503,14 +505,13 @@ Public Class ucnJackDsp
             '組立順序を丸手囲まれた数値表示
             g.DrawString(ChrW(9311 + _AssemblyOrder(i)) & _PieceName(i), fnt,
                          Brushes.Black, New Point((-_PieceName(i).Length - 1) * fnt.Size / 2, 0))
-
-
+            g.ResetTransform() 'ワールド座標系リセット
         Next
 
-
-
-
         g.Dispose()
+
+        imgJack = New Bitmap(bmpForDso)
+
 
     End Sub
 
@@ -523,9 +524,10 @@ Public Class ucnJackDsp
         '最大半径及び中心位置
 
 
-        imgJackBase = New Bitmap(Me.Width, Me.Height)
+        imgJack = New Bitmap(Me.Width, Me.Height)
 
-        Dim g As Graphics = Graphics.FromImage(imgJackBase)
+        Dim g As Graphics = Graphics.FromImage(imgJack)
+        g = Graphics.FromImage(imgJack)
 
         g.Clear(Color.Transparent)  '消去
 
@@ -540,8 +542,8 @@ Public Class ucnJackDsp
                 Dim St As Single = (_faiJack(i) - 360 / _numberJack / 2)
 
                 Dim ps As Point() =
-                    {New Point(MaxRadios * 0.8 * Cos(St.torad) + CenterPos.X,
-                               -MaxRadios * 0.8 * Sin(St.torad) + CenterPos.Y),
+                    {New Point(MaxRadios * 0.8 * Cos(St.ToRad) + CenterPos.X,
+                               -MaxRadios * 0.8 * Sin(St.ToRad) + CenterPos.Y),
                                CenterPos}
                 g.DrawLines(Pens.Black, ps)
 
@@ -572,8 +574,8 @@ Public Class ucnJackDsp
             'ワールド座標系リセット
             g.ResetTransform()
             '移動
-            g.TranslateTransform(MaxRadios * 0.85 * Cos(_faiJack(i).torad) + CenterPos.X,
-                                 -MaxRadios * 0.85 * Sin(_faiJack(i).torad) + CenterPos.Y)
+            g.TranslateTransform(MaxRadios * 0.85 * Cos(_faiJack(i).ToRad) + CenterPos.X,
+                                 -MaxRadios * 0.85 * Sin(_faiJack(i).ToRad) + CenterPos.Y)
             g.RotateTransform(360 / _numberJack * i + IIf(_firstJackLoc = "top", 0, 360 / _numberJack / 2)) '回転
             'ジャッキ番号の表示
             g.DrawString((i + 1).ToString, fnt, Brushes.Black, IIf(i + 1 >= 10, -fnt.Size, -fnt.Size / 2), -fnt.Size / 2)
@@ -588,8 +590,8 @@ Public Class ucnJackDsp
             Dim j As Integer = IIf(i - 1 < 0, _numberGroup - 1, i - 1)
             Dim r As Single = IIf(GrDgree(i) < GrDgree(j), (GrDgree(j) + GrDgree(i)) / 2, (GrDgree(j) + GrDgree(i) + 360) / 2)
             'グループ圧の表示位置
-            GroupPvDsp(i).Location = New Point(MaxRadios * GpWakuRate * Cos(r.torad) + CenterPos.X - GroupPvDsp(i).Width / 2,
-                               -MaxRadios * GpWakuRate * Sin(r.torad) + CenterPos.Y - GroupPvDsp(i).Height / 2)
+            GroupPvDsp(i).Location = New Point(MaxRadios * GpWakuRate * Cos(r.ToRad) + CenterPos.X - GroupPvDsp(i).Width / 2,
+                               -MaxRadios * GpWakuRate * Sin(r.ToRad) + CenterPos.Y - GroupPvDsp(i).Height / 2)
 
             'グループ圧の表示が重なるときは縦位置を調整する
             If i > 0 Then
@@ -603,13 +605,12 @@ Public Class ucnJackDsp
             'ワールド座標系リセット
             g.ResetTransform()
             '移動
-            g.TranslateTransform(MaxRadios * PointRate * Cos(r.torad) + CenterPos.X,
-                                 -MaxRadios * PointRate * Sin(r.torad) + CenterPos.Y)
+            g.TranslateTransform(MaxRadios * PointRate * Cos(r.ToRad) + CenterPos.X,
+                                 -MaxRadios * PointRate * Sin(r.ToRad) + CenterPos.Y)
             g.RotateTransform(90 - r) '回転
             'ジャッキ番号の表示
             g.DrawString((i + 1).ToString, fnt, Brushes.White, IIf(i + 1 >= 10, -fnt.Size, -fnt.Size / 2), -fnt.Size / 2)
             'ジャッキステータス（色識別の表示)
-
 
         Next
 
@@ -617,7 +618,15 @@ Public Class ucnJackDsp
         g.Dispose()
 
 
-        Me.Invalidate()
+        DspJackStatus() 'ジャッキステータスの表示
+
+        SegmentPieceDsp() 'ｾｸﾞﾒﾝﾄピース表示
+
+        DspCopy() 'コピー位置、ステータスの表示
+
+        DspGpPvImg() 'グループ圧のイメージ表示
+
+
     End Sub
 
     ''' <summary>
@@ -625,20 +634,22 @@ Public Class ucnJackDsp
     ''' </summary>
     Public Sub DspJackStatus()
 
-        If IsNothing(_JackStatus) Or IsNothing(_faiJack) Then Exit Sub
+        If IsNothing(_JackStatus) OrElse IsNothing(_faiJack) Then Exit Sub
 
-        Dim g As Graphics = Me.CreateGraphics
+
+        Dim bmpForDso As New Bitmap(imgJack)
+
+        Dim g As Graphics = Graphics.FromImage(bmpForDso)
+
 
         'ジャッキステータスの表示
         Dim i As Short
         For i = 0 To _numberJack - 1
-            'ワールド座標系リセット
-            g.ResetTransform()
             '移動
             'g.TranslateTransform(CenterPos.X * 0.85 * Cos(_faiJack(i) * PI / 180) + CenterPos.X,
             '                     -CenterPos.Y * 0.85 * Sin(_faiJack(i) * PI / 180) + CenterPos.Y)
-            g.TranslateTransform(MaxRadios * 0.85 * Cos(_faiJack(i).torad) + CenterPos.X,
-                                 -MaxRadios * 0.85 * Sin(_faiJack(i).torad) + CenterPos.Y)
+            g.TranslateTransform(MaxRadios * 0.85 * Cos(_faiJack(i).ToRad) + CenterPos.X,
+                                 -MaxRadios * 0.85 * Sin(_faiJack(i).ToRad) + CenterPos.Y)
             g.RotateTransform(360 / _numberJack * i + IIf(_firstJackLoc = "top", 0, 360 / _numberJack / 2)) '回転
 
             'TODO:ロスゼロの表示色の割付
@@ -686,9 +697,14 @@ Public Class ucnJackDsp
 
             'ジャッキステータス（色識別の表示)
             g.FillRectangle(JackBrush, -12, 20, 24, 15) '四角形の中心を０
+
+            'ワールド座標系リセット
+            g.ResetTransform()
+
         Next
 
         g.Dispose()
+        imgJack = New Bitmap(bmpForDso)
 
         'グループ圧の表示
         For i = 0 To _numberGroup - 1
@@ -701,7 +717,11 @@ Public Class ucnJackDsp
     ''' </summary>
     Private Sub DspCopy()
 
-        Dim g As Graphics = Me.CreateGraphics
+        Dim bmpForDso As New Bitmap(imgJack)
+
+        Dim g As Graphics = Graphics.FromImage(bmpForDso)
+
+        'Dim g As Graphics = Me.CreateGraphics
         'TODO:早い回転でうまく表示されない時がある
         Dim k As Integer = CInt(_CopyAngle / 5)
         CopyStatus(k) = (_CopyStroke > _CopyStrechSet)
@@ -732,6 +752,7 @@ Public Class ucnJackDsp
 
 
         g.Dispose()
+        imgJack = New Bitmap(bmpForDso)
 
 
 
@@ -743,9 +764,14 @@ Public Class ucnJackDsp
     ''' グループ圧のイメージ表示
     ''' </summary>
     Private Sub DspGpPvImg()
-        If IsNothing(_JackStatus) Or IsNothing(_faiJack) Then Exit Sub
+        If IsNothing(_JackStatus) OrElse IsNothing(_faiJack) Then Exit Sub
 
-        Dim g As Graphics = Me.CreateGraphics
+
+        Dim bmpForDso As New Bitmap(imgJack)
+
+        Dim g As Graphics = Graphics.FromImage(bmpForDso)
+
+        'Dim g As Graphics = Me.CreateGraphics
         '元圧とグループ圧の割合
         Dim GpColor As Color
         Dim d = MaxRadios * 0.55
@@ -771,14 +797,14 @@ Public Class ucnJackDsp
             g.DrawArc(p, New Rectangle(CenterPos.X - d, CenterPos.Y - d, d * 2, d * 2), startAng, endAng)
 
             Dim ps As Point() =
-    {New Point((d + 5) * Cos(GrDgree(i).torad) + CenterPos.X,
-               -(d + 5) * Sin(GrDgree(i).torad) + CenterPos.Y),
-               New Point((d - 5) * Cos(GrDgree(i).torad) + CenterPos.X,
-               -(d - 5) * Sin(GrDgree(i).torad) + CenterPos.Y)}
+    {New Point((d + 5) * Cos(GrDgree(i).ToRad) + CenterPos.X,
+               -(d + 5) * Sin(GrDgree(i).ToRad) + CenterPos.Y),
+               New Point((d - 5) * Cos(GrDgree(i).ToRad) + CenterPos.X,
+               -(d - 5) * Sin(GrDgree(i).ToRad) + CenterPos.Y)}
             g.DrawLines(Pens.Black, ps)
         Next
-
         g.Dispose()
+        imgJack = New Bitmap(bmpForDso)
 
     End Sub
     ''' <summary>

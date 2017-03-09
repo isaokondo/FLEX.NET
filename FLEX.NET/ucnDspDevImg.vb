@@ -4,6 +4,13 @@ Public Class ucnDspDevImg
     Private _HorDev As Double
     Private _VerDev As Double
 
+
+    ''' <summary>
+    ''' 画面
+    ''' </summary>
+    Private imgDev As Image = New Bitmap(Me.Width, Me.Height)
+
+
     Public Sub New()
 
         ' この呼び出しはデザイナーで必要です。
@@ -41,9 +48,10 @@ Public Class ucnDspDevImg
     ''' 偏角画面更新
     ''' </summary>
     Private Sub DspUpdate()
-        'Dim g As Graphics = CreateGraphics()
-        Dim g As Graphics = Me.CreateGraphics
 
+        Dim bmpForDso As New Bitmap(imgDev)
+
+        Dim g As Graphics = Graphics.FromImage(bmpForDso)
         'g.Clear(Color.White)  '消去
 
 
@@ -79,10 +87,20 @@ Public Class ucnDspDevImg
 
         Next
 
+        imgDev = New Bitmap(bmpForDso)
+
+
         g.Dispose()
     End Sub
-
+    ''' <summary>
+    ''' イメージの表示更新
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub ucnDspDevImg_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
-        DspUpdate()
+        If Not IsNothing(imgDev) Then
+            Me.BackgroundImage = imgDev
+        End If
+
     End Sub
 End Class

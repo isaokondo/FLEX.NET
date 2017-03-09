@@ -502,7 +502,6 @@ Friend Class clsReducePress
             _MvOut(i) -= ReduceDev(i)
             If _MvOut(i) < 0 Then _MvOut(i) = 0
         Next
-        'Console.WriteLine("MV" & String.Join(",", _MvOut))
         Dim ReduceFlg As Boolean = True
         Dim MvZero As Short = 0
         '5秒間は減圧中フラグを保持

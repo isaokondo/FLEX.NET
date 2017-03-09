@@ -43,10 +43,14 @@ Public Class frmAssemblyProcessEdit
         '組立パターンの表示
         'TODO:1ピース目のパターン名を表示（他の方法がないか？）
         AssemblyPatternSel.ComboBox.Text = SegAsbly.AssemblyPtnName(ConfirmRingNo.Value)
+        DspTypeName.Value = SegAsmblyData.TypeData(ConfirmRingNo.Value).TypeName 'セグメント種類
+
+
         'DspAssemblyPattern.Value = SegAsbly.SegmentAssenblyPtn(ConfirmRingNo.Value)
         With SegAsbly.ProcessData(AssemblyPieceNo.Value)
             'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
             DspAssemblyPattern.Value = .PatternName
+
             DspBoltPitch.Value = .BoltPitch
             DspAssemblyPieace.Value = .PieceName  '組立ピース名称
             DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ

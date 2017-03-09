@@ -84,7 +84,6 @@ Public Class ucnDspData
     ''' </summary>
     Private Sub AdjustFontSiza()
         With lblFieldName
-            Debug.WriteLine("{0},{1},{2}", lblFieldName.Text, .Width, TextRenderer.MeasureText(.Text, .Font).Width)
             .Font = DefaultFiledFont
 
             '            If .Width > TextRenderer.MeasureText(.Text, DefaultFont).Width Then

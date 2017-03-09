@@ -44,6 +44,16 @@ Module CommonMdl
     'TODO:データベースより読み込むように変更
     'Public gdblToStartDistance As Double ''起点から発進座標までの累積距離
 
+    ''' <summary>
+    ''' プロジェクトのバージョン番号
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function GetVersionNo() As String
+        Return $" {My.Application.Info.Version.Major}.{My.Application.Info.Version.Minor}.{My.Application.Info.Version.Build}.{My.Application.Info.Version.Revision}"
+    End Function
+
+
+
 
     ''' <summary>
     ''' 左回りを右回りに変換し、値を０～３６０に調整
