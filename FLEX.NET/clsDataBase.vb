@@ -247,6 +247,7 @@ Public Class clsTag
         Dim StartAd As OdbcDataReader = ExecuteSql($"SELECT Min(`アドレス`) FROM {TableAndWhere}")
         StartAd.Read()
         _startAddress = StartAd.Item(0)
+        StartAd.Close()
         'ビットデータの時は、16の倍数からアドレスを介し
         If _startAddress.Substring(0, 1) = "M" Then
             _startAddress = _startAddress(0) & (CInt(_startAddress.Substring(1)) \ 16) * 16
@@ -447,6 +448,8 @@ Public Class clsInitParameter
                 ht(paraDB("項目名称")) = paraDB("値")
             End While
 
+            paraDB.Close()
+
             Htb.htb = ht
             _numberJack = Htb.GetValue("使用ジャッキ本数")
             _numberGroup = Htb.GetValue("グループ数")
@@ -607,7 +610,6 @@ Public Class clsRingReport
         For Each fName In FldLst
             '除外Field名
             Dim ExceptFld() As String = {"リング番号", "掘進ストローク", "時間"}
-            'Dim FldName As String = FldLstRd.Item("Field").ToString
 
             If Not ExceptFld.Contains(fName) Then
                 Dim ExitFld As Odbc.OdbcDataReader =
@@ -731,6 +733,7 @@ Public Class clsTableUpdateConfirm
             End If
 
         End While
+        tableUpTime.Close()
 
         Return gup
 
@@ -753,6 +756,7 @@ Public Class clsTableUpdateConfirm
                 End If
             Next
         End While
+        misamTb.Close()
     End Sub
 
 End Class

@@ -163,6 +163,7 @@
         '圧力調整用フラグ
         DspJackPress.Blink = JackMvAuto.圧力超
         DspMoment.Blink = JackMvAuto.モーメント上限超
+        UcnJackDsp.PointRLimitOver = JackMvAuto.片押しR上限超
 
 
 
@@ -398,12 +399,19 @@
 
         End With
 
+
         '姿勢角トレンドトレンド　データセット
         ucnHorLineChart.PlanData = DirectionChartD.HorPData
         ucnHorLineChart.ExecData = DirectionChartD.HorRData
+        ucnHorLineChart.CorrectData = CtlPara.水平入力補正値
+        ucnHorLineChart.TargetData = DspTargetDirection.Value
+        ucnHorLineChart.RealData = DspDirection.Value
 
         ucnVerLineChart.PlanData = DirectionChartD.VerPData
         ucnVerLineChart.ExecData = DirectionChartD.VerRData
+        ucnVerLineChart.CorrectData = CtlPara.鉛直入力補正値
+        ucnVerLineChart.TargetData = DspTargetPitching.Value
+        ucnVerLineChart.RealData = DspPitching.Value
 
     End Sub
     ''' <summary>

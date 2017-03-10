@@ -517,16 +517,6 @@ Module mdlFLEX
 
 
     End Sub
-    ''' <summary>
-    ''' PLC読込イベント
-    ''' </summary>
-    Private Sub PlcIf_PLCRead() Handles PlcIf.PLCRead
-        'モーメント推力の演算
-        CulcMoment.MomentCul()
-
-
-
-    End Sub
 
 
 

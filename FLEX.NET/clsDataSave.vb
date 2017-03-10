@@ -30,6 +30,7 @@ Friend Class clsDataSave
     Public Sub Save()
         Dim recDataSave As Odbc.OdbcDataReader =
             ExecuteSql("REPLACE INTO FLEX掘削データ VALUES(" & getSqlData() & ")")
+        recDataSave.Close()
     End Sub
 
     ''' <summary>

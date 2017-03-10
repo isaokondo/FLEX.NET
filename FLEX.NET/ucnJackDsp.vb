@@ -107,6 +107,12 @@ Public Class ucnJackDsp
 
     Private BlinkFlag As Boolean    '点滅用フラグ
 
+    ''' <summary>
+    ''' Rの片押し制限中
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property PointRLimitOver As Boolean
+
 
 
     ''' <summary>
@@ -970,5 +976,10 @@ Public Class ucnJackDsp
 
     Private Sub tmrBlink_Tick(sender As Object, e As EventArgs) Handles tmrBlink.Tick
         BlinkFlag = Not BlinkFlag
+        If _PointRLimitOver Then
+            lblPointR.BackColor = IIf(BlinkFlag, Color.Black, Color.Red)
+        Else
+            lblPointR.BackColor = Color.Black
+        End If
     End Sub
 End Class

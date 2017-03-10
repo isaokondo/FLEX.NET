@@ -151,7 +151,7 @@ Friend Class clsSegmentAssembly
         While rsPtLst.Read
             _AssenblyPtnDic.Add(rsPtLst.Item("組立パターンNo"), rsPtLst.Item("組立パターン名"))
         End While
-
+        rsPtLst.Close()
         ''当該リングのセグメント組立IDを取得
         Dim Id As Short = _SegmentAssenblyPtnID(RingNo)
         '検索
@@ -274,7 +274,7 @@ Friend Class clsSegmentAssembly
             _SegmentAssenblyPtnID(i) = rsData.Item("組立パターンNo")
             '_SegmentAssenblyPtn(i) = rsData.Item("組立パターン")
         End While
-
+        rsData.Close()
         'SegmentAssemblyPatternListRead() 'セグメント組立パターンリスト読込
     End Sub
 
@@ -304,7 +304,7 @@ Friend Class clsSegmentAssembly
 
         End While
 
-
+        rsData.Close()
 
 
 

@@ -30,6 +30,9 @@ Friend Class clsCulKijun
     ''縦断
     Public VerSentanKijun As clsLineMake ''先端位置
     Public VerKodoKijun As clsLineMake ''後胴中心
+    ''' <summary>
+    ''' 縦断前銅中心
+    ''' </summary>
     Public VerZendoKijun As clsLineMake ''前銅中心
     Public VerNakaKodo As clsCulNakaore1 ''中折れ演算（後胴中心で検討）
     Public VerNakaCul As clsCulNakaore2 ''中折れ計算2（構築中心の方向角で検討）

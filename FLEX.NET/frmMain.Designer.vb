@@ -76,6 +76,7 @@ Partial Class frmMain
         Me.lblNowDate = New System.Windows.Forms.Label()
         Me.cmbWideSelct = New System.Windows.Forms.ComboBox()
         Me.lblMachineMode = New System.Windows.Forms.Label()
+        Me.UcnDspData24 = New FLEX.NET.ucnDspData()
         Me.DspClosetJack = New FLEX.NET.ucnDspData()
         Me.DspBoltPitch = New FLEX.NET.ucnDspData()
         Me.DspAveStartStroke = New FLEX.NET.ucnDspData()
@@ -134,7 +135,6 @@ Partial Class frmMain
         Me.DspExcavStartDate = New FLEX.NET.ucnDspData()
         Me.DspAssemblyPattern = New FLEX.NET.ucnDspData()
         Me.DspNextPieceName = New FLEX.NET.ucnDspData()
-        Me.UcnDspData24 = New FLEX.NET.ucnDspData()
         Me.DspAddClosetThrustJack = New FLEX.NET.ucnDspData()
         Me.DspClosetThrustJack = New FLEX.NET.ucnDspData()
         Me.DspPullBackJack = New FLEX.NET.ucnDspData()
@@ -605,6 +605,27 @@ Partial Class frmMain
         Me.lblMachineMode.Text = "セグメントモード"
         Me.lblMachineMode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'UcnDspData24
+        '
+        Me.UcnDspData24.BackColor = System.Drawing.Color.Transparent
+        Me.UcnDspData24.Blink = False
+        Me.UcnDspData24.BlinkColor = System.Drawing.Color.Red
+        Me.UcnDspData24.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.UcnDspData24.DataWidth = 91
+        Me.UcnDspData24.DecimalPlaces = CType(2, Short)
+        Me.UcnDspData24.FieldName = "ローリング偏差"
+        Me.UcnDspData24.FieldNameWidth = 146
+        Me.UcnDspData24.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.UcnDspData24.Location = New System.Drawing.Point(1634, 625)
+        Me.UcnDspData24.Margin = New System.Windows.Forms.Padding(1)
+        Me.UcnDspData24.Name = "UcnDspData24"
+        Me.UcnDspData24.Size = New System.Drawing.Size(243, 32)
+        Me.UcnDspData24.TabIndex = 109
+        Me.UcnDspData24.Unit = "deg"
+        Me.UcnDspData24.UnitVisible = False
+        Me.UcnDspData24.Value = "-"
+        Me.UcnDspData24.ValueType = True
+        '
         'DspClosetJack
         '
         Me.DspClosetJack.BackColor = System.Drawing.Color.Transparent
@@ -634,13 +655,13 @@ Partial Class frmMain
         Me.DspBoltPitch.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.DspBoltPitch.DataWidth = 91
         Me.DspBoltPitch.DecimalPlaces = CType(1, Short)
-        Me.DspBoltPitch.FieldName = "組立ﾎﾞﾙﾄﾋﾟｯﾁ"
+        Me.DspBoltPitch.FieldName = "組立ﾎﾞﾙﾄ位置"
         Me.DspBoltPitch.FieldNameWidth = 146
         Me.DspBoltPitch.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspBoltPitch.Location = New System.Drawing.Point(1633, 530)
+        Me.DspBoltPitch.Location = New System.Drawing.Point(1399, 626)
         Me.DspBoltPitch.Margin = New System.Windows.Forms.Padding(1)
         Me.DspBoltPitch.Name = "DspBoltPitch"
-        Me.DspBoltPitch.Size = New System.Drawing.Size(243, 32)
+        Me.DspBoltPitch.Size = New System.Drawing.Size(242, 32)
         Me.DspBoltPitch.TabIndex = 102
         Me.DspBoltPitch.Unit = "deg"
         Me.DspBoltPitch.UnitVisible = False
@@ -781,7 +802,7 @@ Partial Class frmMain
         Me.DspUpRealStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspUpRealStroke.DecimalPlaces = CType(0, Short)
         Me.DspUpRealStroke.FieldName = "上ST実"
-        Me.DspUpRealStroke.Location = New System.Drawing.Point(102, 131)
+        Me.DspUpRealStroke.Location = New System.Drawing.Point(102, 149)
         Me.DspUpRealStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspUpRealStroke.Name = "DspUpRealStroke"
         Me.DspUpRealStroke.Size = New System.Drawing.Size(138, 46)
@@ -846,7 +867,7 @@ Partial Class frmMain
         Me.DspTopClearance.BackColor = System.Drawing.Color.Transparent
         Me.DspTopClearance.DecimalPlaces = CType(0, Short)
         Me.DspTopClearance.FieldName = "上ｸﾘｱ"
-        Me.DspTopClearance.Location = New System.Drawing.Point(191, 131)
+        Me.DspTopClearance.Location = New System.Drawing.Point(191, 149)
         Me.DspTopClearance.Margin = New System.Windows.Forms.Padding(2)
         Me.DspTopClearance.Name = "DspTopClearance"
         Me.DspTopClearance.Size = New System.Drawing.Size(143, 46)
@@ -898,7 +919,7 @@ Partial Class frmMain
         Me.DspUpRawStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspUpRawStroke.DecimalPlaces = CType(0, Short)
         Me.DspUpRawStroke.FieldName = "上ST読"
-        Me.DspUpRawStroke.Location = New System.Drawing.Point(102, 181)
+        Me.DspUpRawStroke.Location = New System.Drawing.Point(102, 199)
         Me.DspUpRawStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspUpRawStroke.Name = "DspUpRawStroke"
         Me.DspUpRawStroke.Size = New System.Drawing.Size(138, 46)
@@ -1557,7 +1578,7 @@ Partial Class frmMain
         Me.DspNextPieceName.FieldName = "次の組立ピース"
         Me.DspNextPieceName.FieldNameWidth = 146
         Me.DspNextPieceName.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspNextPieceName.Location = New System.Drawing.Point(1633, 625)
+        Me.DspNextPieceName.Location = New System.Drawing.Point(1634, 529)
         Me.DspNextPieceName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspNextPieceName.Name = "DspNextPieceName"
         Me.DspNextPieceName.Size = New System.Drawing.Size(243, 32)
@@ -1566,27 +1587,6 @@ Partial Class frmMain
         Me.DspNextPieceName.UnitVisible = False
         Me.DspNextPieceName.Value = "A1-3"
         Me.DspNextPieceName.ValueType = True
-        '
-        'UcnDspData24
-        '
-        Me.UcnDspData24.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData24.Blink = False
-        Me.UcnDspData24.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData24.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.UcnDspData24.DataWidth = 91
-        Me.UcnDspData24.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData24.FieldName = "RL考慮ｼﾞｬｯｷ"
-        Me.UcnDspData24.FieldNameWidth = 146
-        Me.UcnDspData24.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData24.Location = New System.Drawing.Point(1399, 626)
-        Me.UcnDspData24.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData24.Name = "UcnDspData24"
-        Me.UcnDspData24.Size = New System.Drawing.Size(243, 32)
-        Me.UcnDspData24.TabIndex = 109
-        Me.UcnDspData24.Unit = "deg"
-        Me.UcnDspData24.UnitVisible = False
-        Me.UcnDspData24.Value = "-"
-        Me.UcnDspData24.ValueType = True
         '
         'DspAddClosetThrustJack
         '
@@ -1695,6 +1695,7 @@ Partial Class frmMain
         '
         'UcnDspDevImg
         '
+        Me.UcnDspDevImg.BackgroundImage = CType(resources.GetObject("UcnDspDevImg.BackgroundImage"), System.Drawing.Image)
         Me.UcnDspDevImg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.UcnDspDevImg.HorDev = 0.3R
         Me.UcnDspDevImg.Location = New System.Drawing.Point(902, 31)
@@ -1761,7 +1762,7 @@ Partial Class frmMain
         Me.DspUpSpeed.BackColor = System.Drawing.Color.Transparent
         Me.DspUpSpeed.DecimalPlaces = CType(0, Short)
         Me.DspUpSpeed.FieldName = "上速度"
-        Me.DspUpSpeed.Location = New System.Drawing.Point(102, 231)
+        Me.DspUpSpeed.Location = New System.Drawing.Point(102, 249)
         Me.DspUpSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.DspUpSpeed.Name = "DspUpSpeed"
         Me.DspUpSpeed.Size = New System.Drawing.Size(138, 46)
@@ -2040,6 +2041,7 @@ Partial Class frmMain
         Me.UcnJackDsp.AssemblyPieceNo = CType(0, Short)
         Me.UcnJackDsp.AutoSize = True
         Me.UcnJackDsp.BackColor = System.Drawing.Color.Transparent
+        Me.UcnJackDsp.BackgroundImage = CType(resources.GetObject("UcnJackDsp.BackgroundImage"), System.Drawing.Image)
         Me.UcnJackDsp.CopyStrechSet = 100
         Me.UcnJackDsp.FaiJack = Nothing
         Me.UcnJackDsp.FlexAutoManual = False
@@ -2449,6 +2451,7 @@ Partial Class frmMain
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.UcnDspData24)
         Me.Controls.Add(Me.DspClosetJack)
         Me.Controls.Add(Me.DspBoltPitch)
         Me.Controls.Add(Me.DspAveStartStroke)
@@ -2486,7 +2489,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.DspAssemblyPattern)
         Me.Controls.Add(Me.DspNextPieceName)
-        Me.Controls.Add(Me.UcnDspData24)
         Me.Controls.Add(Me.DspAddClosetThrustJack)
         Me.Controls.Add(Me.DspClosetThrustJack)
         Me.Controls.Add(Me.DspPullBackJack)

@@ -666,6 +666,7 @@ Partial Class frmCorrectionValueManagement
         Me.UcnSpredCompnent14.DecimalPlaces = CType(3, Short)
         Me.UcnSpredCompnent14.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.HeadDspType
         Me.UcnSpredCompnent14.FieldName = "項目"
+        Me.UcnSpredCompnent14.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.UcnSpredCompnent14.ForeColor = System.Drawing.Color.Black
         Me.UcnSpredCompnent14.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.UcnSpredCompnent14.Location = New System.Drawing.Point(471, 37)

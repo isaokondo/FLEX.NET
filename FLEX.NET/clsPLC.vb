@@ -124,10 +124,8 @@ Public Class clsPlcIf
     Private _LosZeroSts_FLEX As Short
 
 
-
     Private WithEvents com_ReferencesEasyIF As ACTMULTILib.ActEasyIF
 
-    Public Event PLCRead() 'PLC読込イベント
     Public Event PLCErrOccur(ByVal sender As Object, ByVale As EventArgs, ByVal ErrMsg As String, ByVal ErrCode As Long) 'PLC読込イベント
     ''' <summary>
     ''' 掘進ステータスの変化時
@@ -165,6 +163,11 @@ Public Class clsPlcIf
     Public AnalogTag As clsTag
     Public ParameterTag As clsTag
     Private DigtalTag As clsTag
+
+    'DB保存用データ変数
+    Private AnalogComData() As Short
+    Private ParmterComData() As Short
+    Private DigtalComData() As Boolean
 
     Private sharrDeviceValue() As Short         'デバイス値
     ''' <summary>
@@ -737,10 +740,10 @@ Public Class clsPlcIf
 
         PreExcaStatus = _excaStatus
         _LosZeroMode = DigtalPlcRead("同時施工モード")
-        '計測ジャッキ読込
-        'For Each mj In InitParameter.MesureJackAngle.Keys
-        '    _mesureJackStroke(mj) = AnalogPlcRead("ジャッキストローク" & mj)
-        'Next
+
+        'PLC読み込みデータサイズ確定
+        ReDim AnalogComData(AnalogTag.DeviceSize)
+        ReDim ParmterComData(ParameterTag.DeviceSize)
 
         TimerRun()
 
@@ -778,72 +781,83 @@ Public Class clsPlcIf
             iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(AnalogTag.StartAddress,
                                                         AnalogTag.DeviceSize + 1,
                                                         sharrDeviceValue(0))
+
             If iReturnCode = 0 Then '通信OK
-                For Each at In AnalogTag.Tag
-                    _EngValue(at.FieldName) = GetAnalogData(at.FieldName, AnalogTag)
-                Next
+
+                If Not sharrDeviceValue.SequenceEqual(AnalogComData) Then
+
+                    '保存用データ保持
+                    AnalogComData = sharrDeviceValue.Clone
+
+                    For Each at In AnalogTag.Tag
+                        _EngValue(at.FieldName) = GetAnalogData(at.FieldName, AnalogTag)
+                    Next
 
 
-                _gyro = _EngValue("ジャイロ方位")
-                _gyroPitching = _EngValue("ジャイロピッチング")
-                _gyroRolling = _EngValue("ジャイロローリング")
+                    _gyro = _EngValue("ジャイロ方位")
+                    _gyroPitching = _EngValue("ジャイロピッチング")
+                    _gyroRolling = _EngValue("ジャイロローリング")
 
-                _machinePitching = _EngValue("マシンピッチング")
-                _mashineRolling = _EngValue("マシンローリング")
+                    _machinePitching = _EngValue("マシンピッチング")
+                    _mashineRolling = _EngValue("マシンローリング")
 
-                _jkPress = _EngValue("ジャッキ圧力")
+                    _jkPress = _EngValue("ジャッキ圧力")
 
-                _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
+                    _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
 
-                _nakaoreLR = _EngValue("中折左右角")
-                _nakaoreTB = _EngValue("中折上下角")
-                _realStroke = _EngValue("掘進ストローク")
-                _excaStatus = _EngValue("掘進ステータス")
-                _CopyAngle = _EngValue("コピー角度")
-                _CopyStroke1 = _EngValue("コピーストローク1")
-                _CopyStroke2 = _EngValue("コピーストローク2")
+                    _nakaoreLR = _EngValue("中折左右角")
+                    _nakaoreTB = _EngValue("中折上下角")
+                    _realStroke = _EngValue("掘進ストローク")
+                    _excaStatus = _EngValue("掘進ステータス")
+                    _CopyAngle = _EngValue("コピー角度")
+                    _CopyStroke1 = _EngValue("コピーストローク1")
+                    _CopyStroke2 = _EngValue("コピーストローク2")
 
-                _leftClearance = _EngValue("クリアランス左")
-                _topClearance = _EngValue("クリアランス上")
-                _rightClearance = _EngValue("クリアランス右")
-                _botomClearance = _EngValue("クリアランス下")
+                    _leftClearance = _EngValue("クリアランス左")
+                    _topClearance = _EngValue("クリアランス上")
+                    _rightClearance = _EngValue("クリアランス右")
+                    _botomClearance = _EngValue("クリアランス下")
 
 
-                For Each mj In InitPara.MesureJackAngle.Keys
-                    _mesureJackStroke(mj) = _EngValue("ジャッキストローク" & mj)
-                    _mesureJackSpeed(mj) = _EngValue("ジャッキスピード" & mj)
-                Next
+                    For Each mj In InitPara.MesureJackAngle.Keys
+                        _mesureJackStroke(mj) = _EngValue("ジャッキストローク" & mj)
+                        _mesureJackSpeed(mj) = _EngValue("ジャッキスピード" & mj)
+                    Next
 
-                '同時施工ステータス読込
-                Dim p As Short
-                p = _LosZeroSts_FLEX
-                _LosZeroSts_FLEX = _EngValue("同時施工ステータス_FLEX")
-                '同時施工モードでステータス変化時
-                If _LosZeroMode And p <> _LosZeroSts_FLEX Then
-                    RaiseEvent LosZeroStsChange(p, _LosZeroSts_FLEX, False)
+                    '同時施工ステータス読込
+                    Dim p As Short
+                    p = _LosZeroSts_FLEX
+                    _LosZeroSts_FLEX = _EngValue("同時施工ステータス_FLEX")
+                    '同時施工モードでステータス変化時
+                    If _LosZeroMode And p <> _LosZeroSts_FLEX Then
+                        RaiseEvent LosZeroStsChange(p, _LosZeroSts_FLEX, False)
+                    End If
+
+                    p = _LosZeroSts_M
+                    _LosZeroSts_M = _EngValue("同時施工ステータス_Machine")
+                    '同時施工モードでステータス変化時
+                    If _LosZeroMode And p <> _LosZeroSts_M Then
+                        RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
+                    End If
+
+                    Dim i As Integer
+                    For i = 0 To InitPara.NumberGroup - 1
+                        _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
+                        _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
+                        _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
+                        _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
+                    Next
+
+                    For i = 0 To InitPara.NumberJack - 1
+                        _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
+                        _jackSelect(i) = (_JackStatus(i) And 1)
+                    Next
+
                 End If
 
-                p = _LosZeroSts_M
-                _LosZeroSts_M = _EngValue("同時施工ステータス_Machine")
-                '同時施工モードでステータス変化時
-                If _LosZeroMode And p <> _LosZeroSts_M Then
-                    RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
-                End If
-
-                Dim i As Integer
-                For i = 0 To InitPara.NumberGroup - 1
-                    _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
-                    _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
-                    _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
-                    _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
-                Next
-
-                For i = 0 To InitPara.NumberJack - 1
-                    _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
-                    _jackSelect(i) = (_JackStatus(i) And 1)
-                Next
 
                 frmMain.tmrDataDsp.Enabled = True
+
             Else    'エラー発生
                 RaiseEvent PLCErrOccur(sender, e, "アナログ読込エラー", iReturnCode)
             End If
@@ -858,35 +872,35 @@ Public Class clsPlcIf
                                                         sharrDeviceValue(0))
             If iReturnCode = 0 Then '通信OK
 
-                Dim rno As Integer = _RingNo
-                _RingNo = GetAnalogData("RingNo", ParameterTag)
-                If rno <> _RingNo Then
-                    RaiseEvent ExcavationStatusChange(0, 0)
-                    RaiseEvent LineDistanceChage()
+                If Not ParmterComData.SequenceEqual(sharrDeviceValue) Then
+
+                    '保存用データ保持
+                    ParmterComData = sharrDeviceValue.Clone
+
+                    Dim rno As Integer = _RingNo
+                    _RingNo = GetAnalogData("RingNo", ParameterTag)
+                    If rno <> _RingNo Then
+                        RaiseEvent ExcavationStatusChange(0, 0)
+                        RaiseEvent LineDistanceChage()
+
+                    End If
+                    _終了判定引きストローク = GetAnalogData("終了判定引きストローク", ParameterTag)
+
+                    _減圧弁制御P定数 = GetAnalogData("減圧弁制御P定数", ParameterTag)
+                    _減圧弁制御I定数 = GetAnalogData("減圧弁制御I定数", ParameterTag)
+                    _減圧弁制御D定数 = GetAnalogData("減圧弁制御D定数", ParameterTag)
+                    _減圧弁特性増減時間 = GetAnalogData("減圧弁特性増減時間", ParameterTag)
+
+
+                    ''偏差過大の時の設定値　
+                    _感度調整減圧弁制御Ｐ定数 = GetAnalogData("感度調整減圧弁制御P定数", ParameterTag)
+                    _感度調整減圧弁制御Ｉ定数 = GetAnalogData("感度調整減圧弁制御I定数", ParameterTag)
+                    '_GaingSetReducingValveContDConst = GetAnalogData("", ParameterTag)
+                    _感度調整設定圧力偏差 = GetAnalogData("感度調整設定圧力偏差", ParameterTag)
+                    'TODO:同時施工で考慮
+                    _MaxExcavingStroke = GetAnalogData("掘進中最大ストローク", ParameterTag)
 
                 End If
-
-                '_ストローク管理法 = GetAnalogData("ストローク管理法", ParameterTag)   'ストローク管理方法
-                '_掘進判定ストローク = GetAnalogData("掘進判定ストローク", ParameterTag)
-                '_終了判定ストローク = GetAnalogData("終了判定ストローク", ParameterTag)
-                _終了判定引きストローク = GetAnalogData("終了判定引きストローク", ParameterTag)
-                '_終了判定時間 = GetAnalogData("終了判定時間", ParameterTag)
-
-                _減圧弁制御P定数 = GetAnalogData("減圧弁制御P定数", ParameterTag)
-                _減圧弁制御I定数 = GetAnalogData("減圧弁制御I定数", ParameterTag)
-                _減圧弁制御D定数 = GetAnalogData("減圧弁制御D定数", ParameterTag)
-                '_中断判定速度 = GetAnalogData("中断判定速度", ParameterTag)
-                _減圧弁特性増減時間 = GetAnalogData("減圧弁特性増減時間", ParameterTag)
-
-
-                ''偏差過大の時の設定値　
-                _感度調整減圧弁制御Ｐ定数 = GetAnalogData("感度調整減圧弁制御P定数", ParameterTag)
-                _感度調整減圧弁制御Ｉ定数 = GetAnalogData("感度調整減圧弁制御I定数", ParameterTag)
-                '_GaingSetReducingValveContDConst = GetAnalogData("", ParameterTag)
-                _感度調整設定圧力偏差 = GetAnalogData("感度調整設定圧力偏差", ParameterTag)
-                'TODO:同時施工で考慮
-                _MaxExcavingStroke = GetAnalogData("掘進中最大ストローク", ParameterTag)
-
 
             Else    'エラー発生
                 RaiseEvent PLCErrOccur(sender, e, "パラメータ読込エラー", iReturnCode)
@@ -903,38 +917,47 @@ Public Class clsPlcIf
             If iReturnCode = 0 Then '通信成功
                 Dim bit() As Boolean = WordToBit(sharrDeviceValue)
 
-                ''ジャッキ選択の取込
-                'For i = 0 To _jackSelect.Length - 1
-                '    _jackSelect(i) = bit(DigtalTag.TagData("ジャッキ選択" & (i + 1)).OffsetAddress)
-                'Next
+                If IsNothing(DigtalComData) Then
+                    ReDim DigtalComData(bit.Count - 1)
+                End If
+
+                Dim ComFlgAdr As Integer =
+                    DigtalTag.TagData("伝送フラグ").OffsetAddress
+
+                DigtalComData(ComFlgAdr) = bit(ComFlgAdr)
+
+                If Not bit.SequenceEqual(DigtalComData) Then
+
+                    '保存用データ保持
+                    DigtalComData = bit.Clone
 
 
+                    'FLEXON（圧力制御中)
+                    _flexControlOn = bit(DigtalTag.TagData("圧力制御").OffsetAddress)
+                    _gyiroError = bit(DigtalTag.TagData("ジャイロ異常").OffsetAddress)
 
-                'FLEXON（圧力制御中)
-                _flexControlOn = bit(DigtalTag.TagData("圧力制御").OffsetAddress)
-                _gyiroError = bit(DigtalTag.TagData("ジャイロ異常").OffsetAddress)
-
-                '掘進モード、セグメントモード 
-                _execMode = bit(DigtalTag.TagData("掘進モード").OffsetAddress)
-                _segmentMode = bit(DigtalTag.TagData("セグメントモード").OffsetAddress)
+                    '掘進モード、セグメントモード 
+                    _execMode = bit(DigtalTag.TagData("掘進モード").OffsetAddress)
+                    _segmentMode = bit(DigtalTag.TagData("セグメントモード").OffsetAddress)
 
 
-                Dim tmp As Boolean
-                '同時施工モード
-                tmp = _LosZeroMode
-                _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
-                If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
-                _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
-                tmp = _MachineComErr
-                _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
-                If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(sender, e, "シールドマシン伝送異常が発生しました。", 0)
+                    Dim tmp As Boolean
+                    '同時施工モード
+                    tmp = _LosZeroMode
+                    _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
+                    If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
+                    _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
+                    tmp = _MachineComErr
+                    _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
+                    If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(sender, e, "シールドマシン伝送異常が発生しました。", 0)
 
-                tmp = LosZeroCancel
-                LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
-                If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
+                    tmp = LosZeroCancel
+                    LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
+                    If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
+                End If
 
             Else    'エラー発生
-                RaiseEvent PLCErrOccur(sender, e, "デジタル読込エラー", iReturnCode)
+                    RaiseEvent PLCErrOccur(sender, e, "デジタル読込エラー", iReturnCode)
             End If
         Catch exException As Exception
             '例外処理	
@@ -980,12 +1003,15 @@ Public Class clsPlcIf
         Dim t As Long = 0
         mblnBlink = Not mblnBlink
         t = t Or mblnBlink
-        iReturnCode = com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
+        iReturnCode =
+            com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
+
+
+        'モーメント推力の演算
+        CulcMoment.MomentCul()
 
 
 
-        'PLC読込イベント
-        RaiseEvent PLCRead()
 
         ' ……
     End Sub
