@@ -142,6 +142,7 @@ Public Class clsHorPanData
         ゾーン総数 = tb.Item(0)
         '        ReDim _horData(_ゾーン総数 + 1)
         'db.Disconnect()
+        tb.Close()
 
         Call RedimData()
 
@@ -199,6 +200,8 @@ Public Class clsHorPanData
                 'End Try
             End While
         End With
+        tb.Close
+
 
         'Next
         'db.Disconnect()
@@ -208,6 +211,7 @@ Public Class clsHorPanData
         tb.Read()
         シフトゾーン総数 = tb.Item(0)
         'db.Disconnect()
+        tb.Close()
 
         tb = db.ExecuteSql($"SELECT * FROM 平面シフト WHERE `シートID` = {InitPara.SheetID} ORDER BY `シフト№`;")
         'For i = 0 To tb.Rows.Count - 1
@@ -222,6 +226,7 @@ Public Class clsHorPanData
         End With
         'Next i
 
+        tb.Close()
 
     End Sub
 
@@ -285,13 +290,14 @@ Public Class clsVerPlanData
             到達勾配 = .Item("到達勾配")
         End With
         '        db.Disconnect()
-
+        tb.Close()
         'ゾーン総数を求める
         tb = db.ExecuteSql($"SELECT MAX(`ゾーン№`) FROM 縦断線形 WHERE `シートID` = {InitPara.SheetID}")
         tb.Read()
         ゾーン総数 = CInt(tb.Item(0))
         'db.Disconnect()
         Call RedimData()
+        tb.Close()
 
         tb = db.ExecuteSql("SELECT * FROM 縦断線形 WHERE `シートID` = " & InitPara.SheetID & " ORDER BY `ゾーン№`;")
         '        Dim i As Integer
@@ -324,7 +330,7 @@ Public Class clsVerPlanData
                 _中心位置累積水平距離(zoneNo) = db.CheckItemData(.Item("中心累積距離"))
             End While
         End With
-
+        tb.Close()
         '       Next
         '        db.Disconnect()
 
@@ -346,7 +352,7 @@ Public Class clsVerPlanData
             End While
         End With
         'Next i
-
+        tb.Close()
 
     End Sub
 

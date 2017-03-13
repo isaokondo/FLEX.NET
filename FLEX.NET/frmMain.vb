@@ -702,6 +702,8 @@
             rtbEventLog.AppendText(CDate(tb.Item(0)).ToString("yyyy/MM/dd HH:mm:ss") & Space(2) & tb.Item(1).ToString & vbCrLf)
 
         End While
+        tb.Close()
+
     End Sub
     ''' <summary>
     ''' 掘進開始日時表示
@@ -809,6 +811,8 @@
 
                 LastDistance = rsData.Item("平面発進から発旋回中心までの距離")
             End While
+
+            rsData.Close()
 
             'これから掘削する計画方位データ
             _HorPData.Clear()

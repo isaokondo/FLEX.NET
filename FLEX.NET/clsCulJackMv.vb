@@ -95,7 +95,9 @@ Friend Class clsCulJackMv
     Private mblnStartTraking As Boolean
 
 
-    ''前回（一秒前に算出した強さ）
+    ''' <summary>
+    '''前回（一秒前に算出した強さ） 
+    ''' </summary>
     Private mdblRcDash As Double
 
     ''' <summary>
@@ -394,7 +396,11 @@ Friend Class clsCulJackMv
 
     End Sub
 
-
+    ''' <summary>
+    ''' ジャッキ操作量の算出
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Public Sub sbCulc(sender As Object, e As Timers.ElapsedEventArgs)
         ' @(f)
         '
@@ -495,15 +501,11 @@ Friend Class clsCulJackMv
         '予測値は使わない！　.netより
 
         ''制御モードの判定
-
-        ''ver 1.1でこのコメントを外す
         _圧力超 = PlcIf.JkPress > CtlPara.圧力許容値
 
-        _モーメント上限超 = (CulcMoment.MomentR > CtlPara.ジャッキモーメント上限値) _
-            And mblnモーメント制御 = False
+        _モーメント上限超 = (CulcMoment.MomentR > CtlPara.ジャッキモーメント上限値) And mblnモーメント制御 = False
 
         ''半径がある一定値を越えたらロックする。
-        ''片押し制限
         _片押しR上限超 = mdblRcDash > CtlPara.片押しR制限
 
         ''片押制御フラグをすべてに反映
@@ -519,8 +521,8 @@ Friend Class clsCulJackMv
         If _圧力調整中 And mdblRcDash > mdbl操作強 Then
 
             ''圧力調整モード
-            dblX = mdbl操作強 * Cos(mdbl操作角 / 180 * PI)
-            dblY = mdbl操作強 * Sin(mdbl操作角 / 180 * PI)
+            dblX = mdbl操作強 * Cos(mdbl操作角.ToRad)
+            dblY = mdbl操作強 * Sin(mdbl操作角.ToRad)
 
             If mblnモーメント制御 Then
                 mdblHorHensa = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * _水平モーメント偏差
@@ -531,6 +533,9 @@ Friend Class clsCulJackMv
             End If
             mdblRcDash = mdbl操作強
 
+            mdblRcDash -= CtlPara.単位当r引き戻し量 / CtlPara.引き戻し実施間隔
+
+            If mdblRcDash < 0 Then mdblRcDash = 0
 
             ''制御モードがＰＩＤ→圧力調整に切り替わったとき
             '    If mbln制御モード Then RaiseEvent 制御モードChanges(False)

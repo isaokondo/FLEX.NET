@@ -224,6 +224,7 @@ Public Class clsControlParameter
 
         End Set
     End Property
+    'todo:力点と操作角、操作強を同時に更新したい！
     Public Property PointX() As Single
         Get
             Return _PointX
@@ -790,6 +791,7 @@ Public Class clsControlParameter
                 Dim tb As Odbc.OdbcDataReader =
         ExecuteSql($"UPDATE FLEX制御パラメータ SET`値`='{v.Value}' 
         WHERE `項目名称`='開始ジャッキストローク{v.Key}'")
+                tb.Close()
             Next
             '平均開始ストロークの算出
             '_StartAveJackStroke =
@@ -817,6 +819,7 @@ Public Class clsControlParameter
         Dim tb As Odbc.OdbcDataReader =
         ExecuteSql("UPDATE FLEX制御パラメータ SET`値`='" & value &
                       "' WHERE `項目名称`='wideuse" & iKey & "'")
+        tb.Close()
 
     End Sub
 
@@ -898,6 +901,15 @@ Public Class clsControlParameter
                         _圧力制御開始推力値有効フラグ = fnBoolean(tb.Item("値"))
                     Case "全押しスタート"
                         _全押しスタート = fnBoolean(tb.Item("値"))
+
+                    Case "単位当r引き戻し量"
+                        _単位当r引き戻し量 = tb.Item("値")
+
+                    Case "引き戻し実施間隔"
+                        _引き戻し実施間隔 = tb.Item("値")
+
+
+
                     Case "AutoDirectionControl"
                         Dim Value As Boolean = fnBoolean(tb.Item("値"))
                         If _AutoDirectionControl <> Value Then
@@ -974,6 +986,8 @@ Public Class clsControlParameter
 
         End While
 
+        tb.Close()
+
         '平均開始ストロークの算出
         _StartAveJackStroke =
                 (From i In _StartJackStroke Where Not _ExceptMesureJackNo.Contains(i.Key) Select (i.Value)).Average
@@ -998,11 +1012,14 @@ Public Class clsControlParameter
             WrValue = value.ToString
         End If
 
+
         Dim tb As Odbc.OdbcDataReader =
         ExecuteSql("UPDATE FLEX制御パラメータ SET`値`='" & WrValue &
                       "' WHERE `項目名称`='" & FieldName & "'")
 
+        tb.Close()
 
+        Debug.WriteLine($"WrValue={WrValue} FieldName={FieldName}")
 
         'TODO DBに反映させる PLCアドレスの存在する場合は、PLC書込
     End Sub
@@ -1025,7 +1042,10 @@ Public Class clsControlParameter
             If Not tbchk.HasRows Then
                 MsgBox($"項目名　開始ジャッキストローク{i.Key}が、存在しません。{vbCrLf}テーブル「FLEX制御パラメータ」に追加してください", vbExclamation)
             End If
+            tbchk.Close()
+            
         Next
+
 
         'パラメータ読込
         ReadParameter()

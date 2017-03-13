@@ -135,7 +135,7 @@ Partial Class frmOneWayTunnelLimit
         Me.OneReduceValue.DecimalPlaces = CType(2, Short)
         Me.OneReduceValue.DspFieldName = True
         Me.OneReduceValue.FieldName = "１回のr引き戻し量"
-        Me.OneReduceValue.Increment = 1.0!
+        Me.OneReduceValue.Increment = 0.05!
         Me.OneReduceValue.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.OneReduceValue.Location = New System.Drawing.Point(29, 204)
         Me.OneReduceValue.Margin = New System.Windows.Forms.Padding(2)

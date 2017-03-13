@@ -20,7 +20,7 @@ Friend Class clsDataSave
         Do While recFldData.Read
             ColumnList.Add(recFldData.Item("Field").ToString)
         Loop
-
+        recFldData.Close
 
 
     End Sub

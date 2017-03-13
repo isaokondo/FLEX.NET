@@ -16,6 +16,7 @@ Public Class clsDataBase
     ''' </summary>
     Private Shared PortNo As Integer = My.Settings.Port
 
+    Private cn As OdbcConnection
 
 
     Private Shared MySQLVersion As String
@@ -106,7 +107,8 @@ Public Class clsDataBase
             database={DataBaseName}; port={PortNo}; 
             uid= toyo;pwd= yanagi;OPTION=3"
 
-        Dim cn As New OdbcConnection(ConnectionString)
+        cn = New OdbcConnection(ConnectionString)
+
         Try
             cn.Open()
 
@@ -132,6 +134,15 @@ Public Class clsDataBase
         Dim dr As OdbcDataReader = cmd.ExecuteReader
         Return dr
     End Function
+
+
+    Public Sub ConnectionClose()
+        cn.Close()
+        cn.Dispose()
+    End Sub
+
+
+
 
     ''' <summary>
     ''' SQLよりデータセットを取得
@@ -289,7 +300,7 @@ Public Class clsTag
                 i += 1
             End If
         End While
-
+        anaTag.Close()
         Htb.htb = ht    'ハッシュテーブルの設定
 
 
@@ -449,6 +460,7 @@ Public Class clsInitParameter
             End While
 
             paraDB.Close()
+            ConnectionClose()
 
             Htb.htb = ht
             _numberJack = Htb.GetValue("使用ジャッキ本数")
