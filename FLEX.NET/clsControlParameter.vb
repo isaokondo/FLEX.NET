@@ -835,158 +835,98 @@ Public Class clsControlParameter
 
         _wideUse = New Dictionary(Of Short, String)
 
-        Dim DB As New clsDataBase
 
         Dim OptGSetNum As New List(Of String)　'任意圧力設定グループ
         Dim OptGpSv As New Dictionary(Of Short, Single) '任意圧力設定値　グループ番号をkey
+        'データテーブルの作成
+        Dim CtlDt As DataTable =
+            GetDtfmSQL("SELECT * FROM FLEX制御パラメータ ")
 
-        Dim tb As Odbc.OdbcDataReader = DB.ExecuteSql("SELECT * FROM FLEX制御パラメータ ")
+        Dim tb As New Dictionary(Of String, String)
 
-        While tb.Read
-            Try
-                Select Case tb.Item("項目名称").ToString
-                    Case "最低全開グループ数"
-                        _最低全開グループ数 = tb.Item("値")
-                    Case "全開作動範囲"
-                        _全開作動範囲 = tb.Item("値")
-                    Case "全開作動指令値"
-                        _全開作動指令値 = tb.Item("値")
-                    Case "全開グループ制限"
-                        _全開グループ制限 = fnBoolean(tb.Item("値"))
-                    Case "最大全開出力時の目標圧力"
-                        _最大全開出力時の目標圧力 = tb.Item("値")
-                    Case "最低制御圧力"
-                        _最低制御圧力 = tb.Item("値")
-                    Case "偏差角許容値"
-                        _偏差角許容値 = tb.Item("値")
-                    Case "PointX"
-                        _PointX = tb.Item("値")
-                    Case "PointY"
-                        _PointY = tb.Item("値")
-                    Case "片押しR制限"
-                        _片押しR制限 = tb.Item("値")
-                    Case "圧力許容値"
-                        _圧力許容値 = tb.Item("値")
-                    Case "片押し制限フラグ"
-                        _片押し制限フラグ = fnBoolean(tb.Item("値"))
-                    Case "開始時の力点位置"
-                        _開始時の力点位置 = fnBoolean(tb.Item("値"))
-                    Case "ジャッキの間引き制御"
-                        _ジャッキの間引き制御 = fnBoolean(tb.Item("値"))
-                    Case "クリアランス計"
-                        _クリアランス計 = fnBoolean(tb.Item("値"))
-                    Case "水平ジャッキ制御P定数"
-                        _水平ジャッキ制御P定数 = tb.Item("値")
-                    Case "水平ジャッキ制御I定数"
-                        _水平ジャッキ制御I定数 = tb.Item("値")
-                    Case "鉛直ジャッキ制御P定数"
-                        _鉛直ジャッキ制御P定数 = tb.Item("値")
-                    Case "鉛直ジャッキ制御I定数"
-                        _鉛直ジャッキ制御I定数 = tb.Item("値")
-                    Case "元圧フィルタ係数"
-                        _元圧フィルタ係数 = tb.Item("値")
-                    Case "測量ポイントリング番号"
-                        _測量ポイントリング番号 = tb.Item("値")
-                    Case "測量ポイント総距離"
-                        _測量ポイント総距離 = tb.Item("値")
-                    Case "鉛直入力補正値"
-                        _鉛直入力補正値 = tb.Item("値")
-                    Case "水平入力補正値"
-                        _水平入力補正値 = tb.Item("値")
-                    Case "ジャッキモーメント上限値"
-                        _ジャッキモーメント上限値 = tb.Item("値")
-                    Case "圧力制御開始推力値"
-                        _圧力制御開始推力値 = tb.Item("値")
-                    Case "圧力制御開始推力値有効フラグ"
-                        _圧力制御開始推力値有効フラグ = fnBoolean(tb.Item("値"))
-                    Case "全押しスタート"
-                        _全押しスタート = fnBoolean(tb.Item("値"))
+        For Each dt As DataRow In CtlDt.Rows
+            tb(dt("項目名称")) = dt("値")
+        Next
 
-                    Case "単位当r引き戻し量"
-                        _単位当r引き戻し量 = tb.Item("値")
-
-                    Case "引き戻し実施間隔"
-                        _引き戻し実施間隔 = tb.Item("値")
+        Dim chk As New clsCheckDictionary(tb, "FLEX制御パラメータ")
 
 
+        _最低全開グループ数 = chk.GetValue("最低全開グループ数")
+        _全開作動範囲 = chk.GetValue("全開作動範囲")
+        _全開作動指令値 = chk.GetValue("全開作動指令値")
+        _全開グループ制限 = fnBoolean(chk.GetValue("全開グループ制限"))
+        _最大全開出力時の目標圧力 = chk.GetValue("最大全開出力時の目標圧力")
+        _最低制御圧力 = chk.GetValue("最低制御圧力")
+        _偏差角許容値 = chk.GetValue("偏差角許容値")
+        _PointX = chk.GetValue("PointX")
+        _PointY = chk.GetValue("PointY")
+        _片押しR制限 = chk.GetValue("片押しR制限値")
+        _圧力許容値 = chk.GetValue("圧力許容値")
+        _片押し制限フラグ = fnBoolean(chk.GetValue("片押し制限フラグ"))
+        _開始時の力点位置 = fnBoolean(chk.GetValue("開始時の力点位置"))
+        _ジャッキの間引き制御 = fnBoolean(chk.GetValue("ジャッキの間引き制御"))
+        _クリアランス計 = fnBoolean(chk.GetValue("クリアランス計"))
+        _水平ジャッキ制御P定数 = chk.GetValue("水平ジャッキ制御P定数")
+        _水平ジャッキ制御I定数 = chk.GetValue("水平ジャッキ制御I定数")
+        _鉛直ジャッキ制御P定数 = chk.GetValue("鉛直ジャッキ制御P定数")
+        _鉛直ジャッキ制御I定数 = chk.GetValue("鉛直ジャッキ制御I定数")
+        _元圧フィルタ係数 = chk.GetValue("元圧フィルタ係数")
+        _測量ポイントリング番号 = chk.GetValue("測量ポイントリング番号")
+        _測量ポイント総距離 = chk.GetValue("測量ポイント総距離")
+        _鉛直入力補正値 = chk.GetValue("鉛直入力補正値")
+        _水平入力補正値 = chk.GetValue("水平入力補正値")
+        _ジャッキモーメント上限値 = chk.GetValue("ジャッキモーメント上限値")
+        _圧力制御開始推力値 = chk.GetValue("圧力制御開始推力値")
+        _圧力制御開始推力値有効フラグ = fnBoolean(chk.GetValue("圧力制御開始推力値有効フラグ"))
+        _全押しスタート = fnBoolean(chk.GetValue("全押しスタート"))
 
-                    Case "AutoDirectionControl"
-                        Dim Value As Boolean = fnBoolean(tb.Item("値"))
-                        If _AutoDirectionControl <> Value Then
-                            _AutoDirectionControl = Value
-                            RaiseEvent FlexAutoManualChange()
-                        End If
-                    Case "GraphStrokeWidth"
-                        _GraphStrokeWidth = tb.Item("値")
-                    Case "HorMomentTrendWidth"
-                        _HorMomentTrendWidth = tb.Item("値")
-                    Case "VerMomentTrendWidth"
-                        _VerMomentTrendWidth = tb.Item("値")
-                    Case "HorDevDegTrendWidth"
-                        _HorDevDegTrendWidth = tb.Item("値")
-                    Case "VerDevDegTrendWidth"
-                        _VerDevDegTrendWidth = tb.Item("値")
-                    Case "LineDevStartRing"
-                        _LineDevStartRing = tb.Item("値")
-                    Case "LineDevLastRing"
-                        _LineDevLastRing = tb.Item("値")
-                    Case "PresBarGraphWidt"
-                        _PresBarGraphWidt = tb.Item("値")
-                    Case "DevTolerance"
-                        _DevTolerance = tb.Item("値")
-
-                    Case "LosZeroRollingTake"
-                        _LosZeroRollingTake = fnBoolean(tb.Item("値"))
-                    Case "LosZeroOpposeJack"
-                        _LosZeroOpposeJack = fnBoolean(tb.Item("値"))
-                    Case "LosZeroOpposeControl"
-                        _LosZeroOpposeControl = fnBoolean(tb.Item("値"))
-
-                    Case "ReduceTime"
-                        _ReduceTime = tb.Item("値")
-                    Case "ReduceJudgePress"
-                        _ReduceJudgePress = tb.Item("値")
-                    Case "NextPieceConfirm"
-                        _NextPieceConfirm = tb.Item("値")
-                    Case "PIDShiftDefl"
-                        _PIDShiftDefl = tb.Item("値")
-                    Case "DirectControl"
-                        _DirectControl = fnBoolean(tb.Item("値"))
-
-                    Case "OptinalGroupSetNumber"
-                        _optGpEn =
-                            (From k In Split(tb.Item("値"), ",") Where IsNumeric(k) Select CShort(k)).ToList
-
-                    Case "ExceptMesureJackNo"
-                        _ExceptMesureJackNo =
-                            (From k In Split(tb.Item("値"), ",") Where IsNumeric(k) Select CShort(k)).ToList
+        _単位当r引き戻し量 = chk.GetValue("単位当r引き戻し量")
+        _引き戻し実施間隔 = chk.GetValue("引き戻し実施間隔")
 
 
-                End Select
+        Dim Value As Boolean = fnBoolean(chk.GetValue("AutoDirectionControl"))
+        If _AutoDirectionControl <> Value Then
+            _AutoDirectionControl = Value
+            RaiseEvent FlexAutoManualChange()
+        End If
 
-                '項目名称より数値を取り出す
-                Dim Numb As Short = GetNum(tb.Item("項目名称").ToString)
+        _GraphStrokeWidth = chk.GetValue("GraphStrokeWidth")
+        _HorMomentTrendWidth = chk.GetValue("HorMomentTrendWidth")
+        _VerMomentTrendWidth = chk.GetValue("VerMomentTrendWidth")
+        _HorDevDegTrendWidth = chk.GetValue("HorDevDegTrendWidth")
+        _VerDevDegTrendWidth = chk.GetValue("VerDevDegTrendWidth")
+        _LineDevStartRing = chk.GetValue("LineDevStartRing")
+        _LineDevLastRing = chk.GetValue("LineDevLastRing")
+        _PresBarGraphWidt = chk.GetValue("PresBarGraphWidt")
+        _DevTolerance = chk.GetValue("DevTolerance")
+        _LosZeroRollingTake = fnBoolean(chk.GetValue("LosZeroRollingTake"))
+        _LosZeroOpposeJack = fnBoolean(chk.GetValue("LosZeroOpposeJack"))
+        _LosZeroOpposeControl = fnBoolean(chk.GetValue("LosZeroOpposeControl"))
+        _ReduceTime = chk.GetValue("ReduceTime")
+        _ReduceJudgePress = chk.GetValue("ReduceJudgePress")
+        _NextPieceConfirm = chk.GetValue("NextPieceConfirm")
+        _PIDShiftDefl = chk.GetValue("PIDShiftDefl")
+        _DirectControl = fnBoolean(chk.GetValue("DirectControl"))
 
-                If tb.Item("項目名称").ToString.Contains("開始ジャッキストローク") Then
-                    _StartJackStroke(Numb) = tb.Item("値")
-                End If
+        _optGpEn =
+            (From k In Split(chk.GetValue("OptinalGroupSetNumber"), ",") Where IsNumeric(k) Select CShort(k)).ToList
 
-                If tb.Item("項目名称").ToString.Contains("wideuse") Then
-                    _wideUse(Numb) = tb.Item("値")
-                End If
+        _ExceptMesureJackNo =
+                            (From k In Split(chk.GetValue("ExceptMesureJackNo"), ",") Where IsNumeric(k) Select CShort(k)).ToList
 
-                If tb.Item("項目名称").ToString.Contains("OptinalGroupSetValue") Then
-                    _optGpSv(Numb - 1) = tb.Item("値")
-                End If
+        'Dim Numb As Short = chk.GetValue("項目名称").ToGetNum
 
-
-            Catch ex As Exception
-                    Debug.WriteLine("Err" & tb.Item("項目名称").ToString)
-                End Try
-
-        End While
-
-        tb.Close()
+        For Each k In tb
+            If k.Key.Contains("開始ジャッキストローク") Then
+                _StartJackStroke(k.Value.ToGetNum) = k.Value
+            End If
+            If k.Key.Contains("wideuse") Then
+                _wideUse(k.Value.ToGetNum) = k.Value
+            End If
+            If k.Key.Contains("OptinalGroupSetValue") Then
+                OptGpSv(k.Value.ToGetNum - 1) = k.Value
+            End If
+        Next
 
         '平均開始ストロークの算出
         _StartAveJackStroke =
@@ -1025,7 +965,7 @@ Public Class clsControlParameter
     End Sub
 
     Private Function fnBoolean(ByRef o As Object) As Boolean
-        If String.Compare(o.ToString, "ON", True) = 0 Or String.Compare(o.ToString, "TRUE", True) = 0 Then
+        If Not IsNothing(o) AndAlso (String.Compare(o.ToString, "ON", True) = 0 Or String.Compare(o.ToString, "TRUE", True) = 0) Then
             Return True
         Else
             Return False
@@ -1037,13 +977,18 @@ Public Class clsControlParameter
         '計測ジャッキストローク　初期化,フィールドの存在チェック
         For Each i As KeyValuePair(Of Short, Single) In InitPara.MesureJackAngle
             _StartJackStroke.Add(i.Key, 0)
-            Dim tbchk As Odbc.OdbcDataReader =
-                ExecuteSql($"SELECT * FROM FLEX制御パラメータ WHERE `項目名称`='開始ジャッキストローク{i.Key}'")
-            If Not tbchk.HasRows Then
+            Dim tbchk As DataTable =
+                GetDtfmSQL($"SELECT * FROM FLEX制御パラメータ WHERE `項目名称`='開始ジャッキストローク{i.Key}'")
+            If tbchk.Rows.Count = 0 Then
                 MsgBox($"項目名　開始ジャッキストローク{i.Key}が、存在しません。{vbCrLf}テーブル「FLEX制御パラメータ」に追加してください", vbExclamation)
             End If
-            tbchk.Close()
-            
+            'Dim tbchk As Odbc.OdbcDataReader =
+            '    ExecuteSql($"SELECT * FROM FLEX制御パラメータ WHERE `項目名称`='開始ジャッキストローク{i.Key}'")
+            'If Not tbchk.HasRows Then
+            '    MsgBox($"項目名　開始ジャッキストローク{i.Key}が、存在しません。{vbCrLf}テーブル「FLEX制御パラメータ」に追加してください", vbExclamation)
+            'End If
+            'tbchk.Close()
+
         Next
 
 

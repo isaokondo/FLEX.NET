@@ -145,15 +145,15 @@ Public Class clsDataBase
 
 
     ''' <summary>
-    ''' SQLよりデータセットを取得
+    ''' SQLよりデータテーブルを取得
     ''' </summary>
     ''' <param name="SQLCommand"></param>
     ''' <returns>SQL文</returns>
-    Public Function GetDsfmSQL(SQLCommand As String) As DataSet
+    Public Function GetDtfmSQL(SQLCommand As String) As DataTable
         Dim Adpter = New OdbcDataAdapter(SQLCommand, conDB)
         Dim ds As New DataSet
         Adpter.Fill(ds)
-        Return ds
+        Return ds.Tables(0)
     End Function
 
 
@@ -251,21 +251,20 @@ Public Class clsTag
     ''' <remarks></remarks>
     Public Sub New(ByVal TableName As String, ByVal PLCAdressClass As String)
         Dim TableAndWhere As String = $" {TableName} WHERE `アドレス` LIKE '{PLCAdressClass}%'"
-        Dim MaxID As OdbcDataReader = ExecuteSql($"SELECT COUNT(*) FROM {TableAndWhere}")
-        MaxID.Read()
+        'Dim MaxID As OdbcDataReader = ExecuteSql($"SELECT COUNT(*) FROM {TableAndWhere}")
+        'MaxID.Read()
         'ReDim _TagList(MaxID.Item(0) + 1)
 
-        Dim StartAd As OdbcDataReader = ExecuteSql($"SELECT Min(`アドレス`) FROM {TableAndWhere}")
-        StartAd.Read()
-        _startAddress = StartAd.Item(0)
-        StartAd.Close()
+        _startAddress =
+            GetDtfmSQL($"SELECT Min(`アドレス`) FROM {TableAndWhere}").Rows(0).Item(0)
+        'StartAd.Close()
         'ビットデータの時は、16の倍数からアドレスを介し
         If _startAddress.Substring(0, 1) = "M" Then
             _startAddress = _startAddress(0) & (CInt(_startAddress.Substring(1)) \ 16) * 16
         End If
 
-        Dim anaTag As OdbcDataReader
-        anaTag = ExecuteSql($"SELECT * FROM {TableAndWhere}")
+        Dim anaTag As DataTable =
+            GetDtfmSQL($"SELECT * FROM {TableAndWhere}")
 
         Dim ht As Hashtable = New Hashtable
 
@@ -274,18 +273,20 @@ Public Class clsTag
         tagDic = New Dictionary(Of String, Short)
 
         Dim i As Integer = 0 ' anaTag("ID")
-        While anaTag.Read()
-            If anaTag("項目名") <> "" Then
+
+        'While anaTag.Read()
+        For Each t As DataRow In anaTag.Rows
+            If t("項目名") <> "" Then
                 Dim tag As New _tag
-                tag.FieldName = anaTag("項目名")
-                tag.Address = anaTag("アドレス")
+                tag.FieldName = t("項目名")
+                tag.Address = t("アドレス")
                 If TableName = "FLEXアナログtag" Then
-                    tag.DigitLoc = CInt(anaTag("小数点位置"))
-                    tag.Unit = anaTag("単位")
-                    tag.EngLow = anaTag("下限")
-                    tag.EngHight = anaTag("上限")
-                    tag.ScaleLow = anaTag("スケール下限")
-                    tag.ScaleHigh = anaTag("スケール上限")
+                    tag.DigitLoc = CInt(t("小数点位置"))
+                    tag.Unit = t("単位")
+                    tag.EngLow = t("下限")
+                    tag.EngHight = t("上限")
+                    tag.ScaleLow = t("スケール下限")
+                    tag.ScaleHigh = t("スケール上限")
                 End If
                 Dim ad As String = tag.Address 'アドレスからオフセットを算出
                 If Not ad.Equals("") AndAlso IsNumeric(ad.Substring(1)) Then
@@ -293,14 +294,40 @@ Public Class clsTag
                 End If
                 _TagList.Add(tag)
                 tagDic.Add(tag.FieldName, i)
-                ht(anaTag("項目名")) = i
+                ht(t("項目名")) = i
 
                 'オフセットの最大値取得
                 If _devicesize < tag.OffsetAddress Then _devicesize = tag.OffsetAddress
                 i += 1
             End If
-        End While
-        anaTag.Close()
+        Next
+
+        'If anaTag("項目名") <> "" Then
+        '        Dim tag As New _tag
+        '        tag.FieldName = anaTag("項目名")
+        '        tag.Address = anaTag("アドレス")
+        '        If TableName = "FLEXアナログtag" Then
+        '            tag.DigitLoc = CInt(anaTag("小数点位置"))
+        '            tag.Unit = anaTag("単位")
+        '            tag.EngLow = anaTag("下限")
+        '            tag.EngHight = anaTag("上限")
+        '            tag.ScaleLow = anaTag("スケール下限")
+        '            tag.ScaleHigh = anaTag("スケール上限")
+        '        End If
+        '        Dim ad As String = tag.Address 'アドレスからオフセットを算出
+        '        If Not ad.Equals("") AndAlso IsNumeric(ad.Substring(1)) Then
+        '            tag.OffsetAddress = CInt(ad.Substring(1)) - StartAdress
+        '        End If
+        '        _TagList.Add(tag)
+        '        tagDic.Add(tag.FieldName, i)
+        '        ht(anaTag("項目名")) = i
+
+        '        'オフセットの最大値取得
+        '        If _devicesize < tag.OffsetAddress Then _devicesize = tag.OffsetAddress
+        '        i += 1
+        '    End If
+        'End While
+        'anaTag.Close()
         Htb.htb = ht    'ハッシュテーブルの設定
 
 
@@ -449,28 +476,24 @@ Public Class clsInitParameter
 
 
     Public Sub New()
-        Dim paraDB As OdbcDataReader
-        paraDB = ExecuteSql("SELECT * FROM FLEX初期パラメータ")
-
-        Dim ht As Hashtable = New Hashtable
+        Dim paraDB As DataTable =
+            GetDtfmSQL("SELECT * FROM FLEX初期パラメータ")
 
         Try
-            While paraDB.Read()
-                ht(paraDB("項目名称")) = paraDB("値")
-            End While
+            Dim ht As New Dictionary(Of String, String)
 
-            paraDB.Close()
-            ConnectionClose()
+            For Each dt As DataRow In paraDB.Rows
+                ht(dt("項目名称")) = dt("値")
+            Next
 
-            Htb.htb = ht
-            _numberJack = Htb.GetValue("使用ジャッキ本数")
-            _numberGroup = Htb.GetValue("グループ数")
-            _jackPower = Htb.GetValue("ジャッキ能力")
-            _jackRadius = Htb.GetValue("ジャッキ取付半径")
-            _JackMaxOilPres = Htb.GetValue("ジャッキの最大油圧")
-            _actLogicalStationNumber = Htb.GetValue("PLC論理局")
-            _firstJackLoc = Htb.GetValue("No1ジャッキの位置")
-            _sheetID = Htb.GetValue("SheetID")
+            _numberJack = ht("使用ジャッキ本数")
+            _numberGroup = ht("グループ数")
+            _jackPower = ht("ジャッキ能力")
+            _jackRadius = ht("ジャッキ取付半径")
+            _JackMaxOilPres = ht("ジャッキの最大油圧")
+            _actLogicalStationNumber = ht("PLC論理局")
+            _firstJackLoc = ht("No1ジャッキの位置")
+            _sheetID = ht("SheetID")
             '_planDataMdb = Htb.GetValue("PlanDataMdb")
             ''絶対パスに変換
             'If Not (System.IO.Path.IsPathRooted(_planDataMdb)) Then
@@ -484,7 +507,7 @@ Public Class clsInitParameter
             Dim i As Integer
             For i = 0 To _numberJack - 1
                 '_faiJack(i) = Htb.GetValue("ジャッキ取付位置" & (i + 1))
-                _JackGroupPos(i) = Htb.GetValue("所属するジャッキグループの番号" & (i + 1))
+                _JackGroupPos(i) = ht("所属するジャッキグループの番号" & (i + 1))
                 _numberJackOfGroup(_JackGroupPos(i) - 1) += 1
             Next
             'ジャッキ取付角度の演算(degree)
@@ -508,7 +531,7 @@ Public Class clsInitParameter
                 End If
 
             Next
-            Dim test As Single = 0
+            'Dim test As Single = 0
             For i = 0 To _numberGroup - 1
                 _faiGroup(i) = _faiGroup(i) / _numberJackOfGroup(i)
             Next
@@ -524,7 +547,7 @@ Public Class clsInitParameter
 
 
             '計測ジャッキ番号
-            For Each JkNo In Htb.GetValue("計測ジャッキ上右下左").ToString.Split(",")
+            For Each JkNo In ht("計測ジャッキ上右下左").ToString.Split(",")
                 _mesureJackNo.Add(JkNo)
             Next
 
@@ -772,3 +795,30 @@ Public Class clsTableUpdateConfirm
     End Sub
 
 End Class
+''' <summary>
+''' dictionaryのキー存在チェックし、値を返すクラス
+''' 
+''' </summary>
+Public Class clsCheckDictionary
+    Private _dic As Dictionary(Of String, String)
+    Private _tableName As String
+    Sub New(_dic As Dictionary(Of String, String), _talbeName As String)
+        Me._dic = _dic
+        Me._tableName = _tableName
+    End Sub
+
+    Public Function GetValue(tKey As String) As String
+        If _dic.ContainsKey(tKey) Then
+            Return _dic(tKey)
+        Else
+            MsgBox($"テーブル'{_tableName}'に,'{tKey}'が見つかりません！", vbCritical)
+            Return Nothing
+        End If
+    End Function
+
+
+
+
+
+End Class
+

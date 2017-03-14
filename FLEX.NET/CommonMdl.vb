@@ -215,6 +215,16 @@ Module CommonMdl
 
     End Function
 
+    ''' <summary>
+    ''' 文字列から数値を取り出す
+    ''' </summary>
+    ''' <param name="st"></param>
+    ''' <returns></returns>
+    <Extension()>
+    Public Function ToGetNum(st As String) As Short
+        Return Val(Array.FindAll(st.ToString.ToCharArray, AddressOf IsNumeric))
+    End Function
+
 
 
 End Module

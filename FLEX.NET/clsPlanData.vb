@@ -9,6 +9,7 @@ Imports System.Math
 ''' </summary>
 ''' <remarks></remarks>
 Public Class clsPlanData
+    Inherits clsDataBase
     Public Property ゾーン総数 As Integer         'ゾーン総数
     Public Property シフトゾーン総数 As Integer    'シフトゾーン数
     Public Property 線形 As Integer()    '線形の種類
@@ -30,10 +31,10 @@ Public Class clsPlanData
 
 
     Public Overridable Sub RedimData()
-        ReDim _線形(_ゾーン総数 + 1), _前胴中心(_ゾーン総数 + 1), _後胴中心(_ゾーン総数 + 1), _中折(_ゾーン総数 + 1), _
-            _中折開始(_ゾーン総数 + 1), _戻し開始(_ゾーン総数 + 1), _最大中折れ角(_ゾーン総数 + 1), _
+        ReDim _線形(_ゾーン総数 + 1), _前胴中心(_ゾーン総数 + 1), _後胴中心(_ゾーン総数 + 1), _中折(_ゾーン総数 + 1),
+            _中折開始(_ゾーン総数 + 1), _戻し開始(_ゾーン総数 + 1), _最大中折れ角(_ゾーン総数 + 1),
             _姿勢変化率(_ゾーン総数 + 1), _中心角(_ゾーン総数 + 1), _線分長(_ゾーン総数 + 1)
-        ReDim _シフト区間長(_ゾーン総数 + 1), _始点シフト量(_ゾーン総数 + 1), _
+        ReDim _シフト区間長(_ゾーン総数 + 1), _始点シフト量(_ゾーン総数 + 1),
             _終点シフト量(_ゾーン総数 + 1), _シフトゾーン距離(_ゾーン総数 + 1), _シフトゾーン残距離(_ゾーン総数 + 1)
 
 
@@ -118,115 +119,179 @@ Public Class clsHorPanData
         'Dim tb As DataTable
         ''        Dim SheetID As Integer = 20
         'db.Connect()
-        Dim db As New clsDataBase
 
-        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql($"SELECT * FROM 平面起点 WHERE `シートID` = {InitPara.SheetID}")
-        tb.Read()
-        _座標系 = tb.Item("座標系")
-        _発進X座標 = tb.Item("発進X座標")
-        _発進Y座標 = tb.Item("発進Y座標") * _座標系
-        _到達X座標 = tb.Item("到達X座標")
-        _到達Y座標 = tb.Item("到達Y座標") * _座標系
-        _到達方位角 = tb.Item("到達方位角")
-        _X軸方位角 = tb.Item("X軸方位角")
+        Dim tbl As DataTable =
+            GetDtfmSQL($"SELECT * FROM 平面起点 WHERE `シートID` = {InitPara.SheetID}")
 
-        '起点座標
-        _起点X座標 = tb.Item("起点X座標")
-        _起点Y座標 = tb.Item("起点Y座標") * _座標系
-        _起点方位角 = tb.Item("起点方位角")
+        For Each tb As DataRow In tbl.Rows
+            _座標系 = tb.Item("座標系")
+            _発進X座標 = tb.Item("発進X座標")
+            _発進Y座標 = tb.Item("発進Y座標") * _座標系
+            _到達X座標 = tb.Item("到達X座標")
+            _到達Y座標 = tb.Item("到達Y座標") * _座標系
+            _到達方位角 = tb.Item("到達方位角")
+            _X軸方位角 = tb.Item("X軸方位角")
+
+            '起点座標
+            _起点X座標 = tb.Item("起点X座標")
+            _起点Y座標 = tb.Item("起点Y座標") * _座標系
+            _起点方位角 = tb.Item("起点方位角")
+        Next
+
         'db.Disconnect()
 
         'ゾーン総数を求める
-        tb = db.ExecuteSql("SELECT MAX(`ゾーン№`) FROM 平面線形 WHERE `シートID` = " & InitPara.SheetID)
-        tb.Read()
-        ゾーン総数 = tb.Item(0)
-        '        ReDim _horData(_ゾーン総数 + 1)
-        'db.Disconnect()
-        tb.Close()
+        'Dim tbr = ExecuteSql("SELECT MAX(`ゾーン№`) FROM 平面線形 WHERE `シートID` = " & InitPara.SheetID)
+        'tbr.Read()
+        'ゾーン総数 = tbr.Item(0)
+        '''        ReDim _horData(_ゾーン総数 + 1)
+        ''Disconnect()
+        'tbr.Close()
+
+
+        Dim tblHorLine As DataTable =
+            GetDtfmSQL($"SELECT * FROM 平面線形 WHERE `シートID` = {InitPara.SheetID} ORDER BY `ゾーン№`;")
+
+        ゾーン総数 = tblHorLine.Rows.Count - 1
 
         Call RedimData()
 
-        tb = db.ExecuteSql($"SELECT * FROM 平面線形 WHERE `シートID` = {InitPara.SheetID} ORDER BY `ゾーン№`;")
-        ' Dim i As Integer
+
+
+        Dim i As Integer
 
         'For i = 0 To tb.Rows.Count - 1
-        With tb
-            While .Read
-                'Try
-                Dim zoneNo As Integer = .Item("ゾーン№")
-                線形(zoneNo) = .Item("線形状")
-                線分長(zoneNo) = .Item("線分長")
+        For Each h As DataRow In tblHorLine.Rows
+            Dim zoneNo As Integer = h.Item("ゾーン№")
+            線形(zoneNo) = h.Item("線形状")
+            線分長(zoneNo) = h.Item("線分長")
 
-                If 線形(zoneNo) <> 1 Then
-                    _始点曲率半径(zoneNo) = db.CheckItemData(.Item("始点半径")) * _座標系
-                    _終点曲率半径(zoneNo) = db.CheckItemData(.Item("終点半径")) * _座標系
-                    _始点カント(zoneNo) = db.CheckItemData(.Item("始点シフト")) * _座標系
-                    _終点カント(zoneNo) = db.CheckItemData(.Item("終点シフト")) * _座標系
+            If 線形(zoneNo) <> 1 Then
+                _始点曲率半径(zoneNo) = CheckItemData(h.Item("始点半径")) * _座標系
+                _終点曲率半径(zoneNo) = CheckItemData(h.Item("終点半径")) * _座標系
+                _始点カント(zoneNo) = CheckItemData(h.Item("始点シフト")) * _座標系
+                _終点カント(zoneNo) = CheckItemData(h.Item("終点シフト")) * _座標系
 
-                    中折(zoneNo) = .Item("中折使用").ToString.ToNum
-                    前胴中心(zoneNo) = .Item("前胴中心").ToString.ToNum
-                    後胴中心(zoneNo) = db.CheckItemData(.Item("後胴中心"))
-                    中折開始(zoneNo) = db.CheckItemData(.Item("中折開始"))
-                    戻し開始(zoneNo) = db.CheckItemData(.Item("戻し開始"))
-                    最大中折れ角(zoneNo) = db.CheckItemData(.Item("最大中折角")) * _座標系
-                    姿勢変化率(zoneNo) = db.CheckItemData(.Item("姿勢変化率"))
+                中折(zoneNo) = h.Item("中折使用").ToString.ToNum
+                前胴中心(zoneNo) = h.Item("前胴中心").ToString.ToNum
+                後胴中心(zoneNo) = CheckItemData(h.Item("後胴中心"))
+                中折開始(zoneNo) = CheckItemData(h.Item("中折開始"))
+                戻し開始(zoneNo) = CheckItemData(h.Item("戻し開始"))
+                最大中折れ角(zoneNo) = CheckItemData(h.Item("最大中折角")) * _座標系
+                姿勢変化率(zoneNo) = CheckItemData(h.Item("姿勢変化率"))
 
-                    _クロソイドパラメータ(zoneNo) = db.CheckItemData(.Item("ｸﾛｿｲﾄﾞﾊﾟﾗﾒｰﾀ"))
-                    中心角(zoneNo) = db.CheckItemData(.Item("中心角"))
-                End If
-                _始点累積距離(zoneNo) = .Item("始点累積距離")
-                _終点累積距離(zoneNo) = .Item("終点累積距離")
-                _始点方向角(zoneNo) = Hoi2Hoko(.Item("始点方向角"))
-                _終点方向角(zoneNo) = Hoi2Hoko(.Item("終点方向角"))
-                _始点X座標(zoneNo) = .Item("始点X座標")
-                _終点X座標(zoneNo) = .Item("終点X座標")
-                _始点Y座標(zoneNo) = .Item("始点Y座標") * _座標系
-                _終点Y座標(zoneNo) = .Item("終点Y座標") * _座標系
+                _クロソイドパラメータ(zoneNo) = CheckItemData(h.Item("ｸﾛｿｲﾄﾞﾊﾟﾗﾒｰﾀ"))
+                中心角(zoneNo) = CheckItemData(h.Item("中心角"))
+            End If
+            _始点累積距離(zoneNo) = h.Item("始点累積距離")
+            _終点累積距離(zoneNo) = h.Item("終点累積距離")
+            _始点方向角(zoneNo) = Hoi2Hoko(h.Item("始点方向角"))
+            _終点方向角(zoneNo) = Hoi2Hoko(h.Item("終点方向角"))
+            _始点X座標(zoneNo) = h.Item("始点X座標")
+            _終点X座標(zoneNo) = h.Item("終点X座標")
+            _始点Y座標(zoneNo) = h.Item("始点Y座標") * _座標系
+            _終点Y座標(zoneNo) = h.Item("終点Y座標") * _座標系
 
-                If Not IsDBNull(.Item("始点中心X")) Then
-                    _始点中心X座標(zoneNo) = .Item("始点中心X")
-                    _終点中心X座標(zoneNo) = .Item("終点中心X")
-                    _始点中心Y座標(zoneNo) = .Item("始点中心Y") * _座標系
-                    _終点中心Y座標(zoneNo) = .Item("終点中心Y") * _座標系
-                End If
+            If Not IsDBNull(h.Item("始点中心X")) Then
+                _始点中心X座標(zoneNo) = h.Item("始点中心X")
+                _終点中心X座標(zoneNo) = h.Item("終点中心X")
+                _始点中心Y座標(zoneNo) = h.Item("始点中心Y") * _座標系
+                _終点中心Y座標(zoneNo) = h.Item("終点中心Y") * _座標系
+            End If
 
 
-                _始点構築X座標(zoneNo) = .Item("始点X構築")
-                _終点構築X座標(zoneNo) = .Item("終点X構築")
-                _始点構築Y座標(zoneNo) = .Item("始点Y構築") * _座標系
-                _終点構築Y座標(zoneNo) = .Item("終点Y構築") * _座標系
-                'Catch ex As InvalidCastException
-                'Exit Try
-                'End Try
-            End While
-        End With
-        tb.Close
+            _始点構築X座標(zoneNo) = h.Item("始点X構築")
+            _終点構築X座標(zoneNo) = h.Item("終点X構築")
+            _始点構築Y座標(zoneNo) = h.Item("始点Y構築") * _座標系
+            _終点構築Y座標(zoneNo) = h.Item("終点Y構築") * _座標系
+
+        Next
+        'With tblHorLine
+        '        While .Read
+        '            'Try
+        '            Dim zoneNo As Integer = .Item("ゾーン№")
+        '            線形(zoneNo) = .Item("線形状")
+        '            線分長(zoneNo) = .Item("線分長")
+
+        '            If 線形(zoneNo) <> 1 Then
+        '            _始点曲率半径(zoneNo) = CheckItemData(.Item("始点半径")) * _座標系
+        '            _終点曲率半径(zoneNo) = CheckItemData(.Item("終点半径")) * _座標系
+        '            _始点カント(zoneNo) = CheckItemData(.Item("始点シフト")) * _座標系
+        '            _終点カント(zoneNo) = CheckItemData(.Item("終点シフト")) * _座標系
+
+        '            中折(zoneNo) = .Item("中折使用").ToString.ToNum
+        '                前胴中心(zoneNo) = .Item("前胴中心").ToString.ToNum
+        '            後胴中心(zoneNo) = CheckItemData(.Item("後胴中心"))
+        '            中折開始(zoneNo) = CheckItemData(.Item("中折開始"))
+        '            戻し開始(zoneNo) = CheckItemData(.Item("戻し開始"))
+        '            最大中折れ角(zoneNo) = CheckItemData(.Item("最大中折角")) * _座標系
+        '            姿勢変化率(zoneNo) = CheckItemData(.Item("姿勢変化率"))
+
+        '            _クロソイドパラメータ(zoneNo) = CheckItemData(.Item("ｸﾛｿｲﾄﾞﾊﾟﾗﾒｰﾀ"))
+        '            中心角(zoneNo) = CheckItemData(.Item("中心角"))
+        '        End If
+        '            _始点累積距離(zoneNo) = .Item("始点累積距離")
+        '            _終点累積距離(zoneNo) = .Item("終点累積距離")
+        '            _始点方向角(zoneNo) = Hoi2Hoko(.Item("始点方向角"))
+        '            _終点方向角(zoneNo) = Hoi2Hoko(.Item("終点方向角"))
+        '            _始点X座標(zoneNo) = .Item("始点X座標")
+        '            _終点X座標(zoneNo) = .Item("終点X座標")
+        '            _始点Y座標(zoneNo) = .Item("始点Y座標") * _座標系
+        '            _終点Y座標(zoneNo) = .Item("終点Y座標") * _座標系
+
+        '            If Not IsDBNull(.Item("始点中心X")) Then
+        '                _始点中心X座標(zoneNo) = .Item("始点中心X")
+        '                _終点中心X座標(zoneNo) = .Item("終点中心X")
+        '                _始点中心Y座標(zoneNo) = .Item("始点中心Y") * _座標系
+        '                _終点中心Y座標(zoneNo) = .Item("終点中心Y") * _座標系
+        '            End If
+
+
+        '            _始点構築X座標(zoneNo) = .Item("始点X構築")
+        '            _終点構築X座標(zoneNo) = .Item("終点X構築")
+        '            _始点構築Y座標(zoneNo) = .Item("始点Y構築") * _座標系
+        '            _終点構築Y座標(zoneNo) = .Item("終点Y構築") * _座標系
+        '            'Catch ex As InvalidCastException
+        '            'Exit Try
+        '            'End Try
+        '        End While
+        '    End With
+        '    tblHorLine.Close
 
 
         'Next
         'db.Disconnect()
 
         'ゾーン総数を求める
-        tb = db.ExecuteSql($"SELECT MAX(`シフト№`) FROM 平面シフト WHERE `シートID` = {InitPara.SheetID}")
-        tb.Read()
-        シフトゾーン総数 = tb.Item(0)
+        'tblHorLine = db.ExecuteSql($"SELECT MAX(`シフト№`) FROM 平面シフト WHERE `シートID` = {InitPara.SheetID}")
+        '    tblHorLine.Read()
+        '    シフトゾーン総数 = tblHorLine.Item(0)
         'db.Disconnect()
-        tb.Close()
+        'tblHorLine.Close()
 
-        tb = db.ExecuteSql($"SELECT * FROM 平面シフト WHERE `シートID` = {InitPara.SheetID} ORDER BY `シフト№`;")
+        Dim tblHorShift As DataTable =
+            GetDtfmSQL($"SELECT * FROM 平面シフト WHERE `シートID` = {InitPara.SheetID} ORDER BY `シフト№`;")
         'For i = 0 To tb.Rows.Count - 1
+        シフトゾーン総数 = tblHorShift.Rows.Count - 1
 
-        With tb
-            While .Read
-                Dim shiftNo As Integer = .Item("シフト№")
-                シフト区間長(shiftNo) = .Item("区間長")
-                始点シフト量(shiftNo) = db.CheckItemData(.Item("始点シフト")) * _座標系
-                終点シフト量(shiftNo) = db.CheckItemData(.Item("終点シフト")) * _座標系
-            End While
-        End With
+        For Each t As DataRow In tblHorShift.Rows
+            Dim shiftNo As Integer = t.Item("シフト№")
+            シフト区間長(shiftNo) = t.Item("区間長")
+            始点シフト量(shiftNo) = CheckItemData(t.Item("始点シフト")) * _座標系
+            終点シフト量(shiftNo) = CheckItemData(t.Item("終点シフト")) * _座標系
+        Next
+
+        'With tblHorLine
+        '        While .Read
+        '            Dim shiftNo As Integer = .Item("シフト№")
+        '            シフト区間長(shiftNo) = .Item("区間長")
+        '        始点シフト量(shiftNo) = CheckItemData(.Item("始点シフト")) * _座標系
+        '        終点シフト量(shiftNo) = CheckItemData(.Item("終点シフト")) * _座標系
+        '    End While
+        '    End With
         'Next i
 
-        tb.Close()
+        'tblHorLine.Close()
 
     End Sub
 
@@ -276,83 +341,115 @@ Public Class clsVerPlanData
 
     Public Sub DataRead()
 
-        '計画路線の読込
-        'Dim db As New AccessMdb
-        'Dim tb As DataTable
-        'db.Connect()
-        Dim db As New clsDataBase
-        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql($"SELECT * FROM 縦断発進 WHERE `シートID` = {InitPara.SheetID}")
-        With tb
-            .Read()
-            発進Z座標 = .Item("発進Z座標")
-            発進勾配 = .Item("発進勾配")
-            到達Z座標 = .Item("到達Z座標")
-            到達勾配 = .Item("到達勾配")
-        End With
-        '        db.Disconnect()
-        tb.Close()
+        Dim tblVerStart As DataTable =
+            GetDtfmSQL($"SELECT * FROM 縦断発進 WHERE `シートID` = {InitPara.SheetID}")
+
+        For Each t As DataRow In tblVerStart.Rows
+            発進Z座標 = t.Item("発進Z座標")
+            発進勾配 = t.Item("発進勾配")
+            到達Z座標 = t.Item("到達Z座標")
+            到達勾配 = t.Item("到達勾配")
+        Next
+
+
         'ゾーン総数を求める
-        tb = db.ExecuteSql($"SELECT MAX(`ゾーン№`) FROM 縦断線形 WHERE `シートID` = {InitPara.SheetID}")
-        tb.Read()
-        ゾーン総数 = CInt(tb.Item(0))
-        'db.Disconnect()
-        Call RedimData()
-        tb.Close()
+        'tblVerStart = ExecuteSql($"SELECT MAX(`ゾーン№`) FROM 縦断線形 WHERE `シートID` = {InitPara.SheetID}")
+        'tblVerStart.Read()
+        'ゾーン総数 = CInt(tblVerStart.Item(0))
+        ''Disconnect()
+        'tblVerStart.Close()
 
-        tb = db.ExecuteSql("SELECT * FROM 縦断線形 WHERE `シートID` = " & InitPara.SheetID & " ORDER BY `ゾーン№`;")
-        '        Dim i As Integer
+        Dim tblVerLine As DataTable =
+            GetDtfmSQL($"SELECT * FROM 縦断線形 WHERE `シートID` ={InitPara.SheetID} ORDER BY `ゾーン№`;")
 
-        '        For i = 0 To tb.Rows.Count - 1
+        ゾーン総数 = tblVerLine.Rows.Count - 1
 
-        With tb
-            While .Read
-                Dim zoneNo As Integer = CInt(.Item("ゾーン№"))
-                線形(zoneNo) = CInt(.Item("線形状"))
-                _線分水平距離(zoneNo) = CDbl(.Item("水平線分距離"))
-                If 線形(zoneNo) <> 1 Then
-                    中折(zoneNo) = db.CheckItemData(.Item("中折使用"))
-                    前胴中心(zoneNo) = db.CheckItemData(.Item("前胴中心"))
-                    後胴中心(zoneNo) = db.CheckItemData(.Item("後胴中心"))
-                    中折開始(zoneNo) = db.CheckItemData(.Item("中折開始"))
-                    戻し開始(zoneNo) = db.CheckItemData(.Item("戻し開始"))
-                    最大中折れ角(zoneNo) = db.CheckItemData(.Item("最大中折角"))
-                    姿勢変化率(zoneNo) = db.CheckItemData(.Item("姿勢変化率"))
 
-                    中心角(zoneNo) = db.CheckItemData(.Item("中心角"))
-                End If
-                _始点累積水平距離(zoneNo) = .Item("始点累積距離")
-                _終点累積累積距離(zoneNo) = .Item("終点累積距離")
-                _始点勾配(zoneNo) = .Item("始点勾配")
-                _終点勾配(zoneNo) = .Item("終点勾配")
-                _始点Z座標(zoneNo) = .Item("始点Z座標")
-                _終点Z座標(zoneNo) = .Item("終点Z座標")
-                _中心位置Z座標(zoneNo) = db.CheckItemData(.Item("中心Z"))
-                _中心位置累積水平距離(zoneNo) = db.CheckItemData(.Item("中心累積距離"))
-            End While
-        End With
-        tb.Close()
+        RedimData()
+
+        For Each t As DataRow In tblVerLine.Rows
+            Dim zoneNo As Integer = CInt(t.Item("ゾーン№"))
+            線形(zoneNo) = CInt(t.Item("線形状"))
+            _線分水平距離(zoneNo) = CDbl(t.Item("水平線分距離"))
+            If 線形(zoneNo) <> 1 Then
+                中折(zoneNo) = CheckItemData(t.Item("中折使用"))
+                前胴中心(zoneNo) = CheckItemData(t.Item("前胴中心"))
+                後胴中心(zoneNo) = CheckItemData(t.Item("後胴中心"))
+                中折開始(zoneNo) = CheckItemData(t.Item("中折開始"))
+                戻し開始(zoneNo) = CheckItemData(t.Item("戻し開始"))
+                最大中折れ角(zoneNo) = CheckItemData(t.Item("最大中折角"))
+                姿勢変化率(zoneNo) = CheckItemData(t.Item("姿勢変化率"))
+
+                中心角(zoneNo) = CheckItemData(t.Item("中心角"))
+            End If
+            _始点累積水平距離(zoneNo) = t.Item("始点累積距離")
+            _終点累積累積距離(zoneNo) = t.Item("終点累積距離")
+            _始点勾配(zoneNo) = t.Item("始点勾配")
+            _終点勾配(zoneNo) = t.Item("終点勾配")
+            _始点Z座標(zoneNo) = t.Item("始点Z座標")
+            _終点Z座標(zoneNo) = t.Item("終点Z座標")
+            _中心位置Z座標(zoneNo) = CheckItemData(t.Item("中心Z"))
+            _中心位置累積水平距離(zoneNo) = CheckItemData(t.Item("中心累積距離"))
+        Next
+
+        'With tblVerStart
+        '    While .Read
+        '        Dim zoneNo As Integer = CInt(t.item("ゾーン№"))
+        '        線形(zoneNo) = CInt(t.item("線形状"))
+        '        _線分水平距離(zoneNo) = CDbl(t.item("水平線分距離"))
+        '        If 線形(zoneNo) <> 1 Then
+        '            中折(zoneNo) = CheckItemData(t.item("中折使用"))
+        '            前胴中心(zoneNo) = CheckItemData(t.item("前胴中心"))
+        '            後胴中心(zoneNo) = CheckItemData(t.item("後胴中心"))
+        '            中折開始(zoneNo) = CheckItemData(t.item("中折開始"))
+        '            戻し開始(zoneNo) = CheckItemData(t.item("戻し開始"))
+        '            最大中折れ角(zoneNo) = CheckItemData(t.item("最大中折角"))
+        '            姿勢変化率(zoneNo) = CheckItemData(t.item("姿勢変化率"))
+
+        '            中心角(zoneNo) = CheckItemData(t.item("中心角"))
+        '        End If
+        '        _始点累積水平距離(zoneNo) = t.item("始点累積距離")
+        '        _終点累積累積距離(zoneNo) = t.item("終点累積距離")
+        '        _始点勾配(zoneNo) = t.item("始点勾配")
+        '        _終点勾配(zoneNo) = t.item("終点勾配")
+        '        _始点Z座標(zoneNo) = t.item("始点Z座標")
+        '        _終点Z座標(zoneNo) = t.item("終点Z座標")
+        '        _中心位置Z座標(zoneNo) = CheckItemData(t.item("中心Z"))
+        '        _中心位置累積水平距離(zoneNo) = CheckItemData(t.item("中心累積距離"))
+        '    End While
+        'End With
+        'tblVerStart.Close()
         '       Next
-        '        db.Disconnect()
+        '        Disconnect()
 
         'ゾーン総数を求める
-        tb = db.ExecuteSql("SELECT MAX(`シフト№`) FROM 縦断シフト WHERE `シートID` = " & InitPara.SheetID)
-        tb.Read()
-        シフトゾーン総数 = tb.Item(0)
-        '        db.Disconnect()
+        'tblVerStart = ExecuteSql("SELECT MAX(`シフト№`) FROM 縦断シフト WHERE `シートID` = " & InitPara.SheetID)
+        'tblVerStart.Read()
+        'シフトゾーン総数 = tblVerStart.Item(0)
+        '        Disconnect()
 
-        tb = db.ExecuteSql("SELECT * FROM 縦断シフト WHERE `シートID` = " & InitPara.SheetID & " ORDER BY `シフト№`;")
-        'For i = 0 To tb.Rows.Count - 1
+        Dim tblVerShift As DataTable =
+            GetDtfmSQL($"SELECT * FROM 縦断シフト WHERE `シートID` = {InitPara.SheetID} ORDER BY `シフト№`;")
 
-        With tb
-            While .Read
-                Dim shiftNo As Integer = .Item("シフト№")
-                シフト区間長(shiftNo) = .Item("区間長")
-                始点シフト量(shiftNo) = db.CheckItemData(.Item("始点シフト"))
-                終点シフト量(shiftNo) = db.CheckItemData(.Item("終点シフト"))
-            End While
-        End With
+        シフトゾーン総数 = tblVerShift.Rows.Count
+
+        For Each t As DataRow In tblVerShift.Rows
+            Dim shiftNo As Integer = t.Item("シフト№")
+            シフト区間長(shiftNo) = t.Item("区間長")
+            始点シフト量(shiftNo) = CheckItemData(t.Item("始点シフト"))
+            終点シフト量(shiftNo) = CheckItemData(t.Item("終点シフト"))
+        Next
+
+
+        'With tblVerStart
+        '    While .Read
+        '        Dim shiftNo As Integer = .Item("シフト№")
+        '        シフト区間長(shiftNo) = .Item("区間長")
+        '        始点シフト量(shiftNo) = CheckItemData(.Item("始点シフト"))
+        '        終点シフト量(shiftNo) = CheckItemData(.Item("終点シフト"))
+        '    End While
+        'End With
         'Next i
-        tb.Close()
 
     End Sub
 

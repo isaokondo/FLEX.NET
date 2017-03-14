@@ -110,27 +110,50 @@ Public Class clsMachinSpec
     ''' </summary>
     Public Sub DataRead()
         ''選択クエリー実行
-        Dim rsData As Odbc.OdbcDataReader = ExecuteSql("SELECT * FROM シールド機データ３;")
-        With rsData
-            .Read()
-            _ZendoLen = .Item("前胴長")
-            _KodoLen = .Item("後胴長")
-            _MachineLength = .Item("機長")
+
+        Dim tblShield As DataTable =
+            GetDtfmSQL("SELECT * FROM シールド機データ３;")
+
+        For Each t As DataRow In tblShield.Rows
+            _ZendoLen = t.Item("前胴長")
+            _KodoLen = t.Item("後胴長")
+            _MachineLength = t.Item("機長")
             ''08/08/27 追加
 
-            _ShieldTypeHor = .Item("平面中折れ使用")
-            _HorSenkaiCyuushin = .Item("平面旋回中心")
-            _HorSel = .Item("平面設定方法")
-            _HorZendoCenter = .Item("平面前胴中心")
-            _HorKodoCenter = .Item("平面後胴中心")
+            _ShieldTypeHor = t.Item("平面中折れ使用")
+            _HorSenkaiCyuushin = t.Item("平面旋回中心")
+            _HorSel = t.Item("平面設定方法")
+            _HorZendoCenter = t.Item("平面前胴中心")
+            _HorKodoCenter = t.Item("平面後胴中心")
 
-            _ShieldTypeVer = .Item("縦断中折れ使用")
-            _VerSenkaiCyuushin = .Item("縦断旋回中心")
-            _VerSel = .Item("縦断設定方法")
-            _VerZendoCenter = .Item("縦断前胴中心")
-            _VerKodoCenter = .Item("縦断後胴中心")
-            .Close()
-        End With
+            _ShieldTypeVer = t.Item("縦断中折れ使用")
+            _VerSenkaiCyuushin = t.Item("縦断旋回中心")
+            _VerSel = t.Item("縦断設定方法")
+            _VerZendoCenter = t.Item("縦断前胴中心")
+            _VerKodoCenter = t.Item("縦断後胴中心")
+
+        Next
+
+        'With tblShield
+        '    .Read()
+        '    _ZendoLen = .Item("前胴長")
+        '    _KodoLen = .Item("後胴長")
+        '    _MachineLength = .Item("機長")
+        '    ''08/08/27 追加
+
+        '    _ShieldTypeHor = .Item("平面中折れ使用")
+        '    _HorSenkaiCyuushin = .Item("平面旋回中心")
+        '    _HorSel = .Item("平面設定方法")
+        '    _HorZendoCenter = .Item("平面前胴中心")
+        '    _HorKodoCenter = .Item("平面後胴中心")
+
+        '    _ShieldTypeVer = .Item("縦断中折れ使用")
+        '    _VerSenkaiCyuushin = .Item("縦断旋回中心")
+        '    _VerSel = .Item("縦断設定方法")
+        '    _VerZendoCenter = .Item("縦断前胴中心")
+        '    _VerKodoCenter = .Item("縦断後胴中心")
+        '    .Close()
+        'End With
     End Sub
 
 End Class

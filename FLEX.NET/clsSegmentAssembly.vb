@@ -156,16 +156,16 @@ Friend Class clsSegmentAssembly
         Dim Id As Short = _SegmentAssenblyPtnID(RingNo)
         '検索
 
-        Dim dsSegAsm As DataSet =
-            GetDsfmSQL($"SELECT  * FROM `セグメント組立パターンリスト` 
+        Dim dsSegAsm As DataTable =
+            GetDtfmSQL($"SELECT  * FROM `セグメント組立パターンリスト` 
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンリスト`.`分割No` 
             WHERE `組立パターンNo` = '{Id}'")
 
         _ProcessData.Clear()
 
-        For Each dRow As DataRow In dsSegAsm.Tables(0).Rows
+        For Each dRow As DataRow In dsSegAsm.Rows
 
-            For Each Col As DataColumn In dsSegAsm.Tables(0).Columns
+            For Each Col As DataColumn In dsSegAsm.Columns
                 Dim ColName As String = Col.ColumnName
 
                 If ColName.Contains("組立順序") AndAlso Not IsDBNull(dRow(ColName)) Then
@@ -255,26 +255,39 @@ Friend Class clsSegmentAssembly
     Public Sub SegmentRingDataRead()
 
 
-        Dim rsData As Odbc.OdbcDataReader
+        Dim rsData As DataTable =
+            GetDtfmSQL("SELECT * FROM `flexセグメント組立データ`")
 
         'rsData = ExecuteSql _
         '("SELECT * FROM `flexセグメント組立データ` Inner Join `セグメント組立パターンベース`")
-        rsData = ExecuteSql _
-            ("SELECT * FROM `flexセグメント組立データ`")
 
-        While rsData.Read()
-            Dim i As Integer = rsData.Item("リング番号")
-            _TypeNo(i) = rsData.Item("セグメントNo")
+        For Each t As DataRow In rsData.Rows
+            Dim i As Integer = t.Item("リング番号")
+            _TypeNo(i) = t.Item("セグメントNo")
             If Not _TypeList.ContainsKey(_TypeNo(i)) Then
                 MsgBox($"{i}リングのセグメントNoが未登録です")
             Else
                 '_SegmentWidth(i) = _SegmentTypeList(rsData.Item("セグメントNo")).CenterWidth * 1000
             End If
-            _RingLastStroke(i) = rsData.Item("掘進終了ストローク")
-            _SegmentAssenblyPtnID(i) = rsData.Item("組立パターンNo")
+            _RingLastStroke(i) = t.Item("掘進終了ストローク")
+            _SegmentAssenblyPtnID(i) = t.Item("組立パターンNo")
             '_SegmentAssenblyPtn(i) = rsData.Item("組立パターン")
-        End While
-        rsData.Close()
+
+        Next
+
+        'While rsData.Read()
+        '    Dim i As Integer = rsData.Item("リング番号")
+        '    _TypeNo(i) = rsData.Item("セグメントNo")
+        '    If Not _TypeList.ContainsKey(_TypeNo(i)) Then
+        '        MsgBox($"{i}リングのセグメントNoが未登録です")
+        '    Else
+        '        '_SegmentWidth(i) = _SegmentTypeList(rsData.Item("セグメントNo")).CenterWidth * 1000
+        '    End If
+        '    _RingLastStroke(i) = rsData.Item("掘進終了ストローク")
+        '    _SegmentAssenblyPtnID(i) = rsData.Item("組立パターンNo")
+        '    '_SegmentAssenblyPtn(i) = rsData.Item("組立パターン")
+        'End While
+        'rsData.Close()
         'SegmentAssemblyPatternListRead() 'セグメント組立パターンリスト読込
     End Sub
 
@@ -285,26 +298,39 @@ Friend Class clsSegmentAssembly
         'TODO:データベース更新時に読込
         _TypeList.Clear()
 
-        Dim rsData As Odbc.OdbcDataReader
+        Dim rsData As DataTable =
+            GetDtfmSQL("SELECT * FROM `セグメントリスト`")
 
-        rsData = ExecuteSql("SELECT * FROM `セグメントリスト`")
-
-        While rsData.Read
+        For Each t As DataRow In rsData.Rows
             Dim st As New SegmentType
-            'Dim i As Short = rsData.Item("セグメントNo")
-            st.TypeName = rsData.Item("種類")
-            st.CenterWidth = rsData.Item("中心幅")
-            st.ETTaper = rsData.Item("坑口")
-            st.TFTaper = rsData.Item("テーパー量切羽")
+            st.TypeName = t.Item("種類")
+            st.CenterWidth = t.Item("中心幅")
+            st.ETTaper = t.Item("坑口")
+            st.TFTaper = t.Item("テーパー量切羽")
             'st.Note = rsData.Item("備考")
-            st.OuterDiameter = rsData.Item("外径")
-            st.TaperAngle = rsData.Item("位置")
+            st.OuterDiameter = t.Item("外径")
+            st.TaperAngle = t.Item("位置")
 
-            _TypeList.Add(rsData.Item("セグメントNo"), st)
+            _TypeList.Add(t.Item("セグメントNo"), st)
 
-        End While
+        Next
 
-        rsData.Close()
+        'While rsData.Read
+        '    Dim st As New SegmentType
+        '    'Dim i As Short = rsData.Item("セグメントNo")
+        '    st.TypeName = rsData.Item("種類")
+        '    st.CenterWidth = rsData.Item("中心幅")
+        '    st.ETTaper = rsData.Item("坑口")
+        '    st.TFTaper = rsData.Item("テーパー量切羽")
+        '    'st.Note = rsData.Item("備考")
+        '    st.OuterDiameter = rsData.Item("外径")
+        '    st.TaperAngle = rsData.Item("位置")
+
+        '    _TypeList.Add(rsData.Item("セグメントNo"), st)
+
+        'End While
+
+        'rsData.Close()
 
 
 

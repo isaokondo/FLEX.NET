@@ -14,13 +14,12 @@ Friend Class clsDataSave
 
     Public Sub New()
         'コラム名のリストを取得
-        Dim recFldData As Odbc.OdbcDataReader =
-            ExecuteSql("show columns from flex掘削データ")
+        Dim recFldData As DataTable =
+            GetDtfmSQL("show columns from flex掘削データ")
 
-        Do While recFldData.Read
-            ColumnList.Add(recFldData.Item("Field").ToString)
-        Loop
-        recFldData.Close
+        For Each t As DataRow In recFldData.Rows
+            ColumnList.Add(t.Item("Field"))
+        Next
 
 
     End Sub
