@@ -236,8 +236,8 @@
             LstData.Add(GpData.JkPress)
 
 
-            Dim recDataSave As Odbc.OdbcDataReader =
-                ExecuteSql($"REPLACE INTO flex減圧弁テストデータ (`ID`,`時間`,{String.Join(",", LstColumn.ToArray)  }) VALUES({String.Join(",", LstData.ToArray)}  )")
+            'Dim recDataSave As Odbc.OdbcDataReader =
+            ExecuteSqlCmd($"REPLACE INTO flex減圧弁テストデータ (`ID`,`時間`,{String.Join(",", LstColumn.ToArray)  }) VALUES({String.Join(",", LstData.ToArray)}  )")
 
         End Sub
     End Class

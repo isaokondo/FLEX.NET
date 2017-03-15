@@ -150,8 +150,8 @@ Public Class clsControlParameter
             _optGpSv = value
 
             For i As Short = 0 To _optGpSv.Count - 1
-                Dim tb As Odbc.OdbcDataReader =
-                    ExecuteSql($"UPDATE FLEX制御パラメータ SET`値`='{_optGpSv(i)}'
+                'Dim tb As Odbc.OdbcDataReader =
+                ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{_optGpSv(i)}'
                     WHERE `項目名称`='OptinalGroupSetValue{i + 1}'")
             Next
 
@@ -170,8 +170,8 @@ Public Class clsControlParameter
         Set(value As List(Of Short))
             _optGpEn = value
 
-            Dim tb As Odbc.OdbcDataReader =
-                ExecuteSql($"UPDATE FLEX制御パラメータ SET`値`='{String.Join(",", _optGpEn.ToArray)}'
+            'Dim tb As Odbc.OdbcDataReader =
+            ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{String.Join(",", _optGpEn.ToArray)}'
                 WHERE `項目名称`='OptinalGroupSetNumber'")
         End Set
     End Property
@@ -183,12 +183,11 @@ Public Class clsControlParameter
         Set(value As List(Of Short))
             _ExceptMesureJackNo = value
 
-            Dim tb As Odbc.OdbcDataReader =
-                ExecuteSql($"UPDATE FLEX制御パラメータ SET`値`='{String.Join(",", _ExceptMesureJackNo.ToArray)}'
+            'Dim tb As Odbc.OdbcDataReader =
+            ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{String.Join(",", _ExceptMesureJackNo.ToArray)}'
                 WHERE `項目名称`='ExceptMesureJackNo'")
         End Set
     End Property
-
 
 
 
@@ -788,10 +787,10 @@ Public Class clsControlParameter
             _StartJackStroke = value
 
             For Each v In value
-                Dim tb As Odbc.OdbcDataReader =
-        ExecuteSql($"UPDATE FLEX制御パラメータ SET`値`='{v.Value}' 
+                'Dim tb As Odbc.OdbcDataReader =
+                ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{v.Value}' 
         WHERE `項目名称`='開始ジャッキストローク{v.Key}'")
-                tb.Close()
+                'tb.Close()
             Next
             '平均開始ストロークの算出
             '_StartAveJackStroke =
@@ -816,10 +815,9 @@ Public Class clsControlParameter
 
     Public Sub WideUseUpdate(iKey As Short, value As String)
         _wideUse.Item(iKey) = value
-        Dim tb As Odbc.OdbcDataReader =
-        ExecuteSql("UPDATE FLEX制御パラメータ SET`値`='" & value &
-                      "' WHERE `項目名称`='wideuse" & iKey & "'")
-        tb.Close()
+        'Dim tb As Odbc.OdbcDataReader =
+        ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{value}' WHERE `項目名称`='wideuse{iKey}'")
+        'tb.Close()
 
     End Sub
 
@@ -863,9 +861,9 @@ Public Class clsControlParameter
         _片押しR制限 = chk.GetValue("片押しR制限値")
         _圧力許容値 = chk.GetValue("圧力許容値")
         _片押し制限フラグ = fnBoolean(chk.GetValue("片押し制限フラグ"))
-        _開始時の力点位置 = fnBoolean(chk.GetValue("開始時の力点位置"))
-        _ジャッキの間引き制御 = fnBoolean(chk.GetValue("ジャッキの間引き制御"))
-        _クリアランス計 = fnBoolean(chk.GetValue("クリアランス計"))
+        '_開始時の力点位置 = fnBoolean(chk.GetValue("開始時の力点位置"))
+        '_ジャッキの間引き制御 = fnBoolean(chk.GetValue("ジャッキの間引き制御"))
+        '_クリアランス計 = fnBoolean(chk.GetValue("クリアランス計"))
         _水平ジャッキ制御P定数 = chk.GetValue("水平ジャッキ制御P定数")
         _水平ジャッキ制御I定数 = chk.GetValue("水平ジャッキ制御I定数")
         _鉛直ジャッキ制御P定数 = chk.GetValue("鉛直ジャッキ制御P定数")
@@ -953,11 +951,11 @@ Public Class clsControlParameter
         End If
 
 
-        Dim tb As Odbc.OdbcDataReader =
-        ExecuteSql("UPDATE FLEX制御パラメータ SET`値`='" & WrValue &
+        'Dim tb As Odbc.OdbcDataReader =
+        ExecuteSqlCmd("UPDATE FLEX制御パラメータ SET`値`='" & WrValue &
                       "' WHERE `項目名称`='" & FieldName & "'")
 
-        tb.Close()
+        'tb.Close()
 
         Debug.WriteLine($"WrValue={WrValue} FieldName={FieldName}")
 

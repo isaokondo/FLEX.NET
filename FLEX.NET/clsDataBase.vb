@@ -16,7 +16,7 @@ Public Class clsDataBase
     ''' </summary>
     Private Shared PortNo As Integer = My.Settings.Port
 
-    Private cn As OdbcConnection
+    'Private cn As OdbcConnection
 
 
     Private Shared MySQLVersion As String
@@ -107,7 +107,8 @@ Public Class clsDataBase
             database={DataBaseName}; port={PortNo}; 
             uid= toyo;pwd= yanagi;OPTION=3"
 
-        cn = New OdbcConnection(ConnectionString)
+        Dim cn As OdbcConnection =
+            New OdbcConnection(ConnectionString)
 
         Try
             cn.Open()
@@ -118,27 +119,31 @@ Public Class clsDataBase
                 ErrMsg = "MySQL ODBC 5.3 Unicode Driver を　インストールしてください"
             End If
             If ex.Message.Contains("Unknown MySQL server host") Then
-                ErrMsg = My.Settings.HostName & ":ホスト名が見つかりません！"
+                ErrMsg = HostName & ":ホスト名が見つかりません！"
             End If
             If ex.Message.Contains("Unknown MySQL server host") Then
-                ErrMsg = My.Settings.HostName & ":ホスト名が見つかりません！"
+                ErrMsg = HostName & ":ホスト名が見つかりません！"
             End If
-            MessageBox.Show("Connect Error:" & ex.Message & vbCrLf & ErrMsg, "FLEX.NET", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MsgBox($"Connect Error:{ex.Message & vbCrLf & ErrMsg} FLEX.NET",
+                   MessageBoxButtons.OK, MessageBoxIcon.Error)
             End
         End Try
         Return cn
     End Function
 
-    Public Function ExecuteSql(SQLCommand As String) As OdbcDataReader
+    Public Sub ExecuteSqlCmd(SQLCommand As String) 'As OdbcDataReader
         Dim cmd As New OdbcCommand(SQLCommand, conDB)
         Dim dr As OdbcDataReader = cmd.ExecuteReader
-        Return dr
-    End Function
+
+        If dr.RecordsAffected = 0 Then
+            Debug.Print(SQLCommand)
+        End If
 
 
-    Public Sub ConnectionClose()
-        cn.Close()
-        cn.Dispose()
+        dr.Close()
+        conDB.Close()
+        conDB.Dispose()
+        'Return dr
     End Sub
 
 
@@ -153,6 +158,9 @@ Public Class clsDataBase
         Dim Adpter = New OdbcDataAdapter(SQLCommand, conDB)
         Dim ds As New DataSet
         Adpter.Fill(ds)
+        Adpter.Dispose()
+        conDB.Close()
+        conDB.Dispose()
         Return ds.Tables(0)
     End Function
 
@@ -631,42 +639,38 @@ Public Class clsRingReport
     ''' </summary>
     Public Sub CheckRingItem()
         'テーブル　flex掘削データより　フィールドの存在チェック
-        Dim FldLstRd As Odbc.OdbcDataReader =
-            ExecuteSql("SHOW COLUMNS FROM flex掘削データ")
+        Dim FldLstRd As DataTable =
+            GetDtfmSQL("SHOW COLUMNS FROM flex掘削データ")
+
+        Dim FldLst As List(Of String) = (From g As DataRow In FldLstRd.Rows Select (Function(j) j.ToString))
+
+        'While FldLstRd.Read
+        '    FldLst.Add(FldLstRd.Item("Field"))
+        'End While
+        'FldLstRd.Close()
+
         Dim i As Integer = 0
-
-        Dim FldLst As New List(Of String)
-        While FldLstRd.Read
-            FldLst.Add(FldLstRd.Item("Field"))
-        End While
-        FldLstRd.Close()
-
 
         For Each fName In FldLst
             '除外Field名
             Dim ExceptFld() As String = {"リング番号", "掘進ストローク", "時間"}
 
             If Not ExceptFld.Contains(fName) Then
-                Dim ExitFld As Odbc.OdbcDataReader =
-                ExecuteSql($"SELECT * FROM flexリング報項目 WHERE 項目名='{fName}'")
+                Dim ExitFld As DataTable =
+                GetDtfmSQL($"SELECT * FROM flexリング報項目 WHERE 項目名='{fName}'")
 
-                If Not ExitFld.HasRows Then
-                    Dim InsertFld As Odbc.OdbcDataReader =
-                    ExecuteSql($"INSERT INTO flexリング報項目(ID,項目名) VALUES({i},'{fName}')")
-                    InsertFld.Close()
+                If ExitFld.Rows.Count = 0 Then
+                    ExecuteSqlCmd($"INSERT INTO flexリング報項目(ID,項目名) VALUES({i},'{fName}')")
                 End If
-                ExitFld.Close()
 
                 'アナログTAGより小数点、単位を更新
-                Dim AnaTag As Odbc.OdbcDataReader =
-                        ExecuteSql($"SELECT * FROM flexアナログtag WHERE 項目名='{fName}'")
-                If AnaTag.HasRows Then
-                    Dim UpFld As OdbcDataReader =
-                        ExecuteSql($"UPDATE flexリング報項目 SET 小数点位置='{AnaTag.Item("小数点位置")}',単位='{AnaTag.Item("単位")}'
-                         WHERE  項目名='{fName}'")
-                    UpFld.Close()
+                Dim AnaTag As DataTable =
+                        GetDtfmSQL($"SELECT * FROM flexアナログtag WHERE 項目名='{fName}'")
+                If AnaTag.Rows.Count <> 0 Then
+                    'Dim UpFld As OdbcDataReader =
+                    ExecuteSqlCmd($"UPDATE flexリング報項目 SET 小数点位置='{AnaTag.Rows(0).Item("小数点位置")}'
+                        ,単位='{AnaTag.Rows(0).Item("単位")}' WHERE  項目名='{fName}'")
                 End If
-                AnaTag.Close()
                 i += 1
             End If
         Next
@@ -757,41 +761,36 @@ Public Class clsTableUpdateConfirm
 
     Private Function GetUpdateTIme() As Dictionary(Of String, Date)
         '更新時間を取得　MISAMのみ
-        Dim tableUpTime As OdbcDataReader
-        Dim gup As New Dictionary(Of String, Date)
-        tableUpTime = ExecuteSql("flush tables")
-        tableUpTime = ExecuteSql("show table status;")
 
-        While tableUpTime.Read
-            If tableUpTime.Item("TYPE") = "MyISAM" Then
-                gup.Add(tableUpTime.Item("Name").ToString, CDate(tableUpTime.Item("Update_time")))
-            End If
+        Dim tableUpTime As DataTable =
+            GetDtfmSQL("show table status;")
 
-        End While
-        tableUpTime.Close()
+        Dim k =
+            From i In tableUpTime.AsEnumerable Where i("TYPE") = "MyISAM"
 
-        Return gup
+        Return k.ToDictionary(Function(n) n("name").ToString, Function(n) CDate(n("Update_time")))
 
     End Function
     ''' <summary>
     ''' テーブルがMyISAMかどうか、チェック！
     ''' </summary>
     Private Sub CheckMisam()
-        Dim misamTb As OdbcDataReader
-        misamTb = ExecuteSql("flush tables")
-        misamTb = ExecuteSql("show table status;")
+        Dim misamTb As DataTable =
+            GetDtfmSQL("show table status;")
+        'misamTb = ExecuteSql("flush tables;show table status;")
+        'misamTb = ExecuteSql("show table status;")
 
-        While misamTb.Read
+        For Each t As DataRow In misamTb.Rows
+
             For Each tb In MisamTable
-                If tb = misamTb.Item("Name") Then
-                    If misamTb.Item("TYPE") <> "MyISAM" Then
-                        'MsgBox($"テーブル {tb} を　エンジンMyISAMにしてください。", vbCritical)
-                        Dim ChangeEngine As OdbcDataReader = ExecuteSql($"ALTER TABLE {tb} ENGINE=MyISAM;")
+                If tb = t.Item("Name") Then
+                    If t.Item("TYPE") <> "MyISAM" Then
+                        'Dim ChangeEngine As OdbcDataReader =
+                        ExecuteSqlCmd($"ALTER TABLE {tb} ENGINE=MyISAM;")
                     End If
                 End If
             Next
-        End While
-        misamTb.Close()
+        Next
     End Sub
 
 End Class

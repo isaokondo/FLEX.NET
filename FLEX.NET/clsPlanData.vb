@@ -144,7 +144,6 @@ Public Class clsHorPanData
         'Dim tbr = ExecuteSql("SELECT MAX(`ゾーン№`) FROM 平面線形 WHERE `シートID` = " & InitPara.SheetID)
         'tbr.Read()
         'ゾーン総数 = tbr.Item(0)
-        '''        ReDim _horData(_ゾーン総数 + 1)
         ''Disconnect()
         'tbr.Close()
 
@@ -152,13 +151,16 @@ Public Class clsHorPanData
         Dim tblHorLine As DataTable =
             GetDtfmSQL($"SELECT * FROM 平面線形 WHERE `シートID` = {InitPara.SheetID} ORDER BY `ゾーン№`;")
 
-        ゾーン総数 = tblHorLine.Rows.Count - 1
+
+
+        ゾーン総数 = (From zo In tblHorLine.AsEnumerable Select zo.Item("ゾーン№")).Last
+
 
         Call RedimData()
 
 
 
-        Dim i As Integer
+        'Dim i As Integer
 
         'For i = 0 To tb.Rows.Count - 1
         For Each h As DataRow In tblHorLine.Rows
@@ -272,7 +274,7 @@ Public Class clsHorPanData
         Dim tblHorShift As DataTable =
             GetDtfmSQL($"SELECT * FROM 平面シフト WHERE `シートID` = {InitPara.SheetID} ORDER BY `シフト№`;")
         'For i = 0 To tb.Rows.Count - 1
-        シフトゾーン総数 = tblHorShift.Rows.Count - 1
+        シフトゾーン総数 = (From zo In tblHorShift.AsEnumerable Select zo("シフト№")).Last
 
         For Each t As DataRow In tblHorShift.Rows
             Dim shiftNo As Integer = t.Item("シフト№")

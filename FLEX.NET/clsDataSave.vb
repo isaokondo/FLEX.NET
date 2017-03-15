@@ -27,9 +27,9 @@ Friend Class clsDataSave
     ''' FLEX掘削データ作成
     ''' </summary>
     Public Sub Save()
-        Dim recDataSave As Odbc.OdbcDataReader =
-            ExecuteSql("REPLACE INTO FLEX掘削データ VALUES(" & getSqlData() & ")")
-        recDataSave.Close()
+        'Dim recDataSave As Odbc.OdbcDataReader =
+        ExecuteSqlCmd($"REPLACE INTO FLEX掘削データ VALUES({getSqlData()})")
+        'recDataSave.Close()
     End Sub
 
     ''' <summary>

@@ -694,15 +694,15 @@
     Public Sub EventlogUpdate()
         rtbEventLog.Clear()
         Dim DB As New clsDataBase
-        Dim tb As Odbc.OdbcDataReader = DB.ExecuteSql _
+        Dim tb As DataTable = DB.GetDtfmSQL _
             ("SELECT TIME,イベントデータ,イベント種類 FROM FLEXイベントデータ ORDER BY TIME DESC LIMIT 0,50")
-        Dim i As Integer = 0
-        While tb.Read()
-            rtbEventLog.SelectionColor = ColorTranslator.FromOle(tb.Item(2))
-            rtbEventLog.AppendText(CDate(tb.Item(0)).ToString("yyyy/MM/dd HH:mm:ss") & Space(2) & tb.Item(1).ToString & vbCrLf)
 
-        End While
-        tb.Close()
+        For Each t As DataRow In tb.Rows
+            rtbEventLog.SelectionColor =
+                ColorTranslator.FromOle(t.Item(2))
+            rtbEventLog.AppendText(CDate(t.Item(0)).ToString("yyyy/MM/dd HH:mm:ss") & Space(2) & t.Item(1).ToString & vbCrLf)
+
+        Next
 
     End Sub
     ''' <summary>
@@ -779,8 +779,8 @@
         ''' </summary>
         Public Sub DataGet()
             '過去の掘進データ 10mm毎
-            Dim rsData As Odbc.OdbcDataReader =
-                ExecuteSql($"SELECT * FROM flex掘削データ WHERE `リング番号`>=
+            Dim rsData As DataTable =
+                GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE `リング番号`>=
                 '{PlcIf.RingNo - CtlPara.LineDevStartRing}
                 ' AND `リング番号`<'{PlcIf.RingNo}' AND MOD(掘進ストローク,10)=0;")
 
@@ -791,28 +791,28 @@
             Dim TmpStrk As Integer
             Dim g As ucnChart2.gData
             Dim LastDistance As Single
-            While rsData.Read
-                If RingNo <> rsData.Item("リング番号") Then
+
+            For Each t As DataRow In rsData.Rows
+
+                If RingNo <> t.Item("リング番号") Then
                     OffsetStroke += TmpStrk
                 End If
-                g.RingNo = rsData("リング番号")
-                g.Distance = OffsetStroke + rsData.Item("掘進ストローク")
-                g.PlanDr = rsData.Item("前胴方位角")
-                g.TargetDr = rsData.Item("平面姿勢角管理値")
-                g.RealDr = rsData.Item("ジャイロ方位角")
+                g.RingNo = t("リング番号")
+                g.Distance = OffsetStroke + t.Item("掘進ストローク")
+                g.PlanDr = t.Item("前胴方位角")
+                g.TargetDr = t.Item("平面姿勢角管理値")
+                g.RealDr = t.Item("ジャイロ方位角")
                 _HorRData.Add(g)
 
-                g.PlanDr = rsData.Item("前胴鉛直角")
-                g.TargetDr = rsData.Item("縦断姿勢角管理値")
-                g.RealDr = rsData.Item("ジャイロピッチング")
+                g.PlanDr = t.Item("前胴鉛直角")
+                g.TargetDr = t.Item("縦断姿勢角管理値")
+                g.RealDr = t.Item("ジャイロピッチング")
                 _VerRData.Add(g)
                 RingNo = g.RingNo
-                TmpStrk = rsData.Item("掘進ストローク")
+                TmpStrk = t.Item("掘進ストローク")
 
-                LastDistance = rsData.Item("平面発進から発旋回中心までの距離")
-            End While
-
-            rsData.Close()
+                LastDistance = t.Item("平面発進から発旋回中心までの距離")
+            Next
 
             'これから掘削する計画方位データ
             _HorPData.Clear()
@@ -844,20 +844,24 @@
         Public Shared RingNo As Integer
         Private _DList As Dictionary(Of Integer, Single)
         Sub New(FldName As String)
-            _DList = New Dictionary(Of Integer, Single)
-            Dim rsData As Odbc.OdbcDataReader =
-                ExecuteSql($"SELECT * FROM flex掘削データ WHERE `リング番号`='{RingNo}';")
-            While rsData.Read
-                _DList.Add(rsData.Item("掘進ストローク"), rsData.Item(FldName))
-            End While
+            '_DList = New Dictionary(Of Integer, Single)
+            Dim rsData As DataTable =
+                GetDtfmSQL($"SELECT `掘進ストローク`,`{FldName}` FROM flex掘削データ WHERE `リング番号`='{RingNo}';")
+            'While rsData.Read
+            '    _DList.Add(rsData.Item("掘進ストローク"), rsData.Item(FldName))
+            'End While
+            _DList =
+                rsData.AsEnumerable.ToDictionary(Function(n) CInt(n.Item(0)), Function(n) CSng(n.Item(1)))
+
         End Sub
 
         Sub New()
-            Dim rsData As Odbc.OdbcDataReader =
-                ExecuteSql("SELECT * FROM flex掘削データ ORDER BY `時間` LIMIT 0,1")
-            While rsData.Read
-                RingNo = rsData.Item("リング番号")
-            End While
+            Dim rsData As DataTable =
+                GetDtfmSQL("SELECT リング番号 FROM flex掘削データ ORDER BY `時間` DESC LIMIT 0,1")
+            'While rsData.Read
+            '    RingNo = rsData.Item("リング番号")
+            'End While
+            RingNo = rsData.Rows(0).Item(0)
 
         End Sub
 

@@ -146,12 +146,16 @@ Friend Class clsSegmentAssembly
     Public Sub AssemblyDataRead(RingNo As Integer)
         _AssenblyPtnDic.Clear()
         'パターンリストの取得
-        Dim rsPtLst As Odbc.OdbcDataReader =
-            ExecuteSql("SELECT * FROM セグメント組立パターンリスト")
-        While rsPtLst.Read
-            _AssenblyPtnDic.Add(rsPtLst.Item("組立パターンNo"), rsPtLst.Item("組立パターン名"))
-        End While
-        rsPtLst.Close()
+        Dim rsPtLst As DataTable =
+            GetDtfmSQL("SELECT 組立パターンNo,組立パターン名 FROM セグメント組立パターンリスト")
+        'While rsPtLst.Read
+        '    _AssenblyPtnDic.Add(rsPtLst.Item("組立パターンNo"), rsPtLst.Item("組立パターン名"))
+        'End While
+        'rsPtLst.Close()
+        _AssenblyPtnDic =
+            rsPtLst.AsEnumerable.ToDictionary(Function(n) CShort(n.Item(0)), Function(n) n.Item(1).ToString)
+
+
         ''当該リングのセグメント組立IDを取得
         Dim Id As Short = _SegmentAssenblyPtnID(RingNo)
         '検索
@@ -363,8 +367,10 @@ Friend Class clsSegmentAssembly
         ' 備考      :Findだとパフォーマンスが不足のため変更
 
 
-        Dim rsData As Odbc.OdbcDataReader =
-            ExecuteSql($"UPDATE flexセグメント組立データ SET 組立パターンNo ='{GetPtNameID(PatternName)}' ,セグメントNo ='{GetTypeNameId(TypeName)}' WHERE リング番号 = {RingNo};")
+        'Dim rsData As Odbc.OdbcDataReader =
+        ExecuteSqlCmd($"UPDATE flexセグメント組立データ 
+        SET 組立パターンNo ='{GetPtNameID(PatternName)}' 
+        ,セグメントNo ='{GetTypeNameId(TypeName)}' WHERE リング番号 = {RingNo};")
 
         '
     End Sub
@@ -405,17 +411,19 @@ Friend Class clsSegmentAssembly
 
 
         ''選択クエリー実行
-        Dim rsData As Odbc.OdbcDataReader = ExecuteSql("SELECT * FROM  セグメント組立データ WHERE リング番号 = " & intRingNo & ";")
+        Dim rsData As DataTable =
+            GetDtfmSQL($"SELECT * FROM  セグメント組立データ WHERE リング番号 = {intRingNo};")
 
-        rsData.Read()
+        'rsData.Read()
         ''掘進終了ストロークが0の場合はそのリングのセグメント幅にする
-        If Not IsDBNull(rsData.Item("掘進終了ストローク")) And CShort(rsData.Item("掘進終了ストローク")) <> 0 Then
-            Return rsData.Item("掘進終了ストローク")
+        If Not IsNothing(rsData.Rows(0).Item("掘進終了ストローク")) AndAlso rsData.Rows(0).Item("掘進終了ストローク") <> 0 Then
+            Return rsData.Rows(0).Item("掘進終了ストローク")
         Else
             ''更新クエリー実行
-            rsData = ExecuteSql("UPDATE セグメント組立データ SET 掘進終了ストローク = セグメント幅 WHERE リング番号 = " & intRingNo & ";")
+            'Dim rsQ As Odbc.OdbcDataReader =
+            ExecuteSqlCmd($"UPDATE セグメント組立データ SET 掘進終了ストローク = セグメント幅 WHERE リング番号 = {intRingNo}")
 
-            Return rsData.Item("セグメント幅")
+            Return rsData.Rows(0).Item("セグメント幅")
         End If
 
 

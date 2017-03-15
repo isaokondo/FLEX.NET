@@ -84,7 +84,20 @@ Public Class clsDataBase
 
     End Function
 
-
+    ''' <summary>
+    ''' SQLよりデータテーブルを取得
+    ''' </summary>
+    ''' <param name="SQLCommand"></param>
+    ''' <returns>SQL文</returns>
+    Public Function GetDtfmSQL(SQLCommand As String) As DataTable
+        Dim Adpter = New OdbcDataAdapter(SQLCommand, conDB)
+        Dim ds As New DataSet
+        Adpter.Fill(ds)
+        Adpter.Dispose()
+        conDB.Close()
+        conDB.Dispose()
+        Return ds.Tables(0)
+    End Function
 
 End Class
 
@@ -137,50 +150,53 @@ Public Class clsTag
     ''' <remarks></remarks>
     Public Sub New(ByVal TableName As String, ByVal PLCAdressClass As String)
         Dim TableAndWhere As String = " " & TableName & " WHERE `アドレス` LIKE '" & PLCAdressClass & "%'"
-        Dim MaxID As OdbcDataReader = ExecuteSql("SELECT COUNT(*) FROM " & TableAndWhere)
-        MaxID.Read()
-        ReDim _Tag(MaxID.Item(0) + 1)
+        Dim MaxID As DataTable =
+            GetDtfmSQL("SELECT COUNT(*) FROM " & TableAndWhere)
+        'MaxID.Read()
+        ReDim _Tag(MaxID.Rows(0).Item(0) + 1)
 
-        Dim StartAd As OdbcDataReader = ExecuteSql("SELECT Min(`アドレス`) FROM" & TableAndWhere)
-        StartAd.Read()
-        _startAddress = StartAd.Item(0)
+        Dim StartAd As DataTable = GetDtfmSQL("SELECT Min(`アドレス`) FROM" & TableAndWhere)
+        'StartAd.Read()
+        _startAddress = StartAd.Rows(0).Item(0)
         'ビットデータの時は、16の倍数からアドレスを介し
         If _startAddress.Substring(0, 1) = "M" Then
             _startAddress = _startAddress(0) & (CInt(_startAddress.Substring(1)) \ 16) * 16
         End If
 
-        Dim anaTag As OdbcDataReader
-        anaTag = ExecuteSql("SELECT * FROM " & TableAndWhere)
+        Dim anaTag As DataTable = GetDtfmSQL("SELECT * FROM " & TableAndWhere)
 
         Dim ht As Hashtable = New Hashtable
 
         Dim StartAdress As Integer = CInt(_startAddress.Substring(1))
 
         Dim i As Integer = 0 ' anaTag("ID")
-        While anaTag.Read()
-            'If Not IsDBNull(anaTag("項目名")) Then
-            _Tag(i).FieldName = anaTag("項目名").ToString
-            _Tag(i).Address = anaTag("アドレス").ToString
-            If TableName = "FLEXアナログtag" Then
-                _Tag(i).DigitLoc = CInt(anaTag("小数点位置"))
-                _Tag(i).Unit = anaTag("単位").ToString
-                _Tag(i).EngLow = CSng(anaTag("下限"))
-                _Tag(i).EngHight = CSng(anaTag("上限"))
-                _Tag(i).ScaleLow = CSng(anaTag("スケール下限"))
-                _Tag(i).ScaleHigh = CSng(anaTag("スケール上限"))
-            End If
-            Dim ad As String = _Tag(i).Address 'アドレスからオフセットを算出
-            If Not ad.Equals("") AndAlso IsNumeric(ad.Substring(1)) Then
-                _Tag(i).OffsetAddress = CInt(ad.Substring(1)) - StartAdress
-            End If
+        'While anaTag.Read()
+        For Each t As DataRow In anaTag.Rows
 
-            ht(anaTag("項目名")) = i
+                _Tag(i).FieldName = anaTag("項目名").ToString
+                _Tag(i).Address = anaTag("アドレス").ToString
+                If TableName = "FLEXアナログtag" Then
+                    _Tag(i).DigitLoc = CInt(t("小数点位置"))
+                    _Tag(i).Unit = t("単位").ToString
+                    _Tag(i).EngLow = CSng(t("下限"))
+                    _Tag(i).EngHight = CSng(t("上限"))
+                    _Tag(i).ScaleLow = CSng(t("スケール下限"))
+                    _Tag(i).ScaleHigh = CSng(t("スケール上限"))
+                End If
+                Dim ad As String = _Tag(i).Address 'アドレスからオフセットを算出
+                If Not ad.Equals("") AndAlso IsNumeric(ad.Substring(1)) Then
+                    _Tag(i).OffsetAddress = CInt(ad.Substring(1)) - StartAdress
+                End If
 
-            'オフセットの最大値取得
-            If _devicesize < _Tag(i).OffsetAddress Then _devicesize = _Tag(i).OffsetAddress
-            i = i + 1
-            'End If
-        End While
+                ht(anaTag("項目名")) = i
+
+                'オフセットの最大値取得
+                If _devicesize < _Tag(i).OffsetAddress Then _devicesize = _Tag(i).OffsetAddress
+                i = i + 1
+                'End If
+            Next
+        'If Not IsDBNull(anaTag("項目名")) Then
+        'End While
 
         Htb.htb = ht    'ハッシュテーブルの設定
 
@@ -312,15 +328,17 @@ Public Class clsInitParameter
     '    End Get
     'End Property
     Public Sub New()
-        Dim paraDB As OdbcDataReader
-        paraDB = ExecuteSql("SELECT * FROM FLEX初期パラメータ")
+        Dim paraDB As DataTable = GetDtfmSQL("SELECT * FROM FLEX初期パラメータ")
 
         Dim ht As Hashtable = New Hashtable
 
         Try
-            While paraDB.Read()
-                ht(paraDB("項目名称")) = paraDB("値")
-            End While
+            'While paraDB.Read()
+            For Each t As DataRow In paraDB.Rows
+                ht(t("項目名称")) = t("値")
+
+            Next
+            'End While
 
             Htb.htb = ht
             _numberJack = Htb.GetValue("使用ジャッキ本数")

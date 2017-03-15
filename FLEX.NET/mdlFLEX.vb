@@ -531,7 +531,8 @@ Module mdlFLEX
 
         Dim db As New clsDataBase
 
-        Dim tb As Odbc.OdbcDataReader = db.ExecuteSql _
+        'Dim tb As Odbc.OdbcDataReader = 
+        db.ExecuteSqlCmd _
             ($"INSERT INTO FLEXイベントデータ
             (Time,イベントデータ,イベント種類) VALUES('{Now}','{EventMsg}','{Colorlng}')")
 

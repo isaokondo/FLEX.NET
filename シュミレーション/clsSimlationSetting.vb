@@ -53,96 +53,93 @@ Public Class clsSimlationSetting
     Public Sub New()
         Dim DB As New clsDataBase
 
-         Dim tb As Odbc.OdbcDataReader = DB.ExecuteSql("SELECT * FROM flexシュミレーション設定 ")
-        With tb
-            While tb.Read
-                Select Case .Item("項目")
-                    Case "LeftStrokeAdr"
-                        _LeftStrokeAdr = .Item("値")
-                    Case "RightStrokeAdr"
-                        _RightStrokeAdr = .Item("値")
-                    Case "JkPresAdr"
-                        _JkPresAdr = .Item("値")
-                    Case "GpPresPV"
-                        _GpPresPV = .Item("値")
-                    Case "GpPresMV"
-                        _GpPresMV = .Item("値")
-                    Case "BitStartAdr"
-                        _BitStartAdr = .Item("値")
-                    Case "KussinOn"
-                        _KussinOn = .Item("値")
-                    Case "JackSel"
-                        _JackSel = .Item("値")
-                    Case "FlexMode"
-                        _FlexMode = .Item("値")
-                    Case "StrokePlcScale"
-                        _StrokePlcScale = .Item("値")
-                    Case "StrokeEngScale"
-                        _StrokeEngScale = .Item("値")
-                    Case "PresPlcScale"
-                        _PresPlcScale = .Item("値")
-                    Case "PresEngScale"
-                        _PresEngScale = .Item("値")
-                    Case "GpMvPlcScale"
-                        _GpMvPlcScale = .Item("値")
-                    Case "GpMvEngScale"
-                        _GpMvEngScale = .Item("値")
-                    Case "SpeedPlcScale"
-                        _SpeedPlcScale = .Item("値")
-                    Case "SpeedEngScale"
-                        _SpeedEngScale = .Item("値")
-                    Case "LeftSpeedAdr"
-                        _LeftSpeedAdr = .Item("値")
-                    Case "RightSpeedAdr"
-                        _RightSpeedAdr = .Item("値")
-                    Case "PitchingAdr"
-                        _PitchingAdr = .Item("値")
-                    Case "GyairoAdr"
-                        _GyairoAdr = .Item("値")
-                    Case "ExcavOrSegmentAdr"
-                        _ExcavOrSegmentAdr = .Item("値")
-                    Case "PullBackOnAdr"
-                        _PullBackOnAdr = .Item("値")
-                    Case "PullBackAnsAdr"
-                        _PullBackAnsAdr = .Item("値")
-                    Case "ClosetOnAdr"
-                        _ClosetOnAdr = .Item("値")
-                    Case "ClosetAnsAdr"
-                        _ClosetAnsAdr = .Item("値")
-                    Case "PullBackCommand"
-                        _PullBackCommand = .Item("値")
-                    Case "ClosetCommand"
-                        _ClosetCommand = .Item("値")
-                    Case "AddClosetCommand"
-                        _AddClosetCommand = .Item("値")
-                    Case "LosZeroStMachine"
-                        _LosZeroStMachine = .Item("値")
-                    Case "LosZeroStFlex"
-                        _LosZeroStFlex = .Item("値")
-                    Case "LosZeroModeMachine"
-                        _LosZeroModeMachine = .Item("値")
-                    Case "LosZeroEnable"
-                        _LosZeroEnable = .Item("値")
+        Dim tb As DataTable = DB.GetDtfmSQL("SELECT * FROM flexシュミレーション設定 ")
+        For Each t As DataRow In tb.Rows
+            Select Case t("項目")
+                Case "LeftStrokeAdr"
+                    _LeftStrokeAdr = t("値")
+                Case "RightStrokeAdr"
+                    _RightStrokeAdr = t("値")
+                Case "JkPresAdr"
+                    _JkPresAdr = t("値")
+                Case "GpPresPV"
+                    _GpPresPV = t("値")
+                Case "GpPresMV"
+                    _GpPresMV = t("値")
+                Case "BitStartAdr"
+                    _BitStartAdr = t("値")
+                Case "KussinOn"
+                    _KussinOn = t("値")
+                Case "JackSel"
+                    _JackSel = t("値")
+                Case "FlexMode"
+                    _FlexMode = t("値")
+                Case "StrokePlcScale"
+                    _StrokePlcScale = t("値")
+                Case "StrokeEngScale"
+                    _StrokeEngScale = t("値")
+                Case "PresPlcScale"
+                    _PresPlcScale = t("値")
+                Case "PresEngScale"
+                    _PresEngScale = t("値")
+                Case "GpMvPlcScale"
+                    _GpMvPlcScale = t("値")
+                Case "GpMvEngScale"
+                    _GpMvEngScale = t("値")
+                Case "SpeedPlcScale"
+                    _SpeedPlcScale = t("値")
+                Case "SpeedEngScale"
+                    _SpeedEngScale = t("値")
+                Case "LeftSpeedAdr"
+                    _LeftSpeedAdr = t("値")
+                Case "RightSpeedAdr"
+                    _RightSpeedAdr = t("値")
+                Case "PitchingAdr"
+                    _PitchingAdr = t("値")
+                Case "GyairoAdr"
+                    _GyairoAdr = t("値")
+                Case "ExcavOrSegmentAdr"
+                    _ExcavOrSegmentAdr = t("値")
+                Case "PullBackOnAdr"
+                    _PullBackOnAdr = t("値")
+                Case "PullBackAnsAdr"
+                    _PullBackAnsAdr = t("値")
+                Case "ClosetOnAdr"
+                    _ClosetOnAdr = t("値")
+                Case "ClosetAnsAdr"
+                    _ClosetAnsAdr = t("値")
+                Case "PullBackCommand"
+                    _PullBackCommand = t("値")
+                Case "ClosetCommand"
+                    _ClosetCommand = t("値")
+                Case "AddClosetCommand"
+                    _AddClosetCommand = t("値")
+                Case "LosZeroStMachine"
+                    _LosZeroStMachine = t("値")
+                Case "LosZeroStFlex"
+                    _LosZeroStFlex = t("値")
+                Case "LosZeroModeMachine"
+                    _LosZeroModeMachine = t("値")
+                Case "LosZeroEnable"
+                    _LosZeroEnable = t("値")
 
-                    Case "ExecMode"
-                        _ExecMode = .Item("値")
-                    Case "SegmentMode"
-                        _SegmentMode = .Item("値")
-                End Select
-                '計測ジャッキの取込
-                If .Item("項目").ToString.IndexOf("MesureJackStroke") >= 0 Then
-                    _MesureJackStroke.Add(.Item("値"))
-                    _MesureJackNo.Add(CShort(.Item("項目").ToString.Replace("MesureJackStroke", "")))
-                End If
+                Case "ExecMode"
+                    _ExecMode = t("値")
+                Case "SegmentMode"
+                    _SegmentMode = t("値")
+            End Select
+            '計測ジャッキの取込
+            If t("項目").ToString.IndexOf("MesureJackStroke") >= 0 Then
+                _MesureJackStroke.Add(t("値"))
+                _MesureJackNo.Add(CShort(t("項目").ToString.Replace("MesureJackStroke", "")))
+            End If
 
-                If .Item("項目").ToString.IndexOf("MesureJackSpeed") >= 0 Then
-                    _MesureJackSpeed.Add(.Item("値"))
-                End If
-
+            If t("項目").ToString.IndexOf("MesureJackSpeed") >= 0 Then
+                _MesureJackSpeed.Add(t("値"))
+            End If
 
 
-            End While
-        End With
+        Next
 
 
     End Sub

@@ -259,14 +259,19 @@ Public Class clsReportDb
     ''' <returns></returns>
     Public ReadOnly Property LastRing As Integer
         Get
-            Dim LastRingNo As OdbcDataReader =
-                ExecuteSql("Select `リング番号` FROM flex掘削データ ORDER BY 時間 DESC LIMIT 0,1")
-            If LastRingNo.HasRows Then
-                While LastRingNo.Read
-                    Return LastRingNo.GetInt32(0)
-                End While
+            Dim LastRingNo As DataTable =
+                GetDtfmSQL("Select `リング番号` FROM flex掘削データ ORDER BY 時間 DESC LIMIT 0,1")
+            If LastRingNo.Rows.Count = 0 Then
+                Return 0
+            Else
+                Return LastRingNo.Rows(0).Item(0)
             End If
-            Return 0
+            'If LastRingNo.HasRows Then
+            '    While LastRingNo.Read
+            '        Return LastRingNo.GetInt32(0)
+            '    End While
+            'End If
+            'Return 0
         End Get
     End Property
 
@@ -322,45 +327,48 @@ Public Class clsReportDb
         Dim ExecTime As Integer '掘進時間（中断時間含む)
 
 
-        Dim RingRpt As OdbcDataReader =
-                ExecuteSql($"Select min(`時間`),max(`時間`),max(`掘進ストローク`),
+        Dim RingRpt As DataTable =
+                GetDtfmSQL($"Select min(`時間`),max(`時間`),max(`掘進ストローク`),
                 max(`平面旋回中心`+`平面発進から発旋回中心までの距離`),
                 SUM(CASE WHEN `圧力制御`='0' THEN 1 ELSE 0 END) AS JKSELMODE,
                 SUM(CASE WHEN `圧力制御`='1' THEN 1 ELSE 0 END)  AS FLEXMODE,
                 SUM(CASE WHEN `同時施工モード`='1' THEN 1 ELSE 0 END) AS LOSZEROMODE 
                 FROM flex掘削データ  WHERE `リング番号`='{RingNo}' ORDER BY 時間")
 
-        While RingRpt.Read
-            sheet.Range("掘進開始時刻").Value = RingRpt.Item(0)
-            sheet.Range("掘進完了時刻").Value = RingRpt.Item(1)
-            sheet.Range("掘進ストローク").Value = RingRpt.Item(2)
-            sheet.Range("掘進総距離").Value = RingRpt.Item(3)
-            LastStroke = RingRpt.Item(2)
+        'While RingRpt.Read
+        For Each t As DataRow In RingRpt.Rows
+            sheet.Range("掘進開始時刻").Value = t.Item(0)
+            sheet.Range("掘進完了時刻").Value = t.Item(1)
+            sheet.Range("掘進ストローク").Value = t.Item(2)
+            sheet.Range("掘進総距離").Value = t.Item(3)
+            LastStroke = t.Item(2)
             '掘進時間の算出（中断時間を含めない）単位（分）
-            Dim tStt As DateTime = DateTime.Parse(RingRpt.Item(0))
-            Dim tLst As DateTime = DateTime.Parse(RingRpt.Item(1))
+            Dim tStt As DateTime = DateTime.Parse(t.Item(0))
+            Dim tLst As DateTime = DateTime.Parse(t.Item(1))
             ExecTime = tLst.Subtract(tStt).TotalMinutes
             'TODO:ビット演算子を使いたい
             Dim ModeFg As Short
             Dim ExecFrom As String() = {"ジャッキ選択", "FLEX推進", "ジャッキ選択/FLEX推進", "同時施工"}
-            If RingRpt.Item("JKSELMODE") > 0 And RingRpt.Item("FLEXMODE") > 0 Then
+            If t.Item("JKSELMODE") > 0 And t.Item("FLEXMODE") > 0 Then
                 ModeFg = 0
             End If
 
-            If RingRpt.Item("JKSELMODE") = 0 And RingRpt.Item("FLEXMODE") > 0 Then
+            If t.Item("JKSELMODE") = 0 And t.Item("FLEXMODE") > 0 Then
                 ModeFg = 2
             End If
 
-            If RingRpt.Item("JKSELMODE") > 0 And RingRpt.Item("FLEXMODE") = 0 Then
+            If t.Item("JKSELMODE") > 0 And t.Item("FLEXMODE") = 0 Then
                 ModeFg = 1
             End If
 
-            If RingRpt.Item("LOSZEROMODE") > 0 Then
+            If t.Item("LOSZEROMODE") > 0 Then
                 ModeFg = 3
             End If
 
             sheet.Range("掘進形態").Value = ExecFrom(ModeFg)
-        End While
+
+        Next
+        'End While
 
         Dim StartRows As Integer = sheet.Range("データ名称").Cell(1, 1).Address.RowNumber
         Dim StartCols As Integer = sheet.Range("データ名称").Cell(1, 1).Address.ColumnNumber
@@ -379,26 +387,26 @@ Public Class clsReportDb
 
         Next
 
-        Dim RingRptData As OdbcDataReader =
-                ExecuteSql($"SELECT * FROM flex掘削データ
+        Dim RingRptData As DataTable =
+                GetDtfmSQL($"SELECT * FROM flex掘削データ
                  WHERE `リング番号`='{RingNo}' ORDER BY 時間")
         Dim StdStroke As Integer = 10 '基準ストローク
         Dim Col As Integer = StartCols + 2  '開始列
-        While RingRptData.Read
-            Dim ExecStroke As Integer = RingRptData.Item("掘進ストローク")
+        'While RingRptData.Read
+        For Each t As DataRow In RingRptData.Rows
+            Dim ExecStroke As Integer = t.Item("掘進ストローク")
             If ExecStroke >= StdStroke Or ExecStroke = LastStroke Then
 
                 sheet.Cell(StartRows - 2, Col).Value = ExecStroke
-                sheet.Cell(StartRows - 1, Col).Value = RingRptData.Item("時間")
+                sheet.Cell(StartRows - 1, Col).Value = t.Item("時間")
                 sheet.Cell(StartRows - 1, Col).Style.DateFormat.Format = ("hh:ss")
-
 
                 'パターンからデータ名称
                 For Row As Short = 0 To _ReportSetItem(PtNo - 1).Count - 1
                     Dim k As Integer = _ReportSetItem(PtNo - 1)(Row) - 1
                     If k <> -1 Then
                         sheet.Cell(Row + StartRows, Col).Value =
-                                RingRptData.Item(_ReportItem(k).FeileName) 'データ
+                                t.Item(_ReportItem(k).FeileName) 'データ
                     End If
                 Next
 
@@ -413,18 +421,20 @@ Public Class clsReportDb
 
                 '最終ストローク
                 sheet.Range("平面線形").Value =
-                    RingRptData.Item("平面半径（軌道中心）")
+                    t.Item("平面半径（軌道中心）")
                 'パーミリに変換　一応
                 sheet.Range("縦断勾配").Value =
-                    DegToPermili(RingRptData.Item("縦断線形")).ToString("F0")
+                    DegToPermili(t.Item("縦断線形")).ToString("F0")
                 sheet.Range("掘進時間").Value =
-                    RingRptData.Item("掘進時間")
+                    t.Item("掘進時間")
                 sheet.Range("掘進中断時間").Value =
-                    ExecTime - RingRptData.Item("掘進時間")
+                    ExecTime - t.Item("掘進時間")
 
             End If
 
-        End While
+
+        Next
+        'End While
 
         '平均、最大、最小の表示
         Dim CalucMethd As String() = {"AVG", "MAX", "MIN"}
@@ -442,16 +452,18 @@ Public Class clsReportDb
                     SelectItm.Add("''")
                 End If
             Next
-            Dim RingRptCalcData As OdbcDataReader =
-                ExecuteSql($"SELECT {String.Join(",", SelectItm)} FROM flex掘削データ
+            Dim RingRptCalcData As DataTable =
+                GetDtfmSQL($"SELECT {String.Join(",", SelectItm)} FROM flex掘削データ
                  WHERE `リング番号`='{RingNo}'")
 
-            While RingRptCalcData.Read
-                For i As Short = 0 To _ReportSetItem(PtNo - 1).Count - 1
-                    sheet.Cell(i + StartRows, StartCalcCol).Value = RingRptCalcData.Item(i)
+            'While RingRptCalcData.Read
+            For Each t In RingRptCalcData.Rows
+                    For i As Short = 0 To _ReportSetItem(PtNo - 1).Count - 1
+                    sheet.Cell(i + StartRows, StartCalcCol).Value = t.Item(i)
+                Next
                 Next
                 StartCalcCol += 1
-            End While
+            'End While
         Next
 
         Return ReportXml
@@ -466,8 +478,8 @@ Public Class clsReportDb
     Public Sub PtnSave()
         For i As Short = 0 To _ReportSetItem.Count - 1
             'リング報印字項目の設定読込
-            Dim RingPrtFldRd As OdbcDataReader =
-                ExecuteSql($"UPDATE flex制御パラメータ SET `値`= '{String.Join(",", _ReportSetItem(i))}'
+            'Dim RingPrtFldRd As OdbcDataReader =
+            ExecuteSqlCmd($"UPDATE flex制御パラメータ SET `値`= '{String.Join(",", _ReportSetItem(i))}'
                 WHERE `項目名称`='RingReporPtn{(i + 1)}'")
         Next
     End Sub
@@ -475,50 +487,58 @@ Public Class clsReportDb
 
     Public Sub New()
         'リング情報読込
-        Dim RingLst As OdbcDataReader =
-                ExecuteSql("SELECT `リング番号`,Min(`時間`),Max(`時間`) 
+        Dim RingLst As DataTable =
+                GetDtfmSQL("SELECT `リング番号`,Min(`時間`),Max(`時間`) 
                 FROM `flex掘削データ` GROUP BY `リング番号` ORDER BY `リング番号` DESC")
 
-        While RingLst.Read
-            _RingData.Add(New RingInfo(RingLst.Item(0), RingLst.Item(1)))
-        End While
+        'While RingLst.Read
+        For Each t In RingLst.Rows
+            _RingData.Add(New RingInfo(t.Item(0), t.Item(1)))
+        Next
+        'End While
 
         '項目情報読込
-        Dim ItemInfo As OdbcDataReader =
-                ExecuteSql("SELECT * FROM `flexリング報項目` WHERE `印字有効`='1'")
+        Dim ItemInfo As DataTable =
+                GetDtfmSQL("SELECT * FROM `flexリング報項目` WHERE `印字有効`='1'")
 
-        While ItemInfo.Read
+        'While ItemInfo.Read
+        For Each t In ItemInfo.Rows
             Dim r As ReprtItemIfo
-            r.ID = ItemInfo.Item("ID")
-            r.FeileName = ItemInfo.Item("項目名")
-            r.Unit = ItemInfo.Item("単位")
-            r.DicemalPlace = ItemInfo.Item("小数点位置")
-            r.SelectStr = Split(",", ItemInfo.Item("選択文字").ToString).ToList
+            r.ID = t.Item("ID")
+            r.FeileName = t.Item("項目名")
+            r.Unit = t.Item("単位")
+            r.DicemalPlace = t.Item("小数点位置")
+            r.SelectStr = Split(",", t.Item("選択文字").ToString).ToList
             _ReportItem.Add(r)
-        End While
+
+
+        Next
+        'End While
 
         'リング報行数
-        Dim RingRptRow As OdbcDataReader =
-                ExecuteSql("SELECT 値 FROM flex制御パラメータ WHERE 項目名称='RingReportRows' ")
-        If RingRptRow.HasRows Then
-            While RingRptRow.Read
-                _RingReportRows = RingRptRow.Item(0)
-            End While
+        Dim RingRptRow As DataTable =
+                GetDtfmSQL("SELECT 値 FROM flex制御パラメータ WHERE 項目名称='RingReportRows' ")
+        If RingRptRow.Rows.Count <> 0 Then
+            'While RingRptRow.Read
+            _RingReportRows = RingRptRow.Rows(0).Item(0)
+            'End While
         Else
             MsgBox("リング報行数 RingReportRowsが　flex制御パラメータに設定されてません", vbCritical)
         End If
 
         'リング報印字項目の設定読込
-        Dim RingPrtFldRd As OdbcDataReader =
-                ExecuteSql("SELECT * FROM flex制御パラメータ WHERE 項目名称 Like 'RingReporPtn%'")
+        Dim RingPrtFldRd As DataTable =
+                GetDtfmSQL("SELECT * FROM flex制御パラメータ WHERE 項目名称 Like 'RingReporPtn%'")
 
-        If RingPrtFldRd.HasRows Then
-            While RingPrtFldRd.Read
-                Dim PtnNo As Short = GetNum(RingPrtFldRd.Item("項目名称"))
+        If RingPrtFldRd.Rows.Count <> 0 Then
+            'While RingPrtFldRd.Read
+            For Each t As DataRow In RingPrtFldRd.Rows
+                Dim PtnNo As Short = GetNum(t.Item("項目名称"))
                 _ReportSetItem(PtnNo - 1) =
-                        New List(Of Integer)((From j In RingPrtFldRd.Item("値").ToString.Split(",")
+                        New List(Of Integer)((From j In t.Item("値").ToString.Split(",")
                                               Select CInt(j)).ToList)
-            End While
+            Next
+            'End While
         Else
             MsgBox("リング報印字項目の設定読込 RingReporPtn　flex制御パラメータに設定されてません", vbCritical)
         End If
