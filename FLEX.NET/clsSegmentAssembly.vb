@@ -41,11 +41,11 @@ Friend Class clsSegmentAssembly
     ''' <returns></returns>
     Public ReadOnly Property TypeData(ByVal RingNo As Integer) As SegmentType
         Get
-            If RingNo <> 0 Then
+            'If RingNo <> 0 Then
                 Return _TypeList(_TypeNo(RingNo))
-            Else
-                Return New SegmentType
-            End If
+            'Else
+            '    Return New SegmentType
+            'End If
 
 
         End Get
@@ -260,7 +260,7 @@ Friend Class clsSegmentAssembly
 
 
         Dim rsData As DataTable =
-            GetDtfmSQL("SELECT * FROM `flexセグメント組立データ`")
+            GetDtfmSQL("SELECT * FROM `flexセグメント組立データ` order by リング番号")
 
         'rsData = ExecuteSql _
         '("SELECT * FROM `flexセグメント組立データ` Inner Join `セグメント組立パターンベース`")

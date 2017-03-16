@@ -155,13 +155,21 @@ Public Class clsDataBase
     ''' <param name="SQLCommand"></param>
     ''' <returns>SQL文</returns>
     Public Function GetDtfmSQL(SQLCommand As String) As DataTable
-        Dim Adpter = New OdbcDataAdapter(SQLCommand, conDB)
-        Dim ds As New DataSet
-        Adpter.Fill(ds)
-        Adpter.Dispose()
-        conDB.Close()
-        conDB.Dispose()
-        Return ds.Tables(0)
+        Try
+            Dim Adpter = New OdbcDataAdapter(SQLCommand, conDB)
+            Dim ds As New DataSet
+            Adpter.Fill(ds)
+            Adpter.Dispose()
+            conDB.Close()
+            conDB.Dispose()
+            Return ds.Tables(0)
+
+        Catch ex As System.Data.Odbc.OdbcException
+            MsgBox($"データベース読込エラー
+            {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}　FLEXを終了します  ", vbCritical)
+            Application.Exit()
+
+        End Try
     End Function
 
 
@@ -216,7 +224,7 @@ Public Class clsTag
             Try
                 Return _TagList(tagDic(FldName))
             Catch ex As System.Collections.Generic.KeyNotFoundException
-                MsgBox($"{FldName}がTAGに見つかりません。設定をしてください{vbCrLf}プログラムを終了します。", vbCritical)
+                MsgBox($"{FldName}がTAGに見つかりません。設定をしてください{vbCrLf}{ex.Message}{vbCrLf}{ex.StackTrace}プログラムを終了します。", vbCritical)
                 Application.Exit()
                 Return Nothing
             End Try

@@ -786,72 +786,78 @@ Public Class clsPlcIf
 
                 If Not sharrDeviceValue.SequenceEqual(AnalogComData) Then
 
-                    '保存用データ保持
-                    AnalogComData = sharrDeviceValue.Clone
-
-                    For Each at In AnalogTag.Tag
-                        _EngValue(at.FieldName) = GetAnalogData(at.FieldName, AnalogTag)
-                    Next
+                    Try
 
 
-                    _gyro = _EngValue("ジャイロ方位")
-                    _gyroPitching = _EngValue("ジャイロピッチング")
-                    _gyroRolling = _EngValue("ジャイロローリング")
+                        '保存用データ保持
+                        AnalogComData = sharrDeviceValue.Clone
 
-                    _machinePitching = _EngValue("マシンピッチング")
-                    _mashineRolling = _EngValue("マシンローリング")
-
-                    _jkPress = _EngValue("ジャッキ圧力")
-
-                    _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
-
-                    _nakaoreLR = _EngValue("中折左右角")
-                    _nakaoreTB = _EngValue("中折上下角")
-                    _realStroke = _EngValue("掘進ストローク")
-                    _excaStatus = _EngValue("掘進ステータス")
-                    _CopyAngle = _EngValue("コピー角度")
-                    _CopyStroke1 = _EngValue("コピーストローク1")
-                    _CopyStroke2 = _EngValue("コピーストローク2")
-
-                    _leftClearance = _EngValue("クリアランス左")
-                    _topClearance = _EngValue("クリアランス上")
-                    _rightClearance = _EngValue("クリアランス右")
-                    _botomClearance = _EngValue("クリアランス下")
+                        For Each at In AnalogTag.Tag
+                            _EngValue(at.FieldName) = GetAnalogData(at.FieldName, AnalogTag)
+                        Next
 
 
-                    For Each mj In InitPara.MesureJackAngle.Keys
-                        _mesureJackStroke(mj) = _EngValue("ジャッキストローク" & mj)
-                        _mesureJackSpeed(mj) = _EngValue("ジャッキスピード" & mj)
-                    Next
+                        _gyro = _EngValue("ジャイロ方位")
+                        _gyroPitching = _EngValue("ジャイロピッチング")
+                        _gyroRolling = _EngValue("ジャイロローリング")
 
-                    '同時施工ステータス読込
-                    Dim p As Short
-                    p = _LosZeroSts_FLEX
-                    _LosZeroSts_FLEX = _EngValue("同時施工ステータス_FLEX")
-                    '同時施工モードでステータス変化時
-                    If _LosZeroMode And p <> _LosZeroSts_FLEX Then
-                        RaiseEvent LosZeroStsChange(p, _LosZeroSts_FLEX, False)
-                    End If
+                        _machinePitching = _EngValue("マシンピッチング")
+                        _mashineRolling = _EngValue("マシンローリング")
 
-                    p = _LosZeroSts_M
-                    _LosZeroSts_M = _EngValue("同時施工ステータス_Machine")
-                    '同時施工モードでステータス変化時
-                    If _LosZeroMode And p <> _LosZeroSts_M Then
-                        RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
-                    End If
+                        _jkPress = _EngValue("ジャッキ圧力")
 
-                    Dim i As Integer
-                    For i = 0 To InitPara.NumberGroup - 1
-                        _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
-                        _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
-                        _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
-                        _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
-                    Next
+                        _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
 
-                    For i = 0 To InitPara.NumberJack - 1
-                        _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
-                        _jackSelect(i) = (_JackStatus(i) And 1)
-                    Next
+                        _nakaoreLR = _EngValue("中折左右角")
+                        _nakaoreTB = _EngValue("中折上下角")
+                        _realStroke = _EngValue("掘進ストローク")
+                        _excaStatus = _EngValue("掘進ステータス")
+                        _CopyAngle = _EngValue("コピー角度")
+                        _CopyStroke1 = _EngValue("コピーストローク1")
+                        _CopyStroke2 = _EngValue("コピーストローク2")
+
+                        _leftClearance = _EngValue("クリアランス左")
+                        _topClearance = _EngValue("クリアランス上")
+                        _rightClearance = _EngValue("クリアランス右")
+                        _botomClearance = _EngValue("クリアランス下")
+
+
+                        For Each mj In InitPara.MesureJackAngle.Keys
+                            _mesureJackStroke(mj) = _EngValue("ジャッキストローク" & mj)
+                            _mesureJackSpeed(mj) = _EngValue("ジャッキスピード" & mj)
+                        Next
+
+                        '同時施工ステータス読込
+                        Dim p As Short
+                        p = _LosZeroSts_FLEX
+                        _LosZeroSts_FLEX = _EngValue("同時施工ステータス_FLEX")
+                        '同時施工モードでステータス変化時
+                        If _LosZeroMode And p <> _LosZeroSts_FLEX Then
+                            RaiseEvent LosZeroStsChange(p, _LosZeroSts_FLEX, False)
+                        End If
+
+                        p = _LosZeroSts_M
+                        _LosZeroSts_M = _EngValue("同時施工ステータス_Machine")
+                        '同時施工モードでステータス変化時
+                        If _LosZeroMode And p <> _LosZeroSts_M Then
+                            RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
+                        End If
+
+                        Dim i As Integer
+                        For i = 0 To InitPara.NumberGroup - 1
+                            _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
+                            _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
+                            _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
+                            _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
+                        Next
+
+                        For i = 0 To InitPara.NumberJack - 1
+                            _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
+                            _jackSelect(i) = (_JackStatus(i) And 1)
+                        Next
+                    Catch ex As Exception
+                        MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.StackTrace.ToString}")
+                    End Try
 
                 End If
 
@@ -961,7 +967,7 @@ Public Class clsPlcIf
             End If
         Catch exException As Exception
             '例外処理	
-            MessageBox.Show(exException.Message, "PLC_READ", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(exException.Message & vbCrLf & exException.StackTrace, "PLC_READ", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End Try
 
@@ -1043,28 +1049,33 @@ Public Class clsPlcIf
 
     Private Function GetAnalogData(ByVal FieldName As String, Tag As clsTag) As Single
         'アナログデータのスケール変換
-        With Tag.TagData(FieldName)
-            If .ScaleHigh - .ScaleLow = 0 Then
-                Return 0
-            End If
-            Dim tData As Single
-            If .ScaleHigh > 32767 Then  '2wordの時
-                Dim TmpHigh As Single = sharrDeviceValue(.OffsetAddress + 1)
-                tData = sharrDeviceValue(.OffsetAddress)
-                If tData < 0 Then tData = 65536 + tData
-                tData = TmpHigh * 65536 + tData     ' HI*&h10000 + LO (16->32Bit)
-                If tData >= 2 ^ 31 Then
-                    tData = tData - (2 ^ 32)
+        Try
+
+            With Tag.TagData(FieldName)
+                If .ScaleHigh - .ScaleLow = 0 Then
+                    Return 0
                 End If
+                Dim tData As Single
+                If .ScaleHigh > 32767 Then  '2wordの時
+                    Dim TmpHigh As Single = sharrDeviceValue(.OffsetAddress + 1)
+                    tData = sharrDeviceValue(.OffsetAddress)
+                    If tData < 0 Then tData = 65536 + tData
+                    tData = TmpHigh * 65536 + tData     ' HI*&h10000 + LO (16->32Bit)
+                    If tData >= 2 ^ 31 Then
+                        tData = tData - (2 ^ 32)
+                    End If
 
-            Else
-                tData = sharrDeviceValue(.OffsetAddress)
-            End If
-            'スケール変換
-            Return (tData - .ScaleLow) * (.EngHight - .EngLow) / (.ScaleHigh - .ScaleLow) + .EngLow  ' + .EngLow
+                Else
+                    tData = sharrDeviceValue(.OffsetAddress)
+                End If
+                'スケール変換
+                Return (tData - .ScaleLow) * (.EngHight - .EngLow) / (.ScaleHigh - .ScaleLow) + .EngLow  ' + .EngLow
 
 
-        End With
+            End With
+        Catch ex As Exception
+            MsgBox($"GetAnalogDataでエラー{vbCrLf}{ex.Message}{vbCrLf}フィールド名{FieldName}")
+        End Try
     End Function
     ''' <summary>
     ''' ビットデータをPLC書き込み用にワードデータに変換

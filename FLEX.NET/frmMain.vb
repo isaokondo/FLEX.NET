@@ -858,10 +858,10 @@
         Sub New()
             Dim rsData As DataTable =
                 GetDtfmSQL("SELECT リング番号 FROM flex掘削データ ORDER BY `時間` DESC LIMIT 0,1")
-            'While rsData.Read
-            '    RingNo = rsData.Item("リング番号")
-            'End While
-            RingNo = rsData.Rows(0).Item(0)
+
+            If rsData.Rows.Count <> 0 Then
+                RingNo = rsData.Rows(0).Item(0)
+            End If
 
         End Sub
 

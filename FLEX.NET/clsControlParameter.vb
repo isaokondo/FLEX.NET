@@ -916,13 +916,13 @@ Public Class clsControlParameter
 
         For Each k In tb
             If k.Key.Contains("開始ジャッキストローク") Then
-                _StartJackStroke(k.Value.ToGetNum) = k.Value
+                _StartJackStroke(k.Key.ToGetNum) = k.Value
             End If
             If k.Key.Contains("wideuse") Then
-                _wideUse(k.Value.ToGetNum) = k.Value
+                _wideUse(k.Key.ToGetNum) = k.Value
             End If
             If k.Key.Contains("OptinalGroupSetValue") Then
-                OptGpSv(k.Value.ToGetNum - 1) = k.Value
+                OptGpSv(k.Key.ToGetNum - 1) = k.Value
             End If
         Next
 

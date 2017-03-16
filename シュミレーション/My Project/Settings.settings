@@ -6,7 +6,7 @@
       <Value Profile="(Default)">192.168.2.212</Value>
     </Setting>
     <Setting Name="DataBaseName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">flex鹿島外環</Value>
+      <Value Profile="(Default)">flex安藤間北西線</Value>
     </Setting>
   </Settings>
 </SettingsFile>
