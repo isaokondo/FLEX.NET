@@ -555,9 +555,10 @@ Friend Class clsSegmentAssembly
             Dim Jk(InitPara.NumberJack - 1) As Boolean
             Dim i As Short
             'リストを配列に
-            For i = 0 To _PullBackJack.Count - 1
-                Jk(_PullBackJack(i) - 1) = True
+            For i = 0 To InitPara.NumberJack - 1
+                Jk(1) = _PullBackJack.Contains(i + 1)
             Next
+
             '引戻しジャッキから減圧グループを
             For i = 0 To InitPara.NumberJack - 1
                 If Not Jk(i) Then
