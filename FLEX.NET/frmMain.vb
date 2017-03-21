@@ -287,7 +287,7 @@
             .FlexPointR = CtlPara.操作強
             .FlexPointSeater = CtlPara.操作角
 
-            Call .DspInitBaseImg()
+            .DspInitBaseImg()
         End With
 
         '---------------チャートの設定------------------------
@@ -342,6 +342,18 @@
         '汎用データ表示項目セット
         WideDataFldSet()
 
+        '基準方位の算出
+        RefernceDirection.sbCulKijun()
+
+        '線形データ画面更新
+        LineDataUpdate()
+
+        '組立パターンの情報を取得
+        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+        '同時施工組立パターン情報表示
+        SegmentDataDsp()
+        '掘削開始時刻の取得
+        DspExcavStartDay(getExcecStartTime)
     End Sub
     ''' <summary>
     ''' 汎用データ表示項目セット
@@ -360,7 +372,18 @@
 
     End Sub
 
+    Private Function getExcecStartTime() As Date
+        Dim db As New clsDataBase
+        Dim tb As DataTable =
+            db.GetDtfmSQL($"SELECT 時間 FROM flex掘削データ 
+            WHERE リング番号='{PlcIf.RingNo}' ORDER BY 時間 DESC LIMIT 0,1")
+        If tb.Rows.Count = 0 Then
+            Return Now
+        Else
+            Return tb.Rows(0).Item(0)
+        End If
 
+    End Function
 
 
     ''' <summary>
@@ -427,23 +450,25 @@
         If PlcIf.AnalogTag.TagExist("ｾｸﾞﾒﾝﾄの種類信号") Then
             PlcIf.AnalogPlcWrite("ｾｸﾞﾒﾝﾄの種類信号", SegAsmblyData.TypeData(PlcIf.RingNo).TypeNameID) 'セグメント種類
         End If
+        If SegAsmblyData.ProcessData.Count <> 0 Then
 
-        With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
-            'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
-            DspAssemblyPattern.Value = .PatternName '組立パターン名
-            DspBoltPitch.Value = .BoltPitch '組立ボルトピッチ
-            DspAssemblyPieace.Value = .PieceName  '組立ピース名称
-            DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
-            DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
-            DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
+            With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
+                'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
+                DspAssemblyPattern.Value = .PatternName '組立パターン名
+                DspBoltPitch.Value = .BoltPitch '組立ボルトピッチ
+                DspAssemblyPieace.Value = .PieceName  '組立ピース名称
+                DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
+                DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
+                DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
-            If PlcIf.AnalogTag.TagExist("甲乙表示用信号") Then
-                PlcIf.AnalogPlcWrite("甲乙表示用信号", .PatternKouOtuID)
-            End If
+                If PlcIf.AnalogTag.TagExist("甲乙表示用信号") Then
+                    PlcIf.AnalogPlcWrite("甲乙表示用信号", .PatternKouOtuID)
+                End If
 
-        End With
+            End With
+        End If
         'MAXのピース番号内で表示
-        If SegAsmblyData.AssemblyPieceNumber > PlcIf.AssemblyPieceNo Then
+        If SegAsmblyData.AssemblyPieceNumber > PlcIf.AssemblyPieceNo AndAlso SegAsmblyData.ProcessData.Count <> 0 Then
             DspNextPieceName.Value =
             SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).PieceName '組立次ピース名称
         Else

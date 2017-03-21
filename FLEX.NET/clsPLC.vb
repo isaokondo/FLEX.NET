@@ -168,7 +168,7 @@ Public Class clsPlcIf
     Private AnalogComData() As Short
     Private ParmterComData() As Short
     Private DigtalComData() As Boolean
-
+    'TODO:アナログ、パラメータ、デジタルの変数を分けたほうがいい！
     Private sharrDeviceValue() As Short         'デバイス値
     ''' <summary>
     ''' TAGの読込
@@ -737,13 +737,18 @@ Public Class clsPlcIf
         _LosZeroSts_M = AnalogPlcRead("同時施工ステータス_Machine")
         _excaStatus = AnalogPlcRead("掘進ステータス")
         _AssemblyPieceNo = AnalogPlcRead("組立ピース")
+        _RingNo = ParameterPlcRead("RingNo")
 
         PreExcaStatus = _excaStatus
         _LosZeroMode = DigtalPlcRead("同時施工モード")
 
         'PLC読み込みデータサイズ確定
-        ReDim AnalogComData(AnalogTag.DeviceSize)
-        ReDim ParmterComData(ParameterTag.DeviceSize)
+        'ReDim AnalogComData(AnalogTag.DeviceSize)
+        'ReDim ParmterComData(ParameterTag.DeviceSize)
+
+        RaiseEvent ExcavationStatusChange(0, 0)
+        RaiseEvent LineDistanceChage()
+
 
         TimerRun()
 
@@ -764,7 +769,7 @@ Public Class clsPlcIf
 
         'Call PLC_Open() 'オープン処理
 
-        'Debug.Write(System.DateTime.Now.ToString("HH:mm:ss.fff  "))
+        'Debug.WriteLine(System.DateTime.Now.ToString("HH:mm:ss.fff  "))
 
         Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
         Dim szDeviceName As String = ""         'デバイス名称
@@ -784,7 +789,7 @@ Public Class clsPlcIf
 
             If iReturnCode = 0 Then '通信OK
 
-                If Not sharrDeviceValue.SequenceEqual(AnalogComData) Then
+                If IsNothing(AnalogComData) OrElse Not sharrDeviceValue.SequenceEqual(AnalogComData) Then
 
                     Try
 
@@ -878,18 +883,12 @@ Public Class clsPlcIf
                                                         sharrDeviceValue(0))
             If iReturnCode = 0 Then '通信OK
 
-                If Not ParmterComData.SequenceEqual(sharrDeviceValue) Then
+                If IsNothing(ParmterComData) OrElse Not ParmterComData.SequenceEqual(sharrDeviceValue) Then
 
                     '保存用データ保持
                     ParmterComData = sharrDeviceValue.Clone
 
-                    Dim rno As Integer = _RingNo
-                    _RingNo = GetAnalogData("RingNo", ParameterTag)
-                    If rno <> _RingNo Then
-                        RaiseEvent ExcavationStatusChange(0, 0)
-                        RaiseEvent LineDistanceChage()
 
-                    End If
                     _終了判定引きストローク = GetAnalogData("終了判定引きストローク", ParameterTag)
 
                     _減圧弁制御P定数 = GetAnalogData("減圧弁制御P定数", ParameterTag)
@@ -905,6 +904,14 @@ Public Class clsPlcIf
                     _感度調整設定圧力偏差 = GetAnalogData("感度調整設定圧力偏差", ParameterTag)
                     'TODO:同時施工で考慮
                     _MaxExcavingStroke = GetAnalogData("掘進中最大ストローク", ParameterTag)
+
+                    Dim rno As Integer = _RingNo
+                    _RingNo = GetAnalogData("RingNo", ParameterTag)
+                    If rno <> _RingNo Then
+                        RaiseEvent ExcavationStatusChange(0, 0)
+                        RaiseEvent LineDistanceChage()
+
+                    End If
 
                 End If
 
@@ -1074,7 +1081,7 @@ Public Class clsPlcIf
 
             End With
         Catch ex As Exception
-            MsgBox($"GetAnalogDataでエラー{vbCrLf}{ex.Message}{vbCrLf}フィールド名{FieldName}")
+            MsgBox($"GetAnalogDataでエラー{vbCrLf}{ex.Message}{vbCrLf}フィールド名:{FieldName}{vbCrLf}{Environment.StackTrace.ToString}")
         End Try
     End Function
     ''' <summary>
@@ -1198,6 +1205,18 @@ Public Class clsPlcIf
         Dim PlcAdress As String = AnalogTag.TagData(TagName).Address
         Return PLC_Read(PlcAdress)
     End Function
+    ''' <summary>
+    ''' パラメータデータ　PLC読込
+    ''' </summary>
+    ''' <param name="TagNmae"></param>
+    ''' <returns></returns>
+    Public Function ParameterPlcRead(TagNmae As String) As Integer
+        Return PLC_Read(ParameterTag.TagData(TagNmae).Address)
+    End Function
+
+
+
+
     ''' <summary>
     ''' PLCから読込
     ''' </summary>

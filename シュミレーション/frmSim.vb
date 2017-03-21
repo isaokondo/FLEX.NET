@@ -649,8 +649,8 @@ CatchError:  '例外処理
     ''' <param name="e"></param>
     Private Sub btnAllSet_Click(sender As Object, e As EventArgs) Handles btnAllSet.Click
         '計測ジャッキの取込
-        Dim strokeData As Integer = fnChangePresAnalogOut(nudSumupStroke.Value)
-        Dim speedData As Integer = fnChangePresAnalogOut(nudSumupSpeed.Value)
+        Dim strokeData As Integer = fnChangeStrokeAnalogOut(nudSumupStroke.Value)
+        Dim speedData As Integer = fnChangeSpeedAnalogOut(nudSumupSpeed.Value)
         For i As Short = 0 To SimlationSetting.MesureJackNo.Count - 1
             Dim iRet As Long
             iRet = ComPlc.SetDevice(SimlationSetting.MesureJackStroke(i), strokeData)

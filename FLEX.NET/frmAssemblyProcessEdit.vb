@@ -45,45 +45,48 @@ Public Class frmAssemblyProcessEdit
         AssemblyPatternSel.ComboBox.Text = SegAsbly.AssemblyPtnName(ConfirmRingNo.Value)
         DspTypeName.Value = SegAsmblyData.TypeData(ConfirmRingNo.Value).TypeName 'セグメント種類
 
+        If SegAsbly.ProcessData.Count <> 0 Then
 
-        'DspAssemblyPattern.Value = SegAsbly.SegmentAssenblyPtn(ConfirmRingNo.Value)
-        With SegAsbly.ProcessData(AssemblyPieceNo.Value)
-            'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
-            DspAssemblyPattern.Value = .PatternName
+            'DspAssemblyPattern.Value = SegAsbly.SegmentAssenblyPtn(ConfirmRingNo.Value)
+            With SegAsbly.ProcessData(AssemblyPieceNo.Value)
+                'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
+                DspAssemblyPattern.Value = .PatternName
 
-            DspBoltPitch.Value = .BoltPitch
-            DspAssemblyPieace.Value = .PieceName  '組立ピース名称
-            DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
-            DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
-            DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
+                DspBoltPitch.Value = .BoltPitch
+                DspAssemblyPieace.Value = .PieceName  '組立ピース名称
+                DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
+                DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
+                DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
 
-            AssemblyPieceNo.MaxValue = SegAsbly.AssemblyPieceNumber '組立ピース番号MAX値設定
+                AssemblyPieceNo.MaxValue = SegAsbly.AssemblyPieceNumber '組立ピース番号MAX値設定
 
-            '作動ジャッキの表示
-            If OperattionJackSel.ComboBox.SelectedIndex = -1 Then
-                OperattionJackSel.ComboBox.SelectedIndex = 0    '未選択時の処理
-            End If
-            Dim jkLst As New List(Of Short)
-            Select Case OperattionJackSel.ComboBox.SelectedItem
-                Case "引戻"
-                    jkLst = .PullBackJack
-                Case "押込"
-                    jkLst = .ClosetJack
-                Case "押込推進"
+                '作動ジャッキの表示
+                If OperattionJackSel.ComboBox.SelectedIndex = -1 Then
+                    OperattionJackSel.ComboBox.SelectedIndex = 0    '未選択時の処理
+                End If
+                Dim jkLst As New List(Of Short)
+                Select Case OperattionJackSel.ComboBox.SelectedItem
+                    Case "引戻"
+                        jkLst = .PullBackJack
+                    Case "押込"
+                        jkLst = .ClosetJack
+                    Case "押込推進"
                     'DspStartLastJack()
-                Case "追加推進"
-                    jkLst = .AddClosetJack
-                Case "RL考慮"
-                    'TODO:左右のローリングの区別　DBへの反映をどうするか？
-            End Select
-            DspStartLastJack(jkLst)
-            ImgDsp(jkLst)
+                    Case "追加推進"
+                        jkLst = .AddClosetJack
+                    Case "RL考慮"
+                        'TODO:左右のローリングの区別　DBへの反映をどうするか？
+                End Select
+                DspStartLastJack(jkLst)
+                ImgDsp(jkLst)
 
 
-        End With
+            End With
+        End If
+
         'MAXのピース番号内で表示
-        If SegAsmblyData.AssemblyPieceNumber > AssemblyPieceNo.Value Then
+        If SegAsmblyData.AssemblyPieceNumber > AssemblyPieceNo.Value AndAlso SegAsmblyData.ProcessData.Count <> 0 Then
             DspNextPieceName.Value =
             SegAsmblyData.ProcessData(AssemblyPieceNo.Value + 1).PieceName '組立次ピース名称
         Else

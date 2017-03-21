@@ -644,7 +644,7 @@ Partial Class frmMain
         Me.DspClosetJack.TabIndex = 106
         Me.DspClosetJack.Unit = "deg"
         Me.DspClosetJack.UnitVisible = False
-        Me.DspClosetJack.Value = "20"
+        Me.DspClosetJack.Value = "-"
         Me.DspClosetJack.ValueType = True
         '
         'DspBoltPitch
@@ -665,7 +665,7 @@ Partial Class frmMain
         Me.DspBoltPitch.TabIndex = 102
         Me.DspBoltPitch.Unit = "deg"
         Me.DspBoltPitch.UnitVisible = False
-        Me.DspBoltPitch.Value = "3"
+        Me.DspBoltPitch.Value = "-"
         Me.DspBoltPitch.ValueType = False
         '
         'DspAveStartStroke
@@ -1510,10 +1510,10 @@ Partial Class frmMain
         Me.DspExcavStartTime.Blink = False
         Me.DspExcavStartTime.BlinkColor = System.Drawing.Color.Red
         Me.DspExcavStartTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspExcavStartTime.DataWidth = 141
+        Me.DspExcavStartTime.DataWidth = 151
         Me.DspExcavStartTime.DecimalPlaces = CType(2, Short)
         Me.DspExcavStartTime.FieldName = "開始時刻"
-        Me.DspExcavStartTime.FieldNameWidth = 125
+        Me.DspExcavStartTime.FieldNameWidth = 115
         Me.DspExcavStartTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspExcavStartTime.Location = New System.Drawing.Point(21, 83)
         Me.DspExcavStartTime.Margin = New System.Windows.Forms.Padding(1)
@@ -1531,10 +1531,10 @@ Partial Class frmMain
         Me.DspExcavStartDate.Blink = False
         Me.DspExcavStartDate.BlinkColor = System.Drawing.Color.Red
         Me.DspExcavStartDate.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspExcavStartDate.DataWidth = 141
+        Me.DspExcavStartDate.DataWidth = 151
         Me.DspExcavStartDate.DecimalPlaces = CType(2, Short)
         Me.DspExcavStartDate.FieldName = "開始日"
-        Me.DspExcavStartDate.FieldNameWidth = 125
+        Me.DspExcavStartDate.FieldNameWidth = 115
         Me.DspExcavStartDate.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspExcavStartDate.Location = New System.Drawing.Point(21, 51)
         Me.DspExcavStartDate.Margin = New System.Windows.Forms.Padding(1)
@@ -1543,7 +1543,7 @@ Partial Class frmMain
         Me.DspExcavStartDate.TabIndex = 122
         Me.DspExcavStartDate.Unit = "deg"
         Me.DspExcavStartDate.UnitVisible = False
-        Me.DspExcavStartDate.Value = "216/05/01"
+        Me.DspExcavStartDate.Value = "2016/05/01"
         Me.DspExcavStartDate.ValueType = True
         '
         'DspAssemblyPattern
@@ -1564,7 +1564,7 @@ Partial Class frmMain
         Me.DspAssemblyPattern.TabIndex = 111
         Me.DspAssemblyPattern.Unit = "deg"
         Me.DspAssemblyPattern.UnitVisible = False
-        Me.DspAssemblyPattern.Value = "RC甲1"
+        Me.DspAssemblyPattern.Value = "-------"
         Me.DspAssemblyPattern.ValueType = True
         '
         'DspNextPieceName
@@ -1585,7 +1585,7 @@ Partial Class frmMain
         Me.DspNextPieceName.TabIndex = 110
         Me.DspNextPieceName.Unit = "deg"
         Me.DspNextPieceName.UnitVisible = False
-        Me.DspNextPieceName.Value = "A1-3"
+        Me.DspNextPieceName.Value = "-----"
         Me.DspNextPieceName.ValueType = True
         '
         'DspAddClosetThrustJack
@@ -1606,7 +1606,7 @@ Partial Class frmMain
         Me.DspAddClosetThrustJack.TabIndex = 108
         Me.DspAddClosetThrustJack.Unit = "deg"
         Me.DspAddClosetThrustJack.UnitVisible = False
-        Me.DspAddClosetThrustJack.Value = "24"
+        Me.DspAddClosetThrustJack.Value = "-"
         Me.DspAddClosetThrustJack.ValueType = True
         '
         'DspClosetThrustJack
@@ -1648,7 +1648,7 @@ Partial Class frmMain
         Me.DspPullBackJack.TabIndex = 105
         Me.DspPullBackJack.Unit = "deg"
         Me.DspPullBackJack.UnitVisible = False
-        Me.DspPullBackJack.Value = "19-23"
+        Me.DspPullBackJack.Value = "-"
         Me.DspPullBackJack.ValueType = True
         '
         'DspAssemblyPieace
@@ -1669,7 +1669,7 @@ Partial Class frmMain
         Me.DspAssemblyPieace.TabIndex = 103
         Me.DspAssemblyPieace.Unit = "deg"
         Me.DspAssemblyPieace.UnitVisible = False
-        Me.DspAssemblyPieace.Value = "A2-1"
+        Me.DspAssemblyPieace.Value = "-----"
         Me.DspAssemblyPieace.ValueType = True
         '
         'DspTypeName
@@ -1690,7 +1690,7 @@ Partial Class frmMain
         Me.DspTypeName.TabIndex = 101
         Me.DspTypeName.Unit = "deg"
         Me.DspTypeName.UnitVisible = False
-        Me.DspTypeName.Value = "RC20ST"
+        Me.DspTypeName.Value = "-------"
         Me.DspTypeName.ValueType = True
         '
         'UcnDspDevImg
@@ -2064,6 +2064,7 @@ Partial Class frmMain
         Me.UcnJackDsp.PieceAngle = CType(resources.GetObject("UcnJackDsp.PieceAngle"), System.Collections.Generic.List(Of Single))
         Me.UcnJackDsp.PieceCenterAngle = CType(resources.GetObject("UcnJackDsp.PieceCenterAngle"), System.Collections.Generic.List(Of Single))
         Me.UcnJackDsp.PieceName = CType(resources.GetObject("UcnJackDsp.PieceName"), System.Collections.Generic.List(Of String))
+        Me.UcnJackDsp.PointRLimitOver = False
         Me.UcnJackDsp.Size = New System.Drawing.Size(795, 731)
         Me.UcnJackDsp.TabIndex = 68
         '
