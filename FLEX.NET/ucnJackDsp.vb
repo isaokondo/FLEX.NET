@@ -700,10 +700,10 @@ Public Class ucnJackDsp
                 JackBrush = Brushes.Orange
             End If
 
-
+            'ジャッキ本数により幅を変える
+            Dim wd As Integer = 580 / InitPara.NumberJack
             'ジャッキステータス（色識別の表示)
-            g.FillRectangle(JackBrush, -12, 20, 24, 15) '四角形の中心を０
-
+            g.FillRectangle(JackBrush, -wd, 20, wd * 2, 15) '四角形の中心を０
             'ワールド座標系リセット
             g.ResetTransform()
 
@@ -780,7 +780,7 @@ Public Class ucnJackDsp
         'Dim g As Graphics = Me.CreateGraphics
         '元圧とグループ圧の割合
         Dim GpColor As Color
-        Dim d = MaxRadios * 0.55
+        Dim d As Single = MaxRadios * 0.55
         DrawACircle(Pens.Black, g, CenterPos, d + 5)
 
         Dim i As Integer

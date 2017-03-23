@@ -124,9 +124,17 @@
             UcnGpPvBarGraph.GpFlg = .GroupFlg
             UcnGpPvBarGraph.GpPv = .GroupPv
 
+            '力点座標数値表示
+            UcnJackDsp.FlexPointX = .PointX
+            UcnJackDsp.FlexPointY = .PointY
+
+            UcnJackDsp.FlexPointR = .操作強
+            UcnJackDsp.FlexPointSeater = .操作角
+
+
             '掘進モード／セグメントモードの表示
-            lblMachineMode.Text = IIf(.ExecMode, "掘進", "セグメント") & "モード"
-            lblMachineMode.BackColor = IIf(.ExecMode, Color.Magenta, Color.Aqua)
+            lblMachineMode.Text = IIf(.ExcavMode, "掘進", "セグメント") & "モード"
+            lblMachineMode.BackColor = IIf(.ExcavMode, Color.Magenta, Color.Aqua)
         End With
 
 
@@ -152,12 +160,6 @@
             '自動方向制御ON／OFF
             UcnJackDsp.FlexAutoManual = .AutoDirectionControl
             DspFlexAuto.BitStatus = .AutoDirectionControl
-            '力点座標数値表示
-            UcnJackDsp.FlexPointX = .PointX
-            UcnJackDsp.FlexPointY = .PointY
-
-            UcnJackDsp.FlexPointR = .操作強
-            UcnJackDsp.FlexPointSeater = .操作角
         End With
 
         '圧力調整用フラグ
@@ -263,9 +265,9 @@
         JackMvAuto = New clsCulJackMv ''ジャッキ操作量の演算
         DivCul = New clsThrustDiv ''推力分担
         RefernceDirection = New clsCulKijun '基準方位演算
-        JackManual = New clsJkManualOut 'ジャッキ手動操作出力
         CalcStroke = New clsCalcuStroke   'ロスゼロ時の計算ストローク
         PlcIf = New clsPlcIf 'PLCインターフェース
+        JackManual = New clsJkManualOut 'ジャッキ手動操作出力
         Reduce = New clsReducePress 'ロスゼロ減圧処理
         TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
 
@@ -281,11 +283,11 @@
             .JackGroupPos = InitPara.JackGroupPos
             .NumberJack = InitPara.NumberJack
 
-            .FlexPointX = CtlPara.PointX
-            .FlexPointY = CtlPara.PointY
+            .FlexPointX = PlcIf.PointX
+            .FlexPointY = PlcIf.PointY
 
-            .FlexPointR = CtlPara.操作強
-            .FlexPointSeater = CtlPara.操作角
+            .FlexPointR = PlcIf.操作強
+            .FlexPointSeater = PlcIf.操作角
 
             .DspInitBaseImg()
         End With
@@ -354,6 +356,11 @@
         SegmentDataDsp()
         '掘削開始時刻の取得
         DspExcavStartDay(getExcecStartTime)
+        '姿勢制御自動手動の切替時の処理
+        ControlParameter_FlexAutoManualChange()
+        '計算すtロー演算
+        PlcIf_MesureStrokeChange()
+
     End Sub
     ''' <summary>
     ''' 汎用データ表示項目セット
@@ -665,11 +672,13 @@
     ''' ポイント座標が入力され演算完了したイベント
     ''' </summary>
     Private Sub UcnJackDsp_ManualPointChange() Handles UcnJackDsp.ManualPointChange
-        With CtlPara
+        With PlcIf
             .PointX = UcnJackDsp.FlexPointX
             .PointY = UcnJackDsp.FlexPointY
 
             JackManual.PutPointXY(.PointX, .PointY)
+
+            .PointWrite()
 
         End With
 

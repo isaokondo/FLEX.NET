@@ -15,6 +15,40 @@ Friend Class clsCulMoment
     Private _MomentR As Single ''合成モーメント
     Private _Thrust As Single ''推力
 
+    '入力
+    Private _GroupPv As Single()
+    Private _JackSel As Boolean()
+    Private _FlexControlOn As Boolean
+    Private _JkPress As Single
+    Private _ExcaStatus As Integer
+
+    Public WriteOnly Property GroupPv As Single()
+        Set(value As Single())
+            _GroupPv = value
+        End Set
+    End Property
+    Public WriteOnly Property JackSel As Boolean()
+        Set(value As Boolean())
+            _JackSel = value
+        End Set
+    End Property
+
+    Public WriteOnly Property FlexControlOn As Boolean
+        Set(value As Boolean)
+            _FlexControlOn = value
+        End Set
+    End Property
+    Public WriteOnly Property JkPress As Single
+        Set(value As Single)
+            _JkPress = value
+        End Set
+    End Property
+    Public WriteOnly Property ExcaStatus As Integer
+        Set(value As Integer)
+            _ExcaStatus = value
+        End Set
+    End Property
+
 
     Public ReadOnly Property MomentX() As Single
         Get
@@ -59,29 +93,29 @@ Friend Class clsCulMoment
         _Thrust = 0
 
         ''掘進中以外は０に
-        If PlcIf.ExcaStatus <> cKussin Then Exit Sub
+        If _ExcaStatus <> cKussin Then Exit Sub
 
 
         Dim i As Short
         For i = 0 To InitPara.NumberJack - 1
-            If PlcIf.JackSel(i) Then
-                Dim GpPv As Single = PlcIf.GroupPv(InitPara.JackGroupPos(i) - 1)
+            If _JackSel(i) Then
+                Dim GpPv As Single = _GroupPv(InitPara.JackGroupPos(i) - 1)
                 ''水平方向のモーメントの演算    01/09/11 変更
                 _MomentX +=
-                    Cos(InitPara.FaiJack(i) / 180 * PI) * GpPv / InitPara.JackMaxOilPres * InitPara.JackPower * InitPara.JackRadius
+                    Cos(InitPara.FaiJack(i).ToRad) * GpPv / InitPara.JackMaxOilPres * InitPara.JackPower * InitPara.JackRadius
                 ''鉛直方向のモーメントの演算    01/09/11 変更
                 _MomentY +=
-                    Sin(InitPara.FaiJack(i) / 180 * PI) * GpPv / InitPara.JackMaxOilPres * InitPara.JackPower * InitPara.JackRadius
+                    Sin(InitPara.FaiJack(i).ToRad) * GpPv / InitPara.JackMaxOilPres * InitPara.JackPower * InitPara.JackRadius
                 ''推力の演算
-                If PlcIf.FlexControlOn Then
+                If _FlexControlOn Then
                     '' 01/09/04 変更    神谷部長指摘による
                     _Thrust +=
                         GpPv / InitPara.JackMaxOilPres * InitPara.JackPower
                 Else
                     ''04/05/11 FLEXモードでないときの推力演算追加
-                    If PlcIf.JackSel(i) Then
+                    If _JackSel(i) Then
                         _Thrust +=
-                            InitPara.JackPower * PlcIf.JkPress / InitPara.JackMaxOilPres
+                            InitPara.JackPower * _JkPress / InitPara.JackMaxOilPres
                     End If
 
                 End If

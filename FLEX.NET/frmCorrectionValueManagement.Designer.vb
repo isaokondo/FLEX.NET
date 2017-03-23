@@ -669,7 +669,7 @@ Partial Class frmCorrectionValueManagement
         Me.UcnSpredCompnent14.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.UcnSpredCompnent14.ForeColor = System.Drawing.Color.Black
         Me.UcnSpredCompnent14.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.UcnSpredCompnent14.Location = New System.Drawing.Point(471, 37)
+        Me.UcnSpredCompnent14.Location = New System.Drawing.Point(471, 38)
         Me.UcnSpredCompnent14.Margin = New System.Windows.Forms.Padding(2)
         Me.UcnSpredCompnent14.Name = "UcnSpredCompnent14"
         Me.UcnSpredCompnent14.Size = New System.Drawing.Size(420, 21)

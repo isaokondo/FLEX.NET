@@ -32,7 +32,7 @@ Public Class clsPlcIf
 
     Private _JackStatus() As Short      ''ジャッキのステータス
 
-    Private _execMode As Boolean    'マシン掘進モード
+    Private _excavMode As Boolean    'マシン掘進モード
     Private _segmentMode As Boolean 'マシンセグメントモード
 
     Private _flexControlOn As Boolean         ''FLEX制御ON
@@ -59,6 +59,15 @@ Public Class clsPlcIf
     Private _CopyAngle As Integer   'コピー角度
     Private _CopyStroke1 As Integer 'コピーストローク1
     Private _CopyStroke2 As Integer 'コピーストローク1
+
+    ''力点座標
+    Private _PointX As Single = 0 ''Ｘ座標
+    Private _PointY As Single = 0 ''Ｙ座標
+
+    Private _操作角 As Single
+    Private _操作強 As Single
+
+
 
 
     'パラメータ　Rレジスタ
@@ -159,6 +168,12 @@ Public Class clsPlcIf
     ''' </summary>
     Public Event LosZeroModeChange()
 
+    ''' <summary>
+    ''' 掘進モード／セグメントモードの切り替え
+    ''' </summary>
+    ''' <param name="Mode">TRUE:掘進モード　FALSE：セグメントモード</param>
+    Public Event ExcavModeChange(Mode As Boolean)
+
 
     Public AnalogTag As clsTag
     Public ParameterTag As clsTag
@@ -188,8 +203,52 @@ Public Class clsPlcIf
         End Get
     End Property
 
+    Public Property PointX As Single
+        Get
+            Return _PointX
+        End Get
+        Set(value As Single)
+            If value <> _PointX Then
+                _PointX = value
+                AnalogPlcWrite("ポイントＸ", _PointX)
+            End If
+        End Set
+    End Property
+    Public Property PointY As Single
+        Get
+            Return _PointY
+        End Get
+        Set(value As Single)
+            If value <> _PointY Then
+                _PointY = value
+                AnalogPlcWrite("ポイントＹ", _PointY)
+            End If
+        End Set
+    End Property
 
+    Public Property 操作角 As Single
+        Get
+            Return _操作角
+        End Get
+        Set(value As Single)
+            If value <> _操作角 Then
+                _操作角 = value
+                AnalogPlcWrite("操作角", _操作角)
+            End If
+        End Set
+    End Property
 
+    Public Property 操作強 As Single
+        Get
+            Return _操作強
+        End Get
+        Set(value As Single)
+            If value <> _操作強 Then
+                _操作強 = value
+                AnalogPlcWrite("操作強", _操作強)
+            End If
+        End Set
+    End Property
 
     Public ReadOnly Property Gyro() As Single
         Get
@@ -411,9 +470,9 @@ Public Class clsPlcIf
     ''' 掘進モード
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ExecMode As Boolean
+    Public ReadOnly Property ExcavMode As Boolean
         Get
-            Return _execMode
+            Return _excavMode
         End Get
     End Property
     ''' <summary>
@@ -426,7 +485,7 @@ Public Class clsPlcIf
         End Get
     End Property
     ''' <summary>
-    ''' 掘進ストローク
+    ''' 掘進ストローク(未使用)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property MaxExcavingStroke As Short
@@ -738,17 +797,25 @@ Public Class clsPlcIf
         _excaStatus = AnalogPlcRead("掘進ステータス")
         _AssemblyPieceNo = AnalogPlcRead("組立ピース")
         _RingNo = ParameterPlcRead("RingNo")
-
+        PreRealStroke = AnalogPlcRead("掘進ストローク")
         PreExcaStatus = _excaStatus
         _LosZeroMode = DigtalPlcRead("同時施工モード")
+
+        _excavMode = DigtalPlcRead("掘進モード")
+        _segmentMode = DigtalPlcRead("セグメントモード")
 
         'PLC読み込みデータサイズ確定
         'ReDim AnalogComData(AnalogTag.DeviceSize)
         'ReDim ParmterComData(ParameterTag.DeviceSize)
 
-        RaiseEvent ExcavationStatusChange(0, 0)
-        RaiseEvent LineDistanceChage()
 
+
+        PLC_Read()
+        'TODO:操作権なしの時は、タイマで常時読み込み
+        _PointX = _EngValue("ポイントＸ")
+        _PointY = _EngValue("ポイントＹ")
+        _操作強 = _EngValue("操作強")
+        _操作角 = _EngValue("操作角")
 
         TimerRun()
 
@@ -756,6 +823,9 @@ Public Class clsPlcIf
 
 
     Public Sub TimerRun()
+
+        'RaiseEvent ExcavationStatusChange(0, 0)
+        'RaiseEvent LineDistanceChage()
 
         Dim timer As Timer = New Timer()
         AddHandler timer.Tick, New EventHandler(AddressOf PLC_Read)
@@ -765,7 +835,7 @@ Public Class clsPlcIf
         'RaiseEvent MesureStrokeChange()
     End Sub
 
-    Public Sub PLC_Read(sender As Object, e As EventArgs)
+    Public Sub PLC_Read()
 
         'Call PLC_Open() 'オープン処理
 
@@ -870,7 +940,7 @@ Public Class clsPlcIf
                 frmMain.tmrDataDsp.Enabled = True
 
             Else    'エラー発生
-                RaiseEvent PLCErrOccur(sender, e, "アナログ読込エラー", iReturnCode)
+                RaiseEvent PLCErrOccur(Me, New EventArgs, "アナログ読込エラー", iReturnCode)
             End If
 
 
@@ -916,7 +986,7 @@ Public Class clsPlcIf
                 End If
 
             Else    'エラー発生
-                RaiseEvent PLCErrOccur(sender, e, "パラメータ読込エラー", iReturnCode)
+                RaiseEvent PLCErrOccur(Me, New EventArgs, "パラメータ読込エラー", iReturnCode)
             End If
 
 
@@ -950,27 +1020,37 @@ Public Class clsPlcIf
                     _gyiroError = bit(DigtalTag.TagData("ジャイロ異常").OffsetAddress)
 
                     '掘進モード、セグメントモード 
-                    _execMode = bit(DigtalTag.TagData("掘進モード").OffsetAddress)
-                    _segmentMode = bit(DigtalTag.TagData("セグメントモード").OffsetAddress)
+                    Dim bf_excvMode As Boolean = _excavMode
+                    _excavMode = bit(DigtalTag.TagData("掘進モード").OffsetAddress)
+                    If _excavMode And Not bf_excvMode Then
+                        '掘進モードに変わったとき
+                        RaiseEvent ExcavModeChange(True)
+                    End If
 
+                    Dim bf_segmentoMode As Boolean = _segmentMode
+                    _segmentMode = bit(DigtalTag.TagData("セグメントモード").OffsetAddress)
+                    If _segmentMode And Not bf_excvMode Then
+                        'セグメントモードに変わったとき
+                        RaiseEvent ExcavModeChange(True)
+                    End If
 
                     Dim tmp As Boolean
-                    '同時施工モード
-                    tmp = _LosZeroMode
-                    _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
-                    If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
-                    _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
-                    tmp = _MachineComErr
-                    _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
-                    If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(sender, e, "シールドマシン伝送異常が発生しました。", 0)
+                        '同時施工モード
+                        tmp = _LosZeroMode
+                        _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
+                        If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
+                        _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
+                        tmp = _MachineComErr
+                        _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
+                        If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(Me, New EventArgs, "シールドマシン伝送異常が発生しました。", 0)
 
-                    tmp = LosZeroCancel
-                    LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
-                    If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
-                End If
+                        tmp = LosZeroCancel
+                        LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
+                        If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
+                    End If
 
-            Else    'エラー発生
-                    RaiseEvent PLCErrOccur(sender, e, "デジタル読込エラー", iReturnCode)
+                Else    'エラー発生
+                RaiseEvent PLCErrOccur(Me, New EventArgs, "デジタル読込エラー", iReturnCode)
             End If
         Catch exException As Exception
             '例外処理	
@@ -1020,7 +1100,14 @@ Public Class clsPlcIf
             com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
 
 
+
+
         'モーメント推力の演算
+        CulcMoment.ExcaStatus = _excaStatus
+        CulcMoment.FlexControlOn = _flexControlOn
+        CulcMoment.GroupPv = _groupPv
+        CulcMoment.JackSel = _jackSelect
+        CulcMoment.JkPress = _jkPress
         CulcMoment.MomentCul()
 
 
@@ -1082,6 +1169,7 @@ Public Class clsPlcIf
             End With
         Catch ex As Exception
             MsgBox($"GetAnalogDataでエラー{vbCrLf}{ex.Message}{vbCrLf}フィールド名:{FieldName}{vbCrLf}{Environment.StackTrace.ToString}")
+            Return 0
         End Try
     End Function
     ''' <summary>
@@ -1213,7 +1301,16 @@ Public Class clsPlcIf
     Public Function ParameterPlcRead(TagNmae As String) As Integer
         Return PLC_Read(ParameterTag.TagData(TagNmae).Address)
     End Function
-
+    ''' <summary>
+    ''' 作用点情報書き込み
+    ''' </summary>
+    Public Sub PointWrite()
+        'AnalogPlcWrite("ポイントＸ", _PointX)
+        'AnalogPlcWrite("ポイントＹ", _PointY)
+        'AnalogPlcWrite("操作強", _操作強)
+        'AnalogPlcWrite("操作角", _操作角)
+        ''Debug.WriteLine($"{Now} {_PointX}")
+    End Sub
 
 
 
@@ -1230,7 +1327,7 @@ Public Class clsPlcIf
             Return Value
         Catch exException As Exception
             '例外処理	
-            MessageBox.Show(exException.Message, "PLC_Write", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(exException.Message, "PLC_Read", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return 0
         End Try
     End Function

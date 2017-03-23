@@ -42,14 +42,13 @@
     Private Sub frmCorrectionValueManagement_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
 
-        With CtlPara
-            ConfirmRingNo.Value = .測量ポイントリング番号
-            TipDistance.Value = .測量ポイント総距離
-            'PuchUpStroke.Value=.
-            HorCorrentionValue.Value = .水平入力補正値
-            VerCorrentionValue.Value = .鉛直入力補正値
+        ConfirmRingNo.Value = CtlPara.測量ポイントリング番号
+        TipDistance.Value = CtlPara.測量ポイント総距離
 
-        End With
+        PuchUpStroke.Value = SegAsmblyData.RingLastStroke(CtlPara.測量ポイントリング番号)
+        HorCorrentionValue.Value = CtlPara.水平入力補正値
+        VerCorrentionValue.Value = CtlPara.鉛直入力補正値
+
 
 
         DspUpdate()

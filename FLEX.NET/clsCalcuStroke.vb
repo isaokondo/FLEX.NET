@@ -205,7 +205,7 @@ Public Class clsCalcuStroke
                     / 180 * Math.PI)
                 End If
             Next
-            If PlcIf.ExecMode AndAlso _mesureCalcJackStroke(mjJkNo) >= CtlPara.StartJackStroke(mjJkNo) Then
+            If PlcIf.ExcavMode AndAlso _mesureCalcJackStroke(mjJkNo) >= CtlPara.StartJackStroke(mjJkNo) Then
                 '掘進ストローク 掘進モードのときのみ演算
                 _MesureCalcLogicalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - CtlPara.StartJackStroke(mjJkNo)
             End If
@@ -218,10 +218,14 @@ Public Class clsCalcuStroke
         Dim CalcLogicalSt As New clsGetAvg(_MesureCalcLogicalStroke)
         _CalcAveLogicalStroke = CalcLogicalSt.AvgData
 
-
-        ''平均計測ジャッキスピードの演算
-        Dim CalcSpeed As New clsGetAvg(_mesureJackSpeed)
-        _MesureAveSpeed = CalcSpeed.AvgData
+        '掘進中以外はゼロ
+        If PlcIf.ExcaStatus = cKussin Then
+            ''平均計測ジャッキスピードの演算
+            Dim CalcSpeed As New clsGetAvg(_mesureJackSpeed)
+            _MesureAveSpeed = CalcSpeed.AvgData
+        Else
+            _MesureAveSpeed = 0
+        End If
 
 
     End Sub

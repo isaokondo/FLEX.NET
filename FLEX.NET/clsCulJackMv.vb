@@ -299,43 +299,43 @@ Friend Class clsCulJackMv
 
 
     ''03/01/20追加 同時施工用
-    Public Property 操作角() As Double
+    Public Property 操作角() As Single
         Get
             Return mdbl操作角
         End Get
-        Set(ByVal Value As Double)
+        Set(ByVal Value As Single)
             mdbl操作角 = Value
         End Set
     End Property
 
 
     ''02/11/04追加
-    Public Property 操作強() As Double
+    Public Property 操作強() As Single
         Get
             Return mdbl操作強
         End Get
-        Set(ByVal Value As Double)
+        Set(ByVal Value As Single)
             mdbl操作強 = Value
         End Set
     End Property
 
 
-    Public Property PointX() As Double
+    Public Property PointX() As Single
         Get
             Return mdblPointX
         End Get
-        Set(ByVal Value As Double)
+        Set(ByVal Value As Single)
             mdblPointX = Value
         End Set
     End Property
 
 
 
-    Public Property PointY() As Double
+    Public Property PointY() As Single
         Get
             Return mdblPointY
         End Get
-        Set(ByVal Value As Double)
+        Set(ByVal Value As Single)
             mdblPointY = Value
         End Set
     End Property
@@ -407,8 +407,8 @@ Friend Class clsCulJackMv
         ' 機能      :ジャッキ操作量の算出
         '
         ' 備考      :自動方向制御の時に一秒ごとに呼び出される
+
         'TODO:エラー処理検討
-        'On Error GoTo ErrTrap
 
         If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
@@ -561,13 +561,7 @@ Friend Class clsCulJackMv
 
         RaiseEvent AutoDirectionCulc()
 
-        'Debug.Print mdblPointX, mdblPointY
-        Exit Sub
 
-ErrTrap:
-        ''立ち上げ時に掘進してる場合の処理
-        If Err.Number = 11 Then Exit Sub
-        Resume Next
 
     End Sub
 

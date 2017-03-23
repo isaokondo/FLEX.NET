@@ -52,20 +52,20 @@ Friend Class clsThrustDiv
     End Property
 
 
-    Public Property 操作強() As Double
+    Public Property 操作強() As Single
         Get
             Return _操作強
         End Get
-        Set(ByVal Value As Double)
+        Set(ByVal Value As Single)
             _操作強 = Value
         End Set
     End Property
 
-    Public Property 操作角() As Double
+    Public Property 操作角() As Single
         Get
             Return _操作角
         End Get
-        Set(ByVal Value As Double)
+        Set(ByVal Value As Single)
             _操作角 = Value
         End Set
     End Property

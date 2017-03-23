@@ -169,6 +169,9 @@ Module mdlFLEX
             JackManual.ManualOn = False
             WriteEventData("掘進中断しました", Color.Black)
             ElapsedTime.ExcavationStop()
+            '最終ストロークをセグメント割付データに書き込み
+            SegAsmblyData.RingLastStrokeUpdate(PlcIf.RingNo, CalcStroke.MesureCalcAveJackStroke)
+
         End If
 
         '待機中
@@ -199,14 +202,14 @@ Module mdlFLEX
         '掘進中で手動方向制御
         If NowStatus = cKussin And CtlPara.AutoDirectionControl = False Then
             '保持してる作用点
-            JackManual.PutPointXY(CtlPara.PointX, CtlPara.PointY)
+            JackManual.PutPointXY(PlcIf.PointX, PlcIf.PointY)
         End If
 
         '掘進してないときは、自動方向制御停止
         If NowStatus <> cKussin Then JackMvAuto.MvAutoStop()
 
         If NowStatus = cKussin And CtlPara.AutoDirectionControl Then
-            'JackMvAuto.MvAutoStart()
+            JackMvAuto.MvAutoStart()
         End If
 
 
@@ -361,7 +364,7 @@ Module mdlFLEX
     ''' 計測ストロークの変化時
     ''' ステータス変化時
     ''' </summary>
-    Private Sub PlcIf_MesureStrokeChange() Handles PlcIf.MesureStrokeChange, PlcIf.ExcavationStatusChange
+    Public Sub PlcIf_MesureStrokeChange() Handles PlcIf.MesureStrokeChange, PlcIf.ExcavationStatusChange
         CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
         CalcStroke.MesureJackSpeed = PlcIf.MesureJackSpeed
         CalcStroke.Calc() '計算ストローク演算
@@ -422,22 +425,23 @@ Module mdlFLEX
                 '力点自動
                 DivCul.操作角 = JackMvAuto.操作角
                 DivCul.操作強 = JackMvAuto.操作強
-                CtlPara.PointX = JackMvAuto.PointX
-                CtlPara.PointY = JackMvAuto.PointY
-                CtlPara.操作角 = JackMvAuto.操作角
-                CtlPara.操作強 = JackMvAuto.操作強
+                PlcIf.PointX = JackMvAuto.PointX
+                PlcIf.PointY = JackMvAuto.PointY
+                PlcIf.操作角 = JackMvAuto.操作角
+                PlcIf.操作強 = JackMvAuto.操作強
             Else
                 '力点手動操作時
                 DivCul.操作角 = JackManual.操作角
                 DivCul.操作強 = JackManual.操作強
-                CtlPara.操作角 = JackManual.操作角
-                CtlPara.操作強 = JackManual.操作強
+                PlcIf.操作角 = JackManual.操作角
+                PlcIf.操作強 = JackManual.操作強
             End If
             'TODO:ジャッキステータスを追加するように
             '掘進モードをセット
             DivCul.OnJack = PlcIf.JackExecMode
             DivCul.sbCul() ''推力分担率の演算
-
+            '力点の更新
+            PlcIf.PointWrite()
 
         End With
 
@@ -543,11 +547,11 @@ Module mdlFLEX
     ''' 姿勢制御自動手動の切替時の処理
     ''' </summary>
     ''' 
-    Private Sub ControlParameter_FlexAutoManualChange() Handles CtlPara.FlexAutoManualChange ', PlcIf.ExcavationStatusChange
+    Public Sub ControlParameter_FlexAutoManualChange() Handles CtlPara.FlexAutoManualChange ', PlcIf.ExcavationStatusChange
         '掘進中以外はスキップ
         'If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
-        If CtlPara.AutoDirectionControl Then
+        If PlcIf.FlexControlOn AndAlso CtlPara.AutoDirectionControl Then
             JackManual.ManualOn = False
             If PlcIf.ExcaStatus = cKussin Then
                 WriteEventData("自動方向制御開始しました。", Color.Orange)
@@ -574,7 +578,7 @@ Module mdlFLEX
             End With
 
         Else
-            If PlcIf.ExcaStatus = cKussin Then
+            If PlcIf.FlexControlOn AndAlso PlcIf.ExcaStatus = cKussin Then
                 WriteEventData("方向制御 手動モードに変わりました", Color.Blue)
             End If
             ''自動演算停止

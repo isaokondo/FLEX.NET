@@ -66,6 +66,18 @@ Friend Class clsSegmentAssembly
         '             " WHERE リング番号 = " & intRingNo & ";")
         'End Set
     End Property
+    ''' <summary>
+    ''' 掘進終了のストローク更新
+    ''' </summary>
+    ''' <param name="RingNo"></param>
+    ''' <param name="Stroke"></param>
+    Public Sub RingLastStrokeUpdate(RingNo As Integer, Stroke As Short)
+
+        _RingLastStroke(RingNo) = Stroke
+        ExecuteSqlCmd($"UPDATE flexセグメント組立データ SET 掘進終了ストローク ='{Stroke}'
+            WHERE リング番号 = '{RingNo}'")
+    End Sub
+
     Public ReadOnly Property AssenblyPtnLst As Dictionary(Of Short, String)
         Get
             Return _AssenblyPtnDic

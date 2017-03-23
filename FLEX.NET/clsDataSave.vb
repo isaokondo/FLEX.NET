@@ -101,6 +101,12 @@ Friend Class clsDataSave
                 Data(ColumnList.IndexOf("同時施工可")) = IIf(.LosZeroEnable, 1, 0)
                 Data(ColumnList.IndexOf("ジャイロ異常")) = IIf(.GyiroError, 1, 0)
 
+                Data(ColumnList.IndexOf("力点Ｘ")) = .PointX.ToString("F3")
+                Data(ColumnList.IndexOf("力点Ｙ")) = .PointY.ToString("F3")
+
+                Data(ColumnList.IndexOf("片押しγ")) = .操作強.ToString("F4")
+                Data(ColumnList.IndexOf("方向θ")) = .操作角.ToString("F4")
+
             End With
 
 
@@ -155,11 +161,6 @@ Friend Class clsDataSave
 
             With CtlPara
 
-                Data(ColumnList.IndexOf("力点Ｘ")) = .PointX.ToString("F3")
-                Data(ColumnList.IndexOf("力点Ｙ")) = .PointY.ToString("F3")
-
-                Data(ColumnList.IndexOf("片押しγ")) = .操作強.ToString("F4")
-                Data(ColumnList.IndexOf("方向θ")) = .操作角.ToString("F4")
 
                 Data(ColumnList.IndexOf("測量ポイント確認リング")) = .測量ポイントリング番号
                 Data(ColumnList.IndexOf("測量ポイント先端距離")) = .測量ポイント総距離

@@ -18,6 +18,9 @@ Friend Class clsJkManualOut
 
 
     Public Sub New()
+        '初期値はデータベースより
+        _PointX = PlcIf.PointX
+        _PointY = PlcIf.PointY
         '手動操作時は、1秒ごとに演算
         AddHandler Timer.Tick, New EventHandler(AddressOf sbCul)
         Timer.Interval = 1000   '1秒ごとの処理
@@ -53,7 +56,7 @@ Friend Class clsJkManualOut
     End Property
 
 
-    Public ReadOnly Property PointY() As Double
+    Public ReadOnly Property PointY() As Single
         Get
             PointY = _PointY
         End Get
@@ -61,7 +64,7 @@ Friend Class clsJkManualOut
 
 
 
-    Public ReadOnly Property PointX() As Double
+    Public ReadOnly Property PointX() As Single
         Get
             PointX = _PointX
         End Get

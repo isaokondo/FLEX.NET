@@ -15,12 +15,12 @@ Public Class clsControlParameter
     Private _偏差角許容値 As Single ''偏差角許容値
     Private _最低制御圧力 As Single
 
-    ''力点座標
-    Private _PointX As Double = 0 ''Ｘ座標
-    Private _PointY As Double = 0 ''Ｙ座標
+    '力点座標
+    'Private _PointX As Double = 0 ''Ｘ座標
+    'Private _PointY As Double = 0 ''Ｙ座標
 
-    Private _操作角 As Double
-    Private _操作強 As Double
+    'Private _操作角 As Double
+    'Private _操作強 As Double
 
 
 
@@ -224,45 +224,45 @@ Public Class clsControlParameter
         End Set
     End Property
     'todo:力点と操作角、操作強を同時に更新したい！
-    Public Property PointX() As Single
-        Get
-            Return _PointX
-        End Get
-        Set(ByVal Value As Single)
-            _PointX = Value
-            Call sbUpdateData(Value)
-        End Set
-    End Property
+    'Public Property PointX() As Single
+    '    Get
+    '        Return _PointX
+    '    End Get
+    '    Set(ByVal Value As Single)
+    '        _PointX = Value
+    '        Call sbUpdateData(Value)
+    '    End Set
+    'End Property
 
-    Public Property PointY() As Single
-        Get
-            Return _PointY
-        End Get
-        Set(ByVal Value As Single)
-            _PointY = Value
-            Call sbUpdateData(Value)
-        End Set
-    End Property
+    'Public Property PointY() As Single
+    '    Get
+    '        Return _PointY
+    '    End Get
+    '    Set(ByVal Value As Single)
+    '        _PointY = Value
+    '        Call sbUpdateData(Value)
+    '    End Set
+    'End Property
 
-    Public Property 操作角 As Single
-        Get
-            Return _操作角
-        End Get
-        Set(value As Single)
-            _操作角 = value
-            Call sbUpdateData(value)
-        End Set
-    End Property
+    'Public Property 操作角 As Single
+    '    Get
+    '        Return _操作角
+    '    End Get
+    '    Set(value As Single)
+    '        _操作角 = value
+    '        Call sbUpdateData(value)
+    '    End Set
+    'End Property
 
-    Public Property 操作強 As Single
-        Get
-            Return _操作強
-        End Get
-        Set(value As Single)
-            _操作強 = value
-            Call sbUpdateData(value)
-        End Set
-    End Property
+    'Public Property 操作強 As Single
+    '    Get
+    '        Return _操作強
+    '    End Get
+    '    Set(value As Single)
+    '        _操作強 = value
+    '        Call sbUpdateData(value)
+    '    End Set
+    'End Property
 
     Public Property 片押し制限フラグ As Boolean
         Get
@@ -856,8 +856,8 @@ Public Class clsControlParameter
         _最大全開出力時の目標圧力 = chk.GetValue("最大全開出力時の目標圧力")
         _最低制御圧力 = chk.GetValue("最低制御圧力")
         _偏差角許容値 = chk.GetValue("偏差角許容値")
-        _PointX = chk.GetValue("PointX")
-        _PointY = chk.GetValue("PointY")
+        '_PointX = chk.GetValue("PointX")
+        '_PointY = chk.GetValue("PointY")
         _片押しR制限 = chk.GetValue("片押しR制限値")
         _圧力許容値 = chk.GetValue("圧力許容値")
         _片押し制限フラグ = fnBoolean(chk.GetValue("片押し制限フラグ"))
@@ -935,10 +935,6 @@ Public Class clsControlParameter
 
     End Sub
 
-    Private Sub sbUpdateData(value As Dictionary(Of Short, String))
-        'TODO:これから
-        MsgBox("'TODO:これから")
-    End Sub
 
     Private Sub sbUpdateData(ByRef value As Object)
         '呼び出し元のプロパティをフィールド名に

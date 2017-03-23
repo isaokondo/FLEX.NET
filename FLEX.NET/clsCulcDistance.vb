@@ -59,7 +59,7 @@ Friend Class clsCulcDistance
     End Property
 
 
-    Private Function fnGetHoseiSegmentWidth(ByVal dblStartDis As Double, ByVal dblLastDis As Double) As Double
+    Private Function GetHoseiSegmentWidth(ByVal dblStartDis As Double, ByVal dblLastDis As Double) As Double
         ' @(f)
         '
         ' 機能      :セグメント幅の補正
@@ -111,10 +111,10 @@ Friend Class clsCulcDistance
                     For i = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 2)
                         'SegMakDat.RingNo = intCnt
                         mdbl掘進総距離 +=
-                             fnGetHoseiSegmentWidth(mdbl掘進総距離, .TypeData(i).CenterWidth)
+                             GetHoseiSegmentWidth(mdbl掘進総距離, .TypeData(i).CenterWidth)
                     Next i
 
-                    mdbl掘進総距離 -= .RingLastStroke(mint測量ポイントリング番号) / 1000 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .RingLastStroke(CShort(mint現在のリング番号 - 1)) / 1000)
+                    mdbl掘進総距離 -= .RingLastStroke(mint測量ポイントリング番号) / 1000 + GetHoseiSegmentWidth(mdbl掘進総距離, .RingLastStroke(CShort(mint現在のリング番号 - 1)) / 1000)
 
                 End With
             End If
@@ -125,7 +125,7 @@ Friend Class clsCulcDistance
                 If mblnChangeFlg Then ''リング番号、測量ポイントのリング番号および総距離が変化した時のみ演算　負荷削減のため
                     For i = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 1)
                         'SegMakDat.RingNo = intCnt
-                        mdbl掘進総距離 = mdbl掘進総距離 + fnGetHoseiSegmentWidth(mdbl掘進総距離, .TypeData(i).CenterWidth)
+                        mdbl掘進総距離 += GetHoseiSegmentWidth(mdbl掘進総距離, .TypeData(i).CenterWidth)
                     Next i
                     mdbl現リング総距離 = mdbl掘進総距離
                     mblnChangeFlg = False
@@ -133,7 +133,7 @@ Friend Class clsCulcDistance
                     mdbl掘進総距離 = mdbl現リング総距離
                 End If
 
-                mdbl掘進総距離 = mdbl掘進総距離 - .RingLastStroke(mint測量ポイントリング番号) / 1000 + fnGetHoseiSegmentWidth(mdbl掘進総距離, PlcIf.MaxExcavingStroke / 1000)
+                mdbl掘進総距離 += - .RingLastStroke(mint測量ポイントリング番号) / 1000 + GetHoseiSegmentWidth(mdbl掘進総距離, CalcStroke.MesureCalcAveJackStroke / 1000)
             End With
 
         End If

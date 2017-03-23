@@ -168,7 +168,7 @@ Public Class clsDataBase
             MsgBox($"データベース読込エラー
             {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}　FLEXを終了します  ", vbCritical)
             Application.Exit()
-
+            Return Nothing
         End Try
     End Function
 
