@@ -1029,9 +1029,9 @@ Public Class clsPlcIf
 
                     Dim bf_segmentoMode As Boolean = _segmentMode
                     _segmentMode = bit(DigtalTag.TagData("セグメントモード").OffsetAddress)
-                    If _segmentMode And Not bf_excvMode Then
+                    If _segmentMode And Not bf_segmentoMode Then
                         'セグメントモードに変わったとき
-                        RaiseEvent ExcavModeChange(True)
+                        RaiseEvent ExcavModeChange(False)
                     End If
 
                     Dim tmp As Boolean

@@ -554,7 +554,7 @@ Module mdlFLEX
         If PlcIf.FlexControlOn AndAlso CtlPara.AutoDirectionControl Then
             JackManual.ManualOn = False
             If PlcIf.ExcaStatus = cKussin Then
-                WriteEventData("自動方向制御開始しました。", Color.Orange)
+                WriteEventData("自動方向制御開始しました。", Color.Blue)
             End If
             'tmrAutoDirect.Enabled = False
             'TODO:自動手動切替時しかPID定数が反映されてない！
@@ -696,5 +696,9 @@ Module mdlFLEX
 
         g.FillEllipse(pen, rect)
 
+    End Sub
+
+    Private Sub PlcIf_ExcavModeChange(Mode As Boolean) Handles PlcIf.ExcavModeChange
+        WriteEventData(IIf(Mode, "掘進", "セグメント") & "モードになりました。", Color.DarkMagenta)
     End Sub
 End Module
