@@ -24,6 +24,48 @@ Public Class ucnNumEdit
     ''' </remarks>
     Private _SelectItem As String
 
+    ''' <summary>
+    ''' ツールチップタイトル
+    ''' </summary>
+    Private _ttTile As String = ""
+    ''' <summary>
+    ''' ツールチップメッセージ
+    ''' </summary>
+    Private _ttMsg As String = ""
+
+    Private toolTip As New System.Windows.Forms.ToolTip()
+    <Browsable(True), Description("ツールチップタイトル")>
+    Public Property ttTile As String
+        Get
+            Return _ttTile
+        End Get
+        Set(value As String)
+            _ttTile = value
+            ToolTipSet()
+        End Set
+    End Property
+    <Browsable(True), Description("ツールチップメッセージ")>
+    Public Property ttMsg As String
+        Get
+            Return _ttMsg
+        End Get
+        Set(value As String)
+            _ttMsg = value
+            ToolTipSet()
+        End Set
+    End Property
+
+
+    Private Sub ToolTipSet()
+        toolTip.IsBalloon = True
+        toolTip.SetToolTip(lblFieldName, _ttMsg)
+        toolTip.SetToolTip(ComboBox, _ttMsg)
+        toolTip.SetToolTip(numUD, _ttMsg)
+        toolTip.SetToolTip(lblUnit, _ttMsg)
+
+    End Sub
+
+
     Public Enum InputMethod As Short   '選択方式 or 数値入力
         ''' <summary>
         ''' 数値入力
@@ -223,6 +265,9 @@ Public Class ucnNumEdit
         RaiseEvent ValueChanged(sender, e)
     End Sub
 
+
+
+
     Public Sub New()
 
         ' この呼び出しはデザイナーで必要です。
@@ -232,7 +277,7 @@ Public Class ucnNumEdit
 
         numUDDefPointX = numUD.Location.X
         lblUnitDefPointX = lblUnit.Location.X
-
+        toolTip.IsBalloon = True
 
     End Sub
 

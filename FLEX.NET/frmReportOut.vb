@@ -335,40 +335,70 @@ Public Class clsReportDb
                 SUM(CASE WHEN `同時施工モード`='1' THEN 1 ELSE 0 END) AS LOSZEROMODE 
                 FROM flex掘削データ  WHERE `リング番号`='{RingNo}' ORDER BY 時間")
 
-        'While RingRpt.Read
-        For Each t As DataRow In RingRpt.Rows
-            sheet.Range("掘進開始時刻").Value = t.Item(0)
-            sheet.Range("掘進完了時刻").Value = t.Item(1)
-            sheet.Range("掘進ストローク").Value = t.Item(2)
-            sheet.Range("掘進総距離").Value = t.Item(3)
-            LastStroke = t.Item(2)
-            '掘進時間の算出（中断時間を含めない）単位（分）
-            Dim tStt As DateTime = DateTime.Parse(t.Item(0))
-            Dim tLst As DateTime = DateTime.Parse(t.Item(1))
-            ExecTime = tLst.Subtract(tStt).TotalMinutes
+        sheet.Range("掘進開始時刻").Value = RingRpt.Rows(0).Item(0)
+        sheet.Range("掘進完了時刻").Value = RingRpt.Rows(0).Item(1)
+            sheet.Range("掘進ストローク").Value = RingRpt.Rows(0).Item(2)
+            sheet.Range("掘進総距離").Value = RingRpt.Rows(0).Item(3)
+            LastStroke = RingRpt.Rows(0).Item(2)
+        '掘進時間の算出（中断時間を含めない）単位（分）
+        Dim tStt As DateTime = DateTime.Parse(RingRpt.Rows(0).Item(0))
+        Dim tLst As DateTime = DateTime.Parse(RingRpt.Rows(0).Item(1))
+        ExecTime = tLst.Subtract(tStt).TotalMinutes
             'TODO:ビット演算子を使いたい
             Dim ModeFg As Short
             Dim ExecFrom As String() = {"ジャッキ選択", "FLEX推進", "ジャッキ選択/FLEX推進", "同時施工"}
-            If t.Item("JKSELMODE") > 0 And t.Item("FLEXMODE") > 0 Then
-                ModeFg = 0
-            End If
+        If RingRpt.Rows(0).Item("JKSELMODE") > 0 And RingRpt.Rows(0).Item("FLEXMODE") > 0 Then
+            ModeFg = 2
+        End If
 
-            If t.Item("JKSELMODE") = 0 And t.Item("FLEXMODE") > 0 Then
-                ModeFg = 2
-            End If
+        If RingRpt.Rows(0).Item("JKSELMODE") = 0 And RingRpt.Rows(0).Item("FLEXMODE") > 0 Then
+            ModeFg = 1
+        End If
 
-            If t.Item("JKSELMODE") > 0 And t.Item("FLEXMODE") = 0 Then
-                ModeFg = 1
-            End If
+        If RingRpt.Rows(0).Item("JKSELMODE") > 0 And RingRpt.Rows(0).Item("FLEXMODE") = 0 Then
+            ModeFg = 0
+        End If
 
-            If t.Item("LOSZEROMODE") > 0 Then
-                ModeFg = 3
-            End If
+        If RingRpt.Rows(0).Item("LOSZEROMODE") > 0 Then
+            ModeFg = 3
+        End If
 
-            sheet.Range("掘進形態").Value = ExecFrom(ModeFg)
+        sheet.Range("掘進形態").Value = ExecFrom(ModeFg)
 
-        Next
         'End While
+        '組立開始、完了時刻及び組立時間の取得
+        '
+
+        If ModeFg <> 3 Then
+            'ロスゼロ以外の時
+            '組立完了時刻は、次リングの待機中になった時間
+            Dim NextRingWaintgTime As DataTable =
+                GetDtfmSQL($"SELECT TIME FROM flexイベントデータ 
+                WHERE (`イベントデータ` LIKE '%{RingNo + 1}リング%') 
+                AND (`イベントデータ` LIKE '%待機中%') ")
+            If NextRingWaintgTime.Rows.Count <> 0 Then
+                sheet.Range("組立完了時刻").Value = NextRingWaintgTime.Rows(0).Item(0)
+
+                Dim StartSegmentAsem As DataTable =
+                    GetDtfmSQL($"SELECT TIME FROM flexイベントデータ 
+                    WHERE `イベントデータ` LIKE '%セグメントモード%' AND 
+                    `TIME`>'{RingRpt.Rows(0).Item(1)}' AND `TIME`<'{NextRingWaintgTime.Rows(0).Item(0)}'")
+                If StartSegmentAsem.Rows.Count <> 0 Then
+                    sheet.Range("組立開始時刻").Value = StartSegmentAsem.Rows(0).Item(0)
+
+                    '組立時間の算出(分)
+                    sheet.Range("組立時間").Value =
+                        (DateTime.Parse(NextRingWaintgTime.Rows(0).Item(0)) - DateTime.Parse(StartSegmentAsem.Rows(0).Item(0))).TotalMinutes
+                    'サイクル時間
+                    sheet.Range("サイクル時間").Value =
+                        (DateTime.Parse(NextRingWaintgTime.Rows(0).Item(0)) - DateTime.Parse(RingRpt.Rows(0).Item(0))).TotalMinutes
+
+
+                End If
+
+            End If
+        End If
+
 
         Dim StartRows As Integer = sheet.Range("データ名称").Cell(1, 1).Address.RowNumber
         Dim StartCols As Integer = sheet.Range("データ名称").Cell(1, 1).Address.ColumnNumber

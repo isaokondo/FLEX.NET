@@ -6,7 +6,7 @@ Public Class clsPlcIf
     Private mblnBlink As Boolean 'ブリンク
 
 
-    Private _EngValue As Dictionary(Of String, Double) 'アナログの工業値
+    Private _EngValue As Dictionary(Of String, Single) 'アナログの工業値
 
 
     Private _groupPv() As Single 'グループ圧力データ
@@ -153,6 +153,12 @@ Public Class clsPlcIf
     Public Event LineDistanceChage()
 
     ''' <summary>
+    ''' FLEX手動時作用点が変化したイベント
+    ''' </summary>
+    Public Event PointChange()
+
+
+    ''' <summary>
     ''' 同時施工ステータス変化
     ''' </summary>
     ''' <param name="PreSts">変化前のステータス</param>
@@ -197,7 +203,7 @@ Public Class clsPlcIf
     ''' アナログ入力（工業値)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property EngValue As Dictionary(Of String, Double)
+    Public ReadOnly Property EngValue As Dictionary(Of String, Single)
         Get
             Return _EngValue
         End Get
@@ -779,7 +785,7 @@ Public Class clsPlcIf
             _mesureJackStroke.Add(i.Key, 0)
             _mesureJackSpeed.Add(i.Key, 0)
         Next
-        _EngValue = New Dictionary(Of String, Double)
+        _EngValue = New Dictionary(Of String, Single)
         '工業値のDictionary 初期化
         For Each an In AnalogTag.Tag
             _EngValue.Add(an.FieldName, 0)
@@ -930,6 +936,18 @@ Public Class clsPlcIf
                             _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
                             _jackSelect(i) = (_JackStatus(i) And 1)
                         Next
+
+                        '作用点
+                        Dim Px As Single = _PointX
+                        Dim Py As Single = _PointY
+                        _PointX = _EngValue("ポイントＸ")
+                        _PointY = _EngValue("ポイントＹ")
+                        'FLEXモードで手動時に作用点が変化したとき
+                        If _flexControlOn And (Px <> _PointX Or Py <> _PointY) AndAlso Not CtlPara.AutoDirectionControl Then
+                            JackManual.PutPointXY(_PointX, _PointY)
+                        End If
+
+
                     Catch ex As Exception
                         MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.StackTrace.ToString}")
                     End Try
@@ -1070,8 +1088,6 @@ Public Class clsPlcIf
         If _realStroke <> PreRealStroke Or _excaStatus <> PreExcaStatus _
             Or _gyro <> _PreJyairo Or _PrePitching <> _gyroPitching Then
             RaiseEvent LineDistanceChage()
-
-
         End If
         '掘進ステータスの変化
         If _excaStatus <> PreExcaStatus Then
@@ -1081,7 +1097,6 @@ Public Class clsPlcIf
         If (_realStroke > PreRealStroke Or _excaStatus <> PreExcaStatus) And _excaStatus = cKussin Then
             DataSave.Save()
         End If
-
 
         '掘進ストローク保持
         PreRealStroke = _realStroke
@@ -1099,9 +1114,6 @@ Public Class clsPlcIf
         iReturnCode =
             com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
 
-
-
-
         'モーメント推力の演算
         CulcMoment.ExcaStatus = _excaStatus
         CulcMoment.FlexControlOn = _flexControlOn
@@ -1109,10 +1121,6 @@ Public Class clsPlcIf
         CulcMoment.JackSel = _jackSelect
         CulcMoment.JkPress = _jkPress
         CulcMoment.MomentCul()
-
-
-
-
         ' ……
     End Sub
     ''' <summary>
@@ -1144,7 +1152,10 @@ Public Class clsPlcIf
     Private Function GetAnalogData(ByVal FieldName As String, Tag As clsTag) As Single
         'アナログデータのスケール変換
         Try
+            If FieldName = "ポイントＸ" Then
+                Debug.WriteLine("")
 
+            End If
             With Tag.TagData(FieldName)
                 If .ScaleHigh - .ScaleLow = 0 Then
                     Return 0
@@ -1163,7 +1174,7 @@ Public Class clsPlcIf
                     tData = sharrDeviceValue(.OffsetAddress)
                 End If
                 'スケール変換
-                Return (tData - .ScaleLow) * (.EngHight - .EngLow) / (.ScaleHigh - .ScaleLow) + .EngLow  ' + .EngLow
+                Return (tData - Tag.TagData(FieldName).ScaleLow) * (Tag.TagData(FieldName).EngHight - Tag.TagData(FieldName).EngLow) / (Tag.TagData(FieldName).ScaleHigh - Tag.TagData(FieldName).ScaleLow) + Tag.TagData(FieldName).EngLow  ' + .EngLow
 
 
             End With

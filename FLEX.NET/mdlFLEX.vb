@@ -147,7 +147,7 @@ Module mdlFLEX
 
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
             PlcIf.LosZeroSts_FLEX = 0
-            WriteEventData(PlcIf.RingNo & "リング 掘進開始しました", Color.CornflowerBlue)
+            WriteEventData($"{PlcIf.RingNo}リング 掘進開始しました", Color.CornflowerBlue)
             My.Forms.frmMain.ChartClear() 'チャート初期化
             My.Forms.frmMain.DspExcavStartDay(Now)
             ElapsedTime.Reset() '掘進時間計算開始
@@ -166,7 +166,7 @@ Module mdlFLEX
         End If
         '中断
         If NowStatus = cChudan Then
-            JackManual.ManualOn = False
+            'JackManual.ManualOn = False
             WriteEventData("掘進中断しました", Color.Black)
             ElapsedTime.ExcavationStop()
             '最終ストロークをセグメント割付データに書き込み
@@ -183,7 +183,7 @@ Module mdlFLEX
 
             LosZeroSts = 0
             If PreStatus <> -1 Then
-                WriteEventData("待機中になりました。", Color.Blue)
+                WriteEventData($"{PlcIf.RingNo}リング 待機中になりました。", Color.Blue)
             End If
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
             PlcIf.LosZeroSts_FLEX = 0
@@ -552,7 +552,7 @@ Module mdlFLEX
         'If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
         If PlcIf.FlexControlOn AndAlso CtlPara.AutoDirectionControl Then
-            JackManual.ManualOn = False
+            'JackManual.ManualOn = False
             If PlcIf.ExcaStatus = cKussin Then
                 WriteEventData("自動方向制御開始しました。", Color.Blue)
             End If

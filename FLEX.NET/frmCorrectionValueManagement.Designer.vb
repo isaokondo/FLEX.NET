@@ -693,6 +693,8 @@ Partial Class frmCorrectionValueManagement
         Me.VerCorrentionValue.SelectItem = Nothing
         Me.VerCorrentionValue.Size = New System.Drawing.Size(415, 30)
         Me.VerCorrentionValue.TabIndex = 4
+        Me.VerCorrentionValue.ttMsg = ""
+        Me.VerCorrentionValue.ttTile = ""
         Me.VerCorrentionValue.Unit = "deg"
         Me.VerCorrentionValue.Value = 0R
         '
@@ -712,6 +714,8 @@ Partial Class frmCorrectionValueManagement
         Me.HorCorrentionValue.SelectItem = Nothing
         Me.HorCorrentionValue.Size = New System.Drawing.Size(415, 30)
         Me.HorCorrentionValue.TabIndex = 3
+        Me.HorCorrentionValue.ttMsg = ""
+        Me.HorCorrentionValue.ttTile = ""
         Me.HorCorrentionValue.Unit = "deg"
         Me.HorCorrentionValue.Value = 0R
         '
@@ -731,6 +735,8 @@ Partial Class frmCorrectionValueManagement
         Me.PuchUpStroke.SelectItem = Nothing
         Me.PuchUpStroke.Size = New System.Drawing.Size(425, 30)
         Me.PuchUpStroke.TabIndex = 2
+        Me.PuchUpStroke.ttMsg = ""
+        Me.PuchUpStroke.ttTile = ""
         Me.PuchUpStroke.Unit = "mm"
         Me.PuchUpStroke.Value = 1000.0R
         '
@@ -750,6 +756,8 @@ Partial Class frmCorrectionValueManagement
         Me.TipDistance.SelectItem = Nothing
         Me.TipDistance.Size = New System.Drawing.Size(425, 30)
         Me.TipDistance.TabIndex = 1
+        Me.TipDistance.ttMsg = ""
+        Me.TipDistance.ttTile = ""
         Me.TipDistance.Unit = "m"
         Me.TipDistance.Value = 1000.0R
         '
@@ -769,6 +777,8 @@ Partial Class frmCorrectionValueManagement
         Me.ConfirmRingNo.SelectItem = Nothing
         Me.ConfirmRingNo.Size = New System.Drawing.Size(425, 30)
         Me.ConfirmRingNo.TabIndex = 0
+        Me.ConfirmRingNo.ttMsg = "測量で距離を確認したシールド機の押し上がりリング番号"
+        Me.ConfirmRingNo.ttTile = "補正値管理"
         Me.ConfirmRingNo.Unit = "リング"
         Me.ConfirmRingNo.Value = 10.0R
         '
