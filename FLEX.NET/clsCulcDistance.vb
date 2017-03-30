@@ -1,4 +1,4 @@
-﻿Option Strict On
+﻿
 Option Explicit On
 Friend Class clsCulcDistance
     ' @(h) clsCulcDistance.cls                ver 1.2 ( '03.10.20 近藤　勲 )
@@ -15,21 +15,30 @@ Friend Class clsCulcDistance
     '
     '
 
-    Private mint測量ポイントリング番号 As Short
-    Private mdbl測量ポイント総距離 As Double
-    Private mint現在のリング番号 As Short
+    Private _測量ポイントリング番号 As Short
+    Private _測量ポイント総距離 As Double
+    Private _現在のリング番号 As Short
 
-    Private mdbl現リング総距離 As Double
+    Private _現リング総距離 As Double
 
     ''鹿島品川線より追加
     Private mblnChangeFlg As Boolean ''リング番号、測量ポイントのリング番号および総距離が変化したか？
 
-    Private mdbl掘進総距離 As Double
+    Private _掘進総距離 As Double
 
+    Private _SegWdAddDist As Double 'セグメント追加距離
+    ''' <summary>
+    ''' 押し上がりストロークの差
+    ''' </summary>
+    Private _LastStrokeDiff As Double
+    ''' <summary>
+    ''' 当リングの始点の先端距離
+    ''' </summary>
+    Private _StartThisRingDist As Double
     Public WriteOnly Property 現在のリング番号() As Short
         Set(ByVal Value As Short)
-            mblnChangeFlg = mblnChangeFlg Or (Value <> mint現在のリング番号) ''鹿島品川線より追加
-            mint現在のリング番号 = Value
+            mblnChangeFlg = mblnChangeFlg Or (Value <> _現在のリング番号) ''鹿島品川線より追加
+            _現在のリング番号 = Value
         End Set
     End Property
 
@@ -37,25 +46,54 @@ Friend Class clsCulcDistance
         Get
 
             Call sbCulDistance()
-            Return mdbl掘進総距離
+            Return _掘進総距離
         End Get
     End Property
 
     Public Property 測量ポイント総距離() As Double
         Get
-            Return mdbl測量ポイント総距離
+            Return _測量ポイント総距離
         End Get
         Set(ByVal Value As Double)
-            mblnChangeFlg = mblnChangeFlg Or (Value <> mdbl測量ポイント総距離) ''鹿島品川線より追加
-            mdbl測量ポイント総距離 = Value
+            mblnChangeFlg = mblnChangeFlg Or (Value <> _測量ポイント総距離) ''鹿島品川線より追加
+            _測量ポイント総距離 = Value
         End Set
     End Property
 
     Public WriteOnly Property 測量ポイントリング番号() As Short
         Set(ByVal Value As Short)
-            mblnChangeFlg = mblnChangeFlg Or (Value <> mint測量ポイントリング番号) ''鹿島品川線より追加
-            mint測量ポイントリング番号 = Value
+            mblnChangeFlg = mblnChangeFlg Or (Value <> _測量ポイントリング番号) ''鹿島品川線より追加
+            _測量ポイントリング番号 = Value
         End Set
+    End Property
+
+    ''' <summary>
+    ''' セグメント幅の追加距離
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property SegWdAddDist As Double
+        Get
+            Return _SegWdAddDist
+        End Get
+    End Property
+    ''' <summary>
+    ''' 押し上がりストロークの差
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property LastStrokeDiff As Double
+        Get
+            Return _LastStrokeDiff
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 当リングの始点の先端距離
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property StartThisRingDist As Double
+        Get
+            Return _StartThisRingDist
+        End Get
     End Property
 
 
@@ -88,7 +126,9 @@ Friend Class clsCulcDistance
     End Function
 
 
-
+    ''' <summary>
+    ''' 掘進総距離の演算
+    ''' </summary>
     Private Sub sbCulDistance()
         ''堀川シールドにて大幅修正　03/04/24
         ''堀川シールドにてさらに大幅修正　03/10/20
@@ -96,26 +136,27 @@ Friend Class clsCulcDistance
         'On Error GoTo ErrTrap
 
         ''掘進総距離のベース距離
-        mdbl掘進総距離 = mdbl測量ポイント総距離
+        _掘進総距離 = _測量ポイント総距離
 
 
         Dim i As Short
 
         If PlcIf.ExcaStatus = cTaiki Then ''待機中
 
-            If mint現在のリング番号 - mint測量ポイントリング番号 <= 1 Then
+            If _現在のリング番号 - _測量ポイントリング番号 <= 1 Then
 
             Else
                 ''現在のリング番号-測量リング>1　のとき
                 With SegAsmblyData
-                    For i = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 2)
+                    For i = _測量ポイントリング番号 To _現在のリング番号 - 2
                         'SegMakDat.RingNo = intCnt
-                        mdbl掘進総距離 +=
-                             GetHoseiSegmentWidth(mdbl掘進総距離, .TypeData(i).CenterWidth)
+                        _掘進総距離 +=
+                             GetHoseiSegmentWidth(_掘進総距離, .TypeData(i).CenterWidth)
                     Next i
-
-                    mdbl掘進総距離 -= .RingLastStroke(mint測量ポイントリング番号) / 1000 + GetHoseiSegmentWidth(mdbl掘進総距離, .RingLastStroke(CShort(mint現在のリング番号 - 1)) / 1000)
-
+                    _SegWdAddDist = _掘進総距離 - _測量ポイント総距離
+                    _LastStrokeDiff = - .RingLastStroke(_測量ポイントリング番号) / 1000 + GetHoseiSegmentWidth(_掘進総距離, .RingLastStroke(_現在のリング番号 - 1) / 1000)
+                    _掘進総距離 += _LastStrokeDiff
+                    _StartThisRingDist = _掘進総距離
                 End With
             End If
 
@@ -123,17 +164,19 @@ Friend Class clsCulcDistance
             ''掘進中or中断中
             With SegAsmblyData
                 If mblnChangeFlg Then ''リング番号、測量ポイントのリング番号および総距離が変化した時のみ演算　負荷削減のため
-                    For i = mint測量ポイントリング番号 To CShort(mint現在のリング番号 - 1)
+                    For i = _測量ポイントリング番号 To _現在のリング番号 - 1
                         'SegMakDat.RingNo = intCnt
-                        mdbl掘進総距離 += GetHoseiSegmentWidth(mdbl掘進総距離, .TypeData(i).CenterWidth)
+                        _掘進総距離 += GetHoseiSegmentWidth(_掘進総距離, .TypeData(i).CenterWidth)
                     Next i
-                    mdbl現リング総距離 = mdbl掘進総距離
+                    _現リング総距離 = _掘進総距離
                     mblnChangeFlg = False
                 Else
-                    mdbl掘進総距離 = mdbl現リング総距離
+                    _掘進総距離 = _現リング総距離
                 End If
-
-                mdbl掘進総距離 += - .RingLastStroke(mint測量ポイントリング番号) / 1000 + GetHoseiSegmentWidth(mdbl掘進総距離, CalcStroke.MesureCalcAveJackStroke / 1000)
+                _SegWdAddDist = _掘進総距離 - _測量ポイント総距離
+                _StartThisRingDist = _掘進総距離 - .RingLastStroke(_測量ポイントリング番号) / 1000
+                _LastStrokeDiff = - .RingLastStroke(_測量ポイントリング番号) / 1000 + GetHoseiSegmentWidth(_掘進総距離, CalcStroke.MesureCalcAveJackStroke / 1000)
+                _掘進総距離 += _LastStrokeDiff
             End With
 
         End If

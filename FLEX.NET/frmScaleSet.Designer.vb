@@ -97,6 +97,8 @@ Partial Class frmScaleSet
         Me.nudHorMomentTrendWidth.SelectItem = Nothing
         Me.nudHorMomentTrendWidth.Size = New System.Drawing.Size(424, 30)
         Me.nudHorMomentTrendWidth.TabIndex = 27
+        Me.nudHorMomentTrendWidth.ttMsg = ""
+        Me.nudHorMomentTrendWidth.ttTile = ""
         Me.nudHorMomentTrendWidth.Unit = "ｋN・m"
         Me.nudHorMomentTrendWidth.Value = 0R
         '
@@ -116,6 +118,8 @@ Partial Class frmScaleSet
         Me.nudVerMomentTrendWidth.SelectItem = Nothing
         Me.nudVerMomentTrendWidth.Size = New System.Drawing.Size(424, 30)
         Me.nudVerMomentTrendWidth.TabIndex = 28
+        Me.nudVerMomentTrendWidth.ttMsg = ""
+        Me.nudVerMomentTrendWidth.ttTile = ""
         Me.nudVerMomentTrendWidth.Unit = "ｋN・m"
         Me.nudVerMomentTrendWidth.Value = 0R
         '
@@ -134,10 +138,10 @@ Partial Class frmScaleSet
         'nudHorDevDegTrendWidth
         '
         Me.nudHorDevDegTrendWidth.DataDspWidth = 110
-        Me.nudHorDevDegTrendWidth.DecimalPlaces = CType(1, Short)
+        Me.nudHorDevDegTrendWidth.DecimalPlaces = CType(2, Short)
         Me.nudHorDevDegTrendWidth.DspFieldName = True
         Me.nudHorDevDegTrendWidth.FieldName = "水平　　　　　　　　　　±"
-        Me.nudHorDevDegTrendWidth.Increment = 0.1!
+        Me.nudHorDevDegTrendWidth.Increment = 0.01!
         Me.nudHorDevDegTrendWidth.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.nudHorDevDegTrendWidth.Location = New System.Drawing.Point(35, 223)
         Me.nudHorDevDegTrendWidth.Margin = New System.Windows.Forms.Padding(2)
@@ -147,16 +151,18 @@ Partial Class frmScaleSet
         Me.nudHorDevDegTrendWidth.SelectItem = Nothing
         Me.nudHorDevDegTrendWidth.Size = New System.Drawing.Size(424, 30)
         Me.nudHorDevDegTrendWidth.TabIndex = 30
-        Me.nudHorDevDegTrendWidth.Unit = "ｋN・m"
+        Me.nudHorDevDegTrendWidth.ttMsg = ""
+        Me.nudHorDevDegTrendWidth.ttTile = ""
+        Me.nudHorDevDegTrendWidth.Unit = "deg"
         Me.nudHorDevDegTrendWidth.Value = 0R
         '
         'nudVerDevDegTrendWidth
         '
         Me.nudVerDevDegTrendWidth.DataDspWidth = 110
-        Me.nudVerDevDegTrendWidth.DecimalPlaces = CType(1, Short)
+        Me.nudVerDevDegTrendWidth.DecimalPlaces = CType(2, Short)
         Me.nudVerDevDegTrendWidth.DspFieldName = True
         Me.nudVerDevDegTrendWidth.FieldName = "鉛直　　　　　　　　　　±"
-        Me.nudVerDevDegTrendWidth.Increment = 0.1!
+        Me.nudVerDevDegTrendWidth.Increment = 0.01!
         Me.nudVerDevDegTrendWidth.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.nudVerDevDegTrendWidth.Location = New System.Drawing.Point(35, 258)
         Me.nudVerDevDegTrendWidth.Margin = New System.Windows.Forms.Padding(2)
@@ -166,6 +172,8 @@ Partial Class frmScaleSet
         Me.nudVerDevDegTrendWidth.SelectItem = Nothing
         Me.nudVerDevDegTrendWidth.Size = New System.Drawing.Size(424, 30)
         Me.nudVerDevDegTrendWidth.TabIndex = 31
+        Me.nudVerDevDegTrendWidth.ttMsg = ""
+        Me.nudVerDevDegTrendWidth.ttTile = ""
         Me.nudVerDevDegTrendWidth.Unit = "deg"
         Me.nudVerDevDegTrendWidth.Value = 0R
         '
@@ -203,12 +211,14 @@ Partial Class frmScaleSet
         Me.nudLineDevStartRing.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.nudLineDevStartRing.Location = New System.Drawing.Point(35, 387)
         Me.nudLineDevStartRing.Margin = New System.Windows.Forms.Padding(2)
-        Me.nudLineDevStartRing.MaxValue = "1"
-        Me.nudLineDevStartRing.MinValue = "10"
+        Me.nudLineDevStartRing.MaxValue = "10"
+        Me.nudLineDevStartRing.MinValue = "1"
         Me.nudLineDevStartRing.Name = "nudLineDevStartRing"
         Me.nudLineDevStartRing.SelectItem = Nothing
         Me.nudLineDevStartRing.Size = New System.Drawing.Size(424, 30)
         Me.nudLineDevStartRing.TabIndex = 34
+        Me.nudLineDevStartRing.ttMsg = ""
+        Me.nudLineDevStartRing.ttTile = ""
         Me.nudLineDevStartRing.Unit = "リング"
         Me.nudLineDevStartRing.Value = 10.0R
         '
@@ -222,12 +232,14 @@ Partial Class frmScaleSet
         Me.nudLineDevLastRing.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.nudLineDevLastRing.Location = New System.Drawing.Point(35, 422)
         Me.nudLineDevLastRing.Margin = New System.Windows.Forms.Padding(2)
-        Me.nudLineDevLastRing.MaxValue = "1"
-        Me.nudLineDevLastRing.MinValue = "10"
+        Me.nudLineDevLastRing.MaxValue = "10"
+        Me.nudLineDevLastRing.MinValue = "1"
         Me.nudLineDevLastRing.Name = "nudLineDevLastRing"
         Me.nudLineDevLastRing.SelectItem = Nothing
         Me.nudLineDevLastRing.Size = New System.Drawing.Size(424, 30)
         Me.nudLineDevLastRing.TabIndex = 35
+        Me.nudLineDevLastRing.ttMsg = ""
+        Me.nudLineDevLastRing.ttTile = ""
         Me.nudLineDevLastRing.Unit = "リング"
         Me.nudLineDevLastRing.Value = 10.0R
         '
@@ -247,6 +259,8 @@ Partial Class frmScaleSet
         Me.nudPresBarGraphWidt.SelectItem = Nothing
         Me.nudPresBarGraphWidt.Size = New System.Drawing.Size(424, 30)
         Me.nudPresBarGraphWidt.TabIndex = 36
+        Me.nudPresBarGraphWidt.ttMsg = ""
+        Me.nudPresBarGraphWidt.ttTile = ""
         Me.nudPresBarGraphWidt.Unit = "Mpa"
         Me.nudPresBarGraphWidt.Value = 100.0R
         '
@@ -266,6 +280,8 @@ Partial Class frmScaleSet
         Me.nudDevTolerance.SelectItem = Nothing
         Me.nudDevTolerance.Size = New System.Drawing.Size(424, 30)
         Me.nudDevTolerance.TabIndex = 37
+        Me.nudDevTolerance.ttMsg = ""
+        Me.nudDevTolerance.ttTile = ""
         Me.nudDevTolerance.Unit = "deg"
         Me.nudDevTolerance.Value = 0R
         '

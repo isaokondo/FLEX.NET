@@ -114,10 +114,11 @@ Partial Class ucnJackDsp
         'btnPointCenter
         '
         Me.btnPointCenter.BackColor = System.Drawing.Color.Silver
-        Me.btnPointCenter.Location = New System.Drawing.Point(317, 397)
+        Me.btnPointCenter.Font = New System.Drawing.Font("MS UI Gothic", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnPointCenter.Location = New System.Drawing.Point(304, 397)
         Me.btnPointCenter.Margin = New System.Windows.Forms.Padding(4)
         Me.btnPointCenter.Name = "btnPointCenter"
-        Me.btnPointCenter.Size = New System.Drawing.Size(34, 24)
+        Me.btnPointCenter.Size = New System.Drawing.Size(47, 33)
         Me.btnPointCenter.TabIndex = 119
         Me.btnPointCenter.Text = "C"
         Me.btnPointCenter.UseVisualStyleBackColor = False

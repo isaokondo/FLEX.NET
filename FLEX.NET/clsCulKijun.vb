@@ -55,8 +55,14 @@ Friend Class clsCulKijun
 
     Private _平面偏角 As Double
     Private _縦断偏角 As Double
-
-
+    ''' <summary>
+    ''' 平面偏角許容値オーバー
+    ''' </summary>
+    Private _HorDevLimitOver As Boolean
+    ''' <summary>
+    ''' 縦断偏角許容値オーバー
+    ''' </summary>
+    Private _VerDevLimitOver As Boolean
 
     ''掘進総距離取得用クラスをモジュール変数に変更　鹿島品川線より
     ''' <summary>
@@ -124,13 +130,13 @@ Friend Class clsCulKijun
 
     Public ReadOnly Property 平面偏角 As Double
         Get
-            Return Lim180(PlcIf.Gyro - mdbl平面基準方位)
+            Return _平面偏角
         End Get
     End Property
 
     Public ReadOnly Property 縦断偏角 As Double
         Get
-            Return PlcIf.Pitching - mdbl縦断基準方位
+            Return _縦断偏角
         End Get
     End Property
     ''' <summary>
@@ -142,8 +148,24 @@ Friend Class clsCulKijun
             Return _toStartDistance
         End Get
     End Property
-
-
+    ''' <summary>
+    ''' 平面偏角許容値オーバー
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property HorDevLimitOver As Boolean
+        Get
+            Return _HorDevLimitOver
+        End Get
+    End Property
+    ''' <summary>
+    ''' 縦断偏角許容値オーバー
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property VerDevLimitOver As Boolean
+        Get
+            Return _VerDevLimitOver
+        End Get
+    End Property
 
     ''' <summary>
     ''' 基準方位の算出
@@ -326,6 +348,13 @@ Friend Class clsCulKijun
         mdbl平面基準方位 = (mdbl平面計画方位 + CtlPara.水平入力補正値 + HorPlan.X軸方位角)
         mdbl平面旋回中心 = HorSentanKijun.掘進累積距離 - HorZendoKijun.掘進累積距離
 
+        _平面偏角 = Lim180(PlcIf.Gyro - mdbl平面基準方位)
+        '偏角許容値オーバーの判断
+        Dim HoverP As Boolean = _HorDevLimitOver
+        _HorDevLimitOver = Math.Abs(_平面偏角) > CtlPara.DevTolerance
+        If Not HoverP And _HorDevLimitOver Then
+            WriteEventData("平面偏角が許容値を超えています", Color.Red)
+        End If
 
 
         ''------縦断----------
@@ -428,6 +457,17 @@ Friend Class clsCulKijun
         End If
         mdbl縦断基準方位 = mdbl縦断計画方位 + CtlPara.鉛直入力補正値
         mdbl縦断旋回中心 = VerSentanKijun.掘進累積距離 - VerZendoKijun.掘進累積距離
+
+        _縦断偏角 = PlcIf.Pitching - mdbl縦断基準方位
+        Dim VoverP As Boolean = _VerDevLimitOver
+        '偏角許容値オーバーの判断
+        _VerDevLimitOver = Math.Abs(_縦断偏角) > CtlPara.DevTolerance
+
+        If Not VoverP And _VerDevLimitOver Then
+            WriteEventData("鉛直偏角が許容値を超えています", Color.Red)
+        End If
+
+
 
     End Sub
     'Private Function fnGetNowStroke()

@@ -22,9 +22,11 @@ Partial Class frmCorrectionValueManagement
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.btnOK = New System.Windows.Forms.Button()
         Me.btnCLose = New System.Windows.Forms.Button()
+        Me.NowRing = New FLEX.NET.ucnSpredCompnent()
         Me.PlanCommon2 = New FLEX.NET.ucnSpredCompnent()
         Me.VerPlan15 = New FLEX.NET.ucnSpredCompnent()
         Me.VerPlan14 = New FLEX.NET.ucnSpredCompnent()
@@ -68,6 +70,7 @@ Partial Class frmCorrectionValueManagement
         Me.PuchUpStroke = New FLEX.NET.ucnNumEdit()
         Me.TipDistance = New FLEX.NET.ucnNumEdit()
         Me.ConfirmRingNo = New FLEX.NET.ucnNumEdit()
+        Me.tmrLineUpdate = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'btnCancel
@@ -106,6 +109,21 @@ Partial Class frmCorrectionValueManagement
         Me.btnCLose.Text = "閉じる"
         Me.btnCLose.UseVisualStyleBackColor = False
         '
+        'NowRing
+        '
+        Me.NowRing.DecimalPlaces = CType(0, Short)
+        Me.NowRing.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
+        Me.NowRing.FieldName = "現在のリング"
+        Me.NowRing.ForeColor = System.Drawing.Color.Black
+        Me.NowRing.HeaderColor = System.Drawing.Color.Empty
+        Me.NowRing.Location = New System.Drawing.Point(471, 60)
+        Me.NowRing.Margin = New System.Windows.Forms.Padding(2)
+        Me.NowRing.Name = "NowRing"
+        Me.NowRing.Size = New System.Drawing.Size(420, 21)
+        Me.NowRing.TabIndex = 59
+        Me.NowRing.Unit = "Ring"
+        Me.NowRing.Value = 12345.0R
+        '
         'PlanCommon2
         '
         Me.PlanCommon2.DecimalPlaces = CType(3, Short)
@@ -113,7 +131,7 @@ Partial Class frmCorrectionValueManagement
         Me.PlanCommon2.FieldName = "セグメント幅の追加距離"
         Me.PlanCommon2.ForeColor = System.Drawing.Color.Black
         Me.PlanCommon2.HeaderColor = System.Drawing.Color.Empty
-        Me.PlanCommon2.Location = New System.Drawing.Point(471, 79)
+        Me.PlanCommon2.Location = New System.Drawing.Point(471, 102)
         Me.PlanCommon2.Margin = New System.Windows.Forms.Padding(2)
         Me.PlanCommon2.Name = "PlanCommon2"
         Me.PlanCommon2.Size = New System.Drawing.Size(420, 21)
@@ -128,7 +146,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan15.FieldName = "姿勢角管理値"
         Me.VerPlan15.ForeColor = System.Drawing.Color.Black
         Me.VerPlan15.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan15.Location = New System.Drawing.Point(471, 814)
+        Me.VerPlan15.Location = New System.Drawing.Point(471, 837)
         Me.VerPlan15.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan15.Name = "VerPlan15"
         Me.VerPlan15.Size = New System.Drawing.Size(420, 21)
@@ -143,7 +161,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan14.FieldName = "後胴部の鉛直角"
         Me.VerPlan14.ForeColor = System.Drawing.Color.Black
         Me.VerPlan14.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan14.Location = New System.Drawing.Point(471, 793)
+        Me.VerPlan14.Location = New System.Drawing.Point(471, 816)
         Me.VerPlan14.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan14.Name = "VerPlan14"
         Me.VerPlan14.Size = New System.Drawing.Size(420, 21)
@@ -158,7 +176,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan13.FieldName = "前胴部の鉛直角"
         Me.VerPlan13.ForeColor = System.Drawing.Color.Black
         Me.VerPlan13.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan13.Location = New System.Drawing.Point(471, 772)
+        Me.VerPlan13.Location = New System.Drawing.Point(471, 795)
         Me.VerPlan13.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan13.Name = "VerPlan13"
         Me.VerPlan13.Size = New System.Drawing.Size(420, 21)
@@ -173,7 +191,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan12.FieldName = "鉛直中折角"
         Me.VerPlan12.ForeColor = System.Drawing.Color.Black
         Me.VerPlan12.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan12.Location = New System.Drawing.Point(471, 751)
+        Me.VerPlan12.Location = New System.Drawing.Point(471, 774)
         Me.VerPlan12.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan12.Name = "VerPlan12"
         Me.VerPlan12.Size = New System.Drawing.Size(420, 21)
@@ -188,7 +206,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan11.FieldName = "シフト追加角"
         Me.VerPlan11.ForeColor = System.Drawing.Color.Black
         Me.VerPlan11.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan11.Location = New System.Drawing.Point(471, 730)
+        Me.VerPlan11.Location = New System.Drawing.Point(471, 753)
         Me.VerPlan11.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan11.Name = "VerPlan11"
         Me.VerPlan11.Size = New System.Drawing.Size(420, 21)
@@ -203,7 +221,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan10.FieldName = "シフト"
         Me.VerPlan10.ForeColor = System.Drawing.Color.Black
         Me.VerPlan10.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan10.Location = New System.Drawing.Point(471, 709)
+        Me.VerPlan10.Location = New System.Drawing.Point(471, 732)
         Me.VerPlan10.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan10.Name = "VerPlan10"
         Me.VerPlan10.Size = New System.Drawing.Size(420, 21)
@@ -218,7 +236,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan9.FieldName = "Z座標"
         Me.VerPlan9.ForeColor = System.Drawing.Color.Black
         Me.VerPlan9.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan9.Location = New System.Drawing.Point(471, 688)
+        Me.VerPlan9.Location = New System.Drawing.Point(471, 711)
         Me.VerPlan9.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan9.Name = "VerPlan9"
         Me.VerPlan9.Size = New System.Drawing.Size(420, 21)
@@ -233,7 +251,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan8.FieldName = "後方変化点距離"
         Me.VerPlan8.ForeColor = System.Drawing.Color.Black
         Me.VerPlan8.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan8.Location = New System.Drawing.Point(471, 667)
+        Me.VerPlan8.Location = New System.Drawing.Point(471, 690)
         Me.VerPlan8.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan8.Name = "VerPlan8"
         Me.VerPlan8.Size = New System.Drawing.Size(420, 21)
@@ -248,7 +266,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan7.FieldName = "前方変化点距離"
         Me.VerPlan7.ForeColor = System.Drawing.Color.Black
         Me.VerPlan7.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan7.Location = New System.Drawing.Point(471, 646)
+        Me.VerPlan7.Location = New System.Drawing.Point(471, 669)
         Me.VerPlan7.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan7.Name = "VerPlan7"
         Me.VerPlan7.Size = New System.Drawing.Size(420, 21)
@@ -263,7 +281,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan6.FieldName = "曲率半径"
         Me.VerPlan6.ForeColor = System.Drawing.Color.Black
         Me.VerPlan6.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan6.Location = New System.Drawing.Point(471, 625)
+        Me.VerPlan6.Location = New System.Drawing.Point(471, 648)
         Me.VerPlan6.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan6.Name = "VerPlan6"
         Me.VerPlan6.Size = New System.Drawing.Size(420, 21)
@@ -278,7 +296,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan5.FieldName = "線形(1:直線　２：単曲線)"
         Me.VerPlan5.ForeColor = System.Drawing.Color.Black
         Me.VerPlan5.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan5.Location = New System.Drawing.Point(471, 604)
+        Me.VerPlan5.Location = New System.Drawing.Point(471, 627)
         Me.VerPlan5.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan5.Name = "VerPlan5"
         Me.VerPlan5.Size = New System.Drawing.Size(420, 21)
@@ -293,7 +311,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan4.FieldName = "ゾーン"
         Me.VerPlan4.ForeColor = System.Drawing.Color.Black
         Me.VerPlan4.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan4.Location = New System.Drawing.Point(471, 583)
+        Me.VerPlan4.Location = New System.Drawing.Point(471, 606)
         Me.VerPlan4.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan4.Name = "VerPlan4"
         Me.VerPlan4.Size = New System.Drawing.Size(420, 21)
@@ -308,7 +326,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan3.FieldName = "起点から旋回中心までの距離"
         Me.VerPlan3.ForeColor = System.Drawing.Color.Black
         Me.VerPlan3.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan3.Location = New System.Drawing.Point(471, 562)
+        Me.VerPlan3.Location = New System.Drawing.Point(471, 585)
         Me.VerPlan3.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan3.Name = "VerPlan3"
         Me.VerPlan3.Size = New System.Drawing.Size(420, 21)
@@ -323,7 +341,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan2.FieldName = "発進から旋回中心までの距離"
         Me.VerPlan2.ForeColor = System.Drawing.Color.Black
         Me.VerPlan2.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan2.Location = New System.Drawing.Point(471, 541)
+        Me.VerPlan2.Location = New System.Drawing.Point(471, 564)
         Me.VerPlan2.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan2.Name = "VerPlan2"
         Me.VerPlan2.Size = New System.Drawing.Size(420, 21)
@@ -338,7 +356,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerPlan1.FieldName = "旋回中心"
         Me.VerPlan1.ForeColor = System.Drawing.Color.Black
         Me.VerPlan1.HeaderColor = System.Drawing.Color.Empty
-        Me.VerPlan1.Location = New System.Drawing.Point(471, 520)
+        Me.VerPlan1.Location = New System.Drawing.Point(471, 543)
         Me.VerPlan1.Margin = New System.Windows.Forms.Padding(2)
         Me.VerPlan1.Name = "VerPlan1"
         Me.VerPlan1.Size = New System.Drawing.Size(420, 21)
@@ -353,7 +371,7 @@ Partial Class frmCorrectionValueManagement
         Me.UcnSpredCompnent29.FieldName = "鉛直方向"
         Me.UcnSpredCompnent29.ForeColor = System.Drawing.Color.Black
         Me.UcnSpredCompnent29.HeaderColor = System.Drawing.Color.Yellow
-        Me.UcnSpredCompnent29.Location = New System.Drawing.Point(471, 501)
+        Me.UcnSpredCompnent29.Location = New System.Drawing.Point(471, 524)
         Me.UcnSpredCompnent29.Margin = New System.Windows.Forms.Padding(2)
         Me.UcnSpredCompnent29.Name = "UcnSpredCompnent29"
         Me.UcnSpredCompnent29.Size = New System.Drawing.Size(420, 21)
@@ -368,7 +386,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan16.FieldName = "姿勢角管理値"
         Me.HorPlan16.ForeColor = System.Drawing.Color.Black
         Me.HorPlan16.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan16.Location = New System.Drawing.Point(471, 478)
+        Me.HorPlan16.Location = New System.Drawing.Point(471, 501)
         Me.HorPlan16.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan16.Name = "HorPlan16"
         Me.HorPlan16.Size = New System.Drawing.Size(420, 21)
@@ -383,7 +401,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan15.FieldName = "後胴部の方位角"
         Me.HorPlan15.ForeColor = System.Drawing.Color.Black
         Me.HorPlan15.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan15.Location = New System.Drawing.Point(471, 457)
+        Me.HorPlan15.Location = New System.Drawing.Point(471, 480)
         Me.HorPlan15.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan15.Name = "HorPlan15"
         Me.HorPlan15.Size = New System.Drawing.Size(420, 21)
@@ -398,7 +416,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan14.FieldName = "前胴部の方位角"
         Me.HorPlan14.ForeColor = System.Drawing.Color.Black
         Me.HorPlan14.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan14.Location = New System.Drawing.Point(471, 436)
+        Me.HorPlan14.Location = New System.Drawing.Point(471, 459)
         Me.HorPlan14.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan14.Name = "HorPlan14"
         Me.HorPlan14.Size = New System.Drawing.Size(420, 21)
@@ -413,7 +431,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan13.FieldName = "水平中折角"
         Me.HorPlan13.ForeColor = System.Drawing.Color.Black
         Me.HorPlan13.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan13.Location = New System.Drawing.Point(471, 415)
+        Me.HorPlan13.Location = New System.Drawing.Point(471, 438)
         Me.HorPlan13.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan13.Name = "HorPlan13"
         Me.HorPlan13.Size = New System.Drawing.Size(420, 21)
@@ -428,7 +446,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan12.FieldName = "シフト追加角"
         Me.HorPlan12.ForeColor = System.Drawing.Color.Black
         Me.HorPlan12.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan12.Location = New System.Drawing.Point(471, 394)
+        Me.HorPlan12.Location = New System.Drawing.Point(471, 417)
         Me.HorPlan12.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan12.Name = "HorPlan12"
         Me.HorPlan12.Size = New System.Drawing.Size(420, 21)
@@ -443,7 +461,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan11.FieldName = "シフト"
         Me.HorPlan11.ForeColor = System.Drawing.Color.Black
         Me.HorPlan11.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan11.Location = New System.Drawing.Point(471, 373)
+        Me.HorPlan11.Location = New System.Drawing.Point(471, 396)
         Me.HorPlan11.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan11.Name = "HorPlan11"
         Me.HorPlan11.Size = New System.Drawing.Size(420, 21)
@@ -458,7 +476,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan10.FieldName = "Y座標"
         Me.HorPlan10.ForeColor = System.Drawing.Color.Black
         Me.HorPlan10.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan10.Location = New System.Drawing.Point(471, 352)
+        Me.HorPlan10.Location = New System.Drawing.Point(471, 375)
         Me.HorPlan10.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan10.Name = "HorPlan10"
         Me.HorPlan10.Size = New System.Drawing.Size(420, 21)
@@ -473,7 +491,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan9.FieldName = "X座標"
         Me.HorPlan9.ForeColor = System.Drawing.Color.Black
         Me.HorPlan9.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan9.Location = New System.Drawing.Point(471, 331)
+        Me.HorPlan9.Location = New System.Drawing.Point(471, 354)
         Me.HorPlan9.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan9.Name = "HorPlan9"
         Me.HorPlan9.Size = New System.Drawing.Size(420, 21)
@@ -488,7 +506,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan8.FieldName = "後方変化点距離"
         Me.HorPlan8.ForeColor = System.Drawing.Color.Black
         Me.HorPlan8.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan8.Location = New System.Drawing.Point(471, 310)
+        Me.HorPlan8.Location = New System.Drawing.Point(471, 333)
         Me.HorPlan8.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan8.Name = "HorPlan8"
         Me.HorPlan8.Size = New System.Drawing.Size(420, 21)
@@ -503,7 +521,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan7.FieldName = "前方変化点距離"
         Me.HorPlan7.ForeColor = System.Drawing.Color.Black
         Me.HorPlan7.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan7.Location = New System.Drawing.Point(471, 289)
+        Me.HorPlan7.Location = New System.Drawing.Point(471, 312)
         Me.HorPlan7.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan7.Name = "HorPlan7"
         Me.HorPlan7.Size = New System.Drawing.Size(420, 21)
@@ -518,7 +536,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan6.FieldName = "曲率半径"
         Me.HorPlan6.ForeColor = System.Drawing.Color.Black
         Me.HorPlan6.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan6.Location = New System.Drawing.Point(471, 268)
+        Me.HorPlan6.Location = New System.Drawing.Point(471, 291)
         Me.HorPlan6.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan6.Name = "HorPlan6"
         Me.HorPlan6.Size = New System.Drawing.Size(420, 21)
@@ -533,7 +551,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan5.FieldName = "線形(1:直線　２：単曲線　3:緩和)"
         Me.HorPlan5.ForeColor = System.Drawing.Color.Black
         Me.HorPlan5.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan5.Location = New System.Drawing.Point(471, 247)
+        Me.HorPlan5.Location = New System.Drawing.Point(471, 270)
         Me.HorPlan5.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan5.Name = "HorPlan5"
         Me.HorPlan5.Size = New System.Drawing.Size(420, 21)
@@ -548,7 +566,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan4.FieldName = "ゾーン"
         Me.HorPlan4.ForeColor = System.Drawing.Color.Black
         Me.HorPlan4.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan4.Location = New System.Drawing.Point(471, 226)
+        Me.HorPlan4.Location = New System.Drawing.Point(471, 249)
         Me.HorPlan4.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan4.Name = "HorPlan4"
         Me.HorPlan4.Size = New System.Drawing.Size(420, 21)
@@ -563,7 +581,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan3.FieldName = "起点から旋回中心までの距離"
         Me.HorPlan3.ForeColor = System.Drawing.Color.Black
         Me.HorPlan3.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan3.Location = New System.Drawing.Point(471, 205)
+        Me.HorPlan3.Location = New System.Drawing.Point(471, 228)
         Me.HorPlan3.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan3.Name = "HorPlan3"
         Me.HorPlan3.Size = New System.Drawing.Size(420, 21)
@@ -578,7 +596,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan2.FieldName = "発進から旋回中心までの距離"
         Me.HorPlan2.ForeColor = System.Drawing.Color.Black
         Me.HorPlan2.HeaderColor = System.Drawing.Color.Empty
-        Me.HorPlan2.Location = New System.Drawing.Point(471, 184)
+        Me.HorPlan2.Location = New System.Drawing.Point(471, 207)
         Me.HorPlan2.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan2.Name = "HorPlan2"
         Me.HorPlan2.Size = New System.Drawing.Size(420, 21)
@@ -593,7 +611,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorPlan1.FieldName = "旋回中心"
         Me.HorPlan1.ForeColor = System.Drawing.Color.Black
         Me.HorPlan1.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.HorPlan1.Location = New System.Drawing.Point(471, 163)
+        Me.HorPlan1.Location = New System.Drawing.Point(471, 186)
         Me.HorPlan1.Margin = New System.Windows.Forms.Padding(2)
         Me.HorPlan1.Name = "HorPlan1"
         Me.HorPlan1.Size = New System.Drawing.Size(420, 21)
@@ -608,7 +626,7 @@ Partial Class frmCorrectionValueManagement
         Me.UcnSpredCompnent4.FieldName = "水平方向"
         Me.UcnSpredCompnent4.ForeColor = System.Drawing.Color.Black
         Me.UcnSpredCompnent4.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.UcnSpredCompnent4.Location = New System.Drawing.Point(471, 143)
+        Me.UcnSpredCompnent4.Location = New System.Drawing.Point(471, 166)
         Me.UcnSpredCompnent4.Margin = New System.Windows.Forms.Padding(2)
         Me.UcnSpredCompnent4.Name = "UcnSpredCompnent4"
         Me.UcnSpredCompnent4.Size = New System.Drawing.Size(420, 21)
@@ -620,10 +638,10 @@ Partial Class frmCorrectionValueManagement
         '
         Me.PlanCommon4.DecimalPlaces = CType(3, Short)
         Me.PlanCommon4.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.PlanCommon4.FieldName = "当リング始点の先端総距離"
+        Me.PlanCommon4.FieldName = "現在の先端距離"
         Me.PlanCommon4.ForeColor = System.Drawing.Color.Black
         Me.PlanCommon4.HeaderColor = System.Drawing.Color.Empty
-        Me.PlanCommon4.Location = New System.Drawing.Point(471, 121)
+        Me.PlanCommon4.Location = New System.Drawing.Point(471, 144)
         Me.PlanCommon4.Margin = New System.Windows.Forms.Padding(2)
         Me.PlanCommon4.Name = "PlanCommon4"
         Me.PlanCommon4.Size = New System.Drawing.Size(420, 21)
@@ -638,7 +656,7 @@ Partial Class frmCorrectionValueManagement
         Me.PlanCommon3.FieldName = "押し上がりストロークの差"
         Me.PlanCommon3.ForeColor = System.Drawing.Color.Black
         Me.PlanCommon3.HeaderColor = System.Drawing.Color.Empty
-        Me.PlanCommon3.Location = New System.Drawing.Point(471, 100)
+        Me.PlanCommon3.Location = New System.Drawing.Point(471, 123)
         Me.PlanCommon3.Margin = New System.Windows.Forms.Padding(2)
         Me.PlanCommon3.Name = "PlanCommon3"
         Me.PlanCommon3.Size = New System.Drawing.Size(420, 21)
@@ -653,7 +671,7 @@ Partial Class frmCorrectionValueManagement
         Me.PlanCommon1.FieldName = "確認リングの先端総距離"
         Me.PlanCommon1.ForeColor = System.Drawing.Color.Black
         Me.PlanCommon1.HeaderColor = System.Drawing.Color.Empty
-        Me.PlanCommon1.Location = New System.Drawing.Point(471, 58)
+        Me.PlanCommon1.Location = New System.Drawing.Point(471, 81)
         Me.PlanCommon1.Margin = New System.Windows.Forms.Padding(2)
         Me.PlanCommon1.Name = "PlanCommon1"
         Me.PlanCommon1.Size = New System.Drawing.Size(420, 21)
@@ -669,7 +687,7 @@ Partial Class frmCorrectionValueManagement
         Me.UcnSpredCompnent14.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.UcnSpredCompnent14.ForeColor = System.Drawing.Color.Black
         Me.UcnSpredCompnent14.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.UcnSpredCompnent14.Location = New System.Drawing.Point(471, 38)
+        Me.UcnSpredCompnent14.Location = New System.Drawing.Point(471, 39)
         Me.UcnSpredCompnent14.Margin = New System.Windows.Forms.Padding(2)
         Me.UcnSpredCompnent14.Name = "UcnSpredCompnent14"
         Me.UcnSpredCompnent14.Size = New System.Drawing.Size(420, 21)
@@ -782,6 +800,11 @@ Partial Class frmCorrectionValueManagement
         Me.ConfirmRingNo.Unit = "リング"
         Me.ConfirmRingNo.Value = 10.0R
         '
+        'tmrLineUpdate
+        '
+        Me.tmrLineUpdate.Enabled = True
+        Me.tmrLineUpdate.Interval = 1000
+        '
         'frmCorrectionValueManagement
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -789,6 +812,7 @@ Partial Class frmCorrectionValueManagement
         Me.BackColor = System.Drawing.Color.Gray
         Me.ClientSize = New System.Drawing.Size(932, 869)
         Me.ControlBox = False
+        Me.Controls.Add(Me.NowRing)
         Me.Controls.Add(Me.btnCLose)
         Me.Controls.Add(Me.PlanCommon2)
         Me.Controls.Add(Me.VerPlan15)
@@ -887,4 +911,6 @@ Partial Class frmCorrectionValueManagement
     Friend WithEvents VerPlan8 As FLEX.NET.ucnSpredCompnent
     Friend WithEvents PlanCommon2 As ucnSpredCompnent
     Friend WithEvents btnCLose As Button
+    Friend WithEvents NowRing As ucnSpredCompnent
+    Friend WithEvents tmrLineUpdate As Timer
 End Class

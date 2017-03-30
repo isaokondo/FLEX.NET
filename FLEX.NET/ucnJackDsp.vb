@@ -821,6 +821,7 @@ Public Class ucnJackDsp
     Private Sub imgPoint_Click(sender As Object, e As EventArgs) _
         Handles imgPointYUP.Click, imgPointXDOWN.Click, imgPointXUP.Click, imgPointYDOWN.Click, btnPointCenter.Click
 
+
         If sender Is imgPointYUP Then
             _FlexPointY += 0.05
         End If
@@ -939,6 +940,7 @@ Public Class ucnJackDsp
         _FlexPointY = 0
         DspPointData()
         RaiseEvent ManualPointChange()
+        btnPointCenter.BackColor = Color.DarkGreen
 
     End Sub
 
@@ -948,6 +950,8 @@ Public Class ucnJackDsp
 
     Private Sub btnPointCenter_MouseUp(sender As Object, e As MouseEventArgs) Handles btnPointCenter.MouseUp
         tmrCenter.Enabled = False
+        btnPointCenter.BackColor = Color.DarkGray
+
     End Sub
 
     Private Sub imgPoint_Click_1(sender As Object, e As EventArgs) Handles imgPoint.Click

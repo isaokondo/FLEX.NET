@@ -12,7 +12,7 @@ Public Class clsControlParameter
 
     Private _全開グループ制限 As Boolean
     Private _最大全開出力時の目標圧力 As Single
-    Private _偏差角許容値 As Single ''偏差角許容値
+    'Private _偏差角許容値 As Single ''偏差角許容値
     Private _最低制御圧力 As Single
 
     '力点座標
@@ -400,15 +400,15 @@ Public Class clsControlParameter
     End Property
 
 
-    Public Property 偏差角許容値() As Single
-        Get
-            Return _偏差角許容値
-        End Get
-        Set(ByVal Value As Single)
-            _偏差角許容値 = Value
-            Call sbUpdateData(Value)
-        End Set
-    End Property
+    'Public Property 偏差角許容値() As Single
+    '    Get
+    '        Return _偏差角許容値
+    '    End Get
+    '    Set(ByVal Value As Single)
+    '        _偏差角許容値 = Value
+    '        Call sbUpdateData(Value)
+    '    End Set
+    'End Property
     ''' <summary>
     ''' ダイレクト指令制御　使用／未使用
     ''' </summary>
@@ -855,7 +855,7 @@ Public Class clsControlParameter
         _全開グループ制限 = fnBoolean(chk.GetValue("全開グループ制限"))
         _最大全開出力時の目標圧力 = chk.GetValue("最大全開出力時の目標圧力")
         _最低制御圧力 = chk.GetValue("最低制御圧力")
-        _偏差角許容値 = chk.GetValue("偏差角許容値")
+        '_偏差角許容値 = chk.GetValue("偏差角許容値")
         '_PointX = chk.GetValue("PointX")
         '_PointY = chk.GetValue("PointY")
         _片押しR制限 = chk.GetValue("片押しR制限値")

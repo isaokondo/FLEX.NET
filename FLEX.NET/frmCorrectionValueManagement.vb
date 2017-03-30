@@ -41,7 +41,7 @@
 
     Private Sub frmCorrectionValueManagement_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-
+        NowRing.Value = PlcIf.RingNo
         ConfirmRingNo.Value = CtlPara.測量ポイントリング番号
         TipDistance.Value = CtlPara.測量ポイント総距離
 
@@ -66,18 +66,19 @@
             If o.GetType Is GetType(ucnSpredCompnent) Then
                 Dim p As ucnSpredCompnent = DirectCast(o, ucnSpredCompnent)
 
-
-
-
                 '水平のデータ
                 With RefernceDirection
 
                     If p.Name.IndexOf("PlanCommon") >= 0 Then
                         Select Case p.FieldName
+                            Case "現在の先端距離"
+                                p.Value = .Distance.掘進総距離
                             Case "確認リングの先端総距離"
                                 p.Value = .Distance.測量ポイント総距離
-                            Case "当リング始点の先端総距離"
-                                p.Value = .Distance.掘進総距離
+                            Case "セグメント幅の追加距離"
+                                p.Value = .Distance.SegWdAddDist
+                            Case "押し上がりストロークの差"
+                                p.Value = .Distance.LastStrokeDiff
 
                         End Select
                     End If
@@ -168,5 +169,18 @@
         Next
 
     End Sub
+    ''' <summary>
+    ''' 平均ストローク
+    ''' </summary>
+    Private AveStroke As Integer
 
+    Private Sub tmrLineUpdate_Tick(sender As Object, e As EventArgs) Handles tmrLineUpdate.Tick
+
+
+        If PlcIf.ExcaStatus = cKussin Then
+
+            DspUpdate()
+        End If
+
+    End Sub
 End Class

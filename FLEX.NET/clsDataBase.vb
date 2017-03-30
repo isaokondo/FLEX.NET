@@ -380,6 +380,8 @@ Public Class clsInitParameter
 
     Private _mesureJackNo As New List(Of Short) '計測ジャッキ番号 上右下左の順番
 
+    Private _constructionName As String '工事名（環境設定テーブルより
+
     Private WithEvents Htb As New clsHashtableRead
     ''' <summary>
     ''' ジャッキ本数
@@ -490,8 +492,14 @@ Public Class clsInitParameter
         End Get
     End Property
 
+    Public ReadOnly Property ConstructionName As String
+        Get
+            Return _constructionName
+        End Get
+    End Property
 
     Public Sub New()
+
         Dim paraDB As DataTable =
             GetDtfmSQL("SELECT * FROM FLEX初期パラメータ")
 
@@ -572,6 +580,14 @@ Public Class clsInitParameter
         Catch ex As Exception
 
         End Try
+
+        '工事名の取得
+        'Dim ConName As DataTable = GetDtfmSQL($"SELECT 工事名 FROM 環境設定 WHERE シートID='{_sheetID}'")
+        Dim ConName As DataTable = GetDtfmSQL($"SELECT 工事名 FROM 環境設定 WHERE シートID='10'")
+        If ConName.Rows.Count <> 0 Then
+            _constructionName = ConName.Rows(0).Item(0)
+        End If
+
 
 
     End Sub

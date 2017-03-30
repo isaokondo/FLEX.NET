@@ -18,7 +18,7 @@
             .JackGroupPos = InitParameter.JackGroupPos
             .NumberJack = InitParameter.NumberJack
             .NumberGroup = InitParameter.NumberGroup
-            Call .CreateInitBaseImg()
+            'Call .CreateInitBaseImg()
         End With
 
 

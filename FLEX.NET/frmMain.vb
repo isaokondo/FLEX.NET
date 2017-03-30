@@ -167,6 +167,10 @@
         DspMoment.Blink = JackMvAuto.モーメント上限超
         UcnJackDsp.PointRLimitOver = JackMvAuto.片押しR上限超
 
+        DspHorDev.Blink = RefernceDirection.HorDevLimitOver
+        DspVerDev.Blink = RefernceDirection.VerDevLimitOver
+
+
 
 
         'チャートの更新
@@ -251,7 +255,6 @@
         'MYSQLのバージョン取得
         clsDataBase.GetMySQKVersion()
 
-        Me.Text += GetVersionNo()
 
         'インスタンス作成
         InitPara = New clsInitParameter '初期値パラメータ
@@ -273,6 +276,8 @@
 
         Dim ReportTbl As New clsRingReport
         '        ReportTbl.CheckRingItem()
+        'フォームのタイトル
+        Me.Text += $"{GetVersionNo()} [{InitPara.ConstructionName}]"
 
 
         'ジャッキ稼働画面の初期データ
@@ -343,9 +348,13 @@
 
         '汎用データ表示項目セット
         WideDataFldSet()
+        '計算すtロー演算
+        PlcIf_MesureStrokeChange()
 
         '基準方位の算出
         RefernceDirection.sbCulKijun()
+
+        DirectionChartD.DataGet()
 
         '線形データ画面更新
         LineDataUpdate()
@@ -358,8 +367,6 @@
         DspExcavStartDay(getExcecStartTime)
         '姿勢制御自動手動の切替時の処理
         ControlParameter_FlexAutoManualChange()
-        '計算すtロー演算
-        PlcIf_MesureStrokeChange()
 
     End Sub
     ''' <summary>

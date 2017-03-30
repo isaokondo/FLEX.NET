@@ -181,7 +181,7 @@ Friend Class clsDataSave
                 Data(ColumnList.IndexOf("全開グループ制限")) = IIf(.全開グループ制限, 1, 0)
                 Data(ColumnList.IndexOf("最低全開グループ数")) = .最低全開グループ数
                 'TODO:偏角許容値のエラーメッセージ未処理　音声がいいか！
-                Data(ColumnList.IndexOf("偏差角許容値")) = .偏差角許容値
+                Data(ColumnList.IndexOf("偏差角許容値")) = .DevTolerance
                 Data(ColumnList.IndexOf("最大全開出力時の目標圧力")) = .最大全開出力時の目標圧力
                 Data(ColumnList.IndexOf("ジャッキモーメント上限値")) = .ジャッキモーメント上限値
 
