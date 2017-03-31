@@ -62,6 +62,8 @@
 
             dSet.setData(0, ZoneNo)
 
+            dSet.setData(1, HorPlan.終点測点名(ZoneNo))
+
             dSet.setData(2, HorPlan.線形(ZoneNo))
             dSet.setData(3, HorPlan.線分長(ZoneNo))
             dSet.setData(4, HorPlan.始点曲率半径(ZoneNo) * HorPlan.座標系)

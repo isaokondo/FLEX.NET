@@ -65,6 +65,7 @@ Public Class clsHorPanData
     Public Property 起点Y座標 As Double
     Public Property 起点方位角 As Double
 
+    Public Property 終点測点名 As String() '終点測点名
     Public Property 始点累積距離 As Double() '始点累積距離
     Public Property 終点累積距離 As Double() '終点累積距離
     Public Property 始点方向角 As Double() '始点方向角（勾配)
@@ -95,7 +96,7 @@ Public Class clsHorPanData
 
         MyBase.RedimData()
 
-        ReDim _始点累積距離(ゾーン総数 + 1), _終点累積距離(ゾーン総数 + 1), _始点方向角(ゾーン総数 + 1), _
+        ReDim _終点測点名(ゾーン総数 + 1), _始点累積距離(ゾーン総数 + 1), _終点累積距離(ゾーン総数 + 1), _始点方向角(ゾーン総数 + 1),
             _終点方向角(ゾーン総数 + 1)
 
         ReDim _始点曲率半径(ゾーン総数 + 1), _終点曲率半径(ゾーン総数 + 1), _始点カント(ゾーン総数 + 1), _
@@ -184,6 +185,9 @@ Public Class clsHorPanData
 
                 _クロソイドパラメータ(zoneNo) = CheckItemData(h.Item("ｸﾛｿｲﾄﾞﾊﾟﾗﾒｰﾀ"))
                 中心角(zoneNo) = CheckItemData(h.Item("中心角"))
+            End If
+            If Not IsDBNull(h.Item("終点測点名")) Then
+                _終点測点名(zoneNo) = h.Item("終点測点名")
             End If
             _始点累積距離(zoneNo) = h.Item("始点累積距離")
             _終点累積距離(zoneNo) = h.Item("終点累積距離")

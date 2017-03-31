@@ -308,31 +308,26 @@
 
 
         '水平モーメント
-        With ucnHorMomentChart
-            .StrokeWidth = CtlPara.GraphStrokeWidth
-            .ChartHighScale = CtlPara.HorMomentTrendWidth
-            .ChartList = HorMomentData.DList
+        ucnHorMomentChart.StrokeWidth = CtlPara.GraphStrokeWidth
+        ucnHorMomentChart.ChartHighScale = CtlPara.HorMomentTrendWidth
+        ucnHorMomentChart.ChartList = HorMomentData.DList
+        ucnHorMomentChart.ChartClear()
 
-        End With
         '鉛直モーメント
-        With ucnVerMomentChart
-            .StrokeWidth = CtlPara.GraphStrokeWidth
-            .ChartHighScale = CtlPara.HorMomentTrendWidth
+        ucnVerMomentChart.StrokeWidth = CtlPara.GraphStrokeWidth
+        ucnVerMomentChart.ChartHighScale = CtlPara.HorMomentTrendWidth
             ucnVerMomentChart.ChartList = VerMomentData.DList
-        End With
+        ucnVerMomentChart.ChartClear()
         '水平偏角
-        With ucnHorDevChart
-            .StrokeWidth = CtlPara.GraphStrokeWidth
-            .ChartHighScale = CtlPara.HorDevDegTrendWidth
-            .ChartList = HorDevData.DList
-        End With
+        ucnHorDevChart.StrokeWidth = CtlPara.GraphStrokeWidth
+        ucnHorDevChart.ChartHighScale = CtlPara.HorDevDegTrendWidth
+            ucnHorDevChart.ChartList = HorDevData.DList
+        ucnHorDevChart.ChartClear()
         '鉛直偏角
-        With ucnVerDevChart
-            .StrokeWidth = CtlPara.GraphStrokeWidth
-            .ChartHighScale = CtlPara.HorDevDegTrendWidth
-            .ChartList = VerDevData.DList
-        End With
-
+        ucnVerDevChart.StrokeWidth = CtlPara.GraphStrokeWidth
+        ucnVerDevChart.ChartHighScale = CtlPara.HorDevDegTrendWidth
+        ucnVerDevChart.ChartList = VerDevData.DList
+        ucnVerDevChart.ChartClear()
         '
         UcnGpPvBarGraph.PresBarGraphWidt = CtlPara.PresBarGraphWidt
 

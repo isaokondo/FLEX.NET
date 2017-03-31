@@ -44,19 +44,20 @@ Partial Class frmTuningMonitor
         '
         'btnClose
         '
-        Me.btnClose.Location = New System.Drawing.Point(417, 118)
-        Me.btnClose.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnClose.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnClose.Location = New System.Drawing.Point(547, 28)
+        Me.btnClose.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClose.Name = "btnClose"
-        Me.btnClose.Size = New System.Drawing.Size(52, 25)
+        Me.btnClose.Size = New System.Drawing.Size(65, 27)
         Me.btnClose.TabIndex = 0
         Me.btnClose.Text = "閉じる"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'picDsp
         '
         Me.picDsp.BackColor = System.Drawing.Color.White
         Me.picDsp.Location = New System.Drawing.Point(11, 46)
-        Me.picDsp.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.picDsp.Margin = New System.Windows.Forms.Padding(2)
         Me.picDsp.Name = "picDsp"
         Me.picDsp.Size = New System.Drawing.Size(480, 481)
         Me.picDsp.TabIndex = 1
@@ -152,13 +153,13 @@ Partial Class frmTuningMonitor
         'AlwaysTopMost
         '
         Me.AlwaysTopMost.Name = "AlwaysTopMost"
-        Me.AlwaysTopMost.Size = New System.Drawing.Size(115, 22)
+        Me.AlwaysTopMost.Size = New System.Drawing.Size(152, 22)
         Me.AlwaysTopMost.Text = "常に手前"
         '
         'CloseWindow
         '
         Me.CloseWindow.Name = "CloseWindow"
-        Me.CloseWindow.Size = New System.Drawing.Size(115, 22)
+        Me.CloseWindow.Size = New System.Drawing.Size(152, 22)
         Me.CloseWindow.Text = "閉じる"
         '
         'frmTuningMonitor
@@ -177,7 +178,7 @@ Partial Class frmTuningMonitor
         Me.Controls.Add(Me.ShapeContainer1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "frmTuningMonitor"
         Me.Text = "チューニングモニタ"
         CType(Me.picDsp, System.ComponentModel.ISupportInitialize).EndInit()
