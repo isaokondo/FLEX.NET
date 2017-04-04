@@ -120,7 +120,7 @@ Friend Class clsDataSave
             With RefernceDirection.HorZendoKijun
                 Data(ColumnList.IndexOf("平面旋回中心")) = RefernceDirection.平面旋回中心.ToString("F4")
                 Data(ColumnList.IndexOf("平面発進から発旋回中心までの距離")) = (.掘進累積距離 - RefernceDirection.toStartDistance).ToString("F4")
-                Data(ColumnList.IndexOf("平面基点から発旋回中心までの距離")) = .掘進累積距離.ToString("F4")
+                Data(ColumnList.IndexOf("平面起点から発旋回中心までの距離")) = .掘進累積距離.ToString("F4")
                 Data(ColumnList.IndexOf("平面ｿﾞｰﾝ")) = .平面ゾーン番号
                 Data(ColumnList.IndexOf("平面線形")) = .平面線形
                 Data(ColumnList.IndexOf("平面前方変化点距離")) = .平面ゾーン内残距離.ToString("F4")
@@ -135,7 +135,7 @@ Friend Class clsDataSave
 
                 Data(ColumnList.IndexOf("Ｘ座標（構築中心）")) = .構築中心X座標.ToString("F4")
                 Data(ColumnList.IndexOf("Ｙ座標（構築中心）")) = .構築中心Y座標.ToString("F4")
-                Data(ColumnList.IndexOf("前胴方位角")) = Hoko2Hoi(.軌道中心方位角 + HorPlan.X軸方位角).ToString("F4")
+                Data(ColumnList.IndexOf("前胴方位角")) = Hoko2Hoi(RefernceDirection.HorZendoKijun.軌道中心方位角 + HorPlan.X軸方位角).ToString("F4")
             End With
 
             Data(ColumnList.IndexOf("後胴方位角")) = Hoko2Hoi(RefernceDirection.HorKodoKijun.軌道中心方位角 + HorPlan.X軸方位角).ToString("F4")
@@ -144,7 +144,7 @@ Friend Class clsDataSave
             Data(ColumnList.IndexOf("縦断旋回中心")) = RefernceDirection.縦断旋回中心.ToString("F4")
             With RefernceDirection.VerZendoKijun
                 Data(ColumnList.IndexOf("縦断発進から発旋回中心までの距離")) = (.掘進累積距離 - RefernceDirection.toStartDistance).ToString("F4")
-                Data(ColumnList.IndexOf("縦断基点から発旋回中心までの距離")) = .掘進累積距離.ToString("F4")
+                Data(ColumnList.IndexOf("縦断起点から発旋回中心までの距離")) = .掘進累積距離.ToString("F4")
                 Data(ColumnList.IndexOf("縦断ｿﾞｰﾝ")) = .縦断ゾーン番号
                 Data(ColumnList.IndexOf("縦断線形")) = .縦断線形
                 Data(ColumnList.IndexOf("縦断前方変化点距離")) = .縦断ゾーン内残距離.ToString("F4")

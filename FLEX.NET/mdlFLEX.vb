@@ -405,6 +405,7 @@ Module mdlFLEX
             JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
         End If
 
+        frmMain.DirectionChartD.DataUp()
 
 
     End Sub

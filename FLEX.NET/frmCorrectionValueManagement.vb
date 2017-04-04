@@ -41,6 +41,7 @@
 
     Private Sub frmCorrectionValueManagement_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Me.TopMost = True
         NowRing.Value = PlcIf.RingNo
         ConfirmRingNo.Value = CtlPara.測量ポイントリング番号
         TipDistance.Value = CtlPara.測量ポイント総距離

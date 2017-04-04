@@ -804,17 +804,55 @@
                 Return _VerRData
             End Get
         End Property
-
+        ''' <summary>
+        ''' これから掘進する平面計画データ
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property HorPData As Dictionary(Of Integer, Single)
             Get
                 Return _HorPData
             End Get
         End Property
+        ''' <summary>
+        ''' これから掘進する縦断計画データ
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property VerPData As Dictionary(Of Integer, Single)
             Get
                 Return _VerPData
             End Get
         End Property
+
+        ''' <summary>
+        ''' チャートデータ更新
+        ''' </summary>
+        Public Sub DataUp()
+            Dim rsData As DataTable =
+                GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE `リング番号`=
+               '{PlcIf.RingNo}' ORDER BY `掘進ストローク` DESC LIMIT 0,1")
+
+            Dim g As ucnChart2.gData
+
+            If rsData.Rows.Count <> 0 Then
+                Dim t As DataRow = rsData.Rows(0)
+                g.RingNo = t("リング番号")
+                g.Distance = t.Item("平面起点から発旋回中心までの距離") * 1000
+                g.PlanDr = t.Item("前胴方位角")
+                g.TargetDr = t.Item("平面姿勢角管理値")
+                g.RealDr = t.Item("ジャイロ方位角")
+                _HorRData.Add(g)
+
+                g.Distance = t.Item("縦断起点から発旋回中心までの距離") * 1000
+                g.PlanDr = t.Item("前胴鉛直角")
+                g.TargetDr = t.Item("縦断姿勢角管理値")
+                g.RealDr = t.Item("ジャイロピッチング")
+                _VerRData.Add(g)
+
+            End If
+
+        End Sub
+
+
 
 
         ''' <summary>
@@ -825,36 +863,29 @@
             Dim rsData As DataTable =
                 GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE `リング番号`>=
                 '{PlcIf.RingNo - CtlPara.LineDevStartRing}
-                ' AND `リング番号`<'{PlcIf.RingNo}' AND MOD(掘進ストローク,10)=0;")
+                ' AND `リング番号`<='{PlcIf.RingNo}' AND MOD(掘進ストローク,10)=0;")
 
             _HorRData.Clear()
             _VerRData.Clear()
             Dim RingNo As Integer = Nothing
-            Dim OffsetStroke As Integer = 0 'リング毎に加算する距離
-            Dim TmpStrk As Integer
             Dim g As ucnChart2.gData
-            Dim LastDistance As Single
 
             For Each t As DataRow In rsData.Rows
 
-                If RingNo <> t.Item("リング番号") Then
-                    OffsetStroke += TmpStrk
-                End If
                 g.RingNo = t("リング番号")
-                g.Distance = OffsetStroke + t.Item("掘進ストローク")
+                g.Distance = t.Item("平面起点から発旋回中心までの距離") * 1000
                 g.PlanDr = t.Item("前胴方位角")
                 g.TargetDr = t.Item("平面姿勢角管理値")
                 g.RealDr = t.Item("ジャイロ方位角")
                 _HorRData.Add(g)
 
+                g.Distance = t.Item("縦断起点から発旋回中心までの距離") * 1000
                 g.PlanDr = t.Item("前胴鉛直角")
                 g.TargetDr = t.Item("縦断姿勢角管理値")
                 g.RealDr = t.Item("ジャイロピッチング")
                 _VerRData.Add(g)
                 RingNo = g.RingNo
-                TmpStrk = t.Item("掘進ストローク")
 
-                LastDistance = t.Item("平面発進から発旋回中心までの距離")
             Next
 
             'これから掘削する計画方位データ
@@ -869,7 +900,7 @@
             Dim dis As New clsLineMake
 
             For i As Integer = 0 To Distance Step 10
-                dis.掘進累積距離 = i / 1000 + LastDistance
+                dis.掘進累積距離 = (i  + _HorRData.Last.Distance)/1000
                 _HorPData.Add(i, Hoko2Hoi(dis.軌道中心方位角 + HorPlan.X軸方位角))
                 _VerPData.Add(i, dis.鉛直角)
             Next
