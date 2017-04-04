@@ -577,6 +577,19 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+
+    Public Property 全押しスタート As Boolean
+        Get
+            Return _全押しスタート
+        End Get
+        Set(value As Boolean)
+            _全押しスタート = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
+
+
     ''' <summary>
     ''' グラフ横軸幅
     ''' </summary>

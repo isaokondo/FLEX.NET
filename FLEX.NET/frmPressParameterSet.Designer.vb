@@ -33,15 +33,17 @@ Partial Class frmPressParameterSet
         Me.RectangleShape1 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.DirectControl = New FLEX.NET.ucnRdBtn()
         Me.ControlStartThrustOn = New FLEX.NET.ucnRdBtn()
+        Me.DirectControlOffset = New FLEX.NET.ucnNumEdit()
+        Me.DirectControlCoefficient = New FLEX.NET.ucnNumEdit()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(228, 431)
+        Me.btnOK.Location = New System.Drawing.Point(228, 568)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(348, 432)
+        Me.btnCancel.Location = New System.Drawing.Point(348, 569)
         '
         'PIDShiftDefl
         '
@@ -59,6 +61,8 @@ Partial Class frmPressParameterSet
         Me.PIDShiftDefl.SelectItem = Nothing
         Me.PIDShiftDefl.Size = New System.Drawing.Size(395, 30)
         Me.PIDShiftDefl.TabIndex = 12
+        Me.PIDShiftDefl.ttMsg = ""
+        Me.PIDShiftDefl.ttTile = ""
         Me.PIDShiftDefl.Unit = "MPa"
         Me.PIDShiftDefl.Value = 0R
         '
@@ -70,7 +74,7 @@ Partial Class frmPressParameterSet
         Me.PID_P.FieldName = "P"
         Me.PID_P.Increment = 1.0!
         Me.PID_P.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.PID_P.Location = New System.Drawing.Point(28, 114)
+        Me.PID_P.Location = New System.Drawing.Point(28, 237)
         Me.PID_P.Margin = New System.Windows.Forms.Padding(2)
         Me.PID_P.MaxValue = "200"
         Me.PID_P.MinValue = "0"
@@ -78,6 +82,8 @@ Partial Class frmPressParameterSet
         Me.PID_P.SelectItem = Nothing
         Me.PID_P.Size = New System.Drawing.Size(395, 39)
         Me.PID_P.TabIndex = 15
+        Me.PID_P.ttMsg = ""
+        Me.PID_P.ttTile = ""
         Me.PID_P.Unit = "%"
         Me.PID_P.Value = 0R
         '
@@ -89,7 +95,7 @@ Partial Class frmPressParameterSet
         Me.PID_I.FieldName = "I"
         Me.PID_I.Increment = 1.0!
         Me.PID_I.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.PID_I.Location = New System.Drawing.Point(28, 153)
+        Me.PID_I.Location = New System.Drawing.Point(28, 276)
         Me.PID_I.Margin = New System.Windows.Forms.Padding(2)
         Me.PID_I.MaxValue = "200"
         Me.PID_I.MinValue = "0"
@@ -97,6 +103,8 @@ Partial Class frmPressParameterSet
         Me.PID_I.SelectItem = Nothing
         Me.PID_I.Size = New System.Drawing.Size(395, 39)
         Me.PID_I.TabIndex = 16
+        Me.PID_I.ttMsg = ""
+        Me.PID_I.ttTile = ""
         Me.PID_I.Unit = "sec"
         Me.PID_I.Value = 0R
         '
@@ -108,7 +116,7 @@ Partial Class frmPressParameterSet
         Me.PID_D.FieldName = "D"
         Me.PID_D.Increment = 1.0!
         Me.PID_D.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.PID_D.Location = New System.Drawing.Point(28, 192)
+        Me.PID_D.Location = New System.Drawing.Point(28, 315)
         Me.PID_D.Margin = New System.Windows.Forms.Padding(2)
         Me.PID_D.MaxValue = "200"
         Me.PID_D.MinValue = "0"
@@ -116,6 +124,8 @@ Partial Class frmPressParameterSet
         Me.PID_D.SelectItem = Nothing
         Me.PID_D.Size = New System.Drawing.Size(395, 39)
         Me.PID_D.TabIndex = 17
+        Me.PID_D.ttMsg = ""
+        Me.PID_D.ttTile = ""
         Me.PID_D.Unit = "sec"
         Me.PID_D.Value = 0R
         '
@@ -127,7 +137,7 @@ Partial Class frmPressParameterSet
         Me.PresFileterFactor.FieldName = "元圧フィルター係数"
         Me.PresFileterFactor.Increment = 1.0!
         Me.PresFileterFactor.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.PresFileterFactor.Location = New System.Drawing.Point(28, 254)
+        Me.PresFileterFactor.Location = New System.Drawing.Point(28, 377)
         Me.PresFileterFactor.Margin = New System.Windows.Forms.Padding(2)
         Me.PresFileterFactor.MaxValue = "100"
         Me.PresFileterFactor.MinValue = "0"
@@ -135,6 +145,8 @@ Partial Class frmPressParameterSet
         Me.PresFileterFactor.SelectItem = Nothing
         Me.PresFileterFactor.Size = New System.Drawing.Size(395, 39)
         Me.PresFileterFactor.TabIndex = 18
+        Me.PresFileterFactor.ttMsg = ""
+        Me.PresFileterFactor.ttTile = ""
         Me.PresFileterFactor.Unit = "%"
         Me.PresFileterFactor.Value = 0R
         '
@@ -146,7 +158,7 @@ Partial Class frmPressParameterSet
         Me.ControlStartThrustData.FieldName = "制御開始推力値"
         Me.ControlStartThrustData.Increment = 1.0!
         Me.ControlStartThrustData.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.ControlStartThrustData.Location = New System.Drawing.Point(28, 361)
+        Me.ControlStartThrustData.Location = New System.Drawing.Point(28, 496)
         Me.ControlStartThrustData.Margin = New System.Windows.Forms.Padding(2)
         Me.ControlStartThrustData.MaxValue = "100000"
         Me.ControlStartThrustData.MinValue = "0"
@@ -154,6 +166,8 @@ Partial Class frmPressParameterSet
         Me.ControlStartThrustData.SelectItem = Nothing
         Me.ControlStartThrustData.Size = New System.Drawing.Size(395, 29)
         Me.ControlStartThrustData.TabIndex = 19
+        Me.ControlStartThrustData.ttMsg = ""
+        Me.ControlStartThrustData.ttTile = ""
         Me.ControlStartThrustData.Unit = "kN"
         Me.ControlStartThrustData.Value = 0R
         '
@@ -163,7 +177,7 @@ Partial Class frmPressParameterSet
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape2, Me.RectangleShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(464, 489)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(464, 634)
         Me.ShapeContainer1.TabIndex = 20
         Me.ShapeContainer1.TabStop = False
         '
@@ -171,7 +185,7 @@ Partial Class frmPressParameterSet
         '
         Me.RectangleShape2.BorderColor = System.Drawing.Color.White
         Me.RectangleShape2.CornerRadius = 10
-        Me.RectangleShape2.Location = New System.Drawing.Point(11, 317)
+        Me.RectangleShape2.Location = New System.Drawing.Point(11, 451)
         Me.RectangleShape2.Name = "RectangleShape2"
         Me.RectangleShape2.Size = New System.Drawing.Size(443, 90)
         '
@@ -181,7 +195,7 @@ Partial Class frmPressParameterSet
         Me.RectangleShape1.CornerRadius = 10
         Me.RectangleShape1.Location = New System.Drawing.Point(10, 11)
         Me.RectangleShape1.Name = "RectangleShape1"
-        Me.RectangleShape1.Size = New System.Drawing.Size(443, 90)
+        Me.RectangleShape1.Size = New System.Drawing.Size(443, 178)
         '
         'DirectControl
         '
@@ -200,7 +214,7 @@ Partial Class frmPressParameterSet
         '
         Me.ControlStartThrustOn.BackColor = System.Drawing.Color.Transparent
         Me.ControlStartThrustOn.FieldName = "制御開始推力設定"
-        Me.ControlStartThrustOn.Location = New System.Drawing.Point(28, 323)
+        Me.ControlStartThrustOn.Location = New System.Drawing.Point(28, 458)
         Me.ControlStartThrustOn.Margin = New System.Windows.Forms.Padding(2)
         Me.ControlStartThrustOn.Name = "ControlStartThrustOn"
         Me.ControlStartThrustOn.rdbtnValue = False
@@ -209,12 +223,56 @@ Partial Class frmPressParameterSet
         Me.ControlStartThrustOn.SlectYesName = "する"
         Me.ControlStartThrustOn.TabIndex = 22
         '
+        'DirectControlOffset
+        '
+        Me.DirectControlOffset.DataDspWidth = 110
+        Me.DirectControlOffset.DecimalPlaces = CType(0, Short)
+        Me.DirectControlOffset.DspFieldName = True
+        Me.DirectControlOffset.FieldName = "オフセット"
+        Me.DirectControlOffset.Increment = 1.0!
+        Me.DirectControlOffset.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.DirectControlOffset.Location = New System.Drawing.Point(28, 143)
+        Me.DirectControlOffset.Margin = New System.Windows.Forms.Padding(2)
+        Me.DirectControlOffset.MaxValue = "200"
+        Me.DirectControlOffset.MinValue = "0"
+        Me.DirectControlOffset.Name = "DirectControlOffset"
+        Me.DirectControlOffset.SelectItem = Nothing
+        Me.DirectControlOffset.Size = New System.Drawing.Size(395, 39)
+        Me.DirectControlOffset.TabIndex = 24
+        Me.DirectControlOffset.ttMsg = ""
+        Me.DirectControlOffset.ttTile = ""
+        Me.DirectControlOffset.Unit = "%"
+        Me.DirectControlOffset.Value = 0R
+        '
+        'DirectControlCoefficient
+        '
+        Me.DirectControlCoefficient.DataDspWidth = 110
+        Me.DirectControlCoefficient.DecimalPlaces = CType(2, Short)
+        Me.DirectControlCoefficient.DspFieldName = True
+        Me.DirectControlCoefficient.FieldName = "係数"
+        Me.DirectControlCoefficient.Increment = 0.1!
+        Me.DirectControlCoefficient.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.DirectControlCoefficient.Location = New System.Drawing.Point(28, 104)
+        Me.DirectControlCoefficient.Margin = New System.Windows.Forms.Padding(2)
+        Me.DirectControlCoefficient.MaxValue = "200"
+        Me.DirectControlCoefficient.MinValue = "0"
+        Me.DirectControlCoefficient.Name = "DirectControlCoefficient"
+        Me.DirectControlCoefficient.SelectItem = Nothing
+        Me.DirectControlCoefficient.Size = New System.Drawing.Size(395, 39)
+        Me.DirectControlCoefficient.TabIndex = 23
+        Me.DirectControlCoefficient.ttMsg = ""
+        Me.DirectControlCoefficient.ttTile = ""
+        Me.DirectControlCoefficient.Unit = ""
+        Me.DirectControlCoefficient.Value = 0R
+        '
         'frmPressParameterSet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
-        Me.ClientSize = New System.Drawing.Size(464, 489)
+        Me.ClientSize = New System.Drawing.Size(464, 634)
+        Me.Controls.Add(Me.DirectControlOffset)
+        Me.Controls.Add(Me.DirectControlCoefficient)
         Me.Controls.Add(Me.ControlStartThrustOn)
         Me.Controls.Add(Me.DirectControl)
         Me.Controls.Add(Me.ControlStartThrustData)
@@ -237,6 +295,8 @@ Partial Class frmPressParameterSet
         Me.Controls.SetChildIndex(Me.ControlStartThrustOn, 0)
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
+        Me.Controls.SetChildIndex(Me.DirectControlCoefficient, 0)
+        Me.Controls.SetChildIndex(Me.DirectControlOffset, 0)
         Me.ResumeLayout(False)
 
     End Sub
@@ -252,4 +312,6 @@ Partial Class frmPressParameterSet
     Friend WithEvents RectangleShape1 As PowerPacks.RectangleShape
     Friend WithEvents DirectControl As ucnRdBtn
     Friend WithEvents ControlStartThrustOn As ucnRdBtn
+    Friend WithEvents DirectControlOffset As ucnNumEdit
+    Friend WithEvents DirectControlCoefficient As ucnNumEdit
 End Class

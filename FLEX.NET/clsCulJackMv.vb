@@ -64,8 +64,8 @@ Friend Class clsCulJackMv
 
 
     ''クラス内モジュール変数
-    Private mdblHorHensa As Double
-    Private mdblVerHensa As Double
+    Private _HorDev As Double
+    Private _VerDev As Double
 
     Private mbln制御モード As Boolean ''True：PID　False:圧力制御
 
@@ -340,23 +340,23 @@ Friend Class clsCulJackMv
         End Set
     End Property
 
-    Public Property HorHensa() As Double
+    Public Property HorDev() As Double
         Get
-            Return mdblHorHensa
+            Return _HorDev
         End Get
         Set(ByVal Value As Double)
-            mdblHorHensa = Value
+            _HorDev = Value
         End Set
     End Property
 
 
 
-    Public Property VerHensa() As Double
+    Public Property VerDev() As Double
         Get
-            Return mdblVerHensa
+            Return _VerDev
         End Get
         Set(ByVal Value As Double)
-            mdblVerHensa = Value
+            _VerDev = Value
         End Set
     End Property
 
@@ -364,8 +364,8 @@ Friend Class clsCulJackMv
     Private Sub Class_Initialize_Renamed()
 
         ''偏差の初期化
-        mdblHorHensa = 0 ''水平
-        mdblVerHensa = 0 ''鉛直
+        _HorDev = 0 ''水平
+        _VerDev = 0 ''鉛直
 
         ''01/07/12 追加
         EstValue = New clsEstmateValeu
@@ -430,8 +430,8 @@ Friend Class clsCulJackMv
             ''モーメント制御
             ''ＰＩＤ演算
             'TODO:モーメント制御
-            mdblHorHensa += mdblHorHensa
-            mdblVerHensa += mdblVerHensa
+            _HorDev += _HorDev
+            _VerDev += _VerDev
 
             ''比例常数→比例帯
             dblHorKp = 100 / _水平モーメントP定数
@@ -443,8 +443,8 @@ Friend Class clsCulJackMv
             dblHorGi = cHorDg / _水平モーメントI定数
             dblVerGi = cVerDg / _鉛直モーメントI定数
 
-            dblX = dblHorKp * (dblHorGp * _水平モーメント偏差 + dblHorGi * mdblHorHensa)
-            dblY = dblVerKp * (dblVerGp * _鉛直モーメント偏差 + dblVerGi * mdblVerHensa)
+            dblX = dblHorKp * (dblHorGp * _水平モーメント偏差 + dblHorGi * _HorDev)
+            dblY = dblVerKp * (dblVerGp * _鉛直モーメント偏差 + dblVerGi * _VerDev)
 
             '    Debug.Print "偏差", mdbl水平モーメント偏差, mdbl鉛直モーメント偏差
             ''変化率を制限する
@@ -462,8 +462,8 @@ Friend Class clsCulJackMv
             ''姿勢制御
             ''ＰＩＤ演算
 
-            mdblHorHensa += mdbl水平偏差角
-            mdblVerHensa += mdbl鉛直偏差角
+            _HorDev += mdbl水平偏差角
+            _VerDev += mdbl鉛直偏差角
 
             ''比例常数→比例帯
             dblHorKp = 100 / _水平P定数
@@ -475,8 +475,8 @@ Friend Class clsCulJackMv
             dblHorGi = cHorDg / _水平I定数
             dblVerGi = cVerDg / _鉛直I定数
 
-            dblX = dblHorKp * (dblHorGp * mdbl水平偏差角 + dblHorGi * mdblHorHensa)
-            dblY = dblVerKp * (dblVerGp * mdbl鉛直偏差角 + dblVerGi * mdblVerHensa)
+            dblX = dblHorKp * (dblHorGp * mdbl水平偏差角 + dblHorGi * _HorDev)
+            dblY = dblVerKp * (dblVerGp * mdbl鉛直偏差角 + dblVerGi * _VerDev)
 
         End If
 
@@ -525,11 +525,11 @@ Friend Class clsCulJackMv
             dblY = mdbl操作強 * Sin(mdbl操作角.ToRad)
 
             If mblnモーメント制御 Then
-                mdblHorHensa = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * _水平モーメント偏差
-                mdblVerHensa = 1 / (dblVerKp * dblVerGi) * dblY - dblVerGp / dblVerGi * _鉛直モーメント偏差
+                _HorDev = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * _水平モーメント偏差
+                _VerDev = 1 / (dblVerKp * dblVerGi) * dblY - dblVerGp / dblVerGi * _鉛直モーメント偏差
             Else
-                mdblHorHensa = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * mdbl水平偏差角
-                mdblVerHensa = 1 / (dblVerKp * dblVerGi) * dblY - dblVerGp / dblVerGi * mdbl鉛直偏差角
+                _HorDev = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * mdbl水平偏差角
+                _VerDev = 1 / (dblVerKp * dblVerGi) * dblY - dblVerGp / dblVerGi * mdbl鉛直偏差角
             End If
             mdblRcDash = mdbl操作強
 
@@ -595,8 +595,8 @@ Friend Class clsCulJackMv
         dblHorGi = cHorDg / _水平I定数
         dblVerGi = cVerDg / _鉛直I定数
 
-        mdblHorHensa = 1 / (dblHorKp * dblHorGi) * mdblPointX - dblHorGp / dblHorGi * mdbl水平偏差角
-        mdblVerHensa = 1 / (dblVerKp * dblVerGi) * mdblPointY - dblVerGp / dblVerGi * mdbl鉛直偏差角
+        _HorDev = 1 / (dblHorKp * dblHorGi) * mdblPointX - dblHorGp / dblHorGi * mdbl水平偏差角
+        _VerDev = 1 / (dblVerKp * dblVerGi) * mdblPointY - dblVerGp / dblVerGi * mdbl鉛直偏差角
 
         ''手動→自動トラッキング時は片押しが効かないようにセット
         mblnStartTraking = True
@@ -630,8 +630,8 @@ Friend Class clsCulJackMv
         dblHorGi = cHorDg / _水平モーメントI定数
         dblVerGi = cVerDg / _鉛直モーメントI定数
 
-        mdblHorHensa = 1 / (dblHorKp * dblHorGi) * mdblPointX
-        mdblVerHensa = 1 / (dblVerKp * dblVerGi) * mdblPointY
+        _HorDev = 1 / (dblHorKp * dblHorGi) * mdblPointX
+        _VerDev = 1 / (dblVerKp * dblVerGi) * mdblPointY
 
         ''手動→自動トラッキング時は片押しが効かないようにセット
         mblnStartTraking = True

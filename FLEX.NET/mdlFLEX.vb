@@ -154,6 +154,7 @@ Module mdlFLEX
             CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
             '掘進開始時のストローク取り込み
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
+            FullOpenStart() '全押しスタート
         End If
         If PreStatus = cChudan And NowStatus = cKussin Then
             WriteEventData("掘進再開しました", Color.Magenta)
@@ -410,10 +411,31 @@ Module mdlFLEX
 
     End Sub
     ''' <summary>
+    ''' 掘進開始時に全押しスタート
+    ''' </summary>
+    Private Sub FullOpenStart()
+        'FLEX制御、自動、全押しスタートフラグON
+        If CtlPara.AutoDirectionControl And CtlPara.全押しスタート And PlcIf.FlexControlOn Then
+
+            JackManual.PutPointXY(0, 0)
+
+            JackMvAuto.操作角 = 0
+            JackMvAuto.操作強 = 0
+            JackMvAuto.PointX = 0
+            JackMvAuto.PointY = 0
+            JackMvAuto.HorDev = 0
+            JackMvAuto.VerDev = 0
+            JackManual_PointChanges()
+        End If
+
+    End Sub
+
+    'TODO:手動時にフラグ（PID偏差）がダイレクト制御になったときのイベント
+    ''' <summary>
     ''' 操作出力の処理
     ''' </summary>
-    Private Sub JackManual_PointChanges() Handles JackManual.PointChanges,
-        PlcIf.ExcavationStatusChange, JackMvAuto.AutoDirectionCulc, Reduce.ReduceOn, PlcIf.LosZeroStsChange
+    Private Sub JackManual_PointChanges() Handles PlcIf.ExcavationStatusChange, PlcIf.JkPressFilterChange,
+        JackMvAuto.AutoDirectionCulc, Reduce.ReduceOn, PlcIf.LosZeroStsChange, JackManual.PointChanges
 
         With DivCul
             'パラメータセット
@@ -432,6 +454,7 @@ Module mdlFLEX
                 PlcIf.操作強 = JackMvAuto.操作強
             Else
                 '力点手動操作時
+
                 DivCul.操作角 = JackManual.操作角
                 DivCul.操作強 = JackManual.操作強
                 PlcIf.操作角 = JackManual.操作角
@@ -445,6 +468,7 @@ Module mdlFLEX
             PlcIf.PointWrite()
 
         End With
+
 
         GroupSvOut() 'シーケンサへ圧力分担値の送出
 

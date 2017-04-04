@@ -10,6 +10,8 @@
             PID_P.Value = .減圧弁制御P定数
             PID_I.Value = .減圧弁制御I定数
             PID_D.Value = .減圧弁制御D定数
+            DirectControlCoefficient.Value = .DirectControlCoefficient
+            DirectControlOffset.Value = .DirectControlOffset
 
         End With
 
@@ -24,19 +26,18 @@
     End Sub
 
     Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
-        With PlcIf
-            PlcIf.減圧弁制御P定数 = PID_P.Value
-            PlcIf.減圧弁制御I定数 = PID_I.Value
+        PlcIf.減圧弁制御P定数 = PID_P.Value
+        PlcIf.減圧弁制御I定数 = PID_I.Value
             PlcIf.減圧弁制御D定数 = PID_D.Value
-        End With
+        PlcIf.DirectControlCoefficient = DirectControlCoefficient.Value
+        PlcIf.DirectControlOffset = DirectControlOffset.Value
 
-        With CtlPara
-            .元圧フィルタ係数 = PresFileterFactor.Value
-            .圧力制御開始推力値有効フラグ = ControlStartThrustOn.rdbtnValue
-            .圧力制御開始推力値 = ControlStartThrustData.Value
-            .PIDShiftDefl = PIDShiftDefl.Value
-            .DirectControl = DirectControl.rdbtnValue
-        End With
+        CtlPara.元圧フィルタ係数 = PresFileterFactor.Value
+        CtlPara.圧力制御開始推力値有効フラグ = ControlStartThrustOn.rdbtnValue
+            CtlPara.圧力制御開始推力値 = ControlStartThrustData.Value
+            CtlPara.PIDShiftDefl = PIDShiftDefl.Value
+            CtlPara.DirectControl = DirectControl.rdbtnValue
+
 
         Me.Close()
     End Sub

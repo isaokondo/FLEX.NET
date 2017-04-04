@@ -94,6 +94,12 @@ Public Class clsPlcIf
     Private _GaingSetReducingValveContDConst As Integer
     Private _感度調整設定圧力偏差 As Single
 
+    'ダイレクト制御パラメータ
+    Private _DirectControlCoefficient As Single '係数
+    Private _DirectControlOffset As Integer 'オフセット
+
+
+
     'グループ数、ジャッキ本数
     Private _numberGroup As Short
     Private _numberJack As Short
@@ -157,6 +163,10 @@ Public Class clsPlcIf
     ''' </summary>
     Public Event PointChange()
 
+    ''' <summary>
+    ''' FLEX手動時に掘進中にジャッキ圧力が変化したイベント
+    ''' </summary>
+    Public Event JkPressFilterChange()
 
     ''' <summary>
     ''' 同時施工ステータス変化
@@ -707,8 +717,34 @@ Public Class clsPlcIf
             Return _mesureJackSpeed
         End Get
     End Property
+    ''' <summary>
+    ''' ダイレクト制御係数
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property DirectControlCoefficient As Single
+        Get
+            Return _DirectControlCoefficient
+        End Get
+        Set(value As Single)
+            _DirectControlCoefficient = value
+            Call ParameterWrite(value)
 
+        End Set
+    End Property
+    ''' <summary>
+    ''' ダイレクト制御オフセット
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property DirectControlOffset As Integer
+        Get
+            Return _DirectControlOffset
+        End Get
+        Set(value As Integer)
+            _DirectControlOffset = value
+            Call ParameterWrite(value)
 
+        End Set
+    End Property
 
 
     ''' <summary>
@@ -887,7 +923,14 @@ Public Class clsPlcIf
 
                         _jkPress = _EngValue("ジャッキ圧力")
 
+                        Dim JkPs As Single = _FilterJkPress
                         _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
+                        'FLEX手動時に掘進中にジャッキ圧力が変化したイベント
+                        If _excaStatus = cKussin AndAlso _flexControlOn And
+                            Not CtlPara.AutoDirectionControl And JkPs <> _jkPress Then
+                            RaiseEvent JkPressFilterChange()
+                        End If
+
 
                         _nakaoreLR = _EngValue("中折左右角")
                         _nakaoreTB = _EngValue("中折上下角")
@@ -924,13 +967,30 @@ Public Class clsPlcIf
                             RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
                         End If
 
-                        Dim i As Integer
-                        For i = 0 To InitPara.NumberGroup - 1
+                        For i As Short = 0 To InitPara.NumberGroup - 1
                             _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
                             _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
                             _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
                             _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
                         Next
+                        '掘進中でダイレクト制御ONでFLEX手動モード時
+                        If _excaStatus = cKussin AndAlso _flexControlOn And
+                            CtlPara.DirectControl And Not CtlPara.AutoDirectionControl Then
+                            'PID偏差がダイレクト制御偏差より変化
+                            For i As Short = 0 To InitPara.NumberGroup - 1
+                                If _groupFlg(i) = cDirect And Math.Abs(_groupPv(i) - _groupSv(i)) < CtlPara.PIDShiftDefl Then
+                                    RaiseEvent JkPressFilterChange()
+                                    Exit For
+                                End If
+                                If _groupFlg(i) = cPIDOut And Math.Abs(_groupPv(i) - _groupSv(i)) > CtlPara.PIDShiftDefl Then
+                                    RaiseEvent JkPressFilterChange()
+                                    Exit For
+                                End If
+                            Next
+                        End If
+
+
+
 
                         For i = 0 To InitPara.NumberJack - 1
                             _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
@@ -992,6 +1052,10 @@ Public Class clsPlcIf
                     _感度調整設定圧力偏差 = GetAnalogData("感度調整設定圧力偏差", ParameterTag)
                     'TODO:同時施工で考慮
                     _MaxExcavingStroke = GetAnalogData("掘進中最大ストローク", ParameterTag)
+
+                    _DirectControlCoefficient = GetAnalogData("DirectControlCoefficient", ParameterTag)
+                    _DirectControlOffset = GetAnalogData("DirectControlOffset", ParameterTag)
+
 
                     Dim rno As Integer = _RingNo
                     _RingNo = GetAnalogData("RingNo", ParameterTag)
