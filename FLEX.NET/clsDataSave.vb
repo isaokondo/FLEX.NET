@@ -178,7 +178,7 @@ Friend Class clsDataSave
                 'Data(ColumnList.IndexOf("制御モード切替作動範囲")) = .
                 Data(ColumnList.IndexOf("片押し制限フラグ")) = IIf(.片押し制限フラグ, 1, 0)
                 Data(ColumnList.IndexOf("圧力許容値")) = .圧力許容値
-                Data(ColumnList.IndexOf("全開グループ制限")) = IIf(.全開グループ制限, 1, 0)
+                'Data(ColumnList.IndexOf("全開グループ制限")) = IIf(.全開グループ制限, 1, 0)
                 Data(ColumnList.IndexOf("最低全開グループ数")) = .最低全開グループ数
                 'TODO:偏角許容値のエラーメッセージ未処理　音声がいいか！
                 Data(ColumnList.IndexOf("偏差角許容値")) = .DevTolerance

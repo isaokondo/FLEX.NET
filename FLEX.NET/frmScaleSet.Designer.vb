@@ -91,7 +91,7 @@ Partial Class frmScaleSet
         Me.nudHorMomentTrendWidth.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.nudHorMomentTrendWidth.Location = New System.Drawing.Point(35, 66)
         Me.nudHorMomentTrendWidth.Margin = New System.Windows.Forms.Padding(2)
-        Me.nudHorMomentTrendWidth.MaxValue = "100000"
+        Me.nudHorMomentTrendWidth.MaxValue = "1E+07"
         Me.nudHorMomentTrendWidth.MinValue = "0"
         Me.nudHorMomentTrendWidth.Name = "nudHorMomentTrendWidth"
         Me.nudHorMomentTrendWidth.SelectItem = Nothing
@@ -112,7 +112,7 @@ Partial Class frmScaleSet
         Me.nudVerMomentTrendWidth.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.nudVerMomentTrendWidth.Location = New System.Drawing.Point(34, 100)
         Me.nudVerMomentTrendWidth.Margin = New System.Windows.Forms.Padding(2)
-        Me.nudVerMomentTrendWidth.MaxValue = "100000"
+        Me.nudVerMomentTrendWidth.MaxValue = "1E+07"
         Me.nudVerMomentTrendWidth.MinValue = "0"
         Me.nudVerMomentTrendWidth.Name = "nudVerMomentTrendWidth"
         Me.nudVerMomentTrendWidth.SelectItem = Nothing

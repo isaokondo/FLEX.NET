@@ -1015,7 +1015,6 @@ Public Class clsPlcIf
                 End If
 
 
-                frmMain.tmrDataDsp.Enabled = True
 
             Else    'エラー発生
                 RaiseEvent PLCErrOccur(Me, New EventArgs, "アナログ読込エラー", iReturnCode)
@@ -1185,6 +1184,10 @@ Public Class clsPlcIf
         CulcMoment.JackSel = _jackSelect
         CulcMoment.JkPress = _jkPress
         CulcMoment.MomentCul()
+
+        frmMain.tmrDataDsp.Enabled = True
+
+
         ' ……
     End Sub
     ''' <summary>

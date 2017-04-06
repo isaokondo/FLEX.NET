@@ -10,7 +10,7 @@ Public Class clsControlParameter
     Private _全開作動範囲 As Short = 35
     Private _全開作動指令値 As Short
 
-    Private _全開グループ制限 As Boolean
+    'Private _全開グループ制限 As Boolean
     Private _最大全開出力時の目標圧力 As Single
     'Private _偏差角許容値 As Single ''偏差角許容値
     Private _最低制御圧力 As Single
@@ -212,17 +212,17 @@ Public Class clsControlParameter
         End Set
     End Property
 
-    Public Property 全開グループ制限() As Boolean
-        Get
-            Return _全開グループ制限
+    'Public Property 全開グループ制限() As Boolean
+    '    Get
+    '        Return _全開グループ制限
 
-        End Get
-        Set(ByVal Value As Boolean)
-            _全開グループ制限 = Value
-            Call sbUpdateData(Value)
+    '    End Get
+    '    Set(ByVal Value As Boolean)
+    '        _全開グループ制限 = Value
+    '        Call sbUpdateData(Value)
 
-        End Set
-    End Property
+    '    End Set
+    'End Property
     'todo:力点と操作角、操作強を同時に更新したい！
     'Public Property PointX() As Single
     '    Get
@@ -865,7 +865,7 @@ Public Class clsControlParameter
         _最低全開グループ数 = chk.GetValue("最低全開グループ数")
         _全開作動範囲 = chk.GetValue("全開作動範囲")
         _全開作動指令値 = chk.GetValue("全開作動指令値")
-        _全開グループ制限 = fnBoolean(chk.GetValue("全開グループ制限"))
+        '_全開グループ制限 = fnBoolean(chk.GetValue("全開グループ制限"))
         _最大全開出力時の目標圧力 = chk.GetValue("最大全開出力時の目標圧力")
         _最低制御圧力 = chk.GetValue("最低制御圧力")
         '_偏差角許容値 = chk.GetValue("偏差角許容値")

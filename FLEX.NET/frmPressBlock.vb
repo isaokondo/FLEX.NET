@@ -14,7 +14,7 @@ Public Class frmPressBlock
 
 
         With CtlPara
-            FullPowerMinimumEnable.rdbtnValue = .全開グループ制限
+            'FullPowerMinimumEnable.rdbtnValue = .全開グループ制限
             MinimumFullPowerBlock.Value = .最低全開グループ数
             FullPowerValue.Value = .全開作動指令値
             FullPowerRange.Value = .全開作動範囲
@@ -29,7 +29,7 @@ Public Class frmPressBlock
 
     Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
 
-        CtlPara.全開グループ制限 = FullPowerMinimumEnable.rdbtnValue
+        'CtlPara.全開グループ制限 = FullPowerMinimumEnable.rdbtnValue
         CtlPara.最低全開グループ数 = MinimumFullPowerBlock.Value
         CtlPara.全開作動指令値 = FullPowerValue.Value
         CtlPara.全開作動範囲 = FullPowerRange.Value

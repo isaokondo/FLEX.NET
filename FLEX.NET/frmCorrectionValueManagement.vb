@@ -72,7 +72,7 @@
 
                     If p.Name.IndexOf("PlanCommon") >= 0 Then
                         Select Case p.FieldName
-                            Case "現在の先端距離"
+                            Case "現在の先端距離（発進から）"
                                 p.Value = .Distance.掘進総距離
                             Case "確認リングの先端総距離"
                                 p.Value = .Distance.測量ポイント総距離

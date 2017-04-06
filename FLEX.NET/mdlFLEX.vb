@@ -417,20 +417,15 @@ Module mdlFLEX
         'FLEX制御、自動、全押しスタートフラグON
         If CtlPara.AutoDirectionControl And CtlPara.全押しスタート And PlcIf.FlexControlOn Then
 
+            '手動操作の作用点を原点にし
             JackManual.PutPointXY(0, 0)
+            '手動から自動制御へ移行
+            ControlParameter_FlexAutoManualChange()
 
-            JackMvAuto.操作角 = 0
-            JackMvAuto.操作強 = 0
-            JackMvAuto.PointX = 0
-            JackMvAuto.PointY = 0
-            JackMvAuto.HorDev = 0
-            JackMvAuto.VerDev = 0
-            JackManual_PointChanges()
         End If
 
     End Sub
 
-    'TODO:手動時にフラグ（PID偏差）がダイレクト制御になったときのイベント
     ''' <summary>
     ''' 操作出力の処理
     ''' </summary>
@@ -442,7 +437,7 @@ Module mdlFLEX
             DivCul.最低全開グループ数 = CtlPara.最低全開グループ数
             DivCul.全開作動指令値 = CtlPara.全開作動指令値
             DivCul.全開作動範囲 = CtlPara.全開作動範囲
-            DivCul.全開グループ制限 = CtlPara.全開グループ制限
+            'DivCul.全開グループ制限 = CtlPara.全開グループ制限
 
             If CtlPara.AutoDirectionControl Then
                 '力点自動

@@ -22,7 +22,6 @@ Partial Class frmPressBlock
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.FullPowerMinimumEnable = New FLEX.NET.ucnRdBtn()
         Me.MinimumFullPowerBlock = New FLEX.NET.ucnNumEdit()
         Me.RectangleShape1 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
@@ -43,19 +42,6 @@ Partial Class frmPressBlock
         '
         Me.btnCancel.Location = New System.Drawing.Point(339, 364)
         '
-        'FullPowerMinimumEnable
-        '
-        Me.FullPowerMinimumEnable.BackColor = System.Drawing.Color.Transparent
-        Me.FullPowerMinimumEnable.FieldName = "全開ﾌﾞﾛｯｸの最小設定"
-        Me.FullPowerMinimumEnable.Location = New System.Drawing.Point(37, 14)
-        Me.FullPowerMinimumEnable.Margin = New System.Windows.Forms.Padding(2)
-        Me.FullPowerMinimumEnable.Name = "FullPowerMinimumEnable"
-        Me.FullPowerMinimumEnable.rdbtnValue = False
-        Me.FullPowerMinimumEnable.Size = New System.Drawing.Size(404, 34)
-        Me.FullPowerMinimumEnable.SlectNoName = "する"
-        Me.FullPowerMinimumEnable.SlectYesName = "しない"
-        Me.FullPowerMinimumEnable.TabIndex = 23
-        '
         'MinimumFullPowerBlock
         '
         Me.MinimumFullPowerBlock.DataDspWidth = 110
@@ -64,7 +50,7 @@ Partial Class frmPressBlock
         Me.MinimumFullPowerBlock.FieldName = "全開ブロック最小数"
         Me.MinimumFullPowerBlock.Increment = 1.0!
         Me.MinimumFullPowerBlock.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.MinimumFullPowerBlock.Location = New System.Drawing.Point(37, 52)
+        Me.MinimumFullPowerBlock.Location = New System.Drawing.Point(37, 40)
         Me.MinimumFullPowerBlock.Margin = New System.Windows.Forms.Padding(2)
         Me.MinimumFullPowerBlock.MaxValue = "10"
         Me.MinimumFullPowerBlock.MinValue = "1"
@@ -72,6 +58,8 @@ Partial Class frmPressBlock
         Me.MinimumFullPowerBlock.SelectItem = Nothing
         Me.MinimumFullPowerBlock.Size = New System.Drawing.Size(421, 30)
         Me.MinimumFullPowerBlock.TabIndex = 22
+        Me.MinimumFullPowerBlock.ttMsg = ""
+        Me.MinimumFullPowerBlock.ttTile = ""
         Me.MinimumFullPowerBlock.Unit = ""
         Me.MinimumFullPowerBlock.Value = 1.0R
         '
@@ -89,7 +77,7 @@ Partial Class frmPressBlock
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(1149, 665)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(1132, 665)
         Me.ShapeContainer1.TabIndex = 24
         Me.ShapeContainer1.TabStop = False
         '
@@ -109,6 +97,8 @@ Partial Class frmPressBlock
         Me.MaxContorolPress.SelectItem = Nothing
         Me.MaxContorolPress.Size = New System.Drawing.Size(421, 39)
         Me.MaxContorolPress.TabIndex = 28
+        Me.MaxContorolPress.ttMsg = ""
+        Me.MaxContorolPress.ttTile = ""
         Me.MaxContorolPress.Unit = "MPa"
         Me.MaxContorolPress.Value = 0R
         '
@@ -128,6 +118,8 @@ Partial Class frmPressBlock
         Me.MinimumContorolPress.SelectItem = Nothing
         Me.MinimumContorolPress.Size = New System.Drawing.Size(421, 39)
         Me.MinimumContorolPress.TabIndex = 27
+        Me.MinimumContorolPress.ttMsg = ""
+        Me.MinimumContorolPress.ttTile = ""
         Me.MinimumContorolPress.Unit = "MPa"
         Me.MinimumContorolPress.Value = 0R
         '
@@ -147,6 +139,8 @@ Partial Class frmPressBlock
         Me.FullPowerRange.SelectItem = Nothing
         Me.FullPowerRange.Size = New System.Drawing.Size(421, 39)
         Me.FullPowerRange.TabIndex = 26
+        Me.FullPowerRange.ttMsg = ""
+        Me.FullPowerRange.ttTile = ""
         Me.FullPowerRange.Unit = "%"
         Me.FullPowerRange.Value = 0R
         '
@@ -158,7 +152,7 @@ Partial Class frmPressBlock
         Me.FullPowerValue.FieldName = "全開指令の中央値"
         Me.FullPowerValue.Increment = 1.0!
         Me.FullPowerValue.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.FullPowerValue.Location = New System.Drawing.Point(39, 104)
+        Me.FullPowerValue.Location = New System.Drawing.Point(39, 92)
         Me.FullPowerValue.Margin = New System.Windows.Forms.Padding(2)
         Me.FullPowerValue.MaxValue = "100"
         Me.FullPowerValue.MinValue = "90"
@@ -166,13 +160,15 @@ Partial Class frmPressBlock
         Me.FullPowerValue.SelectItem = Nothing
         Me.FullPowerValue.Size = New System.Drawing.Size(421, 39)
         Me.FullPowerValue.TabIndex = 25
+        Me.FullPowerValue.ttMsg = ""
+        Me.FullPowerValue.ttTile = ""
         Me.FullPowerValue.Unit = "%"
         Me.FullPowerValue.Value = 90.0R
         '
         'picPressBlock
         '
         Me.picPressBlock.BackColor = System.Drawing.Color.Transparent
-        Me.picPressBlock.Location = New System.Drawing.Point(478, 14)
+        Me.picPressBlock.Location = New System.Drawing.Point(472, 14)
         Me.picPressBlock.Margin = New System.Windows.Forms.Padding(2)
         Me.picPressBlock.Name = "picPressBlock"
         Me.picPressBlock.Size = New System.Drawing.Size(653, 640)
@@ -194,21 +190,19 @@ Partial Class frmPressBlock
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
-        Me.ClientSize = New System.Drawing.Size(1149, 665)
+        Me.ClientSize = New System.Drawing.Size(1132, 665)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.picPressBlock)
         Me.Controls.Add(Me.MaxContorolPress)
         Me.Controls.Add(Me.MinimumContorolPress)
         Me.Controls.Add(Me.FullPowerRange)
         Me.Controls.Add(Me.FullPowerValue)
-        Me.Controls.Add(Me.FullPowerMinimumEnable)
         Me.Controls.Add(Me.MinimumFullPowerBlock)
         Me.Controls.Add(Me.ShapeContainer1)
         Me.Name = "frmPressBlock"
         Me.Text = "圧力ブロック"
         Me.Controls.SetChildIndex(Me.ShapeContainer1, 0)
         Me.Controls.SetChildIndex(Me.MinimumFullPowerBlock, 0)
-        Me.Controls.SetChildIndex(Me.FullPowerMinimumEnable, 0)
         Me.Controls.SetChildIndex(Me.FullPowerValue, 0)
         Me.Controls.SetChildIndex(Me.FullPowerRange, 0)
         Me.Controls.SetChildIndex(Me.MinimumContorolPress, 0)
@@ -221,8 +215,6 @@ Partial Class frmPressBlock
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents FullPowerMinimumEnable As ucnRdBtn
     Friend WithEvents MinimumFullPowerBlock As ucnNumEdit
     Friend WithEvents RectangleShape1 As PowerPacks.RectangleShape
     Friend WithEvents ShapeContainer1 As PowerPacks.ShapeContainer

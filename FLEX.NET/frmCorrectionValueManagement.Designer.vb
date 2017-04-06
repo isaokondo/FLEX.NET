@@ -638,7 +638,7 @@ Partial Class frmCorrectionValueManagement
         '
         Me.PlanCommon4.DecimalPlaces = CType(3, Short)
         Me.PlanCommon4.Dsp_Style = FLEX.NET.ucnSpredCompnent.DspStyle.DataDspType
-        Me.PlanCommon4.FieldName = "現在の先端距離"
+        Me.PlanCommon4.FieldName = "現在の先端距離（発進から）"
         Me.PlanCommon4.ForeColor = System.Drawing.Color.Black
         Me.PlanCommon4.HeaderColor = System.Drawing.Color.Empty
         Me.PlanCommon4.Location = New System.Drawing.Point(471, 144)
@@ -763,7 +763,7 @@ Partial Class frmCorrectionValueManagement
         Me.TipDistance.DataDspWidth = 110
         Me.TipDistance.DecimalPlaces = CType(3, Short)
         Me.TipDistance.DspFieldName = True
-        Me.TipDistance.FieldName = "先端の総距離"
+        Me.TipDistance.FieldName = "先端の総距離（発進から）"
         Me.TipDistance.Increment = 0.01!
         Me.TipDistance.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.TipDistance.Location = New System.Drawing.Point(20, 81)

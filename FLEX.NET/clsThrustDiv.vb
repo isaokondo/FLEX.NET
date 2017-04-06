@@ -70,14 +70,14 @@ Friend Class clsThrustDiv
         End Set
     End Property
 
-    Public Property 全開グループ制限() As Boolean
-        Get
-            全開グループ制限 = _全開グループ制限
-        End Get
-        Set(ByVal Value As Boolean)
-            _全開グループ制限 = Value
-        End Set
-    End Property
+    'Public Property 全開グループ制限() As Boolean
+    '    Get
+    '        全開グループ制限 = _全開グループ制限
+    '    End Get
+    '    Set(ByVal Value As Boolean)
+    '        _全開グループ制限 = Value
+    '    End Set
+    'End Property
 
     Public Property 全開作動範囲() As Short
         Get
@@ -286,10 +286,10 @@ Friend Class clsThrustDiv
         '============================= page Ⅲ－３１===============================
         ''全開グループ制御
         'Dim dblWork As Double
-        If _全開グループ制限 Then
+        'If _全開グループ制限 Then
+        '常に全開制限を行う
 
-
-            Dim buntang As New Dictionary(Of Short, Double)
+        Dim buntang As New Dictionary(Of Short, Double)
 
             For i = 0 To InitPara.NumberGroup - 1
                 buntang.Add(i, If(CtlPara.optGpEn.Contains(i + 1), 0, _分担率計算値(i)))
@@ -304,7 +304,7 @@ Friend Class clsThrustDiv
                 _分担率指令値(g) = 100
             Next
 
-        End If
+        'End If
 
         Dim Pj1sum As Double = 0
 

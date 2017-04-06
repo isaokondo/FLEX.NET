@@ -4,6 +4,9 @@ Public Class frmSegmentEdit
     ''' 更新した行
     ''' </summary>
     Private lstChangeRow As New List(Of Integer)
+    'コピーするリング番号の最初と最後
+    Private CopyStartRing As Integer
+    Private CopyLastRing As Integer
 
     Public Sub New()
 
@@ -81,6 +84,73 @@ Public Class frmSegmentEdit
     End Sub
 
     Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
+
+    End Sub
+    ''' <summary>
+    ''' コピーする範囲の行インデックスを取得
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub tsmCopy_Click(sender As Object, e As EventArgs) Handles tsmCopy.Click
+
+        CopyStartRing =
+            (From i As DataGridViewRow In DgvSegAssign.SelectedRows Select i.Index).Min
+        CopyLastRing =
+            (From i As DataGridViewRow In DgvSegAssign.SelectedRows Select i.Index).Max
+
+
+        tsmPaste.Enabled = True
+        tsmPtternPaste.Enabled = True
+
+    End Sub
+    ''' <summary>
+    ''' コピーしたデータを貼り付け
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub tsmPaste_Click(sender As Object, e As EventArgs) Handles tsmPaste.Click
+        'コピーするデータを取得
+        Dim PtName As New List(Of String), TypeName As New List(Of String)
+        For i As Integer = CopyStartRing To CopyLastRing
+            TypeName.Add(DgvSegAssign("SegmentType", i).Value)
+            PtName.Add(DgvSegAssign("AssemblyPtnName", i).Value)
+        Next
+        '貼り付けする位置を取得
+        Dim PasetPos As Integer =
+            (From i As DataGridViewRow In DgvSegAssign.SelectedRows Select i.Index).Min
+        'データ貼り付け
+        For i As Integer = 0 To PtName.Count - 1
+            DgvSegAssign("SegmentType", PasetPos).Value = TypeName(i) 'セグメント種類
+            DgvSegAssign("AssemblyPtnName", PasetPos).Value = PtName(i)  'セグメント種類
+            PasetPos += 1
+        Next
+
+    End Sub
+    ''' <summary>
+    ''' パターン貼り付け
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub tsmPtternPaste_Click(sender As Object, e As EventArgs) Handles tsmPtternPaste.Click
+        'コピーするデータを取得
+        Dim PtName As New List(Of String), TypeName As New List(Of String)
+        For i As Integer = CopyStartRing To CopyLastRing
+            TypeName.Add(DgvSegAssign("SegmentType", i).Value)
+            PtName.Add(DgvSegAssign("AssemblyPtnName", i).Value)
+        Next
+
+        Dim PasteStartLoc As Integer =
+            (From i As DataGridViewRow In DgvSegAssign.SelectedRows Select i.Index).Min
+        Dim PasteLastLoc As Integer =
+            (From i As DataGridViewRow In DgvSegAssign.SelectedRows Select i.Index).Max
+
+        Dim j As Integer = 0
+        For i As Integer = PasteStartLoc To PasteLastLoc
+            DgvSegAssign("SegmentType", i).Value = TypeName(j) '
+            DgvSegAssign("AssemblyPtnName", i).Value = PtName(j)  '
+            j += 1
+            If j = TypeName.Count Then j = 0
+        Next
 
     End Sub
 End Class

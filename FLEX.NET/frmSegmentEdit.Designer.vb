@@ -22,6 +22,7 @@ Partial Class frmSegmentEdit
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -34,7 +35,12 @@ Partial Class frmSegmentEdit
         Me.SegmentType = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.SegWidth = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AssemblyPtnName = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.tsmCopy = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmPaste = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmPtternPaste = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.DgvSegAssign, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnOK
@@ -54,6 +60,7 @@ Partial Class frmSegmentEdit
         DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.DgvSegAssign.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DgvSegAssign.BackgroundColor = System.Drawing.SystemColors.ControlDark
+        Me.DgvSegAssign.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle2.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
@@ -65,9 +72,9 @@ Partial Class frmSegmentEdit
         Me.DgvSegAssign.ColumnHeadersHeight = 40
         Me.DgvSegAssign.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.DgvSegAssign.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RingNo, Me.SegmentType, Me.SegWidth, Me.AssemblyPtnName})
+        Me.DgvSegAssign.ContextMenuStrip = Me.ContextMenuStrip
         Me.DgvSegAssign.Location = New System.Drawing.Point(28, 39)
         Me.DgvSegAssign.Margin = New System.Windows.Forms.Padding(2)
-        Me.DgvSegAssign.MultiSelect = False
         Me.DgvSegAssign.Name = "DgvSegAssign"
         Me.DgvSegAssign.RowHeadersVisible = False
         Me.DgvSegAssign.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
@@ -75,7 +82,7 @@ Partial Class frmSegmentEdit
         Me.DgvSegAssign.RowsDefaultCellStyle = DataGridViewCellStyle7
         Me.DgvSegAssign.RowTemplate.Height = 24
         Me.DgvSegAssign.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.DgvSegAssign.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.DgvSegAssign.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DgvSegAssign.Size = New System.Drawing.Size(607, 631)
         Me.DgvSegAssign.TabIndex = 18
         '
@@ -126,6 +133,32 @@ Partial Class frmSegmentEdit
         Me.AssemblyPtnName.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.AssemblyPtnName.Width = 200
         '
+        'ContextMenuStrip
+        '
+        Me.ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmCopy, Me.tsmPaste, Me.tsmPtternPaste})
+        Me.ContextMenuStrip.Name = "ContextMenuStrip"
+        Me.ContextMenuStrip.Size = New System.Drawing.Size(150, 70)
+        '
+        'tsmCopy
+        '
+        Me.tsmCopy.Name = "tsmCopy"
+        Me.tsmCopy.Size = New System.Drawing.Size(149, 22)
+        Me.tsmCopy.Text = "コピー"
+        '
+        'tsmPaste
+        '
+        Me.tsmPaste.Enabled = False
+        Me.tsmPaste.Name = "tsmPaste"
+        Me.tsmPaste.Size = New System.Drawing.Size(149, 22)
+        Me.tsmPaste.Text = "貼り付け"
+        '
+        'tsmPtternPaste
+        '
+        Me.tsmPtternPaste.Enabled = False
+        Me.tsmPtternPaste.Name = "tsmPtternPaste"
+        Me.tsmPtternPaste.Size = New System.Drawing.Size(149, 22)
+        Me.tsmPtternPaste.Text = "パターン貼り付け"
+        '
         'frmSegmentEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -138,6 +171,7 @@ Partial Class frmSegmentEdit
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.DgvSegAssign, 0)
         CType(Me.DgvSegAssign, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -147,4 +181,8 @@ Partial Class frmSegmentEdit
     Friend WithEvents SegmentType As DataGridViewComboBoxColumn
     Friend WithEvents SegWidth As DataGridViewTextBoxColumn
     Friend WithEvents AssemblyPtnName As DataGridViewComboBoxColumn
+    Friend WithEvents ContextMenuStrip As ContextMenuStrip
+    Friend WithEvents tsmCopy As ToolStripMenuItem
+    Friend WithEvents tsmPaste As ToolStripMenuItem
+    Friend WithEvents tsmPtternPaste As ToolStripMenuItem
 End Class
