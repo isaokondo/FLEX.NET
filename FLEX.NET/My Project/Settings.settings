@@ -47,5 +47,8 @@
     <Setting Name="ReportAutoPrintPtn" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="DataBaseType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mssql</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

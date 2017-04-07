@@ -828,7 +828,7 @@
         ''' </summary>
         Public Sub DataUp()
             Dim rsData As DataTable =
-                GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE `リング番号`=
+                GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE リング番号 =
                '{PlcIf.RingNo}' ORDER BY `掘進ストローク` DESC LIMIT 0,1")
 
             Dim g As ucnChart2.gData
@@ -861,9 +861,9 @@
         Public Sub DataGet()
             '過去の掘進データ 10mm毎
             Dim rsData As DataTable =
-                GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE `リング番号`>=
+                GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE リング番号 >=
                 '{PlcIf.RingNo - CtlPara.LineDevStartRing}
-                ' AND `リング番号`<='{PlcIf.RingNo}' AND MOD(掘進ストローク,10)=0;")
+                ' AND リング番号<='{PlcIf.RingNo}' AND MOD(掘進ストローク,10)=0;")
 
             _HorRData.Clear()
             _VerRData.Clear()
@@ -923,7 +923,7 @@
         Sub New(FldName As String)
             '_DList = New Dictionary(Of Integer, Single)
             Dim rsData As DataTable =
-                GetDtfmSQL($"SELECT `掘進ストローク`,`{FldName}` FROM flex掘削データ WHERE `リング番号`='{RingNo}';")
+                GetDtfmSQL($"SELECT 掘進ストローク,{FldName} FROM flex掘削データ WHERE リング番号='{RingNo}';")
             'While rsData.Read
             '    _DList.Add(rsData.Item("掘進ストローク"), rsData.Item(FldName))
             'End While
@@ -934,7 +934,7 @@
 
         Sub New()
             Dim rsData As DataTable =
-                GetDtfmSQL("SELECT リング番号 FROM flex掘削データ ORDER BY `時間` DESC LIMIT 0,1")
+                GetDtfmSQL("SELECT リング番号 FROM flex掘削データ ORDER BY 時間 DESC LIMIT 0,1")
 
             If rsData.Rows.Count <> 0 Then
                 RingNo = rsData.Rows(0).Item(0)

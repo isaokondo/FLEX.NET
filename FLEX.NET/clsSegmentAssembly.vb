@@ -173,7 +173,7 @@ Friend Class clsSegmentAssembly
         '検索
 
         Dim dsSegAsm As DataTable =
-            GetDtfmSQL($"SELECT  * FROM `セグメント組立パターンリスト` 
+            GetDtfmSQL($"SELECT  * FROM `セグメント組立パターンリスト`  
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンリスト`.`分割No` 
             WHERE `組立パターンNo` = '{Id}'")
 
@@ -277,10 +277,10 @@ Friend Class clsSegmentAssembly
 
 
         Dim rsData As DataTable =
-            GetDtfmSQL("SELECT * FROM `flexセグメント組立データ` order by リング番号")
+            GetDtfmSQL("SELECT * FROM flexセグメント組立データ order by リング番号")
 
         'rsData = ExecuteSql _
-        '("SELECT * FROM `flexセグメント組立データ` Inner Join `セグメント組立パターンベース`")
+        '("SELECT * FROM flexセグメント組立データ Inner Join セグメント組立パターンベース")
 
         For Each t As DataRow In rsData.Rows
             Dim i As Integer = t.Item("リング番号")
@@ -320,7 +320,7 @@ Friend Class clsSegmentAssembly
         _TypeList.Clear()
 
         Dim rsData As DataTable =
-            GetDtfmSQL("SELECT * FROM `セグメントリスト`")
+            GetDtfmSQL("SELECT * FROM セグメントリスト")
 
         For Each t As DataRow In rsData.Rows
             Dim st As New SegmentType

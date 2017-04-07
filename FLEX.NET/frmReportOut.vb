@@ -333,7 +333,7 @@ Public Class clsReportDb
                 SUM(CASE WHEN `圧力制御`='0' THEN 1 ELSE 0 END) AS JKSELMODE,
                 SUM(CASE WHEN `圧力制御`='1' THEN 1 ELSE 0 END)  AS FLEXMODE,
                 SUM(CASE WHEN `同時施工モード`='1' THEN 1 ELSE 0 END) AS LOSZEROMODE 
-                FROM flex掘削データ  WHERE `リング番号`='{RingNo}' ORDER BY 時間")
+                FROM flex掘削データ  WHERE リング番号='{RingNo}' ORDER BY 時間")
 
         sheet.Range("掘進開始時刻").Value = RingRpt.Rows(0).Item(0)
         sheet.Range("掘進完了時刻").Value = RingRpt.Rows(0).Item(1)
@@ -381,7 +381,7 @@ Public Class clsReportDb
 
                 Dim StartSegmentAsem As DataTable =
                     GetDtfmSQL($"SELECT TIME FROM flexイベントデータ 
-                    WHERE `イベントデータ` LIKE '%セグメントモード%' AND 
+                    WHERE イベントデータ LIKE '%セグメントモード%' AND 
                     `TIME`>'{RingRpt.Rows(0).Item(1)}' AND `TIME`<'{NextRingWaintgTime.Rows(0).Item(0)}'")
                 If StartSegmentAsem.Rows.Count <> 0 Then
                     sheet.Range("組立開始時刻").Value = StartSegmentAsem.Rows(0).Item(0)
@@ -419,7 +419,7 @@ Public Class clsReportDb
 
         Dim RingRptData As DataTable =
                 GetDtfmSQL($"SELECT * FROM flex掘削データ
-                 WHERE `リング番号`='{RingNo}' ORDER BY 時間")
+                 WHERE リング番号='{RingNo}' ORDER BY 時間")
         Dim StdStroke As Integer = 10 '基準ストローク
         Dim Col As Integer = StartCols + 2  '開始列
         'While RingRptData.Read
@@ -484,7 +484,7 @@ Public Class clsReportDb
             Next
             Dim RingRptCalcData As DataTable =
                 GetDtfmSQL($"SELECT {String.Join(",", SelectItm)} FROM flex掘削データ
-                 WHERE `リング番号`='{RingNo}'")
+                 WHERE リング番号='{RingNo}'")
 
             'While RingRptCalcData.Read
             For Each t In RingRptCalcData.Rows
@@ -510,7 +510,7 @@ Public Class clsReportDb
             'リング報印字項目の設定読込
             'Dim RingPrtFldRd As OdbcDataReader =
             ExecuteSqlCmd($"UPDATE flex制御パラメータ SET `値`= '{String.Join(",", _ReportSetItem(i))}'
-                WHERE `項目名称`='RingReporPtn{(i + 1)}'")
+                WHERE 項目名称='RingReporPtn{(i + 1)}'")
         Next
     End Sub
 
@@ -519,7 +519,7 @@ Public Class clsReportDb
         'リング情報読込
         Dim RingLst As DataTable =
                 GetDtfmSQL("SELECT `リング番号`,Min(`時間`),Max(`時間`) 
-                FROM `flex掘削データ` GROUP BY `リング番号` ORDER BY `リング番号` DESC")
+                FROM flex掘削データ GROUP BY `リング番号` ORDER BY `リング番号` DESC")
 
         'While RingLst.Read
         For Each t In RingLst.Rows
@@ -529,7 +529,7 @@ Public Class clsReportDb
 
         '項目情報読込
         Dim ItemInfo As DataTable =
-                GetDtfmSQL("SELECT * FROM `flexリング報項目` WHERE `印字有効`='1'")
+                GetDtfmSQL("SELECT * FROM flexリング報項目 WHERE 印字有効='1'")
 
         'While ItemInfo.Read
         For Each t In ItemInfo.Rows

@@ -13,9 +13,19 @@ Friend Class clsDataSave
     Private ColumnList As New List(Of String)
 
     Public Sub New()
+        Dim recFldData As DataTable
         'コラム名のリストを取得
-        Dim recFldData As DataTable =
-            GetDtfmSQL("show columns from flex掘削データ")
+        If DBType() = DataBaseType.MySQL Then
+            recFldData = GetDtfmSQL("show columns from `flex掘削データ`")
+        End If
+
+        If DBType() = DataBaseType.MsSQLServer Then
+            recFldData =
+                GetDtfmSQL("SELECT syscolumns.name as Field FROM syscolumns 
+                INNER JOIN sysobjects ON sysobjects.id = syscolumns.id 
+                WHERE  sysobjects.name = 'flex掘削データ'")
+        End If
+
 
         For Each t As DataRow In recFldData.Rows
             ColumnList.Add(t.Item("Field"))

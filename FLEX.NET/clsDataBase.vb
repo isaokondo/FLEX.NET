@@ -1,4 +1,10 @@
 ﻿Imports System.Data.Odbc
+Imports System.Data.SqlClient
+
+Public Enum DataBaseType
+    MySQL
+    MsSQLServer
+End Enum
 
 Public Class clsDataBase
 
@@ -47,8 +53,8 @@ Public Class clsDataBase
 
         objStm = objSck.GetStream()
 
-            ' TCP/IP接続待ち 
-            Do While objSck.Connected = False
+        ' TCP/IP接続待ち 
+        Do While objSck.Connected = False
             System.Threading.Thread.Sleep(500)
         Loop
 
@@ -89,9 +95,25 @@ Public Class clsDataBase
     End Sub
 
 
+    Private Function conMsSqlSvDb() As SqlClient.SqlConnection
+
+
+        Dim CoonectSql As String =
+            "Server=127.0.0.1\SQLEXPRESS;Initial Catalog=flex鹿島外環test;User ID=sa;Password=yanagi;"
+
+        Dim cn As SqlConnection = New SqlConnection(CoonectSql)
+        cn.Open()
+
+        Return cn
+
+
+    End Function
+
+
+
 
     'データベースコネクション
-    Private Function conDB() As OdbcConnection
+    Private Function conMYSQLDB() As OdbcConnection
 
         Dim DriverVersion As String = ""
         Select Case MySQLVersion
@@ -131,22 +153,44 @@ Public Class clsDataBase
         Return cn
     End Function
 
-    Public Sub ExecuteSqlCmd(SQLCommand As String) 'As OdbcDataReader
-        Dim cmd As New OdbcCommand(SQLCommand, conDB)
-        Dim dr As OdbcDataReader = cmd.ExecuteReader
+    Public Sub ExecuteSqlCmd(SQLCommand As String)
+        If My.Settings.DataBaseType.IndexOf("MYSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
+            Dim cmd As New OdbcCommand(SQLCommand, conMYSQLDB)
+            Dim dr As OdbcDataReader = cmd.ExecuteReader
 
-        If dr.RecordsAffected = 0 Then
-            Debug.Print(SQLCommand)
+            If dr.RecordsAffected = 0 Then
+                Debug.Print(SQLCommand)
+            End If
+
+            dr.Close()
+            conMYSQLDB.Close()
+            conMYSQLDB.Dispose()
+
         End If
 
+        If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
+            Dim cmd As New SqlCommand(SQLCommand, conMsSqlSvDb)
+            Dim dr As SqlDataReader = cmd.ExecuteReader
 
-        dr.Close()
-        conDB.Close()
-        conDB.Dispose()
-        'Return dr
+            If dr.RecordsAffected = 0 Then
+                Debug.Print(SQLCommand)
+            End If
+            dr.Close()
+            conMsSqlSvDb.Close()
+            conMsSqlSvDb.Dispose()
+        End If
+
     End Sub
 
+    Public Function DBType() As DataBaseType
+        If My.Settings.DataBaseType.IndexOf("MYSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
+            Return DataBaseType.MySQL
+        End If
+        If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
+            Return DataBaseType.MsSQLServer
+        End If
 
+    End Function
 
 
     ''' <summary>
@@ -155,13 +199,29 @@ Public Class clsDataBase
     ''' <param name="SQLCommand"></param>
     ''' <returns>SQL文</returns>
     Public Function GetDtfmSQL(SQLCommand As String) As DataTable
+
+        Dim ds As New DataSet
         Try
-            Dim Adpter = New OdbcDataAdapter(SQLCommand, conDB)
-            Dim ds As New DataSet
-            Adpter.Fill(ds)
-            Adpter.Dispose()
-            conDB.Close()
-            conDB.Dispose()
+            If DBType() = DataBaseType.MySQL Then
+                Dim Adpter = New OdbcDataAdapter(SQLCommand, conMYSQLDB)
+                Adpter.Fill(ds)
+                Adpter.Dispose()
+                conMYSQLDB.Close()
+                conMYSQLDB.Dispose()
+            End If
+
+            If DBType() = DataBaseType.MsSQLServer Then
+
+                SqlStrToMsType(SQLCommand)
+
+
+                Dim Adpter = New SqlDataAdapter(SQLCommand, conMsSqlSvDb)
+                Adpter.Fill(ds)
+                Adpter.Dispose()
+                conMsSqlSvDb.Close()
+                conMsSqlSvDb.Dispose()
+
+            End If
             Return ds.Tables(0)
 
         Catch ex As System.Data.Odbc.OdbcException
@@ -171,6 +231,26 @@ Public Class clsDataBase
             Return Nothing
         End Try
     End Function
+
+    ''' <summary>
+    ''' MYSQLの特殊文字をMicrosoSQLServer用に変更
+    ''' </summary>
+    ''' <param name="SqlString"></param>
+    Private Sub SqlStrToMsType(ByRef SqlString As String)
+        '文字列にLIMITの位置を取得
+        Dim LimitLoc As Short = SqlString.IndexOf("LIMIT")
+        Dim GetNum As Short = 0
+        If LimitLoc > 0 Then
+            'LIMITのあとの　コンマの後の数値を取得
+            Dim Konma As Short = SqlString.IndexOf(",", LimitLoc)
+            GetNum = SqlString.Substring(Konma + 1).ToNum
+            SqlString = SqlString.Remove(LimitLoc)
+        End If
+
+
+
+    End Sub
+
 
 
     Public Function CheckItemData(tmp As Object) As String
@@ -266,13 +346,13 @@ Public Class clsTag
     ''' <param name="PLCAdressClass">PLCアドレスの先頭文字 M or D or R</param>
     ''' <remarks></remarks>
     Public Sub New(ByVal TableName As String, ByVal PLCAdressClass As String)
-        Dim TableAndWhere As String = $" {TableName} WHERE `アドレス` LIKE '{PLCAdressClass}%'"
+        Dim TableAndWhere As String = $" {TableName} WHERE アドレス LIKE '{PLCAdressClass}%'"
         'Dim MaxID As OdbcDataReader = ExecuteSql($"SELECT COUNT(*) FROM {TableAndWhere}")
         'MaxID.Read()
         'ReDim _TagList(MaxID.Item(0) + 1)
 
         _startAddress =
-            GetDtfmSQL($"SELECT Min(`アドレス`) FROM {TableAndWhere}").Rows(0).Item(0)
+            GetDtfmSQL($"SELECT Min(アドレス) FROM {TableAndWhere}").Rows(0).Item(0)
         'StartAd.Close()
         'ビットデータの時は、16の倍数からアドレスを介し
         If _startAddress.Substring(0, 1) = "M" Then
@@ -728,8 +808,10 @@ Public Class clsTableUpdateConfirm
     "セグメント組立パターンリスト", "セグメント分割仕様リスト", "セグメントリスト"}
 
     Public Sub New()
-        'MyISAMのチェック
-        CheckMisam()
+        If DBType() = DataBaseType.MySQL Then
+            'MyISAMのチェック
+            CheckMisam()
+        End If
         '更新時刻の取得
         tbTime = GetUpdateTIme()
 
@@ -786,13 +868,17 @@ Public Class clsTableUpdateConfirm
     Private Function GetUpdateTIme() As Dictionary(Of String, Date)
         '更新時間を取得　MISAMのみ
 
-        Dim tableUpTime As DataTable =
+        If DBType() = DataBaseType.MySQL Then
+            Dim tableUpTime As DataTable =
             GetDtfmSQL("show table status;")
 
-        Dim k =
+            Dim k =
             From i In tableUpTime.AsEnumerable Where i("TYPE") = "MyISAM"
 
-        Return k.ToDictionary(Function(n) n("name").ToString, Function(n) CDate(n("Update_time")))
+            Return k.ToDictionary(Function(n) n("name").ToString, Function(n) CDate(n("Update_time")))
+
+        End If
+
 
     End Function
     ''' <summary>

@@ -152,7 +152,7 @@ Public Class clsControlParameter
             For i As Short = 0 To _optGpSv.Count - 1
                 'Dim tb As Odbc.OdbcDataReader =
                 ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{_optGpSv(i)}'
-                    WHERE `項目名称`='OptinalGroupSetValue{i + 1}'")
+                    WHERE 項目名称='OptinalGroupSetValue{i + 1}'")
             Next
 
         End Set
@@ -172,7 +172,7 @@ Public Class clsControlParameter
 
             'Dim tb As Odbc.OdbcDataReader =
             ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{String.Join(",", _optGpEn.ToArray)}'
-                WHERE `項目名称`='OptinalGroupSetNumber'")
+                WHERE 項目名称='OptinalGroupSetNumber'")
         End Set
     End Property
 
@@ -185,7 +185,7 @@ Public Class clsControlParameter
 
             'Dim tb As Odbc.OdbcDataReader =
             ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{String.Join(",", _ExceptMesureJackNo.ToArray)}'
-                WHERE `項目名称`='ExceptMesureJackNo'")
+                WHERE 項目名称 ='ExceptMesureJackNo'")
         End Set
     End Property
 
@@ -212,57 +212,7 @@ Public Class clsControlParameter
         End Set
     End Property
 
-    'Public Property 全開グループ制限() As Boolean
-    '    Get
-    '        Return _全開グループ制限
 
-    '    End Get
-    '    Set(ByVal Value As Boolean)
-    '        _全開グループ制限 = Value
-    '        Call sbUpdateData(Value)
-
-    '    End Set
-    'End Property
-    'todo:力点と操作角、操作強を同時に更新したい！
-    'Public Property PointX() As Single
-    '    Get
-    '        Return _PointX
-    '    End Get
-    '    Set(ByVal Value As Single)
-    '        _PointX = Value
-    '        Call sbUpdateData(Value)
-    '    End Set
-    'End Property
-
-    'Public Property PointY() As Single
-    '    Get
-    '        Return _PointY
-    '    End Get
-    '    Set(ByVal Value As Single)
-    '        _PointY = Value
-    '        Call sbUpdateData(Value)
-    '    End Set
-    'End Property
-
-    'Public Property 操作角 As Single
-    '    Get
-    '        Return _操作角
-    '    End Get
-    '    Set(value As Single)
-    '        _操作角 = value
-    '        Call sbUpdateData(value)
-    '    End Set
-    'End Property
-
-    'Public Property 操作強 As Single
-    '    Get
-    '        Return _操作強
-    '    End Get
-    '    Set(value As Single)
-    '        _操作強 = value
-    '        Call sbUpdateData(value)
-    '    End Set
-    'End Property
 
     Public Property 片押し制限フラグ As Boolean
         Get
@@ -802,7 +752,7 @@ Public Class clsControlParameter
             For Each v In value
                 'Dim tb As Odbc.OdbcDataReader =
                 ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{v.Value}' 
-        WHERE `項目名称`='開始ジャッキストローク{v.Key}'")
+        WHERE 項目名称='開始ジャッキストローク{v.Key}'")
                 'tb.Close()
             Next
             '平均開始ストロークの算出
@@ -829,7 +779,7 @@ Public Class clsControlParameter
     Public Sub WideUseUpdate(iKey As Short, value As String)
         _wideUse.Item(iKey) = value
         'Dim tb As Odbc.OdbcDataReader =
-        ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{value}' WHERE `項目名称`='wideuse{iKey}'")
+        ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{value}' WHERE 項目名称 ='wideuse{iKey}'")
         'tb.Close()
 
     End Sub
@@ -962,7 +912,7 @@ Public Class clsControlParameter
 
         'Dim tb As Odbc.OdbcDataReader =
         ExecuteSqlCmd("UPDATE FLEX制御パラメータ SET`値`='" & WrValue &
-                      "' WHERE `項目名称`='" & FieldName & "'")
+                      "' WHERE 項目名称='" & FieldName & "'")
 
         'tb.Close()
 
@@ -985,12 +935,13 @@ Public Class clsControlParameter
         For Each i As KeyValuePair(Of Short, Single) In InitPara.MesureJackAngle
             _StartJackStroke.Add(i.Key, 0)
             Dim tbchk As DataTable =
-                GetDtfmSQL($"SELECT * FROM FLEX制御パラメータ WHERE `項目名称`='開始ジャッキストローク{i.Key}'")
+                GetDtfmSQL($"SELECT * FROM FLEX制御パラメータ WHERE 項目名称='開始ジャッキストローク{i.Key}'")
+            'GetDtfmSQL($"SELECT * FROM FLEX制御パラメータ WHERE 項目名称 ='開始ジャッキストローク{i.Key}'")
             If tbchk.Rows.Count = 0 Then
                 MsgBox($"項目名　開始ジャッキストローク{i.Key}が、存在しません。{vbCrLf}テーブル「FLEX制御パラメータ」に追加してください", vbExclamation)
             End If
             'Dim tbchk As Odbc.OdbcDataReader =
-            '    ExecuteSql($"SELECT * FROM FLEX制御パラメータ WHERE `項目名称`='開始ジャッキストローク{i.Key}'")
+            '    ExecuteSql($"SELECT * FROM FLEX制御パラメータ WHERE 項目名称 ='開始ジャッキストローク{i.Key}'")
             'If Not tbchk.HasRows Then
             '    MsgBox($"項目名　開始ジャッキストローク{i.Key}が、存在しません。{vbCrLf}テーブル「FLEX制御パラメータ」に追加してください", vbExclamation)
             'End If

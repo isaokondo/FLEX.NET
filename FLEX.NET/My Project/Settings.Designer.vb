@@ -194,6 +194,18 @@ Namespace My
                 Me("ReportAutoPrintPtn") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Mssql")>  _
+        Public Property DataBaseType() As String
+            Get
+                Return CType(Me("DataBaseType"),String)
+            End Get
+            Set
+                Me("DataBaseType") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
