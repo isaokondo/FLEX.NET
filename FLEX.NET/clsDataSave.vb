@@ -16,7 +16,7 @@ Friend Class clsDataSave
         Dim recFldData As DataTable
         'コラム名のリストを取得
         If DBType() = DataBaseType.MySQL Then
-            recFldData = GetDtfmSQL("show columns from `flex掘削データ`")
+            recFldData = GetDtfmSQL("show columns from  flex掘削データ ")
         End If
 
         If DBType() = DataBaseType.MsSQLServer Then
@@ -246,7 +246,9 @@ Friend Class clsDataSave
 
                 End If
             Next
-            Return "'" & String.Join("','", Data) & "'"
+            Dim s As String = "'" & String.Join("','", Data) & "'"
+            s = s.Replace("''", "NULL")
+            Return s
 
         Catch ex As Exception
 

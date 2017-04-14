@@ -64,81 +64,85 @@
 
 
         'PLCからの読込表示
-        With PlcIf
+        'With PlcIf
 
-            DspMachinComErr.Visible = .MachineComErr 'マシン伝送異常
+        DspMachinComErr.Visible = PlcIf.MachineComErr 'マシン伝送異常
             DspMachinComErr.BitStatus = BlinkFlg
 
-            DspRingNo.Text = .RingNo 'リングNo
+            DspRingNo.Text = PlcIf.RingNo 'リングNo
 
-            DspDirection.Value = .Gyro              '方位角
-
+            DspDirection.Value = PlcIf.Gyro              '方位角
+        If InitPara.bottomStrokeEnable Then
             DspBottomRealStroke.Value = CalcStroke.BottomCalcStroke '下ｽﾄﾛｰｸ
-            DspBottomRawStroke.Value = .BotomStroke '下ｽﾄﾛｰｸ
-            DspBottomSpeed.Value = .BotomSpeed      '下ｽﾋﾟｰﾄﾞ
+            DspBottomRawStroke.Value = PlcIf.BotomStroke '下ｽﾄﾛｰｸ
+            DspBottomSpeed.Value = PlcIf.BotomSpeed      '下ｽﾋﾟｰﾄﾞ
+        End If
 
+        If InitPara.topStrokeEnable Then
             DspUpRealStroke.Value = CalcStroke.TopCalcStroke      '上ｽﾄﾛｰｸ
-            DspUpRawStroke.Value = .TopStroke      '上ｽﾄﾛｰｸ
-            DspUpSpeed.Value = .TopSpeed            '上ｽﾋﾟｰﾄﾞ
+            DspUpRawStroke.Value = PlcIf.TopStroke      '上ｽﾄﾛｰｸ
+            DspUpSpeed.Value = PlcIf.TopSpeed            '上ｽﾋﾟｰﾄﾞ
+        End If
 
-            DspRightRealStroke.Value = CalcStroke.RightCalcStroke '右ｽﾄﾛｰｸ
-            DspRightRawStroke.Value = .RightStroke '右ｽﾄﾛｰｸ
-            DspRightSpeed.Value = .RightSpeed       '右ｽﾋﾟｰﾄﾞ
+
+        DspRightRealStroke.Value = CalcStroke.RightCalcStroke '右ｽﾄﾛｰｸ
+            DspRightRawStroke.Value = PlcIf.RightStroke '右ｽﾄﾛｰｸ
+            DspRightSpeed.Value = PlcIf.RightSpeed       '右ｽﾋﾟｰﾄﾞ
 
             DspLeftRealStroke.Value = CalcStroke.LeftCalcStroke   '左ｽﾄﾛｰｸ
-            DspLeftRawStroke.Value = .LeftStroke   '左ｽﾄﾛｰｸ
-            DspLeftSpeed.Value = .LeftSpeed         '左ｽﾋﾟｰﾄﾞ
+            DspLeftRawStroke.Value = PlcIf.LeftStroke   '左ｽﾄﾛｰｸ
+            DspLeftSpeed.Value = PlcIf.LeftSpeed         '左ｽﾋﾟｰﾄﾞ
 
-            DspJackPress.Value = .JkPress           'ジャッキ圧力
-            DspPitching.Value = .Pitching           'ピッチング
-            DspHorBroken.Value = .NakaoreLR         '中折左右
-            DspVerBroken.Value = .NakaoreTB         '中折上下
+            DspJackPress.Value = PlcIf.JkPress           'ジャッキ圧力
+            DspPitching.Value = PlcIf.Pitching           'ピッチング
+            DspHorBroken.Value = PlcIf.NakaoreLR         '中折左右
+            DspVerBroken.Value = PlcIf.NakaoreTB         '中折上下
 
-            DspCopyStroke1.Value = .CopyStroke1 'コピーストローク
-            DspCopyStroke2.Value = .CopyStroke2
+            DspCopyStroke1.Value = PlcIf.CopyStroke1 'コピーストローク
+            DspCopyStroke2.Value = PlcIf.CopyStroke2
 
-            DspBottomClearance.Value = .botomClearance
-            DspTopClearance.Value = .topClearance
-            DspRightClearance.Value = .rightClearance
-            DspLeftClearance.Value = .leftClearance
+            DspBottomClearance.Value = PlcIf.botomClearance
+            DspTopClearance.Value = PlcIf.topClearance
+            DspRightClearance.Value = PlcIf.rightClearance
+            DspLeftClearance.Value = PlcIf.leftClearance
 
             DspThrust.Value = CulcMoment.Thrust '推力
             DspMoment.Value = CulcMoment.MomentR 'モーメント
             'FLEXの制御ON/OFF
-            DspFlexControlOn.BitStatus = .FlexControlOn
-            UcnJackDsp.FlexOn = .FlexControlOn
+            DspFlexControlOn.BitStatus = PlcIf.FlexControlOn
+            UcnJackDsp.FlexOn = PlcIf.FlexControlOn
 
             '掘進ステータス　掘進中、中断中、待機中
-            DspExcavingOn.BitStatus = (.ExcaStatus = cKussin)
-            DspExcavingStop.BitStatus = (.ExcaStatus = cChudan)
-            DspExcaWaiting.BitStatus = (.ExcaStatus = cTaiki)
+            DspExcavingOn.BitStatus = (PlcIf.ExcaStatus = cKussin)
+            DspExcavingStop.BitStatus = (PlcIf.ExcaStatus = cChudan)
+            DspExcaWaiting.BitStatus = (PlcIf.ExcaStatus = cTaiki)
             'ジャッキステータス表示
-            UcnJackDsp.JackStatus = .JackStatus
+            UcnJackDsp.JackStatus = PlcIf.JackStatus
             'グループ圧PV
-            UcnJackDsp.GroupPV = .GroupPv
-            UcnJackDsp.JackOrgPress = .JkPress
+            UcnJackDsp.GroupPV = PlcIf.GroupPv
+            UcnJackDsp.JackOrgPress = PlcIf.JkPress
             'コピー角度、ストローク
-            UcnJackDsp.CopyAngle = .CopyAngle
-            UcnJackDsp.CopyStroke = .CopyStroke1
+            UcnJackDsp.CopyAngle = PlcIf.CopyAngle
+            UcnJackDsp.CopyStroke = PlcIf.CopyStroke1
             'グループ圧バーグラフ
-            UcnGpPvBarGraph.GpFlg = .GroupFlg
-            UcnGpPvBarGraph.GpPv = .GroupPv
+            UcnGpPvBarGraph.GpFlg = PlcIf.GroupFlg
+            UcnGpPvBarGraph.GpPv = PlcIf.GroupPv
 
             '力点座標数値表示
-            UcnJackDsp.FlexPointX = .PointX
-            UcnJackDsp.FlexPointY = .PointY
+            UcnJackDsp.FlexPointX = PlcIf.PointX
+            UcnJackDsp.FlexPointY = PlcIf.PointY
 
-            UcnJackDsp.FlexPointR = .操作強
-            UcnJackDsp.FlexPointSeater = .操作角
+            UcnJackDsp.FlexPointR = PlcIf.操作強
+            UcnJackDsp.FlexPointSeater = PlcIf.操作角
 
 
             '掘進モード／セグメントモードの表示
-            lblMachineMode.Text = IIf(.ExcavMode, "掘進", "セグメント") & "モード"
-            lblMachineMode.BackColor = IIf(.ExcavMode, Color.Magenta, Color.Aqua)
-        End With
+            lblMachineMode.Text = IIf(PlcIf.ExcavMode, "掘進", "セグメント") & "モード"
+            lblMachineMode.BackColor = IIf(PlcIf.ExcavMode, Color.Magenta, Color.Aqua)
+            'End With
 
 
-        UcnJackDsp.MakeBmp()
+            UcnJackDsp.MakeBmp()
 
 
         DspAveStartStroke.Value = CtlPara.StartAveStroke '平均開始ストローク
@@ -829,7 +833,7 @@
         Public Sub DataUp()
             Dim rsData As DataTable =
                 GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE リング番号 =
-               '{PlcIf.RingNo}' ORDER BY `掘進ストローク` DESC LIMIT 0,1")
+               '{PlcIf.RingNo}' ORDER BY 掘進ストローク DESC LIMIT 0,1")
 
             Dim g As ucnChart2.gData
 
@@ -862,8 +866,8 @@
             '過去の掘進データ 10mm毎
             Dim rsData As DataTable =
                 GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE リング番号 >=
-                '{PlcIf.RingNo - CtlPara.LineDevStartRing}
-                ' AND リング番号<='{PlcIf.RingNo}' AND MOD(掘進ストローク,10)=0;")
+                '{PlcIf.RingNo - CtlPara.LineDevStartRing}'
+                AND リング番号<='{PlcIf.RingNo}' AND 掘進ストローク%10 =0;")
 
             _HorRData.Clear()
             _VerRData.Clear()

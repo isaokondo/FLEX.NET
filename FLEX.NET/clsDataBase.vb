@@ -25,7 +25,7 @@ Public Class clsDataBase
     'Private cn As OdbcConnection
 
 
-    Private Shared MySQLVersion As String
+    Public Shared MySQLVersion As String
 
     Public Sub New()
 
@@ -247,6 +247,10 @@ Public Class clsDataBase
             SqlString = SqlString.Remove(LimitLoc)
         End If
 
+        SqlString = SqlString.Replace(" `", " [")
+        SqlString = SqlString.Replace("` ", "] ")
+        SqlString = SqlString.Replace("`.`", "].[")
+
 
 
     End Sub
@@ -460,6 +464,10 @@ Public Class clsInitParameter
 
     Private _mesureJackNo As New List(Of Short) '計測ジャッキ番号 上右下左の順番
 
+    Private _topStrokeEnable As Boolean     '上ストローク計あり
+    Private _bottomStrokeEnable As Boolean '下ストローク計あり
+
+
     Private _constructionName As String '工事名（環境設定テーブルより
 
     Private WithEvents Htb As New clsHashtableRead
@@ -572,6 +580,18 @@ Public Class clsInitParameter
         End Get
     End Property
 
+    Public ReadOnly Property topStrokeEnable As Boolean
+        Get
+            Return _topStrokeEnable
+        End Get
+    End Property
+    Public ReadOnly Property bottomStrokeEnable As Boolean
+        Get
+            Return _bottomStrokeEnable
+        End Get
+    End Property
+
+
     Public ReadOnly Property ConstructionName As String
         Get
             Return _constructionName
@@ -652,9 +672,10 @@ Public Class clsInitParameter
 
             '計測ジャッキ番号
             For Each JkNo In ht("計測ジャッキ上右下左").ToString.Split(",")
-                _mesureJackNo.Add(JkNo)
+                _mesureJackNo.Add( JkNo)
             Next
-
+            _topStrokeEnable = (_mesureJackNo(0) <> 0)
+            _bottomStrokeEnable = (_mesureJackNo(2) <> 0)
 
 
         Catch ex As Exception
@@ -808,8 +829,10 @@ Public Class clsTableUpdateConfirm
     "セグメント組立パターンリスト", "セグメント分割仕様リスト", "セグメントリスト"}
 
     Public Sub New()
-        If DBType() = DataBaseType.MySQL Then
+        If DBType() = DataBaseType.MySQL And clsDataBase.MySQLVersion = "4.0.25" Then
             'MyISAMのチェック
+
+
             CheckMisam()
         End If
         '更新時刻の取得
@@ -825,7 +848,7 @@ Public Class clsTableUpdateConfirm
         Dim timer As Timer = New Timer()
         AddHandler timer.Tick, New EventHandler(AddressOf TableUpdateTimeGet)
         timer.Interval = 5000   '5秒ごとの処理
-        timer.Enabled = True ' timer.Start()と同じ
+        timer.Enabled = False ' timer.Start()と同じ
 
     End Sub
 
@@ -868,7 +891,7 @@ Public Class clsTableUpdateConfirm
     Private Function GetUpdateTIme() As Dictionary(Of String, Date)
         '更新時間を取得　MISAMのみ
 
-        If DBType() = DataBaseType.MySQL Then
+        If DBType() = DataBaseType.MySQL And clsDataBase.MySQLVersion = "4.0.25" Then
             Dim tableUpTime As DataTable =
             GetDtfmSQL("show table status;")
 

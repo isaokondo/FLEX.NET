@@ -151,7 +151,7 @@ Public Class clsControlParameter
 
             For i As Short = 0 To _optGpSv.Count - 1
                 'Dim tb As Odbc.OdbcDataReader =
-                ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{_optGpSv(i)}'
+                ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{_optGpSv(i)}'
                     WHERE 項目名称='OptinalGroupSetValue{i + 1}'")
             Next
 
@@ -171,7 +171,7 @@ Public Class clsControlParameter
             _optGpEn = value
 
             'Dim tb As Odbc.OdbcDataReader =
-            ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{String.Join(",", _optGpEn.ToArray)}'
+            ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{String.Join(",", _optGpEn.ToArray)}'
                 WHERE 項目名称='OptinalGroupSetNumber'")
         End Set
     End Property
@@ -184,7 +184,7 @@ Public Class clsControlParameter
             _ExceptMesureJackNo = value
 
             'Dim tb As Odbc.OdbcDataReader =
-            ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{String.Join(",", _ExceptMesureJackNo.ToArray)}'
+            ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{String.Join(",", _ExceptMesureJackNo.ToArray)}'
                 WHERE 項目名称 ='ExceptMesureJackNo'")
         End Set
     End Property
@@ -751,7 +751,7 @@ Public Class clsControlParameter
 
             For Each v In value
                 'Dim tb As Odbc.OdbcDataReader =
-                ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{v.Value}' 
+                ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{v.Value}' 
         WHERE 項目名称='開始ジャッキストローク{v.Key}'")
                 'tb.Close()
             Next
@@ -779,7 +779,7 @@ Public Class clsControlParameter
     Public Sub WideUseUpdate(iKey As Short, value As String)
         _wideUse.Item(iKey) = value
         'Dim tb As Odbc.OdbcDataReader =
-        ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET`値`='{value}' WHERE 項目名称 ='wideuse{iKey}'")
+        ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{value}' WHERE 項目名称 ='wideuse{iKey}'")
         'tb.Close()
 
     End Sub
@@ -911,7 +911,7 @@ Public Class clsControlParameter
 
 
         'Dim tb As Odbc.OdbcDataReader =
-        ExecuteSqlCmd("UPDATE FLEX制御パラメータ SET`値`='" & WrValue &
+        ExecuteSqlCmd("UPDATE FLEX制御パラメータ SET 値 ='" & WrValue &
                       "' WHERE 項目名称='" & FieldName & "'")
 
         'tb.Close()

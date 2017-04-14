@@ -142,7 +142,7 @@ Public Class clsHorPanData
         'db.Disconnect()
 
         'ゾーン総数を求める
-        'Dim tbr = ExecuteSql("SELECT MAX(`ゾーン№`) FROM 平面線形 WHERE シートID = " & InitPara.SheetID)
+        'Dim tbr = ExecuteSql("SELECT MAX( ゾーン№ ) FROM 平面線形 WHERE シートID = " & InitPara.SheetID)
         'tbr.Read()
         'ゾーン総数 = tbr.Item(0)
         ''Disconnect()
@@ -269,7 +269,7 @@ Public Class clsHorPanData
         'db.Disconnect()
 
         'ゾーン総数を求める
-        'tblHorLine = db.ExecuteSql($"SELECT MAX(`シフト№`) FROM 平面シフト WHERE シートID = {InitPara.SheetID}")
+        'tblHorLine = db.ExecuteSql($"SELECT MAX( シフト№ ) FROM 平面シフト WHERE シートID = {InitPara.SheetID}")
         '    tblHorLine.Read()
         '    シフトゾーン総数 = tblHorLine.Item(0)
         'db.Disconnect()
@@ -359,7 +359,7 @@ Public Class clsVerPlanData
 
 
         'ゾーン総数を求める
-        'tblVerStart = ExecuteSql($"SELECT MAX(`ゾーン№`) FROM 縦断線形 WHERE シートID = {InitPara.SheetID}")
+        'tblVerStart = ExecuteSql($"SELECT MAX( ゾーン№ ) FROM 縦断線形 WHERE シートID = {InitPara.SheetID}")
         'tblVerStart.Read()
         'ゾーン総数 = CInt(tblVerStart.Item(0))
         ''Disconnect()
@@ -429,7 +429,7 @@ Public Class clsVerPlanData
         '        Disconnect()
 
         'ゾーン総数を求める
-        'tblVerStart = ExecuteSql("SELECT MAX(`シフト№`) FROM 縦断シフト WHERE シートID = " & InitPara.SheetID)
+        'tblVerStart = ExecuteSql("SELECT MAX( シフト№ ) FROM 縦断シフト WHERE シートID = " & InitPara.SheetID)
         'tblVerStart.Read()
         'シフトゾーン総数 = tblVerStart.Item(0)
         '        Disconnect()

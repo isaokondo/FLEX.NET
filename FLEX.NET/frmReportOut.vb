@@ -260,7 +260,7 @@ Public Class clsReportDb
     Public ReadOnly Property LastRing As Integer
         Get
             Dim LastRingNo As DataTable =
-                GetDtfmSQL("Select `リング番号` FROM flex掘削データ ORDER BY 時間 DESC LIMIT 0,1")
+                GetDtfmSQL("Select リング番号 FROM flex掘削データ ORDER BY 時間 DESC LIMIT 0,1")
             If LastRingNo.Rows.Count = 0 Then
                 Return 0
             Else
@@ -328,11 +328,11 @@ Public Class clsReportDb
 
 
         Dim RingRpt As DataTable =
-                GetDtfmSQL($"Select min(`時間`),max(`時間`),max(`掘進ストローク`),
-                max(`平面旋回中心`+`平面発進から発旋回中心までの距離`),
-                SUM(CASE WHEN `圧力制御`='0' THEN 1 ELSE 0 END) AS JKSELMODE,
-                SUM(CASE WHEN `圧力制御`='1' THEN 1 ELSE 0 END)  AS FLEXMODE,
-                SUM(CASE WHEN `同時施工モード`='1' THEN 1 ELSE 0 END) AS LOSZEROMODE 
+                GetDtfmSQL($"Select min(時間),max(時間),max(掘進ストローク),
+                max(平面旋回中心+平面発進から発旋回中心までの距離),
+                SUM(CASE WHEN 圧力制御='0' THEN 1 ELSE 0 END) AS JKSELMODE,
+                SUM(CASE WHEN 圧力制御='1' THEN 1 ELSE 0 END)  AS FLEXMODE,
+                SUM(CASE WHEN 同時施工モード='1' THEN 1 ELSE 0 END) AS LOSZEROMODE 
                 FROM flex掘削データ  WHERE リング番号='{RingNo}' ORDER BY 時間")
 
         sheet.Range("掘進開始時刻").Value = RingRpt.Rows(0).Item(0)
@@ -374,15 +374,15 @@ Public Class clsReportDb
             '組立完了時刻は、次リングの待機中になった時間
             Dim NextRingWaintgTime As DataTable =
                 GetDtfmSQL($"SELECT TIME FROM flexイベントデータ 
-                WHERE (`イベントデータ` LIKE '%{RingNo + 1}リング%') 
-                AND (`イベントデータ` LIKE '%待機中%') ")
+                WHERE (イベントデータ LIKE '%{RingNo + 1}リング%') 
+                AND (イベントデータ LIKE '%待機中%') ")
             If NextRingWaintgTime.Rows.Count <> 0 Then
                 sheet.Range("組立完了時刻").Value = NextRingWaintgTime.Rows(0).Item(0)
 
                 Dim StartSegmentAsem As DataTable =
                     GetDtfmSQL($"SELECT TIME FROM flexイベントデータ 
                     WHERE イベントデータ LIKE '%セグメントモード%' AND 
-                    `TIME`>'{RingRpt.Rows(0).Item(1)}' AND `TIME`<'{NextRingWaintgTime.Rows(0).Item(0)}'")
+                    TIME>'{RingRpt.Rows(0).Item(1)}' AND TIME<'{NextRingWaintgTime.Rows(0).Item(0)}'")
                 If StartSegmentAsem.Rows.Count <> 0 Then
                     sheet.Range("組立開始時刻").Value = StartSegmentAsem.Rows(0).Item(0)
 
@@ -509,7 +509,7 @@ Public Class clsReportDb
         For i As Short = 0 To _ReportSetItem.Count - 1
             'リング報印字項目の設定読込
             'Dim RingPrtFldRd As OdbcDataReader =
-            ExecuteSqlCmd($"UPDATE flex制御パラメータ SET `値`= '{String.Join(",", _ReportSetItem(i))}'
+            ExecuteSqlCmd($"UPDATE flex制御パラメータ SET 値= '{String.Join(",", _ReportSetItem(i))}'
                 WHERE 項目名称='RingReporPtn{(i + 1)}'")
         Next
     End Sub
@@ -518,8 +518,8 @@ Public Class clsReportDb
     Public Sub New()
         'リング情報読込
         Dim RingLst As DataTable =
-                GetDtfmSQL("SELECT `リング番号`,Min(`時間`),Max(`時間`) 
-                FROM flex掘削データ GROUP BY `リング番号` ORDER BY `リング番号` DESC")
+                GetDtfmSQL("SELECT リング番号,Min(時間),Max(時間) 
+                FROM flex掘削データ GROUP BY リング番号 ORDER BY リング番号 DESC")
 
         'While RingLst.Read
         For Each t In RingLst.Rows

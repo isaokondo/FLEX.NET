@@ -1,6 +1,12 @@
 ﻿'Imports MySql.Data.MySqlClient
 Imports System.Data.Odbc
 
+Public Enum DataBaseType
+    MySQL
+    MsSQLServer
+End Enum
+
+
 Public Class clsDataBase
 
     ''' <summary>
@@ -11,6 +17,12 @@ Public Class clsDataBase
     ''' データベース名
     ''' </summary>
     Private _DataBaseName As String = My.Settings.DataBaseName
+
+    Private  MySQLVersion As String
+
+    Public Sub New()
+        GetMySQKVersion()
+    End Sub
 
     ''' <summary>
     ''' ホスト名
@@ -37,16 +49,94 @@ Public Class clsDataBase
         End Set
     End Property
 
+    Public Function DBType() As DataBaseType
+        If My.Settings.DataBaseType.IndexOf("MYSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
+            Return DataBaseType.MySQL
+        End If
+        If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
+            Return DataBaseType.MsSQLServer
+        End If
+
+    End Function
+
+    Private Sub GetMySQKVersion()
+
+        ' ソケット生成
+        Dim objSck As New System.Net.Sockets.TcpClient
+        Dim objStm As System.Net.Sockets.NetworkStream
+
+        Try
+            ' TCP/IP接続
+            objSck.Connect(My.Settings.HostName, My.Settings.Port)
+        Catch ex As System.Net.Sockets.SocketException '
+            '接続出来ない場合
+            MsgBox(ex.Message,
+                   MsgBoxStyle.Exclamation,
+                   "データベース接続エラー" & "ホスト名:" & HostName & vbCrLf & "  ポート番号:" & My.Settings.Port)
+            End
+        End Try
+
+        objStm = objSck.GetStream()
+
+        ' TCP/IP接続待ち 
+        Do While objSck.Connected = False
+            System.Threading.Thread.Sleep(500)
+        Loop
+
+
+        ' データ受信
+        Do
+            System.Threading.Thread.Sleep(500)
+            If objSck.Available > 0 Then
+                ' Byte配列にデータ受信
+                Dim rdat As Byte() =
+            New Byte(objSck.Available - 1) {}
+                objStm.Read(rdat, 0, rdat.GetLength(0))
+                ' Byte配列を文字列に変換して表示
+                Dim rString As String = System.Text.Encoding.GetEncoding("SHIFT-JIS").GetString(rdat)
+
+                If rString.Contains("4.0.25") Then
+                    MySQLVersion = "4.0.25"
+                End If
+                If rString.Contains("MariaDB") Then
+                    MySQLVersion = "MariaDB"
+                End If
+                If IsNothing(MySQLVersion) Then
+                    MsgBox($"データベースが異常です　{rString}",,)
+
+                End If
+
+                Exit Do
+            End If
+        Loop
+
+
+
+
+        ' TCP/IP切断
+        objSck.Close()
+
+
+    End Sub
+
 
     'データベースコネクション
     Private Function conDB() As OdbcConnection
-        'TODO MariDB以外対応も検討、ポート番号指定しよう！
+
+        Dim DriverVersion As String = ""
+        Select Case MySQLVersion
+            Case "4.0.25"
+                DriverVersion = "{MySQL ODBC 3.51 Driver}"
+            Case "MariaDB"
+                DriverVersion = "{MySQL ODBC 5.3 Unicode Driver}"
+        End Select
+
+
         Dim ConnectionString As String =
-        "DRIVER={MySQL ODBC 3.51 Driver};" &
-        $"server={_HostName }; database={_DataBaseName}; uid= toyo;pwd= yanagi;OPTION=3"
-        'Dim ConnectionString As String =
-        '"DRIVER={MySQL ODBC 5.3 Unicode Driver};server=" & My.Settings.HostName &
-        ' "; database=" & My.Settings.DataseName & "; uid= toyo;pwd= yanagi;OPTION=3"
+            $"DRIVER={DriverVersion};server={My.Settings.HostName}; 
+            database={My.Settings.DataBaseName}; port={My.Settings.Port}; 
+            uid= toyo;pwd= yanagi;OPTION=3"
+
         Dim cn As New OdbcConnection(ConnectionString)
         Try
             cn.Open()
