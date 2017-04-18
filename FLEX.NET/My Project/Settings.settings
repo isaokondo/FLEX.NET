@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DataBaseName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">flex大成望月寒川</Value>
+      <Value Profile="(Default)">flex鹿島外環</Value>
     </Setting>
     <Setting Name="GpPsColor1" Type="System.Drawing.Color" Scope="Application">
       <Value Profile="(Default)">Black</Value>
@@ -36,10 +36,10 @@
       <Value Profile="(Default)">Red</Value>
     </Setting>
     <Setting Name="Port" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">25565</Value>
+      <Value Profile="(Default)">3306</Value>
     </Setting>
     <Setting Name="HostName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">192.168.2.212</Value>
+      <Value Profile="(Default)">kjmgaikan.jpn.ph</Value>
     </Setting>
     <Setting Name="ReportFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)">c:\</Value>

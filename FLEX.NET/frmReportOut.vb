@@ -523,7 +523,9 @@ Public Class clsReportDb
 
         'While RingLst.Read
         For Each t In RingLst.Rows
-            _RingData.Add(New RingInfo(t.Item(0), t.Item(1)))
+            If Not IsDBNull(t.item(1)) And Not IsDBNull(t.item(0)) Then
+                _RingData.Add(New RingInfo(t.Item(0), t.Item(1)))
+            End If
         Next
         'End While
 

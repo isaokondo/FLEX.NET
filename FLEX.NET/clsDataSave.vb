@@ -15,7 +15,7 @@ Friend Class clsDataSave
     Public Sub New()
         Dim recFldData As DataTable
         'コラム名のリストを取得
-        If DBType() = DataBaseType.MySQL Then
+        If DBType() = DataBaseType.MySQL Or DBType() = DataBaseType.MariaDB Then
             recFldData = GetDtfmSQL("show columns from  flex掘削データ ")
         End If
 
