@@ -1140,6 +1140,20 @@
         '姿勢制御自動手動の切替時の処理
         ControlParameter_FlexAutoManualChange()
 
+
+        '上下ストローク計の有無で表示設定
+
+        DspBottomRawStroke.Visible = InitPara.bottomStrokeEnable
+        DspBottomRealStroke.Visible = InitPara.bottomStrokeEnable
+        DspBottomSpeed.Visible = InitPara.bottomStrokeEnable
+
+
+        DspUpRawStroke.Visible = InitPara.topStrokeEnable
+        DspUpRealStroke.Visible = InitPara.topStrokeEnable
+        DspUpSpeed.Visible = InitPara.topStrokeEnable
+
+
+
         ParameterCheck()
 
 

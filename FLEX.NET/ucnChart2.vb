@@ -225,7 +225,7 @@ Public Class ucnChart2
         '中心線
         g.DrawLine(New Pen(_CenterColor, 1), New Point(0, picChart.Height / 2), New Point(picChart.Width, picChart.Height / 2))
 
-        If IsNothing(_ExecData) OrElse _ExecData.Count < 10 Then
+        If IsNothing(_ExecData) OrElse _ExecData.Count < 2 Then
             g.Dispose()
             picChart.Image = canvas
             Exit Sub
@@ -238,6 +238,7 @@ Public Class ucnChart2
         Dim stInit As Integer = _ExecData(0).Distance
         Dim StRingNo As Integer = _ExecData(0).RingNo
         '_StrokeWidth = _GraphData(_GraphData.Count - 1).Distance
+
         Dim stMax As Integer = _ExecData.Last.Distance - stInit + _PlanData.Last.Key '最終値の掘進距離をMAX
         '最終目標値を中心値に
         _ChartCenterValue = Math.Round(_ExecData.Last.TargetDr, 1)

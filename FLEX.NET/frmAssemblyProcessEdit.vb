@@ -58,6 +58,7 @@ Public Class frmAssemblyProcessEdit
                 DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
                 DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
+                DspReduceGroup.Value = SegAsmblyData.JackListDsp(.ReduceGroup)
 
                 AssemblyPieceNo.MaxValue = SegAsbly.AssemblyPieceNumber '組立ピース番号MAX値設定
 

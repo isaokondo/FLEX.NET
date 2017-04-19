@@ -573,7 +573,7 @@ Friend Class clsSegmentAssembly
             Dim i As Short
             'リストを配列に
             For i = 0 To InitPara.NumberJack - 1
-                Jk(1) = _PullBackJack.Contains(i + 1)
+                Jk(i) = _PullBackJack.Contains(i + 1)
             Next
 
             '引戻しジャッキから減圧グループを

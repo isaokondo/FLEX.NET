@@ -74,8 +74,7 @@ Public Class clsDataBase
                 If rString.Contains("4.0.25") Then
                     MySQLVersion = "4.0.25"
                 End If
-                If rString.Contains("
-") Then
+                If rString.Contains("MariaDB") Then
                     MySQLVersion = "MariaDB"
                 End If
                 If IsNothing(MySQLVersion) Then
@@ -119,13 +118,7 @@ Public Class clsDataBase
     Private Function conMYSQLDB() As OdbcConnection
 
         Dim DriverVersion As String = ""
-        Select Case MySQLVersion
-            Case "4.0.25"
-                DriverVersion = "{MySQL ODBC 3.51 Driver}"
-            Case "MariaDB"
-                DriverVersion = "{MySQL ODBC 5.3 ANSI Driver}"
-        End Select
-
+        DriverVersion = "{MySQL ODBC 3.51 Driver}"
 
         Dim ConnectionString As String =
             $"DRIVER={DriverVersion};server={HostName}; 
@@ -141,14 +134,12 @@ Public Class clsDataBase
         Catch ex As OdbcException
             Dim ErrMsg As String = vbNullString
             If ex.Message.Contains("ドライバーが見つかりません") Then
-                ErrMsg = $"MySQL ODBC 5.3 Unicode Driver を　インストールしてください   {ConnectionString}"
+                ErrMsg = $"{DriverVersion} を　インストールしてください   {ConnectionString}"
             End If
             If ex.Message.Contains("Unknown MySQL server host") Then
-                ErrMsg = HostName & ":ホスト名が見つかりません！"
+                ErrMsg = HostName & ":ホスト名が見つかりません！  {ConnectionString}"
             End If
-            If ex.Message.Contains("Unknown MySQL server host") Then
-                ErrMsg = HostName & ":ホスト名が見つかりません！"
-            End If
+
             MsgBox($"Connect Error:{ex.Message & vbCrLf & ErrMsg} FLEX.NET",
                    MessageBoxButtons.OK, MessageBoxIcon.Error)
             End
@@ -158,20 +149,49 @@ Public Class clsDataBase
 
     Public Sub ExecuteSqlCmd(SQLCommand As String)
         If My.Settings.DataBaseType.IndexOf("MYSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
-            Dim cmd As New OdbcCommand(SQLCommand, conMYSQLDB)
-            Dim dr As OdbcDataReader = cmd.ExecuteReader
 
-            If dr.RecordsAffected = 0 Then
-                Debug.Print(SQLCommand)
+            If MySQLVersion = "4.0.25" Then
+                Dim cmd As New OdbcCommand(SQLCommand, conMYSQLDB)
+                Dim dr As OdbcDataReader = cmd.ExecuteReader
+
+                If dr.RecordsAffected = 0 Then
+                    Debug.Print(SQLCommand)
+                End If
+
+                dr.Close()
+                conMYSQLDB.Close()
+                conMYSQLDB.Dispose()
             End If
 
-            dr.Close()
-            conMYSQLDB.Close()
-            conMYSQLDB.Dispose()
+            If MySQLVersion = "MariaDB" Then
+                Dim Builder = New MySqlConnectionStringBuilder()
+                ' データベースに接続するために必要な情報をBuilderに与える
+                Builder.Server = My.Settings.HostName
+                Builder.Port = My.Settings.Port
+                Builder.UserID = "toyo"
+                Builder.Password = "yanagi"
+                Builder.Database = My.Settings.DataBaseName
+                Dim ConStr = Builder.ToString()
+
+                Dim con As New MySqlConnection
+                con.ConnectionString = ConStr
+                con.Open()
+
+                Dim cmd As New MySqlCommand(SQLCommand, con)
+                Dim dr As MySqlDataReader = cmd.ExecuteReader
+
+                dr.Close()
+                con.Close()
+                con.Dispose()
+
+            End If
+
+
+
 
         End If
 
-        If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
+            If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
             Dim cmd As New SqlCommand(SQLCommand, conMsSqlSvDb)
             Dim dr As SqlDataReader = cmd.ExecuteReader
 
@@ -183,30 +203,7 @@ Public Class clsDataBase
             conMsSqlSvDb.Dispose()
         End If
 
-        If My.Settings.DataBaseType.IndexOf("MariaDB", StringComparison.OrdinalIgnoreCase) = 0 Then
-            Dim Builder = New MySqlConnectionStringBuilder()
-            ' データベースに接続するために必要な情報をBuilderに与える
-            Builder.Server = My.Settings.HostName
-            Builder.Port = My.Settings.Port
-            Builder.UserID = "toyo"
-            Builder.Password = "yanagi"
-            Builder.Database = My.Settings.DataBaseName
-            Dim ConStr = Builder.ToString()
 
-            Dim con As New MySqlConnection
-            con.ConnectionString = ConStr
-            con.Open()
-
-            Dim cmd As New MySqlCommand(SQLCommand, con)
-            Dim dr As MySqlDataReader = cmd.ExecuteReader
-
-            dr.Close()
-            con.Close()
-            con.Dispose()
-
-
-
-        End If
 
 
     End Sub
@@ -217,9 +214,6 @@ Public Class clsDataBase
         End If
         If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
             Return DataBaseType.MsSQLServer
-        End If
-        If My.Settings.DataBaseType.IndexOf("MariaDB", StringComparison.OrdinalIgnoreCase) = 0 Then
-            Return DataBaseType.MariaDB
         End If
     End Function
 
@@ -234,11 +228,40 @@ Public Class clsDataBase
         Dim ds As New DataSet
         Try
             If DBType() = DataBaseType.MySQL Then
-                Dim Adpter = New OdbcDataAdapter(SQLCommand, conMYSQLDB)
-                Adpter.Fill(ds)
-                Adpter.Dispose()
-                conMYSQLDB.Close()
-                conMYSQLDB.Dispose()
+
+                If MySQLVersion = "4.0.25" Then
+                    Dim Adpter = New OdbcDataAdapter(SQLCommand, conMYSQLDB)
+                    Adpter.Fill(ds)
+                    Adpter.Dispose()
+                    conMYSQLDB.Close()
+                    conMYSQLDB.Dispose()
+
+                End If
+
+                If MySQLVersion = "MariaDB" Then
+                    Dim Builder = New MySqlConnectionStringBuilder()
+                    ' データベースに接続するために必要な情報をBuilderに与える
+                    Builder.Server = My.Settings.HostName
+                    Builder.Port = My.Settings.Port
+                    Builder.UserID = "toyo"
+                    Builder.Password = "yanagi"
+                    Builder.Database = My.Settings.DataBaseName
+                    Dim ConStr = Builder.ToString()
+
+                    Dim con As New MySqlConnection
+                    con.ConnectionString = ConStr
+                    con.Open()
+
+                    Dim adpter As New MySqlDataAdapter(SQLCommand, con)
+
+                    adpter.Fill(ds)
+                    adpter.Dispose()
+
+
+                    con.Close()
+                    con.Dispose()
+                End If
+
             End If
 
             If DBType() = DataBaseType.MsSQLServer Then
@@ -253,37 +276,6 @@ Public Class clsDataBase
                 conMsSqlSvDb.Dispose()
 
             End If
-
-            If DBType() = DataBaseType.MariaDB Then
-
-                Dim Builder = New MySqlConnectionStringBuilder()
-                ' データベースに接続するために必要な情報をBuilderに与える
-                Builder.Server = My.Settings.HostName
-                Builder.Port = My.Settings.Port
-                Builder.UserID = "toyo"
-                Builder.Password = "yanagi"
-                Builder.Database = My.Settings.DataBaseName
-                Dim ConStr = Builder.ToString()
-
-                Dim con As New MySqlConnection
-                con.ConnectionString = ConStr
-                con.Open()
-
-                Dim adpter As New MySqlDataAdapter(SQLCommand, con)
-
-                adpter.Fill(ds)
-                adpter.Dispose()
-
-
-                con.Close()
-                con.Dispose()
-
-
-            End If
-
-
-
-
 
             Return ds.Tables(0)
 
@@ -735,8 +727,11 @@ Public Class clsInitParameter
 
             '計測ジャッキ番号
             For Each JkNo In ht("計測ジャッキ上右下左").ToString.Split(",")
-                _mesureJackNo.Add( JkNo)
+                'If JkNo <> 0 Then
+                _mesureJackNo.Add(JkNo)
+                'End If
             Next
+            '上下のストローク計の有無
             _topStrokeEnable = (_mesureJackNo(0) <> 0)
             _bottomStrokeEnable = (_mesureJackNo(2) <> 0)
 

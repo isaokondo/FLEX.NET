@@ -81,12 +81,17 @@ Friend Class clsDataSave
                 Data(ColumnList.IndexOf("中折上下角")) = .NakaoreTB.ToString
                 Data(ColumnList.IndexOf("左ジャッキストローク")) = .LeftStroke.ToString
                 Data(ColumnList.IndexOf("右ジャッキストローク")) = .RightStroke.ToString
-                Data(ColumnList.IndexOf("上ジャッキストローク")) = .TopStroke.ToString
-                Data(ColumnList.IndexOf("下ジャッキストローク")) = .BotomStroke.ToString
                 Data(ColumnList.IndexOf("左ジャッキ速度")) = .LeftSpeed.ToString
                 Data(ColumnList.IndexOf("右ジャッキ速度")) = .RightSpeed.ToString
-                Data(ColumnList.IndexOf("上ジャッキ速度")) = .TopSpeed.ToString
-                Data(ColumnList.IndexOf("下ジャッキ速度")) = .BotomSpeed.ToString
+                If InitPara.topStrokeEnable Then
+                    Data(ColumnList.IndexOf("上ジャッキストローク")) = .TopStroke.ToString
+                    Data(ColumnList.IndexOf("上ジャッキ速度")) = .TopSpeed.ToString
+                End If
+                If InitPara.bottomStrokeEnable Then
+                    Data(ColumnList.IndexOf("下ジャッキストローク")) = .BotomStroke.ToString
+                    Data(ColumnList.IndexOf("下ジャッキ速度")) = .BotomSpeed.ToString
+                End If
+
                 Data(ColumnList.IndexOf("コピー角度1")) = .CopyAngle.ToString
                 Data(ColumnList.IndexOf("コピーストローク1")) = .CopyStroke1.ToString
                 'TODO:未割り当て
@@ -252,7 +257,7 @@ Friend Class clsDataSave
 
         Catch ex As Exception
 
-            MessageBox.Show(ex.Message)
+            MessageBox.Show($"DataSaveでエラー  {ex.Message} {ex.StackTrace}")
             Return "'" & String.Join("','", Data) & "'"
         End Try
 

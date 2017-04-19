@@ -41,6 +41,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspPullBackJack = New FLEX.NET.ucnDspData()
         Me.DspAssemblyPieace = New FLEX.NET.ucnDspData()
         Me.DspTypeName = New FLEX.NET.ucnDspData()
+        Me.DspReduceGroup = New FLEX.NET.ucnDspData()
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -68,6 +69,8 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblyBoltPitchSel.SelectItem = Nothing
         Me.AssemblyBoltPitchSel.Size = New System.Drawing.Size(391, 37)
         Me.AssemblyBoltPitchSel.TabIndex = 125
+        Me.AssemblyBoltPitchSel.ttMsg = ""
+        Me.AssemblyBoltPitchSel.ttTile = ""
         Me.AssemblyBoltPitchSel.Unit = ""
         Me.AssemblyBoltPitchSel.Value = 10.0R
         '
@@ -87,6 +90,8 @@ Partial Class frmAssemblyProcessEdit
         Me.DspSegmentTypeName.SelectItem = Nothing
         Me.DspSegmentTypeName.Size = New System.Drawing.Size(391, 37)
         Me.DspSegmentTypeName.TabIndex = 124
+        Me.DspSegmentTypeName.ttMsg = ""
+        Me.DspSegmentTypeName.ttTile = ""
         Me.DspSegmentTypeName.Unit = ""
         Me.DspSegmentTypeName.Value = -1.0R
         '
@@ -106,6 +111,8 @@ Partial Class frmAssemblyProcessEdit
         Me.ConfirmRingNo.SelectItem = Nothing
         Me.ConfirmRingNo.Size = New System.Drawing.Size(426, 37)
         Me.ConfirmRingNo.TabIndex = 123
+        Me.ConfirmRingNo.ttMsg = ""
+        Me.ConfirmRingNo.ttTile = ""
         Me.ConfirmRingNo.Unit = "リング"
         Me.ConfirmRingNo.Value = 10.0R
         '
@@ -125,6 +132,8 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblyPatternSel.SelectItem = Nothing
         Me.AssemblyPatternSel.Size = New System.Drawing.Size(391, 37)
         Me.AssemblyPatternSel.TabIndex = 126
+        Me.AssemblyPatternSel.ttMsg = ""
+        Me.AssemblyPatternSel.ttTile = ""
         Me.AssemblyPatternSel.Unit = ""
         Me.AssemblyPatternSel.Value = -1.0R
         '
@@ -145,6 +154,8 @@ Partial Class frmAssemblyProcessEdit
         Me.LastJackNo.Size = New System.Drawing.Size(391, 37)
         Me.LastJackNo.TabIndex = 130
         Me.LastJackNo.Tag = "s"
+        Me.LastJackNo.ttMsg = ""
+        Me.LastJackNo.ttTile = ""
         Me.LastJackNo.Unit = ""
         Me.LastJackNo.Value = 1.0R
         '
@@ -164,6 +175,8 @@ Partial Class frmAssemblyProcessEdit
         Me.StartJackNo.SelectItem = Nothing
         Me.StartJackNo.Size = New System.Drawing.Size(391, 37)
         Me.StartJackNo.TabIndex = 129
+        Me.StartJackNo.ttMsg = ""
+        Me.StartJackNo.ttTile = ""
         Me.StartJackNo.Unit = ""
         Me.StartJackNo.Value = 10.0R
         '
@@ -183,6 +196,8 @@ Partial Class frmAssemblyProcessEdit
         Me.OperattionJackSel.SelectItem = Nothing
         Me.OperattionJackSel.Size = New System.Drawing.Size(391, 37)
         Me.OperattionJackSel.TabIndex = 128
+        Me.OperattionJackSel.ttMsg = ""
+        Me.OperattionJackSel.ttTile = ""
         Me.OperattionJackSel.Unit = ""
         Me.OperattionJackSel.Value = -1.0R
         '
@@ -202,13 +217,15 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblyPieceNo.SelectItem = Nothing
         Me.AssemblyPieceNo.Size = New System.Drawing.Size(391, 37)
         Me.AssemblyPieceNo.TabIndex = 127
+        Me.AssemblyPieceNo.ttMsg = ""
+        Me.AssemblyPieceNo.ttTile = ""
         Me.AssemblyPieceNo.Unit = ""
         Me.AssemblyPieceNo.Value = 1.0R
         '
         'picAssemblySeg
         '
         Me.picAssemblySeg.BackColor = System.Drawing.Color.Transparent
-        Me.picAssemblySeg.Location = New System.Drawing.Point(513, 253)
+        Me.picAssemblySeg.Location = New System.Drawing.Point(504, 271)
         Me.picAssemblySeg.Margin = New System.Windows.Forms.Padding(2)
         Me.picAssemblySeg.Name = "picAssemblySeg"
         Me.picAssemblySeg.Size = New System.Drawing.Size(465, 496)
@@ -425,11 +442,33 @@ Partial Class frmAssemblyProcessEdit
         Me.DspTypeName.Value = "RC20ST"
         Me.DspTypeName.ValueType = True
         '
+        'DspReduceGroup
+        '
+        Me.DspReduceGroup.BackColor = System.Drawing.Color.Transparent
+        Me.DspReduceGroup.Blink = False
+        Me.DspReduceGroup.BlinkColor = System.Drawing.Color.Red
+        Me.DspReduceGroup.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.DspReduceGroup.DataWidth = 91
+        Me.DspReduceGroup.DecimalPlaces = CType(2, Short)
+        Me.DspReduceGroup.FieldName = "減圧ｸﾞﾙｰﾌﾟ"
+        Me.DspReduceGroup.FieldNameWidth = 146
+        Me.DspReduceGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspReduceGroup.Location = New System.Drawing.Point(504, 226)
+        Me.DspReduceGroup.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspReduceGroup.Name = "DspReduceGroup"
+        Me.DspReduceGroup.Size = New System.Drawing.Size(243, 32)
+        Me.DspReduceGroup.TabIndex = 149
+        Me.DspReduceGroup.Unit = "deg"
+        Me.DspReduceGroup.UnitVisible = False
+        Me.DspReduceGroup.Value = "19-23"
+        Me.DspReduceGroup.ValueType = True
+        '
         'frmAssemblyProcessEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1078, 769)
+        Me.Controls.Add(Me.DspReduceGroup)
         Me.Controls.Add(Me.UcnDspData24)
         Me.Controls.Add(Me.DspClosetJack)
         Me.Controls.Add(Me.DspBoltPitch)
@@ -472,6 +511,7 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.SetChildIndex(Me.DspBoltPitch, 0)
         Me.Controls.SetChildIndex(Me.DspClosetJack, 0)
         Me.Controls.SetChildIndex(Me.UcnDspData24, 0)
+        Me.Controls.SetChildIndex(Me.DspReduceGroup, 0)
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -495,4 +535,5 @@ Partial Class frmAssemblyProcessEdit
     Friend WithEvents DspPullBackJack As ucnDspData
     Friend WithEvents DspAssemblyPieace As ucnDspData
     Friend WithEvents DspTypeName As ucnDspData
+    Friend WithEvents DspReduceGroup As ucnDspData
 End Class
