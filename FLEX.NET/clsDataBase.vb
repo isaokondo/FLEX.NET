@@ -148,7 +148,9 @@ Public Class clsDataBase
     End Function
 
     Public Sub ExecuteSqlCmd(SQLCommand As String)
-        If My.Settings.DataBaseType.IndexOf("MYSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
+
+
+        If DBType() = DataBaseType.MySQL Then
 
             If MySQLVersion = "4.0.25" Then
                 Dim cmd As New OdbcCommand(SQLCommand, conMYSQLDB)
@@ -180,6 +182,9 @@ Public Class clsDataBase
                 Dim cmd As New MySqlCommand(SQLCommand, con)
                 Dim dr As MySqlDataReader = cmd.ExecuteReader
 
+                'If dr.RecordsAffected = 0 Then
+                'End If
+
                 dr.Close()
                 con.Close()
                 con.Dispose()
@@ -191,7 +196,7 @@ Public Class clsDataBase
 
         End If
 
-            If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
+        If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
             Dim cmd As New SqlCommand(SQLCommand, conMsSqlSvDb)
             Dim dr As SqlDataReader = cmd.ExecuteReader
 

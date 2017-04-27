@@ -101,7 +101,9 @@
             DspCopyStroke1.Value = PlcIf.CopyStroke1 'コピーストローク
             DspCopyStroke2.Value = PlcIf.CopyStroke2
 
-            DspBottomClearance.Value = PlcIf.botomClearance
+        DspMachineRolling.Value = PlcIf.MashineRolling  'マシンローリング
+
+        DspBottomClearance.Value = PlcIf.botomClearance
             DspTopClearance.Value = PlcIf.topClearance
             DspRightClearance.Value = PlcIf.rightClearance
             DspLeftClearance.Value = PlcIf.leftClearance

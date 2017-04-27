@@ -115,14 +115,14 @@ Module mdlFLEX
         Application.Run(New frmMain())
 
     End Sub
-
+    'TODO:PLCエラー処理検討
     Private Sub PlcIf_PLCErrOccur(sender As Object, ByVale As EventArgs, ErrMsg As String, ErrCode As Long) Handles PlcIf.PLCErrOccur
-        If ErrCode <> 0 Then
-            Dim response = MsgBox($"PLC通信エラー:{ErrMsg}", MsgBoxStyle.AbortRetryIgnore)
-            If response = MsgBoxResult.Abort Then End
-        Else
-            WriteEventData(ErrMsg, Color.Red)
-        End If
+        'If ErrCode <> 0 Then
+        '    Dim response = MsgBox($"PLC通信エラー:{ErrMsg}", MsgBoxStyle.AbortRetryIgnore)
+        '    If response = MsgBoxResult.Abort Then End
+        'Else
+        WriteEventData(ErrMsg, Color.Red)
+        'End If
     End Sub
 
     ''' <summary>

@@ -64,7 +64,7 @@ Public Class frmAssemblyProcessEdit
 
                 '作動ジャッキの表示
                 If OperattionJackSel.ComboBox.SelectedIndex = -1 Then
-                    OperattionJackSel.ComboBox.SelectedIndex = 0    '未選択時の処理
+                    OperattionJackSel.ComboBox.SelectedIndex = 0    '未選択時の処理    
                 End If
                 Dim jkLst As New List(Of Short)
                 Select Case OperattionJackSel.ComboBox.SelectedItem
