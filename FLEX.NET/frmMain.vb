@@ -280,94 +280,10 @@
         Reduce = New clsReducePress 'ロスゼロ減圧処理
         TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
 
-        'Dim ReportTbl As New clsRingReport
-        ''        ReportTbl.CheckRingItem()
-        ''フォームのタイトル
-        'Me.Text += $"{GetVersionNo()} [{InitPara.ConstructionName}]"
 
 
-        ''ジャッキ稼働画面の初期データ
-        'With UcnJackDsp
-        '    .NumberGroup = InitPara.NumberGroup
-        '    .FirstJackLoc = InitPara.FirstJackLoc
-        '    .FaiJack = InitPara.FaiJack
-        '    .JackGroupPos = InitPara.JackGroupPos
-        '    .NumberJack = InitPara.NumberJack
-
-        '    .FlexPointX = PlcIf.PointX
-        '    .FlexPointY = PlcIf.PointY
-
-        '    .FlexPointR = PlcIf.操作強
-        '    .FlexPointSeater = PlcIf.操作角
-
-        '    .DspInitBaseImg()
-        'End With
-
-        ''---------------チャートの設定------------------------
-        ''偏角、モーメントグラフ
-        'Dim LastRingNoGet As New ChartDataGet   '最終のリング番号を取得
-
-        'Dim HorMomentData As New ChartDataGet("水平モーメント")
-        'Dim VerMomentData As New ChartDataGet("鉛直モーメント")
-        'Dim HorDevData As New ChartDataGet("水平偏角")
-        'Dim VerDevData As New ChartDataGet("鉛直偏角")
 
 
-        ''水平モーメント
-        'ucnHorMomentChart.StrokeWidth = CtlPara.GraphStrokeWidth
-        'ucnHorMomentChart.ChartHighScale = CtlPara.HorMomentTrendWidth
-        'ucnHorMomentChart.ChartList = HorMomentData.DList
-        'ucnHorMomentChart.ChartClear()
-
-        ''鉛直モーメント
-        'ucnVerMomentChart.StrokeWidth = CtlPara.GraphStrokeWidth
-        'ucnVerMomentChart.ChartHighScale = CtlPara.HorMomentTrendWidth
-        '    ucnVerMomentChart.ChartList = VerMomentData.DList
-        'ucnVerMomentChart.ChartClear()
-        ''水平偏角
-        'ucnHorDevChart.StrokeWidth = CtlPara.GraphStrokeWidth
-        'ucnHorDevChart.ChartHighScale = CtlPara.HorDevDegTrendWidth
-        '    ucnHorDevChart.ChartList = HorDevData.DList
-        'ucnHorDevChart.ChartClear()
-        ''鉛直偏角
-        'ucnVerDevChart.StrokeWidth = CtlPara.GraphStrokeWidth
-        'ucnVerDevChart.ChartHighScale = CtlPara.HorDevDegTrendWidth
-        'ucnVerDevChart.ChartList = VerDevData.DList
-        'ucnVerDevChart.ChartClear()
-        ''
-        'UcnGpPvBarGraph.PresBarGraphWidt = CtlPara.PresBarGraphWidt
-
-        'フォームの大きさを画面
-
-        'ReDim DspGp(InitPara.NumberGroup)
-        ''イベントログ更新
-        'EventlogUpdate()
-
-        ''PLCにグループ数、ジャッキ本数書込
-        'PlcIf.ParameterWrite("グループ数", InitPara.NumberGroup)
-        'PlcIf.ParameterWrite("ジャッキ本数", InitPara.NumberJack)
-
-        ''汎用データ表示項目セット
-        'WideDataFldSet()
-        ''計算すtロー演算
-        'PlcIf_MesureStrokeChange()
-
-        ''基準方位の算出
-        'RefernceDirection.sbCulKijun()
-
-        'DirectionChartD.DataGet()
-
-        ''線形データ画面更新
-        'LineDataUpdate()
-
-        ''組立パターンの情報を取得
-        'SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
-        ''同時施工組立パターン情報表示
-        'SegmentDataDsp()
-        ''掘削開始時刻の取得
-        'DspExcavStartDay(getExcecStartTime)
-        ''姿勢制御自動手動の切替時の処理
-        'ControlParameter_FlexAutoManualChange()
 
     End Sub
     ''' <summary>
@@ -1057,6 +973,10 @@
         '        ReportTbl.CheckRingItem()
         'フォームのタイトル
         Me.Text += $"{GetVersionNo()} [{InitPara.ConstructionName}]"
+
+        If InitPara.ClientMode Then
+            Me.Text += " ClientMode"
+        End If
 
 
         'ジャッキ稼働画面の初期データ

@@ -2051,7 +2051,7 @@ Partial Class frmMain
         Me.UcnJackDsp.AutoSize = True
         Me.UcnJackDsp.BackColor = System.Drawing.Color.Transparent
         Me.UcnJackDsp.BackgroundImage = CType(resources.GetObject("UcnJackDsp.BackgroundImage"), System.Drawing.Image)
-        Me.UcnJackDsp.CopyStrechSet = 100
+        Me.UcnJackDsp.CopyStrechSet = 10
         Me.UcnJackDsp.FaiJack = Nothing
         Me.UcnJackDsp.FlexAutoManual = False
         Me.UcnJackDsp.FlexPointR = 0!

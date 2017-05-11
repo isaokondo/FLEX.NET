@@ -481,7 +481,9 @@ Friend Class clsCulJackMv
         End If
 
         mdblRcDash = Sqrt(dblX ^ 2 + dblY ^ 2)
-
+        'オーバーフロー防止
+        If mdblRcDash > 20 Then mdblRcDash = 20
+        If mdblRcDash < -20 Then mdblRcDash = -20
 
         If fnNearZero(dblX) And fnNearZero(dblY) Then
             mdbl操作角 = 0
@@ -506,7 +508,7 @@ Friend Class clsCulJackMv
         _モーメント上限超 = (CulcMoment.MomentR > CtlPara.ジャッキモーメント上限値) And mblnモーメント制御 = False
 
         ''半径がある一定値を越えたらロックする。
-        _片押しR上限超 = mdblRcDash > CtlPara.片押しR制限
+        _片押しR上限超 = mdblRcDash > CtlPara.片押しR制限値
 
         ''片押制御フラグをすべてに反映
         ''モーメント上限超えを変数に

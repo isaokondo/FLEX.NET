@@ -155,7 +155,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("3306")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("25565")>  _
         Public ReadOnly Property Port() As Integer
             Get
                 Return CType(Me("Port"),Integer)
@@ -164,7 +164,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("kjmgaikan.jpn.ph")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("192.168.2.212")>  _
         Public ReadOnly Property HostName() As String
             Get
                 Return CType(Me("HostName"),String)

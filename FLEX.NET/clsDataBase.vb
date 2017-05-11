@@ -530,6 +530,8 @@ Public Class clsInitParameter
 
     Private _constructionName As String '工事名（環境設定テーブルより
 
+    Private _ClientMode As Boolean = False  'クライアントモード　データ保存なし、グループ操作出力なしのモード
+
     Private WithEvents Htb As New clsHashtableRead
     ''' <summary>
     ''' ジャッキ本数
@@ -658,6 +660,16 @@ Public Class clsInitParameter
         End Get
     End Property
 
+    ''' <summary>
+    ''' クライアントモード
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ClientMode As Boolean
+        Get
+            Return _ClientMode
+        End Get
+    End Property
+
     Public Sub New()
 
         Dim paraDB As DataTable =
@@ -751,6 +763,19 @@ Public Class clsInitParameter
         If ConName.Rows.Count <> 0 Then
             _constructionName = ConName.Rows(0).Item(0)
         End If
+
+
+        'コマンドライン引数より、モードを求める
+        'コマンドライン引数を配列で取得する
+        Dim cmds As String() = Environment.GetCommandLineArgs()
+        'コマンドライン引数を列挙する
+        For Each cmd As String In cmds
+            If cmd.ToUpper = "/C" Then
+                _ClientMode = True
+            End If
+
+
+        Next
 
 
 
@@ -891,6 +916,9 @@ Public Class clsTableUpdateConfirm
         "flex制御パラメータ", "flexセグメント組立データ", "セグメント割付シュミレーション",
     "セグメント組立パターンリスト", "セグメント分割仕様リスト", "セグメントリスト"}
 
+    'MariaDB Trigger用
+    Dim tbUpdateTime As Date
+
     Public Sub New()
         If DBType() = DataBaseType.MySQL And clsDataBase.MySQLVersion = "4.0.25" Then
             'MyISAMのチェック
@@ -910,43 +938,94 @@ Public Class clsTableUpdateConfirm
 
         Dim timer As Timer = New Timer()
         AddHandler timer.Tick, New EventHandler(AddressOf TableUpdateTimeGet)
-        timer.Interval = 5000   '5秒ごとの処理
-        timer.Enabled = False ' timer.Start()と同じ
+        timer.Interval = 2000   '5秒ごとの処理
+        timer.Enabled = True ' timer.Start()と同じ
+
+        Dim td As DataTable = GetDtfmSQL("SELECT TIME FROM updatetable ORDER BY TIME DESC")
+        If td.Rows.Count <> 0 Then
+            tbUpdateTime = td.Rows(0).Item(0)
+
+
+        End If
 
     End Sub
 
     Private Sub TableUpdateTimeGet()
-        '更新時刻を取得
-        Dim NewUpTime As Dictionary(Of String, Date) = GetUpdateTIme()
 
-        For Each t In NewUpTime
-            If t.Value <> tbTime(t.Key) Then '更新時刻が変化
-                Select Case t.Key
+        If clsDataBase.MySQLVersion = "4.0.25" Then
+            '更新時刻を取得
+            Dim NewUpTime As Dictionary(Of String, Date) = GetUpdateTIme()
+
+            For Each t In NewUpTime
+                If t.Value <> tbTime(t.Key) Then '更新時刻が変化
+                    Select Case t.Key
+                        Case "flexアナログtag", "flexデジタルtag"
+                            PlcIf.TagRead()
+                        Case "flex初期パラメータ"
+                            InitPara = New clsInitParameter
+                        Case "flex制御パラメータ"
+                            CtlPara.ReadParameter()
+                            My.Forms.frmMain.WideDataFldSet() '汎用データの更新
+
+                    End Select
+
+                    If t.Key.Contains("セグメント") Then
+                        SegAsmblyData.SegmentRingDataRead()
+                        '組立パターンの情報を取得
+                        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+
+                        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+
+                    End If
+                End If
+            Next
+            '現在の更新時刻を保持
+            tbTime = New Dictionary(Of String, Date)(NewUpTime)
+
+        End If
+
+        'MariaDBのときは、triggerを利用
+        If clsDataBase.MySQLVersion = "MariaDB" Then
+            Dim tableUpDt As DataTable =
+            GetDtfmSQL($"SELECT * FROM updatetable WHERE TIME>'{tbUpdateTime.ToString}' ORDER BY TIME DESC")
+
+
+
+            For i As Integer = 0 To tableUpDt.Rows.Count - 1
+                Select Case tableUpDt.Rows(i).Item("TableName")
+                    Case "flex制御パラメータ"
+                        CtlPara.ReadParameter()
+                        My.Forms.frmMain.WideDataFldSet() '汎用データの更新
                     Case "flexアナログtag", "flexデジタルtag"
                         PlcIf.TagRead()
                     Case "flex初期パラメータ"
                         InitPara = New clsInitParameter
-                    Case "flex制御パラメータ"
-                        CtlPara.ReadParameter()
-                        My.Forms.frmMain.WideDataFldSet() '汎用データの更新
 
                 End Select
+                tbUpdateTime = tableUpDt.Rows(i).Item("TIME")
 
-                If t.Key.Contains("セグメント") Then
-                    SegAsmblyData.SegmentRingDataRead()
-                    '組立パターンの情報を取得
-                    SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
-
-                    My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
-
-                End If
+            Next
 
 
 
-            End If
-        Next
-        '現在の更新時刻を保持
-        tbTime = New Dictionary(Of String, Date)(NewUpTime)
+
+
+
+        End If
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     End Sub
 

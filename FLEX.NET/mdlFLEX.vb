@@ -121,7 +121,7 @@ Module mdlFLEX
         '    Dim response = MsgBox($"PLC通信エラー:{ErrMsg}", MsgBoxStyle.AbortRetryIgnore)
         '    If response = MsgBoxResult.Abort Then End
         'Else
-        WriteEventData(ErrMsg, Color.Red)
+        WriteEventData($"{ErrMsg} ErrorCode:0x{ErrCode.ToString("X8")} ", Color.Red)
         'End If
     End Sub
 
@@ -209,7 +209,7 @@ Module mdlFLEX
         '掘進してないときは、自動方向制御停止
         If NowStatus <> cKussin Then JackMvAuto.MvAutoStop()
 
-        If NowStatus = cKussin And CtlPara.AutoDirectionControl Then
+        If NowStatus = cKussin And CtlPara.AutoDirectionControl And PlcIf.FlexControlOn Then
             JackMvAuto.MvAutoStart()
         End If
 
@@ -443,10 +443,12 @@ Module mdlFLEX
                 '力点自動
                 DivCul.操作角 = JackMvAuto.操作角
                 DivCul.操作強 = JackMvAuto.操作強
-                PlcIf.PointX = JackMvAuto.PointX
-                PlcIf.PointY = JackMvAuto.PointY
-                PlcIf.操作角 = JackMvAuto.操作角
-                PlcIf.操作強 = JackMvAuto.操作強
+                If Not InitPara.ClientMode Then
+                    PlcIf.PointX = JackMvAuto.PointX
+                    PlcIf.PointY = JackMvAuto.PointY
+                    PlcIf.操作角 = JackMvAuto.操作角
+                    PlcIf.操作強 = JackMvAuto.操作強
+                End If
             Else
                 '力点手動操作時
 
@@ -534,8 +536,11 @@ Module mdlFLEX
                 Next intCnt
 
         End Select
-        ''シーケンサ出力
-        PlcIf.PutSvPress(sngGpSV, intGpFl)
+        If Not InitPara.ClientMode Then
+            ''シーケンサ出力
+            PlcIf.PutSvPress(sngGpSV, intGpFl)
+
+        End If
 
 
 
@@ -551,14 +556,18 @@ Module mdlFLEX
     ''' <param name="EventMsg">イベントメッセージ</param>
     ''' <param name="EventColor">表示用のイベントカラー</param>
     Public Sub WriteEventData(EventMsg As String, EventColor As Color)
-        Dim Colorlng As Long = ColorTranslator.ToOle(EventColor)
 
-        Dim db As New clsDataBase
+        If Not InitPara.ClientMode Then
+            Dim Colorlng As Long = ColorTranslator.ToOle(EventColor)
 
-        'Dim tb As Odbc.OdbcDataReader = 
-        db.ExecuteSqlCmd _
+            Dim db As New clsDataBase
+
+            'Dim tb As Odbc.OdbcDataReader = 
+            db.ExecuteSqlCmd _
             ($"INSERT INTO FLEXイベントデータ
             (Time,イベントデータ,イベント種類) VALUES('{Now}','{EventMsg}','{Colorlng}')")
+
+        End If
 
         frmMain.EventlogUpdate()
 
@@ -579,24 +588,21 @@ Module mdlFLEX
             'tmrAutoDirect.Enabled = False
             'TODO:自動手動切替時しかPID定数が反映されてない！
             ''手動→自動切替時
-            With JackMvAuto
 
-                .水平P定数 = CtlPara.水平ジャッキ制御P定数
-                .水平I定数 = CtlPara.水平ジャッキ制御I定数
-                .水平D定数 = CtlPara.水平ジャッキ制御D定数
-                .鉛直P定数 = CtlPara.鉛直ジャッキ制御P定数
-                .鉛直I定数 = CtlPara.鉛直ジャッキ制御I定数
-                .鉛直D定数 = CtlPara.鉛直ジャッキ制御D定数
-                .水平偏差角 = RefernceDirection.平面偏角
-                .鉛直偏差角 = RefernceDirection.縦断偏角
-                ''自動から手動時のトラッキング処理
-                .PointX = JackManual.PointX
-                .PointY = JackManual.PointY
-                .sbMnToAutTracking()
-                ''自動演算開始
-                .MvAutoStart()
-            End With
-
+            JackMvAuto.水平P定数 = CtlPara.水平ジャッキ制御P定数
+            JackMvAuto.水平I定数 = CtlPara.水平ジャッキ制御I定数
+            JackMvAuto.水平D定数 = CtlPara.水平ジャッキ制御D定数
+            JackMvAuto.鉛直P定数 = CtlPara.鉛直ジャッキ制御P定数
+            JackMvAuto.鉛直I定数 = CtlPara.鉛直ジャッキ制御I定数
+            JackMvAuto.鉛直D定数 = CtlPara.鉛直ジャッキ制御D定数
+            JackMvAuto.水平偏差角 = RefernceDirection.平面偏角
+            JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
+            ''自動から手動時のトラッキング処理
+            JackMvAuto.PointX = JackManual.PointX
+            JackMvAuto.PointY = JackManual.PointY
+            JackMvAuto.sbMnToAutTracking()
+            ''自動演算開始
+            JackMvAuto.MvAutoStart()
         Else
             If PlcIf.FlexControlOn AndAlso PlcIf.ExcaStatus = cKussin Then
                 WriteEventData("方向制御 手動モードに変わりました", Color.Blue)

@@ -201,6 +201,10 @@ Public Class clsPlcIf
     Private DigtalComData() As Boolean
     'TODO:アナログ、パラメータ、デジタルの変数を分けたほうがいい！
     Private sharrDeviceValue() As Short         'デバイス値
+
+
+    Private TimeOutErrCount As Integer = 0
+
     ''' <summary>
     ''' TAGの読込
     ''' </summary>
@@ -550,38 +554,6 @@ Public Class clsPlcIf
         End Set
     End Property
 
-    'Public Property ストローク管理法 As Integer
-    '    Get
-    '        Return _ストローク管理法
-    '    End Get
-    '    Set(value As Integer)
-    '        _ストローク管理法 = value
-    '        Call ParameterWrite(value)
-
-    '    End Set
-    'End Property
-
-    'Public Property 掘進判定ストローク As Integer
-    '    Get
-    '        Return _掘進判定ストローク
-    '    End Get
-    '    Set(value As Integer)
-    '        _掘進判定ストローク = value
-    '        Call ParameterWrite(value)
-
-    '    End Set
-    'End Property
-
-    'Public Property 終了判定ストローク As Integer
-    '    Get
-    '        Return _終了判定ストローク
-    '    End Get
-    '    Set(value As Integer)
-    '        _終了判定ストローク = value
-    '        Call ParameterWrite(value)
-
-    '    End Set
-    'End Property
     Public Property 終了判定引きストローク As Integer
         Get
             Return _終了判定引きストローク
@@ -593,27 +565,6 @@ Public Class clsPlcIf
         End Set
     End Property
 
-    'Public Property 中断判定速度 As Integer
-    '    Get
-    '        Return _中断判定速度
-    '    End Get
-    '    Set(value As Integer)
-    '        _中断判定速度 = value
-    '        Call ParameterWrite(value)
-
-    '    End Set
-    'End Property
-
-    'Public Property 終了判定時間 As Integer
-    '    Get
-    '        Return _終了判定時間
-    '    End Get
-    '    Set(value As Integer)
-    '        _終了判定時間 = value
-    '        Call ParameterWrite(value)
-
-    '    End Set
-    'End Property
 
     Public Property 減圧弁制御P定数 As Integer
         Get
@@ -1007,13 +958,13 @@ Public Class clsPlcIf
                             JackManual.PutPointXY(_PointX, _PointY)
                         End If
 
+                        TimeOutErrCount = 0
 
                     Catch ex As Exception
                         MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.StackTrace.ToString}")
                     End Try
 
                 End If
-
 
 
             Else    'エラー発生
@@ -1156,8 +1107,8 @@ Public Class clsPlcIf
         If _excaStatus <> PreExcaStatus Then
             RaiseEvent ExcavationStatusChange(PreExcaStatus, _excaStatus)
         End If
-        '掘削データ保存　ストロークが掘進中に伸びたとき
-        If (_realStroke > PreRealStroke Or _excaStatus <> PreExcaStatus) And _excaStatus = cKussin Then
+        '掘削データ保存　ストロークが掘進中に伸びたとき(クライアントモードでないとき）
+        If Not InitPara.ClientMode And (_realStroke > PreRealStroke Or _excaStatus <> PreExcaStatus) And _excaStatus = cKussin Then
             DataSave.Save()
         End If
 
@@ -1169,13 +1120,18 @@ Public Class clsPlcIf
         _PreJyairo = _gyro
         _PrePitching = _gyroPitching
 
+
+
         '伝送フラグの送出
         'デジタルの読込
         Dim t As Long = 0
         mblnBlink = Not mblnBlink
         t = t Or mblnBlink
-        iReturnCode =
+
+        If Not InitPara.ClientMode Then
+            iReturnCode =
             com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
+        End If
 
         'モーメント推力の演算
         CulcMoment.ExcaStatus = _excaStatus

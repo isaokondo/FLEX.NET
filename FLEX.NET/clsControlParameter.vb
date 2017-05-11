@@ -24,7 +24,7 @@ Public Class clsControlParameter
 
 
 
-    Private _片押しR制限 As Single = 2
+    Private _片押しR制限値 As Single = 2
     Private _圧力許容値 As Single = 35
     Private _片押し制限フラグ As Boolean = True
 
@@ -224,13 +224,13 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
-    Public Property 片押しR制限() As Single
+    Public Property 片押しR制限値() As Single
         Get
-            Return _片押しR制限
+            Return _片押しR制限値
 
         End Get
         Set(ByVal Value As Single)
-            _片押しR制限 = Value
+            _片押しR制限値 = Value
             Call sbUpdateData(Value)
         End Set
 
@@ -821,7 +821,7 @@ Public Class clsControlParameter
         '_偏差角許容値 = chk.GetValue("偏差角許容値")
         '_PointX = chk.GetValue("PointX")
         '_PointY = chk.GetValue("PointY")
-        _片押しR制限 = chk.GetValue("片押しR制限値")
+        _片押しR制限値 = chk.GetValue("片押しR制限値")
         _圧力許容値 = chk.GetValue("圧力許容値")
         _片押し制限フラグ = fnBoolean(chk.GetValue("片押し制限フラグ"))
         '_開始時の力点位置 = fnBoolean(chk.GetValue("開始時の力点位置"))
@@ -909,12 +909,12 @@ Public Class clsControlParameter
             WrValue = value.ToString
         End If
 
-
-        'Dim tb As Odbc.OdbcDataReader =
-        ExecuteSqlCmd("UPDATE FLEX制御パラメータ SET 値 ='" & WrValue &
-                      "' WHERE 項目名称='" & FieldName & "'")
-
-        'tb.Close()
+        '現在の値と異なる場合のみUPDATE
+        Dim NowVal As DataTable =
+            GetDtfmSQL($"SELECT 値 FROM FLEX制御パラメータ WHERE 項目名称='{FieldName}'")
+        If NowVal.Rows(0).Item(0) <> WrValue Then
+            ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値 ='{WrValue}' WHERE 項目名称='{FieldName}'")
+        End If
 
         Debug.WriteLine($"WrValue={WrValue} FieldName={FieldName}")
 

@@ -783,11 +783,11 @@ Public Class ucnJackDsp
         Dim d As Single = MaxRadios * 0.55
         DrawACircle(Pens.Black, g, CenterPos, d + 5)
 
-        Dim i As Integer
-        For i = 0 To _numberGroup - 1
+
+        For i As Short = 0 To _numberGroup - 1
             '表示色を１０段階で取得
             Dim ColorIndex As Integer
-            If _JackOrgPress <> 0 And _GpPv(i) <> 0 Then
+            If _JackOrgPress > 0.5 AndAlso _GpPv(i) > 0.5 Then
                 ColorIndex = Int(_GpPv(i) / _JackOrgPress * 10)
             Else
                 ColorIndex = 0

@@ -56,6 +56,8 @@ Partial Class frmOneWayTunnelLimit
         Me.OneWayRLimit.SelectItem = Nothing
         Me.OneWayRLimit.Size = New System.Drawing.Size(409, 39)
         Me.OneWayRLimit.TabIndex = 28
+        Me.OneWayRLimit.ttMsg = ""
+        Me.OneWayRLimit.ttTile = ""
         Me.OneWayRLimit.Unit = ""
         Me.OneWayRLimit.Value = 0R
         '
@@ -75,6 +77,8 @@ Partial Class frmOneWayTunnelLimit
         Me.MomentPermitValue.SelectItem = Nothing
         Me.MomentPermitValue.Size = New System.Drawing.Size(423, 39)
         Me.MomentPermitValue.TabIndex = 27
+        Me.MomentPermitValue.ttMsg = ""
+        Me.MomentPermitValue.ttTile = ""
         Me.MomentPermitValue.Unit = "kN・m"
         Me.MomentPermitValue.Value = 0R
         '
@@ -94,6 +98,8 @@ Partial Class frmOneWayTunnelLimit
         Me.PressPermitValue.SelectItem = Nothing
         Me.PressPermitValue.Size = New System.Drawing.Size(409, 39)
         Me.PressPermitValue.TabIndex = 26
+        Me.PressPermitValue.ttMsg = ""
+        Me.PressPermitValue.ttTile = ""
         Me.PressPermitValue.Unit = "MPa"
         Me.PressPermitValue.Value = 0R
         '
@@ -126,6 +132,8 @@ Partial Class frmOneWayTunnelLimit
         Me.OneReduceTime.SelectItem = Nothing
         Me.OneReduceTime.Size = New System.Drawing.Size(409, 39)
         Me.OneReduceTime.TabIndex = 34
+        Me.OneReduceTime.ttMsg = ""
+        Me.OneReduceTime.ttTile = ""
         Me.OneReduceTime.Unit = "sec"
         Me.OneReduceTime.Value = 0R
         '
@@ -145,6 +153,8 @@ Partial Class frmOneWayTunnelLimit
         Me.OneReduceValue.SelectItem = Nothing
         Me.OneReduceValue.Size = New System.Drawing.Size(409, 39)
         Me.OneReduceValue.TabIndex = 33
+        Me.OneReduceValue.ttMsg = ""
+        Me.OneReduceValue.ttTile = ""
         Me.OneReduceValue.Unit = ""
         Me.OneReduceValue.Value = 0R
         '
