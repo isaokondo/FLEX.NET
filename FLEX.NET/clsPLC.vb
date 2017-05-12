@@ -953,6 +953,10 @@ Public Class clsPlcIf
                         Dim Py As Single = _PointY
                         _PointX = _EngValue("ポイントＸ")
                         _PointY = _EngValue("ポイントＹ")
+                        _操作強 = _EngValue("操作強")
+                        _操作角 = _EngValue("操作角")
+
+
                         'FLEXモードで手動時に作用点が変化したとき
                         If _flexControlOn And (Px <> _PointX Or Py <> _PointY) AndAlso Not CtlPara.AutoDirectionControl Then
                             JackManual.PutPointXY(_PointX, _PointY)
