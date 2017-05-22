@@ -61,7 +61,7 @@ Module mdlFLEX
     ''' <summary>
     ''' テーブル更新日付取得
     ''' </summary>
-    Public TableUpdateConfirm As clsTableUpdateConfirm
+    Public WithEvents TableUpdateConfirm As clsTableUpdateConfirm
 
     ''' <summary>
     ''' MP3再生
@@ -394,9 +394,8 @@ Module mdlFLEX
     ''' <summary>
     ''' マシン先端距離の変化時の処理
     ''' </summary>
-    Private Sub LineDistanceChage() Handles PlcIf.LineDistanceChage, CtlPara.ReferChnge
+    Private Sub LineDistanceChage() Handles PlcIf.LineDistanceChage, CtlPara.ReferChnge, TableUpdateConfirm.SegmentAsmChange
 
-        '        RefernceDirection.Distance.測量ポイントリング番号
         RefernceDirection.sbCulKijun()
 
         My.Forms.frmMain.LineDataUpdate()

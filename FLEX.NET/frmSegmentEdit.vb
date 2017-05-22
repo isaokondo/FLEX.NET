@@ -28,6 +28,8 @@ Public Class frmSegmentEdit
         'データ読み込み
         SegAsmblyData.SegmentRingDataRead()
 
+        Dim FirstSclRow As Integer '表示位置
+
         For i As Integer = 0 To SegAsmblyData.SegmentAssenblyPtnID.Count - 1
             DgvSegAssign.Rows.Add()
             Dim RingNo As Integer = SegAsmblyData.SegmentAssenblyPtnID.Keys(i)
@@ -35,11 +37,14 @@ Public Class frmSegmentEdit
             DgvSegAssign("SegmentType", i).Value = SegAsmblyData.TypeData(RingNo).TypeName 'セグメント種類
             DgvSegAssign("SegWidth", i).Value = SegAsmblyData.TypeData(RingNo).CenterWidth * 1000 'セグメント幅
             DgvSegAssign("AssemblyPtnName", i).Value = SegAsmblyData.AssemblyPtnName(RingNo) '組立パターン名
+
+            '現在のリング番号を先頭行に移動
+            If RingNo = PlcIf.RingNo Then
+                FirstSclRow = i
+            End If
         Next
-
-
-        DgvSegAssign.FirstDisplayedScrollingRowIndex = PlcIf.RingNo
-
+        '表示位置の設定
+        DgvSegAssign.FirstDisplayedCell = DgvSegAssign(0, FirstSclRow)
 
         AddHandler DgvSegAssign.CellValueChanged, AddressOf DgvSegAssign_CellValueChanged
 

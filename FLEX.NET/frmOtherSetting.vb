@@ -10,6 +10,7 @@
             StartPowerPointPosition.rdbtnValue = Not .全押しスタート
             JackCullControl.rdbtnValue = .ジャッキの間引き制御
             ClearanceMeterExist.rdbtnValue = .クリアランス計
+            PitchingSelect.rdbtnValue = (.PitchingSel = 0)
         End With
 
     End Sub
@@ -21,6 +22,7 @@
             .全押しスタート = Not StartPowerPointPosition.rdbtnValue
             .ジャッキの間引き制御 = JackCullControl.rdbtnValue
             .クリアランス計 = ClearanceMeterExist.rdbtnValue
+            .PitchingSel = IIf(PitchingSelect.rdbtnValue, 0, 1)
         End With
         Me.Close()
 

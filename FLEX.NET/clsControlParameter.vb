@@ -90,6 +90,9 @@ Public Class clsControlParameter
     Private _ReduceJudgePress As Single '減圧完了判断圧力(Mpa)
     Private _NextPieceConfirm As Boolean    '次ピース組立確認
 
+    Private _PitchingSel As Integer = 0 'ピッチングの選択　0:ジャイロ　1:マシン
+
+
     ''' <summary>
     ''' パラメータに対応するPLCアドレスのハッシュテーブル
     ''' </summary>
@@ -348,6 +351,21 @@ Public Class clsControlParameter
         End Set
 
     End Property
+
+    ''' <summary>
+    ''' ピッチングの選択　0:ジャイロ　1:マシン
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property PitchingSel As Integer
+        Get
+            Return _PitchingSel
+        End Get
+        Set(value As Integer)
+            _PitchingSel = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
 
 
     'Public Property 偏差角許容値() As Single
@@ -844,6 +862,7 @@ Public Class clsControlParameter
         _単位当r引き戻し量 = chk.GetValue("単位当r引き戻し量")
         _引き戻し実施間隔 = chk.GetValue("引き戻し実施間隔")
 
+        _PitchingSel = chk.GetValue("PitchingSel")
 
         Dim Value As Boolean = fnBoolean(chk.GetValue("AutoDirectionControl"))
         If _AutoDirectionControl <> Value Then

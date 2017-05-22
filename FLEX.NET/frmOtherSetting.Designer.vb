@@ -25,21 +25,22 @@ Partial Class frmOtherSetting
         Me.StartPowerPointPosition = New FLEX.NET.ucnRdBtn()
         Me.JackCullControl = New FLEX.NET.ucnRdBtn()
         Me.ClearanceMeterExist = New FLEX.NET.ucnRdBtn()
+        Me.PitchingSelect = New FLEX.NET.ucnRdBtn()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(183, 219)
+        Me.btnOK.Location = New System.Drawing.Point(187, 275)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(320, 220)
+        Me.btnCancel.Location = New System.Drawing.Point(324, 276)
         '
         'StartPowerPointPosition
         '
         Me.StartPowerPointPosition.BackColor = System.Drawing.Color.Transparent
         Me.StartPowerPointPosition.FieldName = "開始時の力点位置"
-        Me.StartPowerPointPosition.Location = New System.Drawing.Point(18, 27)
+        Me.StartPowerPointPosition.Location = New System.Drawing.Point(18, 86)
         Me.StartPowerPointPosition.Margin = New System.Windows.Forms.Padding(2)
         Me.StartPowerPointPosition.Name = "StartPowerPointPosition"
         Me.StartPowerPointPosition.rdbtnValue = False
@@ -52,7 +53,7 @@ Partial Class frmOtherSetting
         '
         Me.JackCullControl.BackColor = System.Drawing.Color.Transparent
         Me.JackCullControl.FieldName = "ジャッキの間引き制御"
-        Me.JackCullControl.Location = New System.Drawing.Point(18, 82)
+        Me.JackCullControl.Location = New System.Drawing.Point(18, 140)
         Me.JackCullControl.Margin = New System.Windows.Forms.Padding(2)
         Me.JackCullControl.Name = "JackCullControl"
         Me.JackCullControl.rdbtnValue = False
@@ -65,7 +66,7 @@ Partial Class frmOtherSetting
         '
         Me.ClearanceMeterExist.BackColor = System.Drawing.Color.Transparent
         Me.ClearanceMeterExist.FieldName = "クリアランス計"
-        Me.ClearanceMeterExist.Location = New System.Drawing.Point(18, 137)
+        Me.ClearanceMeterExist.Location = New System.Drawing.Point(18, 194)
         Me.ClearanceMeterExist.Margin = New System.Windows.Forms.Padding(2)
         Me.ClearanceMeterExist.Name = "ClearanceMeterExist"
         Me.ClearanceMeterExist.rdbtnValue = False
@@ -74,12 +75,26 @@ Partial Class frmOtherSetting
         Me.ClearanceMeterExist.SlectYesName = "あり"
         Me.ClearanceMeterExist.TabIndex = 35
         '
+        'PitchingSelect
+        '
+        Me.PitchingSelect.BackColor = System.Drawing.Color.Transparent
+        Me.PitchingSelect.FieldName = "ピッチングの選択"
+        Me.PitchingSelect.Location = New System.Drawing.Point(18, 32)
+        Me.PitchingSelect.Margin = New System.Windows.Forms.Padding(2)
+        Me.PitchingSelect.Name = "PitchingSelect"
+        Me.PitchingSelect.rdbtnValue = False
+        Me.PitchingSelect.Size = New System.Drawing.Size(425, 34)
+        Me.PitchingSelect.SlectNoName = "ジャイロ"
+        Me.PitchingSelect.SlectYesName = "シールドマシン"
+        Me.PitchingSelect.TabIndex = 36
+        '
         'frmOtherSetting
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
-        Me.ClientSize = New System.Drawing.Size(454, 278)
+        Me.ClientSize = New System.Drawing.Size(454, 339)
+        Me.Controls.Add(Me.PitchingSelect)
         Me.Controls.Add(Me.ClearanceMeterExist)
         Me.Controls.Add(Me.JackCullControl)
         Me.Controls.Add(Me.StartPowerPointPosition)
@@ -90,10 +105,12 @@ Partial Class frmOtherSetting
         Me.Controls.SetChildIndex(Me.ClearanceMeterExist, 0)
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
+        Me.Controls.SetChildIndex(Me.PitchingSelect, 0)
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents StartPowerPointPosition As ucnRdBtn
     Friend WithEvents JackCullControl As ucnRdBtn
     Friend WithEvents ClearanceMeterExist As ucnRdBtn
+    Friend WithEvents PitchingSelect As ucnRdBtn
 End Class

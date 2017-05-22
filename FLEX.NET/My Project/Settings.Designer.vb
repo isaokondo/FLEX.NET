@@ -56,7 +56,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("flex鹿島外環")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("flex安藤間北西線")>  _
         Public ReadOnly Property DataBaseName() As String
             Get
                 Return CType(Me("DataBaseName"),String)
@@ -164,7 +164,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("192.168.2.212")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("andohazamahokuseisen.dip.jp")>  _
         Public ReadOnly Property HostName() As String
             Get
                 Return CType(Me("HostName"),String)

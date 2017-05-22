@@ -225,7 +225,7 @@ Public Class ucnChart2
         '中心線
         g.DrawLine(New Pen(_CenterColor, 1), New Point(0, picChart.Height / 2), New Point(picChart.Width, picChart.Height / 2))
 
-        If IsNothing(_ExecData) OrElse _ExecData.Count < 2 Then
+        If IsNothing(_ExecData) OrElse _ExecData.Count < 2 OrElse _PlanData.Count = 0 Then
             g.Dispose()
             picChart.Image = canvas
             Exit Sub

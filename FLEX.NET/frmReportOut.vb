@@ -11,7 +11,7 @@ Public Class frmReportOut
     ''' <param name="e"></param>
     Private Sub DgvReportItemSet_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles DgvReportItemSet.CellValueChanged
 
-        If e.RowIndex > 0 Then
+        If e.RowIndex >= 0 Then
             Dim x As New DataGridViewComboBoxCell()
             x = CType(DgvReportItemSet(1, e.RowIndex), DataGridViewComboBoxCell)
             If Not IsNothing(x.Value) Then

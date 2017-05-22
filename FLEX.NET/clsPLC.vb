@@ -1,5 +1,10 @@
-﻿
+﻿Imports System.Convert
+
 Public Class clsPlcIf
+
+
+    Inherits clsDataBase
+
 
     Private mblnComOk As Boolean            ''通信フラグ
 
@@ -199,11 +204,13 @@ Public Class clsPlcIf
     Private AnalogComData() As Short
     Private ParmterComData() As Short
     Private DigtalComData() As Boolean
+    Private DigtalComPlcData() As Short 'デジタルデータのDB書き込み用
     'TODO:アナログ、パラメータ、デジタルの変数を分けたほうがいい！
     Private sharrDeviceValue() As Short         'デバイス値
 
 
     Private TimeOutErrCount As Integer = 0
+
 
     ''' <summary>
     ''' TAGの読込
@@ -323,14 +330,28 @@ Public Class clsPlcIf
     End Property
 
     ''' <summary>
-    ''' ピッチング
+    ''' ジャイロピッチング
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Pitching As Single
+    Public ReadOnly Property GyroPitching As Single
         Get
             Return _gyroPitching
         End Get
     End Property
+    ''' <summary>
+    ''' 選択されたピッチング
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Pitching As Single
+        Get
+            If CtlPara.PitchingSel = 0 Then
+                Return _gyroPitching
+            Else
+                Return _machinePitching
+            End If
+        End Get
+    End Property
+
 
     Public ReadOnly Property Rolling As Single
         Get
@@ -751,6 +772,11 @@ Public Class clsPlcIf
 
     Public ReadOnly Property MachineComErr As Boolean
 
+    ''' <summary>
+    ''' モニタモードでデータを取得した時間
+    ''' </summary>
+    Public ReadOnly Property DataGetTime As DateTime
+
 
     Public Sub New()
 
@@ -778,29 +804,27 @@ Public Class clsPlcIf
             _EngValue.Add(an.FieldName, 0)
         Next
 
-        Dim iRet As Long = PLC_Open() 'オープン処理
-        If iRet <> 0 Then
-            MsgBox("シーケンサと通信出来ません！" & vbCrLf & "論理局番：" & com_ReferencesEasyIF.ActLogicalStationNumber.ToString, MsgBoxStyle.Exclamation)
-            End
+        If Not InitPara.MonitorMode Then
+            Dim iRet As Long = PLC_Open() 'オープン処理
+            If iRet <> 0 Then
+                MsgBox("シーケンサと通信出来ません！" & vbCrLf & "論理局番：" & com_ReferencesEasyIF.ActLogicalStationNumber.ToString, MsgBoxStyle.Exclamation)
+                End
+            End If
+
+            '初期状態読込 イベントを発生させないため
+            _LosZeroSts_FLEX = AnalogPlcRead("同時施工ステータス_FLEX")
+            _LosZeroSts_M = AnalogPlcRead("同時施工ステータス_Machine")
+            _excaStatus = AnalogPlcRead("掘進ステータス")
+            _AssemblyPieceNo = AnalogPlcRead("組立ピース")
+            _RingNo = ParameterPlcRead("RingNo")
+            PreRealStroke = AnalogPlcRead("掘進ストローク")
+            PreExcaStatus = _excaStatus
+            _LosZeroMode = DigtalPlcRead("同時施工モード")
+
+            _excavMode = DigtalPlcRead("掘進モード")
+            _segmentMode = DigtalPlcRead("セグメントモード")
+
         End If
-
-        '初期状態読込 イベントを発生させないため
-        _LosZeroSts_FLEX = AnalogPlcRead("同時施工ステータス_FLEX")
-        _LosZeroSts_M = AnalogPlcRead("同時施工ステータス_Machine")
-        _excaStatus = AnalogPlcRead("掘進ステータス")
-        _AssemblyPieceNo = AnalogPlcRead("組立ピース")
-        _RingNo = ParameterPlcRead("RingNo")
-        PreRealStroke = AnalogPlcRead("掘進ストローク")
-        PreExcaStatus = _excaStatus
-        _LosZeroMode = DigtalPlcRead("同時施工モード")
-
-        _excavMode = DigtalPlcRead("掘進モード")
-        _segmentMode = DigtalPlcRead("セグメントモード")
-
-        'PLC読み込みデータサイズ確定
-        'ReDim AnalogComData(AnalogTag.DeviceSize)
-        'ReDim ParmterComData(ParameterTag.DeviceSize)
-
 
 
         PLC_Read()
@@ -830,9 +854,6 @@ Public Class clsPlcIf
 
     Public Sub PLC_Read()
 
-        'Call PLC_Open() 'オープン処理
-
-        'Debug.WriteLine(System.DateTime.Now.ToString("HH:mm:ss.fff  "))
 
         Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
         Dim szDeviceName As String = ""         'デバイス名称
@@ -841,22 +862,42 @@ Public Class clsPlcIf
         '計測ジャッキ取込 '前スキャンの読込
         Dim st As New Dictionary(Of Short, Integer)(_mesureJackStroke)
 
+        If InitPara.MonitorMode Then
+            'モニタモード時は、DBよびPLC通信データを読込
+            Dim tb As DataTable = GetDtfmSQL("SELECT * FROM plccomdata ORDER BY TIME DESC LIMIT 0,1")
+            'アナログデータ
+            AnalogComData =
+                (From i In tb.Rows(0).Item("Analog").ToString.Split(",") Select Int16.Parse(i)).ToArray
+            'パラメータ
+            ParmterComData =
+                (From i In tb.Rows(0).Item("Parameter").ToString.Split(",") Select CShort(i)).ToArray
+            'デジタルデータ
+            DigtalComPlcData =
+                (From i In tb.Rows(0).Item("Digtal").ToString.Split(",") Select CShort(i)).ToArray
+            'データを取得した時刻　フォームに表示
+            _DataGetTime = DateTime.Parse(tb.Rows(0).Item("TIME")).AddSeconds(tb.Rows(0).Item("SEC"))
 
+        End If
+
+        '==============================================================================================================
         Try
-            'デバイス値用の領域を割り当て
+            'デバイス値用の領域を割り当て　
             ReDim sharrDeviceValue(AnalogTag.DeviceSize)
-            'ReadDeviceBlock2関数処理の実行 アナログの読込
-            iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(AnalogTag.StartAddress,
-                                                        AnalogTag.DeviceSize + 1,
-                                                        sharrDeviceValue(0))
+
+            If InitPara.MonitorMode Then
+                sharrDeviceValue = AnalogComData
+                iReturnCode = 0
+            Else
+                'ReadDeviceBlock2関数処理の実行 アナログの読込
+                iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(AnalogTag.StartAddress,
+                                                       AnalogTag.DeviceSize + 1,
+                                                      sharrDeviceValue(0))
+            End If
 
             If iReturnCode = 0 Then '通信OK
-
-                If IsNothing(AnalogComData) OrElse Not sharrDeviceValue.SequenceEqual(AnalogComData) Then
-
+                'モニタモード時は無条件に実施
+                If InitPara.MonitorMode OrElse IsNothing(AnalogComData) OrElse Not sharrDeviceValue.SequenceEqual(AnalogComData) Then
                     Try
-
-
                         '保存用データ保持
                         AnalogComData = sharrDeviceValue.Clone
 
@@ -941,8 +982,6 @@ Public Class clsPlcIf
                         End If
 
 
-
-
                         For i = 0 To InitPara.NumberJack - 1
                             _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
                             _jackSelect(i) = (_JackStatus(i) And 1)
@@ -976,16 +1015,25 @@ Public Class clsPlcIf
             End If
 
 
-
+            '==============================================================================================================
             'デバイス値用の領域を割り当て
             ReDim sharrDeviceValue(ParameterTag.DeviceSize)
-            'ReadDeviceBlock2関数処理の実行 パラメータの読込
-            iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(ParameterTag.StartAddress,
+
+            If InitPara.MonitorMode Then
+                sharrDeviceValue = ParmterComData
+                ParmterComData = Nothing
+                iReturnCode = 0
+            Else
+                'ReadDeviceBlock2関数処理の実行 パラメータの読込
+                iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(ParameterTag.StartAddress,
                                                         ParameterTag.DeviceSize + 1,
                                                         sharrDeviceValue(0))
-            If iReturnCode = 0 Then '通信OK
+            End If
 
-                If IsNothing(ParmterComData) OrElse Not ParmterComData.SequenceEqual(sharrDeviceValue) Then
+
+            If iReturnCode = 0 Then '通信OK
+                'モニタモード時は無条件に実施
+                If InitPara.MonitorMode OrElse IsNothing(ParmterComData) OrElse Not ParmterComData.SequenceEqual(sharrDeviceValue) Then
 
                     '保存用データ保持
                     ParmterComData = sharrDeviceValue.Clone
@@ -1026,13 +1074,25 @@ Public Class clsPlcIf
             End If
 
 
+            '==============================================================================================================
 
             'デバイス値用の領域を割り当て
             ReDim sharrDeviceValue(DigtalTag.DeviceSize \ 16 + 1)
-            'デジタルの読込
-            iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(DigtalTag.StartAddress,
+
+
+            If InitPara.MonitorMode Then
+                sharrDeviceValue = DigtalComPlcData
+                iReturnCode = 0
+            Else
+                'デジタルの読込
+                iReturnCode = com_ReferencesEasyIF.ReadDeviceBlock2(DigtalTag.StartAddress,
                                                         DigtalTag.DeviceSize \ 16 + 1,
                                                     sharrDeviceValue(0))
+            End If
+
+
+            DigtalComPlcData = sharrDeviceValue.Clone
+
             If iReturnCode = 0 Then '通信成功
                 Dim bit() As Boolean = WordToBit(sharrDeviceValue)
 
@@ -1044,8 +1104,8 @@ Public Class clsPlcIf
                     DigtalTag.TagData("伝送フラグ").OffsetAddress
 
                 DigtalComData(ComFlgAdr) = bit(ComFlgAdr)
-
-                If Not bit.SequenceEqual(DigtalComData) Then
+                'モニタモード時は無条件に実施
+                If InitPara.MonitorMode OrElse Not bit.SequenceEqual(DigtalComData) Then
 
                     '保存用データ保持
                     DigtalComData = bit.Clone
@@ -1071,21 +1131,21 @@ Public Class clsPlcIf
                     End If
 
                     Dim tmp As Boolean
-                        '同時施工モード
-                        tmp = _LosZeroMode
-                        _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
-                        If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
-                        _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
-                        tmp = _MachineComErr
-                        _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
-                        If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(Me, New EventArgs, "シールドマシン伝送異常が発生しました。", 0)
+                    '同時施工モード
+                    tmp = _LosZeroMode
+                    _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
+                    If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
+                    _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
+                    tmp = _MachineComErr
+                    _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
+                    If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(Me, New EventArgs, "シールドマシン伝送異常が発生しました。", 0)
 
-                        tmp = LosZeroCancel
-                        LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
-                        If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
-                    End If
+                    tmp = LosZeroCancel
+                    LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
+                    If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
+                End If
 
-                Else    'エラー発生
+            Else    'エラー発生
                 RaiseEvent PLCErrOccur(Me, New EventArgs, "デジタル読込エラー", iReturnCode)
             End If
         Catch exException As Exception
@@ -1093,6 +1153,25 @@ Public Class clsPlcIf
             MessageBox.Show(exException.Message & vbCrLf & exException.StackTrace, "PLC_READ", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End Try
+
+        If Not InitPara.ClientMode Then
+            'PLCデータをテーブルに書き込む　
+            'データは1秒毎に更新、保存は1分毎
+            Try
+                Dim Tm As String = Now.ToString("yyyy/MM/dd HH:mm:") & "00"
+
+                ExecuteSqlCmd($"REPLACE INTO PlcComData VALUES 
+                        ('{Tm}','{Now.ToString("ss")}',
+                            '{String.Join(",", AnalogComData)}',
+                            '{String.Join(",", DigtalComPlcData)}',
+                            '{String.Join(",", ParmterComData)}')")
+
+            Catch ex As Exception
+
+            End Try
+        End If
+
+
 
         '計測ストロークのいずれかが変化した時のイベント
         For Each mj In InitPara.MesureJackAngle.Keys

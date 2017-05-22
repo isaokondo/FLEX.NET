@@ -200,7 +200,7 @@ Friend Class clsCulKijun
 
         With CtlPara
             If PlcIf.RingNo <> 0 Then
-                Distance.現在のリング番号 = PlcIf.RingNo
+                Distance.NowRingNo = PlcIf.RingNo
                 Distance.測量ポイントリング番号 = .測量ポイントリング番号
                 Distance.測量ポイント総距離 = .測量ポイント総距離
 

@@ -531,6 +531,7 @@ Public Class clsInitParameter
     Private _constructionName As String '工事名（環境設定テーブルより
 
     Private _ClientMode As Boolean = False  'クライアントモード　データ保存なし、グループ操作出力なしのモード
+    Private _MonitorMode As Boolean = False  'モニタモード　データ保存なし、PLC書き込みなし　　グループ操作出力なしのモード
 
     Private WithEvents Htb As New clsHashtableRead
     ''' <summary>
@@ -669,6 +670,15 @@ Public Class clsInitParameter
             Return _ClientMode
         End Get
     End Property
+    ''' <summary>
+    ''' モニタモード
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MonitorMode As Boolean
+        Get
+            Return _MonitorMode
+        End Get
+    End Property
 
     Public Sub New()
 
@@ -773,6 +783,13 @@ Public Class clsInitParameter
             If cmd.ToUpper = "/C" Then
                 _ClientMode = True
             End If
+
+            If cmd.ToUpper = "/M" Then
+                _MonitorMode = True
+                _ClientMode = True
+            End If
+
+
 
 
         Next
@@ -919,6 +936,10 @@ Public Class clsTableUpdateConfirm
     'MariaDB Trigger用
     Dim tbUpdateTime As Date
 
+    'セグメント組立データが変更されたイベント
+    Public Event SegmentAsmChange()
+
+
     Public Sub New()
         If DBType() = DataBaseType.MySQL And clsDataBase.MySQLVersion = "4.0.25" Then
             'MyISAMのチェック
@@ -1000,6 +1021,10 @@ Public Class clsTableUpdateConfirm
                         PlcIf.TagRead()
                     Case "flex初期パラメータ"
                         InitPara = New clsInitParameter
+                    Case "flexセグメント組立データ"
+                        SegAsmblyData.SegmentRingDataRead()
+                        RaiseEvent SegmentAsmChange()
+
 
                 End Select
                 tbUpdateTime = tableUpDt.Rows(i).Item("TIME")

@@ -71,7 +71,7 @@ Friend Class clsDataSave
 
                 Data(ColumnList.IndexOf("シールドジャッキ圧力")) = .JkPress.ToString
                 Data(ColumnList.IndexOf("ジャイロ方位角")) = .Gyro.ToString
-                Data(ColumnList.IndexOf("ジャイロピッチング")) = .Pitching.ToString
+                Data(ColumnList.IndexOf("ジャイロピッチング")) = PlcIf.GyroPitching.ToString
                 Data(ColumnList.IndexOf("ジャイロローリング")) = .Rolling.ToString
                 Data(ColumnList.IndexOf("マシンピッチング")) = .MachinePitching.ToString
                 Data(ColumnList.IndexOf("マシン前胴ローリング")) = .MashineRolling.ToString

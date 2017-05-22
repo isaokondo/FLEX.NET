@@ -236,7 +236,11 @@
         DspLosZeroElapsedTime.Value = ElapsedTime.LozeroExcavationTime
         DspWatingElapsedTime.Value = ElapsedTime.WatingTime
         DspCycleTime.Value = ElapsedTime.CycleTime
-        lblNowDate.Text = Now.ToString("yyyy/MM/dd HH:mm:ss")
+        If InitPara.MonitorMode Then
+            lblNowDate.Text = PlcIf.DataGetTime.ToString("yyyy/MM/dd HH:mm:ss")
+        Else
+            lblNowDate.Text = Now.ToString("yyyy/MM/dd HH:mm:ss")
+        End If
 
         'TODO:線形データ画面更新　LineDistanceChage に記述したい
         'Call LineDataUpdate()
@@ -974,9 +978,14 @@
         'フォームのタイトル
         Me.Text += $"{GetVersionNo()} [{InitPara.ConstructionName}]"
 
+        If InitPara.MonitorMode Then
+            Me.Text += " MonitorMode"
+        End If
+
         If InitPara.ClientMode Then
             Me.Text += " ClientMode"
         End If
+
 
 
         'ジャッキ稼働画面の初期データ
