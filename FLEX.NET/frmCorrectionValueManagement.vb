@@ -101,9 +101,9 @@
                             Case "曲率半径"
                                 p.Value = .HorZendoKijun.軌道中心平面半径
                             Case "前方変化点距離"
-                                p.Value = .HorZendoKijun.平面ゾーン掘進距離
-                            Case "後方変化点距離"
                                 p.Value = .HorZendoKijun.平面ゾーン内残距離
+                            Case "後方変化点距離"
+                                p.Value = .HorZendoKijun.平面ゾーン掘進距離
                             Case "X座標"
                                 p.Value = .HorZendoKijun.軌道中心X座標
                             Case "Y座標"
@@ -144,9 +144,9 @@
                             Case "曲率半径"
                                 p.Value = .VerZendoKijun.縦断半径
                             Case "前方変化点距離"
-                                p.Value = .VerZendoKijun.縦断ゾーン内掘進距離
-                            Case "後方変化点距離"
                                 p.Value = .VerZendoKijun.縦断ゾーン内残距離
+                            Case "後方変化点距離"
+                                p.Value = .VerZendoKijun.縦断ゾーン内掘進距離
                             Case "Z座標"
                                 p.Value = .VerZendoKijun.Z座標
                             Case "シフト"

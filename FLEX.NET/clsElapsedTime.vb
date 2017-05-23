@@ -25,7 +25,7 @@ Public Class clsElapsedTime
     ''' <returns></returns>
     Public ReadOnly Property ExcavationTime As Integer
         Get
-            '分に変換
+            'ミリ秒を分に変換
             Return ExcavationTimeSw.ElapsedMilliseconds / 1000 / 60
         End Get
     End Property

@@ -511,6 +511,7 @@ Module mdlFLEX
                                 sngGpSV(i) > CtlPara.optGpSv(i) Then
                                 sngGpSV(i) = CtlPara.optGpSv(i)
                             End If
+                            'ダイレクト制御有効で偏差が設定以上
                             If Math.Abs(PlcIf.GroupPv(i) - PlcIf.GroupSV(i)) < CtlPara.PIDShiftDefl _
                                     Or CtlPara.DirectControl = False Then
                                 intGpFl(i) = cPIDOut ''ＰＩＤ出力

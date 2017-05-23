@@ -1,4 +1,4 @@
-﻿Public Class frmMain
+﻿Class frmMain
     Inherits Windows.Forms.Form
     ''' <summary>
     ''' 姿勢トレンドデータ
@@ -67,11 +67,11 @@
         'With PlcIf
 
         DspMachinComErr.Visible = PlcIf.MachineComErr 'マシン伝送異常
-            DspMachinComErr.BitStatus = BlinkFlg
+        DspMachinComErr.BitStatus = BlinkFlg
 
-            DspRingNo.Text = PlcIf.RingNo 'リングNo
+        DspRingNo.Text = PlcIf.RingNo 'リングNo
 
-            DspDirection.Value = PlcIf.Gyro              '方位角
+        DspDirection.Value = PlcIf.Gyro              '方位角
         If InitPara.bottomStrokeEnable Then
             DspBottomRealStroke.Value = CalcStroke.BottomCalcStroke '下ｽﾄﾛｰｸ
             DspBottomRawStroke.Value = PlcIf.BotomStroke '下ｽﾄﾛｰｸ
@@ -86,65 +86,65 @@
 
 
         DspRightRealStroke.Value = CalcStroke.RightCalcStroke '右ｽﾄﾛｰｸ
-            DspRightRawStroke.Value = PlcIf.RightStroke '右ｽﾄﾛｰｸ
-            DspRightSpeed.Value = PlcIf.RightSpeed       '右ｽﾋﾟｰﾄﾞ
+        DspRightRawStroke.Value = PlcIf.RightStroke '右ｽﾄﾛｰｸ
+        DspRightSpeed.Value = PlcIf.RightSpeed       '右ｽﾋﾟｰﾄﾞ
 
-            DspLeftRealStroke.Value = CalcStroke.LeftCalcStroke   '左ｽﾄﾛｰｸ
-            DspLeftRawStroke.Value = PlcIf.LeftStroke   '左ｽﾄﾛｰｸ
-            DspLeftSpeed.Value = PlcIf.LeftSpeed         '左ｽﾋﾟｰﾄﾞ
+        DspLeftRealStroke.Value = CalcStroke.LeftCalcStroke   '左ｽﾄﾛｰｸ
+        DspLeftRawStroke.Value = PlcIf.LeftStroke   '左ｽﾄﾛｰｸ
+        DspLeftSpeed.Value = PlcIf.LeftSpeed         '左ｽﾋﾟｰﾄﾞ
 
-            DspJackPress.Value = PlcIf.JkPress           'ジャッキ圧力
-            DspPitching.Value = PlcIf.Pitching           'ピッチング
-            DspHorBroken.Value = PlcIf.NakaoreLR         '中折左右
-            DspVerBroken.Value = PlcIf.NakaoreTB         '中折上下
+        DspJackPress.Value = PlcIf.JkPress           'ジャッキ圧力
+        DspPitching.Value = PlcIf.Pitching           'ピッチング
+        DspHorBroken.Value = PlcIf.NakaoreLR         '中折左右
+        DspVerBroken.Value = PlcIf.NakaoreTB         '中折上下
 
-            DspCopyStroke1.Value = PlcIf.CopyStroke1 'コピーストローク
-            DspCopyStroke2.Value = PlcIf.CopyStroke2
+        DspCopyStroke1.Value = PlcIf.CopyStroke1 'コピーストローク
+        DspCopyStroke2.Value = PlcIf.CopyStroke2
 
         DspMachineRolling.Value = PlcIf.MashineRolling  'マシンローリング
 
         DspBottomClearance.Value = PlcIf.botomClearance
-            DspTopClearance.Value = PlcIf.topClearance
-            DspRightClearance.Value = PlcIf.rightClearance
-            DspLeftClearance.Value = PlcIf.leftClearance
+        DspTopClearance.Value = PlcIf.topClearance
+        DspRightClearance.Value = PlcIf.rightClearance
+        DspLeftClearance.Value = PlcIf.leftClearance
 
-            DspThrust.Value = CulcMoment.Thrust '推力
-            DspMoment.Value = CulcMoment.MomentR 'モーメント
-            'FLEXの制御ON/OFF
-            DspFlexControlOn.BitStatus = PlcIf.FlexControlOn
-            UcnJackDsp.FlexOn = PlcIf.FlexControlOn
+        DspThrust.Value = CulcMoment.Thrust '推力
+        DspMoment.Value = CulcMoment.MomentR 'モーメント
+        'FLEXの制御ON/OFF
+        DspFlexControlOn.BitStatus = PlcIf.FlexControlOn
+        UcnJackDsp.FlexOn = PlcIf.FlexControlOn
 
-            '掘進ステータス　掘進中、中断中、待機中
-            DspExcavingOn.BitStatus = (PlcIf.ExcaStatus = cKussin)
-            DspExcavingStop.BitStatus = (PlcIf.ExcaStatus = cChudan)
-            DspExcaWaiting.BitStatus = (PlcIf.ExcaStatus = cTaiki)
-            'ジャッキステータス表示
-            UcnJackDsp.JackStatus = PlcIf.JackStatus
-            'グループ圧PV
-            UcnJackDsp.GroupPV = PlcIf.GroupPv
-            UcnJackDsp.JackOrgPress = PlcIf.JkPress
-            'コピー角度、ストローク
-            UcnJackDsp.CopyAngle = PlcIf.CopyAngle
-            UcnJackDsp.CopyStroke = PlcIf.CopyStroke1
-            'グループ圧バーグラフ
-            UcnGpPvBarGraph.GpFlg = PlcIf.GroupFlg
-            UcnGpPvBarGraph.GpPv = PlcIf.GroupPv
+        '掘進ステータス　掘進中、中断中、待機中
+        DspExcavingOn.BitStatus = (PlcIf.ExcaStatus = cKussin)
+        DspExcavingStop.BitStatus = (PlcIf.ExcaStatus = cChudan)
+        DspExcaWaiting.BitStatus = (PlcIf.ExcaStatus = cTaiki)
+        'ジャッキステータス表示
+        UcnJackDsp.JackStatus = PlcIf.JackStatus
+        'グループ圧PV
+        UcnJackDsp.GroupPV = PlcIf.GroupPv
+        UcnJackDsp.JackOrgPress = PlcIf.JkPress
+        'コピー角度、ストローク
+        UcnJackDsp.CopyAngle = PlcIf.CopyAngle
+        UcnJackDsp.CopyStroke = PlcIf.CopyStroke1
+        'グループ圧バーグラフ
+        UcnGpPvBarGraph.GpFlg = PlcIf.GroupFlg
+        UcnGpPvBarGraph.GpPv = PlcIf.GroupPv
 
-            '力点座標数値表示
-            UcnJackDsp.FlexPointX = PlcIf.PointX
-            UcnJackDsp.FlexPointY = PlcIf.PointY
+        '力点座標数値表示
+        UcnJackDsp.FlexPointX = PlcIf.PointX
+        UcnJackDsp.FlexPointY = PlcIf.PointY
 
-            UcnJackDsp.FlexPointR = PlcIf.操作強
-            UcnJackDsp.FlexPointSeater = PlcIf.操作角
-
-
-            '掘進モード／セグメントモードの表示
-            lblMachineMode.Text = IIf(PlcIf.ExcavMode, "掘進", "セグメント") & "モード"
-            lblMachineMode.BackColor = IIf(PlcIf.ExcavMode, Color.Magenta, Color.Aqua)
-            'End With
+        UcnJackDsp.FlexPointR = PlcIf.操作強
+        UcnJackDsp.FlexPointSeater = PlcIf.操作角
 
 
-            UcnJackDsp.MakeBmp()
+        '掘進モード／セグメントモードの表示
+        lblMachineMode.Text = IIf(PlcIf.ExcavMode, "掘進", "セグメント") & "モード"
+        lblMachineMode.BackColor = IIf(PlcIf.ExcavMode, Color.Magenta, Color.Aqua)
+        'End With
+
+
+        UcnJackDsp.MakeBmp()
 
 
         DspAveStartStroke.Value = CtlPara.StartAveStroke '平均開始ストローク
@@ -310,8 +310,8 @@
     Private Function getExcecStartTime() As Date
         Dim db As New clsDataBase
         Dim tb As DataTable =
-            db.GetDtfmSQL($"SELECT 時間 FROM flex掘削データ 
-            WHERE リング番号='{PlcIf.RingNo}' ORDER BY 時間 DESC LIMIT 0,1")
+             db.GetDtfmSQL($"SELECT 時間 FROM flex掘削データ 
+            WHERE リング番号='{PlcIf.RingNo}' ORDER BY 時間  LIMIT 0,1")
         If tb.Rows.Count = 0 Then
             Return Now
         Else
@@ -829,7 +829,7 @@
             Dim dis As New clsLineMake
 
             For i As Integer = 0 To Distance Step 10
-                dis.掘進累積距離 = (i  + _HorRData.Last.Distance)/1000
+                dis.掘進累積距離 = (i + _HorRData.Last.Distance) / 1000
                 _HorPData.Add(i, Hoko2Hoi(dis.軌道中心方位角 + HorPlan.X軸方位角))
                 _VerPData.Add(i, dis.鉛直角)
             Next

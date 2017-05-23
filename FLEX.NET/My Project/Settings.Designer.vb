@@ -56,15 +56,6 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("flex安藤間北西線")>  _
-        Public ReadOnly Property DataBaseName() As String
-            Get
-                Return CType(Me("DataBaseName"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Black")>  _
         Public ReadOnly Property GpPsColor1() As Global.System.Drawing.Color
             Get
@@ -155,15 +146,6 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("25565")>  _
-        Public ReadOnly Property Port() As Integer
-            Get
-                Return CType(Me("Port"),Integer)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("andohazamahokuseisen.dip.jp")>  _
         Public ReadOnly Property HostName() As String
             Get
@@ -192,18 +174,6 @@ Namespace My
             End Get
             Set
                 Me("ReportAutoPrintPtn") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("MYSQL")>  _
-        Public Property DataBaseType() As String
-            Get
-                Return CType(Me("DataBaseType"),String)
-            End Get
-            Set
-                Me("DataBaseType") = value
             End Set
         End Property
     End Class

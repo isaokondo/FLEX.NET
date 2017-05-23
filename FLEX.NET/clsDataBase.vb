@@ -1,5 +1,6 @@
 ﻿Imports System.Data.Odbc
 Imports System.Data.SqlClient
+Imports System.Runtime.InteropServices
 Imports MySql.Data.MySqlClient
 Public Enum DataBaseType
     MySQL
@@ -7,28 +8,72 @@ Public Enum DataBaseType
     MsSQLServer
 End Enum
 
+
+
+
 Public Class clsDataBase
 
     ''' <summary>
     ''' ホスト名
     ''' </summary>
-    Private Shared HostName As String = My.Settings.HostName
+    Private Shared HostName As String
     ''' <summary>
     ''' データベース名
     ''' </summary>
-    Private Shared DataBaseName As String = My.Settings.DataBaseName
+    Private Shared DataBaseName As String
 
     ''' <summary>
     ''' ポート番号
     ''' </summary>
-    Private Shared PortNo As Integer = My.Settings.Port
+    Private Shared PortNo As Integer
 
     'Private cn As OdbcConnection
 
 
     Public Shared MySQLVersion As String
 
+    <DllImport("KERNEL32.DLL", CharSet:=CharSet.Auto)>
+    Public Shared Function GetPrivateProfileString(
+    ByVal lpAppName As String,
+    ByVal lpKeyName As String, ByVal lpDefault As String,
+    ByVal lpReturnedString As System.Text.StringBuilder, ByVal nSize As Integer,
+    ByVal lpFileName As String) As Integer
+    End Function
+
+    <DllImport("KERNEL32.DLL", CharSet:=CharSet.Auto)>
+    Public Shared Function WritePrivateProfileString(
+    ByVal lpApplicationName As String,
+    ByVal lpKeyName As String,
+    ByVal lpString As String,
+    ByVal lpFileName As String) As Long
+    End Function
+
+    'iniファイルから取得する
+    Public Function GetIniString(ByVal lpSection As String, ByVal lpKeyName As String, ByVal lpFileName As String) As String
+        Dim strValue As System.Text.StringBuilder = New System.Text.StringBuilder(1024)
+
+        Dim sLen = GetPrivateProfileString(lpSection, lpKeyName, "", strValue, 1024, lpFileName)
+        Dim str As String = strValue.ToString()
+
+        Return str
+    End Function
+
+
+
     Public Sub New()
+        'FLEX.INI より　HOST名、DB名　PORT番号を読込
+        Dim IniFilePath As String =
+           AppDomain.CurrentDomain.SetupInformation.ApplicationBase & "FLEX.INI"
+
+        If IO.File.Exists(IniFilePath) Then
+            HostName = GetIniString("DataBase", "HostName", IniFilePath)
+            DataBaseName = GetIniString("DataBase", "DataBaseName", IniFilePath)
+            PortNo = GetIniString("DataBase", "port", IniFilePath)
+        Else
+            MsgBox($"FLEX.INIファイルが見つかりません。{vbCrLf}ファイルパス：{IniFilePath}",
+                   MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation, "初期ファイル読込不良")
+            End
+        End If
 
 
     End Sub
@@ -48,7 +93,7 @@ Public Class clsDataBase
             '接続出来ない場合
             MsgBox(ex.Message,
                    MsgBoxStyle.Exclamation,
-                   "データベース接続エラー" & "ホスト名:" & HostName & vbCrLf & "  ポート番号:" & PortNo)
+                   "データベース接続エラー" & "ホスト名:    " & HostName & vbCrLf & "  ポート番号:" & PortNo)
             End
         End Try
 
@@ -150,9 +195,8 @@ Public Class clsDataBase
     Public Sub ExecuteSqlCmd(SQLCommand As String)
 
 
-        If DBType() = DataBaseType.MySQL Then
 
-            If MySQLVersion = "4.0.25" Then
+        If MySQLVersion = "4.0.25" Then
                 Dim cmd As New OdbcCommand(SQLCommand, conMYSQLDB)
                 Dim dr As OdbcDataReader = cmd.ExecuteReader
 
@@ -165,62 +209,43 @@ Public Class clsDataBase
                 conMYSQLDB.Dispose()
             End If
 
-            If MySQLVersion = "MariaDB" Then
-                Dim Builder = New MySqlConnectionStringBuilder()
-                ' データベースに接続するために必要な情報をBuilderに与える
-                Builder.Server = My.Settings.HostName
-                Builder.Port = My.Settings.Port
-                Builder.UserID = "toyo"
-                Builder.Password = "yanagi"
-                Builder.Database = My.Settings.DataBaseName
-                Dim ConStr = Builder.ToString()
+        If MySQLVersion = "MariaDB" Then
 
-                Dim con As New MySqlConnection
-                con.ConnectionString = ConStr
-                con.Open()
+            Dim Builder = New MySqlConnectionStringBuilder()
+            ' データベースに接続するために必要な情報をBuilderに与える
+            Builder.Server = HostName
+            Builder.Port = PortNo
+            Builder.UserID = "toyo"
+            Builder.Password = "yanagi"
+            Builder.Database = DataBaseName
+            Dim ConStr = Builder.ToString()
 
-                Dim cmd As New MySqlCommand(SQLCommand, con)
-                Dim dr As MySqlDataReader = cmd.ExecuteReader
+            Dim con As New MySqlConnection
+            con.ConnectionString = ConStr
+            con.Open()
 
-                'If dr.RecordsAffected = 0 Then
-                'End If
+            Dim cmd As New MySqlCommand(SQLCommand, con)
+            Dim dr As MySqlDataReader = cmd.ExecuteReader
 
-                dr.Close()
-                con.Close()
-                con.Dispose()
+            'If dr.RecordsAffected = 0 Then
+            'End If
 
-            End If
-
-
-
-
-        End If
-
-        If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
-            Dim cmd As New SqlCommand(SQLCommand, conMsSqlSvDb)
-            Dim dr As SqlDataReader = cmd.ExecuteReader
-
-            If dr.RecordsAffected = 0 Then
-                Debug.Print(SQLCommand)
-            End If
             dr.Close()
-            conMsSqlSvDb.Close()
-            conMsSqlSvDb.Dispose()
+            con.Close()
+            con.Dispose()
+
         End If
+
+
+
+
 
 
 
 
     End Sub
 
-    Public Function DBType() As DataBaseType
-        If My.Settings.DataBaseType.IndexOf("MYSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
-            Return DataBaseType.MySQL
-        End If
-        If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
-            Return DataBaseType.MsSQLServer
-        End If
-    End Function
+
 
 
     ''' <summary>
@@ -232,9 +257,8 @@ Public Class clsDataBase
 
         Dim ds As New DataSet
         Try
-            If DBType() = DataBaseType.MySQL Then
 
-                If MySQLVersion = "4.0.25" Then
+            If MySQLVersion = "4.0.25" Then
                     Dim Adpter = New OdbcDataAdapter(SQLCommand, conMYSQLDB)
                     Adpter.Fill(ds)
                     Adpter.Dispose()
@@ -243,44 +267,32 @@ Public Class clsDataBase
 
                 End If
 
-                If MySQLVersion = "MariaDB" Then
-                    Dim Builder = New MySqlConnectionStringBuilder()
-                    ' データベースに接続するために必要な情報をBuilderに与える
-                    Builder.Server = My.Settings.HostName
-                    Builder.Port = My.Settings.Port
-                    Builder.UserID = "toyo"
-                    Builder.Password = "yanagi"
-                    Builder.Database = My.Settings.DataBaseName
-                    Dim ConStr = Builder.ToString()
+            If MySQLVersion = "MariaDB" Then
 
-                    Dim con As New MySqlConnection
-                    con.ConnectionString = ConStr
-                    con.Open()
+                Dim Builder = New MySqlConnectionStringBuilder()
+                ' データベースに接続するために必要な情報をBuilderに与える
+                Builder.Server = HostName
+                Builder.Port = PortNo
+                Builder.UserID = "toyo"
+                Builder.Password = "yanagi"
+                Builder.Database = DataBaseName
+                Dim ConStr = Builder.ToString()
 
-                    Dim adpter As New MySqlDataAdapter(SQLCommand, con)
+                Dim con As New MySqlConnection
+                con.ConnectionString = ConStr
+                con.Open()
 
-                    adpter.Fill(ds)
-                    adpter.Dispose()
+                Dim adpter As New MySqlDataAdapter(SQLCommand, con)
+
+                adpter.Fill(ds)
+                adpter.Dispose()
 
 
-                    con.Close()
-                    con.Dispose()
-                End If
-
+                con.Close()
+                con.Dispose()
             End If
 
-            If DBType() = DataBaseType.MsSQLServer Then
 
-                SqlStrToMsType(SQLCommand)
-
-
-                Dim Adpter = New SqlDataAdapter(SQLCommand, conMsSqlSvDb)
-                Adpter.Fill(ds)
-                Adpter.Dispose()
-                conMsSqlSvDb.Close()
-                conMsSqlSvDb.Dispose()
-
-            End If
 
             Return ds.Tables(0)
 
@@ -534,6 +546,10 @@ Public Class clsInitParameter
     Private _MonitorMode As Boolean = False  'モニタモード　データ保存なし、PLC書き込みなし　　グループ操作出力なしのモード
 
     Private WithEvents Htb As New clsHashtableRead
+
+
+
+
     ''' <summary>
     ''' ジャッキ本数
     ''' </summary>
@@ -941,10 +957,8 @@ Public Class clsTableUpdateConfirm
 
 
     Public Sub New()
-        If DBType() = DataBaseType.MySQL And clsDataBase.MySQLVersion = "4.0.25" Then
+        If clsDataBase.MySQLVersion = "4.0.25" Then
             'MyISAMのチェック
-
-
             CheckMisam()
         End If
         '更新時刻の取得
@@ -1058,7 +1072,7 @@ Public Class clsTableUpdateConfirm
     Private Function GetUpdateTIme() As Dictionary(Of String, Date)
         '更新時間を取得　MISAMのみ
 
-        If DBType() = DataBaseType.MySQL And clsDataBase.MySQLVersion = "4.0.25" Then
+        If clsDataBase.MySQLVersion = "4.0.25" Then
             Dim tableUpTime As DataTable =
             GetDtfmSQL("show table status;")
 

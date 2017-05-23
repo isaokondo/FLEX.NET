@@ -553,6 +553,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="FLEX.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="FLEX.NET_一時キー.pfx" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
