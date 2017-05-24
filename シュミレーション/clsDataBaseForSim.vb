@@ -1,5 +1,6 @@
-﻿'Imports MySql.Data.MySqlClient
-Imports System.Data.Odbc
+﻿Imports System.Data.Odbc
+Imports System.Runtime.InteropServices
+Imports MySql.Data.MySqlClient
 
 Public Enum DataBaseType
     MySQL
@@ -12,54 +13,71 @@ Public Class clsDataBase
     ''' <summary>
     ''' ホスト名
     ''' </summary>
-    Private _HostName As String = My.Settings.HostName
+    Private Shared HostName As String
     ''' <summary>
     ''' データベース名
     ''' </summary>
-    Private _DataBaseName As String = My.Settings.DataBaseName
-
-    Private  MySQLVersion As String
-
-    Public Sub New()
-        GetMySQKVersion()
-    End Sub
+    Private Shared DataBaseName As String
 
     ''' <summary>
-    ''' ホスト名
+    ''' ポート番号
     ''' </summary>
-    ''' <returns></returns>
-    Public Property HostName As String
-        Get
-            Return _HostName
-        End Get
-        Set(value As String)
-            _HostName = value
-        End Set
-    End Property
-    ''' <summary>
-    ''' データベース名
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property DataBaseName As String
-        Get
-            Return _DataBaseName
-        End Get
-        Set(value As String)
-            _DataBaseName = value
-        End Set
-    End Property
+    Private Shared PortNo As Integer
 
-    Public Function DBType() As DataBaseType
-        If My.Settings.DataBaseType.IndexOf("MYSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
-            Return DataBaseType.MySQL
-        End If
-        If My.Settings.DataBaseType.IndexOf("MSSQL", StringComparison.OrdinalIgnoreCase) = 0 Then
-            Return DataBaseType.MsSQLServer
-        End If
+    'Private cn As OdbcConnection
 
+
+    Public Shared MySQLVersion As String
+
+    <DllImport("KERNEL32.DLL", CharSet:=CharSet.Auto)>
+    Public Shared Function GetPrivateProfileString(
+    ByVal lpAppName As String,
+    ByVal lpKeyName As String, ByVal lpDefault As String,
+    ByVal lpReturnedString As System.Text.StringBuilder, ByVal nSize As Integer,
+    ByVal lpFileName As String) As Integer
     End Function
 
-    Private Sub GetMySQKVersion()
+    <DllImport("KERNEL32.DLL", CharSet:=CharSet.Auto)>
+    Public Shared Function WritePrivateProfileString(
+    ByVal lpApplicationName As String,
+    ByVal lpKeyName As String,
+    ByVal lpString As String,
+    ByVal lpFileName As String) As Long
+    End Function
+
+    'iniファイルから取得する
+    Public Function GetIniString(ByVal lpSection As String, ByVal lpKeyName As String, ByVal lpFileName As String) As String
+        Dim strValue As System.Text.StringBuilder = New System.Text.StringBuilder(1024)
+
+        Dim sLen = GetPrivateProfileString(lpSection, lpKeyName, "", strValue, 1024, lpFileName)
+        Dim str As String = strValue.ToString()
+
+        Return str
+    End Function
+
+
+
+    Public Sub New()
+        'FLEX.INI より　HOST名、DB名　PORT番号を読込
+        Dim IniFilePath As String =
+           AppDomain.CurrentDomain.SetupInformation.ApplicationBase & "FLEX.INI"
+
+        If IO.File.Exists(IniFilePath) Then
+            HostName = GetIniString("DataBase", "HostName", IniFilePath)
+            DataBaseName = GetIniString("DataBase", "DataBaseName", IniFilePath)
+            PortNo = GetIniString("DataBase", "port", IniFilePath)
+        Else
+            MsgBox($"FLEX.INIファイルが見つかりません。{vbCrLf}ファイルパス：{IniFilePath}",
+                   MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation, "初期ファイル読込不良")
+            End
+        End If
+        GetMySQKVersion()
+
+    End Sub
+    ''' <summary>
+    ''' MYSQLのバージョン取得
+    ''' </summary>
+    Public Shared Sub GetMySQKVersion()
 
         ' ソケット生成
         Dim objSck As New System.Net.Sockets.TcpClient
@@ -67,12 +85,12 @@ Public Class clsDataBase
 
         Try
             ' TCP/IP接続
-            objSck.Connect(My.Settings.HostName, My.Settings.Port)
+            objSck.Connect(HostName, PortNo)
         Catch ex As System.Net.Sockets.SocketException '
             '接続出来ない場合
             MsgBox(ex.Message,
                    MsgBoxStyle.Exclamation,
-                   "データベース接続エラー" & "ホスト名:" & HostName & vbCrLf & "  ポート番号:" & My.Settings.Port)
+                   "データベース接続エラー" & "ホスト名:    " & HostName & vbCrLf & "  ポート番号:" & PortNo)
             End
         End Try
 
@@ -120,49 +138,158 @@ Public Class clsDataBase
     End Sub
 
 
+
+
+
+
+
+
     'データベースコネクション
-    Private Function conDB() As OdbcConnection
+    Private Function conMYSQLDB() As OdbcConnection
 
         Dim DriverVersion As String = ""
-        Select Case MySQLVersion
-            Case "4.0.25"
-                DriverVersion = "{MySQL ODBC 3.51 Driver}"
-            Case "MariaDB"
-                DriverVersion = "{MySQL ODBC 5.3 Unicode Driver}"
-        End Select
-
+        DriverVersion = "{MySQL ODBC 3.51 Driver}"
 
         Dim ConnectionString As String =
-            $"DRIVER={DriverVersion};server={My.Settings.HostName}; 
-            database={My.Settings.DataBaseName}; port={My.Settings.Port}; 
+            $"DRIVER={DriverVersion};server={HostName}; 
+            database={DataBaseName}; port={PortNo}; 
             uid= toyo;pwd= yanagi;OPTION=3"
 
-        Dim cn As New OdbcConnection(ConnectionString)
+        Dim cn As OdbcConnection =
+            New OdbcConnection(ConnectionString)
+
         Try
             cn.Open()
 
         Catch ex As OdbcException
             Dim ErrMsg As String = vbNullString
-            If ex.Message.IndexOf("ドライバーが見つかりません") >= 0 Then
-                ErrMsg = "MySQL ODBC 5.3 Unicode Driver を　インストールしてください"
+            If ex.Message.Contains("ドライバーが見つかりません") Then
+                ErrMsg = $"{DriverVersion} を　インストールしてください   {ConnectionString}"
             End If
-            If ex.Message.IndexOf("Unknown MySQL server host") >= 0 Then
-                ErrMsg = My.Settings.HostName & ":ホスト名が見つかりません！"
+            If ex.Message.Contains("Unknown MySQL server host") Then
+                ErrMsg = HostName & ":ホスト名が見つかりません！  {ConnectionString}"
             End If
-            If ex.Message.IndexOf("Unknown MySQL server host") >= 0 Then
-                ErrMsg = My.Settings.HostName & ":ホスト名が見つかりません！"
-            End If
-            MessageBox.Show("Connect Error:" & ex.Message & vbCrLf & ErrMsg, "FLEX.NET", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            MsgBox($"Connect Error:{ex.Message & vbCrLf & ErrMsg} FLEX.NET",
+                   MessageBoxButtons.OK, MessageBoxIcon.Error)
             End
         End Try
         Return cn
     End Function
 
-    Public Function ExecuteSql(SQLCommand As String) As OdbcDataReader
-        Dim cmd As New OdbcCommand(SQLCommand, conDB)
-        Dim dr As OdbcDataReader = cmd.ExecuteReader
-        Return dr
+    Public Sub ExecuteSqlCmd(SQLCommand As String)
+
+
+
+        If MySQLVersion = "4.0.25" Then
+            Dim cmd As New OdbcCommand(SQLCommand, conMYSQLDB)
+            Dim dr As OdbcDataReader = cmd.ExecuteReader
+
+            If dr.RecordsAffected = 0 Then
+                Debug.Print(SQLCommand)
+            End If
+
+            dr.Close()
+            conMYSQLDB.Close()
+            conMYSQLDB.Dispose()
+        End If
+
+        If MySQLVersion = "MariaDB" Then
+
+            Dim Builder = New MySqlConnectionStringBuilder()
+            ' データベースに接続するために必要な情報をBuilderに与える
+            Builder.Server = HostName
+            Builder.Port = PortNo
+            Builder.UserID = "toyo"
+            Builder.Password = "yanagi"
+            Builder.Database = DataBaseName
+            Dim ConStr = Builder.ToString()
+
+            Dim con As New MySqlConnection
+            con.ConnectionString = ConStr
+            con.Open()
+
+            Dim cmd As New MySqlCommand(SQLCommand, con)
+            Dim dr As MySqlDataReader = cmd.ExecuteReader
+
+            'If dr.RecordsAffected = 0 Then
+            'End If
+
+            dr.Close()
+            con.Close()
+            con.Dispose()
+
+        End If
+
+
+
+
+
+
+
+
+    End Sub
+
+
+
+
+    ''' <summary>
+    ''' SQLよりデータテーブルを取得
+    ''' </summary>
+    ''' <param name="SQLCommand"></param>
+    ''' <returns>SQL文</returns>
+    Public Function GetDtfmSQL(SQLCommand As String) As DataTable
+
+        Dim ds As New DataSet
+        Try
+
+            If MySQLVersion = "4.0.25" Then
+                Dim Adpter = New OdbcDataAdapter(SQLCommand, conMYSQLDB)
+                Adpter.Fill(ds)
+                Adpter.Dispose()
+                conMYSQLDB.Close()
+                conMYSQLDB.Dispose()
+
+            End If
+
+            If MySQLVersion = "MariaDB" Then
+
+                Dim Builder = New MySqlConnectionStringBuilder()
+                ' データベースに接続するために必要な情報をBuilderに与える
+                Builder.Server = HostName
+                Builder.Port = PortNo
+                Builder.UserID = "toyo"
+                Builder.Password = "yanagi"
+                Builder.Database = DataBaseName
+                Dim ConStr = Builder.ToString()
+
+                Dim con As New MySqlConnection
+                con.ConnectionString = ConStr
+                con.Open()
+
+                Dim adpter As New MySqlDataAdapter(SQLCommand, con)
+
+                adpter.Fill(ds)
+                adpter.Dispose()
+
+
+                con.Close()
+                con.Dispose()
+            End If
+
+
+
+            Return ds.Tables(0)
+
+        Catch ex As System.Data.Odbc.OdbcException
+            MsgBox($"データベース読込エラー
+            {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}　FLEXを終了します  ", vbCritical)
+            Application.Exit()
+            Return Nothing
+        End Try
     End Function
+
+
 
 
     Public Function CheckItemData(tmp As Object) As String
@@ -174,22 +301,11 @@ Public Class clsDataBase
 
     End Function
 
-    ''' <summary>
-    ''' SQLよりデータテーブルを取得
-    ''' </summary>
-    ''' <param name="SQLCommand"></param>
-    ''' <returns>SQL文</returns>
-    Public Function GetDtfmSQL(SQLCommand As String) As DataTable
-        Dim Adpter = New OdbcDataAdapter(SQLCommand, conDB)
-        Dim ds As New DataSet
-        Adpter.Fill(ds)
-        Adpter.Dispose()
-        conDB.Close()
-        conDB.Dispose()
-        Return ds.Tables(0)
-    End Function
+
 
 End Class
+
+
 
 Public Structure _tag
     Public Address As String         'アドレス

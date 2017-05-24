@@ -118,7 +118,7 @@ Public Class frmSim
 
 
         'フォームに情報表示
-        Me.Text &= "　論理局番=[" & ComPlc.ActLogicalStationNumber & "] DBName=[" & My.Settings.DataBaseName & "] HostName=[" & My.Settings.HostName & "]"
+        Me.Text &= "　論理局番=[" & ComPlc.ActLogicalStationNumber & "] " 'DBName=[" & DataBaseName & "] HostName=[" & My.Settings.HostName & "]"
 
 
     End Sub
@@ -681,5 +681,35 @@ CatchError:  '例外処理
         Dim iret = ComPlc.SetDevice(PlcAdr, fnChangePresAnalogOut(e.Value))
 
 
+    End Sub
+
+    Private Sub tmrLeftJack_Tick(sender As Object, e As EventArgs) Handles tmrLeftJack.Tick
+
+        'PLC読込
+        'Dim plcData As Integer
+        If chkExcavOn.Checked Then
+            '左ストローク
+            Dim iRet As Long = ComPlc.SetDevice(SimlationSetting.LeftStrokeAdr, fnChangeStrokeAnalogOut(nudLeftStroke.Value + 1))
+
+        End If
+        tmrLeftJack.Interval = 60000 / nudLeftSpeed.Value
+
+    End Sub
+
+    Private Sub tmrRightJack_Tick(sender As Object, e As EventArgs) Handles tmrRightJack.Tick
+
+        If chkExcavOn.Checked Then
+            '右ストローク
+            Dim iRet As Long = ComPlc.SetDevice(SimlationSetting.RightStrokeAdr, fnChangeStrokeAnalogOut(nudRightStroke.Value + 1))
+
+        End If
+        tmrRightJack.Interval = 60000 / nudRightSpeed.Value
+
+
+    End Sub
+
+    Private Sub chkStrokeAuto_CheckedChanged(sender As Object, e As EventArgs) Handles chkStrokeAuto.CheckedChanged
+        tmrRightJack.Enabled = chkStrokeAuto.Checked
+        tmrLeftJack.Enabled = chkStrokeAuto.Checked
     End Sub
 End Class

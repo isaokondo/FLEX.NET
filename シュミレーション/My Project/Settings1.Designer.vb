@@ -53,42 +53,6 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("192.168.2.212")>  _
-        Public ReadOnly Property HostName() As String
-            Get
-                Return CType(Me("HostName"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("flex大成外環大泉")>  _
-        Public ReadOnly Property DataBaseName() As String
-            Get
-                Return CType(Me("DataBaseName"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("MYSQL")>  _
-        Public ReadOnly Property DataBaseType() As String
-            Get
-                Return CType(Me("DataBaseType"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("25565")>  _
-        Public ReadOnly Property Port() As Integer
-            Get
-                Return CType(Me("Port"),Integer)
-            End Get
-        End Property
     End Class
 End Namespace
 

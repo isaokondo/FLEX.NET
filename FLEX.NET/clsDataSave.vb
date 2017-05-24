@@ -240,9 +240,8 @@ Friend Class clsDataSave
 
                 End If
             Next
-            Dim s As String = "'" & String.Join("','", Data) & "'"
-            s = s.Replace("''", "NULL")
-            Return s
+
+            Return $"'{String.Join("','", Data)}'".Replace("''", "NULL")
 
         Catch ex As Exception
 

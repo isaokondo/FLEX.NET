@@ -1,12 +1,6 @@
 ﻿Imports System.Data.Odbc
-Imports System.Data.SqlClient
 Imports System.Runtime.InteropServices
 Imports MySql.Data.MySqlClient
-Public Enum DataBaseType
-    MySQL
-    MariaDB
-    MsSQLServer
-End Enum
 
 
 
@@ -141,19 +135,6 @@ Public Class clsDataBase
     End Sub
 
 
-    Private Function conMsSqlSvDb() As SqlClient.SqlConnection
-
-
-        Dim CoonectSql As String =
-            "Server=127.0.0.1\SQLEXPRESS;Initial Catalog=flex鹿島外環test;User ID=sa;Password=yanagi;"
-
-        Dim cn As SqlConnection = New SqlConnection(CoonectSql)
-        cn.Open()
-
-        Return cn
-
-
-    End Function
 
 
 
@@ -304,28 +285,7 @@ Public Class clsDataBase
         End Try
     End Function
 
-    ''' <summary>
-    ''' MYSQLの特殊文字をMicrosoSQLServer用に変更
-    ''' </summary>
-    ''' <param name="SqlString"></param>
-    Private Sub SqlStrToMsType(ByRef SqlString As String)
-        '文字列にLIMITの位置を取得
-        Dim LimitLoc As Short = SqlString.IndexOf("LIMIT")
-        Dim GetNum As Short = 0
-        If LimitLoc > 0 Then
-            'LIMITのあとの　コンマの後の数値を取得
-            Dim Konma As Short = SqlString.IndexOf(",", LimitLoc)
-            GetNum = SqlString.Substring(Konma + 1).ToNum
-            SqlString = SqlString.Remove(LimitLoc)
-        End If
 
-        SqlString = SqlString.Replace(" `", " [")
-        SqlString = SqlString.Replace("` ", "] ")
-        SqlString = SqlString.Replace("`.`", "].[")
-
-
-
-    End Sub
 
 
 

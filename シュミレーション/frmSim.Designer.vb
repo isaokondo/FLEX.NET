@@ -89,6 +89,7 @@ Partial Class frmSim
         Me.Label13 = New System.Windows.Forms.Label()
         Me.nudSumupStroke = New System.Windows.Forms.NumericUpDown()
         Me.btnAllSet = New System.Windows.Forms.Button()
+        Me.chkStrokeAuto = New System.Windows.Forms.CheckBox()
         CType(Me.nudSoucePressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudLeftStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudRightStroke, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -253,6 +254,12 @@ Partial Class frmSim
         Me.nudLeftSpeed.Size = New System.Drawing.Size(67, 26)
         Me.nudLeftSpeed.TabIndex = 9
         Me.nudLeftSpeed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'tmrRightJack
+        '
+        '
+        'tmrLeftJack
+        '
         '
         'tmrAuto
         '
@@ -691,12 +698,24 @@ Partial Class frmSim
         Me.btnAllSet.Text = "一括設定"
         Me.btnAllSet.UseVisualStyleBackColor = True
         '
+        'chkStrokeAuto
+        '
+        Me.chkStrokeAuto.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.chkStrokeAuto.Location = New System.Drawing.Point(147, 22)
+        Me.chkStrokeAuto.Margin = New System.Windows.Forms.Padding(2)
+        Me.chkStrokeAuto.Name = "chkStrokeAuto"
+        Me.chkStrokeAuto.Size = New System.Drawing.Size(172, 19)
+        Me.chkStrokeAuto.TabIndex = 35
+        Me.chkStrokeAuto.Text = "ストローク自動"
+        Me.chkStrokeAuto.UseVisualStyleBackColor = True
+        '
         'frmSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(1594, 876)
+        Me.Controls.Add(Me.chkStrokeAuto)
         Me.Controls.Add(Me.btnAllSet)
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.nudSumupSpeed)
@@ -805,4 +824,5 @@ Partial Class frmSim
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents RealStrokeLen As DataGridViewTextBoxColumn
     Friend WithEvents JackSpeed As DataGridViewTextBoxColumn
+    Friend WithEvents chkStrokeAuto As CheckBox
 End Class
