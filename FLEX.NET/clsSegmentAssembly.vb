@@ -26,6 +26,12 @@ Friend Class clsSegmentAssembly
     Private _AssenblyPtnDic As New Dictionary(Of Short, String)
 
     ''' <summary>
+    ''' セグメントシュミレーションデータより転送した日付
+    ''' </summary>
+    Private _TransferDate As New Dictionary(Of Integer, DateTime)
+
+
+    ''' <summary>
     ''' セグメント種類No　 リング番号がKey
     ''' </summary>
     Private _TypeNo As New Dictionary(Of Integer, Short)
@@ -34,6 +40,21 @@ Friend Class clsSegmentAssembly
     ''' セグメント組立データ  ピース番号がKey
     ''' </summary>
     Private _ProcessData As New Dictionary(Of Short, AsseblyProcess)
+
+
+    ''' <summary>
+    ''' シュミレーションデータのセグメント種類
+    ''' </summary>
+    Private _TypeNoSim As New Dictionary(Of Integer, Short)
+    ''' <summary>
+    ''' シュミレーションデータのセグメント組立パターンID
+    ''' </summary>
+    Private _SegmentAssenblyPtnIDSim As New Dictionary(Of Integer, Short)
+    ''' <summary>
+    ''' シュミレーションデータの指示書転送日
+    ''' </summary>
+    Private _TransferDateSim As New Dictionary(Of Integer, DateTime)
+
 
     ''' <summary>
     ''' セグメント種類（タイプ）データ
@@ -126,6 +147,24 @@ Friend Class clsSegmentAssembly
         End Get
     End Property
 
+    Public Property TransferDate() As Dictionary(Of Integer, DateTime)
+        Get
+            Return _TransferDate
+        End Get
+        Set(value As Dictionary(Of Integer, DateTime))
+            _TransferDate = value
+            'TODO:データベース更新作業
+        End Set
+    End Property
+
+
+    Public ReadOnly Property TypeDataSim(ByVal RingNo As Integer) As SegmentType
+        Get
+            Return _TypeList(_TypeNoSim(RingNo))
+
+        End Get
+    End Property
+
 
     Public ReadOnly Property TypeNo As Dictionary(Of Integer, Short)
         Get
@@ -149,7 +188,30 @@ Friend Class clsSegmentAssembly
         End Get
     End Property
 
+    Public Property SegmentAssenblyPtnISim() As Dictionary(Of Integer, Short)
+        Get
+            Return _SegmentAssenblyPtnIDSim
+        End Get
+        Set(value As Dictionary(Of Integer, Short))
+            _SegmentAssenblyPtnIDSim = value
+        End Set
+    End Property
 
+    Public ReadOnly Property AssemblyPtnNameSim(RingNo As Integer) As String
+        Get
+            Return _AssenblyPtnDic(_SegmentAssenblyPtnIDSim(RingNo))
+        End Get
+    End Property
+
+    Public Property TransferDateSim() As Dictionary(Of Integer, DateTime)
+        Get
+            Return _TransferDateSim
+        End Get
+        Set(value As Dictionary(Of Integer, DateTime))
+            _TransferDateSim = value
+            'TODO:データベース更新作業
+        End Set
+    End Property
 
     ''' <summary>
     ''' 組立パターンの情報を取得
@@ -292,24 +354,14 @@ Friend Class clsSegmentAssembly
             End If
             _RingLastStroke(i) = t.Item("掘進終了ストローク")
             _SegmentAssenblyPtnID(i) = t.Item("組立パターンNo")
+            If Not IsDBNull(t.Item("転送日")) Then
+                _TransferDate(i) = t.Item("転送日")
+            End If
             '_SegmentAssenblyPtn(i) = rsData.Item("組立パターン")
 
         Next
 
-        'While rsData.Read()
-        '    Dim i As Integer = rsData.Item("リング番号")
-        '    _TypeNo(i) = rsData.Item("セグメントNo")
-        '    If Not _TypeList.ContainsKey(_TypeNo(i)) Then
-        '        MsgBox($"{i}リングのセグメントNoが未登録です")
-        '    Else
-        '        '_SegmentWidth(i) = _SegmentTypeList(rsData.Item("セグメントNo")).CenterWidth * 1000
-        '    End If
-        '    _RingLastStroke(i) = rsData.Item("掘進終了ストローク")
-        '    _SegmentAssenblyPtnID(i) = rsData.Item("組立パターンNo")
-        '    '_SegmentAssenblyPtn(i) = rsData.Item("組立パターン")
-        'End While
-        'rsData.Close()
-        'SegmentAssemblyPatternListRead() 'セグメント組立パターンリスト読込
+
     End Sub
 
     ''' <summary>
@@ -320,7 +372,7 @@ Friend Class clsSegmentAssembly
         _TypeList.Clear()
 
         Dim rsData As DataTable =
-            GetDtfmSQL("SELECT * FROM セグメントリスト")
+            GetDtfmSQL("SELECT * FROM セグメントリスト WHERE 中心幅 IS NOT NULL")
 
         For Each t As DataRow In rsData.Rows
             Dim st As New SegmentType
@@ -369,6 +421,33 @@ Friend Class clsSegmentAssembly
             Return Nothing
         End Get
     End Property
+
+    ''' <summary>
+    ''' セグメントシュミレーションデータ読込
+    ''' </summary>
+    Public Sub SegmentSimDataRead()
+
+
+        Dim rsData As DataTable =
+            GetDtfmSQL("SELECT  distinct( リングＮｏ) as  リング番号,組立パターンNo,max(転送日) as 転送日,セグメントNo 
+            ,組立パターンNo from `セグメント割付シュミレーション`  group by リングＮｏ order by リングＮｏ asc;")
+
+        'rsData = ExecuteSql _
+        '("SELECT * FROM flexセグメント組立データ Inner Join セグメント組立パターンベース")
+
+        For Each t As DataRow In rsData.Rows
+            Dim i As Integer = t.Item("リング番号")
+            _TypeNoSim(i) = t.Item("セグメントNo")
+
+            _SegmentAssenblyPtnIDSim(i) = t.Item("組立パターンNo")
+            If Not IsDBNull(t.Item("転送日")) Then
+                _TransferDateSim(i) = t.Item("転送日")
+            End If
+
+        Next
+
+    End Sub
+
 
 
     Public Sub SegmentAsemblyDataUpdat(RingNo As Integer, PatternName As String, TypeName As String)

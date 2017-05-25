@@ -28,8 +28,10 @@ Public Class frmSegmentEdit
         'データ読み込み
         SegAsmblyData.SegmentRingDataRead()
 
-        Dim FirstSclRow As Integer '表示位置
+        SegAsmblyData.SegmentSimDataRead()
 
+        Dim FirstSclRow As Integer '表示位置
+        Dim SimDgvRow As Integer = 0
         For i As Integer = 0 To SegAsmblyData.SegmentAssenblyPtnID.Count - 1
             DgvSegAssign.Rows.Add()
             Dim RingNo As Integer = SegAsmblyData.SegmentAssenblyPtnID.Keys(i)
@@ -37,6 +39,38 @@ Public Class frmSegmentEdit
             DgvSegAssign("SegmentType", i).Value = SegAsmblyData.TypeData(RingNo).TypeName 'セグメント種類
             DgvSegAssign("SegWidth", i).Value = SegAsmblyData.TypeData(RingNo).CenterWidth * 1000 'セグメント幅
             DgvSegAssign("AssemblyPtnName", i).Value = SegAsmblyData.AssemblyPtnName(RingNo) '組立パターン名
+
+            Dim Mark As String = ""
+
+            'シュミレーションデータに当該リングのデータが存在するか
+            If SegAsmblyData.TransferDateSim.ContainsKey(RingNo) Then
+                '転送日付の比較
+                Dim FlgDat As Integer
+                If SegAsmblyData.TransferDate.ContainsKey(RingNo) Then
+
+                    FlgDat = Date.Compare(SegAsmblyData.TransferDate(RingNo), SegAsmblyData.TransferDateSim(RingNo))
+                Else
+                    FlgDat = -1
+                End If
+
+                '同じ日付は転送済み
+                If FlgDat = 0 Then Mark = "●"
+                    '新しいデータ
+                    If FlgDat < 0 Then
+                        Mark = "○"
+                        DgvSegSim.Rows.Add()
+                    DgvSegSim("RingNoSim", SimDgvRow).Value = RingNo
+                    DgvSegSim("SegmentTypeSim", SimDgvRow).Value = SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
+                    DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value = SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
+                    'DgvSegSim("TransferSet", SimDgvRow).Value = SegAsmblyData.TransferDateSim(RingNo)
+
+                    SimDgvRow += 1
+                    End If
+
+                End If
+            DgvSegAssign("TransferSet", i).Value = Mark
+
+
 
             '現在のリング番号を先頭行に移動
             If RingNo = PlcIf.RingNo Then
@@ -55,14 +89,7 @@ Public Class frmSegmentEdit
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
-        For Each i In lstChangeRow.Distinct
-            Dim RingNo As Integer = DgvSegAssign("RingNo", i).Value
-            Dim PtName As String = DgvSegAssign("AssemblyPtnName", i).Value
-            Dim TpName As String = DgvSegAssign("SegmentType", i).Value
-            SegAsmblyData.SegmentAsemblyDataUpdat(RingNo, PtName, TpName)
 
-        Next
-        Me.Close()
     End Sub
 
 
@@ -84,7 +111,7 @@ Public Class frmSegmentEdit
         DgvSegAssign.CommitEdit(DataGridViewDataErrorContexts.Commit)
     End Sub
 
-    Private Sub frmSegmentEdit_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub frmSegmentEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
 
