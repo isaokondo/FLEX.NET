@@ -26,23 +26,18 @@ Partial Class frmSegmentEdit
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.DgvSegAssign = New System.Windows.Forms.DataGridView()
-        Me.RingNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SegmentType = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.SegWidth = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.AssemblyPtnName = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.TransferSet = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.tsmCopy = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmPaste = New System.Windows.Forms.ToolStripMenuItem()
@@ -52,10 +47,23 @@ Partial Class frmSegmentEdit
         Me.RingNoSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SegmentTypeSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AssemblyPtnNameSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TransferDateSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ContextMenuStripSim = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.tsmSelect = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmCancel = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnTransfer = New System.Windows.Forms.Button()
+        Me.btnAllSelect = New System.Windows.Forms.Button()
+        Me.btnSelectCancel = New System.Windows.Forms.Button()
+        Me.RingNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SegmentType = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.SegWidth = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AssemblyPtnName = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.TransferSet = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TransferDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DgvSegAssign, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip.SuspendLayout()
         CType(Me.DgvSegSim, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStripSim.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnOK
@@ -86,7 +94,7 @@ Partial Class frmSegmentEdit
         Me.DgvSegAssign.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.DgvSegAssign.ColumnHeadersHeight = 40
         Me.DgvSegAssign.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.DgvSegAssign.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RingNo, Me.SegmentType, Me.SegWidth, Me.AssemblyPtnName, Me.TransferSet})
+        Me.DgvSegAssign.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RingNo, Me.SegmentType, Me.SegWidth, Me.AssemblyPtnName, Me.TransferSet, Me.TransferDate})
         Me.DgvSegAssign.ContextMenuStrip = Me.ContextMenuStrip
         Me.DgvSegAssign.Location = New System.Drawing.Point(11, 38)
         Me.DgvSegAssign.Margin = New System.Windows.Forms.Padding(2)
@@ -100,62 +108,6 @@ Partial Class frmSegmentEdit
         Me.DgvSegAssign.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DgvSegAssign.Size = New System.Drawing.Size(654, 631)
         Me.DgvSegAssign.TabIndex = 18
-        '
-        'RingNo
-        '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.RingNo.DefaultCellStyle = DataGridViewCellStyle3
-        Me.RingNo.Frozen = True
-        Me.RingNo.HeaderText = "リングNo"
-        Me.RingNo.Name = "RingNo"
-        Me.RingNo.ReadOnly = True
-        Me.RingNo.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.RingNo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.RingNo.Width = 60
-        '
-        'SegmentType
-        '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SegmentType.DefaultCellStyle = DataGridViewCellStyle4
-        Me.SegmentType.Frozen = True
-        Me.SegmentType.HeaderText = "セグメント種類"
-        Me.SegmentType.Name = "SegmentType"
-        Me.SegmentType.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.SegmentType.Width = 200
-        '
-        'SegWidth
-        '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.SegWidth.DefaultCellStyle = DataGridViewCellStyle5
-        Me.SegWidth.Frozen = True
-        Me.SegWidth.HeaderText = "セグメント幅(mm)"
-        Me.SegWidth.Name = "SegWidth"
-        Me.SegWidth.ReadOnly = True
-        Me.SegWidth.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.SegWidth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.SegWidth.Width = 120
-        '
-        'AssemblyPtnName
-        '
-        Me.AssemblyPtnName.AutoComplete = False
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.AssemblyPtnName.DefaultCellStyle = DataGridViewCellStyle6
-        Me.AssemblyPtnName.Frozen = True
-        Me.AssemblyPtnName.HeaderText = "組立パターン"
-        Me.AssemblyPtnName.Name = "AssemblyPtnName"
-        Me.AssemblyPtnName.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.AssemblyPtnName.Width = 200
-        '
-        'TransferSet
-        '
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.TransferSet.DefaultCellStyle = DataGridViewCellStyle7
-        Me.TransferSet.HeaderText = "転送済"
-        Me.TransferSet.Name = "TransferSet"
-        Me.TransferSet.ReadOnly = True
-        Me.TransferSet.Width = 50
         '
         'ContextMenuStrip
         '
@@ -203,8 +155,8 @@ Partial Class frmSegmentEdit
         Me.DgvSegSim.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
         Me.DgvSegSim.ColumnHeadersHeight = 40
         Me.DgvSegSim.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.DgvSegSim.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.TrasferEnabl, Me.RingNoSim, Me.SegmentTypeSim, Me.AssemblyPtnNameSim})
-        Me.DgvSegSim.ContextMenuStrip = Me.ContextMenuStrip
+        Me.DgvSegSim.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.TrasferEnabl, Me.RingNoSim, Me.SegmentTypeSim, Me.AssemblyPtnNameSim, Me.TransferDateSim})
+        Me.DgvSegSim.ContextMenuStrip = Me.ContextMenuStripSim
         Me.DgvSegSim.Location = New System.Drawing.Point(763, 140)
         Me.DgvSegSim.Margin = New System.Windows.Forms.Padding(2)
         Me.DgvSegSim.Name = "DgvSegSim"
@@ -264,6 +216,32 @@ Partial Class frmSegmentEdit
         Me.AssemblyPtnNameSim.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.AssemblyPtnNameSim.Width = 200
         '
+        'TransferDateSim
+        '
+        Me.TransferDateSim.Frozen = True
+        Me.TransferDateSim.HeaderText = "転送日付"
+        Me.TransferDateSim.Name = "TransferDateSim"
+        Me.TransferDateSim.ReadOnly = True
+        Me.TransferDateSim.Visible = False
+        '
+        'ContextMenuStripSim
+        '
+        Me.ContextMenuStripSim.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmSelect, Me.tsmCancel})
+        Me.ContextMenuStripSim.Name = "ContextMenuStrip"
+        Me.ContextMenuStripSim.Size = New System.Drawing.Size(95, 48)
+        '
+        'tsmSelect
+        '
+        Me.tsmSelect.Name = "tsmSelect"
+        Me.tsmSelect.Size = New System.Drawing.Size(94, 22)
+        Me.tsmSelect.Text = "選択"
+        '
+        'tsmCancel
+        '
+        Me.tsmCancel.Name = "tsmCancel"
+        Me.tsmCancel.Size = New System.Drawing.Size(94, 22)
+        Me.tsmCancel.Text = "解除"
+        '
         'btnTransfer
         '
         Me.btnTransfer.BackColor = System.Drawing.Color.Silver
@@ -276,11 +254,102 @@ Partial Class frmSegmentEdit
         Me.btnTransfer.Text = "←転送"
         Me.btnTransfer.UseVisualStyleBackColor = False
         '
+        'btnAllSelect
+        '
+        Me.btnAllSelect.BackColor = System.Drawing.Color.Silver
+        Me.btnAllSelect.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnAllSelect.Location = New System.Drawing.Point(763, 90)
+        Me.btnAllSelect.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnAllSelect.Name = "btnAllSelect"
+        Me.btnAllSelect.Size = New System.Drawing.Size(91, 35)
+        Me.btnAllSelect.TabIndex = 21
+        Me.btnAllSelect.Text = "全選択"
+        Me.btnAllSelect.UseVisualStyleBackColor = False
+        '
+        'btnSelectCancel
+        '
+        Me.btnSelectCancel.BackColor = System.Drawing.Color.Silver
+        Me.btnSelectCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnSelectCancel.Location = New System.Drawing.Point(858, 90)
+        Me.btnSelectCancel.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnSelectCancel.Name = "btnSelectCancel"
+        Me.btnSelectCancel.Size = New System.Drawing.Size(91, 35)
+        Me.btnSelectCancel.TabIndex = 22
+        Me.btnSelectCancel.Text = "選択解除"
+        Me.btnSelectCancel.UseVisualStyleBackColor = False
+        '
+        'RingNo
+        '
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.RingNo.DefaultCellStyle = DataGridViewCellStyle3
+        Me.RingNo.Frozen = True
+        Me.RingNo.HeaderText = "リングNo"
+        Me.RingNo.Name = "RingNo"
+        Me.RingNo.ReadOnly = True
+        Me.RingNo.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.RingNo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.RingNo.Width = 60
+        '
+        'SegmentType
+        '
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SegmentType.DefaultCellStyle = DataGridViewCellStyle4
+        Me.SegmentType.Frozen = True
+        Me.SegmentType.HeaderText = "セグメント種類"
+        Me.SegmentType.Name = "SegmentType"
+        Me.SegmentType.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.SegmentType.Width = 200
+        '
+        'SegWidth
+        '
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.SegWidth.DefaultCellStyle = DataGridViewCellStyle5
+        Me.SegWidth.Frozen = True
+        Me.SegWidth.HeaderText = "セグメント幅(mm)"
+        Me.SegWidth.Name = "SegWidth"
+        Me.SegWidth.ReadOnly = True
+        Me.SegWidth.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.SegWidth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.SegWidth.Width = 120
+        '
+        'AssemblyPtnName
+        '
+        Me.AssemblyPtnName.AutoComplete = False
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.AssemblyPtnName.DefaultCellStyle = DataGridViewCellStyle6
+        Me.AssemblyPtnName.Frozen = True
+        Me.AssemblyPtnName.HeaderText = "組立パターン"
+        Me.AssemblyPtnName.Name = "AssemblyPtnName"
+        Me.AssemblyPtnName.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.AssemblyPtnName.Width = 200
+        '
+        'TransferSet
+        '
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.TransferSet.DefaultCellStyle = DataGridViewCellStyle7
+        Me.TransferSet.Frozen = True
+        Me.TransferSet.HeaderText = "転送済"
+        Me.TransferSet.Name = "TransferSet"
+        Me.TransferSet.ReadOnly = True
+        Me.TransferSet.Width = 50
+        '
+        'TransferDate
+        '
+        Me.TransferDate.Frozen = True
+        Me.TransferDate.HeaderText = "転送日付"
+        Me.TransferDate.Name = "TransferDate"
+        Me.TransferDate.ReadOnly = True
+        Me.TransferDate.Visible = False
+        '
         'frmSegmentEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1320, 732)
+        Me.Controls.Add(Me.btnSelectCancel)
+        Me.Controls.Add(Me.btnAllSelect)
         Me.Controls.Add(Me.btnTransfer)
         Me.Controls.Add(Me.DgvSegSim)
         Me.Controls.Add(Me.DgvSegAssign)
@@ -291,9 +360,12 @@ Partial Class frmSegmentEdit
         Me.Controls.SetChildIndex(Me.DgvSegAssign, 0)
         Me.Controls.SetChildIndex(Me.DgvSegSim, 0)
         Me.Controls.SetChildIndex(Me.btnTransfer, 0)
+        Me.Controls.SetChildIndex(Me.btnAllSelect, 0)
+        Me.Controls.SetChildIndex(Me.btnSelectCancel, 0)
         CType(Me.DgvSegAssign, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip.ResumeLayout(False)
         CType(Me.DgvSegSim, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStripSim.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -305,13 +377,20 @@ Partial Class frmSegmentEdit
     Friend WithEvents tsmPtternPaste As ToolStripMenuItem
     Friend WithEvents DgvSegSim As DataGridView
     Protected WithEvents btnTransfer As Button
+    Protected WithEvents btnAllSelect As Button
+    Protected WithEvents btnSelectCancel As Button
+    Friend WithEvents ContextMenuStripSim As ContextMenuStrip
+    Friend WithEvents tsmSelect As ToolStripMenuItem
+    Friend WithEvents tsmCancel As ToolStripMenuItem
+    Friend WithEvents TrasferEnabl As DataGridViewCheckBoxColumn
+    Friend WithEvents RingNoSim As DataGridViewTextBoxColumn
+    Friend WithEvents SegmentTypeSim As DataGridViewTextBoxColumn
+    Friend WithEvents AssemblyPtnNameSim As DataGridViewTextBoxColumn
+    Friend WithEvents TransferDateSim As DataGridViewTextBoxColumn
     Friend WithEvents RingNo As DataGridViewTextBoxColumn
     Friend WithEvents SegmentType As DataGridViewComboBoxColumn
     Friend WithEvents SegWidth As DataGridViewTextBoxColumn
     Friend WithEvents AssemblyPtnName As DataGridViewComboBoxColumn
     Friend WithEvents TransferSet As DataGridViewTextBoxColumn
-    Friend WithEvents TrasferEnabl As DataGridViewCheckBoxColumn
-    Friend WithEvents RingNoSim As DataGridViewTextBoxColumn
-    Friend WithEvents SegmentTypeSim As DataGridViewTextBoxColumn
-    Friend WithEvents AssemblyPtnNameSim As DataGridViewTextBoxColumn
+    Friend WithEvents TransferDate As DataGridViewTextBoxColumn
 End Class

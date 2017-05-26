@@ -450,7 +450,7 @@ Friend Class clsSegmentAssembly
 
 
 
-    Public Sub SegmentAsemblyDataUpdat(RingNo As Integer, PatternName As String, TypeName As String)
+    Public Sub SegmentAsemblyDataUpdat(RingNo As Integer, PatternName As String, TypeName As String, TransferDate As DateTime)
         ' @(f)
         '
         ' 機能      :データ更新
@@ -466,7 +466,9 @@ Friend Class clsSegmentAssembly
         'Dim rsData As Odbc.OdbcDataReader =
         ExecuteSqlCmd($"UPDATE flexセグメント組立データ 
         SET 組立パターンNo ='{GetPtNameID(PatternName)}' 
-        ,セグメントNo ='{GetTypeNameId(TypeName)}' WHERE リング番号 = {RingNo};")
+        ,セグメントNo ='{GetTypeNameId(TypeName)}'
+        ,転送日 ='{TransferDate.ToString}'
+        WHERE リング番号 = {RingNo};")
 
         '
     End Sub

@@ -62,6 +62,7 @@ Public Class frmSegmentEdit
                     DgvSegSim("RingNoSim", SimDgvRow).Value = RingNo
                     DgvSegSim("SegmentTypeSim", SimDgvRow).Value = SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
                     DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value = SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
+                    DgvSegSim("TransferDateSim", SimDgvRow).Value = SegAsmblyData.TransferDateSim(RingNo) '転送日
                     'DgvSegSim("TransferSet", SimDgvRow).Value = SegAsmblyData.TransferDateSim(RingNo)
 
                     SimDgvRow += 1
@@ -89,6 +90,17 @@ Public Class frmSegmentEdit
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
+
+
+        For Each i In lstChangeRow.Distinct
+            Dim RingNo As Integer = DgvSegAssign("RingNo", i).Value
+            Dim PtName As String = DgvSegAssign("AssemblyPtnName", i).Value
+            Dim TpName As String = DgvSegAssign("SegmentType", i).Value
+            Dim TranferDateFromSim As DateTime = DgvSegAssign("Transferdate", i).Value
+            SegAsmblyData.SegmentAsemblyDataUpdat(RingNo, PtName, TpName, TranferDateFromSim)
+
+        Next
+        Me.Close()
 
     End Sub
 
@@ -183,6 +195,54 @@ Public Class frmSegmentEdit
             j += 1
             If j = TypeName.Count Then j = 0
         Next
+
+    End Sub
+    ''' <summary>
+    ''' 全選択,全選択解除
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btlAllSelectorCancel_Click(sender As Object, e As EventArgs) Handles btnAllSelect.Click, btnSelectCancel.Click
+
+        For i As Integer = 0 To DgvSegSim.RowCount - 1
+            ' チェックボックスの列番号を指定して、チェックをつける
+            DgvSegSim("TrasferEnabl", i).Value = (sender Is btnAllSelect)
+        Next
+
+    End Sub
+    ''' <summary>
+    ''' 選択した範囲を選択or 解除
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub tsmSelectorCansel_Click(sender As Object, e As EventArgs) Handles tsmSelect.Click, tsmCancel.Click
+
+        For Each dgvrw As DataGridViewRow In DgvSegSim.SelectedRows
+            dgvrw.Cells("TrasferEnabl").Value = (sender Is tsmSelect)
+        Next
+
+
+    End Sub
+    ''' <summary>
+    ''' 転送
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnTransfer_Click(sender As Object, e As EventArgs) Handles btnTransfer.Click
+
+        For i As Integer = 0 To DgvSegSim.RowCount - 1
+            If DgvSegSim.Rows(i).Cells("TrasferEnabl").Value Then
+                Dim SelRingNo As Integer = DgvSegSim.Rows(i).Cells("RingNoSim").Value
+                '同じリング番号のセルを取得
+                Dim row =
+                    (From ro As DataGridViewRow In DgvSegAssign.Rows Where ro.Cells("RingNo").Value = SelRingNo Select ro.Cells).First
+                row.Item("SegmentType").Value = DgvSegSim.Rows(i).Cells("SegmentTypeSim").Value
+                row.Item("AssemblyPtnName").Value = DgvSegSim.Rows(i).Cells("AssemblyPtnNameSim").Value
+                row.Item("TransferDate").Value = DgvSegSim.Rows(i).Cells("TransferDateSim").Value
+                row.Item("TransferSet").Value = "●"
+            End If
+        Next
+
 
     End Sub
 End Class
