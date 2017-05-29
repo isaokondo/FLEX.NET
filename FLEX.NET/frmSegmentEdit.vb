@@ -57,16 +57,19 @@ Public Class frmSegmentEdit
                 If FlgDat = 0 Then Mark = "●"
                     '新しいデータ
                     If FlgDat < 0 Then
-                        Mark = "○"
-                        DgvSegSim.Rows.Add()
+                    Mark = "☓"
+                    DgvSegSim.Rows.Add()
                     DgvSegSim("RingNoSim", SimDgvRow).Value = RingNo
                     DgvSegSim("SegmentTypeSim", SimDgvRow).Value = SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
                     DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value = SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
                     DgvSegSim("TransferDateSim", SimDgvRow).Value = SegAsmblyData.TransferDateSim(RingNo) '転送日
-                    'DgvSegSim("TransferSet", SimDgvRow).Value = SegAsmblyData.TransferDateSim(RingNo)
+                    '表示位置の設定
+                    If RingNo = PlcIf.RingNo Then
+                        DgvSegSim.FirstDisplayedCell = DgvSegSim(0, SimDgvRow)
+                    End If
 
                     SimDgvRow += 1
-                    End If
+                End If
 
                 End If
             DgvSegAssign("TransferSet", i).Value = Mark
@@ -76,10 +79,17 @@ Public Class frmSegmentEdit
             '現在のリング番号を先頭行に移動
             If RingNo = PlcIf.RingNo Then
                 FirstSclRow = i
+                DgvSegAssign.FirstDisplayedCell = DgvSegAssign(0, FirstSclRow)
+
             End If
         Next
         '表示位置の設定
-        DgvSegAssign.FirstDisplayedCell = DgvSegAssign(0, FirstSclRow)
+
+        DgvSegAssign.FirstDisplayedCell =
+            (From gg As DataGridViewRow In DgvSegAssign.Rows Where gg.Cells("RingNo").Value = PlcIf.RingNo Select gg.Cells.Item(0))(0)
+        DgvSegSim.FirstDisplayedCell =
+            (From gg As DataGridViewRow In DgvSegSim.Rows Where gg.Cells("RingNoSim").Value = PlcIf.RingNo Select gg.Cells.Item(0))(0)
+
 
         AddHandler DgvSegAssign.CellValueChanged, AddressOf DgvSegAssign_CellValueChanged
 
@@ -234,12 +244,18 @@ Public Class frmSegmentEdit
             If DgvSegSim.Rows(i).Cells("TrasferEnabl").Value Then
                 Dim SelRingNo As Integer = DgvSegSim.Rows(i).Cells("RingNoSim").Value
                 '同じリング番号のセルを取得
-                Dim row =
+                Dim DgvRow =
                     (From ro As DataGridViewRow In DgvSegAssign.Rows Where ro.Cells("RingNo").Value = SelRingNo Select ro.Cells).First
-                row.Item("SegmentType").Value = DgvSegSim.Rows(i).Cells("SegmentTypeSim").Value
-                row.Item("AssemblyPtnName").Value = DgvSegSim.Rows(i).Cells("AssemblyPtnNameSim").Value
-                row.Item("TransferDate").Value = DgvSegSim.Rows(i).Cells("TransferDateSim").Value
-                row.Item("TransferSet").Value = "●"
+                DgvRow.Item("SegmentType").Value = DgvSegSim.Rows(i).Cells("SegmentTypeSim").Value
+                DgvRow.Item("AssemblyPtnName").Value = DgvSegSim.Rows(i).Cells("AssemblyPtnNameSim").Value
+                DgvRow.Item("TransferDate").Value = DgvSegSim.Rows(i).Cells("TransferDateSim").Value
+                'DgvRow.Item("TransferSet").Style.BackColor = Color.BlueViolet
+
+                For Each jj As DataGridViewCell In DgvRow
+                    jj.Style.BackColor = Color.Yellow
+                Next
+
+
             End If
         Next
 

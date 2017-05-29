@@ -230,6 +230,11 @@ Friend Class clsSegmentAssembly
             rsPtLst.AsEnumerable.ToDictionary(Function(n) CShort(n.Item(0)), Function(n) n.Item(1).ToString)
 
 
+        'TODO:セグメントシュミレーションより転送済みかどうかの分岐
+
+        Dim kkk As DataTable = GetDtfmSQL($"SELECT 転送日 FROM flexセグメント組立データ WHERE リング番号='{}'")
+
+
         ''当該リングのセグメント組立IDを取得
         Dim Id As Short = _SegmentAssenblyPtnID(RingNo)
         '検索
