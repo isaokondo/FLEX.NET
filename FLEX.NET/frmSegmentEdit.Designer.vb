@@ -54,7 +54,7 @@ Partial Class frmSegmentEdit
         Me.RingNoSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SegmentTypeSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AssemblyPtnNameSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TransferDateSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SheetIDSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RingNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SegmentType = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.SegWidth = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -156,7 +156,7 @@ Partial Class frmSegmentEdit
         Me.DgvSegSim.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle11
         Me.DgvSegSim.ColumnHeadersHeight = 40
         Me.DgvSegSim.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.DgvSegSim.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.TrasferEnabl, Me.RingNoSim, Me.SegmentTypeSim, Me.AssemblyPtnNameSim, Me.TransferDateSim})
+        Me.DgvSegSim.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.TrasferEnabl, Me.RingNoSim, Me.SegmentTypeSim, Me.AssemblyPtnNameSim, Me.SheetIDSim})
         Me.DgvSegSim.ContextMenuStrip = Me.ContextMenuStripSim
         Me.DgvSegSim.Location = New System.Drawing.Point(790, 101)
         Me.DgvSegSim.Margin = New System.Windows.Forms.Padding(2)
@@ -273,11 +273,11 @@ Partial Class frmSegmentEdit
         '
         'TransferDateSim
         '
-        Me.TransferDateSim.Frozen = True
-        Me.TransferDateSim.HeaderText = "転送日付"
-        Me.TransferDateSim.Name = "TransferDateSim"
-        Me.TransferDateSim.ReadOnly = True
-        Me.TransferDateSim.Visible = False
+        Me.SheetIDSim.Frozen = True
+        Me.SheetIDSim.HeaderText = "転送日付"
+        Me.SheetIDSim.Name = "SheetIDSim"
+        Me.SheetIDSim.ReadOnly = True
+        Me.SheetIDSim.Visible = False
         '
         'RingNo
         '
@@ -396,5 +396,5 @@ Partial Class frmSegmentEdit
     Friend WithEvents RingNoSim As DataGridViewTextBoxColumn
     Friend WithEvents SegmentTypeSim As DataGridViewTextBoxColumn
     Friend WithEvents AssemblyPtnNameSim As DataGridViewTextBoxColumn
-    Friend WithEvents TransferDateSim As DataGridViewTextBoxColumn
+    Friend WithEvents SheetIDSim As DataGridViewTextBoxColumn
 End Class

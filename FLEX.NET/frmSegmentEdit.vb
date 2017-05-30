@@ -43,26 +43,26 @@ Public Class frmSegmentEdit
             Dim Mark As String = ""
 
             'シュミレーションデータに当該リングのデータが存在するか
-            If SegAsmblyData.TransferDateSim.ContainsKey(RingNo) Then
+            If SegAsmblyData.SheetID.ContainsKey(RingNo) Then
                 '転送日付の比較
                 Dim FlgDat As Integer
-                If SegAsmblyData.TransferDate.ContainsKey(RingNo) Then
+                If SegAsmblyData.SheetID.ContainsKey(RingNo) Then
 
-                    FlgDat = Date.Compare(SegAsmblyData.TransferDate(RingNo), SegAsmblyData.TransferDateSim(RingNo))
+                    FlgDat = Date.Compare(SegAsmblyData.SheetID(RingNo), SegAsmblyData.SheetID(RingNo))
                 Else
                     FlgDat = -1
                 End If
 
                 '同じ日付は転送済み
                 If FlgDat = 0 Then Mark = "●"
-                    '新しいデータ
-                    If FlgDat < 0 Then
+                '新しいデータ
+                If FlgDat < 0 Then
                     Mark = "☓"
                     DgvSegSim.Rows.Add()
                     DgvSegSim("RingNoSim", SimDgvRow).Value = RingNo
                     DgvSegSim("SegmentTypeSim", SimDgvRow).Value = SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
                     DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value = SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
-                    DgvSegSim("TransferDateSim", SimDgvRow).Value = SegAsmblyData.TransferDateSim(RingNo) '転送日
+                    DgvSegSim("SheetIDSim", SimDgvRow).Value = SegAsmblyData.SheetID(RingNo) 'SheetID
                     '表示位置の設定
                     If RingNo = PlcIf.RingNo Then
                         DgvSegSim.FirstDisplayedCell = DgvSegSim(0, SimDgvRow)

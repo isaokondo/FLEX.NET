@@ -28,7 +28,7 @@ Friend Class clsSegmentAssembly
     ''' <summary>
     ''' セグメントシュミレーションデータより転送した日付
     ''' </summary>
-    Private _TransferDate As New Dictionary(Of Integer, DateTime)
+    Private _SheetID As New Dictionary(Of Integer, Integer)
 
 
     ''' <summary>
@@ -53,7 +53,7 @@ Friend Class clsSegmentAssembly
     ''' <summary>
     ''' シュミレーションデータの指示書転送日
     ''' </summary>
-    Private _TransferDateSim As New Dictionary(Of Integer, DateTime)
+    Private _SheetIDSim As New Dictionary(Of Integer, Integer)
 
 
     ''' <summary>
@@ -63,7 +63,7 @@ Friend Class clsSegmentAssembly
     Public ReadOnly Property TypeData(ByVal RingNo As Integer) As SegmentType
         Get
             'If RingNo <> 0 Then
-                Return _TypeList(_TypeNo(RingNo))
+            Return _TypeList(_TypeNo(RingNo))
             'Else
             '    Return New SegmentType
             'End If
@@ -147,12 +147,12 @@ Friend Class clsSegmentAssembly
         End Get
     End Property
 
-    Public Property TransferDate() As Dictionary(Of Integer, DateTime)
+    Public Property SheetID() As Dictionary(Of Integer, Integer)
         Get
-            Return _TransferDate
+            Return _SheetID
         End Get
-        Set(value As Dictionary(Of Integer, DateTime))
-            _TransferDate = value
+        Set(value As Dictionary(Of Integer, Integer))
+            _SheetID = value
             'TODO:データベース更新作業
         End Set
     End Property
@@ -203,12 +203,12 @@ Friend Class clsSegmentAssembly
         End Get
     End Property
 
-    Public Property TransferDateSim() As Dictionary(Of Integer, DateTime)
+    Public Property SheetIDSim() As Dictionary(Of Integer, Integer)
         Get
-            Return _TransferDateSim
+            Return _SheetIDSim
         End Get
-        Set(value As Dictionary(Of Integer, DateTime))
-            _TransferDateSim = value
+        Set(value As Dictionary(Of Integer, Integer))
+            _SheetIDSim = value
             'TODO:データベース更新作業
         End Set
     End Property
@@ -222,27 +222,29 @@ Friend Class clsSegmentAssembly
         'パターンリストの取得
         Dim rsPtLst As DataTable =
             GetDtfmSQL("SELECT 組立パターンNo,組立パターン名 FROM セグメント組立パターンリスト")
-        'While rsPtLst.Read
-        '    _AssenblyPtnDic.Add(rsPtLst.Item("組立パターンNo"), rsPtLst.Item("組立パターン名"))
-        'End While
-        'rsPtLst.Close()
+
         _AssenblyPtnDic =
             rsPtLst.AsEnumerable.ToDictionary(Function(n) CShort(n.Item(0)), Function(n) n.Item(1).ToString)
 
+        Dim TransferDate As Object =
+            GetDtfmSQL($"SELECT DATE_FORMAT( 転送日,'%Y/%m/%d %H:%i:%S') FROM flexセグメント組立データ 
+            WHERE リング番号='{RingNo}'").Rows(0).Item(0)
 
-        'TODO:セグメントシュミレーションより転送済みかどうかの分岐
-
-        Dim kkk As DataTable = GetDtfmSQL($"SELECT 転送日 FROM flexセグメント組立データ WHERE リング番号='{}'")
-
-
-        ''当該リングのセグメント組立IDを取得
-        Dim Id As Short = _SegmentAssenblyPtnID(RingNo)
         '検索
+        Dim dsSegAsm As DataTable
 
-        Dim dsSegAsm As DataTable =
-            GetDtfmSQL($"SELECT  * FROM `セグメント組立パターンリスト`  
+        If IsDBNull(TransferDate) Then
+            dsSegAsm =
+              GetDtfmSQL($"SELECT  * FROM `セグメント組立パターンリスト`  
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンリスト`.`分割No` 
-            WHERE `組立パターンNo` = '{Id}'")
+            WHERE `組立パターンNo` = '{_SegmentAssenblyPtnID(RingNo)}'")
+        Else
+            dsSegAsm =
+              GetDtfmSQL($"SELECT  * FROM `セグメント割付シュミレーション`  
+            Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント割付シュミレーション`.`分割No` 
+            WHERE `リングＮｏ` = '{RingNo}' AND `転送日`>='{TransferDate}'")
+
+        End If
 
         _ProcessData.Clear()
 
@@ -291,13 +293,11 @@ Friend Class clsSegmentAssembly
         Next
 
         If _ProcessData.Count = 0 Then
-            MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、
-組立順序が設定されてません'", vbCritical)
+            MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、組立順序が設定されてません'", vbCritical)
         Else
             '組立ピース数を取得
             _AssemblyPieceNumber = (From i In _ProcessData Select i.Value.AssemblyOrder).Max
         End If
-
 
 
 
@@ -344,25 +344,36 @@ Friend Class clsSegmentAssembly
 
 
         Dim rsData As DataTable =
-            GetDtfmSQL("SELECT * FROM flexセグメント組立データ order by リング番号")
+            GetDtfmSQL("select  `flexセグメント組立データ`.* ,`セグメント割付シュミレーション`.*  
+            FROM `flexセグメント組立データ`
+            LEFT OUTER JOIN `セグメント割付シュミレーション` ON `flexセグメント組立データ`.`シートID`=`セグメント割付シュミレーション`.`シートID`
+            AND `flexセグメント組立データ`.`リング番号`=`セグメント割付シュミレーション`.`リングＮｏ` ORDER BY `リング番号`")
 
         'rsData = ExecuteSql _
         '("SELECT * FROM flexセグメント組立データ Inner Join セグメント組立パターンベース")
 
         For Each t As DataRow In rsData.Rows
             Dim i As Integer = t.Item("リング番号")
-            _TypeNo(i) = t.Item("セグメントNo")
+
+            If Not IsNumeric(t.Item("シートID")) Then
+                _TypeNo(i) = t.Item("セグメントNo")
+                _SegmentAssenblyPtnID(i) = t.Item("組立パターンNo")
+            Else
+                _TypeNo(i) = t.Item("セグメントNo1")
+                _SegmentAssenblyPtnID(i) = t.Item("組立パターンNo1")
+            End If
+            '_TypeNo(i) = t.Item("セグメントNo")
             If Not _TypeList.ContainsKey(_TypeNo(i)) Then
                 MsgBox($"{i}リングのセグメントNoが未登録です")
             Else
                 '_SegmentWidth(i) = _SegmentTypeList(rsData.Item("セグメントNo")).CenterWidth * 1000
             End If
-            _RingLastStroke(i) = t.Item("掘進終了ストローク")
-            _SegmentAssenblyPtnID(i) = t.Item("組立パターンNo")
             If Not IsDBNull(t.Item("転送日")) Then
-                _TransferDate(i) = t.Item("転送日")
+                _SheetID(i) = t.Item("シートID")
             End If
-            '_SegmentAssenblyPtn(i) = rsData.Item("組立パターン")
+
+
+            _RingLastStroke(i) = t.Item("掘進終了ストローク")
 
         Next
 
@@ -435,7 +446,7 @@ Friend Class clsSegmentAssembly
 
         Dim rsData As DataTable =
             GetDtfmSQL("SELECT  distinct( リングＮｏ) as  リング番号,組立パターンNo,max(転送日) as 転送日,セグメントNo 
-            ,組立パターンNo from `セグメント割付シュミレーション`  group by リングＮｏ order by リングＮｏ asc;")
+            ,組立パターンNo,シートID from `セグメント割付シュミレーション`  group by リングＮｏ order by リングＮｏ asc;")
 
         'rsData = ExecuteSql _
         '("SELECT * FROM flexセグメント組立データ Inner Join セグメント組立パターンベース")
@@ -446,7 +457,7 @@ Friend Class clsSegmentAssembly
 
             _SegmentAssenblyPtnIDSim(i) = t.Item("組立パターンNo")
             If Not IsDBNull(t.Item("転送日")) Then
-                _TransferDateSim(i) = t.Item("転送日")
+                _SheetIDSim(i) = t.Item("シートID")
             End If
 
         Next
