@@ -60,7 +60,7 @@ Partial Class frmSegmentEdit
         Me.SegWidth = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AssemblyPtnName = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.TransferSet = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TransferDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SheetID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DgvSegAssign, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip.SuspendLayout()
         CType(Me.DgvSegSim, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -95,7 +95,7 @@ Partial Class frmSegmentEdit
         Me.DgvSegAssign.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.DgvSegAssign.ColumnHeadersHeight = 40
         Me.DgvSegAssign.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.DgvSegAssign.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RingNo, Me.SegmentType, Me.SegWidth, Me.AssemblyPtnName, Me.TransferSet, Me.TransferDate})
+        Me.DgvSegAssign.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RingNo, Me.SegmentType, Me.SegWidth, Me.AssemblyPtnName, Me.TransferSet, Me.SheetID})
         Me.DgvSegAssign.ContextMenuStrip = Me.ContextMenuStrip
         Me.DgvSegAssign.Location = New System.Drawing.Point(11, 38)
         Me.DgvSegAssign.Margin = New System.Windows.Forms.Padding(2)
@@ -271,10 +271,10 @@ Partial Class frmSegmentEdit
         Me.AssemblyPtnNameSim.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.AssemblyPtnNameSim.Width = 200
         '
-        'TransferDateSim
+        'SheetIDSim
         '
         Me.SheetIDSim.Frozen = True
-        Me.SheetIDSim.HeaderText = "転送日付"
+        Me.SheetIDSim.HeaderText = "SheetID"
         Me.SheetIDSim.Name = "SheetIDSim"
         Me.SheetIDSim.ReadOnly = True
         Me.SheetIDSim.Visible = False
@@ -337,15 +337,15 @@ Partial Class frmSegmentEdit
         Me.TransferSet.ReadOnly = True
         Me.TransferSet.Width = 80
         '
-        'TransferDate
+        'SheetID
         '
         DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.TransferDate.DefaultCellStyle = DataGridViewCellStyle8
-        Me.TransferDate.Frozen = True
-        Me.TransferDate.HeaderText = "転送日付"
-        Me.TransferDate.Name = "TransferDate"
-        Me.TransferDate.ReadOnly = True
-        Me.TransferDate.Visible = False
+        Me.SheetID.DefaultCellStyle = DataGridViewCellStyle8
+        Me.SheetID.Frozen = True
+        Me.SheetID.HeaderText = "SheetID"
+        Me.SheetID.Name = "SheetID"
+        Me.SheetID.ReadOnly = True
+        Me.SheetID.Visible = False
         '
         'frmSegmentEdit
         '
@@ -391,7 +391,7 @@ Partial Class frmSegmentEdit
     Friend WithEvents SegWidth As DataGridViewTextBoxColumn
     Friend WithEvents AssemblyPtnName As DataGridViewComboBoxColumn
     Friend WithEvents TransferSet As DataGridViewTextBoxColumn
-    Friend WithEvents TransferDate As DataGridViewTextBoxColumn
+    Friend WithEvents SheetID As DataGridViewTextBoxColumn
     Friend WithEvents TrasferEnabl As DataGridViewCheckBoxColumn
     Friend WithEvents RingNoSim As DataGridViewTextBoxColumn
     Friend WithEvents SegmentTypeSim As DataGridViewTextBoxColumn

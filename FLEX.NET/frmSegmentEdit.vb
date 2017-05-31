@@ -30,7 +30,6 @@ Public Class frmSegmentEdit
 
         SegAsmblyData.SegmentSimDataRead()
 
-        Dim FirstSclRow As Integer '表示位置
         Dim SimDgvRow As Integer = 0
         For i As Integer = 0 To SegAsmblyData.SegmentAssenblyPtnID.Count - 1
             DgvSegAssign.Rows.Add()
@@ -40,56 +39,36 @@ Public Class frmSegmentEdit
             DgvSegAssign("SegWidth", i).Value = SegAsmblyData.TypeData(RingNo).CenterWidth * 1000 'セグメント幅
             DgvSegAssign("AssemblyPtnName", i).Value = SegAsmblyData.AssemblyPtnName(RingNo) '組立パターン名
 
-            Dim Mark As String = ""
 
             'シュミレーションデータに当該リングのデータが存在するか
-            If SegAsmblyData.SheetID.ContainsKey(RingNo) Then
-                '転送日付の比較
-                Dim FlgDat As Integer
-                If SegAsmblyData.SheetID.ContainsKey(RingNo) Then
+            If SegAsmblyData.SheetIDSim.ContainsKey(RingNo) Then
+                'SheetIDの比較
 
-                    FlgDat = Date.Compare(SegAsmblyData.SheetID(RingNo), SegAsmblyData.SheetID(RingNo))
+                If SegAsmblyData.SheetID.ContainsKey(RingNo) AndAlso
+                    SegAsmblyData.SheetID(RingNo) = SegAsmblyData.SheetIDSim(RingNo) Then
+                    '同じ日付は転送済み
+                    DgvSegAssign("TransferSet", i).Value = "●"
                 Else
-                    FlgDat = -1
-                End If
-
-                '同じ日付は転送済み
-                If FlgDat = 0 Then Mark = "●"
-                '新しいデータ
-                If FlgDat < 0 Then
-                    Mark = "☓"
+                    '新しいデータ
+                    DgvSegAssign("TransferSet", i).Value = "☓"
                     DgvSegSim.Rows.Add()
                     DgvSegSim("RingNoSim", SimDgvRow).Value = RingNo
-                    DgvSegSim("SegmentTypeSim", SimDgvRow).Value = SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
-                    DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value = SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
-                    DgvSegSim("SheetIDSim", SimDgvRow).Value = SegAsmblyData.SheetID(RingNo) 'SheetID
-                    '表示位置の設定
-                    If RingNo = PlcIf.RingNo Then
-                        DgvSegSim.FirstDisplayedCell = DgvSegSim(0, SimDgvRow)
-                    End If
-
+                    DgvSegSim("SegmentTypeSim", SimDgvRow).Value =
+                        SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
+                    DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value =
+                        SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
+                    DgvSegSim("SheetIDSim", SimDgvRow).Value = SegAsmblyData.SheetIDSim(RingNo) 'SheetID
                     SimDgvRow += 1
                 End If
-
-                End If
-            DgvSegAssign("TransferSet", i).Value = Mark
-
-
-
-            '現在のリング番号を先頭行に移動
-            If RingNo = PlcIf.RingNo Then
-                FirstSclRow = i
-                DgvSegAssign.FirstDisplayedCell = DgvSegAssign(0, FirstSclRow)
-
             End If
-        Next
-        '表示位置の設定
 
+        Next
+
+        '表示位置の設定
         DgvSegAssign.FirstDisplayedCell =
             (From gg As DataGridViewRow In DgvSegAssign.Rows Where gg.Cells("RingNo").Value = PlcIf.RingNo Select gg.Cells.Item(0))(0)
         DgvSegSim.FirstDisplayedCell =
-            (From gg As DataGridViewRow In DgvSegSim.Rows Where gg.Cells("RingNoSim").Value = PlcIf.RingNo Select gg.Cells.Item(0))(0)
-
+            (From gg As DataGridViewRow In DgvSegSim.Rows Where gg.Cells("RingNoSim").Value >= PlcIf.RingNo Select gg.Cells.Item(0))(0)
 
         AddHandler DgvSegAssign.CellValueChanged, AddressOf DgvSegAssign_CellValueChanged
 
@@ -106,8 +85,8 @@ Public Class frmSegmentEdit
             Dim RingNo As Integer = DgvSegAssign("RingNo", i).Value
             Dim PtName As String = DgvSegAssign("AssemblyPtnName", i).Value
             Dim TpName As String = DgvSegAssign("SegmentType", i).Value
-            Dim TranferDateFromSim As DateTime = DgvSegAssign("Transferdate", i).Value
-            SegAsmblyData.SegmentAsemblyDataUpdat(RingNo, PtName, TpName, TranferDateFromSim)
+            Dim SheetID As String = DgvSegAssign("SheetID", i).Value
+            SegAsmblyData.SegmentAsemblyDataUpdat(RingNo, PtName, TpName, SheetID)
 
         Next
         Me.Close()
@@ -137,9 +116,6 @@ Public Class frmSegmentEdit
 
     End Sub
 
-    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
-
-    End Sub
     ''' <summary>
     ''' コピーする範囲の行インデックスを取得
     ''' </summary>
@@ -248,7 +224,7 @@ Public Class frmSegmentEdit
                     (From ro As DataGridViewRow In DgvSegAssign.Rows Where ro.Cells("RingNo").Value = SelRingNo Select ro.Cells).First
                 DgvRow.Item("SegmentType").Value = DgvSegSim.Rows(i).Cells("SegmentTypeSim").Value
                 DgvRow.Item("AssemblyPtnName").Value = DgvSegSim.Rows(i).Cells("AssemblyPtnNameSim").Value
-                DgvRow.Item("TransferDate").Value = DgvSegSim.Rows(i).Cells("TransferDateSim").Value
+                DgvRow.Item("SheetID").Value = DgvSegSim.Rows(i).Cells("SheetIDSim").Value
                 'DgvRow.Item("TransferSet").Style.BackColor = Color.BlueViolet
 
                 For Each jj As DataGridViewCell In DgvRow
@@ -258,6 +234,30 @@ Public Class frmSegmentEdit
 
             End If
         Next
+
+
+    End Sub
+
+    Private EdtValue As String
+    ''' <summary>
+    ''' 編集開始
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub DgvSegAssign_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles DgvSegAssign.CellBeginEdit
+        EdtValue = DgvSegAssign.CurrentCell.Value
+    End Sub
+    ''' <summary>
+    ''' 編集終了
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub DgvSegAssign_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DgvSegAssign.CellEndEdit
+        If EdtValue <> DgvSegAssign.CurrentCell.Value Then
+            DgvSegAssign("SheetID", e.RowIndex).Value = Nothing
+            DgvSegAssign("TransferSet", e.RowIndex).Value = "☓"
+        End If
+
 
 
     End Sub

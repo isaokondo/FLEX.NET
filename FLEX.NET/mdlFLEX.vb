@@ -442,7 +442,7 @@ Module mdlFLEX
                 '力点自動
                 DivCul.操作角 = JackMvAuto.操作角
                 DivCul.操作強 = JackMvAuto.操作強
-                If Not InitPara.ClientMode Then
+                If Not InitPara.ReadOnleMode Then
                     PlcIf.PointX = JackMvAuto.PointX
                     PlcIf.PointY = JackMvAuto.PointY
                     PlcIf.操作角 = JackMvAuto.操作角
@@ -536,7 +536,7 @@ Module mdlFLEX
                 Next intCnt
 
         End Select
-        If Not InitPara.ClientMode Then
+        If Not InitPara.ReadOnleMode Then
             ''シーケンサ出力
             PlcIf.PutSvPress(sngGpSV, intGpFl)
 
@@ -557,7 +557,7 @@ Module mdlFLEX
     ''' <param name="EventColor">表示用のイベントカラー</param>
     Public Sub WriteEventData(EventMsg As String, EventColor As Color)
 
-        If Not InitPara.ClientMode Then
+        If Not InitPara.ReadOnleMode Then
             Dim Colorlng As Long = ColorTranslator.ToOle(EventColor)
 
             Dim db As New clsDataBase

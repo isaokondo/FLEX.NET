@@ -63,6 +63,10 @@ Public Class clsDataBase
             HostName = GetIniString("DataBase", "HostName", IniFilePath)
             DataBaseName = GetIniString("DataBase", "DataBaseName", IniFilePath)
             PortNo = GetIniString("DataBase", "port", IniFilePath)
+
+
+
+
         Else
             MsgBox($"FLEX.INIファイルが見つかりません。{vbCrLf}ファイルパス：{IniFilePath}",
                    MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation, "初期ファイル読込不良")
@@ -641,20 +645,40 @@ Public Class clsInitParameter
     ''' クライアントモード
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ClientMode As Boolean
+    Public Property ClientMode As Boolean
         Get
             Return _ClientMode
         End Get
+        Set(value As Boolean)
+            _ClientMode = value
+        End Set
     End Property
     ''' <summary>
     ''' モニタモード
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property MonitorMode As Boolean
+    Public Property MonitorMode As Boolean
         Get
             Return _MonitorMode
         End Get
+        Set(value As Boolean)
+            _MonitorMode = value
+        End Set
     End Property
+    ''' <summary>
+    ''' クライアントモードかモニタモードのどちらかがON
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ReadOnleMode As Boolean
+        Get
+            Return _MonitorMode Or _ClientMode
+        End Get
+    End Property
+
+
+
+
+
 
     Public Sub New()
 
@@ -750,25 +774,13 @@ Public Class clsInitParameter
             _constructionName = ConName.Rows(0).Item(0)
         End If
 
+        'モニタモード、クライアントモードの設定読み込み
+        'FLEX.INIより読込
+        Dim IniFilePath As String =
+           AppDomain.CurrentDomain.SetupInformation.ApplicationBase & "FLEX.INI"
 
-        'コマンドライン引数より、モードを求める
-        'コマンドライン引数を配列で取得する
-        Dim cmds As String() = Environment.GetCommandLineArgs()
-        'コマンドライン引数を列挙する
-        For Each cmd As String In cmds
-            If cmd.ToUpper = "/C" Then
-                _ClientMode = True
-            End If
-
-            If cmd.ToUpper = "/M" Then
-                _MonitorMode = True
-                _ClientMode = True
-            End If
-
-
-
-
-        Next
+        _ClientMode = (GetIniString("MODE", "ClientMode", IniFilePath) = "True")
+        _MonitorMode = (GetIniString("MODE", "MonitorMode", IniFilePath) = "True")
 
 
 

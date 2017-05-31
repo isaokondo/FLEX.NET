@@ -226,14 +226,18 @@ Friend Class clsSegmentAssembly
         _AssenblyPtnDic =
             rsPtLst.AsEnumerable.ToDictionary(Function(n) CShort(n.Item(0)), Function(n) n.Item(1).ToString)
 
-        Dim TransferDate As Object =
-            GetDtfmSQL($"SELECT DATE_FORMAT( 転送日,'%Y/%m/%d %H:%i:%S') FROM flexセグメント組立データ 
-            WHERE リング番号='{RingNo}'").Rows(0).Item(0)
+        Dim SheetID As DataTable =
+            GetDtfmSQL($"SELECT  `flexセグメント組立データ`.`シートID` FROM `flexセグメント組立データ` LEFT OUTER JOIN `セグメント割付シュミレーション`
+             ON  `セグメント割付シュミレーション`.`シートID` = `flexセグメント組立データ`.`シートID`
+            WHERE `リング番号`='{RingNo}'")
+        'Dim TransferDate As Object =
+        'GetDtfmSQL($"SELECT DATE_FORMAT( 転送日,'%Y/%m/%d %H:%i:%S') FROM flexセグメント組立データ 
+        '    WHERE リング番号='{RingNo}'").Rows(0).Item(0)
 
         '検索
         Dim dsSegAsm As DataTable
 
-        If IsDBNull(TransferDate) Then
+        If SheetID.Rows.Count = 0 Then
             dsSegAsm =
               GetDtfmSQL($"SELECT  * FROM `セグメント組立パターンリスト`  
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンリスト`.`分割No` 
@@ -242,7 +246,7 @@ Friend Class clsSegmentAssembly
             dsSegAsm =
               GetDtfmSQL($"SELECT  * FROM `セグメント割付シュミレーション`  
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント割付シュミレーション`.`分割No` 
-            WHERE `リングＮｏ` = '{RingNo}' AND `転送日`>='{TransferDate}'")
+            WHERE `リングＮｏ` = '{RingNo}' AND `シートID`>='{SheetID.Rows(0).Item(0)}'")
 
         End If
 
@@ -352,28 +356,30 @@ Friend Class clsSegmentAssembly
         'rsData = ExecuteSql _
         '("SELECT * FROM flexセグメント組立データ Inner Join セグメント組立パターンベース")
 
-        For Each t As DataRow In rsData.Rows
-            Dim i As Integer = t.Item("リング番号")
+        For Each tb As DataRow In rsData.Rows
+            Dim RingNo As Integer = tb.Item("リング番号")
 
-            If Not IsNumeric(t.Item("シートID")) Then
-                _TypeNo(i) = t.Item("セグメントNo")
-                _SegmentAssenblyPtnID(i) = t.Item("組立パターンNo")
+            If Not IsNumeric(tb.Item("シートID")) Or Not IsNumeric(tb.Item("シートID1")) Then
+                _TypeNo(RingNo) = tb.Item("セグメントNo")
+                _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo")
             Else
-                _TypeNo(i) = t.Item("セグメントNo1")
-                _SegmentAssenblyPtnID(i) = t.Item("組立パターンNo1")
+                _TypeNo(RingNo) = tb.Item("セグメントNo1")
+                _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo1")
             End If
             '_TypeNo(i) = t.Item("セグメントNo")
-            If Not _TypeList.ContainsKey(_TypeNo(i)) Then
-                MsgBox($"{i}リングのセグメントNoが未登録です")
+            If Not _TypeList.ContainsKey(_TypeNo(RingNo)) Then
+                MsgBox($"{RingNo}リングのセグメントNoが未登録です")
             Else
                 '_SegmentWidth(i) = _SegmentTypeList(rsData.Item("セグメントNo")).CenterWidth * 1000
             End If
-            If Not IsDBNull(t.Item("転送日")) Then
-                _SheetID(i) = t.Item("シートID")
+            If IsDBNull(tb.Item("シートID")) Then
+                SheetID.Remove(RingNo)
+            Else
+                _SheetID(RingNo) = tb.Item("シートID")
             End If
 
 
-            _RingLastStroke(i) = t.Item("掘進終了ストローク")
+            _RingLastStroke(RingNo) = tb.Item("掘進終了ストローク")
 
         Next
 
@@ -466,7 +472,7 @@ Friend Class clsSegmentAssembly
 
 
 
-    Public Sub SegmentAsemblyDataUpdat(RingNo As Integer, PatternName As String, TypeName As String, TransferDate As DateTime)
+    Public Sub SegmentAsemblyDataUpdat(RingNo As Integer, PatternName As String, TypeName As String, SheetID As String)
         ' @(f)
         '
         ' 機能      :データ更新
@@ -474,16 +480,16 @@ Friend Class clsSegmentAssembly
         ' 返り値    :
         '
         '
-        ' 機能説明  :04/01/16 修正
-        '
-        ' 備考      :Findだとパフォーマンスが不足のため変更
+        If IsNothing(SheetID) Then
+            SheetID = "NULL"
+        Else
+            SheetID = "'" & SheetID & "'"
+        End If
 
-
-        'Dim rsData As Odbc.OdbcDataReader =
         ExecuteSqlCmd($"UPDATE flexセグメント組立データ 
         SET 組立パターンNo ='{GetPtNameID(PatternName)}' 
         ,セグメントNo ='{GetTypeNameId(TypeName)}'
-        ,転送日 ='{TransferDate.ToString}'
+        ,シートID ={SheetID}
         WHERE リング番号 = {RingNo};")
 
         '
