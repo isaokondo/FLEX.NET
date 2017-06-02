@@ -378,6 +378,8 @@
     Public Sub SegmentDataDsp()
         '組立パターン
 
+        If Not InitPara.LosZeroMode Then Exit Sub
+
         'Dim p As Short = 0
         If PlcIf.AssemblyPieceNo <= 0 Then PlcIf.AssemblyPieceNo = 1
 
@@ -470,7 +472,7 @@
         frmRinguUpdateSetting.Show()
     End Sub
 
-    Private Sub OperationRight_Click(sender As Object, e As EventArgs) Handles OperationRight.Click
+    Private Sub OperationRight_Click(sender As Object, e As EventArgs)
 
     End Sub
 
@@ -568,8 +570,9 @@
     Private Sub AssemblyProcessEdit_Click(sender As Object, e As EventArgs) Handles AssemblyProcessEdit.Click, DspTypeName.DoubleClick,
         DspAssemblyPattern.DoubleClick, DspAssemblyPieace.DoubleClick, DspPullBackJack.DoubleClick,
         DspClosetJack.DoubleClick, DspClosetThrustJack.DoubleClick, DspAddClosetThrustJack.DoubleClick, DspNextPieceName.DoubleClick
-
-        My.Forms.frmAssemblyProcessEdit.Show()
+        If InitPara.LosZeroMode Then
+            My.Forms.frmAssemblyProcessEdit.Show()
+        End If
 
     End Sub
     ''' <summary>
@@ -1061,11 +1064,16 @@
 
         '線形データ画面更新
         LineDataUpdate()
+        If InitPara.LosZeroMode Then
+            '組立パターンの情報を取得
+            SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+            '同時施工組立パターン情報表示
+            SegmentDataDsp()
+        End If
+        '同時施工モードのメニュー有効
+        LossZeroConcern.Enabled = InitPara.LosZeroMode
+        AssemblyProcessEdit.Enabled = InitPara.LosZeroMode
 
-        '組立パターンの情報を取得
-        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
-        '同時施工組立パターン情報表示
-        SegmentDataDsp()
         '掘削開始時刻の取得
         DspExcavStartDay(getExcecStartTime)
         '姿勢制御自動手動の切替時の処理
@@ -1098,5 +1106,9 @@
         End If
     End Sub
 
+    Private Sub RingDataViewer_Click(sender As Object, e As EventArgs) Handles RingDataViewer.Click
 
+        frmRingDataView.Show()
+
+    End Sub
 End Class

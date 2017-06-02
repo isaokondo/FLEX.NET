@@ -178,6 +178,12 @@
     <Compile Include="frmReportViewer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmRingDataView.Designer.vb">
+      <DependentUpon>frmRingDataView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmRingDataView.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmTuningTrend.Designer.vb">
       <DependentUpon>frmTuningTrend.vb</DependentUpon>
     </Compile>
@@ -431,6 +437,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmReportViewer.resx">
       <DependentUpon>frmReportViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRingDataView.resx">
+      <DependentUpon>frmRingDataView.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTuningTrend.resx">
       <DependentUpon>frmTuningTrend.vb</DependentUpon>

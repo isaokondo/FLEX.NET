@@ -596,7 +596,8 @@ Public Class clsReportDb
     ''' <returns>リング番号、開始時刻</returns>
     Public ReadOnly Property RingSel As List(Of String)
         Get
-            Return (From i In _RingData Select $"{String.Format("{0, 6}", i.RingNo)}リング {i.StartDate.ToString}").ToList
+            Return (From i In _RingData
+                    Select $"{String.Format("{0, 6}", i.RingNo)} リング {i.StartDate.ToString("yyyy/MM/dd hh:mm:ss")}").ToList
         End Get
     End Property
 

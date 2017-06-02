@@ -21,23 +21,28 @@ Public Class frmSegmentEdit
             CType(DgvSegAssign.Columns("SegmentType"), DataGridViewComboBoxColumn).Items.Add(i.Value)
         Next
 
-        '組立パターンのコンボボックス選択用
-        For Each i In SegAsmblyData.AssenblyPtnLst
-            CType(DgvSegAssign.Columns("AssemblyPtnName"), DataGridViewComboBoxColumn).Items.Add(i.Value)
-        Next
+        If InitPara.LosZeroMode Then
+            '組立パターンのコンボボックス選択用
+            For Each i In SegAsmblyData.AssenblyPtnLst
+                CType(DgvSegAssign.Columns("AssemblyPtnName"), DataGridViewComboBoxColumn).Items.Add(i.Value)
+            Next
+        End If
+
         'データ読み込み
         SegAsmblyData.SegmentRingDataRead()
 
         SegAsmblyData.SegmentSimDataRead()
 
         Dim SimDgvRow As Integer = 0
-        For i As Integer = 0 To SegAsmblyData.SegmentAssenblyPtnID.Count - 1
+        For i As Integer = 0 To SegAsmblyData.TypeNo.Count - 1
             DgvSegAssign.Rows.Add()
-            Dim RingNo As Integer = SegAsmblyData.SegmentAssenblyPtnID.Keys(i)
+            Dim RingNo As Integer = SegAsmblyData.TypeNo.Keys(i)
             DgvSegAssign("RingNo", i).Value = RingNo
             DgvSegAssign("SegmentType", i).Value = SegAsmblyData.TypeData(RingNo).TypeName 'セグメント種類
             DgvSegAssign("SegWidth", i).Value = SegAsmblyData.TypeData(RingNo).CenterWidth * 1000 'セグメント幅
-            DgvSegAssign("AssemblyPtnName", i).Value = SegAsmblyData.AssemblyPtnName(RingNo) '組立パターン名
+            If InitPara.LosZeroMode Then
+                DgvSegAssign("AssemblyPtnName", i).Value = SegAsmblyData.AssemblyPtnName(RingNo) '組立パターン名
+            End If
 
 
             'シュミレーションデータに当該リングのデータが存在するか
@@ -55,8 +60,11 @@ Public Class frmSegmentEdit
                     DgvSegSim("RingNoSim", SimDgvRow).Value = RingNo
                     DgvSegSim("SegmentTypeSim", SimDgvRow).Value =
                         SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
-                    DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value =
-                        SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
+                    If InitPara.LosZeroMode Then
+                        DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value =
+                            SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
+                    End If
+
                     DgvSegSim("SheetIDSim", SimDgvRow).Value = SegAsmblyData.SheetIDSim(RingNo) 'SheetID
                     SimDgvRow += 1
                 End If

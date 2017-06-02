@@ -270,25 +270,30 @@ Friend Class clsSegmentAssembly
                     SegDt.AssemblyOrder = AsOrder
 
                     Dim PieaceNo As String = GetNum(ColName).ToString
-                    If PieaceNo = "1" Then
-                        PieaceNo = "K"
-                        SegDt.PieceCenterAngle = dRow("基本位置")
-                    Else
-                        SegDt.PieceCenterAngle = dRow(PieaceNo & "中心")
+
+                    If PieaceNo <= dRow("ピース数") Then
+
+
+                        If PieaceNo = "1" Then
+                            PieaceNo = "K"
+                            SegDt.PieceCenterAngle = dRow("基本位置")
+                        Else
+                            SegDt.PieceCenterAngle = dRow(PieaceNo & "中心")
+                        End If
+
+                        SegDt.PieceName = dRow($"{PieaceNo}名称")
+
+                        SegDt.PieceAngle = dRow(PieaceNo & "スパン")
+
+                        SegDt.PieceCenterAngle -= 360 / dRow("ﾎﾞﾙﾄ  数") * dRow("組立ピッチ")
+
+                        'If SegDt.PieceName <> "" Then
+                        SegDt.PullBackJack = JkList(dRow($"{AsOrder}引戻"))
+                        SegDt.ClosetJack = JkList(dRow($"{AsOrder}押込"))
+                        SegDt.AddClosetJack = JkList(dRow($"{AsOrder}追加"))
+
+                        _ProcessData(SegDt.AssemblyOrder) = SegDt
                     End If
-
-                    SegDt.PieceName = dRow($"{PieaceNo}名称")
-
-                    SegDt.PieceAngle = dRow(PieaceNo & "スパン")
-
-                    SegDt.PieceCenterAngle -= 360 / dRow("ﾎﾞﾙﾄ  数") * dRow("組立ピッチ")
-
-                    'If SegDt.PieceName <> "" Then
-                    SegDt.PullBackJack = JkList(dRow($"{AsOrder}引戻"))
-                    SegDt.ClosetJack = JkList(dRow($"{AsOrder}押込"))
-                    SegDt.AddClosetJack = JkList(dRow($"{AsOrder}追加"))
-
-                    _ProcessData(SegDt.AssemblyOrder) = SegDt
 
                 End If
 
@@ -361,10 +366,16 @@ Friend Class clsSegmentAssembly
 
             If Not IsNumeric(tb.Item("シートID")) Or Not IsNumeric(tb.Item("シートID1")) Then
                 _TypeNo(RingNo) = tb.Item("セグメントNo")
-                _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo")
+
+                If InitPara.LosZeroMode Then
+                    _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo")
+                End If
+
             Else
                 _TypeNo(RingNo) = tb.Item("セグメントNo1")
-                _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo1")
+                If InitPara.LosZeroMode Then
+                    _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo1")
+                End If
             End If
             '_TypeNo(i) = t.Item("セグメントNo")
             If Not _TypeList.ContainsKey(_TypeNo(RingNo)) Then
@@ -458,12 +469,14 @@ Friend Class clsSegmentAssembly
         '("SELECT * FROM flexセグメント組立データ Inner Join セグメント組立パターンベース")
 
         For Each t As DataRow In rsData.Rows
-            Dim i As Integer = t.Item("リング番号")
-            _TypeNoSim(i) = t.Item("セグメントNo")
+            Dim RingNo As Integer = t.Item("リング番号")
+            _TypeNoSim(RingNo) = t.Item("セグメントNo")
+            If Not IsDBNull(t.Item("組立パターンNo")) Then
+                _SegmentAssenblyPtnIDSim(RingNo) = t.Item("組立パターンNo")
+            End If
 
-            _SegmentAssenblyPtnIDSim(i) = t.Item("組立パターンNo")
             If Not IsDBNull(t.Item("転送日")) Then
-                _SheetIDSim(i) = t.Item("シートID")
+                _SheetIDSim(RingNo) = t.Item("シートID")
             End If
 
         Next

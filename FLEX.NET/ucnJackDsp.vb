@@ -113,6 +113,12 @@ Public Class ucnJackDsp
     ''' <returns></returns>
     Public Property PointRLimitOver As Boolean
 
+    ''' <summary>
+    ''' セグメント表示あり／なし
+    ''' 同時施工以外は表示なし
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property SegmentDspEnable As Boolean
 
 
     ''' <summary>
@@ -446,6 +452,8 @@ Public Class ucnJackDsp
     ''' ｾｸﾞﾒﾝﾄピース表示
     ''' </summary>
     Public Sub SegmentPieceDsp()
+
+        If Not _SegmentDspEnable Then Exit Sub
 
 
         Dim bmpForDso As New Bitmap(imgJack)

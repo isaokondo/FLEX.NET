@@ -34,7 +34,6 @@ Partial Class frmMain
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExcavEnforceStart = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExcavEnforceStop = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OperationRight = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.SystemEnd = New System.Windows.Forms.ToolStripMenuItem()
         Me.表示ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -140,7 +139,6 @@ Partial Class frmMain
         Me.DspPullBackJack = New FLEX.NET.ucnDspData()
         Me.DspAssemblyPieace = New FLEX.NET.ucnDspData()
         Me.DspTypeName = New FLEX.NET.ucnDspData()
-        Me.UcnDspDevImg = New FLEX.NET.ucnDspDevImg()
         Me.DspRightSpeed = New FLEX.NET.ucnDspDataMin()
         Me.DspRightRealStroke = New FLEX.NET.ucnDspDataMin()
         Me.DspLeftSpeed = New FLEX.NET.ucnDspDataMin()
@@ -159,7 +157,6 @@ Partial Class frmMain
         Me.DspWideUse2 = New FLEX.NET.ucnDspData()
         Me.DspWideUse1 = New FLEX.NET.ucnDspData()
         Me.DspWideUse0 = New FLEX.NET.ucnDspData()
-        Me.UcnJackDsp = New FLEX.NET.ucnJackDsp()
         Me.DspTargetPitching = New FLEX.NET.ucnDspData()
         Me.DspTargetDirection = New FLEX.NET.ucnDspData()
         Me.DspVerRChangePoint = New FLEX.NET.ucnDspData()
@@ -178,6 +175,9 @@ Partial Class frmMain
         Me.DspDirection = New FLEX.NET.ucnDspData()
         Me.DspVerDev = New FLEX.NET.ucnDspData()
         Me.DspHorDev = New FLEX.NET.ucnDspData()
+        Me.UcnDspDevImg = New FLEX.NET.ucnDspDevImg()
+        Me.UcnJackDsp = New FLEX.NET.ucnJackDsp()
+        Me.RingDataViewer = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -200,7 +200,7 @@ Partial Class frmMain
         '
         'ToolStripMenuItem
         '
-        Me.ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RingNoChange, Me.RingNoUpdateSetting, Me.ToolStripMenuItem1, Me.ReportOut, Me.ToolStripMenuItem2, Me.ExcavEnforceStart, Me.ExcavEnforceStop, Me.OperationRight, Me.ToolStripMenuItem3, Me.SystemEnd})
+        Me.ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RingNoChange, Me.RingNoUpdateSetting, Me.ToolStripMenuItem1, Me.ReportOut, Me.RingDataViewer, Me.ToolStripMenuItem2, Me.ExcavEnforceStart, Me.ExcavEnforceStop, Me.ToolStripMenuItem3, Me.SystemEnd})
         Me.ToolStripMenuItem.Name = "ToolStripMenuItem"
         Me.ToolStripMenuItem.Size = New System.Drawing.Size(70, 20)
         Me.ToolStripMenuItem.Text = "システム(&S)"
@@ -244,12 +244,6 @@ Partial Class frmMain
         Me.ExcavEnforceStop.Name = "ExcavEnforceStop"
         Me.ExcavEnforceStop.Size = New System.Drawing.Size(183, 22)
         Me.ExcavEnforceStop.Text = "掘進の強制終了(&B)"
-        '
-        'OperationRight
-        '
-        Me.OperationRight.Name = "OperationRight"
-        Me.OperationRight.Size = New System.Drawing.Size(183, 22)
-        Me.OperationRight.Text = "操作権(&O)"
         '
         'ToolStripMenuItem3
         '
@@ -1702,18 +1696,6 @@ Partial Class frmMain
         Me.DspTypeName.Value = "-------"
         Me.DspTypeName.ValueType = True
         '
-        'UcnDspDevImg
-        '
-        Me.UcnDspDevImg.BackgroundImage = CType(resources.GetObject("UcnDspDevImg.BackgroundImage"), System.Drawing.Image)
-        Me.UcnDspDevImg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.UcnDspDevImg.HorDev = 0.3R
-        Me.UcnDspDevImg.Location = New System.Drawing.Point(902, 31)
-        Me.UcnDspDevImg.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnDspDevImg.Name = "UcnDspDevImg"
-        Me.UcnDspDevImg.Size = New System.Drawing.Size(150, 150)
-        Me.UcnDspDevImg.TabIndex = 95
-        Me.UcnDspDevImg.VerDev = -0.1R
-        '
         'DspRightSpeed
         '
         Me.DspRightSpeed.BackColor = System.Drawing.Color.Transparent
@@ -2043,39 +2025,6 @@ Partial Class frmMain
         Me.DspWideUse0.UnitVisible = True
         Me.DspWideUse0.Value = "123.45 "
         Me.DspWideUse0.ValueType = False
-        '
-        'UcnJackDsp
-        '
-        Me.UcnJackDsp.AssemblyOrder = CType(resources.GetObject("UcnJackDsp.AssemblyOrder"), System.Collections.Generic.List(Of Short))
-        Me.UcnJackDsp.AssemblyPieceNo = CType(0, Short)
-        Me.UcnJackDsp.AutoSize = True
-        Me.UcnJackDsp.BackColor = System.Drawing.Color.Transparent
-        Me.UcnJackDsp.BackgroundImage = CType(resources.GetObject("UcnJackDsp.BackgroundImage"), System.Drawing.Image)
-        Me.UcnJackDsp.CopyStrechSet = 10
-        Me.UcnJackDsp.FaiJack = Nothing
-        Me.UcnJackDsp.FlexAutoManual = False
-        Me.UcnJackDsp.FlexPointR = 0!
-        Me.UcnJackDsp.FlexPointSeater = 0!
-        Me.UcnJackDsp.FlexPointX = 0!
-        Me.UcnJackDsp.FlexPointY = 0!
-        Me.UcnJackDsp.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.UcnJackDsp.GroupPV = New Single() {0!}
-        Me.UcnJackDsp.JackAutoOneWayLimit = False
-        Me.UcnJackDsp.JackAutoPid = False
-        Me.UcnJackDsp.JackGroupPos = Nothing
-        Me.UcnJackDsp.JackOrgPress = 0!
-        Me.UcnJackDsp.JackStatus = New Short() {CType(0, Short)}
-        Me.UcnJackDsp.Location = New System.Drawing.Point(172, 111)
-        Me.UcnJackDsp.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnJackDsp.Name = "UcnJackDsp"
-        Me.UcnJackDsp.NumberGroup = CType(0, Short)
-        Me.UcnJackDsp.NumberJack = CType(0, Short)
-        Me.UcnJackDsp.PieceAngle = CType(resources.GetObject("UcnJackDsp.PieceAngle"), System.Collections.Generic.List(Of Single))
-        Me.UcnJackDsp.PieceCenterAngle = CType(resources.GetObject("UcnJackDsp.PieceCenterAngle"), System.Collections.Generic.List(Of Single))
-        Me.UcnJackDsp.PieceName = CType(resources.GetObject("UcnJackDsp.PieceName"), System.Collections.Generic.List(Of String))
-        Me.UcnJackDsp.PointRLimitOver = False
-        Me.UcnJackDsp.Size = New System.Drawing.Size(795, 731)
-        Me.UcnJackDsp.TabIndex = 68
         '
         'DspTargetPitching
         '
@@ -2455,6 +2404,58 @@ Partial Class frmMain
         Me.DspHorDev.Value = "123.45 "
         Me.DspHorDev.ValueType = False
         '
+        'UcnDspDevImg
+        '
+        Me.UcnDspDevImg.BackgroundImage = CType(resources.GetObject("UcnDspDevImg.BackgroundImage"), System.Drawing.Image)
+        Me.UcnDspDevImg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.UcnDspDevImg.HorDev = 0.3R
+        Me.UcnDspDevImg.Location = New System.Drawing.Point(902, 31)
+        Me.UcnDspDevImg.Margin = New System.Windows.Forms.Padding(2)
+        Me.UcnDspDevImg.Name = "UcnDspDevImg"
+        Me.UcnDspDevImg.Size = New System.Drawing.Size(150, 150)
+        Me.UcnDspDevImg.TabIndex = 95
+        Me.UcnDspDevImg.VerDev = -0.1R
+        '
+        'UcnJackDsp
+        '
+        Me.UcnJackDsp.AssemblyOrder = CType(resources.GetObject("UcnJackDsp.AssemblyOrder"), System.Collections.Generic.List(Of Short))
+        Me.UcnJackDsp.AssemblyPieceNo = CType(0, Short)
+        Me.UcnJackDsp.AutoSize = True
+        Me.UcnJackDsp.BackColor = System.Drawing.Color.Transparent
+        Me.UcnJackDsp.BackgroundImage = CType(resources.GetObject("UcnJackDsp.BackgroundImage"), System.Drawing.Image)
+        Me.UcnJackDsp.CopyStrechSet = 10
+        Me.UcnJackDsp.FaiJack = Nothing
+        Me.UcnJackDsp.FlexAutoManual = False
+        Me.UcnJackDsp.FlexPointR = 0!
+        Me.UcnJackDsp.FlexPointSeater = 0!
+        Me.UcnJackDsp.FlexPointX = 0!
+        Me.UcnJackDsp.FlexPointY = 0!
+        Me.UcnJackDsp.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.UcnJackDsp.GroupPV = New Single() {0!}
+        Me.UcnJackDsp.JackAutoOneWayLimit = False
+        Me.UcnJackDsp.JackAutoPid = False
+        Me.UcnJackDsp.JackGroupPos = Nothing
+        Me.UcnJackDsp.JackOrgPress = 0!
+        Me.UcnJackDsp.JackStatus = New Short() {CType(0, Short)}
+        Me.UcnJackDsp.Location = New System.Drawing.Point(172, 111)
+        Me.UcnJackDsp.Margin = New System.Windows.Forms.Padding(2)
+        Me.UcnJackDsp.Name = "UcnJackDsp"
+        Me.UcnJackDsp.NumberGroup = CType(0, Short)
+        Me.UcnJackDsp.NumberJack = CType(0, Short)
+        Me.UcnJackDsp.PieceAngle = CType(resources.GetObject("UcnJackDsp.PieceAngle"), System.Collections.Generic.List(Of Single))
+        Me.UcnJackDsp.PieceCenterAngle = CType(resources.GetObject("UcnJackDsp.PieceCenterAngle"), System.Collections.Generic.List(Of Single))
+        Me.UcnJackDsp.PieceName = CType(resources.GetObject("UcnJackDsp.PieceName"), System.Collections.Generic.List(Of String))
+        Me.UcnJackDsp.PointRLimitOver = False
+        Me.UcnJackDsp.SegmentDspEnable = False
+        Me.UcnJackDsp.Size = New System.Drawing.Size(795, 731)
+        Me.UcnJackDsp.TabIndex = 68
+        '
+        'RingDataViewer
+        '
+        Me.RingDataViewer.Name = "RingDataViewer"
+        Me.RingDataViewer.Size = New System.Drawing.Size(183, 22)
+        Me.RingDataViewer.Text = "リング内ビューワ"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -2601,7 +2602,6 @@ Partial Class frmMain
     Friend WithEvents ReportOut As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExcavEnforceStart As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExcavEnforceStop As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents OperationRight As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SystemEnd As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 表示ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DspSetting As System.Windows.Forms.ToolStripMenuItem
@@ -2720,6 +2720,7 @@ Partial Class frmMain
     Friend WithEvents 縦断ToolStripMenuItem As ToolStripMenuItem
     Private WithEvents lblMachineMode As Label
     Friend WithEvents DspAveStartStroke As ucnDspData
+    Friend WithEvents RingDataViewer As ToolStripMenuItem
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

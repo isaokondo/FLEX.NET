@@ -505,9 +505,12 @@ Public Class clsInitParameter
 
 
     Private _constructionName As String '工事名（環境設定テーブルより
+    Private _LosZeroMode As Boolean = True    '同時施工あり（環境設定テーブルより
 
     Private _ClientMode As Boolean = False  'クライアントモード　データ保存なし、グループ操作出力なしのモード
     Private _MonitorMode As Boolean = False  'モニタモード　データ保存なし、PLC書き込みなし　　グループ操作出力なしのモード
+
+
 
     Private WithEvents Htb As New clsHashtableRead
 
@@ -640,6 +643,16 @@ Public Class clsInitParameter
             Return _constructionName
         End Get
     End Property
+    ''' <summary>
+    ''' ロスゼロあり、なし
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property LosZeroMode As Boolean
+        Get
+            Return _LosZeroMode
+        End Get
+    End Property
+
 
     ''' <summary>
     ''' クライアントモード
@@ -742,7 +755,6 @@ Public Class clsInitParameter
                 _faiGroup(i) = _faiGroup(i) / _numberJackOfGroup(i)
             Next
             '計測ジャッキの番号と角度を取得
-            'Dim _mJ As New Dictionary(Of Short, Single) '計測ジャッキの角度
 
             For Each mj As String In ht.Keys
                 If mj.Contains("計測ジャッキNo") Then
@@ -750,28 +762,24 @@ Public Class clsInitParameter
                 End If
             Next
 
-
-
             '計測ジャッキ番号
             For Each JkNo In ht("計測ジャッキ上右下左").ToString.Split(",")
-                'If JkNo <> 0 Then
                 _mesureJackNo.Add(JkNo)
-                'End If
             Next
             '上下のストローク計の有無
             _topStrokeEnable = (_mesureJackNo(0) <> 0)
             _bottomStrokeEnable = (_mesureJackNo(2) <> 0)
 
-
         Catch ex As Exception
 
         End Try
 
-        '工事名の取得
-        'Dim ConName As DataTable = GetDtfmSQL($"SELECT 工事名 FROM 環境設定 WHERE シートID='{_sheetID}'")
-        Dim ConName As DataTable = GetDtfmSQL($"SELECT 工事名 FROM 環境設定 WHERE シートID='10'")
-        If ConName.Rows.Count <> 0 Then
-            _constructionName = ConName.Rows(0).Item(0)
+        '工事名の取得,同時施工あり／なし
+        Dim ConNameLosZero As DataTable =
+            GetDtfmSQL($"SELECT 工事名,施工方法 FROM 環境設定 WHERE シートID='10'")
+        If ConNameLosZero.Rows.Count <> 0 Then
+            _constructionName = ConNameLosZero.Rows(0).Item(0)
+            _LosZeroMode = (ConNameLosZero.Rows(0).Item(1) = 1)
         End If
 
         'モニタモード、クライアントモードの設定読み込み
@@ -781,7 +789,6 @@ Public Class clsInitParameter
 
         _ClientMode = (GetIniString("MODE", "ClientMode", IniFilePath) = "True")
         _MonitorMode = (GetIniString("MODE", "MonitorMode", IniFilePath) = "True")
-
 
 
     End Sub
