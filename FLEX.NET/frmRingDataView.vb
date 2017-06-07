@@ -41,8 +41,7 @@ Public Class frmRingDataView
         '    col.Name &= vbCrLf & RptView2.Unit(i)
         '    i += 1
         'Next
-
-
+        dgv.Columns(1).Frozen = True
 
     End Sub
 
@@ -132,6 +131,8 @@ Public Class frmRingDataView
 
 
         Public Function GetData(RingNo As Integer) As DataTable
+
+            _ColList.Remove("リング番号")
 
             Dim dt As DataTable =
                 GetDtfmSQL($"SELECT {String.Join(",", _ColList)}  FROM flex掘削データ WHERE リング番号='{RingNo}'")

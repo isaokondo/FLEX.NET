@@ -167,8 +167,14 @@ Friend Class clsCulcDistance
             _現リング総距離 = _掘進総距離
             _SegWdAddDist = _掘進総距離 - _測量ポイント総距離
             _StartThisRingDist = _掘進総距離 - SegAsmblyData.RingLastStroke(_測量ポイントリング番号) / 1000
-            _LastStrokeDiff =
+            If PlcIf.SegmentMode Then
+                _LastStrokeDiff =
+                -SegAsmblyData.RingLastStroke(_測量ポイントリング番号) / 1000 + GetHoseiSegmentWidth(_掘進総距離, SegAsmblyData.RingLastStroke(_NowRingNo) / 1000)
+            Else
+
+                _LastStrokeDiff =
                 -SegAsmblyData.RingLastStroke(_測量ポイントリング番号) / 1000 + GetHoseiSegmentWidth(_掘進総距離, CalcStroke.MesureCalcAveJackStroke / 1000)
+            End If
             _掘進総距離 += _LastStrokeDiff
 
         End If
