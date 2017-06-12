@@ -1,5 +1,22 @@
 ﻿Public Class frmDspSetting
+    Public Sub New()
+
+        ' この呼び出しはデザイナーで必要です。
+        InitializeComponent()
+
+        ' InitializeComponent() 呼び出しの後で初期化を追加します。
+
+        numCopyNo.Value = CtlPara.CopySelect
+        numCopyCutEnableStroke.Value = CtlPara.CopyCutEnableStroke
+
+    End Sub
+
     Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
+
+        CtlPara.CopySelect = numCopyNo.Value
+        CtlPara.CopyCutEnableStroke = numCopyCutEnableStroke.Value
+
+        Me.Close()
 
     End Sub
 

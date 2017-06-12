@@ -31,7 +31,13 @@ Public Class ucnJackDsp
     Private _FlexPointR As Single
     Private _FlexPointSeater As Single
 
+    ''' <summary>
+    ''' コピーストローク表示
+    ''' コピーカッタの色表示が有効になるストローク
+    ''' </summary>
+    Private _CopyCutEnableStroke As Integer
 
+    Private _MaxCopyStroke As Integer
     ''' <summary>
     ''' ポイントが手動入力での変化
     ''' </summary>
@@ -90,7 +96,7 @@ Public Class ucnJackDsp
     ''' 0:黒　1:コピー位置(緑) 2:コピー切った場所(赤)
     ''' 5度ピッチ
     ''' </summary>
-    Private CopyStatus(72) As Boolean
+    Private CopyStatus(72) As Brush
     ''' <summary>
     ''' FLEX表示用コントロール
     ''' </summary>
@@ -320,6 +326,25 @@ Public Class ucnJackDsp
             _firstJackLoc = value
             Me.Refresh()
 
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' コピーストローク表示
+    ''' コピーカッタの色表示が有効になるストローク
+    ''' </summary>
+    Public WriteOnly Property CopyCutEnableStroke As Integer
+        Set(value As Integer)
+            _CopyCutEnableStroke = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' コピーの最大ストローク
+    ''' </summary>
+    Public WriteOnly Property MaxCopyStroke As Integer
+        Set(value As Integer)
+            _MaxCopyStroke = value
         End Set
     End Property
 
@@ -738,7 +763,14 @@ Public Class ucnJackDsp
         'Dim g As Graphics = Me.CreateGraphics
         'TODO:早い回転でうまく表示されない時がある
         Dim k As Integer = CInt(_CopyAngle / 5)
-        CopyStatus(k) = (_CopyStroke > _CopyStrechSet)
+        If _CopyStroke > _CopyCutEnableStroke Then
+            Dim CpyLocColor As Integer =
+                        (_CopyStroke) / (_MaxCopyStroke - _CopyCutEnableStroke) * (255 - 20) + 20
+
+            CopyStatus(k) = New SolidBrush(Color.FromArgb(CpyLocColor, 0, 0))
+        Else
+            CopyStatus(k) = Brushes.Black
+        End If
         'Dim i As Integer
         '5度ピッチで７２分割
         For i As Short = 0 To 71
@@ -753,11 +785,22 @@ Public Class ucnJackDsp
             If k = i Then
                 Br = Brushes.LightGreen  'コピー位置
             Else
-                If CopyStatus(i) Then
-                    Br = Brushes.Red    '伸びた位置
-                Else
+                If IsNothing(CopyStatus(i)) Then
                     Br = Brushes.Black
+                Else
+                    Br = CopyStatus(i)
                 End If
+                ''If CopyStatus(i) Then
+                'If _CopyStroke > _CopyCutEnableStroke Then
+                '    'DarkRed→Red
+                '    'Br = Brushes.Red    '伸びた位置
+                '    Dim CpyLocColor As Integer =
+                '        (_MaxCopyStroke - _CopyStroke) / (_MaxCopyStroke - _CopyCutEnableStroke) * (255 - 139) + 139
+
+                '    Br = New SolidBrush(Color.FromArgb(CpyLocColor, 0, 0))
+                'Else
+                '    Br = Brushes.Black
+                'End If
             End If
 
             FillACircle(Br, g, p, 7)

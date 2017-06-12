@@ -79,54 +79,35 @@ Public Class frmRingDataView
 
         Public Sub New()
 
-            ' flex掘削データのコラムを取得
+            ' flex掘削データの最新データを取得
+            'NULL以外のデータを表示
+            Dim clLst As DataTable = GetDtfmSQL("select * from flex掘削データ ORDER BY 時間 DESC LIMIT 0,1;")
 
-            Dim clLst As DataTable = GetDtfmSQL("show columns from flex掘削データ;")
-
-            _Unit = New List(Of String)
-            _DigitLoc = New List(Of Short)
+            Dim cl As List(Of String) = (From cc As DataColumn In clLst.Columns Select cc.ColumnName).ToList
 
             For Each r As DataRow In clLst.Rows
-                Dim blnAddEn As Boolean = True
-                Dim cName As String = r.Item(0)
-                '先頭がグループという文字
-                Dim reg As New Regex("[^\d]")
-                If cName.IndexOf("グループ") = 0 Then
-                    blnAddEn = (CInt(reg.Replace(cName, "")) <= InitPara.NumberGroup)
-                End If
-                If cName.IndexOf("ジャッキステータス") = 0 Then
-                    blnAddEn = (CInt(reg.Replace(cName, "")) <= InitPara.NumberJack)
-                End If
+                For Each cName In cl
 
-                If cName.IndexOf("時間") = 0 Then
-                    cName = "DATE_FORMAT(`時間`,' %k:%i:%s' ) AS 時間"
-                End If
-
-                If blnAddEn Then
-                    'アナログTAGより単位を取得
-                    If PlcIf.AnalogTag.TagExist(cName) Then
-                        Dim Unit As String = PlcIf.AnalogTag.TagData(cName).Unit
-
-                        'Dim Dc As Short = PlcIf.AnalogTag.TagData(cName).DigitLoc
-
-                        Dim fName As String = $"round({cName},{PlcIf.AnalogTag.TagData(cName).DigitLoc})"
-
-
-                        If Unit <> "" Then
-                            cName = $"{fName} AS `{cName}{vbCrLf}({Unit})`"
+                    If Not IsDBNull(r.Item(cName)) Then
+                        If cName = "時間" Then
+                            cName = "DATE_FORMAT(`時間`,' %k:%i:%s' ) AS 時間"
                         End If
 
-                        '_DigitLoc.Add($"({PlcIf.AnalogTag.TagData(cName).DigitLoc})")
-                    Else
-                        '_DigitLoc.Add(0)
+                        'アナログTAGより単位を取得
+                        If PlcIf.AnalogTag.TagExist(cName) Then
+                            Dim Unit As String = PlcIf.AnalogTag.TagData(cName).Unit
+                            'Dim Dc As Short = PlcIf.AnalogTag.TagData(cName).DigitLoc
 
+                            Dim fName As String = $"round({cName},{PlcIf.AnalogTag.TagData(cName).DigitLoc + 1})"
+                            If Unit <> "" Then
+                                cName = $"{fName} AS `{cName}{vbCrLf}({Unit})`"
+                            End If
+                        End If
+                        _ColList.Add(cName)
                     End If
-
-
-                    _ColList.Add(cName)
-                    End If
-
+                Next
             Next
+
         End Sub
 
 

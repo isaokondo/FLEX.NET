@@ -112,6 +112,18 @@ Public Class clsControlParameter
     ''' </summary>
     Private _optGpSv(InitPara.NumberGroup - 1) As Single
 
+
+    ''' <summary>
+    ''' コピーストローク表示
+    ''' コピーカッタの色表示が有効になるストローク
+    ''' </summary>
+    Private _CopyCutEnableStroke As Integer
+    ''' <summary>
+    ''' ジャッキ表示の周りのコピーの表示番号
+    ''' </summary>
+    Private _CopySelect As Short
+
+
     ''' <summary>
     ''' ストローク演算で除外する計測ジャッキ
     ''' </summary>
@@ -750,6 +762,33 @@ Public Class clsControlParameter
         End Set
     End Property
     ''' <summary>
+    ''' コピーストローク表示
+    ''' コピーカッタの色表示が有効になるストローク
+    ''' </summary>
+    Public Property CopyCutEnableStroke As Integer
+        Get
+            Return _CopyCutEnableStroke
+        End Get
+        Set(value As Integer)
+            _CopyCutEnableStroke = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+    ''' <summary>
+    ''' ジャッキ表示の周りのコピーの表示番号
+    ''' </summary>
+    Public Property CopySelect As Short
+        Get
+            Return _CopySelect
+        End Get
+        Set(value As Short)
+            _CopySelect = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
+
+    ''' <summary>
     ''' 掘進開始時の平均ストローク
     ''' </summary>
     Private _StartAveJackStroke As Integer
@@ -793,6 +832,9 @@ Public Class clsControlParameter
             Return _wideUse
         End Get
     End Property
+
+
+
 
     Public Sub WideUseUpdate(iKey As Short, value As String)
         _wideUse.Item(iKey) = value
@@ -887,6 +929,10 @@ Public Class clsControlParameter
         _NextPieceConfirm = chk.GetValue("NextPieceConfirm")
         _PIDShiftDefl = chk.GetValue("PIDShiftDefl")
         _DirectControl = fnBoolean(chk.GetValue("DirectControl"))
+
+
+        _CopyCutEnableStroke = chk.GetValue("CopyCutEnableStroke")
+        _CopySelect = chk.GetValue("CopySelect")
 
         _optGpEn =
             (From k In Split(chk.GetValue("OptinalGroupSetNumber"), ",") Where IsNumeric(k) Select CShort(k)).ToList

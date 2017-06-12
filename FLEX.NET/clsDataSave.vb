@@ -41,78 +41,67 @@ Friend Class clsDataSave
 
         Try
             'PLCからの読込
-            With PlcIf
 
-                Data(ColumnList.IndexOf("リング番号")) = .RingNo.ToString
-                Data(ColumnList.IndexOf("掘進ストローク")) = .RealStroke.ToString
-                Data(ColumnList.IndexOf("時間")) = Now.ToString
+            Data(ColumnList.IndexOf("リング番号")) = PlcIf.RingNo.ToString
+            Data(ColumnList.IndexOf("掘進ストローク")) = PlcIf.RealStroke.ToString
+            Data(ColumnList.IndexOf("時間")) = Now.ToString
 
-                For i As Short = 0 To InitPara.NumberGroup - 1
-                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "圧力")) = .GroupPv(i).ToString("F1")
-                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "MV")) = .GroupMV(i).ToString("F1")
-                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "制御フラグ")) = .GroupFlg(i).ToString
-                    Data(ColumnList.IndexOf("グループ" & (i + 1) & "SV")) = .GroupSV(i).ToString("F1")
-                Next
+            For i As Short = 0 To InitPara.NumberGroup - 1
+                Data(ColumnList.IndexOf("グループ" & (i + 1) & "圧力")) = PlcIf.GroupPv(i).ToString("F1")
+                Data(ColumnList.IndexOf("グループ" & (i + 1) & "MV")) = PlcIf.GroupMV(i).ToString("F1")
+                Data(ColumnList.IndexOf("グループ" & (i + 1) & "制御フラグ")) = PlcIf.GroupFlg(i).ToString
+                Data(ColumnList.IndexOf("グループ" & (i + 1) & "SV")) = PlcIf.GroupSV(i).ToString("F1")
+            Next
 
-                For i As Short = 0 To InitPara.NumberJack - 1
-                    Data(ColumnList.IndexOf("ジャッキステータス" & (i + 1))) = .JackStatus(i)
-                Next
+            For i As Short = 0 To InitPara.NumberJack - 1
+                Data(ColumnList.IndexOf("ジャッキステータス" & (i + 1))) = PlcIf.JackStatus(i)
+            Next
 
-                Data(ColumnList.IndexOf("シールドジャッキ圧力")) = .JkPress.ToString
-                Data(ColumnList.IndexOf("ジャイロ方位角")) = .Gyro.ToString
-                Data(ColumnList.IndexOf("ジャイロピッチング")) = PlcIf.GyroPitching.ToString
-                Data(ColumnList.IndexOf("ジャイロローリング")) = .Rolling.ToString
-                Data(ColumnList.IndexOf("マシンピッチング")) = .MachinePitching.ToString
-                Data(ColumnList.IndexOf("マシン前胴ローリング")) = .MashineRolling.ToString
-                'TODO:未割り当て
-                'Data(ColumnList.IndexOf("マシン後胴ローリング")) = .RealStroke.ToString
-                Data(ColumnList.IndexOf("中折左右角")) = .NakaoreLR.ToString
-                Data(ColumnList.IndexOf("中折上下角")) = .NakaoreTB.ToString
-                Data(ColumnList.IndexOf("左ジャッキストローク")) = .LeftStroke.ToString
-                Data(ColumnList.IndexOf("右ジャッキストローク")) = .RightStroke.ToString
-                Data(ColumnList.IndexOf("左ジャッキ速度")) = .LeftSpeed.ToString
-                Data(ColumnList.IndexOf("右ジャッキ速度")) = .RightSpeed.ToString
-                If InitPara.topStrokeEnable Then
-                    Data(ColumnList.IndexOf("上ジャッキストローク")) = .TopStroke.ToString
-                    Data(ColumnList.IndexOf("上ジャッキ速度")) = .TopSpeed.ToString
+            Data(ColumnList.IndexOf("シールドジャッキ圧力")) = PlcIf.JkPress.ToString
+            Data(ColumnList.IndexOf("ジャイロ方位角")) = PlcIf.Gyro.ToString
+            Data(ColumnList.IndexOf("ジャイロピッチング")) = PlcIf.GyroPitching.ToString
+            Data(ColumnList.IndexOf("ジャイロローリング")) = PlcIf.Rolling.ToString
+            Data(ColumnList.IndexOf("マシンピッチング")) = PlcIf.MachinePitching.ToString
+            Data(ColumnList.IndexOf("マシン前胴ローリング")) = PlcIf.MashineRolling.ToString
+            'TODO:未割り当て
+            'Data(ColumnList.IndexOf("マシン後胴ローリング")) = .RealStroke.ToString
+            Data(ColumnList.IndexOf("中折左右角")) = PlcIf.NakaoreLR.ToString
+            Data(ColumnList.IndexOf("中折上下角")) = PlcIf.NakaoreTB.ToString
+            Data(ColumnList.IndexOf("左ジャッキストローク")) = PlcIf.LeftStroke.ToString
+            Data(ColumnList.IndexOf("右ジャッキストローク")) = PlcIf.RightStroke.ToString
+            Data(ColumnList.IndexOf("左ジャッキ速度")) = PlcIf.LeftSpeed.ToString
+            Data(ColumnList.IndexOf("右ジャッキ速度")) = PlcIf.RightSpeed.ToString
+            If InitPara.topStrokeEnable Then
+                Data(ColumnList.IndexOf("上ジャッキストローク")) = PlcIf.TopStroke.ToString
+                Data(ColumnList.IndexOf("上ジャッキ速度")) = PlcIf.TopSpeed.ToString
+            End If
+            If InitPara.bottomStrokeEnable Then
+                    Data(ColumnList.IndexOf("下ジャッキストローク")) = PlcIf.BotomStroke.ToString
+                    Data(ColumnList.IndexOf("下ジャッキ速度")) = PlcIf.BotomSpeed.ToString
                 End If
-                If InitPara.bottomStrokeEnable Then
-                    Data(ColumnList.IndexOf("下ジャッキストローク")) = .BotomStroke.ToString
-                    Data(ColumnList.IndexOf("下ジャッキ速度")) = .BotomSpeed.ToString
-                End If
+            Data(ColumnList.IndexOf("コピー角度1")) = PlcIf.CopyAngle.ToString
+            Data(ColumnList.IndexOf("コピーストローク1")) = PlcIf.CopyStroke1.ToString
+            'TODO:未割り当て
+            'Data(ColumnList.IndexOf("コピー角度2")) = .RealStroke.ToString
+            'Data(ColumnList.IndexOf("コピーストローク2")) = .RealStroke.ToString
 
-                Data(ColumnList.IndexOf("コピー角度1")) = .CopyAngle.ToString
-                Data(ColumnList.IndexOf("コピーストローク1")) = .CopyStroke1.ToString
-                'TODO:未割り当て
-                'Data(ColumnList.IndexOf("コピー角度2")) = .RealStroke.ToString
-                'Data(ColumnList.IndexOf("コピーストローク2")) = .RealStroke.ToString
 
-                Data(ColumnList.IndexOf("同時施工ステータス_Machine")) = .LosZeroSts_M
-                Data(ColumnList.IndexOf("同時施工ステータス_FLEX")) = .LosZeroSts_FLEX
+            Data(ColumnList.IndexOf("減圧弁制御Ｐ定数")) = PlcIf.感度調整減圧弁制御Ｐ定数
+            Data(ColumnList.IndexOf("減圧弁制御Ｉ定数")) = PlcIf.感度調整減圧弁制御Ｉ定数
+            'Data(ColumnList.IndexOf("ストローク管理法")) = .ストローク管理法
+            'Data(ColumnList.IndexOf("掘進判定ストローク")) = .掘進判定ストローク
+            'Data(ColumnList.IndexOf("終了判定ストローク")) = .終了判定ストローク
+            Data(ColumnList.IndexOf("終了判定引きストローク")) = PlcIf.終了判定引きストローク
+            'Data(ColumnList.IndexOf("終了判定時間")) = .終了判定時間
+            'Data(ColumnList.IndexOf("開始判定速度")) = .
+            'Data(ColumnList.IndexOf("中断判定速度")) = .中断判定速度
 
-                Data(ColumnList.IndexOf("減圧弁制御Ｐ定数")) = .感度調整減圧弁制御Ｐ定数
-                Data(ColumnList.IndexOf("減圧弁制御Ｉ定数")) = .感度調整減圧弁制御Ｉ定数
-                'Data(ColumnList.IndexOf("ストローク管理法")) = .ストローク管理法
-                'Data(ColumnList.IndexOf("掘進判定ストローク")) = .掘進判定ストローク
-                'Data(ColumnList.IndexOf("終了判定ストローク")) = .終了判定ストローク
-                Data(ColumnList.IndexOf("終了判定引きストローク")) = .終了判定引きストローク
-                'Data(ColumnList.IndexOf("終了判定時間")) = .終了判定時間
-                'Data(ColumnList.IndexOf("開始判定速度")) = .
-                'Data(ColumnList.IndexOf("中断判定速度")) = .中断判定速度
-
-                Data(ColumnList.IndexOf("圧力制御")) = IIf(.FlexControlOn, 1, 0)
-                Data(ColumnList.IndexOf("同時施工モード")) = IIf(.LosZeroMode, 1, 0)
-                Data(ColumnList.IndexOf("同時施工可")) = IIf(.LosZeroEnable, 1, 0)
-                Data(ColumnList.IndexOf("ジャイロ異常")) = IIf(.GyiroError, 1, 0)
-
-                Data(ColumnList.IndexOf("力点Ｘ")) = .PointX.ToString("F3")
-                Data(ColumnList.IndexOf("力点Ｙ")) = .PointY.ToString("F3")
-
-                Data(ColumnList.IndexOf("片押しγ")) = .操作強.ToString("F4")
-                Data(ColumnList.IndexOf("方向θ")) = .操作角.ToString("F4")
-
-            End With
-
+            Data(ColumnList.IndexOf("圧力制御")) = IIf(PlcIf.FlexControlOn, 1, 0)
+            Data(ColumnList.IndexOf("ジャイロ異常")) = IIf(PlcIf.GyiroError, 1, 0)
+            Data(ColumnList.IndexOf("力点Ｘ")) = PlcIf.PointX.ToString("F3")
+            Data(ColumnList.IndexOf("力点Ｙ")) = PlcIf.PointY.ToString("F3")
+            Data(ColumnList.IndexOf("片押しγ")) = PlcIf.操作強.ToString("F4")
+            Data(ColumnList.IndexOf("方向θ")) = PlcIf.操作角.ToString("F4")
 
             Data(ColumnList.IndexOf("合成モーメント")) = CulcMoment.MomentR.ToString
             Data(ColumnList.IndexOf("水平モーメント")) = CulcMoment.MomentX.ToString
@@ -163,63 +152,70 @@ Friend Class clsDataSave
             Data(ColumnList.IndexOf("縦断姿勢角管理値")) = RefernceDirection.縦断基準方位.ToString("F4")
 
 
-            With CtlPara
+            Data(ColumnList.IndexOf("測量ポイント確認リング")) = CtlPara.測量ポイントリング番号
+            Data(ColumnList.IndexOf("測量ポイント先端距離")) = CtlPara.測量ポイント総距離
 
+            Data(ColumnList.IndexOf("水平補正値")) = CtlPara.水平入力補正値
+            Data(ColumnList.IndexOf("鉛直補正値")) = CtlPara.鉛直入力補正値
+            Data(ColumnList.IndexOf("全開作動指令値")) = CtlPara.全開作動指令値
+            Data(ColumnList.IndexOf("全開作動範囲")) = CtlPara.全開作動範囲
+            Data(ColumnList.IndexOf("水平ジャッキ制御Ｐ定数")) = CtlPara.水平ジャッキ制御P定数
+            Data(ColumnList.IndexOf("水平ジャッキ制御Ｉ定数")) = CtlPara.水平ジャッキ制御I定数
+            Data(ColumnList.IndexOf("水平ジャッキ制御D定数")) = CtlPara.水平ジャッキ制御D定数
+            Data(ColumnList.IndexOf("鉛直ジャッキ制御Ｐ定数")) = CtlPara.鉛直ジャッキ制御P定数
+            Data(ColumnList.IndexOf("鉛直ジャッキ制御Ｉ定数")) = CtlPara.鉛直ジャッキ制御D定数
+            Data(ColumnList.IndexOf("鉛直ジャッキ制御D定数")) = CtlPara.鉛直ジャッキ制御I定数
+            'Data(ColumnList.IndexOf("制御モード切替作動範囲")) = .
+            Data(ColumnList.IndexOf("片押し制限フラグ")) = IIf(CtlPara.片押し制限フラグ, 1, 0)
+            Data(ColumnList.IndexOf("圧力許容値")) = CtlPara.圧力許容値
+            'Data(ColumnList.IndexOf("全開グループ制限")) = IIf(.全開グループ制限, 1, 0)
+            Data(ColumnList.IndexOf("最低全開グループ数")) = CtlPara.最低全開グループ数
+            'TODO:偏角許容値のエラーメッセージ未処理　音声がいいか！
+            Data(ColumnList.IndexOf("偏差角許容値")) = CtlPara.DevTolerance
+            Data(ColumnList.IndexOf("最大全開出力時の目標圧力")) = CtlPara.最大全開出力時の目標圧力
+            Data(ColumnList.IndexOf("ジャッキモーメント上限値")) = CtlPara.ジャッキモーメント上限値
 
-                Data(ColumnList.IndexOf("測量ポイント確認リング")) = .測量ポイントリング番号
-                Data(ColumnList.IndexOf("測量ポイント先端距離")) = .測量ポイント総距離
+            'TODO:復活か　このPID定数
+            'Data(ColumnList.IndexOf("感度調整圧力偏差")) = CulcMoment.Thrust
+            'Data(ColumnList.IndexOf("感度調整減圧弁制御P定数")) = CulcMoment.Thrust
+            'Data(ColumnList.IndexOf("感度調整減圧弁制御I定数")) = CulcMoment.Thrust
 
-                Data(ColumnList.IndexOf("水平補正値")) = .水平入力補正値
-                Data(ColumnList.IndexOf("鉛直補正値")) = .鉛直入力補正値
-                Data(ColumnList.IndexOf("全開作動指令値")) = .全開作動指令値
-                Data(ColumnList.IndexOf("全開作動範囲")) = .全開作動範囲
-                Data(ColumnList.IndexOf("水平ジャッキ制御Ｐ定数")) = .水平ジャッキ制御P定数
-                Data(ColumnList.IndexOf("水平ジャッキ制御Ｉ定数")) = .水平ジャッキ制御I定数
-                Data(ColumnList.IndexOf("水平ジャッキ制御D定数")) = .水平ジャッキ制御D定数
-                Data(ColumnList.IndexOf("鉛直ジャッキ制御Ｐ定数")) = .鉛直ジャッキ制御P定数
-                Data(ColumnList.IndexOf("鉛直ジャッキ制御Ｉ定数")) = .鉛直ジャッキ制御D定数
-                Data(ColumnList.IndexOf("鉛直ジャッキ制御D定数")) = .鉛直ジャッキ制御I定数
-                'Data(ColumnList.IndexOf("制御モード切替作動範囲")) = .
-                Data(ColumnList.IndexOf("片押し制限フラグ")) = IIf(.片押し制限フラグ, 1, 0)
-                Data(ColumnList.IndexOf("圧力許容値")) = .圧力許容値
-                'Data(ColumnList.IndexOf("全開グループ制限")) = IIf(.全開グループ制限, 1, 0)
-                Data(ColumnList.IndexOf("最低全開グループ数")) = .最低全開グループ数
-                'TODO:偏角許容値のエラーメッセージ未処理　音声がいいか！
-                Data(ColumnList.IndexOf("偏差角許容値")) = .DevTolerance
-                Data(ColumnList.IndexOf("最大全開出力時の目標圧力")) = .最大全開出力時の目標圧力
-                Data(ColumnList.IndexOf("ジャッキモーメント上限値")) = .ジャッキモーメント上限値
+            Data(ColumnList.IndexOf("姿勢制御自動")) = IIf(CtlPara.AutoDirectionControl, 1, 0)
 
-                'TODO:復活か　このPID定数
-                'Data(ColumnList.IndexOf("感度調整圧力偏差")) = CulcMoment.Thrust
-                'Data(ColumnList.IndexOf("感度調整減圧弁制御P定数")) = CulcMoment.Thrust
-                'Data(ColumnList.IndexOf("感度調整減圧弁制御I定数")) = CulcMoment.Thrust
-                Data(ColumnList.IndexOf("減圧判断設定値")) = .ReduceJudgePress
-                Data(ColumnList.IndexOf("減圧速度")) = .ReduceTime
+            If InitPara.LosZeroMode Then
 
-                Data(ColumnList.IndexOf("姿勢制御自動")) = IIf(.AutoDirectionControl, 1, 0)
+                Data(ColumnList.IndexOf("同時施工モード")) = IIf(PlcIf.LosZeroMode, 1, 0)
+                Data(ColumnList.IndexOf("同時施工可")) = IIf(PlcIf.LosZeroEnable, 1, 0)
 
+                Data(ColumnList.IndexOf("同時施工ステータス_Machine")) = PlcIf.LosZeroSts_M
+                Data(ColumnList.IndexOf("同時施工ステータス_FLEX")) = PlcIf.LosZeroSts_FLEX
 
-            End With
+                Data(ColumnList.IndexOf("減圧判断設定値")) = CtlPara.ReduceJudgePress
+                Data(ColumnList.IndexOf("減圧速度")) = CtlPara.ReduceTime
 
+                Data(ColumnList.IndexOf("組立ピース")) = PlcIf.AssemblyPieceNo
 
-            Data(ColumnList.IndexOf("組立ピース")) = PlcIf.AssemblyPieceNo
-            With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
-                'TODO:Data(ColumnList.IndexOf("組立セグメント")) = 
-                Data(ColumnList.IndexOf("組立ボルトピッチ")) = .BoltPitch
-                Data(ColumnList.IndexOf("組立パターン")) = .PatternName
-                'TODO:Data(ColumnList.IndexOf("ローリング偏差")) = .r
-                Data(ColumnList.IndexOf("引戻ジャッキ")) = LstToJoinDl(.PullBackJack)
-                Data(ColumnList.IndexOf("減圧グループ")) = LstToJoinDl(.ReduceGroup)
-                Data(ColumnList.IndexOf("押込ジャッキ")) = LstToJoinDl(.ClosetJack)
-                'TODO:Data(ColumnList.IndexOf("押込推進ジャッキ")) = CulcMoment.Thrust
-                Data(ColumnList.IndexOf("追加推進ジャッキ")) = LstToJoinDl(.AddClosetJack)
-                'TODO:Data(ColumnList.IndexOf("RL考慮ジャッキ")) = CulcMoment.Thrust
+                With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
+                    'TODO:Data(ColumnList.IndexOf("組立セグメント")) = 
+                    Data(ColumnList.IndexOf("組立ボルトピッチ")) = .BoltPitch
+                    Data(ColumnList.IndexOf("組立パターン")) = .PatternName
+                    'TODO:Data(ColumnList.IndexOf("ローリング偏差")) = .r
+                    Data(ColumnList.IndexOf("引戻ジャッキ")) = LstToJoinDl(.PullBackJack)
+                    Data(ColumnList.IndexOf("減圧グループ")) = LstToJoinDl(.ReduceGroup)
+                    Data(ColumnList.IndexOf("押込ジャッキ")) = LstToJoinDl(.ClosetJack)
+                    'TODO:Data(ColumnList.IndexOf("押込推進ジャッキ")) = CulcMoment.Thrust
+                    Data(ColumnList.IndexOf("追加推進ジャッキ")) = LstToJoinDl(.AddClosetJack)
+                    'TODO:Data(ColumnList.IndexOf("RL考慮ジャッキ")) = CulcMoment.Thrust
 
-            End With
+                End With
+
+                Data(ColumnList.IndexOf("同時掘進時間")) = ElapsedTime.LozeroExcavationTime
+
+            End If
+
 
             'TODO:Data(ColumnList.IndexOf("低圧推進設定値")) = CulcMoment.Thrust
             Data(ColumnList.IndexOf("掘進時間")) = ElapsedTime.ExcavationTime
-            Data(ColumnList.IndexOf("同時掘進時間")) = ElapsedTime.LozeroExcavationTime
             Data(ColumnList.IndexOf("待機時間")) = ElapsedTime.WatingTime
             Data(ColumnList.IndexOf("サイクル時間")) = ElapsedTime.CycleTime
 

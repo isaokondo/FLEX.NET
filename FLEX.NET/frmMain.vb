@@ -126,6 +126,7 @@
         'コピー角度、ストローク
         UcnJackDsp.CopyAngle = PlcIf.CopyAngle
         UcnJackDsp.CopyStroke = PlcIf.CopyStroke1
+        UcnJackDsp.CopyCutEnableStroke = CtlPara.CopyCutEnableStroke
         'グループ圧バーグラフ
         UcnGpPvBarGraph.GpFlg = PlcIf.GroupFlg
         UcnGpPvBarGraph.GpPv = PlcIf.GroupPv
@@ -284,7 +285,11 @@
         Reduce = New clsReducePress 'ロスゼロ減圧処理
         TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
 
-
+        'TODO:画面ナロータイプを作成したい
+        'If InitPara.DisplayNarrowMode Then
+        '    Me.WindowState = FormWindowState.Normal
+        '    Me.Size = New Size(1280, 1078)
+        'End If
 
 
 
@@ -502,7 +507,7 @@
     End Sub
 
     Private Sub DspSetting_Click(sender As Object, e As EventArgs) Handles DspSetting.Click
-
+        My.Forms.frmDspSetting.Show()
     End Sub
 
     Private Sub ScaleSetting_Click(sender As Object, e As EventArgs) Handles ScaleSetting.Click
@@ -991,6 +996,7 @@
 
 
 
+
         'ジャッキ稼働画面の初期データ
         With UcnJackDsp
             .NumberGroup = InitPara.NumberGroup
@@ -1006,6 +1012,9 @@
             .FlexPointSeater = PlcIf.操作角
 
             .DspInitBaseImg()
+
+
+            .MaxCopyStroke = PlcIf.AnalogTag.TagData("コピーストローク1").EngHight
         End With
 
         '---------------チャートの設定------------------------
