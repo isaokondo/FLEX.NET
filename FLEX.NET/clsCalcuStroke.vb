@@ -129,6 +129,7 @@ Public Class clsCalcuStroke
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property CalcAveLogicalStroke As Integer
+
     ''' <summary>
     ''' 計算計測掘進ストローク
     ''' </summary>
@@ -215,8 +216,13 @@ Public Class clsCalcuStroke
         _mesureCalcAveJackStroke = CalcSt.AvgData
 
         ''計算平均掘進ストロークの演算
-        Dim CalcLogicalSt As New clsGetAvg(_MesureCalcLogicalStroke)
-        _CalcAveLogicalStroke = CalcLogicalSt.AvgData
+        If PlcIf.ExcavMode Then
+            Dim CalcLogicalSt As New clsGetAvg(_MesureCalcLogicalStroke)
+            _CalcAveLogicalStroke = CalcLogicalSt.AvgData
+        Else
+            'セグメントモードの時
+            _CalcAveLogicalStroke = SegAsmblyData.RingLastStroke(PlcIf.RingNo) - CtlPara.StartAveStroke
+        End If
 
         '掘進中以外はゼロ
         If PlcIf.ExcaStatus = cKussin Then

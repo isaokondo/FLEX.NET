@@ -409,7 +409,7 @@ Public Class clsReportDb
             If k <> -1 Then
                 sheet.Cell(i + StartRows, StartCols).Value = _ReportItem(k).FeileName '項目名
                 sheet.Cell(i + StartRows, StartCols + 1).Value = _ReportItem(k).Unit '単位
-                If _ReportItem(i).DicemalPlace <> 0 Then
+                If _ReportItem(k).DicemalPlace <> 0 Then
                     sheet.Rows(i + StartRows).Style.NumberFormat.Format = ("0." & New String("0", _ReportItem(k).DicemalPlace))
                 End If
                 sheet.Cell(i + StartRows, StartCols - 1).Style.NumberFormat.Format = ("0")

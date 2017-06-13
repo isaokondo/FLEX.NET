@@ -759,7 +759,7 @@ Partial Class frmMain
         Me.DspCopyStroke2.BackColor = System.Drawing.Color.Transparent
         Me.DspCopyStroke2.DecimalPlaces = CType(0, Short)
         Me.DspCopyStroke2.FieldName = "余掘 2 "
-        Me.DspCopyStroke2.Location = New System.Drawing.Point(876, 613)
+        Me.DspCopyStroke2.Location = New System.Drawing.Point(848, 613)
         Me.DspCopyStroke2.Margin = New System.Windows.Forms.Padding(2)
         Me.DspCopyStroke2.Name = "DspCopyStroke2"
         Me.DspCopyStroke2.Size = New System.Drawing.Size(193, 30)
@@ -772,7 +772,7 @@ Partial Class frmMain
         Me.DspCopyStroke1.BackColor = System.Drawing.Color.Transparent
         Me.DspCopyStroke1.DecimalPlaces = CType(0, Short)
         Me.DspCopyStroke1.FieldName = "余掘 1 "
-        Me.DspCopyStroke1.Location = New System.Drawing.Point(876, 581)
+        Me.DspCopyStroke1.Location = New System.Drawing.Point(848, 581)
         Me.DspCopyStroke1.Margin = New System.Windows.Forms.Padding(2)
         Me.DspCopyStroke1.Name = "DspCopyStroke1"
         Me.DspCopyStroke1.Size = New System.Drawing.Size(193, 30)
@@ -785,7 +785,7 @@ Partial Class frmMain
         Me.DspSegmentRolling.BackColor = System.Drawing.Color.Transparent
         Me.DspSegmentRolling.DecimalPlaces = CType(2, Short)
         Me.DspSegmentRolling.FieldName = "SG ﾛｰﾘﾝｸﾞ"
-        Me.DspSegmentRolling.Location = New System.Drawing.Point(876, 231)
+        Me.DspSegmentRolling.Location = New System.Drawing.Point(848, 231)
         Me.DspSegmentRolling.Margin = New System.Windows.Forms.Padding(2)
         Me.DspSegmentRolling.Name = "DspSegmentRolling"
         Me.DspSegmentRolling.Size = New System.Drawing.Size(193, 30)
@@ -798,7 +798,7 @@ Partial Class frmMain
         Me.DspMachineRolling.BackColor = System.Drawing.Color.Transparent
         Me.DspMachineRolling.DecimalPlaces = CType(2, Short)
         Me.DspMachineRolling.FieldName = "ﾏｼﾝﾛｰﾘﾝｸﾞ"
-        Me.DspMachineRolling.Location = New System.Drawing.Point(876, 199)
+        Me.DspMachineRolling.Location = New System.Drawing.Point(848, 199)
         Me.DspMachineRolling.Margin = New System.Windows.Forms.Padding(2)
         Me.DspMachineRolling.Name = "DspMachineRolling"
         Me.DspMachineRolling.Size = New System.Drawing.Size(193, 30)
@@ -824,7 +824,7 @@ Partial Class frmMain
         Me.DspRightClearance.BackColor = System.Drawing.Color.Transparent
         Me.DspRightClearance.DecimalPlaces = CType(0, Short)
         Me.DspRightClearance.FieldName = "右ｸﾘｱ"
-        Me.DspRightClearance.Location = New System.Drawing.Point(928, 465)
+        Me.DspRightClearance.Location = New System.Drawing.Point(900, 465)
         Me.DspRightClearance.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRightClearance.Name = "DspRightClearance"
         Me.DspRightClearance.Size = New System.Drawing.Size(138, 46)
@@ -889,7 +889,7 @@ Partial Class frmMain
         Me.DspRightRawStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspRightRawStroke.DecimalPlaces = CType(0, Short)
         Me.DspRightRawStroke.FieldName = "右ST読"
-        Me.DspRightRawStroke.Location = New System.Drawing.Point(928, 368)
+        Me.DspRightRawStroke.Location = New System.Drawing.Point(900, 368)
         Me.DspRightRawStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRightRawStroke.Name = "DspRightRawStroke"
         Me.DspRightRawStroke.Size = New System.Drawing.Size(138, 46)
@@ -1238,14 +1238,15 @@ Partial Class frmMain
         Me.UcnDspBit3.BackColor = System.Drawing.Color.Transparent
         Me.UcnDspBit3.BitStatus = True
         Me.UcnDspBit3.Blink = False
-        Me.UcnDspBit3.FieldName = "補正値管"
+        Me.UcnDspBit3.FieldName = "補正値管理"
+        Me.UcnDspBit3.Font = New System.Drawing.Font("MS UI Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.UcnDspBit3.Location = New System.Drawing.Point(197, 40)
         Me.UcnDspBit3.Margin = New System.Windows.Forms.Padding(2)
         Me.UcnDspBit3.Name = "UcnDspBit3"
         Me.UcnDspBit3.OffBackColor = System.Drawing.Color.LightGray
         Me.UcnDspBit3.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.UcnDspBit3.Size = New System.Drawing.Size(90, 30)
-        Me.UcnDspBit3.TabIndex = 69
+        Me.UcnDspBit3.Size = New System.Drawing.Size(100, 30)
+        Me.UcnDspBit3.TabIndex = 70
         '
         'DspExcavingOn
         '
@@ -1719,7 +1720,7 @@ Partial Class frmMain
         Me.DspRightSpeed.BackColor = System.Drawing.Color.Transparent
         Me.DspRightSpeed.DecimalPlaces = CType(0, Short)
         Me.DspRightSpeed.FieldName = "右速度"
-        Me.DspRightSpeed.Location = New System.Drawing.Point(926, 415)
+        Me.DspRightSpeed.Location = New System.Drawing.Point(898, 415)
         Me.DspRightSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRightSpeed.Name = "DspRightSpeed"
         Me.DspRightSpeed.Size = New System.Drawing.Size(138, 46)
@@ -1732,7 +1733,7 @@ Partial Class frmMain
         Me.DspRightRealStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspRightRealStroke.DecimalPlaces = CType(0, Short)
         Me.DspRightRealStroke.FieldName = "右ST実"
-        Me.DspRightRealStroke.Location = New System.Drawing.Point(926, 318)
+        Me.DspRightRealStroke.Location = New System.Drawing.Point(898, 318)
         Me.DspRightRealStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRightRealStroke.Name = "DspRightRealStroke"
         Me.DspRightRealStroke.Size = New System.Drawing.Size(138, 46)

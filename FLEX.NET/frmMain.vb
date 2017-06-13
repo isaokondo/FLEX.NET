@@ -150,7 +150,7 @@
 
         DspAveStartStroke.Value = CtlPara.StartAveStroke '平均開始ストローク
         DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
-        DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均ストローク
+        DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均スピード
 
 
         '汎用データ表示

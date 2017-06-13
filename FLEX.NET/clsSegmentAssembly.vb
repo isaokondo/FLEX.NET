@@ -237,7 +237,7 @@ Friend Class clsSegmentAssembly
         '検索
         Dim dsSegAsm As DataTable
 
-        If SheetID.Rows.Count = 0 Then
+        If SheetID.Rows.Count = 0 OrElse IsDBNull(SheetID.Rows(0).Item(0)) Then
             dsSegAsm =
               GetDtfmSQL($"SELECT  * FROM `セグメント組立パターンリスト`  
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンリスト`.`分割No` 

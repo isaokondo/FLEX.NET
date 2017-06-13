@@ -1099,9 +1099,9 @@ End Class
 Public Class clsCheckDictionary
     Private _dic As Dictionary(Of String, String)
     Private _tableName As String
-    Sub New(_dic As Dictionary(Of String, String), _talbeName As String)
-        Me._dic = _dic
-        Me._tableName = _tableName
+    Sub New(dic As Dictionary(Of String, String), tbName As String)
+        Me._dic = dic
+        Me._tableName = tbName
     End Sub
 
     Public Function GetValue(tKey As String) As String
