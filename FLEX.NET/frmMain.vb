@@ -290,6 +290,8 @@
         '    Me.WindowState = FormWindowState.Normal
         '    Me.Size = New Size(1280, 1078)
         'End If
+        JackMvAuto.PointX = PlcIf.PointX
+        JackMvAuto.PointY = PlcIf.PointY
 
 
 

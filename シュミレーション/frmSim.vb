@@ -2,17 +2,17 @@
 
 Public Class frmSim
 
-    Public InitParm As New clsInitParameter '初期値パラメータ
+    Public InitParm As FLEX.NET.clsInitParameter '初期値パラメータ
 
     Private WithEvents ComPlc As ACTMULTILib.ActEasyIF
 
     Private DspGpPv() As FLEX.NET.ucnDspGpPres
     Private DspGpMv() As Label
     Private JackSel() As CheckBox
-    Private GpMvOutReal(InitParm.NumberGroup - 1) As Integer
-    Private GpMvOutBefore(InitParm.NumberGroup - 1) As Integer
+    Private GpMvOutReal() As Integer
+    Private GpMvOutBefore() As Integer
 
-    Private SimlationSetting As New clsSimlationSetting
+    Private SimlationSetting As clsSimlationSetting
 
     Const ELEMENT_SIZE_WORD = 10        '文字列の書込み/読出し時、シーケンサ格納データ用配列の使用要素数
     Const ELEMENT_SIZE_32BITINTEGER = 2 '32bit整数の書込み/読出し時、シーケンサ格納データ用配列の使用要素数
@@ -24,6 +24,17 @@ Public Class frmSim
         InitializeComponent()
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
+        Dim db As New FLEX.NET.clsDataBase
+        'MYSQLのバージョン取得
+        db.GetMySQKVersion()
+
+        InitParm = New FLEX.NET.clsInitParameter
+
+        SimlationSetting = New clsSimlationSetting
+
+        ReDim GpMvOutReal(InitParm.NumberGroup - 1)
+        ReDim GpMvOutBefore(InitParm.NumberGroup - 1)
+
 
         ComPlc = New ACTMULTILib.ActEasyIF
         ComPlc.ActLogicalStationNumber = InitParm.ActLogicalStationNumber   'PLC論理局
@@ -35,7 +46,6 @@ Public Class frmSim
                    & "論理局番：" & ComPlc.ActLogicalStationNumber.ToString, MsgBoxStyle.Exclamation)
             End
         End If
-
 
 
     End Sub
@@ -118,7 +128,7 @@ Public Class frmSim
 
 
         'フォームに情報表示
-        Me.Text &= "　論理局番=[" & ComPlc.ActLogicalStationNumber & "] " 'DBName=[" & DataBaseName & "] HostName=[" & My.Settings.HostName & "]"
+        Me.Text &= $"　論理局番=[{ComPlc.ActLogicalStationNumber}] [{InitParm.constructionName}]"
 
 
     End Sub

@@ -62,7 +62,18 @@ Public Class clsDataBase
         If IO.File.Exists(IniFilePath) Then
             HostName = GetIniString("DataBase", "HostName", IniFilePath)
             DataBaseName = GetIniString("DataBase", "DataBaseName", IniFilePath)
-            PortNo = GetIniString("DataBase", "port", IniFilePath)
+            'HostName名に「:」がありその後の文字が整数であればそれをポート番号とする
+            Dim dlmt As Integer = HostName.IndexOf(":")
+            If dlmt > 0 AndAlso IsNumeric(HostName.Substring(dlmt + 1)) Then
+                PortNo = HostName.Substring(dlmt + 1)
+                HostName = HostName.Substring(0, dlmt)
+            Else
+
+                PortNo = GetIniString("DataBase", "port", IniFilePath)
+
+            End If
+
+
 
 
 

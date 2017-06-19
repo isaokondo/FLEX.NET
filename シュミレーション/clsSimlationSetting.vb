@@ -1,7 +1,7 @@
 ﻿Imports FLEX.NET
 
 Public Class clsSimlationSetting
-    Inherits clsDataBase
+    Inherits FLEX.NET.clsDataBase
 
 
     Public ReadOnly Property LeftStrokeAdr As String
@@ -51,7 +51,7 @@ Public Class clsSimlationSetting
 
 
     Public Sub New()
-        Dim DB As New clsDataBase
+        Dim DB As New FLEX.NET.clsDataBase
 
         Dim tb As DataTable = DB.GetDtfmSQL("SELECT * FROM flexシュミレーション設定 ")
         For Each t As DataRow In tb.Rows

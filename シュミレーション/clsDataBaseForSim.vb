@@ -322,7 +322,7 @@ End Structure
 
 
 Public Class clsTag
-    Inherits clsDataBase
+    Inherits FLEX.NET.clsDataBase
 
     Private _Tag() As _tag
     Private _startAddress As String  '読み込み開始アドレス

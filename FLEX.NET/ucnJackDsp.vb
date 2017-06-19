@@ -766,7 +766,7 @@ Public Class ucnJackDsp
         If _CopyStroke > _CopyCutEnableStroke Then
             Dim CpyLocColor As Integer =
                         (_CopyStroke) / (_MaxCopyStroke - _CopyCutEnableStroke) * (255 - 20) + 20
-
+            If CpyLocColor > 255 Then CpyLocColor = 255
             CopyStatus(k) = New SolidBrush(Color.FromArgb(CpyLocColor, 0, 0))
         Else
             CopyStatus(k) = Brushes.Black

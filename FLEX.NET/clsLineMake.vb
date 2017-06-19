@@ -465,7 +465,7 @@ Public Class clsLineMake
 
         For intZone = 0 To VerPlan.ゾーン総数
             With VerPlan
-                If mdbl掘進累積距離 >= .始点累積水平距離(intZone) And mdbl掘進累積距離 < .終点累積累積距離(intZone) Then
+                If mdbl掘進累積距離 >= VerPlan.始点累積水平距離(intZone) And mdbl掘進累積距離 < VerPlan.終点累積累積距離(intZone) Then
                     mint縦断ゾーン番号 = intZone
                 End If
             End With
@@ -484,8 +484,8 @@ Public Class clsLineMake
                 Case 1 ''直線の場合
                     mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + (mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) * Tan(.始点勾配(mint縦断ゾーン番号).ToRad)
                 Case 2 ''曲線の場合
-                    mdbl鉛直角軌道中心 = Asin((mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) / .曲率半径(mint縦断ゾーン番号) + Sin(.始点勾配(mint縦断ゾーン番号).ToRad)) * 180 / PI
-                    mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + .曲率半径(mint縦断ゾーン番号) * (Cos(.始点勾配(mint縦断ゾーン番号).ToRad) - Cos(mdbl鉛直角軌道中心.ToRad))
+                    mdbl鉛直角軌道中心 = Asin((mdbl掘進累積距離 - VerPlan.始点累積水平距離(mint縦断ゾーン番号)) / VerPlan.曲率半径(mint縦断ゾーン番号) + Sin(VerPlan.始点勾配(mint縦断ゾーン番号).ToRad)) * 180 / PI
+                    mdblZ座標 = VerPlan.始点Z座標(mint縦断ゾーン番号) + VerPlan.曲率半径(mint縦断ゾーン番号) * (Cos(VerPlan.始点勾配(mint縦断ゾーン番号).ToRad) - Cos(mdbl鉛直角軌道中心.ToRad))
                 Case Else
             End Select
 
@@ -550,8 +550,8 @@ Public Class clsLineMake
                 Case 2 ''曲線の場合
                     mdbl縦断半径 = .曲率半径(mint縦断ゾーン番号)
                     '                                                                                       FZv→FVz ミス？
-                    mdbl鉛直角軌道中心 = Asin((mdbl掘進累積距離 - .始点累積水平距離(mint縦断ゾーン番号)) / .曲率半径(mint縦断ゾーン番号) + Sin(.始点勾配(mint縦断ゾーン番号).ToRad)) * 180 / PI
-                    mdblZ座標 = .始点Z座標(mint縦断ゾーン番号) + .曲率半径(mint縦断ゾーン番号) * (Cos(.始点勾配(mint縦断ゾーン番号).ToRad) - Cos(mdbl鉛直角軌道中心.ToRad))
+                    mdbl鉛直角軌道中心 = Asin((mdbl掘進累積距離 - VerPlan.始点累積水平距離(mint縦断ゾーン番号)) / VerPlan.曲率半径(mint縦断ゾーン番号) + Sin(VerPlan.始点勾配(mint縦断ゾーン番号).ToRad)) * 180 / PI
+                    mdblZ座標 = VerPlan.始点Z座標(mint縦断ゾーン番号) + VerPlan.曲率半径(mint縦断ゾーン番号) * (Cos(VerPlan.始点勾配(mint縦断ゾーン番号).ToRad) - Cos(mdbl鉛直角軌道中心.ToRad))
                 Case Else
             End Select
 

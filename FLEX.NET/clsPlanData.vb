@@ -385,7 +385,7 @@ Public Class clsVerPlanData
                 戻し開始(zoneNo) = CheckItemData(t.Item("戻し開始"))
                 最大中折れ角(zoneNo) = CheckItemData(t.Item("最大中折角"))
                 姿勢変化率(zoneNo) = CheckItemData(t.Item("姿勢変化率"))
-
+                曲率半径(zoneNo) = CheckItemData(t.Item("半径"))
                 中心角(zoneNo) = CheckItemData(t.Item("中心角"))
             End If
             _始点累積水平距離(zoneNo) = t.Item("始点累積距離")
