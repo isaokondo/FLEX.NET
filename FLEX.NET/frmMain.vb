@@ -292,6 +292,12 @@
         'End If
         JackMvAuto.PointX = PlcIf.PointX
         JackMvAuto.PointY = PlcIf.PointY
+        JackMvAuto.水平P定数 = CtlPara.水平ジャッキ制御P定数
+        JackMvAuto.水平I定数 = CtlPara.水平ジャッキ制御I定数
+        JackMvAuto.水平D定数 = CtlPara.水平ジャッキ制御D定数
+        JackMvAuto.鉛直P定数 = CtlPara.鉛直ジャッキ制御P定数
+        JackMvAuto.鉛直I定数 = CtlPara.鉛直ジャッキ制御I定数
+        JackMvAuto.鉛直D定数 = CtlPara.鉛直ジャッキ制御D定数
 
 
 
@@ -378,6 +384,7 @@
         ucnVerLineChart.TargetData = DspTargetPitching.Value
         ucnVerLineChart.RealData = DspPitching.Value
 
+        DspRingTargetDir.Value = Hoko2Hoi(RefernceDirection.RingTarget.軌道中心方位角) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
     End Sub
     ''' <summary>
     ''' 同時施工組立パターン情報表示

@@ -27,6 +27,9 @@ Friend Class clsCulKijun
     Public HorNakaKodo As clsCulNakaore1 ''中折れ演算（後胴中心で検討）
     Public HorNakaCul As clsCulNakaore2 ''中折れ計算2（構築中心の方向角で検討）
 
+    Public RingTarget As clsLineMake ''リングの目標値
+
+
     ''縦断
     Public VerSentanKijun As clsLineMake ''先端位置
     Public VerKodoKijun As clsLineMake ''後胴中心
@@ -220,6 +223,8 @@ Friend Class clsCulKijun
         HorKodoKijun = New clsLineMake
         HorZendoKijun = New clsLineMake
 
+        RingTarget = New clsLineMake
+
         HorNakaKodo = New clsCulNakaore1
         HorNakaCul = New clsCulNakaore2
 
@@ -342,6 +347,8 @@ Friend Class clsCulKijun
             '後胴中心関連表示の中止
 
         End If
+
+        RingTarget.掘進累積距離 = HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
 
         '01/06/28 修正
         'mdbl平面基準方位 = Hoi2Hoko(mdbl平面計画方位 + PlcIf.水平入力補正値 + clsPlanLine.HorPlan.X軸方位角)

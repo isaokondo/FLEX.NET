@@ -917,6 +917,7 @@ Public Class clsPlcIf
 
                         Dim JkPs As Single = _FilterJkPress
                         _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
+                        Debug.Print(Now & ":" & _FilterJkPress & "," & _jkPress)
                         'FLEX手動時に掘進中にジャッキ圧力が変化したイベント
                         If _excaStatus = cKussin AndAlso _flexControlOn And
                             Not CtlPara.AutoDirectionControl And JkPs <> _jkPress Then
