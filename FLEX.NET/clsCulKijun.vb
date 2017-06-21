@@ -28,6 +28,7 @@ Friend Class clsCulKijun
     Public HorNakaCul As clsCulNakaore2 ''中折れ計算2（構築中心の方向角で検討）
 
     Public RingTarget As clsLineMake ''リングの目標値
+    Public NextRingTarget As clsLineMake ''次リングの目標値
 
 
     ''縦断
@@ -224,6 +225,7 @@ Friend Class clsCulKijun
         HorZendoKijun = New clsLineMake
 
         RingTarget = New clsLineMake
+        NextRingTarget = New clsLineMake
 
         HorNakaKodo = New clsCulNakaore1
         HorNakaCul = New clsCulNakaore2
@@ -349,6 +351,7 @@ Friend Class clsCulKijun
         End If
 
         RingTarget.掘進累積距離 = HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
+        NextRingTarget.掘進累積距離 = RingTarget.掘進累積距離 + SegAsmblyData.TypeData(PlcIf.RingNo + 1).CenterWidth
 
         '01/06/28 修正
         'mdbl平面基準方位 = Hoi2Hoko(mdbl平面計画方位 + PlcIf.水平入力補正値 + clsPlanLine.HorPlan.X軸方位角)
