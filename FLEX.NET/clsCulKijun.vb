@@ -342,7 +342,7 @@ Friend Class clsCulKijun
 
             '○単胴時旋回中心位置
             HorZendoKijun.掘進累積距離 = HorSentanKijun.掘進累積距離 - MachineSpec.HorSenkaiCyuushin
-            mdbl平面計画方位 = HorZendoKijun.軌道中心方位角
+            mdbl平面計画方位 = Hoko2Hoi((HorZendoKijun.軌道中心方位角))
 
             '○単胴ｼｰﾙﾄﾞでは不要なﾃﾞｰﾀの後始末
             mdbl平面中折角度 = 0 '当然0

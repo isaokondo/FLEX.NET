@@ -63,7 +63,9 @@ Public Class clsControlParameter
     Private _圧力制御開始推力値 As Double ''圧力制御開始推力値
     Private _圧力制御開始推力値有効フラグ As Boolean ''圧力制御開始推力値有効フラグ
     Private _全押しスタート As Boolean ''全押しスタート
-
+    ''' <summary>
+    ''' 自動方向制御
+    ''' </summary>
     Private _AutoDirectionControl As Boolean
     ''' <summary>
     ''' FLEX姿勢制御の自動手動の切り替わり
@@ -495,7 +497,10 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
-
+    ''' <summary>
+    ''' 自動方向制御
+    ''' </summary>
+    ''' <returns></returns>
     Public Property AutoDirectionControl As Boolean
         Get
             Return _AutoDirectionControl
