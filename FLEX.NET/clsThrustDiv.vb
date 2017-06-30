@@ -12,7 +12,6 @@ Friend Class clsThrustDiv
     Private _最低全開グループ数 As Short
     Private _全開作動指令値 As Short
     Private _全開作動範囲 As Short
-    Private _全開グループ制限 As Boolean
 
     Private _操作角 As Double
     Private _操作強 As Double
@@ -31,6 +30,10 @@ Friend Class clsThrustDiv
     Private _OnJack(InitPara.NumberJack - 1) As Boolean  '推進ジャッキ
 
     Private _FullOpenGruop As List(Of Short) '全開グループ
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Private _OptinalGroup As Dictionary(Of Short, Single)
 
 
     Public Property 分担率指令値 As Double()
@@ -69,15 +72,6 @@ Friend Class clsThrustDiv
             _操作角 = Value
         End Set
     End Property
-
-    'Public Property 全開グループ制限() As Boolean
-    '    Get
-    '        全開グループ制限 = _全開グループ制限
-    '    End Get
-    '    Set(ByVal Value As Boolean)
-    '        _全開グループ制限 = Value
-    '    End Set
-    'End Property
 
     Public Property 全開作動範囲() As Short
         Get
@@ -217,13 +211,13 @@ Friend Class clsThrustDiv
 
         Dim i As Short
 
-        Dim Ig(InitPara.NumberGroup - 1) As Short    '各グループの有効ジャッキ本数
+        Dim IgNum(InitPara.NumberGroup - 1) As Short    '各グループのジャッキ本数
+        Dim KgNum(InitPara.NumberGroup - 1) As Short    '各グループの有効ジャッキ本数
         'Dim intJg(.NumberGroup - 1) As Short
 
         '============================= page Ⅲ－２８ ===============================
         For i = 0 To InitPara.NumberGroup - 1
             _分担率計算値(i) = 0
-            Ig(i) = 0
         Next i
 
         ''極座標演算 各ジャッキの推力勾配の値
@@ -241,15 +235,16 @@ Friend Class clsThrustDiv
         For i = 0 To InitPara.NumberJack - 1
             '_OnJack(i) = Not PlcIf.LosZeroMode Or (PlcIf.JackExecMode(i) And
             '        Not Reduce.LstR.Contains(InitPara.JackGroupPos(i)))
+            IgNum(InitPara.JackGroupPos(i) - 1) += 1 '各グループのジャッキ本数加算
             If _OnJack(i) Then
                 _分担率計算値(InitPara.JackGroupPos(i) - 1) += _PjDash(i)
-                Ig(InitPara.JackGroupPos(i) - 1) += 1
+                KgNum(InitPara.JackGroupPos(i) - 1) += 1 '各グループの有効ジャッキ本数加算
             End If
         Next i
-        '各グループの有効ジャッキ本数で割る
+        '各グループのジャッキ本数で割る
         For i = 0 To InitPara.NumberGroup - 1
-            If Ig(i) <> 0 Then
-                _分担率計算値(i) /= Ig(i)
+            If IgNum(i) <> 0 Then
+                _分担率計算値(i) /= IgNum(i)
             End If
         Next i
 
@@ -285,17 +280,15 @@ Friend Class clsThrustDiv
 
         '============================= page Ⅲ－３１===============================
         ''全開グループ制御
-        'Dim dblWork As Double
-        'If _全開グループ制限 Then
-        '常に全開制限を行う
 
         Dim buntang As New Dictionary(Of Short, Double)
 
-            For i = 0 To InitPara.NumberGroup - 1
-                buntang.Add(i, If(CtlPara.optGpEn.Contains(i + 1), 0, _分担率計算値(i)))
-            Next i
-            '分担率計算値を降順に並べ変え,最低全開グループ数分の番号を取得
-            _FullOpenGruop =
+        For i = 0 To InitPara.NumberGroup - 1
+            Dim DisenFullOpn As Boolean = CtlPara.optGpEn.Contains(i + 1) Or KgNum(i) / IgNum(i) < 0.5
+            buntang.Add(i, If(DisenFullOpn, 0, _分担率計算値(i)))
+        Next i
+        '分担率計算値を降順に並べ変え,最低全開グループ数分の番号を取得
+        _FullOpenGruop =
                     (From q In buntang Order By q.Value Descending Select q.Key).Take(_最低全開グループ数).ToList
             '分担率　100%も追加
             _FullOpenGruop.AddRange(From q In buntang Where q.Value = 100 Select q.Key)
@@ -304,7 +297,7 @@ Friend Class clsThrustDiv
                 _分担率指令値(g) = 100
             Next
 
-        'End If
+
 
         Dim Pj1sum As Double = 0
 
@@ -341,39 +334,16 @@ Friend Class clsThrustDiv
                     Pj1(i) = Pjmax1(i) * CulcMoment.Thrust / Pj1sum '全ジャッキ時の当該ジャッキ推力（あんまり意味ないじゃん）
                     Pj2(i) = Pjmax2(i) * PC '選択ジャッキ時の当該ジャッキ推力（低圧推進は考慮しない）
 
+                '任意圧に設定されてるグループのジャッキ
                 If CtlPara.optGpEn.Contains(i + 1) AndAlso
                     Pj2(i) > InitPara.JackPower * CtlPara.optGpSv(i) / InitPara.JackMaxOilPres Then
-                    '設定圧１の加減圧ｼﾞｬｯｷとして選択され、さらに当該ジャッキ推力が設定圧１を越えているとき
+                    '任意設定圧の加減圧ｼﾞｬｯｷとして選択され、さらに当該ジャッキ推力が設定圧１を越えているとき
                     Dim Pj2Dash As Single =
                         Pj2(i) - InitPara.JackPower * CtlPara.optGpSv(i) / InitPara.JackMaxOilPres
                     Pj2(i) =
-                        InitPara.JackPower * CtlPara.optGpSv(i) / InitPara.JackMaxOilPres '当該ジャッキ推力を設定圧１の推力にする
-                    Pj2sumdash += Pj2Dash '設定圧１の調整による低下推力を積算（不要）
+                        InitPara.JackPower * CtlPara.optGpSv(i) / InitPara.JackMaxOilPres '当該ジャッキ推力を任意設定圧の推力にする
+                    Pj2sumdash += Pj2Dash '任意設定圧の調整による低下推力を積算（不要）
                 End If
-
-                ''設定圧２の処理　＜＜以下６行は2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
-                'If Onj(i) = 3 And Pj2(i) > InitPara.JackPower * Lowpu2 / InitPara.JackMaxOilPres Then
-                '    '設定圧２の加減圧ｼﾞｬｯｷとして選択され、さらに当該ジャッキ推力が設定圧２を越えているとき
-                '    Pj2Dash = Pj2(i) - InitPara.JackPower * Lowpu2 / InitPara.JackMaxOilPres
-                '    Pj2(i) = InitPara.JackPower * Lowpu2 / InitPara.JackMaxOilPres '当該ジャッキ推力を設定圧２の推力にする
-                '    Pj2sumdash = Pj2sumdash + Pj2Dash '設定圧２の調整による低下推力を積算（不要）
-                'End If
-
-                ''設定圧３の処理　＜＜以下６行は2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
-                'If Onj(i) = 4 And Pj2(i) > InitPara.JackPower * Lowpu3 / InitPara.JackMaxOilPres Then
-                '    '設定圧３の加減圧ｼﾞｬｯｷとして選択され、さらに当該ジャッキ推力が設定圧３を越えているとき
-                '    Pj2Dash = Pj2(i) - InitPara.JackPower * Lowpu3 / InitPara.JackMaxOilPres
-                '    Pj2(i) = InitPara.JackPower * Lowpu3 / InitPara.JackMaxOilPres '当該ジャッキ推力を設定圧３の推力にする
-                '    Pj2sumdash = Pj2sumdash + Pj2Dash '設定圧３の調整による低下推力を積算（不要）
-                'End If
-
-                ''最低制御圧力の処理　＜＜以下６行は2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)　＜＜対抗ジャッキ圧力調整機能　2016/01/22
-                'If (Onj(i) = 1 Or Onj(i) = 9) And Pj2(i) < InitPara.JackPower * Minpu / InitPara.JackMaxOilPres Then  '＜＜ここを修正
-                '    '当該ジャッキ推力が最低制御圧力以下のとき
-                '    Pj2Dash = Pj2(i) - InitPara.JackPower * Minpu / InitPara.JackMaxOilPres
-                '    Pj2(i) = InitPara.JackPower * Minpu / InitPara.JackMaxOilPres '当該ジャッキ推力を最低制御圧力の推力にする
-                '    Pj2sumdash = Pj2sumdash + Pj2Dash '最低制御圧力の調整による上昇推力を積算（不要）
-                'End If
 
                 ''対抗ジャッキ圧自動設定の処理　＜＜以下６行は2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)　＜＜対抗ジャッキ圧力調整機能　2016/01/22
                 'If Ftj = 1 And Onj(i) = 9 And Pj2(i) > InitPara.JackPower * LowpuX / InitPara.JackMaxOilPres Then
@@ -417,6 +387,9 @@ Friend Class clsThrustDiv
 
     End Sub
 End Class
+
+
+
 
 ''' <summary>
 ''' 減圧中処理

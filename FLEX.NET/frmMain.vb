@@ -98,8 +98,13 @@
         DspHorBroken.Value = PlcIf.NakaoreLR         '中折左右
         DspVerBroken.Value = PlcIf.NakaoreTB         '中折上下
 
-        DspCopyStroke1.Value = PlcIf.CopyStroke1 'コピーストローク
-        DspCopyStroke2.Value = PlcIf.CopyStroke2
+        Select Case CtlPara.CopySelect
+            Case 1
+                DspCopyStroke.Value = PlcIf.CopyStroke1 'コピーストローク
+            Case 2
+                DspCopyStroke.Value = PlcIf.CopyStroke2 'コピーストローク
+
+        End Select
 
         DspMachineRolling.Value = PlcIf.MashineRolling  'マシンローリング
 
@@ -1022,7 +1027,7 @@
 
             .DspInitBaseImg()
 
-
+            .SegmentDspEnable = InitPara.LosZeroMode
             .MaxCopyStroke = PlcIf.AnalogTag.TagData("コピーストローク1").EngHight
         End With
 

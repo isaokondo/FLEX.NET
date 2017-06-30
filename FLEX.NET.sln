@@ -9,7 +9,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FlexJackDspTest", "FlexJack
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "シュミレーション", "シュミレーション\シュミレーション.vbproj", "{BDE7FA79-3215-4243-A0EC-6C51F9F4E6D6}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MariDBReplication", "WindowsApplication5\MariDBReplication.vbproj", "{40D31FE8-6FE7-4AAF-A1FA-01C2414B3565}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MariaDBReplication", "WindowsApplication5\MariaDBReplication.vbproj", "{40D31FE8-6FE7-4AAF-A1FA-01C2414B3565}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -44,6 +44,15 @@ Public Class frmPressBlock
         CtlPara.optGpEn =
             (From j In GroupOptionSvCheck Where j.Checked Select CShort(GetNum(j.Name) + 1)).ToList
 
+        CtlPara.OptGpSvDic.Clear()
+        For i As Short = 0 To InitPara.NumberGroup - 1
+            If GroupOptionSvCheck(i).Checked Then
+                CtlPara.OptGpSvDic.Add(i + 1, GroupOptionSvDsp(i).Value)
+            End If
+        Next
+
+
+
         Me.Close()
     End Sub
 

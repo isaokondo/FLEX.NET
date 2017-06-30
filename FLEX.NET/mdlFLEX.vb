@@ -457,8 +457,10 @@ Module mdlFLEX
                 PlcIf.操作強 = JackManual.操作強
             End If
             'TODO:ジャッキステータスを追加するように
-            '掘進モードをセット
-            DivCul.OnJack = PlcIf.JackExecMode
+            '掘進モード & 稼働ジャッキをセット
+            For i As Short = 0 To InitPara.NumberJack - 1
+                DivCul.OnJack(i) = PlcIf.JackExecMode(i) And PlcIf.JackSel(i)
+            Next
             DivCul.sbCul() ''推力分担率の演算
             '力点の更新
             PlcIf.PointWrite()

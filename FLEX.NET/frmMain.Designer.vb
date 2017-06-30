@@ -84,8 +84,7 @@ Partial Class frmMain
         Me.DspExcvSpeed = New FLEX.NET.ucnDspData()
         Me.DspAveStroke = New FLEX.NET.ucnDspData()
         Me.UcnGpPvBarGraph = New FLEX.NET.ucnGpPvBarGraph()
-        Me.DspCopyStroke2 = New FLEX.NET.ucnDspDataMin2()
-        Me.DspCopyStroke1 = New FLEX.NET.ucnDspDataMin2()
+        Me.DspCopyStroke = New FLEX.NET.ucnDspDataMin2()
         Me.DspSegmentRolling = New FLEX.NET.ucnDspDataMin2()
         Me.DspMachineRolling = New FLEX.NET.ucnDspDataMin2()
         Me.DspUpRealStroke = New FLEX.NET.ucnDspDataMin()
@@ -776,38 +775,25 @@ Partial Class frmMain
         Me.UcnGpPvBarGraph.Size = New System.Drawing.Size(78, 555)
         Me.UcnGpPvBarGraph.TabIndex = 96
         '
-        'DspCopyStroke2
+        'DspCopyStroke
         '
-        Me.DspCopyStroke2.BackColor = System.Drawing.Color.Transparent
-        Me.DspCopyStroke2.DecimalPlaces = CType(0, Short)
-        Me.DspCopyStroke2.FieldName = "余掘 2 "
-        Me.DspCopyStroke2.Location = New System.Drawing.Point(848, 613)
-        Me.DspCopyStroke2.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspCopyStroke2.Name = "DspCopyStroke2"
-        Me.DspCopyStroke2.Size = New System.Drawing.Size(193, 30)
-        Me.DspCopyStroke2.TabIndex = 150
-        Me.DspCopyStroke2.Unit = "mm"
-        Me.DspCopyStroke2.Value = 0R
-        '
-        'DspCopyStroke1
-        '
-        Me.DspCopyStroke1.BackColor = System.Drawing.Color.Transparent
-        Me.DspCopyStroke1.DecimalPlaces = CType(0, Short)
-        Me.DspCopyStroke1.FieldName = "余掘 1 "
-        Me.DspCopyStroke1.Location = New System.Drawing.Point(848, 581)
-        Me.DspCopyStroke1.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspCopyStroke1.Name = "DspCopyStroke1"
-        Me.DspCopyStroke1.Size = New System.Drawing.Size(193, 30)
-        Me.DspCopyStroke1.TabIndex = 149
-        Me.DspCopyStroke1.Unit = "mm"
-        Me.DspCopyStroke1.Value = 0R
+        Me.DspCopyStroke.BackColor = System.Drawing.Color.Transparent
+        Me.DspCopyStroke.DecimalPlaces = CType(0, Short)
+        Me.DspCopyStroke.FieldName = "余掘"
+        Me.DspCopyStroke.Location = New System.Drawing.Point(867, 611)
+        Me.DspCopyStroke.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspCopyStroke.Name = "DspCopyStroke"
+        Me.DspCopyStroke.Size = New System.Drawing.Size(185, 30)
+        Me.DspCopyStroke.TabIndex = 149
+        Me.DspCopyStroke.Unit = "mm"
+        Me.DspCopyStroke.Value = 0R
         '
         'DspSegmentRolling
         '
         Me.DspSegmentRolling.BackColor = System.Drawing.Color.Transparent
         Me.DspSegmentRolling.DecimalPlaces = CType(2, Short)
         Me.DspSegmentRolling.FieldName = "SG ﾛｰﾘﾝｸﾞ"
-        Me.DspSegmentRolling.Location = New System.Drawing.Point(848, 231)
+        Me.DspSegmentRolling.Location = New System.Drawing.Point(867, 231)
         Me.DspSegmentRolling.Margin = New System.Windows.Forms.Padding(2)
         Me.DspSegmentRolling.Name = "DspSegmentRolling"
         Me.DspSegmentRolling.Size = New System.Drawing.Size(193, 30)
@@ -820,7 +806,7 @@ Partial Class frmMain
         Me.DspMachineRolling.BackColor = System.Drawing.Color.Transparent
         Me.DspMachineRolling.DecimalPlaces = CType(2, Short)
         Me.DspMachineRolling.FieldName = "ﾏｼﾝﾛｰﾘﾝｸﾞ"
-        Me.DspMachineRolling.Location = New System.Drawing.Point(848, 199)
+        Me.DspMachineRolling.Location = New System.Drawing.Point(867, 199)
         Me.DspMachineRolling.Margin = New System.Windows.Forms.Padding(2)
         Me.DspMachineRolling.Name = "DspMachineRolling"
         Me.DspMachineRolling.Size = New System.Drawing.Size(193, 30)
@@ -846,7 +832,7 @@ Partial Class frmMain
         Me.DspRightClearance.BackColor = System.Drawing.Color.Transparent
         Me.DspRightClearance.DecimalPlaces = CType(0, Short)
         Me.DspRightClearance.FieldName = "右ｸﾘｱ"
-        Me.DspRightClearance.Location = New System.Drawing.Point(900, 465)
+        Me.DspRightClearance.Location = New System.Drawing.Point(919, 465)
         Me.DspRightClearance.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRightClearance.Name = "DspRightClearance"
         Me.DspRightClearance.Size = New System.Drawing.Size(138, 46)
@@ -911,7 +897,7 @@ Partial Class frmMain
         Me.DspRightRawStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspRightRawStroke.DecimalPlaces = CType(0, Short)
         Me.DspRightRawStroke.FieldName = "右ST読"
-        Me.DspRightRawStroke.Location = New System.Drawing.Point(900, 368)
+        Me.DspRightRawStroke.Location = New System.Drawing.Point(919, 368)
         Me.DspRightRawStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRightRawStroke.Name = "DspRightRawStroke"
         Me.DspRightRawStroke.Size = New System.Drawing.Size(138, 46)
@@ -1742,7 +1728,7 @@ Partial Class frmMain
         Me.DspRightSpeed.BackColor = System.Drawing.Color.Transparent
         Me.DspRightSpeed.DecimalPlaces = CType(0, Short)
         Me.DspRightSpeed.FieldName = "右速度"
-        Me.DspRightSpeed.Location = New System.Drawing.Point(898, 415)
+        Me.DspRightSpeed.Location = New System.Drawing.Point(917, 415)
         Me.DspRightSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRightSpeed.Name = "DspRightSpeed"
         Me.DspRightSpeed.Size = New System.Drawing.Size(138, 46)
@@ -1755,7 +1741,7 @@ Partial Class frmMain
         Me.DspRightRealStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspRightRealStroke.DecimalPlaces = CType(0, Short)
         Me.DspRightRealStroke.FieldName = "右ST実"
-        Me.DspRightRealStroke.Location = New System.Drawing.Point(898, 318)
+        Me.DspRightRealStroke.Location = New System.Drawing.Point(917, 318)
         Me.DspRightRealStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspRightRealStroke.Name = "DspRightRealStroke"
         Me.DspRightRealStroke.Size = New System.Drawing.Size(138, 46)
@@ -2495,8 +2481,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.lblMachineMode)
         Me.Controls.Add(Me.cmbWideSelct)
         Me.Controls.Add(Me.UcnGpPvBarGraph)
-        Me.Controls.Add(Me.DspCopyStroke2)
-        Me.Controls.Add(Me.DspCopyStroke1)
+        Me.Controls.Add(Me.DspCopyStroke)
         Me.Controls.Add(Me.DspSegmentRolling)
         Me.Controls.Add(Me.DspMachineRolling)
         Me.Controls.Add(Me.DspUpRealStroke)
@@ -2737,8 +2722,7 @@ Partial Class frmMain
     Friend WithEvents DspRightClearance As ucnDspDataMin
     Friend WithEvents DspMachineRolling As ucnDspDataMin2
     Friend WithEvents DspSegmentRolling As ucnDspDataMin2
-    Friend WithEvents DspCopyStroke2 As ucnDspDataMin2
-    Friend WithEvents DspCopyStroke1 As ucnDspDataMin2
+    Friend WithEvents DspCopyStroke As ucnDspDataMin2
     Friend WithEvents cmbWideSelct As ComboBox
     Friend WithEvents 平面ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 縦断ToolStripMenuItem As ToolStripMenuItem

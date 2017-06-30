@@ -114,6 +114,11 @@ Public Class clsControlParameter
     ''' </summary>
     Private _optGpSv(InitPara.NumberGroup - 1) As Single
 
+    ''' <summary>
+    ''' 任意圧力設定グループとその圧力設定
+    ''' </summary>
+    Private _OptGpSvDic As Dictionary(Of Short, Single)
+
 
     ''' <summary>
     ''' コピーストローク表示
@@ -190,6 +195,19 @@ Public Class clsControlParameter
             'Dim tb As Odbc.OdbcDataReader =
             ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{String.Join(",", _optGpEn.ToArray)}'
                 WHERE 項目名称='OptinalGroupSetNumber'")
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 任意設定有効グループとその設定値
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property OptGpSvDic As Dictionary(Of Short, Single)
+        Get
+            Return _OptGpSvDic
+        End Get
+        Set(value As Dictionary(Of Short, Single))
+
         End Set
     End Property
 
