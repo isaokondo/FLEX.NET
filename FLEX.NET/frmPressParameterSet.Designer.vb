@@ -234,7 +234,7 @@ Partial Class frmPressParameterSet
         Me.DirectControlOffset.Location = New System.Drawing.Point(28, 143)
         Me.DirectControlOffset.Margin = New System.Windows.Forms.Padding(2)
         Me.DirectControlOffset.MaxValue = "200"
-        Me.DirectControlOffset.MinValue = "0"
+        Me.DirectControlOffset.MinValue = "-50"
         Me.DirectControlOffset.Name = "DirectControlOffset"
         Me.DirectControlOffset.SelectItem = Nothing
         Me.DirectControlOffset.Size = New System.Drawing.Size(395, 39)

@@ -42,12 +42,13 @@ Partial Class frmDirControlChek
         Me.lblMomentX = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.dgv = New System.Windows.Forms.DataGridView()
+        Me.btnMomentOptimize = New System.Windows.Forms.Button()
         CType(Me.dgv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(1337, 626)
+        Me.btnOK.Location = New System.Drawing.Point(1350, 627)
         '
         'btnCancel
         '
@@ -214,7 +215,7 @@ Partial Class frmDirControlChek
         Me.btnGetNowData.BackColor = System.Drawing.Color.DarkGray
         Me.btnGetNowData.Location = New System.Drawing.Point(65, 7)
         Me.btnGetNowData.Name = "btnGetNowData"
-        Me.btnGetNowData.Size = New System.Drawing.Size(91, 38)
+        Me.btnGetNowData.Size = New System.Drawing.Size(108, 38)
         Me.btnGetNowData.TabIndex = 30
         Me.btnGetNowData.Text = "現在値取得"
         Me.btnGetNowData.UseVisualStyleBackColor = False
@@ -310,12 +311,23 @@ Partial Class frmDirControlChek
         Me.dgv.Size = New System.Drawing.Size(1267, 486)
         Me.dgv.TabIndex = 35
         '
+        'btnMomentOptimize
+        '
+        Me.btnMomentOptimize.BackColor = System.Drawing.Color.DarkGray
+        Me.btnMomentOptimize.Location = New System.Drawing.Point(65, 51)
+        Me.btnMomentOptimize.Name = "btnMomentOptimize"
+        Me.btnMomentOptimize.Size = New System.Drawing.Size(108, 38)
+        Me.btnMomentOptimize.TabIndex = 36
+        Me.btnMomentOptimize.Text = "モーメント最適化"
+        Me.btnMomentOptimize.UseVisualStyleBackColor = False
+        '
         'frmDirControlChek
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
         Me.ClientSize = New System.Drawing.Size(1463, 673)
+        Me.Controls.Add(Me.btnMomentOptimize)
         Me.Controls.Add(Me.dgv)
         Me.Controls.Add(Me.lblMomentY)
         Me.Controls.Add(Me.label999)
@@ -356,6 +368,7 @@ Partial Class frmDirControlChek
         Me.Controls.SetChildIndex(Me.label999, 0)
         Me.Controls.SetChildIndex(Me.lblMomentY, 0)
         Me.Controls.SetChildIndex(Me.dgv, 0)
+        Me.Controls.SetChildIndex(Me.btnMomentOptimize, 0)
         CType(Me.dgv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -379,4 +392,5 @@ Partial Class frmDirControlChek
     Friend WithEvents lblMomentX As Label
     Friend WithEvents Label7 As Label
     Private WithEvents dgv As DataGridView
+    Friend WithEvents btnMomentOptimize As Button
 End Class

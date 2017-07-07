@@ -83,6 +83,7 @@ Public Class frmDirControlChek
         For JkNo As Integer = 0 To InitPara.NumberJack - 1
             Dim dSet As New clsDgvSet(dgv.Rows(JkNo))
             dSet.setData(2, IIf(DivCul.OnJack(JkNo), 1, 0))
+            dSet.setData(3, IIf(DivCul.OnJack(JkNo), 1, 0))
 
             dSet.setData(4, DivCul.PjDash(JkNo).ToString("F2"))
             dSet.setData(5, DivCul.Pjmax1(JkNo).ToString("F0"))
@@ -114,14 +115,19 @@ Public Class frmDirControlChek
 
         Next
     End Sub
-
+    ''' <summary>
+    ''' 変更時のセルの編集
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub dgv_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv.CellDoubleClick
-        If e.ColumnIndex = 3 Then
+        If e.ColumnIndex = 3 And e.RowIndex <> -1 Then
             Dim cell As DataGridViewCell = dgv.Rows(e.RowIndex).Cells(e.ColumnIndex)
-            If IsNumeric(cell.Value) Then
+            If (Control.ModifierKeys And Keys.Shift) = Keys.Shift Then
                 cell.Value += 1
-            Else
-                cell.Value = 1
+            End If
+            If (Control.ModifierKeys And Keys.Control) = Keys.Control And cell.Value <> 0 Then
+                cell.Value -= 1
             End If
 
 

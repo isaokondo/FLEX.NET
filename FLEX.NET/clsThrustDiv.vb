@@ -31,9 +31,9 @@ Friend Class clsThrustDiv
 
     Private _FullOpenGruop As List(Of Short) '全開グループ
     ''' <summary>
-    ''' 
+    ''' 強制低圧推進および対抗ジャッキ
     ''' </summary>
-    Private _OptinalGroup As Dictionary(Of Short, Single)
+    Private _OptinalGroup As New Dictionary(Of Integer, Single)
 
 
     Public Property 分担率指令値 As Double()
@@ -180,6 +180,16 @@ Friend Class clsThrustDiv
         End Get
         Set(value As Boolean())
             _OnJack = value
+        End Set
+    End Property
+
+
+    Public Property OptinalGroup As Dictionary(Of Integer, Single)
+        Get
+            Return _OptinalGroup
+        End Get
+        Set(value As Dictionary(Of Integer, Single))
+            _OptinalGroup = value
         End Set
     End Property
 
@@ -335,13 +345,16 @@ Friend Class clsThrustDiv
                     Pj2(i) = Pjmax2(i) * PC '選択ジャッキ時の当該ジャッキ推力（低圧推進は考慮しない）
 
                 '任意圧に設定されてるグループのジャッキ
-                If CtlPara.optGpEn.Contains(i + 1) AndAlso
-                    Pj2(i) > InitPara.JackPower * CtlPara.optGpSv(i) / InitPara.JackMaxOilPres Then
+                'If CtlPara.optGpEn.Contains(i + 1) AndAlso
+                '    Pj2(i) > InitPara.JackPower * CtlPara.optGpSv(i) / InitPara.JackMaxOilPres Then
+                '    '任意圧に設定されてるグループのジャッキ
+                If _OptinalGroup.ContainsKey(i + 1) AndAlso
+                        Pj2(i) > InitPara.JackPower * _OptinalGroup(i + 1) / InitPara.JackMaxOilPres Then
                     '任意設定圧の加減圧ｼﾞｬｯｷとして選択され、さらに当該ジャッキ推力が設定圧１を越えているとき
                     Dim Pj2Dash As Single =
-                        Pj2(i) - InitPara.JackPower * CtlPara.optGpSv(i) / InitPara.JackMaxOilPres
+                        Pj2(i) - InitPara.JackPower * _OptinalGroup(i + 1) / InitPara.JackMaxOilPres
                     Pj2(i) =
-                        InitPara.JackPower * CtlPara.optGpSv(i) / InitPara.JackMaxOilPres '当該ジャッキ推力を任意設定圧の推力にする
+                        InitPara.JackPower * _OptinalGroup(i + 1) / InitPara.JackMaxOilPres '当該ジャッキ推力を任意設定圧の推力にする
                     Pj2sumdash += Pj2Dash '任意設定圧の調整による低下推力を積算（不要）
                 End If
 
