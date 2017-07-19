@@ -14,6 +14,7 @@ Friend Class clsCulMoment
     Private _MomentY As Single ''Ｙ軸方向モーメント
     Private _MomentR As Single ''合成モーメント
     Private _Thrust As Single ''推力
+    Private _ThrustOnTime As Single ''掘削時の推力
 
     '入力
     Private _GroupPv As Single()
@@ -71,7 +72,11 @@ Friend Class clsCulMoment
         End Get
     End Property
 
-
+    Public ReadOnly Property ThrustOnTime As Single
+        Get
+            ThrustOnTime = _ThrustOnTime
+        End Get
+    End Property
 
 
     Public Sub MomentCul()
@@ -128,6 +133,7 @@ Friend Class clsCulMoment
         ''合成値の演算
         _MomentR = Sqrt(_MomentX ^ 2 + _MomentY ^ 2)
 
+        _ThrustOnTime = _Thrust
 
     End Sub
 

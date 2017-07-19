@@ -2,7 +2,7 @@
 Option Explicit On
 Imports System.Math
 
-Friend Class clsThrustDiv
+Public Class clsThrustDiv
     ' @(h) clsThrustDiv                ver 1.0 ( '01.03.06 近藤　勲 )
 
     ' @(s)推力分担率の演算
@@ -30,9 +30,9 @@ Friend Class clsThrustDiv
     Private _OnJack(InitPara.NumberJack - 1) As Boolean  '推進ジャッキ
 
     Private _FullOpenGruop As List(Of Short) '全開グループ
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 強制低圧推進および対抗ジャッキ
-    ''' </summary>
+    ''' </summa_pointy>
     Private _OptinalGroup As New Dictionary(Of Integer, Single)
 
 
@@ -99,9 +99,9 @@ Friend Class clsThrustDiv
             _最低全開グループ数 = Value
         End Set
     End Property
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 全開グループ番号リスト
-    ''' </summary>
+    ''' </summa_pointy>
     ''' <returns></returns>
     Public ReadOnly Property FullOpenGruop As List(Of Short)
         Get
@@ -117,9 +117,9 @@ Friend Class clsThrustDiv
             Return _PjDash
         End Get
     End Property
-    ''' <summary>
+    ''' <summa_pointy>
     ''' '元圧MAX時の当該ジャッキの推力
-    ''' </summary>
+    ''' </summa_pointy>
     ''' <returns></returns>
     Public ReadOnly Property Pjmax1 As Double()
         Get
@@ -170,9 +170,9 @@ Friend Class clsThrustDiv
             Return _MomentY
         End Get
     End Property
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 推進ジャッキ
-    ''' </summary>
+    ''' </summa_pointy>
     ''' <returns></returns>
     Public Property OnJack As Boolean()
         Get
@@ -183,7 +183,10 @@ Friend Class clsThrustDiv
         End Set
     End Property
 
-
+    ''' <summa_pointy>
+    ''' 強制低圧推進および対抗ジャッキ
+    ''' </summa_pointy>
+    ''' <returns></returns>
     Public Property OptinalGroup As Dictionary(Of Integer, Single)
         Get
             Return _OptinalGroup
@@ -194,21 +197,14 @@ Friend Class clsThrustDiv
     End Property
 
 
-    Private Sub Class_Initialize_Renamed()
-        ''配列の初期化
-        'ReDim _分担率計算値(InitPara.NumberGroup - 1)
-        'ReDim _分担率指令値(InitPara.NumberGroup - 1)
-        'ReDim _PjDash(InitPara.NumberJack - 1)
-    End Sub
     Public Sub New()
         MyBase.New()
-        Class_Initialize_Renamed()
     End Sub
 
 
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 推力分担率の演算
-    ''' </summary>
+    ''' </summa_pointy>
     Public Sub sbCul()
         ' @(f)
         '
@@ -246,10 +242,10 @@ Friend Class clsThrustDiv
             '_OnJack(i) = Not PlcIf.LosZeroMode Or (PlcIf.JackExecMode(i) And
             '        Not Reduce.LstR.Contains(InitPara.JackGroupPos(i)))
             IgNum(InitPara.JackGroupPos(i) - 1) += 1 '各グループのジャッキ本数加算
-            If _OnJack(i) Then
-                _分担率計算値(InitPara.JackGroupPos(i) - 1) += _PjDash(i)
+            'If _OnJack(i) Then
+            _分担率計算値(InitPara.JackGroupPos(i) - 1) += _PjDash(i)
                 KgNum(InitPara.JackGroupPos(i) - 1) += 1 '各グループの有効ジャッキ本数加算
-            End If
+            'End If
         Next i
         '各グループのジャッキ本数で割る
         For i = 0 To InitPara.NumberGroup - 1
@@ -294,19 +290,18 @@ Friend Class clsThrustDiv
         Dim buntang As New Dictionary(Of Short, Double)
 
         For i = 0 To InitPara.NumberGroup - 1
-            Dim DisenFullOpn As Boolean = CtlPara.optGpEn.Contains(i + 1) Or KgNum(i) / IgNum(i) < 0.5
+            Dim DisenFullOpn As Boolean = _OptinalGroup.ContainsKey(i + 1) Or KgNum(i) / IgNum(i) < 0.5
             buntang.Add(i, If(DisenFullOpn, 0, _分担率計算値(i)))
         Next i
         '分担率計算値を降順に並べ変え,最低全開グループ数分の番号を取得
         _FullOpenGruop =
                     (From q In buntang Order By q.Value Descending Select q.Key).Take(_最低全開グループ数).ToList
-            '分担率　100%も追加
-            _FullOpenGruop.AddRange(From q In buntang Where q.Value = 100 Select q.Key)
-            '全開にセット
-            For Each g In _FullOpenGruop
-                _分担率指令値(g) = 100
-            Next
-
+        '分担率　100%も追加
+        _FullOpenGruop.AddRange(From q In buntang Where q.Value = 100 Select q.Key)
+        '全開にセット
+        For Each g In _FullOpenGruop
+            _分担率指令値(g) = 100
+        Next
 
 
         Dim Pj1sum As Double = 0
@@ -340,9 +335,10 @@ Friend Class clsThrustDiv
 
             For i = 0 To InitPara.NumberJack - 1
 
-                    PC = (P0 + P1) * 0.5 'P0とP1の半分とする
-                    Pj1(i) = Pjmax1(i) * CulcMoment.Thrust / Pj1sum '全ジャッキ時の当該ジャッキ推力（あんまり意味ないじゃん）
-                    Pj2(i) = Pjmax2(i) * PC '選択ジャッキ時の当該ジャッキ推力（低圧推進は考慮しない）
+                PC = (P0 + P1) * 0.5 'P0とP1の半分とする
+                '                Pj1(i) = Pjmax1(i) * CulcMoment.Thrust / Pj1sum '全ジャッキ時の当該ジャッキ推力（あんまり意味ないじゃん）
+                _Pj1(i) = _Pjmax1(i) * CulcMoment.ThrustOnTime / Pj1sum '全ジャッキ時の当該ジャッキ推力（あんまり意味ないじゃん）
+                _Pj2(i) = _PjMax2(i) * PC '選択ジャッキ時の当該ジャッキ推力（低圧推進は考慮しない）
 
                 '任意圧に設定されてるグループのジャッキ
                 'If CtlPara.optGpEn.Contains(i + 1) AndAlso
@@ -381,7 +377,7 @@ Friend Class clsThrustDiv
 
 
             '最適化処理
-            If Pj2sum > CulcMoment.Thrust Then
+            If Pj2sum > CulcMoment.ThrustOnTime Then
                 '計算値が大きいとき
                 P1 = PC '最大値にPC代入
             Else
@@ -394,8 +390,10 @@ Friend Class clsThrustDiv
         _MomentX = 0
         _MomentY = 0
         For i = 0 To InitPara.NumberJack - 1
-            _MomentX -= Pj1(i) * InitPara.JackRadius * Cos(InitPara.FaiJack(i) / 180 * PI)
-            _MomentY -= Pj1(i) * InitPara.JackRadius * Sin(InitPara.FaiJack(i) / 180 * PI)
+            '_MomentX -= Pj1(i) * InitPara.JackRadius * Cos(InitPara.FaiJack(i) / 180 * PI)
+            '_MomentY -= Pj1(i) * InitPara.JackRadius * Sin(InitPara.FaiJack(i) / 180 * PI)
+            _MomentX -= Pj2(i) * InitPara.JackRadius * Cos(InitPara.FaiJack(i) / 180 * PI)
+            _MomentY -= Pj2(i) * InitPara.JackRadius * Sin(InitPara.FaiJack(i) / 180 * PI)
         Next
 
     End Sub
@@ -404,23 +402,23 @@ End Class
 
 
 
-''' <summary>
+''' <summa_pointy>
 ''' 減圧中処理
-''' </summary>
+''' </summa_pointy>
 Friend Class clsReducePress
 
     Private _MvOut() As Short
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 1秒ごとの減圧量(%)
-    ''' </summary>
+    ''' </summa_pointy>
     Private ReduceDev() As Short
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 減圧グループ
-    ''' </summary>
+    ''' </summa_pointy>
     Private _LstRd As New List(Of Short)
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 減圧処理タイマ
-    ''' </summary>
+    ''' </summa_pointy>
     Private timer As Timer
     Private tCount As Short = 0
 
@@ -432,23 +430,23 @@ Friend Class clsReducePress
         timer.Interval = 1000   '1秒ごとの処理
     End Sub
 
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 減圧処理　１秒毎
-    ''' </summary>
+    ''' </summa_pointy>
     Public Event ReduceOn()
 
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 操作出力
-    ''' </summary>
+    ''' </summa_pointy>
     ''' <returns></returns>
     Public ReadOnly Property MvOut As Short()
         Get
             Return _MvOut
         End Get
     End Property
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 現在の減圧グループ
-    ''' </summary>
+    ''' </summa_pointy>
     ''' <returns></returns>
     Public ReadOnly Property LstR As List(Of Short)
         Get
@@ -458,9 +456,9 @@ Friend Class clsReducePress
 
 
 
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 減圧開始
-    ''' </summary>
+    ''' </summa_pointy>
     Public Sub Start()
 
 
@@ -479,9 +477,9 @@ Friend Class clsReducePress
         timer.Enabled = True ' timer.Start()と同じ
         tCount = 0
     End Sub
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 減圧処理
-    ''' </summary>
+    ''' </summa_pointy>
     Private Sub Reduce()
         '操作出力0%まで、減圧
         For i As Short = 0 To InitPara.NumberGroup - 1
@@ -515,9 +513,9 @@ Friend Class clsReducePress
 
         RaiseEvent ReduceOn() '減圧処理イベント
     End Sub
-    ''' <summary>
+    ''' <summa_pointy>
     ''' 減圧キャンセル
-    ''' </summary>
+    ''' </summa_pointy>
     Public Sub Cancel()
         timer.Stop()
         _LstRd.Clear()
@@ -526,7 +524,336 @@ Friend Class clsReducePress
 
 End Class
 
+''' <summa_pointy>
+''' モーメント最適化
+''' </summa_pointy>
+Public Class clsMomentOptimize
+    '目標モーメント
+    Private _TargetMomentX As Double, _TargetMomentY As Double
+    '力点の初期値
+    Private _InitPointX As Double, _InitPointY As Double
+    '算出した力点
+    Private _CulPointX As Double, _CulPointY As Double
+    '力点変化量
+    Private _rStep As Single = 0.5
+    '規定ループ回数
+    Private _Nlp As Integer
+    'モーメント偏差許容値
+    Private _Epm As Double
+
+    Public DivCul0 As New clsThrustDiv
+
+    ''' <summary>
+    ''' 1ループの演算の力点変化量
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property rStep As Single
+        Get
+            Return _rStep
+        End Get
+        Set(value As Single)
+            _rStep = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 規定ループ回数
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Nlp As Integer
+        Get
+            Return _Nlp
+        End Get
+        Set(value As Integer)
+            _Nlp = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' モーメント偏差許容値
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Epm As Double
+        Get
+            Return _Epm
+        End Get
+        Set(value As Double)
+            _Epm = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 力点の初期値X
+    ''' </summary>
+    Public WriteOnly Property InitPointX As Double
+        Set(value As Double)
+            _InitPointX = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' 力点の初期値Y
+    ''' </summary>
+    Public WriteOnly Property InitPointY As Double
+        Set(value As Double)
+            _InitPointY = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' 目標モーメントX
+    ''' </summary>
+    Public WriteOnly Property TargetMomentX As Double
+        Set(value As Double)
+            _TargetMomentX = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' 目標モーメントY
+    ''' </summary>
+    Public WriteOnly Property TargetMomentY As Double
+        Set(value As Double)
+            _TargetMomentY = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' 算出した力点X
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property CulPointX As Double
+        Get
+            Return _CulPointX
+        End Get
+    End Property
+    ''' <summary>
+    ''' 算出した力点Y
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property CulPointY As Double
+        Get
+            Return _CulPointY
+        End Get
+    End Property
 
 
+    Public Sub New()
+        'パラメータセット
+        DivCul0.最低全開グループ数 = CtlPara.最低全開グループ数
+        DivCul0.全開作動指令値 = CtlPara.全開作動指令値
+        DivCul0.全開作動範囲 = CtlPara.全開作動範囲
+
+    End Sub
+
+
+    Public Sub Optimize()
+
+
+        Dim JkM As New clsXyToRs(_InitPointX, _InitPointY)
+
+
+        _CulPointX = _InitPointX
+        _CulPointY = _InitPointY
+
+        DivCul0.操作角 = JkM.OpTheta
+        DivCul0.操作強 = JkM.OpRc
+        DivCul0.sbCul()
+        'モーメント偏差
+        Dim EMx As Double = DivCul0.MomentX - _TargetMomentX
+        Dim EMy As Double = DivCul0.MomentY - _TargetMomentY
+
+        Dim FlagS As Short = 0   '算出フラグ　－2:推力調整　－1:元圧上限超　0:計算ループ超過　1:有効
+        Dim k As Integer = 0
+        Dim kx As Integer = 0
+        Dim ky As Integer = 0
+
+        Dim rxdash As Double = _CulPointX
+        Dim rydash As Double = _CulPointY
+        Dim kxdash As Double = 0
+        Dim kydash As Double = 0
+        Dim rstx As Single = _rStep
+        Dim rsty As Single = _rStep
+
+        Do
+            If FlagS <> -2 Then
+                '通常処理
+                If Abs(EMx) >= Abs(EMy) Then
+                    'Xのモーメント偏差のほうが大きい
+                    rxdash = _CulPointX '前の値を保存 ＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+                    kxdash = kx '前の値を保存 ＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+                    'Xのモーメント偏差がプラスorマイナスで移動
+                    _CulPointX += rstx * Sign(EMx)
+                    kx += 1
+                Else
+                    'Yのモーメント偏差のほうが大きい
+                    rydash = _CulPointY '前の値を保存 ＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+                    kydash = ky '前の値を保存 ＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+                    'Yのモーメント偏差がプラスorマイナスで移動
+                    _CulPointY += rsty * Sign(EMy)
+                    ky += 1
+                End If
+                k += 1
+            Else
+                '推力低下時の処理（１回戻す）
+                _CulPointX = rxdash
+                _CulPointY = rydash
+                kx = kxdash
+                ky = kydash
+                k -= 1
+            End If
+            'XY座標系のｼﾞｬｯｷ操作点を極座標系に変換する
+            Dim JkM2 As New clsXyToRs(_CulPointX, _CulPointY)
+
+            'xytors _CulPointX, _CulPointY, rc, sheatc 'XY座標系のｼﾞｬｯｷ操作点を極座標系に変換する
+            'Retsu = Retsu + 1
+            'Cul_J3 rc, sheatc, Mx, My, pujmax 'ｼﾞｬｯｷ推力を計算してﾓｰﾒﾝﾄ、元圧を計算するルーチン　＜＜設定圧３に関する修正(2003/01/30)
+            'xytors Mx, My, Mc, sheatM
+            DivCul0.操作角 = JkM2.OpTheta
+            DivCul0.操作強 = JkM2.OpRc
+            DivCul0.sbCul()
+
+
+
+            'Exdash = Mx - Mxp
+            'Eydash = My - Myp
+            Dim Exdash As Double = DivCul0.MomentX - _TargetMomentX '- MxD 'ﾓｰﾒﾝﾄ偏差（ｘ)　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+            Dim Eydash As Double = DivCul0.MomentY - _TargetMomentY '- MyD 'ﾓｰﾒﾝﾄ偏差（ｙ)　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+
+            If EMx * Exdash < 0 Then '符号が反転したら操作点移動ｽﾃｯﾌﾟを1/2
+                rstx = rstx / 2
+            End If
+            If EMy * Eydash < 0 Then
+                rsty = rsty / 2
+            End If
+
+            EMx = Exdash
+            EMy = Eydash
+
+
+
+            'Dim Pj2sum As Single = 0 '総推力を計算　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+            'For i = 1 To InitPara.NumberJack
+            '    Pj2sum += divCul0.Pj2(i)
+            'Next
+            Dim Pj2sum As Double = DivCul0.Pj2.Sum '総推力を計算　
+            If FlagS = -2 Then '総推力低下を検知したので終了　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+                '異常終了（推力低下を検知）
+                Exit Do
+            End If
+
+            If Abs(EMx) <= _Epm And Abs(EMy) <= _Epm Then 'ﾓｰﾒﾝﾄの偏差が許容値以下になったら終了　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+                '正常終了
+                FlagS = 1
+                Exit Do
+            End If
+
+            If k >= _Nlp Then 'ﾙｰﾌﾟ回数が規定回数以上になったら終了　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+                '異常終了（ループ回数既定値以上）
+                FlagS = 0
+                Exit Do
+            End If
+
+            'If pujmax >= Limpu Then 'ｼﾞｬｯｷの元圧が規定値以上になったら終了　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+            If DivCul0.PujMax >= CtlPara.圧力許容値 Then 'ｼﾞｬｯｷの元圧が規定値以上になったら終了　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+                '異常終了（元圧が既定値以上）
+                FlagS = -1
+                Exit Do
+            End If
+
+            'If Fp = 1 And Abs(Pj2sum - Nowp) >= 1 Then '総推力ﾁｪｯｸがONで、総推力の規定値との差が1kN以上になったら１回戻し　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+            '    FlagS = -2
+            'End If
+
+        Loop  '＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+
+
+
+
+    End Sub
+
+    ''' <summa_pointy>
+    ''' XYの座標を極座標系　操作角、操作強に変換
+    ''' </summa_pointy>
+    Private Class clsXyToRs
+
+        Private _pointX As Double, _pointY As Double 'XY座標
+        Private _OpRc As Double, _OpTheta As Double '操作強、操作角
+        Public Sub New(px As Double, py As Double)
+            _pointX = px
+            _pointY = py
+            Cul()
+        End Sub
+        ''' <summary>
+        ''' 操作強
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property OpRc As Double
+            Get
+                Return _OpRc
+            End Get
+        End Property
+        ''' <summary>
+        ''' 操作角
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property OpTheta As Double
+            Get
+                Return _OpTheta
+            End Get
+        End Property
+
+
+        Private Sub Cul()
+            _OpRc = Math.Sqrt(_pointX ^ 2 + _pointY ^ 2)
+            If _pointX = 0 Then
+                If _pointY = 0 Then
+                    _OpTheta = 0
+                    Exit Sub
+                Else
+                    If _pointY > 0 Then
+                        _OpTheta = 90
+                        Exit Sub
+                    Else
+                        _OpTheta = 270
+                        Exit Sub
+                    End If
+                End If
+            End If
+            If _pointX > 0 Then
+                If _pointY = 0 Then
+                    _OpTheta = 0
+                    Exit Sub
+                Else
+                    If _pointY > 0 Then
+                        _OpTheta = Abs(Math.Atan(_pointY / _pointX) / Math.PI * 180)
+                        Exit Sub
+                    Else
+                        _OpTheta = 360 - Abs(Atan(_pointY / _pointX) / Math.PI * 180)
+                        Exit Sub
+                    End If
+                End If
+            End If
+            If _pointX < 0 Then
+                If _pointY = 0 Then
+                    _OpTheta = 180
+                    Exit Sub
+                Else
+                    If _pointY > 0 Then
+                        _OpTheta = 180 - Abs(Atan(_pointY / _pointX) / Math.PI * 180)
+                        Exit Sub
+                    Else
+                        _OpTheta = 180 + Abs(Atan(_pointY / _pointX) / Math.PI * 180)
+                        Exit Sub
+                    End If
+                End If
+            End If
+
+        End Sub
+
+
+    End Class
+
+
+
+
+
+End Class
 
 

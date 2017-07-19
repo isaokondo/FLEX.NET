@@ -207,7 +207,7 @@ Public Class clsControlParameter
             Return _OptGpSvDic
         End Get
         Set(value As Dictionary(Of Short, Single))
-
+            _OptGpSvDic = value
         End Set
     End Property
 

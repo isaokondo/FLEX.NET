@@ -43,6 +43,31 @@ Partial Class frmDirControlChek
         Me.Label7 = New System.Windows.Forms.Label()
         Me.dgv = New System.Windows.Forms.DataGridView()
         Me.btnMomentOptimize = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.txtLowOptSv = New System.Windows.Forms.TextBox()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.lblOptMomentY = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.lblOptMomentX = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.lblOptTheater = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.lblOptR = New System.Windows.Forms.Label()
+        Me.lblOptPointY = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.lblOptPointX = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.lblOptJackPress = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.txtRst = New System.Windows.Forms.TextBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtLpMax = New System.Windows.Forms.TextBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.txtMomnetDev = New System.Windows.Forms.TextBox()
+        Me.Label17 = New System.Windows.Forms.Label()
         CType(Me.dgv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -314,12 +339,314 @@ Partial Class frmDirControlChek
         'btnMomentOptimize
         '
         Me.btnMomentOptimize.BackColor = System.Drawing.Color.DarkGray
-        Me.btnMomentOptimize.Location = New System.Drawing.Point(65, 51)
+        Me.btnMomentOptimize.Location = New System.Drawing.Point(576, 7)
         Me.btnMomentOptimize.Name = "btnMomentOptimize"
         Me.btnMomentOptimize.Size = New System.Drawing.Size(108, 38)
         Me.btnMomentOptimize.TabIndex = 36
         Me.btnMomentOptimize.Text = "モーメント最適化"
         Me.btnMomentOptimize.UseVisualStyleBackColor = False
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label1.Location = New System.Drawing.Point(322, 69)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(248, 52)
+        Me.Label1.TabIndex = 37
+        Me.Label1.Text = "0:非稼働（引き、非選択、セグメントモード)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "1:通常FLEXジャッキ" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "2:低圧推進" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "3:対抗ジャッキ"
+        '
+        'Label3
+        '
+        Me.Label3.BackColor = System.Drawing.SystemColors.Control
+        Me.Label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label3.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label3.Location = New System.Drawing.Point(455, 102)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(117, 19)
+        Me.Label3.TabIndex = 39
+        Me.Label3.Text = "対抗G圧力(Mpa)"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label5
+        '
+        Me.Label5.BackColor = System.Drawing.SystemColors.Control
+        Me.Label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label5.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label5.Location = New System.Drawing.Point(455, 83)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(117, 19)
+        Me.Label5.TabIndex = 38
+        Me.Label5.Text = "低圧推進圧力(Mpa)"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'txtLowOptSv
+        '
+        Me.txtLowOptSv.Location = New System.Drawing.Point(576, 82)
+        Me.txtLowOptSv.Name = "txtLowOptSv"
+        Me.txtLowOptSv.Size = New System.Drawing.Size(47, 19)
+        Me.txtLowOptSv.TabIndex = 40
+        Me.txtLowOptSv.Text = "4.5"
+        Me.txtLowOptSv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'TextBox2
+        '
+        Me.TextBox2.Location = New System.Drawing.Point(576, 102)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(47, 19)
+        Me.TextBox2.TabIndex = 41
+        Me.TextBox2.Text = "0.0"
+        Me.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'lblOptMomentY
+        '
+        Me.lblOptMomentY.BackColor = System.Drawing.Color.White
+        Me.lblOptMomentY.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblOptMomentY.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblOptMomentY.Location = New System.Drawing.Point(918, 26)
+        Me.lblOptMomentY.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblOptMomentY.Name = "lblOptMomentY"
+        Me.lblOptMomentY.Size = New System.Drawing.Size(75, 19)
+        Me.lblOptMomentY.TabIndex = 53
+        Me.lblOptMomentY.Text = "0"
+        Me.lblOptMomentY.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label11
+        '
+        Me.Label11.BackColor = System.Drawing.SystemColors.Control
+        Me.Label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label11.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label11.Location = New System.Drawing.Point(854, 26)
+        Me.Label11.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(64, 19)
+        Me.Label11.TabIndex = 52
+        Me.Label11.Text = "MomentY"
+        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblOptMomentX
+        '
+        Me.lblOptMomentX.BackColor = System.Drawing.Color.White
+        Me.lblOptMomentX.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblOptMomentX.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblOptMomentX.Location = New System.Drawing.Point(918, 7)
+        Me.lblOptMomentX.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblOptMomentX.Name = "lblOptMomentX"
+        Me.lblOptMomentX.Size = New System.Drawing.Size(75, 19)
+        Me.lblOptMomentX.TabIndex = 51
+        Me.lblOptMomentX.Text = "0"
+        Me.lblOptMomentX.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label13
+        '
+        Me.Label13.BackColor = System.Drawing.SystemColors.Control
+        Me.Label13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label13.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label13.Location = New System.Drawing.Point(854, 7)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(64, 19)
+        Me.Label13.TabIndex = 50
+        Me.Label13.Text = "MomentX"
+        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label14
+        '
+        Me.Label14.BackColor = System.Drawing.Color.LightSalmon
+        Me.Label14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label14.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label14.Location = New System.Drawing.Point(706, 64)
+        Me.Label14.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(64, 19)
+        Me.Label14.TabIndex = 49
+        Me.Label14.Text = "θ"
+        Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblOptTheater
+        '
+        Me.lblOptTheater.BackColor = System.Drawing.Color.White
+        Me.lblOptTheater.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblOptTheater.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblOptTheater.Location = New System.Drawing.Point(770, 64)
+        Me.lblOptTheater.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblOptTheater.Name = "lblOptTheater"
+        Me.lblOptTheater.Size = New System.Drawing.Size(75, 19)
+        Me.lblOptTheater.TabIndex = 48
+        Me.lblOptTheater.Text = "0"
+        Me.lblOptTheater.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label16
+        '
+        Me.Label16.BackColor = System.Drawing.Color.LightSalmon
+        Me.Label16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label16.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label16.Location = New System.Drawing.Point(706, 45)
+        Me.Label16.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(64, 19)
+        Me.Label16.TabIndex = 47
+        Me.Label16.Text = "RC"
+        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblOptR
+        '
+        Me.lblOptR.BackColor = System.Drawing.Color.White
+        Me.lblOptR.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblOptR.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblOptR.Location = New System.Drawing.Point(770, 45)
+        Me.lblOptR.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblOptR.Name = "lblOptR"
+        Me.lblOptR.Size = New System.Drawing.Size(75, 19)
+        Me.lblOptR.TabIndex = 46
+        Me.lblOptR.Text = "0"
+        Me.lblOptR.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblOptPointY
+        '
+        Me.lblOptPointY.BackColor = System.Drawing.Color.White
+        Me.lblOptPointY.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblOptPointY.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblOptPointY.Location = New System.Drawing.Point(770, 26)
+        Me.lblOptPointY.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblOptPointY.Name = "lblOptPointY"
+        Me.lblOptPointY.Size = New System.Drawing.Size(75, 19)
+        Me.lblOptPointY.TabIndex = 45
+        Me.lblOptPointY.Text = "0"
+        Me.lblOptPointY.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label19
+        '
+        Me.Label19.BackColor = System.Drawing.SystemColors.Control
+        Me.Label19.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label19.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label19.Location = New System.Drawing.Point(706, 26)
+        Me.Label19.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(64, 19)
+        Me.Label19.TabIndex = 44
+        Me.Label19.Text = "Y"
+        Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblOptPointX
+        '
+        Me.lblOptPointX.BackColor = System.Drawing.Color.White
+        Me.lblOptPointX.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblOptPointX.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblOptPointX.Location = New System.Drawing.Point(770, 7)
+        Me.lblOptPointX.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblOptPointX.Name = "lblOptPointX"
+        Me.lblOptPointX.Size = New System.Drawing.Size(75, 19)
+        Me.lblOptPointX.TabIndex = 43
+        Me.lblOptPointX.Text = "0"
+        Me.lblOptPointX.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label21
+        '
+        Me.Label21.BackColor = System.Drawing.SystemColors.Control
+        Me.Label21.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label21.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label21.Location = New System.Drawing.Point(706, 7)
+        Me.Label21.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(64, 19)
+        Me.Label21.TabIndex = 42
+        Me.Label21.Text = "X"
+        Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblOptJackPress
+        '
+        Me.lblOptJackPress.BackColor = System.Drawing.Color.White
+        Me.lblOptJackPress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblOptJackPress.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblOptJackPress.Location = New System.Drawing.Point(770, 101)
+        Me.lblOptJackPress.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblOptJackPress.Name = "lblOptJackPress"
+        Me.lblOptJackPress.Size = New System.Drawing.Size(75, 19)
+        Me.lblOptJackPress.TabIndex = 55
+        Me.lblOptJackPress.Text = "-32353.09"
+        Me.lblOptJackPress.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label12
+        '
+        Me.Label12.BackColor = System.Drawing.SystemColors.Control
+        Me.Label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label12.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label12.Location = New System.Drawing.Point(706, 101)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(64, 19)
+        Me.Label12.TabIndex = 54
+        Me.Label12.Text = "元圧"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'txtRst
+        '
+        Me.txtRst.Location = New System.Drawing.Point(1124, 8)
+        Me.txtRst.Name = "txtRst"
+        Me.txtRst.Size = New System.Drawing.Size(47, 19)
+        Me.txtRst.TabIndex = 57
+        Me.txtRst.Text = "0.05"
+        Me.txtRst.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label9
+        '
+        Me.Label9.BackColor = System.Drawing.SystemColors.Control
+        Me.Label9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label9.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label9.Location = New System.Drawing.Point(1031, 9)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(87, 19)
+        Me.Label9.TabIndex = 56
+        Me.Label9.Text = "力点変化"
+        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'txtLpMax
+        '
+        Me.txtLpMax.Location = New System.Drawing.Point(1124, 29)
+        Me.txtLpMax.Name = "txtLpMax"
+        Me.txtLpMax.Size = New System.Drawing.Size(47, 19)
+        Me.txtLpMax.TabIndex = 59
+        Me.txtLpMax.Text = "100"
+        Me.txtLpMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label15
+        '
+        Me.Label15.BackColor = System.Drawing.SystemColors.Control
+        Me.Label15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label15.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label15.Location = New System.Drawing.Point(1031, 30)
+        Me.Label15.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(87, 19)
+        Me.Label15.TabIndex = 58
+        Me.Label15.Text = "繰返回数"
+        Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'txtMomnetDev
+        '
+        Me.txtMomnetDev.Location = New System.Drawing.Point(1124, 50)
+        Me.txtMomnetDev.Name = "txtMomnetDev"
+        Me.txtMomnetDev.Size = New System.Drawing.Size(47, 19)
+        Me.txtMomnetDev.TabIndex = 61
+        Me.txtMomnetDev.Text = "0.5"
+        Me.txtMomnetDev.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label17
+        '
+        Me.Label17.BackColor = System.Drawing.SystemColors.Control
+        Me.Label17.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label17.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label17.Location = New System.Drawing.Point(1031, 51)
+        Me.Label17.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(87, 19)
+        Me.Label17.TabIndex = 60
+        Me.Label17.Text = "ﾓｰﾒﾝﾄ許容偏差"
+        Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'frmDirControlChek
         '
@@ -327,6 +654,31 @@ Partial Class frmDirControlChek
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
         Me.ClientSize = New System.Drawing.Size(1463, 673)
+        Me.Controls.Add(Me.txtMomnetDev)
+        Me.Controls.Add(Me.Label17)
+        Me.Controls.Add(Me.txtLpMax)
+        Me.Controls.Add(Me.Label15)
+        Me.Controls.Add(Me.txtRst)
+        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.lblOptJackPress)
+        Me.Controls.Add(Me.Label12)
+        Me.Controls.Add(Me.lblOptMomentY)
+        Me.Controls.Add(Me.Label11)
+        Me.Controls.Add(Me.lblOptMomentX)
+        Me.Controls.Add(Me.Label13)
+        Me.Controls.Add(Me.Label14)
+        Me.Controls.Add(Me.lblOptTheater)
+        Me.Controls.Add(Me.Label16)
+        Me.Controls.Add(Me.lblOptR)
+        Me.Controls.Add(Me.lblOptPointY)
+        Me.Controls.Add(Me.Label19)
+        Me.Controls.Add(Me.lblOptPointX)
+        Me.Controls.Add(Me.Label21)
+        Me.Controls.Add(Me.TextBox2)
+        Me.Controls.Add(Me.txtLowOptSv)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btnMomentOptimize)
         Me.Controls.Add(Me.dgv)
         Me.Controls.Add(Me.lblMomentY)
@@ -369,8 +721,34 @@ Partial Class frmDirControlChek
         Me.Controls.SetChildIndex(Me.lblMomentY, 0)
         Me.Controls.SetChildIndex(Me.dgv, 0)
         Me.Controls.SetChildIndex(Me.btnMomentOptimize, 0)
+        Me.Controls.SetChildIndex(Me.Label1, 0)
+        Me.Controls.SetChildIndex(Me.Label5, 0)
+        Me.Controls.SetChildIndex(Me.Label3, 0)
+        Me.Controls.SetChildIndex(Me.txtLowOptSv, 0)
+        Me.Controls.SetChildIndex(Me.TextBox2, 0)
+        Me.Controls.SetChildIndex(Me.Label21, 0)
+        Me.Controls.SetChildIndex(Me.lblOptPointX, 0)
+        Me.Controls.SetChildIndex(Me.Label19, 0)
+        Me.Controls.SetChildIndex(Me.lblOptPointY, 0)
+        Me.Controls.SetChildIndex(Me.lblOptR, 0)
+        Me.Controls.SetChildIndex(Me.Label16, 0)
+        Me.Controls.SetChildIndex(Me.lblOptTheater, 0)
+        Me.Controls.SetChildIndex(Me.Label14, 0)
+        Me.Controls.SetChildIndex(Me.Label13, 0)
+        Me.Controls.SetChildIndex(Me.lblOptMomentX, 0)
+        Me.Controls.SetChildIndex(Me.Label11, 0)
+        Me.Controls.SetChildIndex(Me.lblOptMomentY, 0)
+        Me.Controls.SetChildIndex(Me.Label12, 0)
+        Me.Controls.SetChildIndex(Me.lblOptJackPress, 0)
+        Me.Controls.SetChildIndex(Me.Label9, 0)
+        Me.Controls.SetChildIndex(Me.txtRst, 0)
+        Me.Controls.SetChildIndex(Me.Label15, 0)
+        Me.Controls.SetChildIndex(Me.txtLpMax, 0)
+        Me.Controls.SetChildIndex(Me.Label17, 0)
+        Me.Controls.SetChildIndex(Me.txtMomnetDev, 0)
         CType(Me.dgv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -393,4 +771,29 @@ Partial Class frmDirControlChek
     Friend WithEvents Label7 As Label
     Private WithEvents dgv As DataGridView
     Friend WithEvents btnMomentOptimize As Button
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents txtLowOptSv As TextBox
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents lblOptMomentY As Label
+    Friend WithEvents Label11 As Label
+    Friend WithEvents lblOptMomentX As Label
+    Friend WithEvents Label13 As Label
+    Friend WithEvents Label14 As Label
+    Friend WithEvents lblOptTheater As Label
+    Friend WithEvents Label16 As Label
+    Friend WithEvents lblOptR As Label
+    Friend WithEvents lblOptPointY As Label
+    Friend WithEvents Label19 As Label
+    Friend WithEvents lblOptPointX As Label
+    Friend WithEvents Label21 As Label
+    Friend WithEvents lblOptJackPress As Label
+    Friend WithEvents Label12 As Label
+    Friend WithEvents txtRst As TextBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents txtLpMax As TextBox
+    Friend WithEvents Label15 As Label
+    Friend WithEvents txtMomnetDev As TextBox
+    Friend WithEvents Label17 As Label
 End Class

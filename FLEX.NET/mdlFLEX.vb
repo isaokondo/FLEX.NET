@@ -431,14 +431,12 @@ Module mdlFLEX
     Private Sub JackManual_PointChanges() Handles PlcIf.ExcavationStatusChange, PlcIf.JkPressFilterChange,
         JackMvAuto.AutoDirectionCulc, Reduce.ReduceOn, PlcIf.LosZeroStsChange, JackManual.PointChanges
 
-        With DivCul
-            'パラメータセット
-            DivCul.最低全開グループ数 = CtlPara.最低全開グループ数
-            DivCul.全開作動指令値 = CtlPara.全開作動指令値
-            DivCul.全開作動範囲 = CtlPara.全開作動範囲
-            'DivCul.全開グループ制限 = CtlPara.全開グループ制限
+        'パラメータセット
+        DivCul.最低全開グループ数 = CtlPara.最低全開グループ数
+        DivCul.全開作動指令値 = CtlPara.全開作動指令値
+        DivCul.全開作動範囲 = CtlPara.全開作動範囲
 
-            If CtlPara.AutoDirectionControl Then
+        If CtlPara.AutoDirectionControl Then
                 '力点自動
                 DivCul.操作角 = JackMvAuto.操作角
                 DivCul.操作強 = JackMvAuto.操作強
@@ -465,7 +463,6 @@ Module mdlFLEX
             '力点の更新
             PlcIf.PointWrite()
 
-        End With
 
 
         GroupSvOut() 'シーケンサへ圧力分担値の送出

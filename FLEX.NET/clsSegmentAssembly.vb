@@ -319,13 +319,13 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     ''' <param name="tmpS">文字列</param>
     ''' <returns></returns>
-    Private Function JkList(ByVal tmpS As String) As List(Of Short)
+    Overloads Function JkList(ByVal tmpS As String) As List(Of Short)
 
         Dim lst As New List(Of Short)
 
-        If TypeName(tmpS) = "DBNull" OrElse tmpS = "" Then
-            Return lst
-        End If
+        'If TypeName(tmpS) = "DBNull" OrElse tmpS = "" Then
+        '    Return lst
+        'End If
 
         For i As Short = 0 To tmpS.Length - 1
             If tmpS.Substring(i, 1) = "1" Then
@@ -333,19 +333,14 @@ Friend Class clsSegmentAssembly
             End If
         Next
 
-        'Dim i As String() = tmpS.split(",")
-        'For Each k As Short In i
-        '    lst.Add(k)
-        'Next
-
         Return lst
 
     End Function
 
     'TODO:オーバーライドを使いたい！
-    'Private Function JkList(ByVal tmpS As DBNull) As List(Of Short)
-    '    Return New List(Of Short)
-    'End Function
+    Overloads Function JkList(ByVal tmpS As DBNull) As List(Of Short)
+        Return New List(Of Short)
+    End Function
     ''' <summary>
     ''' データベース読込
     ''' </summary>
