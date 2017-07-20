@@ -21,9 +21,9 @@ Partial Class frmDirControlChek
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.lblPointX = New System.Windows.Forms.Label()
         Me.lblX = New System.Windows.Forms.Label()
         Me.lblPointY = New System.Windows.Forms.Label()
@@ -47,7 +47,7 @@ Partial Class frmDirControlChek
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txtLowOptSv = New System.Windows.Forms.TextBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.txtOpposeGpSv = New System.Windows.Forms.TextBox()
         Me.lblOptMomentY = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.lblOptMomentX = New System.Windows.Forms.Label()
@@ -303,33 +303,33 @@ Partial Class frmDirControlChek
         Me.dgv.AllowUserToDeleteRows = False
         Me.dgv.AllowUserToResizeColumns = False
         Me.dgv.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.Format = "N2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.dgv.ColumnHeadersHeight = 46
         Me.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv.DefaultCellStyle = DataGridViewCellStyle5
         Me.dgv.Location = New System.Drawing.Point(65, 136)
         Me.dgv.MultiSelect = False
         Me.dgv.Name = "dgv"
         Me.dgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.dgv.RowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.dgv.RowsDefaultCellStyle = DataGridViewCellStyle6
         Me.dgv.RowTemplate.Height = 18
         Me.dgv.RowTemplate.ReadOnly = True
         Me.dgv.ShowCellErrors = False
@@ -391,14 +391,14 @@ Partial Class frmDirControlChek
         Me.txtLowOptSv.Text = "4.5"
         Me.txtLowOptSv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'TextBox2
+        'txtOpposeGpSv
         '
-        Me.TextBox2.Location = New System.Drawing.Point(576, 102)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(47, 19)
-        Me.TextBox2.TabIndex = 41
-        Me.TextBox2.Text = "0.0"
-        Me.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtOpposeGpSv.Location = New System.Drawing.Point(576, 102)
+        Me.txtOpposeGpSv.Name = "txtOpposeGpSv"
+        Me.txtOpposeGpSv.Size = New System.Drawing.Size(47, 19)
+        Me.txtOpposeGpSv.TabIndex = 41
+        Me.txtOpposeGpSv.Text = "0.0"
+        Me.txtOpposeGpSv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'lblOptMomentY
         '
@@ -674,7 +674,7 @@ Partial Class frmDirControlChek
         Me.Controls.Add(Me.Label19)
         Me.Controls.Add(Me.lblOptPointX)
         Me.Controls.Add(Me.Label21)
-        Me.Controls.Add(Me.TextBox2)
+        Me.Controls.Add(Me.txtOpposeGpSv)
         Me.Controls.Add(Me.txtLowOptSv)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label5)
@@ -725,7 +725,7 @@ Partial Class frmDirControlChek
         Me.Controls.SetChildIndex(Me.Label5, 0)
         Me.Controls.SetChildIndex(Me.Label3, 0)
         Me.Controls.SetChildIndex(Me.txtLowOptSv, 0)
-        Me.Controls.SetChildIndex(Me.TextBox2, 0)
+        Me.Controls.SetChildIndex(Me.txtOpposeGpSv, 0)
         Me.Controls.SetChildIndex(Me.Label21, 0)
         Me.Controls.SetChildIndex(Me.lblOptPointX, 0)
         Me.Controls.SetChildIndex(Me.Label19, 0)
@@ -775,7 +775,7 @@ Partial Class frmDirControlChek
     Friend WithEvents Label3 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents txtLowOptSv As TextBox
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents txtOpposeGpSv As TextBox
     Friend WithEvents lblOptMomentY As Label
     Friend WithEvents Label11 As Label
     Friend WithEvents lblOptMomentX As Label

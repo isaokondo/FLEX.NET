@@ -152,17 +152,81 @@ Public Class frmDirControlChek
         MomentOpt.InitPointY = lblPointY.Text
         MomentOpt.TargetMomentX = lblMomentX.Text '目標モーメント
         MomentOpt.TargetMomentY = lblMomentY.Text
+        '対抗ジャッキのリスト
+        Dim OpposeJkLst As New List(Of Short)
+
         For JkNo As Integer = 0 To InitPara.NumberJack - 1
             MomentOpt.DivCul0.OnJack(JkNo) = (dgv.Rows(JkNo).Cells(3).Value <> 0)
+            '低圧推進ジャッキ
             If dgv.Rows(JkNo).Cells(3).Value = 2 Then
                 MomentOpt.DivCul0.OptinalGroup.Add(JkNo + 1, txtLowOptSv.Text)
             End If
-
+            '対抗ジャッキ
+            If dgv.Rows(JkNo).Cells(3).Value = 3 Then
+                MomentOpt.DivCul0.OptinalGroup.Add(JkNo + 1, txtOpposeGpSv.Text)
+                OpposeJkLst.Add(JkNo + 1)
+            End If
 
         Next
 
+        Dim OpposeSv As Single
 
-        MomentOpt.Optimize()
+        '対抗ジャッキ自動制御
+        If CtlPara.LosZeroOpposeControl Then
+            '対抗ジャッキ圧調整処理　対抗J圧の初期値：最高圧の1/2とする
+            Dim Pt0 As Single = 0 '下限値（Mpa）
+            Dim Pt1 As Single = CtlPara.最大全開出力時の目標圧力 '上限値（Mpa） 初期値は最高値
+            Dim Ptc As Single = (Pt0 + Pt1) / 2 '中央値
+
+            Dim Count As Integer = 1 '無限ループ回避のためのカウント変数
+
+            Do
+                '中央値より1/2下限側の元圧を確認
+                OpposeSv = (Ptc + Pt0) / 2
+                For Each jk As Short In OpposeJkLst
+                    MomentOpt.DivCul0.OptinalGroup(jk) = OpposeSv
+                Next
+                MomentOpt.Optimize()
+
+                Dim PujMax1 As Double = MomentOpt.DivCul0.PujMax
+                '中央値より1/2上限側の確認
+                OpposeSv = (Ptc + Pt1) / 2
+                For Each jk As Short In OpposeJkLst
+                    MomentOpt.DivCul0.OptinalGroup(jk) = OpposeSv
+                Next
+                MomentOpt.Optimize()
+                Dim PujMax2 As Double = MomentOpt.DivCul0.PujMax
+
+
+                If Math.Abs(PujMax1 - PujMax2) < 0.001 Or Count > 10 Then
+                    '上限側と下限側の元圧に差が無いので終了
+                    'MomentOpt.Optimize()
+                    Exit Do
+                Else
+                    If PujMax1 < PujMax2 Then
+                        '中央値を1/2下限側に移動
+                        Pt1 = Ptc
+                        Ptc = (Pt0 + Pt1) * 0.5
+                    Else
+                        '中央値を1/2上限側に移動
+                        Pt0 = Ptc
+                        Ptc = (Pt0 + Pt1) * 0.5
+                    End If
+                    Count += 1
+                End If
+
+
+            Loop
+
+
+
+
+        Else
+            MomentOpt.Optimize()
+
+        End If
+
+
 
 
 

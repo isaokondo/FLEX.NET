@@ -744,6 +744,7 @@ Public Class clsMomentOptimize
                 Exit Do
             End If
 
+
             If k >= _Nlp Then 'ﾙｰﾌﾟ回数が規定回数以上になったら終了　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
                 '異常終了（ループ回数既定値以上）
                 FlagS = 0

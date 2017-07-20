@@ -246,7 +246,7 @@ Friend Class clsSegmentAssembly
             dsSegAsm =
               GetDtfmSQL($"SELECT  * FROM `セグメント割付シュミレーション`  
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント割付シュミレーション`.`分割No` 
-            WHERE `リングＮｏ` = '{RingNo}' AND `シートID`>='{SheetID.Rows(0).Item(0)}'")
+            WHERE `リングＮｏ` = '{RingNo}' AND `シートID`='{SheetID.Rows(0).Item(0)}'")
 
         End If
 
