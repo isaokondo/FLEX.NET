@@ -20,6 +20,10 @@
             ReduceTime.Value = .ReduceTime
             ReduceJudgePress.Value = .ReduceJudgePress
 
+            LosZeroEmp.Value = .LosZeroEmp
+            LosZeroNlp.Value = .LosZeroNlp
+            LoszerorStep.Value = .LoszerorStep
+
 
         End With
 
@@ -38,6 +42,13 @@
 
             .ReduceTime = ReduceTime.Value
             .ReduceJudgePress = ReduceJudgePress.Value
+
+            .LosZeroEmp = LosZeroEmp.Value
+            .LosZeroNlp = LosZeroNlp.Value
+            .LoszerorStep = LoszerorStep.Value
+
+
+
         End With
 
         Me.Close()

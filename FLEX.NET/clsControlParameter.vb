@@ -84,6 +84,10 @@ Public Class clsControlParameter
     Private _DevTolerance As Single         '偏角許容値
 
 
+    Private _LosZeroNlp As Integer  '同時施工 最適化ループ回数
+    Private _LosZeroEmp As Single   'モーメント偏差許容値
+    Private _LoszerorStep As Single '1ループの演算の力点変化量
+
     Private _LosZeroRollingTake As Boolean  '同時施工：ローリング考慮
     Private _LosZeroOpposeJack As Boolean '対抗ジャッキ選択
     Private _LosZeroOpposeControl As Boolean '対抗圧制御
@@ -711,6 +715,45 @@ Public Class clsControlParameter
         End Set
     End Property
     ''' <summary>
+    ''' 同時施工 最適化ループ回数
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LosZeroNlp As Integer
+        Get
+            Return _LosZeroNlp
+        End Get
+        Set(value As Integer)
+            _LosZeroNlp = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+    ''' <summary>
+    ''' モーメント偏差許容値
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LosZeroEmp As Single
+        Get
+            Return _LosZeroEmp
+        End Get
+        Set(value As Single)
+            _LosZeroEmp = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+    ''' <summary>
+    ''' 1ループの演算の力点変化量
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LoszerorStep As Single
+        Get
+            Return _LoszerorStep
+        End Get
+        Set(value As Single)
+            _LoszerorStep = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+    ''' <summary>
     ''' 同時施工：ローリング考慮
     ''' </summary>
     ''' <returns></returns>
@@ -944,6 +987,11 @@ Public Class clsControlParameter
         _LineDevLastRing = chk.GetValue("LineDevLastRing")
         _PresBarGraphWidt = chk.GetValue("PresBarGraphWidt")
         _DevTolerance = chk.GetValue("DevTolerance")
+
+        _LosZeroNlp = chk.GetValue("LosZeroNlp")
+        _LosZeroEmp = chk.GetValue("LosZeroEmp")
+        _LoszerorStep = chk.GetValue("LoszerorStep")
+
         _LosZeroRollingTake = fnBoolean(chk.GetValue("LosZeroRollingTake"))
         _LosZeroOpposeJack = fnBoolean(chk.GetValue("LosZeroOpposeJack"))
         _LosZeroOpposeControl = fnBoolean(chk.GetValue("LosZeroOpposeControl"))

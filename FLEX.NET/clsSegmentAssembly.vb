@@ -243,6 +243,7 @@ Friend Class clsSegmentAssembly
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンリスト`.`分割No` 
             WHERE `組立パターンNo` = '{_SegmentAssenblyPtnID(RingNo)}'")
         Else
+            '線形管理のセグメント割付シュミレーションで転送済みの場合
             dsSegAsm =
               GetDtfmSQL($"SELECT  * FROM `セグメント割付シュミレーション`  
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント割付シュミレーション`.`分割No` 
@@ -300,14 +301,17 @@ Friend Class clsSegmentAssembly
             Next
 
         Next
+        If InitPara.LosZeroMode Then
 
-        If _ProcessData.Count = 0 Then
-            MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、組立順序が設定されてません'", vbCritical)
-        Else
-            '組立ピース数を取得
-            _AssemblyPieceNumber = (From i In _ProcessData Select i.Value.AssemblyOrder).Max
+
+            If _ProcessData.Count = 0 Then
+                MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、組立順序が設定されてません'", vbCritical)
+            Else
+                '組立ピース数を取得
+                _AssemblyPieceNumber = (From i In _ProcessData Select i.Value.AssemblyOrder).Max
+            End If
+
         End If
-
 
 
 
