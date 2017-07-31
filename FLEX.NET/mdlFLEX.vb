@@ -243,7 +243,7 @@ Module mdlFLEX
 
                         WriteEventData($"No.{PullJk} のジャッキの引戻し開始しました。", Color.Blue)
                         LosZeroSts = 3
-                        Reduce.LstR.Clear() '減圧グループ　クリア
+                        Reduce.LstRdGp.Clear() '減圧グループ　クリア
 
                         PlaySound(My.Resources.PullStart)
                     Case 3
@@ -422,7 +422,7 @@ Module mdlFLEX
             '手動操作の作用点を原点にし
             JackManual.PutPointXY(0, 0)
             '手動から自動制御へ移行
-            ControlParameter_FlexAutoManualChange()
+            FlexAutoManualChange()
 
         End If
 
@@ -445,6 +445,7 @@ Module mdlFLEX
                 '力点自動
                 DivCul.操作角 = Reduce.Theta
                 DivCul.操作強 = Reduce.Rc
+
                 If Not InitPara.ReadOnleMode Then
                     PlcIf.PointX = Reduce.PointX
                     PlcIf.PointY = Reduce.PointY
@@ -464,24 +465,29 @@ Module mdlFLEX
             End If
         Else
             '力点手動操作時
-
             DivCul.操作角 = JackManual.操作角
-                DivCul.操作強 = JackManual.操作強
-                PlcIf.操作角 = JackManual.操作角
-                PlcIf.操作強 = JackManual.操作強
+            DivCul.操作強 = JackManual.操作強
+            PlcIf.操作角 = JackManual.操作角
+            PlcIf.操作強 = JackManual.操作強
+        End If
+        'TODO:ジャッキステータスを追加するように
+        '掘進モード & 稼働ジャッキをセット
+        DivCul.OptinalJack.Clear()
+        '減圧グループのSVをセット
+
+        For i As Short = 0 To InitPara.NumberJack - 1
+            DivCul.OnJack(i) = PlcIf.JackExecMode(i) And PlcIf.JackSel(i)
+            '減圧中で減圧中ジャッキのSVをセット
+            If Reduce.ReduceNow AndAlso Reduce.LstRdGp.Contains(InitPara.JackGroupPos(i)) Then
+                DivCul.OptinalJack.Add(i, Reduce.MvOut(InitPara.JackGroupPos(i)) / 100 * CtlPara.最大全開出力時の目標圧力)
             End If
-            'TODO:ジャッキステータスを追加するように
-            '掘進モード & 稼働ジャッキをセット
-            For i As Short = 0 To InitPara.NumberJack - 1
-                DivCul.OnJack(i) = PlcIf.JackExecMode(i) And PlcIf.JackSel(i)
-            Next
-            DivCul.sbCul() ''推力分担率の演算
-            '力点の更新
-            PlcIf.PointWrite()
+        Next
 
+        DivCul.sbCul() ''推力分担率の演算
+        '力点の更新
+        PlcIf.PointWrite()
 
-
-            GroupSvOut() 'シーケンサへ圧力分担値の送出
+        GroupSvOut() 'シーケンサへ圧力分担値の送出
 
     End Sub
 
@@ -493,9 +499,9 @@ Module mdlFLEX
     Private Sub GroupSvOut()
 
 
-        Dim sngGpSV(InitPara.NumberGroup - 1) As Single
-        Dim intGpFl(InitPara.NumberGroup - 1) As Short
-        Dim sngGpSV0(InitPara.NumberGroup - 1) As Single
+        'Dim sngGpSV(InitPara.NumberGroup - 1) As Single
+        Dim GpFlg(InitPara.NumberGroup - 1) As Short
+        Dim GpSV(InitPara.NumberGroup - 1) As Single
 
 
 
@@ -555,36 +561,36 @@ Module mdlFLEX
                 ''掘進中の処理
                 '減圧中から組立完了
                 If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
-                    Dim Gp As List(Of Short) =
-                        SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
-                    For Each R As Short In Gp
-                        sngGpSV0(R - 1) =
-                        Reduce.MvOut(R - 1) * CtlPara.最大全開出力時の目標圧力 / 100
-                        intGpFl(R - 1) = cTracking
+                    'Dim Gp As List(Of Short) =
+                    'SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+                    For Each i As Short In Reduce.LstRdGp
+                        GpSV(i - 1) =
+                        Reduce.MvOut(i - 1) * CtlPara.最大全開出力時の目標圧力 / 100
+                        GpFlg(i - 1) = cTracking
                     Next
                 End If
 
 
                 For i = 0 To InitPara.NumberGroup - 1
-                    If intGpFl(i) <> cTracking Then
+                    If GpFlg(i) <> cTracking Then
                         '通常のグループ フィルター後の元圧の割合
-                        sngGpSV0(i) = DivCul.PuGp2(i) / DivCul.PujMax * PlcIf.FilterJkPress
+                        GpSV(i) = DivCul.PuGp2(i) / DivCul.PujMax * PlcIf.FilterJkPress
 
-                        If DivCul.OptinalGpNo.Contains(i + 1) Then ''低圧推進及び対抗グループ
-                            sngGpSV0(i) = DivCul.PuGp2(i) '算出もしくは設定されたSV
+                        If DivCul.OptinalGpNo.Contains(i) Then ''低圧推進及び対抗グループ
+                            GpSV(i) = DivCul.PuGp2(i) '算出もしくは設定されたSV
                         End If
 
                         'ダイレクト制御有効で偏差が設定以上
-                        If Math.Abs(PlcIf.GroupPv(i) - sngGpSV0(i)) < CtlPara.PIDShiftDefl _
+                        If Math.Abs(PlcIf.GroupPv(i) - GpSV(i)) < CtlPara.PIDShiftDefl _
                                     Or CtlPara.DirectControl = False Then
-                            intGpFl(i) = cPIDOut ''ＰＩＤ出力
+                            GpFlg(i) = cPIDOut ''ＰＩＤ出力
                         Else
-                            intGpFl(i) = cDirect  'ダイレクト指令制御
+                            GpFlg(i) = cDirect  'ダイレクト指令制御
                         End If
 
                         If DivCul.FullOpenGruop.Contains(i) Then ''全開出力
-                            sngGpSV0(i) = CtlPara.最大全開出力時の目標圧力
-                            intGpFl(i) = cFillPower
+                            GpSV(i) = CtlPara.最大全開出力時の目標圧力
+                            GpFlg(i) = cFillPower
                         End If
 
                     End If
@@ -595,14 +601,14 @@ Module mdlFLEX
                 ''中断中及び待機中の処理
             Case cChudan, cTaiki
                 For intCnt = 0 To InitPara.NumberGroup - 1
-                    intGpFl(intCnt) = cIgnoreOut
+                    GpFlg(intCnt) = cIgnoreOut
                 Next intCnt
 
 
         End Select
         If Not InitPara.ReadOnleMode Then
             ''シーケンサ出力
-            PlcIf.PutSvPress(sngGpSV0, intGpFl)
+            PlcIf.PutSvPress(GpSV, GpFlg)
 
         End If
 
@@ -640,7 +646,7 @@ Module mdlFLEX
     ''' 姿勢制御自動手動の切替時の処理
     ''' </summary>
     ''' 
-    Public Sub ControlParameter_FlexAutoManualChange() Handles CtlPara.FlexAutoManualChange ', PlcIf.ExcavationStatusChange
+    Public Sub FlexAutoManualChange() Handles CtlPara.FlexAutoManualChange ', PlcIf.ExcavationStatusChange
         '掘進中以外はスキップ
         'If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
@@ -662,8 +668,10 @@ Module mdlFLEX
             JackMvAuto.水平偏差角 = RefernceDirection.平面偏角
             JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
             ''自動から手動時のトラッキング処理
-            JackMvAuto.PointX = JackManual.PointX
-            JackMvAuto.PointY = JackManual.PointY
+            'JackMvAuto.PointX = JackManual.PointX
+            'JackMvAuto.PointY = JackManual.PointY
+            JackMvAuto.PointX = PlcIf.PointX
+            JackMvAuto.PointY = PlcIf.PointY
             JackMvAuto.sbMnToAutTracking()
             ''自動演算開始
             JackMvAuto.MvAutoStart()
@@ -678,7 +686,8 @@ Module mdlFLEX
             'If mneSosa.Checked Then
             ''自動から手動時のトラッキング処理
             ''自動時の座標を手動時の座標へ渡す
-            JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
+            'JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
+            JackManual.PutPointXY(PlcIf.PointX, PlcIf.PointY)
 
         End If
     End Sub

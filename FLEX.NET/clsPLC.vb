@@ -917,7 +917,6 @@ Public Class clsPlcIf
 
                         Dim JkPs As Single = _FilterJkPress
                         _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
-                        Debug.Print(Now & ":" & _FilterJkPress & "," & _jkPress)
                         'FLEX手動時に掘進中にジャッキ圧力が変化したイベント
                         If _excaStatus = cKussin AndAlso _flexControlOn And
                             Not CtlPara.AutoDirectionControl And JkPs <> _jkPress Then
@@ -1259,10 +1258,6 @@ Public Class clsPlcIf
     Private Function GetAnalogData(ByVal FieldName As String, Tag As clsTag) As Single
         'アナログデータのスケール変換
         Try
-            If FieldName = "ポイントＸ" Then
-                Debug.WriteLine("")
-
-            End If
             With Tag.TagData(FieldName)
                 If .ScaleHigh - .ScaleLow = 0 Then
                     Return 0

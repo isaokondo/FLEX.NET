@@ -1032,6 +1032,12 @@ Public Class clsTableUpdateConfirm
                         InitPara = New clsInitParameter
                     Case "flexセグメント組立データ"
                         SegAsmblyData.SegmentRingDataRead()
+                        '組立パターンの情報を取得
+                        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+
+
+                        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+
                         RaiseEvent SegmentAsmChange()
 
 

@@ -446,7 +446,7 @@ Friend Class clsCulJackMv
             dblX = dblHorKp * (dblHorGp * _水平モーメント偏差 + dblHorGi * _HorDev)
             dblY = dblVerKp * (dblVerGp * _鉛直モーメント偏差 + dblVerGi * _VerDev)
 
-            '    Debug.Print "偏差", mdbl水平モーメント偏差, mdbl鉛直モーメント偏差
+
             ''変化率を制限する
             If Abs(dblX - mdblPointX) > 0.1 Then
                 dblX = CDbl(IIf(dblX > mdblPointX, mdblPointX + 0.1, mdblPointX - 0.1))

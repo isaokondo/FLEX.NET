@@ -42,6 +42,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPieace = New FLEX.NET.ucnDspData()
         Me.DspTypeName = New FLEX.NET.ucnDspData()
         Me.DspReduceGroup = New FLEX.NET.ucnDspData()
+        Me.btnApply = New System.Windows.Forms.Button()
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -51,7 +52,7 @@ Partial Class frmAssemblyProcessEdit
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(266, 402)
+        Me.btnCancel.Location = New System.Drawing.Point(350, 401)
         '
         'AssemblyBoltPitchSel
         '
@@ -463,11 +464,24 @@ Partial Class frmAssemblyProcessEdit
         Me.DspReduceGroup.Value = "19-23"
         Me.DspReduceGroup.ValueType = True
         '
+        'btnApply
+        '
+        Me.btnApply.BackColor = System.Drawing.Color.Silver
+        Me.btnApply.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnApply.Location = New System.Drawing.Point(246, 401)
+        Me.btnApply.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnApply.Name = "btnApply"
+        Me.btnApply.Size = New System.Drawing.Size(102, 35)
+        Me.btnApply.TabIndex = 150
+        Me.btnApply.Text = "適用"
+        Me.btnApply.UseVisualStyleBackColor = False
+        '
         'frmAssemblyProcessEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1078, 769)
+        Me.Controls.Add(Me.btnApply)
         Me.Controls.Add(Me.DspReduceGroup)
         Me.Controls.Add(Me.UcnDspData24)
         Me.Controls.Add(Me.DspClosetJack)
@@ -512,6 +526,7 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.SetChildIndex(Me.DspClosetJack, 0)
         Me.Controls.SetChildIndex(Me.UcnDspData24, 0)
         Me.Controls.SetChildIndex(Me.DspReduceGroup, 0)
+        Me.Controls.SetChildIndex(Me.btnApply, 0)
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -536,4 +551,5 @@ Partial Class frmAssemblyProcessEdit
     Friend WithEvents DspAssemblyPieace As ucnDspData
     Friend WithEvents DspTypeName As ucnDspData
     Friend WithEvents DspReduceGroup As ucnDspData
+    Protected WithEvents btnApply As Button
 End Class

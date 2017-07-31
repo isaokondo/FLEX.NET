@@ -16,6 +16,15 @@ Public Class frmAssemblyProcessEdit
         OperattionJackSel.ComboBox.SelectedIndex = 0    '未選択時の処理
 
     End Sub
+    ''' <summary>
+    ''' 変更の適用
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnApply_Click(sender As Object, e As EventArgs) Handles btnApply.Click
+        SegAsmblyData.SegmentAsemblyDataUpdat(ConfirmRingNo.Value, AssemblyPatternSel.ComboBox.Text, DspSegmentTypeName.ComboBox.Text, vbNull)
+        ConfirmRingNo_ValueChanged(sender, e)
+    End Sub
 
     'Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
 
@@ -26,7 +35,7 @@ Public Class frmAssemblyProcessEdit
     End Sub
 
     Private Sub ConfirmRingNo_ValueChanged(sender As Object, e As EventArgs) Handles ConfirmRingNo.ValueChanged,
-        AssemblyPieceNo.ValueChanged, OperattionJackSel.ValueChanged
+        AssemblyPieceNo.ValueChanged, OperattionJackSel.ValueChanged ', DspSegmentTypeName.ValueChanged, AssemblyPatternSel.ValueChanged
 
         If IsNothing(OperattionJackSel.SelectItem) Then Exit Sub
 
@@ -98,6 +107,10 @@ Public Class frmAssemblyProcessEdit
 
     End Sub
 
+    'Private Sub DspSegmentTypeName_DropDownClosed(sender As Object, e As EventArgs) Handles DspSegmentTypeName.DropDownClosed
+    '    SegAsbly.TypeData(ConfirmRingNo.Value).TypeName = DspSegmentTypeName.ComboBox.Text
+    '    ConfirmRingNo_ValueChanged(sender, e)
+    'End Sub
 
     Private Sub DspStartLastJack(t As List(Of Short))
         Dim j(1) As Short

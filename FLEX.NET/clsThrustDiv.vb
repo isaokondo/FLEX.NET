@@ -352,8 +352,19 @@ Public Class clsThrustDiv
 
         Dim buntang As New Dictionary(Of Short, Double)
 
+        _OptinalGpNo = New List(Of Short)
+
+        For i = 0 To InitPara.NumberJack - 1
+            'ジャッキの属するグループ番号
+            If _OptinalJack.ContainsKey(i) Then
+                _OptinalGpNo.Add(InitPara.JackGroupPos(i) - 1)
+            End If
+        Next
+
+
+
         For i = 0 To InitPara.NumberGroup - 1
-            Dim DisenFullOpn As Boolean = _OptinalJack.ContainsKey(i + 1) Or KgNum(i) / IgNum(i) < 0.5
+            Dim DisenFullOpn As Boolean = _OptinalGpNo.Contains(i) Or KgNum(i) / IgNum(i) < 0.5
             buntang.Add(i, If(DisenFullOpn, 0, _分担率計算値(i)))
         Next i
         '分担率計算値を降順に並べ変え,最低全開グループ数分の番号を取得
@@ -444,7 +455,7 @@ Public Class clsThrustDiv
         _MomentX = 0
         _MomentY = 0
         ReDim _PuGp2(InitPara.NumberGroup - 1)
-        _OptinalGpNo = New List(Of Short)
+        '_OptinalGpNo = New List(Of Short)
         For i = 0 To InitPara.NumberJack - 1
             'ジャッキの属するグループ番号
             Dim GpNo As Short = InitPara.JackGroupPos(i)
@@ -480,7 +491,8 @@ Friend Class clsReducePress
     ''' <summa_pointy>
     ''' 減圧グループ
     ''' </summa_pointy>
-    Private _LstRd As New List(Of Short)
+    Private _LstRdGp As New List(Of Short)
+
     ''' <summa_pointy>
     ''' 減圧処理タイマ
     ''' </summa_pointy>
@@ -529,9 +541,9 @@ Friend Class clsReducePress
     ''' 現在の減圧グループ
     ''' </summa_pointy>
     ''' <returns></returns>
-    Public ReadOnly Property LstR As List(Of Short)
+    Public ReadOnly Property LstRdGp As List(Of Short)
         Get
-            Return _LstRd
+            Return _LstRdGp
         End Get
     End Property
     ''' <summary>
@@ -595,6 +607,17 @@ Friend Class clsReducePress
             Return XYtoRC.OpTheta
         End Get
     End Property
+    ''' <summary>
+    ''' 減圧中
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ReduceNow As Boolean
+        Get
+            Return timer.Enabled
+        End Get
+    End Property
+
+
 
     ''' <summa_pointy>
     ''' 減圧開始
@@ -603,8 +626,8 @@ Friend Class clsReducePress
 
 
         '減圧グループ
-        _LstRd = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
-
+        _LstRdGp = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
+        '最適化パラメータのセット
         MomentOpt.Nlp = CtlPara.LosZeroNlp '繰り返し回数
         MomentOpt.rStep = CtlPara.LoszerorStep '力点変化ステップ
         MomentOpt.Epm = CtlPara.LosZeroEmp 'モーメント偏差許容値
@@ -623,7 +646,7 @@ Friend Class clsReducePress
         '最適化
         MomentOpt.Optimize()
 
-        For Each GpNo As Short In _LstRd
+        For Each GpNo As Short In _LstRdGp
             '減圧開始時の操作出力
             _MvOut(GpNo - 1) = PlcIf.GroupMV(GpNo - 1)
             '１秒毎の減圧量を算出
@@ -639,8 +662,10 @@ Friend Class clsReducePress
         '１秒毎の力点移動量を算出
         If CtlPara.ReduceTime <> 0 Then
             StepX = (MomentOpt.CulPointX - _PointX) / CtlPara.ReduceTime
-            StepY = (MomentOpt.CulPointX - _PointY) / CtlPara.ReduceTime
+            StepY = (MomentOpt.CulPointY - _PointY) / CtlPara.ReduceTime
         End If
+
+        Debug.Print($"算出された力点　x:{MomentOpt.CulPointX} y:{MomentOpt.CulPointY}")
 
         timer.Enabled = True ' timer.Start()と同じ
         tCount = 0
@@ -660,7 +685,7 @@ Friend Class clsReducePress
         If tCount < 5 Then
             tCount += 1
         End If
-        For Each GpNp As Short In _LstRd
+        For Each GpNp As Short In _LstRdGp
             '減圧判断（各グループが減圧設定圧以下になったか？）
             ReduceFlg = ReduceFlg And (PlcIf.GroupPv(GpNp - 1) < CtlPara.ReduceJudgePress)
             MvZero += _MvOut(GpNp - 1)
@@ -671,11 +696,12 @@ Friend Class clsReducePress
         End If
         '減圧処理停止 MVがすべて０で、減圧判断圧力以下
         If MvZero = 0 And ReduceFlg And tCount = 5 Then
+            FlexAutoManualChange()
             timer.Stop()
         End If
         '力点の移動
-        _PointX -= StepX
-        _PointY -= StepY
+        _PointX += StepX
+        _PointY += StepY
 
         XYtoRC = New clsXyToRs(_PointX, _PointY)
 
@@ -684,6 +710,7 @@ Friend Class clsReducePress
         '掘進停止時は、減圧完了とする
         If PlcIf.ExcaStatus <> cKussin Then
             PlcIf.LosZeroSts_FLEX = 2
+            FlexAutoManualChange()
             timer.Stop()
         End If
 
@@ -693,6 +720,7 @@ Friend Class clsReducePress
     ''' 減圧キャンセル
     ''' </summa_pointy>
     Public Sub Cancel()
+        FlexAutoManualChange()
         timer.Stop()
         '_LstRd.Clear()
     End Sub

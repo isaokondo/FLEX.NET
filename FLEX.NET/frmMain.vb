@@ -1100,7 +1100,7 @@
         '掘削開始時刻の取得
         DspExcavStartDay(getExcecStartTime)
         '姿勢制御自動手動の切替時の処理
-        ControlParameter_FlexAutoManualChange()
+        FlexAutoManualChange()
 
 
         '上下ストローク計の有無で表示設定
