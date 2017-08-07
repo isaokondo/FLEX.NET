@@ -403,14 +403,16 @@
         If PlcIf.AssemblyPieceNo <= 0 Then PlcIf.AssemblyPieceNo = 1
 
         DspTypeName.Value = SegAsmblyData.TypeData(PlcIf.RingNo).TypeName 'セグメント種類
+        DspAssemblyPattern.Value = SegAsmblyData.AssemblyPtnName(PlcIf.RingNo) '組立パターン名
+
         If PlcIf.AnalogTag.TagExist("ｾｸﾞﾒﾝﾄの種類信号") Then
             PlcIf.AnalogPlcWrite("ｾｸﾞﾒﾝﾄの種類信号", SegAsmblyData.TypeData(PlcIf.RingNo).TypeNameID) 'セグメント種類
         End If
+
         If SegAsmblyData.ProcessData.Count <> 0 Then
 
             With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
                 'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
-                DspAssemblyPattern.Value = .PatternName '組立パターン名
                 DspBoltPitch.Value = .BoltPitch '組立ボルトピッチ
                 DspAssemblyPieace.Value = .PieceName  '組立ピース名称
                 DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
@@ -422,6 +424,16 @@
                 End If
 
             End With
+
+
+        Else
+            DspBoltPitch.Value = "-" '組立ボルトピッチ
+            DspAssemblyPieace.Value = "-----"  '組立ピース名称
+            DspPullBackJack.Value = "-" '引戻しジャッキ
+            DspClosetJack.Value = "-" '押込みジャッキ
+            DspAddClosetThrustJack.Value = "-" '追加押込みジャッキ
+
+
         End If
         'MAXのピース番号内で表示
         If SegAsmblyData.AssemblyPieceNumber > PlcIf.AssemblyPieceNo AndAlso SegAsmblyData.ProcessData.Count <> 0 Then
@@ -710,7 +722,14 @@
     End Sub
 
     Private Sub btnPieceConfirm_Click(sender As Object, e As EventArgs) Handles btnPieceConfirm.Click
-        PlcIf.LosZeroEnable = True '同時施工可　信号出力
+
+        If SegAsmblyData.ProcessData.Count = 0 Then
+            MsgBox($"{PlcIf.RingNo}リングの'{SegAsmblyData.AssemblyPtnName(PlcIf.RingNo)}'の、組立順序が設定されてません'", vbCritical)
+        Else
+            PlcIf.LosZeroEnable = True '同時施工可　信号出力
+        End If
+
+
     End Sub
 
     Private Sub ｂｔｎLossZerooCancel_Click(sender As Object, e As EventArgs) Handles btnLossZerooCancel.Click

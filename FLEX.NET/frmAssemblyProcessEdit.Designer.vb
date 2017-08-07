@@ -272,7 +272,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClosetJack.TabIndex = 143
         Me.DspClosetJack.Unit = "deg"
         Me.DspClosetJack.UnitVisible = False
-        Me.DspClosetJack.Value = "20"
+        Me.DspClosetJack.Value = "-"
         Me.DspClosetJack.ValueType = True
         '
         'DspBoltPitch
@@ -293,7 +293,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspBoltPitch.TabIndex = 140
         Me.DspBoltPitch.Unit = "deg"
         Me.DspBoltPitch.UnitVisible = False
-        Me.DspBoltPitch.Value = "3"
+        Me.DspBoltPitch.Value = "-"
         Me.DspBoltPitch.ValueType = False
         '
         'DspAssemblyPattern
@@ -314,7 +314,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPattern.TabIndex = 148
         Me.DspAssemblyPattern.Unit = "deg"
         Me.DspAssemblyPattern.UnitVisible = False
-        Me.DspAssemblyPattern.Value = "RC甲1"
+        Me.DspAssemblyPattern.Value = "-------"
         Me.DspAssemblyPattern.ValueType = True
         '
         'DspNextPieceName
@@ -335,7 +335,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspNextPieceName.TabIndex = 147
         Me.DspNextPieceName.Unit = "deg"
         Me.DspNextPieceName.UnitVisible = False
-        Me.DspNextPieceName.Value = "A1-3"
+        Me.DspNextPieceName.Value = "-----"
         Me.DspNextPieceName.ValueType = True
         '
         'DspAddClosetThrustJack
@@ -356,7 +356,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAddClosetThrustJack.TabIndex = 145
         Me.DspAddClosetThrustJack.Unit = "deg"
         Me.DspAddClosetThrustJack.UnitVisible = False
-        Me.DspAddClosetThrustJack.Value = "24"
+        Me.DspAddClosetThrustJack.Value = "-"
         Me.DspAddClosetThrustJack.ValueType = True
         '
         'DspClosetThrustJack
@@ -398,7 +398,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspPullBackJack.TabIndex = 142
         Me.DspPullBackJack.Unit = "deg"
         Me.DspPullBackJack.UnitVisible = False
-        Me.DspPullBackJack.Value = "19-23"
+        Me.DspPullBackJack.Value = "-"
         Me.DspPullBackJack.ValueType = True
         '
         'DspAssemblyPieace
@@ -419,7 +419,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPieace.TabIndex = 141
         Me.DspAssemblyPieace.Unit = "deg"
         Me.DspAssemblyPieace.UnitVisible = False
-        Me.DspAssemblyPieace.Value = "A2-1"
+        Me.DspAssemblyPieace.Value = "-----"
         Me.DspAssemblyPieace.ValueType = True
         '
         'DspTypeName
@@ -461,7 +461,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspReduceGroup.TabIndex = 149
         Me.DspReduceGroup.Unit = "deg"
         Me.DspReduceGroup.UnitVisible = False
-        Me.DspReduceGroup.Value = "19-23"
+        Me.DspReduceGroup.Value = "-"
         Me.DspReduceGroup.ValueType = True
         '
         'btnApply

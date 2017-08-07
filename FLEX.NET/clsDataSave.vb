@@ -195,27 +195,31 @@ Friend Class clsDataSave
 
                 Data(ColumnList.IndexOf("組立ピース")) = PlcIf.AssemblyPieceNo
 
-                With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
-                    'TODO:Data(ColumnList.IndexOf("組立セグメント")) = 
-                    Data(ColumnList.IndexOf("組立ボルトピッチ")) = .BoltPitch
-                    Data(ColumnList.IndexOf("組立パターン")) = .PatternName
-                    'TODO:Data(ColumnList.IndexOf("ローリング偏差")) = .r
-                    Data(ColumnList.IndexOf("引戻ジャッキ")) = LstToJoinDl(.PullBackJack)
-                    Data(ColumnList.IndexOf("減圧グループ")) = LstToJoinDl(.ReduceGroup)
-                    Data(ColumnList.IndexOf("押込ジャッキ")) = LstToJoinDl(.ClosetJack)
-                    'TODO:Data(ColumnList.IndexOf("押込推進ジャッキ")) = CulcMoment.Thrust
-                    Data(ColumnList.IndexOf("追加推進ジャッキ")) = LstToJoinDl(.AddClosetJack)
-                    'TODO:Data(ColumnList.IndexOf("RL考慮ジャッキ")) = CulcMoment.Thrust
+                If SegAsmblyData.ProcessData.ContainsKey(PlcIf.AssemblyPieceNo) Then
+                    With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
+                        'TODO:Data(ColumnList.IndexOf("組立セグメント")) = 
+                        Data(ColumnList.IndexOf("組立ボルトピッチ")) = .BoltPitch
+                        Data(ColumnList.IndexOf("組立パターン")) = .PatternName
+                        'TODO:Data(ColumnList.IndexOf("ローリング偏差")) = .r
+                        Data(ColumnList.IndexOf("引戻ジャッキ")) = LstToJoinDl(.PullBackJack)
+                        Data(ColumnList.IndexOf("減圧グループ")) = LstToJoinDl(.ReduceGroup)
+                        Data(ColumnList.IndexOf("押込ジャッキ")) = LstToJoinDl(.ClosetJack)
+                        'TODO:Data(ColumnList.IndexOf("押込推進ジャッキ")) = CulcMoment.Thrust
+                        Data(ColumnList.IndexOf("追加推進ジャッキ")) = LstToJoinDl(.AddClosetJack)
+                        'TODO:Data(ColumnList.IndexOf("RL考慮ジャッキ")) = CulcMoment.Thrust
 
-                End With
+                    End With
+
+                End If
+
 
                 Data(ColumnList.IndexOf("同時掘進時間")) = ElapsedTime.LozeroExcavationTime
 
-            End If
+                End If
 
 
-            'TODO:Data(ColumnList.IndexOf("低圧推進設定値")) = CulcMoment.Thrust
-            Data(ColumnList.IndexOf("掘進時間")) = ElapsedTime.ExcavationTime
+                'TODO:Data(ColumnList.IndexOf("低圧推進設定値")) = CulcMoment.Thrust
+                Data(ColumnList.IndexOf("掘進時間")) = ElapsedTime.ExcavationTime
             Data(ColumnList.IndexOf("待機時間")) = ElapsedTime.WatingTime
             Data(ColumnList.IndexOf("サイクル時間")) = ElapsedTime.CycleTime
 

@@ -22,7 +22,7 @@ Public Class frmAssemblyProcessEdit
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub btnApply_Click(sender As Object, e As EventArgs) Handles btnApply.Click
-        SegAsmblyData.SegmentAsemblyDataUpdat(ConfirmRingNo.Value, AssemblyPatternSel.ComboBox.Text, DspSegmentTypeName.ComboBox.Text, vbNull)
+        SegAsmblyData.SegmentAsemblyDataUpdat(ConfirmRingNo.Value, AssemblyPatternSel.ComboBox.Text, DspSegmentTypeName.ComboBox.Text, Nothing)
         ConfirmRingNo_ValueChanged(sender, e)
     End Sub
 
@@ -39,6 +39,8 @@ Public Class frmAssemblyProcessEdit
 
         If IsNothing(OperattionJackSel.SelectItem) Then Exit Sub
 
+        SegAsbly.SegmentRingDataRead()
+
         '入力されたリング番号より組立パターン読込
         SegAsbly.AssemblyDataRead(ConfirmRingNo.Value)
 
@@ -52,22 +54,27 @@ Public Class frmAssemblyProcessEdit
         '組立パターンの表示
         'TODO:1ピース目のパターン名を表示（他の方法がないか？）
         AssemblyPatternSel.ComboBox.Text = SegAsbly.AssemblyPtnName(ConfirmRingNo.Value)
-        DspTypeName.Value = SegAsmblyData.TypeData(ConfirmRingNo.Value).TypeName 'セグメント種類
+        DspTypeName.Value = SegAsbly.TypeData(ConfirmRingNo.Value).TypeName 'セグメント種類
+        DspAssemblyPattern.Value = SegAsbly.AssemblyPtnName(ConfirmRingNo.Value) '組立パターン名
+
+
+        picAssemblySeg.Visible = (SegAsbly.ProcessData.Count <> 0)
+
 
         If SegAsbly.ProcessData.Count <> 0 Then
 
             'DspAssemblyPattern.Value = SegAsbly.SegmentAssenblyPtn(ConfirmRingNo.Value)
             With SegAsbly.ProcessData(AssemblyPieceNo.Value)
                 'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
-                DspAssemblyPattern.Value = .PatternName
+                'DspAssemblyPattern.Value = .PatternName
 
                 DspBoltPitch.Value = .BoltPitch
                 DspAssemblyPieace.Value = .PieceName  '組立ピース名称
-                DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
-                DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
-                DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
+                DspPullBackJack.Value = SegAsbly.JackListDsp(.PullBackJack) '引戻しジャッキ
+                DspClosetJack.Value = SegAsbly.JackListDsp(.ClosetJack) '押込みジャッキ
+                DspAddClosetThrustJack.Value = SegAsbly.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
-                DspReduceGroup.Value = SegAsmblyData.JackListDsp(.ReduceGroup)
+                DspReduceGroup.Value = SegAsbly.JackListDsp(.ReduceGroup)
 
                 AssemblyPieceNo.MaxValue = SegAsbly.AssemblyPieceNumber '組立ピース番号MAX値設定
 
@@ -91,8 +98,14 @@ Public Class frmAssemblyProcessEdit
                 DspStartLastJack(jkLst)
                 ImgDsp(jkLst)
 
-
             End With
+        Else
+            DspBoltPitch.Value = "-" '組立ボルトピッチ
+            DspAssemblyPieace.Value = "-----"  '組立ピース名称
+            DspPullBackJack.Value = "-" '引戻しジャッキ
+            DspClosetJack.Value = "-" '押込みジャッキ
+            DspAddClosetThrustJack.Value = "-" '追加押込みジャッキ
+            DspReduceGroup.Value = "-"
         End If
 
         'MAXのピース番号内で表示

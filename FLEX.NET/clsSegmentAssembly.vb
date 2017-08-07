@@ -305,7 +305,7 @@ Friend Class clsSegmentAssembly
 
 
             If _ProcessData.Count = 0 Then
-                MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、組立順序が設定されてません'", vbCritical)
+                'MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、組立順序が設定されてません'", vbCritical)
             Else
                 '組立ピース数を取得
                 _AssemblyPieceNumber = (From i In _ProcessData Select i.Value.AssemblyOrder).Max

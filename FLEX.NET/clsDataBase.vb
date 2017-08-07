@@ -1019,7 +1019,9 @@ Public Class clsTableUpdateConfirm
             Dim tableUpDt As DataTable =
             GetDtfmSQL($"SELECT * FROM updatetable WHERE TIME>'{tbUpdateTime.ToString}' ORDER BY TIME DESC")
 
-
+            If tableUpDt.Rows.Count <> 0 Then
+                tbUpdateTime = tableUpDt.Rows(0).Item("TIME")
+            End If
 
             For i As Integer = 0 To tableUpDt.Rows.Count - 1
                 Select Case tableUpDt.Rows(i).Item("TableName")
@@ -1042,7 +1044,6 @@ Public Class clsTableUpdateConfirm
 
 
                 End Select
-                tbUpdateTime = tableUpDt.Rows(i).Item("TIME")
 
             Next
 
