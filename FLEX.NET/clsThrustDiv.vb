@@ -665,7 +665,8 @@ Friend Class clsReducePress
             StepY = (MomentOpt.CulPointY - _PointY) / CtlPara.ReduceTime
         End If
 
-        Debug.Print($"算出された力点　x:{MomentOpt.CulPointX} y:{MomentOpt.CulPointY}")
+
+        WriteEventData($"算出された力点　x:{MomentOpt.CulPointX.ToString("F3")} y:{MomentOpt.CulPointY.ToString("F3")}", Color.White)
 
         timer.Enabled = True ' timer.Start()と同じ
         tCount = 0
@@ -937,12 +938,14 @@ Public Class clsMomentOptimize
 
             If Abs(EMx) <= _Epm And Abs(EMy) <= _Epm Then 'ﾓｰﾒﾝﾄの偏差が許容値以下になったら終了　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
                 '正常終了
+                WriteEventData("ﾓｰﾒﾝﾄの偏差が許容値以下になったら終了　", Color.White)
                 FlagS = 1
                 Exit Do
             End If
 
             If k >= _Nlp Then 'ﾙｰﾌﾟ回数が規定回数以上になったら終了　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
                 '異常終了（ループ回数既定値以上）
+                WriteEventData("ﾙｰﾌﾟ回数が規定回数以上になったら終了　", Color.White)
                 FlagS = 0
                 Exit Do
             End If
@@ -950,6 +953,8 @@ Public Class clsMomentOptimize
             'If pujmax >= Limpu Then 'ｼﾞｬｯｷの元圧が規定値以上になったら終了　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
             If DivCul0.PujMax >= CtlPara.圧力許容値 Then 'ｼﾞｬｯｷの元圧が規定値以上になったら終了　＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
                 '異常終了（元圧が既定値以上）
+                WriteEventData("ｼﾞｬｯｷの元圧が規定値以上になったら終了　", Color.White)
+
                 FlagS = -1
                 Exit Do
             End If
@@ -959,6 +964,9 @@ Public Class clsMomentOptimize
             'End If
 
         Loop  '＜＜2ﾋﾟｰｽ目以降計算に関する修正(2005/09/25)
+
+        WriteEventData($"ﾙｰﾌﾟ回数:{Nlp} ﾓｰﾒﾝﾄ偏差 x:{EMx.ToString("F2")} y:{EMy.ToString("F2")} 元圧:{DivCul0.PujMax.ToString("F2")}", Color.White)
+
 
     End Sub
     ''' <summary>

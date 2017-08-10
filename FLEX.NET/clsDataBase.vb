@@ -698,6 +698,24 @@ Public Class clsInitParameter
             Return _MonitorMode Or _ClientMode
         End Get
     End Property
+
+    Public ReadOnly Property ModeName As String
+        Get
+            If _MonitorMode Then
+                Return "MonitorMode"
+            ElseIf _ClientMode Then
+                Return "ClientMode"
+            Else
+                Return "ServerMode"
+            End If
+
+
+        End Get
+    End Property
+
+
+
+
     ''' <summary>
     ''' ディスプレイ　ナローモード
     ''' </summary>

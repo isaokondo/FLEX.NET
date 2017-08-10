@@ -476,7 +476,11 @@ Module mdlFLEX
         '減圧グループのSVをセット
 
         For i As Short = 0 To InitPara.NumberJack - 1
-            DivCul.OnJack(i) = PlcIf.JackExecMode(i) And PlcIf.JackSel(i)
+            '減圧中のジャッキ
+            Dim RdJ As Boolean = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Contains(i) And (PlcIf.LosZeroSts_FLEX = 1 Or PlcIf.LosZeroSts_FLEX = 2)
+
+            DivCul.OnJack(i) =
+                PlcIf.JackExecMode(i) And PlcIf.JackSel(i) And Not RdJ
             '減圧中で減圧中ジャッキのSVをセット
             If Reduce.ReduceNow AndAlso Reduce.LstRdGp.Contains(InitPara.JackGroupPos(i)) Then
                 DivCul.OptinalJack.Add(i, Reduce.MvOut(InitPara.JackGroupPos(i)) / 100 * CtlPara.最大全開出力時の目標圧力)
@@ -611,13 +615,7 @@ Module mdlFLEX
             PlcIf.PutSvPress(GpSV, GpFlg)
 
         End If
-
-
-
-
     End Sub
-
-
 
 
     ''' <summary>
@@ -629,7 +627,7 @@ Module mdlFLEX
 
         If Not InitPara.ReadOnleMode Then
             Dim Colorlng As Long = ColorTranslator.ToOle(EventColor)
-
+            'Color.Whiteは、メイン画面には非表示とする
             Dim db As New clsDataBase
 
             'Dim tb As Odbc.OdbcDataReader = 

@@ -698,7 +698,8 @@
         rtbEventLog.Clear()
         Dim DB As New clsDataBase
         Dim tb As DataTable = DB.GetDtfmSQL _
-            ("SELECT TIME,イベントデータ,イベント種類 FROM FLEXイベントデータ ORDER BY TIME DESC LIMIT 0,50")
+            ($"SELECT TIME,イベントデータ,イベント種類 FROM FLEXイベントデータ 
+            WHERE イベント種類 <> '{ColorTranslator.ToOle(Color.White)}' ORDER BY TIME DESC LIMIT 0,50")
 
         For Each t As DataRow In tb.Rows
             rtbEventLog.SelectionColor =
@@ -727,6 +728,9 @@
             MsgBox($"{PlcIf.RingNo}リングの'{SegAsmblyData.AssemblyPtnName(PlcIf.RingNo)}'の、組立順序が設定されてません'", vbCritical)
         Else
             PlcIf.LosZeroEnable = True '同時施工可　信号出力
+            '組立ピース確認
+            WriteEventData("同時施工　組立ピース確認しました。", Color.Blue)
+
         End If
 
 
@@ -735,6 +739,7 @@
     Private Sub ｂｔｎLossZerooCancel_Click(sender As Object, e As EventArgs) Handles btnLossZerooCancel.Click
         PlcIf.DigtalPlcWrite("同時施工キャンセル", True)
         PlcIf.LosZeroEnable = False '同時施工キャンセル
+        PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
     End Sub
 
     Private Sub StrokeMonitor_Click(sender As Object, e As EventArgs) Handles StrokeMonitor.Click
@@ -1017,17 +1022,9 @@
         Dim ReportTbl As New clsRingReport
         '        ReportTbl.CheckRingItem()
         'フォームのタイトル
-        Me.Text += $"{GetVersionNo()} [{InitPara.ConstructionName}]"
+        Me.Text += $"{GetVersionNo()} [{InitPara.ConstructionName}] "
 
-        If InitPara.MonitorMode Then
-            Me.Text += " MonitorMode"
-        End If
-
-        If InitPara.ClientMode Then
-            Me.Text += " ClientMode"
-        End If
-
-
+        Me.Text += InitPara.ModeName
 
 
         'ジャッキ稼働画面の初期データ
@@ -1136,6 +1133,9 @@
 
 
         ParameterCheck()
+
+        '立ち上がったイベントを表示
+        WriteEventData($"Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]", Color.Blue)
 
 
     End Sub

@@ -47,7 +47,7 @@ Public Class clsSimlationSetting
     Public ReadOnly Property SegmentMode As String
 
 
-
+    Public ReadOnly Property LoszeroStart As String
 
 
     Public Sub New()
@@ -127,6 +127,9 @@ Public Class clsSimlationSetting
                     _ExecMode = t("値")
                 Case "SegmentMode"
                     _SegmentMode = t("値")
+
+                Case "LoszeroStart"
+                    _LoszeroStart = t("値")
             End Select
             '計測ジャッキの取込
             If t("項目").ToString.IndexOf("MesureJackStroke") >= 0 Then
