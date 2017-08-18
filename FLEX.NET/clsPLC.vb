@@ -851,8 +851,11 @@ Public Class clsPlcIf
         '計算ジャッキストロークの演算
         'RaiseEvent MesureStrokeChange()
     End Sub
-
+    ''' <summary>
+    ''' シーケンサ読込　１秒毎
+    ''' </summary>
     Public Sub PLC_Read()
+
 
 
         Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
@@ -1074,7 +1077,7 @@ Public Class clsPlcIf
             End If
 
 
-            '==============================================================================================================
+            '==============================================================================================================え
 
             'デバイス値用の領域を割り当て
             ReDim sharrDeviceValue(DigtalTag.DeviceSize \ 16 + 1)

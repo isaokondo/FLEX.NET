@@ -275,6 +275,7 @@ Module mdlFLEX
                         '最終ピース到達前 減圧ジャッキがある場合
                         If PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber AndAlso
                             SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).ReduceJack.Count > 0 Then
+
                             If CtlPara.NextPieceConfirm Then
                                 '同時施工継続メッセージ出力
                                 My.Forms.frmNextPieceConfirm.Show()
@@ -339,6 +340,11 @@ Module mdlFLEX
         My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
 
     End Sub
+
+
+
+
+
     ''' <summary>
     ''' 同時施工モード変化
     ''' </summary>
@@ -353,6 +359,7 @@ Module mdlFLEX
             LosZeroSts = 0
             ElapsedTime.LosZeroStop()
         End If
+
     End Sub
     ''' <summary>
     ''' 同時施工キャンセル

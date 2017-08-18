@@ -197,6 +197,10 @@
         '同時施工用
         ucnLosZeroMode.BitStatus = PlcIf.LosZeroEnable And PlcIf.LosZeroMode
         ucnLosZeroMode.Blink = Not PlcIf.LosZeroEnable And PlcIf.LosZeroMode
+        '対抗ジャッキ
+        UcnOpposeJackControl.BitStatus = CtlPara.LosZeroOpposeControl
+        UcnOpposeJackSelect.BitStatus = CtlPara.LosZeroOpposeJack
+
         '同時施工ピース確認ボタンブリンク
         btnPieceConfirm.Enabled = ucnLosZeroMode.Blink
         If btnPieceConfirm.Enabled Then

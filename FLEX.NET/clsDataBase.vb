@@ -522,6 +522,7 @@ Public Class clsInitParameter
     Private _MonitorMode As Boolean = False  'モニタモード　データ保存なし、PLC書き込みなし　　グループ操作出力なしのモード
     Private _DisplayNarrowMode As Boolean = False   'ディスプレイモード　ロスゼロなしで
 
+    Private _OpposeJackEnable As Boolean = False '対抗ジャッキの機能が使用可（鹿島、飛島以外のJVでは仕様不可)
 
     Private WithEvents Htb As New clsHashtableRead
 
@@ -664,6 +665,15 @@ Public Class clsInitParameter
         End Get
     End Property
 
+    ''' <summary>
+    ''' 対抗ジャッキの機能使用可（特許の関係で鹿島、飛島以外のJVでは使用不可)
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property OpposeJackEnable As Boolean
+        Get
+            Return _OpposeJackEnable
+        End Get
+    End Property
 
     ''' <summary>
     ''' クライアントモード
@@ -814,6 +824,10 @@ Public Class clsInitParameter
         If ConNameLosZero.Rows.Count <> 0 Then
             _constructionName = ConNameLosZero.Rows(0).Item(0)
             _LosZeroMode = (ConNameLosZero.Rows(0).Item(1) = 1)
+            _OpposeJackEnable =
+                _LosZeroMode And (_constructionName.IndexOf("鹿島") >= 0 Or _constructionName.IndexOf("飛島") >= 0)
+
+
         End If
 
         'モニタモード、クライアントモードの設定読み込み

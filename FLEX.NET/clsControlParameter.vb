@@ -993,8 +993,14 @@ Public Class clsControlParameter
         _LoszerorStep = chk.GetValue("LoszerorStep")
 
         _LosZeroRollingTake = fnBoolean(chk.GetValue("LosZeroRollingTake"))
-        _LosZeroOpposeJack = fnBoolean(chk.GetValue("LosZeroOpposeJack"))
-        _LosZeroOpposeControl = fnBoolean(chk.GetValue("LosZeroOpposeControl"))
+        If InitPara.OpposeJackEnable Then
+            _LosZeroOpposeJack = fnBoolean(chk.GetValue("LosZeroOpposeJack"))
+            _LosZeroOpposeControl = fnBoolean(chk.GetValue("LosZeroOpposeControl"))
+        Else
+            _LosZeroOpposeJack = False
+            _LosZeroOpposeControl = False
+        End If
+
         _ReduceTime = chk.GetValue("ReduceTime")
         _ReduceJudgePress = chk.GetValue("ReduceJudgePress")
         _NextPieceConfirm = chk.GetValue("NextPieceConfirm")

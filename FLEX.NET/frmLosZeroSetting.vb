@@ -26,7 +26,9 @@
 
 
         End With
-
+        '対抗ジャッキの機能使用可／不可
+        LosZeroOpposeJack.Selectable = InitPara.OpposeJackEnable
+        LosZeroOpposeControl.Selectable = InitPara.OpposeJackEnable
 
 
     End Sub

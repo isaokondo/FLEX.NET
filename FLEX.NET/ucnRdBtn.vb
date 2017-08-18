@@ -4,7 +4,10 @@ Public Class ucnRdBtn
     ''' 項目名
     ''' </summary>
     Private _FieldName As String
-
+    ''' <summary>
+    ''' 選択可能か？
+    ''' </summary>
+    Private _selectable As Boolean = True
     Public Sub New()
 
         ' この呼び出しはデザイナーで必要です。
@@ -42,6 +45,18 @@ Public Class ucnRdBtn
             rdbtnYes.Text = value
         End Set
     End Property
+
+    Public Property Selectable As Boolean
+        Get
+            Return _selectable
+        End Get
+        Set(value As Boolean)
+            rdbtnNo.Enabled = value
+            rdbtnYes.Enabled = value
+            lblFieldName.ForeColor = IIf(value, Color.White, Color.DarkGray)
+        End Set
+    End Property
+
 
     Public Property rdbtnValue As Boolean
         Get
