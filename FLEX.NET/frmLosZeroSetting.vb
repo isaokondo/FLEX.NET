@@ -17,6 +17,8 @@
             LosZeroOpposeControl.rdbtnValue = .LosZeroOpposeControl
             NextPieceConfirm.rdbtnValue = .NextPieceConfirm
 
+            NextPieceConfirmTime.Value = .NextPieceConfirmTime
+
             ReduceTime.Value = .ReduceTime
             ReduceJudgePress.Value = .ReduceJudgePress
 
@@ -41,6 +43,7 @@
             .LosZeroOpposeJack = LosZeroOpposeJack.rdbtnValue
             .LosZeroOpposeControl = LosZeroOpposeControl.rdbtnValue
             .NextPieceConfirm = NextPieceConfirm.rdbtnValue
+            .NextPieceConfirmTime = NextPieceConfirmTime.Value
 
             .ReduceTime = ReduceTime.Value
             .ReduceJudgePress = ReduceJudgePress.Value

@@ -134,8 +134,25 @@ Public Class frmAssemblyProcessEdit
             Case 1
                 j(0) = t(0) : j(1) = t(0)
             Case Is > 1
-                j(0) = t(0)
-                j(1) = t(t.Count - 1)
+
+                '１番と最終番号のジャッキが含まれてる場合
+                If t.Contains(1) And t.Contains(InitPara.NumberJack) Then
+                    j(1) = 1
+                    Do While t.Contains(j(1) + 1)
+                        j(1) += 1
+                    Loop
+                    j(0) = InitPara.NumberJack
+                    Do While t.Contains(j(0) - 1)
+                        j(0) -= 1
+                    Loop
+                Else
+
+                    j(0) = t(0)
+                    j(1) = t(t.Count - 1)
+
+                End If
+
+
         End Select
 
         StartJackNo.Value = j(0)

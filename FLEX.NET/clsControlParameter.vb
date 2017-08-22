@@ -95,6 +95,8 @@ Public Class clsControlParameter
     Private _ReduceTime As Integer '減圧時間（単位：SEC）
     Private _ReduceJudgePress As Single '減圧完了判断圧力(Mpa)
     Private _NextPieceConfirm As Boolean    '次ピース組立確認
+    Private _NextPieceConfirmTime As Integer    '組立確認後の減圧開始確認タイマ
+
 
     Private _PitchingSel As Integer = 0 'ピッチングの選択　0:ジャイロ　1:マシン
 
@@ -828,6 +830,20 @@ Public Class clsControlParameter
         End Set
     End Property
     ''' <summary>
+    ''' 組立確認後の減圧開始確認タイマ
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property NextPieceConfirmTime As Integer
+        Get
+            Return _NextPieceConfirmTime
+        End Get
+        Set(value As Integer)
+            _NextPieceConfirmTime = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
+    ''' <summary>
     ''' コピーストローク表示
     ''' コピーカッタの色表示が有効になるストローク
     ''' </summary>
@@ -1004,6 +1020,7 @@ Public Class clsControlParameter
         _ReduceTime = chk.GetValue("ReduceTime")
         _ReduceJudgePress = chk.GetValue("ReduceJudgePress")
         _NextPieceConfirm = chk.GetValue("NextPieceConfirm")
+        _NextPieceConfirmTime = chk.GetValue("NextPieceConfirmTime")
         _PIDShiftDefl = chk.GetValue("PIDShiftDefl")
         _DirectControl = fnBoolean(chk.GetValue("DirectControl"))
 

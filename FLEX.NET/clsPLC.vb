@@ -190,6 +190,16 @@ Public Class clsPlcIf
     Public Event LosZeroModeChange()
 
     ''' <summary>
+    ''' 次ピース組立開始
+    ''' 組立完了後のタイマ
+    ''' </summary>
+    Public Event NextPieceStart()
+    ''' <summary>
+    ''' 組立完了後の経過時間（秒)
+    ''' </summary>
+    Private AsmbledPastTime As Integer = 0
+
+    ''' <summary>
     ''' 掘進モード／セグメントモードの切り替え
     ''' </summary>
     ''' <param name="Mode">TRUE:掘進モード　FALSE：セグメントモード</param>
@@ -961,6 +971,20 @@ Public Class clsPlcIf
                         If _LosZeroMode And p <> _LosZeroSts_M Then
                             RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
                         End If
+                        '組立完了後の経過時間カウント
+                        If _LosZeroSts_M = 5 Then
+                            If AsmbledPastTime <= CtlPara.NextPieceConfirmTime + 1 Then
+                                AsmbledPastTime += 1 'カウントアップ
+                            End If
+                            If AsmbledPastTime = CtlPara.NextPieceConfirmTime Then
+                                'カウントアップ後次ピース確認イベント
+                                RaiseEvent NextPieceStart()
+                            End If
+                        Else
+                            AsmbledPastTime = 0
+                        End If
+
+
 
                         For i As Short = 0 To InitPara.NumberGroup - 1
                             _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")

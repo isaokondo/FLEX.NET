@@ -303,6 +303,46 @@ Friend Class clsSegmentAssembly
         Next
         If InitPara.LosZeroMode Then
 
+            '減圧グループの算出
+            For Each PrsDt In _ProcessData
+                Dim PieceNo As Short 'ピース番号
+                PieceNo = PrsDt.Key
+
+
+                Dim Gr As Boolean() = Enumerable.Repeat(Of Boolean)(True, InitPara.NumberGroup).ToArray()
+                Dim Jk(InitPara.NumberJack - 1) As Boolean
+                Dim i As Short
+                'リストを配列に
+                For i = 0 To InitPara.NumberJack - 1
+                    Jk(i) = PrsDt.Value.PullBackJack.Contains(i)
+                Next
+
+                '引戻しジャッキから減圧グループを
+                For i = 0 To InitPara.NumberJack - 1
+                    If Not Jk(i) Then
+                        Gr(InitPara.JackGroupPos(i) - 1) = False
+                    End If
+                Next
+                '減圧グループリスト作成
+                PrsDt.Value.ReduceGroup = New List(Of Short)
+                PrsDt.Value.ReduceJack = New List(Of Short)
+
+                For i = 0 To InitPara.NumberGroup - 1
+                    If Gr(i) Then
+                        PrsDt.Value.ReduceGroup.Add(i + 1)
+                    End If
+                Next
+
+                '減圧グループを減圧ジャッキに
+                For i = 0 To InitPara.NumberJack - 1
+                    If Gr(InitPara.JackGroupPos(i) - 1) Then
+                        PrsDt.Value.ReduceJack.Add(i + 1)
+                    End If
+                Next
+
+
+            Next
+
 
             If _ProcessData.Count = 0 Then
                 'MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、組立順序が設定されてません'", vbCritical)
@@ -649,7 +689,7 @@ Friend Class clsSegmentAssembly
             End Get
             Set(value As List(Of Short))
                 _PullBackJack = value
-                GetReduceJackAndGr()
+                'GetReduceJackAndGr()
             End Set
         End Property
         ''' <summary>
@@ -725,7 +765,26 @@ Friend Class clsSegmentAssembly
         ElseIf t.Count = 1 Then
             Return t(0)
         Else
-            Return t(0) & "-" & t(t.Count - 1)
+            '１番と最終番号のジャッキが含まれてる場合
+            If t.Contains(1) And t.Contains(InitPara.NumberJack) Then
+                Dim st As Integer = 1
+                Do While t.Contains(st + 1)
+                    st += 1
+                Loop
+                Dim la As Integer = InitPara.NumberJack
+                Do While t.Contains(la - 1)
+                    la -= 1
+                Loop
+
+                Return la & "-" & st
+
+
+
+            Else
+                Return t(0) & "-" & t(t.Count - 1)
+            End If
+
+
 
         End If
     End Function

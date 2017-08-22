@@ -34,6 +34,7 @@ Partial Class frmLosZeroSetting
         Me.RectangleShape2 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.NextPieceConfirmTime = New FLEX.NET.ucnNumEdit()
         Me.SuspendLayout()
         '
         'btnOK
@@ -52,6 +53,7 @@ Partial Class frmLosZeroSetting
         Me.LosZeroOpposeControl.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeControl.Name = "LosZeroOpposeControl"
         Me.LosZeroOpposeControl.rdbtnValue = False
+        Me.LosZeroOpposeControl.Selectable = True
         Me.LosZeroOpposeControl.Size = New System.Drawing.Size(389, 34)
         Me.LosZeroOpposeControl.SlectNoName = "する"
         Me.LosZeroOpposeControl.SlectYesName = "しない"
@@ -65,6 +67,7 @@ Partial Class frmLosZeroSetting
         Me.LosZeroOpposeJack.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeJack.Name = "LosZeroOpposeJack"
         Me.LosZeroOpposeJack.rdbtnValue = False
+        Me.LosZeroOpposeJack.Selectable = True
         Me.LosZeroOpposeJack.Size = New System.Drawing.Size(389, 34)
         Me.LosZeroOpposeJack.SlectNoName = "する"
         Me.LosZeroOpposeJack.SlectYesName = "しない"
@@ -78,6 +81,7 @@ Partial Class frmLosZeroSetting
         Me.LosZeroRollingTake.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroRollingTake.Name = "LosZeroRollingTake"
         Me.LosZeroRollingTake.rdbtnValue = False
+        Me.LosZeroRollingTake.Selectable = True
         Me.LosZeroRollingTake.Size = New System.Drawing.Size(389, 34)
         Me.LosZeroRollingTake.SlectNoName = "する"
         Me.LosZeroRollingTake.SlectYesName = "しない"
@@ -112,7 +116,7 @@ Partial Class frmLosZeroSetting
         Me.ReduceTime.FieldName = "減圧時間"
         Me.ReduceTime.Increment = 1.0!
         Me.ReduceTime.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.ReduceTime.Location = New System.Drawing.Point(16, 258)
+        Me.ReduceTime.Location = New System.Drawing.Point(16, 267)
         Me.ReduceTime.Margin = New System.Windows.Forms.Padding(2)
         Me.ReduceTime.MaxValue = "60"
         Me.ReduceTime.MinValue = "0"
@@ -133,6 +137,7 @@ Partial Class frmLosZeroSetting
         Me.NextPieceConfirm.Margin = New System.Windows.Forms.Padding(2)
         Me.NextPieceConfirm.Name = "NextPieceConfirm"
         Me.NextPieceConfirm.rdbtnValue = False
+        Me.NextPieceConfirm.Selectable = True
         Me.NextPieceConfirm.Size = New System.Drawing.Size(389, 34)
         Me.NextPieceConfirm.SlectNoName = "する"
         Me.NextPieceConfirm.SlectYesName = "しない"
@@ -231,11 +236,33 @@ Partial Class frmLosZeroSetting
         Me.Label1.Text = "モーメント最適化のパラメータ"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'NextPieceConfirmTime
+        '
+        Me.NextPieceConfirmTime.DataDspWidth = 110
+        Me.NextPieceConfirmTime.DecimalPlaces = CType(0, Short)
+        Me.NextPieceConfirmTime.DspFieldName = True
+        Me.NextPieceConfirmTime.FieldName = "次ピース組立確認タイマ"
+        Me.NextPieceConfirmTime.Increment = 1.0!
+        Me.NextPieceConfirmTime.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.NextPieceConfirmTime.Location = New System.Drawing.Point(16, 224)
+        Me.NextPieceConfirmTime.Margin = New System.Windows.Forms.Padding(2)
+        Me.NextPieceConfirmTime.MaxValue = "60"
+        Me.NextPieceConfirmTime.MinValue = "0"
+        Me.NextPieceConfirmTime.Name = "NextPieceConfirmTime"
+        Me.NextPieceConfirmTime.SelectItem = Nothing
+        Me.NextPieceConfirmTime.Size = New System.Drawing.Size(405, 39)
+        Me.NextPieceConfirmTime.TabIndex = 137
+        Me.NextPieceConfirmTime.ttMsg = ""
+        Me.NextPieceConfirmTime.ttTile = ""
+        Me.NextPieceConfirmTime.Unit = "sec"
+        Me.NextPieceConfirmTime.Value = 0R
+        '
         'frmLosZeroSetting
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(441, 639)
+        Me.Controls.Add(Me.NextPieceConfirmTime)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.LoszerorStep)
         Me.Controls.Add(Me.LosZeroEmp)
@@ -263,6 +290,7 @@ Partial Class frmLosZeroSetting
         Me.Controls.SetChildIndex(Me.LosZeroEmp, 0)
         Me.Controls.SetChildIndex(Me.LoszerorStep, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)
+        Me.Controls.SetChildIndex(Me.NextPieceConfirmTime, 0)
         Me.ResumeLayout(False)
 
     End Sub
@@ -279,4 +307,5 @@ Partial Class frmLosZeroSetting
     Friend WithEvents RectangleShape2 As PowerPacks.RectangleShape
     Friend WithEvents ShapeContainer1 As PowerPacks.ShapeContainer
     Friend WithEvents Label1 As Label
+    Friend WithEvents NextPieceConfirmTime As ucnNumEdit
 End Class

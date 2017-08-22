@@ -272,17 +272,17 @@ Module mdlFLEX
                         PlaySound(My.Resources.SegmentAsem)
 
                         'TODO:推進圧力がある程度たってから
-                        '最終ピース到達前 減圧ジャッキがある場合
-                        If PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber AndAlso
-                            SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).ReduceJack.Count > 0 Then
+                        ''最終ピース到達前 減圧ジャッキがある場合
+                        'If PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber AndAlso
+                        '    SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).ReduceJack.Count > 0 Then
 
-                            If CtlPara.NextPieceConfirm Then
-                                '同時施工継続メッセージ出力
-                                My.Forms.frmNextPieceConfirm.Show()
-                            Else
-                                PlcIf.LosZeroSts_FLEX = 1 '減圧開始
-                            End If
-                        End If
+                        '    If CtlPara.NextPieceConfirm Then
+                        '        '同時施工継続メッセージ出力
+                        '        My.Forms.frmNextPieceConfirm.Show()
+                        '    Else
+                        '        PlcIf.LosZeroSts_FLEX = 1 '減圧開始
+                        '    End If
+                        'End If
                     Case 7
                         WriteEventData("ジャッキ押付け完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 4 '押し付け完了確認
@@ -339,6 +339,22 @@ Module mdlFLEX
 
         My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
 
+    End Sub
+    ''' <summary>
+    ''' 組立完了後のタイマーアップで次ピース減圧開始
+    ''' </summary>
+    Private Sub PlcIf_NextPieceStart() Handles PlcIf.NextPieceStart
+        '最終ピース到達前 減圧ジャッキがある場合
+        If PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber AndAlso
+            SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).ReduceJack.Count > 0 Then
+
+            If CtlPara.NextPieceConfirm Then
+                '同時施工継続メッセージ出力
+                My.Forms.frmNextPieceConfirm.Show()
+            Else
+                PlcIf.LosZeroSts_FLEX = 1 '減圧開始
+            End If
+        End If
     End Sub
 
 
@@ -805,4 +821,5 @@ Module mdlFLEX
     Private Sub PlcIf_ExcavModeChange(Mode As Boolean) Handles PlcIf.ExcavModeChange
         WriteEventData(IIf(Mode, "掘進", "セグメント") & "モードになりました。", Color.DarkMagenta)
     End Sub
+
 End Module
