@@ -39,7 +39,7 @@ Friend Class clsSegmentAssembly
     ''' <summary>
     ''' セグメント組立データ  ピース番号がKey
     ''' </summary>
-    Private _ProcessData As New Dictionary(Of Short, AsseblyProcess)
+    Private _ProcessData As New SortedDictionary(Of Short, AsseblyProcess)
 
 
     ''' <summary>
@@ -115,7 +115,7 @@ Friend Class clsSegmentAssembly
     ''' セグメント組立パターン情報読込 ピース番号がKey
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ProcessData As Dictionary(Of Short, AsseblyProcess)
+    Public ReadOnly Property ProcessData As SortedDictionary(Of Short, AsseblyProcess)
         Get
             Return _ProcessData
         End Get
@@ -305,22 +305,32 @@ Friend Class clsSegmentAssembly
 
             '減圧グループの算出
             For Each PrsDt In _ProcessData
-                Dim PieceNo As Short 'ピース番号
-                PieceNo = PrsDt.Key
 
 
-                Dim Gr As Boolean() = Enumerable.Repeat(Of Boolean)(True, InitPara.NumberGroup).ToArray()
-                Dim Jk(InitPara.NumberJack - 1) As Boolean
+                Dim PulJk(InitPara.NumberJack) As Boolean '引き戻しジャッキ
+                Dim PulPreJk(InitPara.NumberJack) As Boolean    '前ピースの引き戻しジャッキ
                 Dim i As Short
                 'リストを配列に
-                For i = 0 To InitPara.NumberJack - 1
-                    Jk(i) = PrsDt.Value.PullBackJack.Contains(i)
+                '引き戻しジャッキ
+                For i = 1 To InitPara.NumberJack
+                    PulJk(i) = PrsDt.Value.PullBackJack.Contains(i)
                 Next
+                '前ピースの引き戻しジャッキで押し込んでないジャッキ
+                Dim PrePcNo As Short = PrsDt.Key - 1 '前ピース番号
+                If _ProcessData.ContainsKey(PrePcNo) Then
+                    For i = 1 To InitPara.NumberJack
+                        PulPreJk(i) =
+                            _ProcessData(PrePcNo).PullBackJack.Contains(i) And Not _ProcessData(PrePcNo).ClosetJack.Contains(i)
+                    Next
+                End If
+
+                '減圧グループ　すべてTRUEに
+                Dim Gr As Boolean() = Enumerable.Repeat(Of Boolean)(True, InitPara.NumberGroup).ToArray()
 
                 '引戻しジャッキから減圧グループを
-                For i = 0 To InitPara.NumberJack - 1
-                    If Not Jk(i) Then
-                        Gr(InitPara.JackGroupPos(i) - 1) = False
+                For i = 1 To InitPara.NumberJack
+                    If Not (PulJk(i) Or PulPreJk(i)) Then
+                        Gr(InitPara.JackGroupPos(i - 1) - 1) = False
                     End If
                 Next
                 '減圧グループリスト作成
@@ -334,9 +344,9 @@ Friend Class clsSegmentAssembly
                 Next
 
                 '減圧グループを減圧ジャッキに
-                For i = 0 To InitPara.NumberJack - 1
-                    If Gr(InitPara.JackGroupPos(i) - 1) Then
-                        PrsDt.Value.ReduceJack.Add(i + 1)
+                For i = 1 To InitPara.NumberJack
+                    If Gr(InitPara.JackGroupPos(i - 1) - 1) Then
+                        PrsDt.Value.ReduceJack.Add(i)
                     End If
                 Next
 
