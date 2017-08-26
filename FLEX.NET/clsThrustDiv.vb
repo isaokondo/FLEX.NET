@@ -700,10 +700,13 @@ Friend Class clsReducePress
             FlexAutoManualChange()
             timer.Stop()
         End If
-        '力点の移動
-        _PointX += StepX
-        _PointY += StepY
 
+        If XYtoRC.OpRc < CtlPara.片押しR制限値 Then
+            '力点の移動
+            _PointX += StepX
+            _PointY += StepY
+
+        End If
         XYtoRC = New clsXyToRs(_PointX, _PointY)
 
 

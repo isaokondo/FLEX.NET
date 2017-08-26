@@ -509,16 +509,14 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     Public Sub SegmentSimDataRead()
 
-
+        '割り付けシュミレーションで転送日の最新のレコードをリング番号ごとに取得        
         Dim rsData As DataTable =
-            GetDtfmSQL("SELECT  distinct( リングＮｏ) as  リング番号,組立パターンNo,max(転送日) as 転送日,セグメントNo 
-            ,組立パターンNo,シートID from `セグメント割付シュミレーション`  group by リングＮｏ order by リングＮｏ asc;")
+            GetDtfmSQL("SELECT * FROM `セグメント割付シュミレーション` AS m WHERE `転送日`= (SELECT max(`転送日`)
+            FROM `セグメント割付シュミレーション` AS s WHERE m.`リングＮｏ` = s.`リングＮｏ`) order by `リングＮｏ`;")
 
-        'rsData = ExecuteSql _
-        '("SELECT * FROM flexセグメント組立データ Inner Join セグメント組立パターンベース")
 
         For Each t As DataRow In rsData.Rows
-            Dim RingNo As Integer = t.Item("リング番号")
+            Dim RingNo As Integer = t.Item("リングＮｏ")
             _TypeNoSim(RingNo) = t.Item("セグメントNo")
             If Not IsDBNull(t.Item("組立パターンNo")) Then
                 _SegmentAssenblyPtnIDSim(RingNo) = t.Item("組立パターンNo")
