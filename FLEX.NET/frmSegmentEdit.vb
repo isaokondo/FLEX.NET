@@ -21,12 +21,12 @@ Public Class frmSegmentEdit
             CType(DgvSegAssign.Columns("SegmentType"), DataGridViewComboBoxColumn).Items.Add(i.Value)
         Next
 
-        If InitPara.LosZeroMode Then
-            '組立パターンのコンボボックス選択用
-            For Each i In SegAsmblyData.AssenblyPtnLst
+        'If InitPara.LosZeroMode Then
+        '組立パターンのコンボボックス選択用
+        For Each i In SegAsmblyData.AssenblyPtnLst
                 CType(DgvSegAssign.Columns("AssemblyPtnName"), DataGridViewComboBoxColumn).Items.Add(i.Value)
             Next
-        End If
+        'End If
 
         'データ読み込み
         SegAsmblyData.SegmentRingDataRead()

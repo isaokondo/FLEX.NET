@@ -218,6 +218,9 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     ''' <param name="RingNo">リング番号</param>
     Public Sub AssemblyDataRead(RingNo As Integer)
+
+        'ロスゼロのみ
+        If Not InitPara.LosZeroMode Then Exit Sub
         _AssenblyPtnDic.Clear()
         'パターンリストの取得
         Dim rsPtLst As DataTable =
@@ -308,21 +311,29 @@ Friend Class clsSegmentAssembly
 
 
                 Dim PulJk(InitPara.NumberJack) As Boolean '引き戻しジャッキ
-                Dim PulPreJk(InitPara.NumberJack) As Boolean    '前ピースの引き戻しジャッキ
+                Dim PulPreJk(InitPara.NumberJack) As Boolean    '前ピースまでのの引き戻しジャッキ
+                Dim ClosetPreJk(InitPara.NumberJack) As Boolean    '前ピースまでのの押し込みしジャッキ
                 Dim i As Short
                 'リストを配列に
-                '引き戻しジャッキ
+                '現ピースの引き戻しジャッキ
                 For i = 1 To InitPara.NumberJack
                     PulJk(i) = PrsDt.Value.PullBackJack.Contains(i)
                 Next
-                '前ピースの引き戻しジャッキで押し込んでないジャッキ
-                Dim PrePcNo As Short = PrsDt.Key - 1 '前ピース番号
-                If _ProcessData.ContainsKey(PrePcNo) Then
-                    For i = 1 To InitPara.NumberJack
-                        PulPreJk(i) =
-                            _ProcessData(PrePcNo).PullBackJack.Contains(i) And Not _ProcessData(PrePcNo).ClosetJack.Contains(i)
-                    Next
-                End If
+
+                '前ピースまでの引き戻しジャッキと押し込みジャッキをリストに
+                Dim PujJ As New List(Of Short), ClosetJ As New List(Of Short)
+                For Each pd In _ProcessData
+                    If pd.Key < PrsDt.Key Then
+                        PujJ.AddRange(pd.Value.PullBackJack)
+                        ClosetJ.AddRange(pd.Value.ClosetJack)
+                    End If
+                Next
+
+                '前ピースまでのの引き戻しジャッキで押し込んでないジャッキ
+                For i = 1 To InitPara.NumberJack
+                    PulPreJk(i) =
+                        PujJ.Contains(i) And Not ClosetJ.Contains(i)
+                Next
 
                 '減圧グループ　すべてTRUEに
                 Dim Gr As Boolean() = Enumerable.Repeat(Of Boolean)(True, InitPara.NumberGroup).ToArray()

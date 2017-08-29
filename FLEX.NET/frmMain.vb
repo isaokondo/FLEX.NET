@@ -157,6 +157,8 @@
         DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
         DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均スピード
 
+        DspLRStrokeDiff.Value = CalcStroke.LeftCalcStroke - CalcStroke.RightCalcStroke '左右ｽﾄﾛｰｸ差
+
 
         '汎用データ表示
         For Each wu In CtlPara.WideUse

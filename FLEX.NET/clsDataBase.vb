@@ -524,6 +524,9 @@ Public Class clsInitParameter
 
     Private _OpposeJackEnable As Boolean = False '対抗ジャッキの機能が使用可（鹿島、飛島以外のJVでは仕様不可)
 
+    Private _DistanceInputMethod As Boolean = False 'False:発進からの入力　True:起点からの入力
+
+
     Private WithEvents Htb As New clsHashtableRead
 
 
@@ -700,6 +703,22 @@ Public Class clsInitParameter
         End Set
     End Property
     ''' <summary>
+    ''' 測量距離入力方法
+    ''' </summary>
+    ''' <returns>
+    ''' Flase:発進から
+    ''' True:起点から
+    ''' </returns>
+    Public Property DistanceInputMethod As Boolean
+        Get
+            Return _DistanceInputMethod
+        End Get
+        Set(value As Boolean)
+            _DistanceInputMethod = value
+        End Set
+    End Property
+
+    ''' <summary>
     ''' クライアントモードかモニタモードのどちらかがON
     ''' </summary>
     ''' <returns></returns>
@@ -813,6 +832,13 @@ Public Class clsInitParameter
             '上下のストローク計の有無
             _topStrokeEnable = (_mesureJackNo(0) <> 0)
             _bottomStrokeEnable = (_mesureJackNo(2) <> 0)
+
+
+            If ht.ContainsKey("測量距離入力") Then
+                _DistanceInputMethod = (ht("測量距離入力").IndexOf("起点") >= 0)
+            End If
+
+
 
         Catch ex As Exception
 

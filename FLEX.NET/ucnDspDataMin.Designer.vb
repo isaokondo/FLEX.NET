@@ -44,12 +44,12 @@ Partial Class ucnDspDataMin
         '
         Me.lblFieldName.BackColor = System.Drawing.Color.Transparent
         Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblFieldName.Location = New System.Drawing.Point(17, 0)
+        Me.lblFieldName.Location = New System.Drawing.Point(-11, 0)
         Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblFieldName.Name = "lblFieldName"
-        Me.lblFieldName.Size = New System.Drawing.Size(111, 18)
+        Me.lblFieldName.Size = New System.Drawing.Size(139, 18)
         Me.lblFieldName.TabIndex = 6
-        Me.lblFieldName.Text = "上ST実(mm/min)"
+        Me.lblFieldName.Text = "左右ｽﾄﾛｰｸ差(mm)"
         Me.lblFieldName.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'ucnDspDataMin

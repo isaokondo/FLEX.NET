@@ -19,23 +19,20 @@
     End Sub
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click, btnCLose.Click
-        With CtlPara
-            .測量ポイントリング番号 = ConfirmRingNo.Value
-            .測量ポイント総距離 = TipDistance.Value
 
-            'PuchUpStroke.Value=.
-            .水平入力補正値 = HorCorrentionValue.Value
-            .鉛直入力補正値 = VerCorrentionValue.Value
-
-        End With
+        CtlPara.測量ポイントリング番号 = ConfirmRingNo.Value
+        '起点入力の場合は、起点から発進までの距離を減算
+        CtlPara.測量ポイント総距離 =
+                TipDistance.Value - IIf(InitPara.DistanceInputMethod, RefernceDirection.toStartDistance, 0)
+        'PuchUpStroke.Value=.
+        CtlPara.水平入力補正値 = HorCorrentionValue.Value
+        CtlPara.鉛直入力補正値 = VerCorrentionValue.Value
 
         DspUpdate()
 
         If sender Is btnCLose Then
             Me.Close()
         End If
-        'Me.Close()
-
 
     End Sub
 
@@ -45,12 +42,15 @@
         NowRing.Value = PlcIf.RingNo
         ConfirmRingNo.Value = CtlPara.測量ポイントリング番号
         TipDistance.Value = CtlPara.測量ポイント総距離
+        '起点入力
+        If InitPara.DistanceInputMethod Then
+            TipDistance.FieldName = TipDistance.FieldName.Replace("発進", "起点") '文字変更
+            TipDistance.Value += RefernceDirection.toStartDistance '起点から発進までの距離加算
+        End If
 
         PuchUpStroke.Value = SegAsmblyData.RingLastStroke(CtlPara.測量ポイントリング番号)
         HorCorrentionValue.Value = CtlPara.水平入力補正値
         VerCorrentionValue.Value = CtlPara.鉛直入力補正値
-
-
 
         DspUpdate()
 

@@ -76,6 +76,7 @@ Partial Class frmMain
         Me.lblNowDate = New System.Windows.Forms.Label()
         Me.cmbWideSelct = New System.Windows.Forms.ComboBox()
         Me.lblMachineMode = New System.Windows.Forms.Label()
+        Me.DspLRStrokeDiff = New FLEX.NET.ucnDspDataMin()
         Me.DspRingTargetDir = New FLEX.NET.ucnDspData()
         Me.UcnDspData24 = New FLEX.NET.ucnDspData()
         Me.DspClosetJack = New FLEX.NET.ucnDspData()
@@ -613,6 +614,19 @@ Partial Class frmMain
         Me.lblMachineMode.TabIndex = 152
         Me.lblMachineMode.Text = "セグメントモード"
         Me.lblMachineMode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'DspLRStrokeDiff
+        '
+        Me.DspLRStrokeDiff.BackColor = System.Drawing.Color.Transparent
+        Me.DspLRStrokeDiff.DecimalPlaces = CType(0, Short)
+        Me.DspLRStrokeDiff.FieldName = "左右ｽﾄﾛｰｸ差"
+        Me.DspLRStrokeDiff.Location = New System.Drawing.Point(919, 530)
+        Me.DspLRStrokeDiff.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspLRStrokeDiff.Name = "DspLRStrokeDiff"
+        Me.DspLRStrokeDiff.Size = New System.Drawing.Size(138, 51)
+        Me.DspLRStrokeDiff.TabIndex = 155
+        Me.DspLRStrokeDiff.Unit = "mm"
+        Me.DspLRStrokeDiff.Value = 1234.0R
         '
         'DspRingTargetDir
         '
@@ -2471,6 +2485,7 @@ Partial Class frmMain
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.DspLRStrokeDiff)
         Me.Controls.Add(Me.DspRingTargetDir)
         Me.Controls.Add(Me.UcnDspData24)
         Me.Controls.Add(Me.DspClosetJack)
@@ -2730,6 +2745,7 @@ Partial Class frmMain
     Friend WithEvents DspAveStartStroke As ucnDspData
     Friend WithEvents RingDataViewer As ToolStripMenuItem
     Friend WithEvents DspRingTargetDir As ucnDspData
+    Friend WithEvents DspLRStrokeDiff As ucnDspDataMin
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog
