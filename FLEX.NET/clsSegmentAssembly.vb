@@ -51,9 +51,14 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     Private _SegmentAssenblyPtnIDSim As New Dictionary(Of Integer, Short)
     ''' <summary>
-    ''' シュミレーションデータの指示書転送日
+    ''' シュミレーションデータのSheetID
     ''' </summary>
     Private _SheetIDSim As New Dictionary(Of Integer, Integer)
+
+    ''' <summary>
+    ''' シュミレーションデータの指示書転送日
+    ''' </summary>
+    Private _TransferDate As New Dictionary(Of Integer, Date)
 
 
     ''' <summary>
@@ -212,6 +217,19 @@ Friend Class clsSegmentAssembly
             'TODO:データベース更新作業
         End Set
     End Property
+
+    Public Property TransferDate() As Dictionary(Of Integer, Date)
+        Get
+            Return _TransferDate
+        End Get
+        Set(value As Dictionary(Of Integer, Date))
+            _TransferDate = value
+            'TODO:データベース更新作業
+        End Set
+    End Property
+
+
+
 
     ''' <summary>
     ''' 組立パターンの情報を取得
@@ -535,6 +553,7 @@ Friend Class clsSegmentAssembly
 
             If Not IsDBNull(t.Item("転送日")) Then
                 _SheetIDSim(RingNo) = t.Item("シートID")
+                _TransferDate(RingNo) = t.Item("転送日")
             End If
 
         Next
@@ -679,9 +698,9 @@ Friend Class clsSegmentAssembly
         ''' </summary>
         Public Property PieceCenterAngle As Double
         ''' <summary>
-        ''' 対抗ジャッキ
+        ''' 対抗グループ
         ''' </summary>
-        Public Property OpposeJack As List(Of Short)
+        Public Property OpposeGroup As List(Of Short)
         ''' <summary>
         ''' 甲組乙組の識別
         ''' </summary>

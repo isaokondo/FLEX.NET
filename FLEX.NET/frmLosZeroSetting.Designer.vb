@@ -35,15 +35,16 @@ Partial Class frmLosZeroSetting
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.NextPieceConfirmTime = New FLEX.NET.ucnNumEdit()
+        Me.LosZeroOpposeGroupNumber = New FLEX.NET.ucnNumEdit()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(204, 572)
+        Me.btnOK.Location = New System.Drawing.Point(204, 625)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(328, 572)
+        Me.btnCancel.Location = New System.Drawing.Point(328, 625)
         '
         'LosZeroOpposeControl
         '
@@ -95,7 +96,7 @@ Partial Class frmLosZeroSetting
         Me.ReduceJudgePress.FieldName = "減圧完了判断圧力"
         Me.ReduceJudgePress.Increment = 1.0!
         Me.ReduceJudgePress.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.ReduceJudgePress.Location = New System.Drawing.Point(16, 316)
+        Me.ReduceJudgePress.Location = New System.Drawing.Point(16, 369)
         Me.ReduceJudgePress.Margin = New System.Windows.Forms.Padding(2)
         Me.ReduceJudgePress.MaxValue = "50"
         Me.ReduceJudgePress.MinValue = "0"
@@ -116,7 +117,7 @@ Partial Class frmLosZeroSetting
         Me.ReduceTime.FieldName = "減圧時間"
         Me.ReduceTime.Increment = 1.0!
         Me.ReduceTime.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.ReduceTime.Location = New System.Drawing.Point(16, 267)
+        Me.ReduceTime.Location = New System.Drawing.Point(16, 320)
         Me.ReduceTime.Margin = New System.Windows.Forms.Padding(2)
         Me.ReduceTime.MaxValue = "60"
         Me.ReduceTime.MinValue = "0"
@@ -133,7 +134,7 @@ Partial Class frmLosZeroSetting
         '
         Me.NextPieceConfirm.BackColor = System.Drawing.Color.Transparent
         Me.NextPieceConfirm.FieldName = "次ピース組立確認"
-        Me.NextPieceConfirm.Location = New System.Drawing.Point(16, 169)
+        Me.NextPieceConfirm.Location = New System.Drawing.Point(11, 223)
         Me.NextPieceConfirm.Margin = New System.Windows.Forms.Padding(2)
         Me.NextPieceConfirm.Name = "NextPieceConfirm"
         Me.NextPieceConfirm.rdbtnValue = False
@@ -151,7 +152,7 @@ Partial Class frmLosZeroSetting
         Me.LosZeroNlp.FieldName = "最適化ループ回数"
         Me.LosZeroNlp.Increment = 1.0!
         Me.LosZeroNlp.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.LosZeroNlp.Location = New System.Drawing.Point(16, 404)
+        Me.LosZeroNlp.Location = New System.Drawing.Point(16, 457)
         Me.LosZeroNlp.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroNlp.MaxValue = "200"
         Me.LosZeroNlp.MinValue = "0"
@@ -172,7 +173,7 @@ Partial Class frmLosZeroSetting
         Me.LosZeroEmp.FieldName = "モーメント偏差許容値"
         Me.LosZeroEmp.Increment = 0.1!
         Me.LosZeroEmp.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.LosZeroEmp.Location = New System.Drawing.Point(16, 447)
+        Me.LosZeroEmp.Location = New System.Drawing.Point(16, 500)
         Me.LosZeroEmp.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroEmp.MaxValue = "300"
         Me.LosZeroEmp.MinValue = "0"
@@ -193,7 +194,7 @@ Partial Class frmLosZeroSetting
         Me.LoszerorStep.FieldName = "1ループの演算の力点変化量"
         Me.LoszerorStep.Increment = 0.01!
         Me.LoszerorStep.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.LoszerorStep.Location = New System.Drawing.Point(16, 490)
+        Me.LoszerorStep.Location = New System.Drawing.Point(16, 543)
         Me.LoszerorStep.Margin = New System.Windows.Forms.Padding(2)
         Me.LoszerorStep.MaxValue = "1"
         Me.LoszerorStep.MinValue = "0"
@@ -210,7 +211,7 @@ Partial Class frmLosZeroSetting
         '
         Me.RectangleShape2.BorderColor = System.Drawing.Color.White
         Me.RectangleShape2.CornerRadius = 10
-        Me.RectangleShape2.Location = New System.Drawing.Point(4, 389)
+        Me.RectangleShape2.Location = New System.Drawing.Point(4, 440)
         Me.RectangleShape2.Name = "RectangleShape2"
         Me.RectangleShape2.Size = New System.Drawing.Size(419, 147)
         '
@@ -220,7 +221,7 @@ Partial Class frmLosZeroSetting
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape2})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(441, 639)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(441, 679)
         Me.ShapeContainer1.TabIndex = 45
         Me.ShapeContainer1.TabStop = False
         '
@@ -228,7 +229,7 @@ Partial Class frmLosZeroSetting
         '
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label1.Location = New System.Drawing.Point(27, 376)
+        Me.Label1.Location = New System.Drawing.Point(27, 429)
         Me.Label1.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(262, 26)
@@ -244,7 +245,7 @@ Partial Class frmLosZeroSetting
         Me.NextPieceConfirmTime.FieldName = "次ピース組立確認タイマ"
         Me.NextPieceConfirmTime.Increment = 1.0!
         Me.NextPieceConfirmTime.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.NextPieceConfirmTime.Location = New System.Drawing.Point(16, 224)
+        Me.NextPieceConfirmTime.Location = New System.Drawing.Point(16, 277)
         Me.NextPieceConfirmTime.Margin = New System.Windows.Forms.Padding(2)
         Me.NextPieceConfirmTime.MaxValue = "60"
         Me.NextPieceConfirmTime.MinValue = "0"
@@ -257,11 +258,33 @@ Partial Class frmLosZeroSetting
         Me.NextPieceConfirmTime.Unit = "sec"
         Me.NextPieceConfirmTime.Value = 0R
         '
+        'LosZeroOpposeGroupNumber
+        '
+        Me.LosZeroOpposeGroupNumber.DataDspWidth = 110
+        Me.LosZeroOpposeGroupNumber.DecimalPlaces = CType(0, Short)
+        Me.LosZeroOpposeGroupNumber.DspFieldName = True
+        Me.LosZeroOpposeGroupNumber.FieldName = "対抗グループ数"
+        Me.LosZeroOpposeGroupNumber.Increment = 1.0!
+        Me.LosZeroOpposeGroupNumber.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.LosZeroOpposeGroupNumber.Location = New System.Drawing.Point(19, 167)
+        Me.LosZeroOpposeGroupNumber.Margin = New System.Windows.Forms.Padding(2)
+        Me.LosZeroOpposeGroupNumber.MaxValue = "5"
+        Me.LosZeroOpposeGroupNumber.MinValue = "0"
+        Me.LosZeroOpposeGroupNumber.Name = "LosZeroOpposeGroupNumber"
+        Me.LosZeroOpposeGroupNumber.SelectItem = Nothing
+        Me.LosZeroOpposeGroupNumber.Size = New System.Drawing.Size(405, 39)
+        Me.LosZeroOpposeGroupNumber.TabIndex = 138
+        Me.LosZeroOpposeGroupNumber.ttMsg = ""
+        Me.LosZeroOpposeGroupNumber.ttTile = ""
+        Me.LosZeroOpposeGroupNumber.Unit = ""
+        Me.LosZeroOpposeGroupNumber.Value = 0R
+        '
         'frmLosZeroSetting
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(441, 639)
+        Me.ClientSize = New System.Drawing.Size(441, 679)
+        Me.Controls.Add(Me.LosZeroOpposeGroupNumber)
         Me.Controls.Add(Me.NextPieceConfirmTime)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.LoszerorStep)
@@ -285,12 +308,13 @@ Partial Class frmLosZeroSetting
         Me.Controls.SetChildIndex(Me.NextPieceConfirm, 0)
         Me.Controls.SetChildIndex(Me.ReduceTime, 0)
         Me.Controls.SetChildIndex(Me.LosZeroNlp, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
-        Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.LosZeroEmp, 0)
         Me.Controls.SetChildIndex(Me.LoszerorStep, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.NextPieceConfirmTime, 0)
+        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnCancel, 0)
+        Me.Controls.SetChildIndex(Me.LosZeroOpposeGroupNumber, 0)
         Me.ResumeLayout(False)
 
     End Sub
@@ -308,4 +332,5 @@ Partial Class frmLosZeroSetting
     Friend WithEvents ShapeContainer1 As PowerPacks.ShapeContainer
     Friend WithEvents Label1 As Label
     Friend WithEvents NextPieceConfirmTime As ucnNumEdit
+    Friend WithEvents LosZeroOpposeGroupNumber As ucnNumEdit
 End Class

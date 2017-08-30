@@ -642,8 +642,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ReduceStart.wav" />
     <None Include="Resources\SegmentAsem.wav" />
+    <None Include="Resources\ReduceStart.wav" />
     <None Include="Resources\ClosetStart.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -663,6 +663,7 @@
     <Content Include="Resources\excelprt.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\NextPieceConfirm.wav" />
     <Content Include="Resources\ReduceFinished.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

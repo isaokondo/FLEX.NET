@@ -539,61 +539,10 @@ Module mdlFLEX
         Select Case PlcIf.ExcaStatus
 
             Case cKussin
-                ''掘進中の処理
-                '減圧中から組立完了
-                'If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
-                '    Dim Gp As List(Of Short) =
-                '        SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
-                '    For Each R As Short In Gp
-                '        sngGpSV(R - 1) =
-                '        Reduce.MvOut(R - 1) * CtlPara.最大全開出力時の目標圧力 / 100
-                '        intGpFl(R - 1) = cTracking
-                '    Next
-                'End If
 
-                'For i = 0 To InitPara.NumberGroup - 1
-                '    If intGpFl(i) <> cTracking Then
-                '        If DivCul.FullOpenGruop.Contains(i) Then ''全開出力
-                '            sngGpSV(i) = CtlPara.最大全開出力時の目標圧力
-                '            intGpFl(i) = cFillPower
-                '        Else
-                '            sngGpSV(i) = DivCul.分担率指令値(i) / 100 * PlcIf.FilterJkPress
-                '            '低圧推進の設定値 
-                '            'TODO:最適化は考慮してない！
-                '            If CtlPara.optGpEn.Contains(i + 1) AndAlso
-                '                sngGpSV(i) > CtlPara.optGpSv(i) Then
-                '                sngGpSV(i) = CtlPara.optGpSv(i)
-                '            End If
-                '            'ダイレクト制御有効で偏差が設定以上
-                '            If Math.Abs(PlcIf.GroupPv(i) - PlcIf.GroupSV(i)) < CtlPara.PIDShiftDefl _
-                '                    Or CtlPara.DirectControl = False Then
-                '                intGpFl(i) = cPIDOut ''ＰＩＤ出力
-                '            Else
-                '                intGpFl(i) = cDirect  'ダイレクト指令制御
-                '            End If
-
-                '        End If
-                '    End If
-                '    'TODO:トラッキングの意味
-                '    ''01/09/20 追加
-                '    'If mblnTracking Then
-                '    '    intGpFl(i) = cTracking ''トラッキング
-                '    '    'frmTuningMonitor.lblPID(intCnt).Text = "T" ''チューニングモニタのステータス
-                '    'End If
-                'Next i
-
-
-                'For i = 0 To InitPara.NumberJack - 1
-                '    Dim GpNo As Short = InitPara.JackGroupPos(i)
-                '    If DivCul.GpSvRate(i) > sngGpSV0(GpNo - 1) Then
-                '        sngGpSV0(GpNo - 1) = DivCul.GpSvRate(i)
-                '    End If
-                'Next
                 ''掘進中の処理
                 '減圧中から組立完了
                 If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
-                    'Dim Gp As List(Of Short) =
-                    'SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
                     For Each i As Short In Reduce.LstRdGp
                         GpSV(i - 1) =
                         Reduce.MvOut(i - 1) * CtlPara.最大全開出力時の目標圧力 / 100

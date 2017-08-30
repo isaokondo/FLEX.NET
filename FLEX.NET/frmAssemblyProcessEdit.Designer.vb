@@ -43,6 +43,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspTypeName = New FLEX.NET.ucnDspData()
         Me.DspReduceGroup = New FLEX.NET.ucnDspData()
         Me.btnApply = New System.Windows.Forms.Button()
+        Me.DspOpposeGroup = New FLEX.NET.ucnDspData()
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -476,11 +477,33 @@ Partial Class frmAssemblyProcessEdit
         Me.btnApply.Text = "適用"
         Me.btnApply.UseVisualStyleBackColor = False
         '
+        'DspOpposeGroup
+        '
+        Me.DspOpposeGroup.BackColor = System.Drawing.Color.Transparent
+        Me.DspOpposeGroup.Blink = False
+        Me.DspOpposeGroup.BlinkColor = System.Drawing.Color.Red
+        Me.DspOpposeGroup.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.DspOpposeGroup.DataWidth = 91
+        Me.DspOpposeGroup.DecimalPlaces = CType(2, Short)
+        Me.DspOpposeGroup.FieldName = "対抗ｸﾞﾙｰﾌﾟ"
+        Me.DspOpposeGroup.FieldNameWidth = 146
+        Me.DspOpposeGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspOpposeGroup.Location = New System.Drawing.Point(740, 226)
+        Me.DspOpposeGroup.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspOpposeGroup.Name = "DspOpposeGroup"
+        Me.DspOpposeGroup.Size = New System.Drawing.Size(243, 32)
+        Me.DspOpposeGroup.TabIndex = 151
+        Me.DspOpposeGroup.Unit = "deg"
+        Me.DspOpposeGroup.UnitVisible = False
+        Me.DspOpposeGroup.Value = "-"
+        Me.DspOpposeGroup.ValueType = True
+        '
         'frmAssemblyProcessEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1078, 769)
+        Me.Controls.Add(Me.DspOpposeGroup)
         Me.Controls.Add(Me.btnApply)
         Me.Controls.Add(Me.DspReduceGroup)
         Me.Controls.Add(Me.UcnDspData24)
@@ -527,6 +550,7 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.SetChildIndex(Me.UcnDspData24, 0)
         Me.Controls.SetChildIndex(Me.DspReduceGroup, 0)
         Me.Controls.SetChildIndex(Me.btnApply, 0)
+        Me.Controls.SetChildIndex(Me.DspOpposeGroup, 0)
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -552,4 +576,5 @@ Partial Class frmAssemblyProcessEdit
     Friend WithEvents DspTypeName As ucnDspData
     Friend WithEvents DspReduceGroup As ucnDspData
     Protected WithEvents btnApply As Button
+    Friend WithEvents DspOpposeGroup As ucnDspData
 End Class

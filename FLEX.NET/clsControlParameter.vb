@@ -91,6 +91,7 @@ Public Class clsControlParameter
     Private _LosZeroRollingTake As Boolean  '同時施工：ローリング考慮
     Private _LosZeroOpposeJack As Boolean '対抗ジャッキ選択
     Private _LosZeroOpposeControl As Boolean '対抗圧制御
+    Private _LosZeroOpposeGroupNumber As Short '対抗ジャッキ制御グループ数
 
     Private _ReduceTime As Integer '減圧時間（単位：SEC）
     Private _ReduceJudgePress As Single '減圧完了判断圧力(Mpa)
@@ -794,6 +795,22 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+
+    ''' <summary>
+    ''' 対抗ジャッキ制御グループ数
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LosZeroOpposeGroupNumber As Short
+        Get
+            Return _LosZeroOpposeGroupNumber
+        End Get
+        Set(value As Short)
+            _LosZeroOpposeGroupNumber = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+
     ''' <summary>
     ''' 減圧時間（単位：SEC）
     ''' </summary>
@@ -1012,9 +1029,11 @@ Public Class clsControlParameter
         If InitPara.OpposeJackEnable Then
             _LosZeroOpposeJack = fnBoolean(chk.GetValue("LosZeroOpposeJack"))
             _LosZeroOpposeControl = fnBoolean(chk.GetValue("LosZeroOpposeControl"))
+            _LosZeroOpposeGroupNumber = chk.GetValue("LosZeroOpposeGroupNumber")
         Else
             _LosZeroOpposeJack = False
             _LosZeroOpposeControl = False
+            _LosZeroOpposeGroupNumber = 0
         End If
 
         _ReduceTime = chk.GetValue("ReduceTime")
