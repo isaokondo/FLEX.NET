@@ -1033,7 +1033,7 @@ Public Class clsControlParameter
         Else
             _LosZeroOpposeJack = False
             _LosZeroOpposeControl = False
-            _LosZeroOpposeGroupNumber = 0
+            _LosZeroOpposeGroupNumber=0
         End If
 
         _ReduceTime = chk.GetValue("ReduceTime")

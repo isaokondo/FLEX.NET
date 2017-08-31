@@ -349,6 +349,9 @@ Module mdlFLEX
             SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).ReduceJack.Count > 0 Then
 
             If CtlPara.NextPieceConfirm Then
+                'ボイスメッセージ出力(次ピース確認)
+                PlaySound(My.Resources.NextPieceConfirm)
+
                 '同時施工継続メッセージ出力
                 My.Forms.frmNextPieceConfirm.Show()
             Else
@@ -529,53 +532,56 @@ Module mdlFLEX
     ''' </summary>
     Private Sub GroupSvOut()
 
-
         'Dim sngGpSV(InitPara.NumberGroup - 1) As Single
         Dim GpFlg(InitPara.NumberGroup - 1) As Short
         Dim GpSV(InitPara.NumberGroup - 1) As Single
-
-
 
         Select Case PlcIf.ExcaStatus
 
             Case cKussin
 
+                'If CtlPara.圧力制御開始推力値有効フラグ AndAlso CtlPara.圧力制御開始推力値 > CulcMoment.Thrust Then
+                '    For i As Short = 0 To InitPara.NumberGroup - 1
+                '        GpFlg(i) = cIgnoreOut
+                '    Next
+                'Else
                 ''掘進中の処理
                 '減圧中から組立完了
                 If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
-                    For Each i As Short In Reduce.LstRdGp
-                        GpSV(i - 1) =
-                        Reduce.MvOut(i - 1) * CtlPara.最大全開出力時の目標圧力 / 100
-                        GpFlg(i - 1) = cTracking
-                    Next
-                End If
-
-
-                For i = 0 To InitPara.NumberGroup - 1
-                    If GpFlg(i) <> cTracking Then
-                        '通常のグループ フィルター後の元圧の割合
-                        GpSV(i) = DivCul.PuGp2(i) / DivCul.PujMax * PlcIf.FilterJkPress
-
-                        If DivCul.OptinalGpNo.Contains(i) Then ''低圧推進及び対抗グループ
-                            GpSV(i) = DivCul.PuGp2(i) '算出もしくは設定されたSV
-                        End If
-
-                        'ダイレクト制御有効で偏差が設定以上
-                        If Math.Abs(PlcIf.GroupPv(i) - GpSV(i)) < CtlPara.PIDShiftDefl _
-                                    Or CtlPara.DirectControl = False Then
-                            GpFlg(i) = cPIDOut ''ＰＩＤ出力
-                        Else
-                            GpFlg(i) = cDirect  'ダイレクト指令制御
-                        End If
-
-                        If DivCul.FullOpenGruop.Contains(i) Then ''全開出力
-                            GpSV(i) = CtlPara.最大全開出力時の目標圧力
-                            GpFlg(i) = cFillPower
-                        End If
-
+                        For Each i As Short In Reduce.LstRdGp
+                            GpSV(i - 1) =
+                            Reduce.MvOut(i - 1) * CtlPara.最大全開出力時の目標圧力 / 100
+                            '減圧グループはトラッキング
+                            GpFlg(i - 1) = cTracking
+                        Next
                     End If
-                Next i
 
+                    For i = 0 To InitPara.NumberGroup - 1
+                        If DivCul.PujMax <> 0 AndAlso GpFlg(i) <> cTracking Then
+                            '通常のグループ フィルター後の元圧の割合
+                            GpSV(i) = DivCul.PuGp2(i) / DivCul.PujMax * PlcIf.FilterJkPress
+
+                            If DivCul.OptinalGpNo.Contains(i) Then ''低圧推進及び対抗グループ
+                                GpSV(i) = DivCul.PuGp2(i) '算出もしくは設定されたSV
+                            End If
+
+                            'ダイレクト制御有効で偏差が設定以上
+                            If Math.Abs(PlcIf.GroupPv(i) - GpSV(i)) < CtlPara.PIDShiftDefl _
+                                        Or CtlPara.DirectControl = False Then
+                                GpFlg(i) = cPIDOut ''ＰＩＤ出力
+                            Else
+                                GpFlg(i) = cDirect  'ダイレクト指令制御
+                            End If
+
+                            If DivCul.FullOpenGruop.Contains(i) Then ''全開出力
+                                GpSV(i) = CtlPara.最大全開出力時の目標圧力
+                                GpFlg(i) = cFillPower
+                            End If
+
+                        End If
+                    Next i
+
+                'End If
 
 
                 ''中断中及び待機中の処理
