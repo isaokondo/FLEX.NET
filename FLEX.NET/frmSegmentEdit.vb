@@ -66,6 +66,9 @@ Public Class frmSegmentEdit
                     End If
 
                     DgvSegSim("SheetIDSim", SimDgvRow).Value = SegAsmblyData.SheetIDSim(RingNo) 'SheetID
+                    DgvSegSim("TransferDate", SimDgvRow).Value = SegAsmblyData.TransferDate(RingNo).ToString("MM月dd日") 'SheetID
+                    DgvSegSim("TransferDate", SimDgvRow).ToolTipText = SegAsmblyData.TransferDate(RingNo).ToString("yyyy年MM月dd日thh時mm分ss秒") 'SheetID
+
                     SimDgvRow += 1
                 End If
             End If

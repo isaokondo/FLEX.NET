@@ -705,8 +705,7 @@ Public Class clsInitParameter
     ''' <summary>
     ''' 測量距離入力方法
     ''' </summary>
-    ''' <returns>
-    ''' Flase:発進から
+    ''' <returns>Flase:発進から
     ''' True:起点から
     ''' </returns>
     Public Property DistanceInputMethod As Boolean
@@ -835,7 +834,7 @@ Public Class clsInitParameter
 
 
             If ht.ContainsKey("測量距離入力") Then
-                _DistanceInputMethod = (ht("測量距離入力").IndexOf("起点") >= 0)
+                _DistanceInputMethod = (ht("測量距離入力").IndexOf("起点") > 0)
             End If
 
 

@@ -1185,10 +1185,10 @@ Public Class clsPlcIf
             'PLCデータをテーブルに書き込む　
             'データは1秒毎に更新、保存は1分毎
             Try
-                Dim Tm As String = Now.ToString("yyyy/MM/dd HH:mm:") & "00"
+                Dim Tm As String = Now.ToString("yyyy/MM/dd HH:") & "00:00"
 
                 ExecuteSqlCmd($"REPLACE INTO PlcComData VALUES 
-                        ('{Tm}','{Now.ToString("ss")}',
+                        ('{Tm}','{Now.ToString("ss").ToNum + Now.ToString("mm").ToNum * 60}',
                             '{String.Join(",", AnalogComData)}',
                             '{String.Join(",", DigtalComPlcData)}',
                             '{String.Join(",", ParmterComData)}')")

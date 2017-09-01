@@ -15,6 +15,8 @@ Public Class frmAssemblyProcessEdit
         LastJackNo.MaxValue = InitPara.NumberJack
         OperattionJackSel.ComboBox.SelectedIndex = 0    '未選択時の処理
 
+        DspOpposeGroup.Visible = InitPara.OpposeJackEnable
+
     End Sub
     ''' <summary>
     ''' 変更の適用
@@ -75,7 +77,7 @@ Public Class frmAssemblyProcessEdit
                 DspAddClosetThrustJack.Value = SegAsbly.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
                 DspReduceGroup.Value = SegAsbly.JackListDsp(.ReduceGroup)
-
+                DspOpposeGroup.Value = SegAsbly.JackListDsp(.OpposeGroup)
                 AssemblyPieceNo.MaxValue = SegAsbly.AssemblyPieceNumber '組立ピース番号MAX値設定
 
                 '作動ジャッキの表示
