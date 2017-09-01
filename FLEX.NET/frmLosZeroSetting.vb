@@ -15,6 +15,8 @@
             LosZeroRollingTake.rdbtnValue = .LosZeroRollingTake
             LosZeroOpposeJack.rdbtnValue = .LosZeroOpposeJack
             LosZeroOpposeControl.rdbtnValue = .LosZeroOpposeControl
+            LosZeroOpposeGroupNumber.Value = .LosZeroOpposeGroupNumber
+
             NextPieceConfirm.rdbtnValue = .NextPieceConfirm
 
             NextPieceConfirmTime.Value = .NextPieceConfirmTime
@@ -31,17 +33,21 @@
         '対抗ジャッキの機能使用可／不可
         LosZeroOpposeJack.Selectable = InitPara.OpposeJackEnable
         LosZeroOpposeControl.Selectable = InitPara.OpposeJackEnable
-
+        LosZeroOpposeGroupNumber.Enabled = InitPara.OpposeJackEnable
 
     End Sub
 
     Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
 
         With CtlPara
+            '対抗ジャッキ有効のとき
+            If InitPara.OpposeJackEnable Then
+                .LosZeroRollingTake = LosZeroRollingTake.rdbtnValue
+                .LosZeroOpposeJack = LosZeroOpposeJack.rdbtnValue
+                .LosZeroOpposeControl = LosZeroOpposeControl.rdbtnValue
+                .LosZeroOpposeGroupNumber = LosZeroOpposeGroupNumber.Value
+            End If
 
-            .LosZeroRollingTake = LosZeroRollingTake.rdbtnValue
-            .LosZeroOpposeJack = LosZeroOpposeJack.rdbtnValue
-            .LosZeroOpposeControl = LosZeroOpposeControl.rdbtnValue
             .NextPieceConfirm = NextPieceConfirm.rdbtnValue
             .NextPieceConfirmTime = NextPieceConfirmTime.Value
 
