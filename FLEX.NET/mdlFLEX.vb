@@ -507,7 +507,7 @@ Module mdlFLEX
         For i As Short = 0 To InitPara.NumberJack - 1
             '減圧中のジャッキ
             Dim RdJ As Boolean = InitPara.LosZeroMode AndAlso
-                (SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Contains(i) And (PlcIf.LosZeroSts_FLEX = 1 Or PlcIf.LosZeroSts_FLEX = 2))
+                (SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Contains(i + 1) And (PlcIf.LosZeroSts_FLEX = 1 Or PlcIf.LosZeroSts_FLEX = 2))
 
             DivCul.OnJack(i) =
                 PlcIf.JackExecMode(i) And PlcIf.JackSel(i) And Not RdJ
@@ -672,10 +672,14 @@ Module mdlFLEX
         End If
     End Sub
 
-    Private Sub JackMvAuto_OneWayLimitModeChanges(Flg As Boolean) Handles JackMvAuto.OneWayLimitModeChanges
-        If Flg Then
-            WriteEventData("圧力調整中になりました。", Color.Magenta)
-            WriteEventData("方向制御　自動に変わりました", Color.Orange)
+    Private Sub JackMvAuto_OneWayLimitModeChanges(ByVal flg0 As Boolean, flg1 As Boolean, flg2 As Boolean) Handles JackMvAuto.OneWayLimitModeChanges
+        If flg0 Or flg1 Or flg2 Then
+            Dim msg As String = "上限です。圧力調整中になりました。"
+            If flg0 Then msg = "圧力" & msg
+            If flg1 Then msg = "モーメント" & msg
+            If flg0 Then msg = "片押しR" & msg
+            WriteEventData(msg, Color.Magenta)
+            'WriteEventData("方向制御　自動に変わりました", Color.Orange)
 
         Else
             WriteEventData("PID制御に変わりました。", Color.Blue)

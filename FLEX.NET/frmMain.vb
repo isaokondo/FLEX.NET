@@ -423,6 +423,7 @@
                 DspAssemblyPieace.Value = .PieceName  '組立ピース名称
                 DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
                 DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
+                DspClosetThrustJack.Value = SegAsmblyData.JackListDsp(.ClosetThrustJack) '押込み推進ジャッキ
                 DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
                 If PlcIf.AnalogTag.TagExist("甲乙表示用信号") Then

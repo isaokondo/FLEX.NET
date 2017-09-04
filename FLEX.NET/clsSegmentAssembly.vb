@@ -312,6 +312,7 @@ Friend Class clsSegmentAssembly
                         'If SegDt.PieceName <> "" Then
                         SegDt.PullBackJack = JkList(dRow($"{AsOrder}引戻"))
                         SegDt.ClosetJack = JkList(dRow($"{AsOrder}押込"))
+                        SegDt.ThrustJack = JkList(dRow($"{AsOrder}推進"))
                         SegDt.AddClosetJack = JkList(dRow($"{AsOrder}追加"))
 
                         _ProcessData(SegDt.AssemblyOrder) = SegDt
@@ -378,6 +379,30 @@ Friend Class clsSegmentAssembly
                         PrsDt.Value.ReduceJack.Add(i)
                     End If
                 Next
+
+
+                If CtlPara.LosZeroOpposeControl Then
+
+                    '減圧グループから対抗グループを算出する
+
+                    '減圧グループの中心角度を求める
+                    Dim GpCenterAngle As New List(Of Single)
+                    For Each Gp In PrsDt.Value.ReduceGroup
+                        GpCenterAngle.Add(InitPara.FaiGroup(Gp - 1))
+                    Next
+                    '対抗グループの中心角度
+                    Dim OppseAngle As Single = GpCenterAngle.Average + 180
+                    If OppseAngle > 360 Then OppseAngle -= 360
+                    '各グループの中心角度との絶対値差を求める
+                    Dim AnglDiff As New Dictionary(Of Short, Single)
+                    For i = 0 To InitPara.NumberGroup - 1
+                        AnglDiff.Add(i + 1, Math.Abs(InitPara.FaiGroup(i) - OppseAngle))
+                        If AnglDiff(i + 1) > 360 Then AnglDiff(i + 1) -= 360
+                    Next
+                    '対抗グループ(差の少ない上位数点）
+                    PrsDt.Value.OpposeGroup =
+                    (From q In AnglDiff Order By q.Value Ascending Select q.Key).Take(CtlPara.LosZeroOpposeGroupNumber).ToList
+                End If
 
 
             Next
@@ -734,6 +759,26 @@ Friend Class clsSegmentAssembly
         ''' 押込みジャッキ
         ''' </summary>
         Public Property ClosetJack As List(Of Short)
+
+        ''' <summary>
+        ''' 推進ジャッキ
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ThrustJack As List(Of Short)
+
+        ''' <summary>
+        ''' 押込推進ジャッキ
+        ''' 推進ジャッキから追加押込みを除外したジャッキ
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ClosetThrustJack As List(Of Short)
+            Get
+                Dim CloseTJ As List(Of Short) = New List(Of Short)(_ThrustJack)
+                CloseTJ.RemoveAll(AddressOf AddClosetJack.Contains)
+                Return CloseTJ
+            End Get
+        End Property
+
         ''' <summary>
         ''' 追加押込みジャッキ
         ''' </summary>
@@ -787,6 +832,27 @@ Friend Class clsSegmentAssembly
                     _ReduceJack.Add(i + 1)
                 End If
             Next
+
+            '減圧グループから対抗グループを算出する
+
+            '減圧グループの中心角度を求める
+            Dim GpCenterAngle As New List(Of Single)
+            For Each Gp In _ReduceGroup
+                GpCenterAngle.Add(InitPara.FaiGroup(Gp - 1))
+            Next
+            '対抗グループの中心角度
+            Dim OppseAngle As Single = GpCenterAngle.Average + 180
+            If OppseAngle > 360 Then OppseAngle -= 360
+            '各グループの中心角度との絶対値を求める
+            Dim AnglDiff As New Dictionary(Of Short, Single)
+            For i = 0 To InitPara.NumberGroup - 1
+                AnglDiff.Add(1 + 1, Math.Abs(InitPara.FaiGroup(i) - OppseAngle))
+                If AnglDiff(i + 1) > 360 Then AnglDiff(i + 1) -= 360
+            Next
+            '対抗グループ
+            _OpposeGroup =
+                    (From q In AnglDiff Order By q.Value Descending Select q.Key).Take(CtlPara.LosZeroOpposeGroupNumber).ToList
+
 
 
         End Sub

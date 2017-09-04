@@ -74,6 +74,8 @@ Public Class frmAssemblyProcessEdit
                 DspAssemblyPieace.Value = .PieceName  '組立ピース名称
                 DspPullBackJack.Value = SegAsbly.JackListDsp(.PullBackJack) '引戻しジャッキ
                 DspClosetJack.Value = SegAsbly.JackListDsp(.ClosetJack) '押込みジャッキ
+                DspClosetThrustJack.Value = SegAsmblyData.JackListDsp(.ClosetThrustJack) '押込み推進ジャッキ
+
                 DspAddClosetThrustJack.Value = SegAsbly.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
                 DspReduceGroup.Value = SegAsbly.JackListDsp(.ReduceGroup)

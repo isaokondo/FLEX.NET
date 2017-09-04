@@ -99,12 +99,10 @@ Friend Class clsCulJackMv
     '''前回（一秒前に算出した強さ） 
     ''' </summary>
     Private mdblRcDash As Double
+    '_圧力超 Or _モーメント上限超 Or _片押しR上限超
 
-    ''' <summary>
-    ''' 圧力調整中フラグ変化時
-    ''' </summary>
-    ''' <param name="Flg"></param>
-    Public Event OneWayLimitModeChanges(ByVal Flg As Boolean)
+
+    Public Event OneWayLimitModeChanges(ByVal 圧力flg As Boolean, ByVal モーメント上限flg As Boolean, ByVal 片押しR上限flg As Boolean)
 
     ''' <summary>
     ''' 自動方向制御演算完
@@ -516,7 +514,7 @@ Friend Class clsCulJackMv
         _圧力調整中 = ((_圧力超 Or _モーメント上限超 Or _片押しR上限超)
             ) And CtlPara.片押し制限フラグ And Not mblnStartTraking
         If LimitOn <> _圧力調整中 Then
-            RaiseEvent OneWayLimitModeChanges(_圧力調整中)
+            RaiseEvent OneWayLimitModeChanges(_圧力超, _モーメント上限超, _片押しR上限超)
         End If
 
 

@@ -243,7 +243,7 @@ Public Class clsCalcuStroke
             Get
                 Dim jkD As New List(Of Integer) '合計データ
                 For Each sp In JackData
-                    '掘進モードのみでゼロ以上 　有効ジャッキ（設定)
+                    '各ジャッキが掘進モードのみでゼロ以上 　有効ジャッキ（設定)
                     'TODO:ゼロ以上の条件は必要なし？
                     If (PlcIf.JackStatus(sp.Key - 1) And 2) And
                         Not CtlPara.ExceptMesureJackNo.Contains(sp.Key) Then

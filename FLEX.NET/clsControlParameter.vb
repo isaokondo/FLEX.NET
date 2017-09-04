@@ -783,7 +783,7 @@ Public Class clsControlParameter
         End Set
     End Property
     ''' <summary>
-    ''' 対抗圧制御
+    ''' 対抗圧制御　有効
     ''' </summary>
     ''' <returns></returns>
     Public Property LosZeroOpposeControl As Boolean
