@@ -587,19 +587,28 @@ Friend Class clsReducePress
     ''' 現在の力点X
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property PointX As Double
+    Public Property PointX As Double
         Get
             Return _PointX
         End Get
+        Set(value As Double)
+            _PointX = value
+            StepX = 0
+
+        End Set
     End Property
     ''' <summary>
     ''' 現在の力点Y
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property PointY As Double
+    Public Property PointY As Double
         Get
             Return _PointY
         End Get
+        Set(value As Double)
+            _PointY = value
+            StepY = 0
+        End Set
     End Property
 
     Public ReadOnly Property Rc As Double
@@ -621,6 +630,9 @@ Friend Class clsReducePress
             Return timer.Enabled
         End Get
     End Property
+
+
+
 
 
 

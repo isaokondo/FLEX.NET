@@ -36,6 +36,19 @@ Public Class clsPlcIf
     Private _jackSelect() As Boolean         ''稼働ジャッキ
 
     Private _JackStatus() As Short      ''ジャッキのステータス
+    '0bit:ジャッキ選択
+    '1bit:掘進モード／セグメントモード（ただし、鹿島外環は異なる）
+    '2bit:減圧中
+    '3bit:引き戻し指令
+    '4bit:引戻しANS
+    '5bit:引き戻し中
+    '6bit:押込み指令
+    '7bit:押込みANS
+    '8bit:押込み中
+    '9bit:対抗ジャッキ
+    '10bit:押込み推進中
+
+
 
     Private _excavMode As Boolean    'マシン掘進モード
     Private _segmentMode As Boolean 'マシンセグメントモード
@@ -478,7 +491,22 @@ Public Class clsPlcIf
 
 
 
-
+    ''' <summary>
+    ''' ジャッキのステータス
+    ''' </summary>
+    ''' <returns>
+    '''0bit:ジャッキ選択
+    '''1bit:掘進モード／セグメントモード（ただし、鹿島外環は異なる）
+    '''2bit:減圧中
+    '''3bit:引き戻し指令
+    '''4bit:引戻しANS
+    '''5bit:引き戻し中
+    '''6bit:押込み指令
+    '''7bit:押込みANS
+    '''8bit:押込み中
+    '''9bit:対抗ジャッキ
+    '''10bit:押込み推進中
+    ''' </returns>
     Public ReadOnly Property JackStatus() As Short()
         Get
             Return _JackStatus
@@ -763,7 +791,14 @@ Public Class clsPlcIf
     End Property
     ''' <summary>
     ''' 同時施工ステータス　from マシン
+    ''' 1:減圧開始指令（1ピース目)
+    ''' 2:引き戻し開始
+    ''' 3:引き戻し完了
+    ''' 4:押込み中
+    ''' 5:組立完了
+    ''' 
     ''' </summary>
+    ''' 
     Public ReadOnly Property LosZeroSts_M As Short
     ''' <summary>
     ''' 同時施工ステータス　from FLEX

@@ -498,7 +498,15 @@ Module mdlFLEX
             DivCul.操作強 = JackManual.操作強
             PlcIf.操作角 = JackManual.操作角
             PlcIf.操作強 = JackManual.操作強
+
+            '減圧中に手動操作
+            If PlcIf.LosZeroSts_FLEX = 1 Then
+                Reduce.PointX = PlcIf.PointX
+                Reduce.PointY = PlcIf.PointY
+            End If
+
         End If
+
         'TODO:ジャッキステータスを追加するように
         '掘進モード & 稼働ジャッキをセット
         DivCul.OptinalJack.Clear()
@@ -513,7 +521,7 @@ Module mdlFLEX
                 PlcIf.JackExecMode(i) And PlcIf.JackSel(i) And Not RdJ
             '減圧中で減圧中ジャッキのSVをセット
             If Reduce.ReduceNow AndAlso Reduce.LstRdGp.Contains(InitPara.JackGroupPos(i)) Then
-                DivCul.OptinalJack.Add(i, Reduce.MvOut(InitPara.JackGroupPos(i) - 1) / 100 * CtlPara.最大全開出力時の目標圧力)
+                DivCul.OptinalJack(i) = Reduce.MvOut(InitPara.JackGroupPos(i) - 1) / 100 * CtlPara.最大全開出力時の目標圧力
             End If
             '低圧推進ジャッキのセット
             If CtlPara.optGpEn.Contains(InitPara.JackGroupPos(i)) Then
