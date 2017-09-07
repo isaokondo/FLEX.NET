@@ -930,6 +930,7 @@ Public Class clsPlcIf
 
                         Dim JkPs As Single = _FilterJkPress
                         _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
+                        If _FilterJkPress < 0 Then _FilterJkPress = 0
                         'FLEX手動時に掘進中にジャッキ圧力が変化したイベント
                         If _excaStatus = cKussin AndAlso _flexControlOn And
                             Not CtlPara.AutoDirectionControl And JkPs <> _jkPress Then
@@ -1031,7 +1032,7 @@ Public Class clsPlcIf
                         TimeOutErrCount = 0
 
                     Catch ex As Exception
-                        MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.StackTrace.ToString}")
+                        MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.Message}{vbCrLf}{ex.StackTrace.ToString}")
                     End Try
 
                 End If

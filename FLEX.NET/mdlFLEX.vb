@@ -513,8 +513,15 @@ Module mdlFLEX
                 PlcIf.JackExecMode(i) And PlcIf.JackSel(i) And Not RdJ
             '減圧中で減圧中ジャッキのSVをセット
             If Reduce.ReduceNow AndAlso Reduce.LstRdGp.Contains(InitPara.JackGroupPos(i)) Then
-                DivCul.OptinalJack.Add(i, Reduce.MvOut(InitPara.JackGroupPos(i)) / 100 * CtlPara.最大全開出力時の目標圧力)
+                DivCul.OptinalJack.Add(i, Reduce.MvOut(InitPara.JackGroupPos(i) - 1) / 100 * CtlPara.最大全開出力時の目標圧力)
             End If
+            '低圧推進ジャッキのセット
+            If CtlPara.optGpEn.Contains(InitPara.JackGroupPos(i)) Then
+                DivCul.OptinalJack.Add(i, CtlPara.optGpSv(InitPara.JackGroupPos(i) - 1))
+            End If
+
+
+
         Next
 
         DivCul.sbCul() ''推力分担率の演算

@@ -1063,7 +1063,7 @@ Public Class clsControlParameter
                 _wideUse(k.Key.ToGetNum) = k.Value
             End If
             If k.Key.Contains("OptinalGroupSetValue") Then
-                OptGpSv(k.Key.ToGetNum - 1) = k.Value
+                _optGpSv(k.Key.ToGetNum - 1) = k.Value
             End If
         Next
 

@@ -93,7 +93,7 @@ Public Class frmAssemblyProcessEdit
                     Case "押込"
                         jkLst = .ClosetJack
                     Case "押込推進"
-                    'DspStartLastJack()
+                        jkLst = .ClosetThrustJack
                     Case "追加推進"
                         jkLst = .AddClosetJack
                     Case "RL考慮"

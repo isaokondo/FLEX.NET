@@ -245,7 +245,7 @@ Public Class clsThrustDiv
         End Set
     End Property
     ''' <summary>
-    ''' 対抗グループの圧力
+    ''' 対抗グループの設定圧力
     ''' </summary>
     Public Property OpposeGroupSv As Single
         Get
@@ -352,7 +352,8 @@ Public Class clsThrustDiv
 
         Dim buntang As New Dictionary(Of Short, Double)
 
-        _OptinalGpNo = New List(Of Short)
+        '_OptinalGpNo = New List(Of Short)
+        _OptinalGpNo.Clear()
 
         For i = 0 To InitPara.NumberJack - 1
             'ジャッキの属するグループ番号
@@ -398,6 +399,10 @@ Public Class clsThrustDiv
         Dim P0 As Single = 0 '推力最適化変数（最低値（35Mpaの割合））
         Dim P1 As Single = 10 '推力最適化変数（最高値（35Mpaの割合））350Mpa最大まで対応
 
+        '低圧推進のセット
+
+
+
         Do
             j += 1
 
@@ -415,13 +420,13 @@ Public Class clsThrustDiv
                 _Pj2(i) = _PjMax2(i) * PC '選択ジャッキ時の当該ジャッキ推力（低圧推進は考慮しない）
 
                 '任意圧に設定されてるグループのジャッキ（低圧推進及び対抗ジャッキ)
-                If _OptinalJack.ContainsKey(i + 1) AndAlso
-                        Pj2(i) > InitPara.JackPower * _OptinalJack(i + 1) / InitPara.JackMaxOilPres Then
+                If _OptinalJack.ContainsKey(i) AndAlso
+                        Pj2(i) > InitPara.JackPower * _OptinalJack(i) / InitPara.JackMaxOilPres Then
                     '任意設定圧の加減圧ｼﾞｬｯｷとして選択され、さらに当該ジャッキ推力が設定圧１を越えているとき
                     Dim Pj2Dash As Single =
-                        Pj2(i) - InitPara.JackPower * _OptinalJack(i + 1) / InitPara.JackMaxOilPres
+                        Pj2(i) - InitPara.JackPower * _OptinalJack(i) / InitPara.JackMaxOilPres
                     Pj2(i) =
-                        InitPara.JackPower * _OptinalJack(i + 1) / InitPara.JackMaxOilPres '当該ジャッキ推力を任意設定圧の推力にする
+                        InitPara.JackPower * _OptinalJack(i) / InitPara.JackMaxOilPres '当該ジャッキ推力を任意設定圧の推力にする
                     Pj2sumdash += Pj2Dash '任意設定圧の調整による低下推力を積算（不要）
                 End If
 

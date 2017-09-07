@@ -319,47 +319,55 @@ Friend Class clsSegmentAssembly
                     End If
 
                 End If
-
             Next
-
         Next
+
+        '同時施工タイプ
         If InitPara.LosZeroMode Then
 
             '減圧グループの算出
             For Each PrsDt In _ProcessData
 
-
-                Dim PulJk(InitPara.NumberJack) As Boolean '引き戻しジャッキ
-                Dim PulPreJk(InitPara.NumberJack) As Boolean    '前ピースまでのの引き戻しジャッキ
-                Dim ClosetPreJk(InitPara.NumberJack) As Boolean    '前ピースまでのの押し込みしジャッキ
                 Dim i As Short
                 'リストを配列に
-                '現ピースの引き戻しジャッキ
-                For i = 1 To InitPara.NumberJack
-                    PulJk(i) = PrsDt.Value.PullBackJack.Contains(i)
-                Next
 
-                '前ピースまでの引き戻しジャッキと押し込みジャッキをリストに
+                '前ピースまでの引き戻しジャッキと押し込みジャッキと追加押込ジャッキをリストに
                 Dim PujJ As New List(Of Short), ClosetJ As New List(Of Short)
                 For Each pd In _ProcessData
                     If pd.Key < PrsDt.Key Then
                         PujJ.AddRange(pd.Value.PullBackJack)
                         ClosetJ.AddRange(pd.Value.ClosetJack)
+                        ClosetJ.AddRange(pd.Value.AddClosetJack)
                     End If
                 Next
 
+                Dim PulPreJk As New List(Of Short)    '前ピースまでのの引き戻しジャッキ
+
                 '前ピースまでのの引き戻しジャッキで押し込んでないジャッキ
-                For i = 1 To InitPara.NumberJack
-                    PulPreJk(i) =
-                        PujJ.Contains(i) And Not ClosetJ.Contains(i)
+                For Each pl In PujJ
+                    If Not ClosetJ.Contains(pl) Then
+                        PulPreJk.Add(pl)
+                    End If
+                Next
+
+                '上述のジャッキの属するグループと現ピースの引き戻しジャッキの属するグループが等しい場合に
+                '含める
+                Dim AddRdJk As New List(Of Short)
+                For Each t In PrsDt.Value.PullBackJack
+                    For Each k In PulPreJk
+                        If InitPara.JackGroupPos(k - 1) = InitPara.JackGroupPos(t - 1) Then
+                            AddRdJk.Add(k)
+                        End If
+                    Next
                 Next
 
                 '減圧グループ　すべてTRUEに
-                Dim Gr As Boolean() = Enumerable.Repeat(Of Boolean)(True, InitPara.NumberGroup).ToArray()
+                Dim Gr As Boolean() =
+                    Enumerable.Repeat(Of Boolean)(True, InitPara.NumberGroup).ToArray()
 
                 '引戻しジャッキから減圧グループを
                 For i = 1 To InitPara.NumberJack
-                    If Not (PulJk(i) Or PulPreJk(i)) Then
+                    If Not (PrsDt.Value.PullBackJack.Contains(i) Or AddRdJk.Contains(i)) Then
                         Gr(InitPara.JackGroupPos(i - 1) - 1) = False
                     End If
                 Next
@@ -380,10 +388,8 @@ Friend Class clsSegmentAssembly
                     End If
                 Next
 
-
-                If CtlPara.LosZeroOpposeControl Then
-
-                    '減圧グループから対抗グループを算出する
+                '***********減圧グループから対抗グループを算出する**************
+                If PrsDt.Value.ReduceGroup.Count <> 0 Then
 
                     '減圧グループの中心角度を求める
                     Dim GpCenterAngle As New List(Of Single)
@@ -399,11 +405,10 @@ Friend Class clsSegmentAssembly
                         AnglDiff.Add(i + 1, Math.Abs(InitPara.FaiGroup(i) - OppseAngle))
                         If AnglDiff(i + 1) > 360 Then AnglDiff(i + 1) -= 360
                     Next
-                    '対抗グループ(差の少ない上位数点）
+                    '対抗グループ(差の少ない上位設定数分を抽出）
                     PrsDt.Value.OpposeGroup =
                     (From q In AnglDiff Order By q.Value Ascending Select q.Key).Take(CtlPara.LosZeroOpposeGroupNumber).ToList
                 End If
-
 
             Next
 
