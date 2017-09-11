@@ -89,7 +89,7 @@ Public Class frmSegmentEdit
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
+    Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnApply.Click
 
 
         For Each i In lstChangeRow.Distinct
@@ -100,7 +100,69 @@ Public Class frmSegmentEdit
             SegAsmblyData.SegmentAsemblyDataUpdat(RingNo, PtName, TpName, SheetID)
 
         Next
-        Me.Close()
+
+        If sender Is btnApply Then
+            DspUp()
+        Else
+
+            Me.Close()
+        End If
+
+    End Sub
+    ''' <summary>
+    ''' 適用時の画面更新
+    ''' </summary>
+    Private Sub DspUp()
+
+        SegAsmblyData.SegmentRingDataRead()
+
+        Dim SimDgvRow As Integer = 0
+        DgvSegSim.Rows.Clear()
+
+        For i As Integer = 0 To SegAsmblyData.TypeNo.Count - 1
+            Dim RingNo As Integer = SegAsmblyData.TypeNo.Keys(i)
+            DgvSegAssign("RingNo", i).Value = RingNo
+            DgvSegAssign("SegmentType", i).Value = SegAsmblyData.TypeData(RingNo).TypeName 'セグメント種類
+            DgvSegAssign("SegWidth", i).Value = SegAsmblyData.TypeData(RingNo).CenterWidth * 1000 'セグメント幅
+            If InitPara.LosZeroMode Then
+                DgvSegAssign("AssemblyPtnName", i).Value = SegAsmblyData.AssemblyPtnName(RingNo) '組立パターン名
+            End If
+
+            'シュミレーションデータに当該リングのデータが存在するか
+            If SegAsmblyData.SheetIDSim.ContainsKey(RingNo) Then
+                'SheetIDの比較
+
+                If SegAsmblyData.SheetID.ContainsKey(RingNo) AndAlso
+                    SegAsmblyData.SheetID(RingNo) = SegAsmblyData.SheetIDSim(RingNo) Then
+                    '同じ日付は転送済み
+                    DgvSegAssign("TransferSet", i).Value = "●"
+                Else
+                    '新しいデータ
+                    DgvSegAssign("TransferSet", i).Value = "☓"
+                    DgvSegSim.Rows.Add()
+                    DgvSegSim("RingNoSim", SimDgvRow).Value = RingNo
+                    DgvSegSim("SegmentTypeSim", SimDgvRow).Value =
+                        SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
+                    If InitPara.LosZeroMode Then
+                        DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value =
+                            SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
+                    End If
+
+                    DgvSegSim("SheetIDSim", SimDgvRow).Value = SegAsmblyData.SheetIDSim(RingNo) 'SheetID
+                    DgvSegSim("TransferDate", SimDgvRow).Value = SegAsmblyData.TransferDate(RingNo).ToString("MM月dd日") 'SheetID
+                    DgvSegSim("TransferDate", SimDgvRow).ToolTipText = SegAsmblyData.TransferDate(RingNo).ToString("yyyy年MM月dd日thh時mm分ss秒") 'SheetID
+
+                    SimDgvRow += 1
+                End If
+            End If
+
+        Next
+
+        '表示位置の設定
+        DgvSegAssign.FirstDisplayedCell =
+            (From gg As DataGridViewRow In DgvSegAssign.Rows Where gg.Cells("RingNo").Value = PlcIf.RingNo Select gg.Cells.Item(0))(0)
+        DgvSegSim.FirstDisplayedCell =
+            (From gg As DataGridViewRow In DgvSegSim.Rows Where gg.Cells("RingNoSim").Value >= PlcIf.RingNo Select gg.Cells.Item(0))(0)
 
     End Sub
 

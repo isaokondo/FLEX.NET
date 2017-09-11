@@ -63,6 +63,7 @@ Partial Class frmSegmentEdit
         Me.btnTransfer = New System.Windows.Forms.Button()
         Me.btnAllSelect = New System.Windows.Forms.Button()
         Me.btnSelectCancel = New System.Windows.Forms.Button()
+        Me.btnApply = New System.Windows.Forms.Button()
         CType(Me.DgvSegAssign, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip.SuspendLayout()
         CType(Me.DgvSegSim, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,7 +76,7 @@ Partial Class frmSegmentEdit
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(511, 686)
+        Me.btnCancel.Location = New System.Drawing.Point(638, 684)
         '
         'DgvSegAssign
         '
@@ -361,11 +362,24 @@ Partial Class frmSegmentEdit
         Me.btnSelectCancel.Text = "選択解除"
         Me.btnSelectCancel.UseVisualStyleBackColor = False
         '
+        'btnApply
+        '
+        Me.btnApply.BackColor = System.Drawing.Color.Silver
+        Me.btnApply.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnApply.Location = New System.Drawing.Point(515, 684)
+        Me.btnApply.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnApply.Name = "btnApply"
+        Me.btnApply.Size = New System.Drawing.Size(102, 35)
+        Me.btnApply.TabIndex = 23
+        Me.btnApply.Text = "適用"
+        Me.btnApply.UseVisualStyleBackColor = False
+        '
         'frmSegmentEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1469, 732)
+        Me.Controls.Add(Me.btnApply)
         Me.Controls.Add(Me.btnSelectCancel)
         Me.Controls.Add(Me.btnAllSelect)
         Me.Controls.Add(Me.btnTransfer)
@@ -380,6 +394,7 @@ Partial Class frmSegmentEdit
         Me.Controls.SetChildIndex(Me.btnTransfer, 0)
         Me.Controls.SetChildIndex(Me.btnAllSelect, 0)
         Me.Controls.SetChildIndex(Me.btnSelectCancel, 0)
+        Me.Controls.SetChildIndex(Me.btnApply, 0)
         CType(Me.DgvSegAssign, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip.ResumeLayout(False)
         CType(Me.DgvSegSim, System.ComponentModel.ISupportInitialize).EndInit()
@@ -412,4 +427,5 @@ Partial Class frmSegmentEdit
     Friend WithEvents AssemblyPtnNameSim As DataGridViewTextBoxColumn
     Friend WithEvents TransferDate As DataGridViewTextBoxColumn
     Friend WithEvents SheetIDSim As DataGridViewTextBoxColumn
+    Protected WithEvents btnApply As Button
 End Class
