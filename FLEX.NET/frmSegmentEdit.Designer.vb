@@ -51,18 +51,18 @@ Partial Class frmSegmentEdit
         Me.tsmPaste = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmPtternPaste = New System.Windows.Forms.ToolStripMenuItem()
         Me.DgvSegSim = New System.Windows.Forms.DataGridView()
-        Me.ContextMenuStripSim = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.tsmSelect = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tsmCancel = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnTransfer = New System.Windows.Forms.Button()
-        Me.btnAllSelect = New System.Windows.Forms.Button()
-        Me.btnSelectCancel = New System.Windows.Forms.Button()
         Me.TrasferEnabl = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.RingNoSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SegmentTypeSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AssemblyPtnNameSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TransferDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SheetIDSim = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ContextMenuStripSim = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.tsmSelect = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmCancel = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnTransfer = New System.Windows.Forms.Button()
+        Me.btnAllSelect = New System.Windows.Forms.Button()
+        Me.btnSelectCancel = New System.Windows.Forms.Button()
         CType(Me.DgvSegAssign, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip.SuspendLayout()
         CType(Me.DgvSegSim, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -241,60 +241,6 @@ Partial Class frmSegmentEdit
         Me.DgvSegSim.Size = New System.Drawing.Size(668, 568)
         Me.DgvSegSim.TabIndex = 19
         '
-        'ContextMenuStripSim
-        '
-        Me.ContextMenuStripSim.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmSelect, Me.tsmCancel})
-        Me.ContextMenuStripSim.Name = "ContextMenuStrip"
-        Me.ContextMenuStripSim.Size = New System.Drawing.Size(95, 48)
-        '
-        'tsmSelect
-        '
-        Me.tsmSelect.Name = "tsmSelect"
-        Me.tsmSelect.Size = New System.Drawing.Size(94, 22)
-        Me.tsmSelect.Text = "選択"
-        '
-        'tsmCancel
-        '
-        Me.tsmCancel.Name = "tsmCancel"
-        Me.tsmCancel.Size = New System.Drawing.Size(94, 22)
-        Me.tsmCancel.Text = "解除"
-        '
-        'btnTransfer
-        '
-        Me.btnTransfer.BackColor = System.Drawing.Color.Silver
-        Me.btnTransfer.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnTransfer.Location = New System.Drawing.Point(706, 327)
-        Me.btnTransfer.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnTransfer.Name = "btnTransfer"
-        Me.btnTransfer.Size = New System.Drawing.Size(71, 35)
-        Me.btnTransfer.TabIndex = 20
-        Me.btnTransfer.Text = "←転送"
-        Me.btnTransfer.UseVisualStyleBackColor = False
-        '
-        'btnAllSelect
-        '
-        Me.btnAllSelect.BackColor = System.Drawing.Color.Silver
-        Me.btnAllSelect.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnAllSelect.Location = New System.Drawing.Point(763, 38)
-        Me.btnAllSelect.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnAllSelect.Name = "btnAllSelect"
-        Me.btnAllSelect.Size = New System.Drawing.Size(91, 35)
-        Me.btnAllSelect.TabIndex = 21
-        Me.btnAllSelect.Text = "全選択"
-        Me.btnAllSelect.UseVisualStyleBackColor = False
-        '
-        'btnSelectCancel
-        '
-        Me.btnSelectCancel.BackColor = System.Drawing.Color.Silver
-        Me.btnSelectCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnSelectCancel.Location = New System.Drawing.Point(858, 38)
-        Me.btnSelectCancel.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnSelectCancel.Name = "btnSelectCancel"
-        Me.btnSelectCancel.Size = New System.Drawing.Size(91, 35)
-        Me.btnSelectCancel.TabIndex = 22
-        Me.btnSelectCancel.Text = "選択解除"
-        Me.btnSelectCancel.UseVisualStyleBackColor = False
-        '
         'TrasferEnabl
         '
         Me.TrasferEnabl.FillWeight = 60.0!
@@ -360,6 +306,60 @@ Partial Class frmSegmentEdit
         Me.SheetIDSim.Name = "SheetIDSim"
         Me.SheetIDSim.ReadOnly = True
         Me.SheetIDSim.Visible = False
+        '
+        'ContextMenuStripSim
+        '
+        Me.ContextMenuStripSim.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmSelect, Me.tsmCancel})
+        Me.ContextMenuStripSim.Name = "ContextMenuStrip"
+        Me.ContextMenuStripSim.Size = New System.Drawing.Size(95, 48)
+        '
+        'tsmSelect
+        '
+        Me.tsmSelect.Name = "tsmSelect"
+        Me.tsmSelect.Size = New System.Drawing.Size(94, 22)
+        Me.tsmSelect.Text = "選択"
+        '
+        'tsmCancel
+        '
+        Me.tsmCancel.Name = "tsmCancel"
+        Me.tsmCancel.Size = New System.Drawing.Size(94, 22)
+        Me.tsmCancel.Text = "解除"
+        '
+        'btnTransfer
+        '
+        Me.btnTransfer.BackColor = System.Drawing.Color.Silver
+        Me.btnTransfer.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnTransfer.Location = New System.Drawing.Point(706, 327)
+        Me.btnTransfer.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnTransfer.Name = "btnTransfer"
+        Me.btnTransfer.Size = New System.Drawing.Size(71, 35)
+        Me.btnTransfer.TabIndex = 20
+        Me.btnTransfer.Text = "←転送"
+        Me.btnTransfer.UseVisualStyleBackColor = False
+        '
+        'btnAllSelect
+        '
+        Me.btnAllSelect.BackColor = System.Drawing.Color.Silver
+        Me.btnAllSelect.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnAllSelect.Location = New System.Drawing.Point(763, 38)
+        Me.btnAllSelect.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnAllSelect.Name = "btnAllSelect"
+        Me.btnAllSelect.Size = New System.Drawing.Size(91, 35)
+        Me.btnAllSelect.TabIndex = 21
+        Me.btnAllSelect.Text = "全選択"
+        Me.btnAllSelect.UseVisualStyleBackColor = False
+        '
+        'btnSelectCancel
+        '
+        Me.btnSelectCancel.BackColor = System.Drawing.Color.Silver
+        Me.btnSelectCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnSelectCancel.Location = New System.Drawing.Point(858, 38)
+        Me.btnSelectCancel.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnSelectCancel.Name = "btnSelectCancel"
+        Me.btnSelectCancel.Size = New System.Drawing.Size(91, 35)
+        Me.btnSelectCancel.TabIndex = 22
+        Me.btnSelectCancel.Text = "選択解除"
+        Me.btnSelectCancel.UseVisualStyleBackColor = False
         '
         'frmSegmentEdit
         '

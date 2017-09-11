@@ -276,4 +276,8 @@ Public Class frmSegmentEdit
     Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
 
     End Sub
+
+    Private Sub DgvSegAssign_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvSegAssign.CellContentClick
+
+    End Sub
 End Class

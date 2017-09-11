@@ -138,6 +138,8 @@ Module mdlFLEX
         frmMain.DirectionChartD.DataGet()
         'TODO:最大テーパーの算出
         CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
+        '最大テーパー位置
+        CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
         'セグメント幅
         CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
 

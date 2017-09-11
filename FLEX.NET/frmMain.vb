@@ -231,6 +231,26 @@
         '組立完了
         ucnAssemblyFinish.BitStatus = (LosZeroSts >= 6)
 
+        If ucnReduceFinish.Blink Then
+            ucnReduceFinish.FieldName = "減圧中"
+        Else
+            ucnReduceFinish.FieldName = "減圧完了"
+        End If
+
+
+        If ucnPullBackFinish.Blink Then
+            ucnPullBackFinish.FieldName = "引戻し中"
+        Else
+            ucnPullBackFinish.FieldName = "引戻完了"
+        End If
+
+
+        If ucnAssemblyFinish.Blink Then
+            ucnAssemblyFinish.FieldName = "組立中"
+        Else
+            ucnAssemblyFinish.FieldName = "組立完了"
+        End If
+
         '点滅用フラグ
         BlinkFlg = Not BlinkFlg
         'ロスゼロ工程表示

@@ -328,6 +328,7 @@ Friend Class clsSegmentAssembly
             '減圧グループの算出
             For Each PrsDt In _ProcessData
 
+                Debug.Print(PrsDt.Value.PieceName)
                 Dim i As Short
                 'リストを配列に
 
@@ -365,9 +366,18 @@ Friend Class clsSegmentAssembly
                 Dim Gr As Boolean() =
                     Enumerable.Repeat(Of Boolean)(True, InitPara.NumberGroup).ToArray()
 
-                '引戻しジャッキから減圧グループを
+                '引戻しジャッキ(Kの場合は追加押込み)から減圧グループを
+                Dim rd As List(Of Short)
+                If PrsDt.Value.PieceName = "K" Then
+
+                    rd = New List(Of Short)(PrsDt.Value.ThrustJack)
+                Else
+                    rd = New List(Of Short)(PrsDt.Value.PullBackJack)
+
+                End If
+
                 For i = 1 To InitPara.NumberJack
-                    If Not (PrsDt.Value.PullBackJack.Contains(i) Or AddRdJk.Contains(i)) Then
+                    If Not (rd.Contains(i) Or AddRdJk.Contains(i)) Then
                         Gr(InitPara.JackGroupPos(i - 1) - 1) = False
                     End If
                 Next
