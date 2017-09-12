@@ -310,7 +310,10 @@ Module mdlFLEX
                     With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
                         '減圧グループ
                         WriteEventData($"{PlcIf.AssemblyPieceNo}ピース目 {String.Join(",", .ReduceGroup)}グループの減圧開始します。", Color.Blue)
-
+                        If CtlPara.LosZeroOpposeJack And .OpposeGroup.Count <> 0 Then
+                            '対抗グループ
+                            WriteEventData($"{String.Join(",", .OpposeGroup)}グループを対抗グループとします。", Color.Blue)
+                        End If
                         'マシンへ指令　
                         PlcIf.LosZeroDataWrite("減圧ジャッキ", .ReduceJack)
                         PlcIf.LosZeroDataWrite("引戻しジャッキ", .PullBackJack)
@@ -530,6 +533,19 @@ Module mdlFLEX
                 DivCul.OptinalJack.Add(i, CtlPara.optGpSv(InitPara.JackGroupPos(i) - 1))
             End If
 
+            '対抗グループのセット ロスゼロありで対抗ジャッキ選択ありで減圧開始から押し込み中まで
+            Dim OpposeJ As Boolean =
+                InitPara.LosZeroMode AndAlso CtlPara.LosZeroOpposeJack AndAlso
+                (PlcIf.LosZeroSts_M >= 1 And PlcIf.LosZeroSts_M <= 4) And
+                SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).OpposeGroup.Contains(InitPara.JackGroupPos(i))
+            If OpposeJ Then
+                If CtlPara.LosZeroOpposeControl Then
+                    DivCul.OptinalJack.Add(i, Reduce.MomentOpt.DivCul0.OpposeGroupSv)
+                Else
+                    DivCul.OptinalJack.Add(i, CtlPara.LosZeroOpposeManualSV)
+
+                End If
+            End If
 
 
         Next

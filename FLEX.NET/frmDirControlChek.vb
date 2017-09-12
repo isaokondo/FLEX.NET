@@ -46,6 +46,10 @@ Public Class frmDirControlChek
 
         Me.Height = dgv.Top + dgv.Height + btnOK.Height + 30
 
+
+
+
+
         '現在値取得
         GetNowData()
 
@@ -84,6 +88,15 @@ Public Class frmDirControlChek
             Dim dSet As New clsDgvSet(dgv.Rows(JkNo))
             dSet.setData(2, IIf(DivCul.OnJack(JkNo), "1", "0"))
             dSet.setData(3, IIf(DivCul.OnJack(JkNo), "1", "0"))
+            '対抗グループ
+            If DivCul.OpposeGpLst.Contains(InitPara.JackGroupPos(JkNo)) Then
+                dSet.setData(3, "3")
+            End If
+            '低圧推進
+            If CtlPara.optGpEn.Contains(InitPara.JackGroupPos(JkNo)) Then
+                dSet.setData(3, "2")
+            End If
+
 
             dSet.setData(4, DivCul.PjDash(JkNo).ToString("F2"))
             dSet.setData(5, DivCul.Pjmax1(JkNo).ToString("F0"))
@@ -97,7 +110,7 @@ Public Class frmDirControlChek
         Next
 
 
-
+        txtOpposeGpSv.Text = CtlPara.LosZeroOpposeManualSV
 
     End Sub
     ''' <summary>

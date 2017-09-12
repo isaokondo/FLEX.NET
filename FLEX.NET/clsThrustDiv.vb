@@ -662,6 +662,13 @@ Friend Class clsReducePress
         Next
         '最適化
         MomentOpt.Optimize()
+        If CtlPara.LosZeroOpposeJack Then
+            MomentOpt.DivCul0.OpposeGpLst =
+                New List(Of Short)(SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).OpposeGroup)
+            MomentOpt.OpposeSvAutoCulc()
+        End If
+
+
 
         For Each GpNo As Short In _LstRdGp
             '減圧開始時の操作出力

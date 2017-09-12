@@ -92,6 +92,8 @@ Public Class clsControlParameter
     Private _LosZeroOpposeJack As Boolean '対抗ジャッキ選択
     Private _LosZeroOpposeControl As Boolean '対抗圧制御
     Private _LosZeroOpposeGroupNumber As Short '対抗ジャッキ制御グループ数
+    Private _LosZeroOpposeManualSV As Single '対抗ジャッキ制御手動設定圧
+
 
     Private _ReduceTime As Integer '減圧時間（単位：SEC）
     Private _ReduceJudgePress As Single '減圧完了判断圧力(Mpa)
@@ -812,6 +814,24 @@ Public Class clsControlParameter
     End Property
 
     ''' <summary>
+    ''' 対抗ジャッキ制御手動設定圧
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LosZeroOpposeManualSV As Single
+        Get
+            Return _LosZeroOpposeManualSV
+        End Get
+        Set(value As Single)
+            _LosZeroOpposeManualSV = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+
+
+
+
+    ''' <summary>
     ''' 減圧時間（単位：SEC）
     ''' </summary>
     ''' <returns></returns>
@@ -1030,6 +1050,7 @@ Public Class clsControlParameter
             _LosZeroOpposeJack = fnBoolean(chk.GetValue("LosZeroOpposeJack"))
             _LosZeroOpposeControl = fnBoolean(chk.GetValue("LosZeroOpposeControl"))
             _LosZeroOpposeGroupNumber = chk.GetValue("LosZeroOpposeGroupNumber")
+            _LosZeroOpposeManualSV = chk.GetValue("LosZeroOpposeManualSV")
         Else
             _LosZeroOpposeJack = False
             _LosZeroOpposeControl = False
