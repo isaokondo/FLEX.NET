@@ -1009,15 +1009,13 @@ Public Class clsPlcIf
                         End If
                         '組立完了後の経過時間カウント
                         If _LosZeroSts_M = 5 Then
-                            If AsmbledPastTime <= CtlPara.NextPieceConfirmTime + 1 Then
-                                AsmbledPastTime += 1 'カウントアップ
-                            End If
+                            AsmbledPastTime += 1 'カウントアップ
                             If AsmbledPastTime = CtlPara.NextPieceConfirmTime Then
                                 'カウントアップ後次ピース確認イベント
                                 RaiseEvent NextPieceStart()
                             End If
                         Else
-                            AsmbledPastTime = 0
+                            AsmbledPastTime = 0 'リセット
                         End If
 
                         'モニターモードではPLCより組立ピース読込
