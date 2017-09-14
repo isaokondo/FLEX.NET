@@ -7,7 +7,10 @@
 
     Private DspGp() As ucnDspGpPres 'グループ圧PV数値表示用
     Private BlinkFlg As Boolean '点滅フラグ
-
+    ''' <summary>
+    ''' イベントログのID
+    ''' </summary>
+    Private EventID As Long
 
 
 
@@ -277,7 +280,7 @@
         'TODO:線形データ画面更新　LineDistanceChage に記述したい
         'Call LineDataUpdate()
 
-
+        EventlogUpdate()
     End Sub
     ''' <summary>
     ''' 偏角、モーメントのチャート初期化
@@ -721,19 +724,30 @@
     ''' <summary>
     ''' イベントログ更新
     ''' </summary>
-    Public Sub EventlogUpdate()
-        rtbEventLog.Clear()
+    Private Sub EventlogUpdate()
+        '最新のIDを比較
         Dim DB As New clsDataBase
-        Dim tb As DataTable = DB.GetDtfmSQL _
+        Dim tbEvID As DataTable = DB.GetDtfmSQL _
+            ($"SELECT ID FROM FLEXイベントデータ 
+             ORDER BY ID DESC LIMIT 0,1")
+        'IDが更新されてれば表示更新
+        If tbEvID.Rows.Count <> 0 Then
+            If EventID <> tbEvID.Rows(0).Item(0) Then
+                rtbEventLog.Clear()
+                Dim tb As DataTable = DB.GetDtfmSQL _
             ($"SELECT TIME,イベントデータ,イベント種類 FROM FLEXイベントデータ 
             WHERE イベント種類 <> '{ColorTranslator.ToOle(Color.White)}' ORDER BY TIME DESC LIMIT 0,50")
 
-        For Each t As DataRow In tb.Rows
-            rtbEventLog.SelectionColor =
+                For Each t As DataRow In tb.Rows
+                    rtbEventLog.SelectionColor =
                 ColorTranslator.FromOle(t.Item(2))
-            rtbEventLog.AppendText(CDate(t.Item(0)).ToString("yyyy/MM/dd HH:mm:ss") & Space(2) & t.Item(1).ToString & vbCrLf)
+                    rtbEventLog.AppendText(CDate(t.Item(0)).ToString("yyyy/MM/dd HH:mm:ss") & Space(2) & t.Item(1).ToString & vbCrLf)
 
-        Next
+                Next
+
+            End If
+            EventID = tbEvID.Rows(0).Item(0)
+        End If
 
     End Sub
     ''' <summary>

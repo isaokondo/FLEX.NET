@@ -1020,6 +1020,10 @@ Public Class clsPlcIf
                             AsmbledPastTime = 0
                         End If
 
+                        'モニターモードではPLCより組立ピース読込
+                        If InitPara.MonitorMode AndAlso InitPara.LosZeroMode Then
+                            _AssemblyPieceNo = _EngValue("組立ピース")
+                        End If
 
 
                         For i As Short = 0 To InitPara.NumberGroup - 1
