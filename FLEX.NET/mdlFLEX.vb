@@ -243,6 +243,9 @@ Module mdlFLEX
                         Dim PullJk As String =
                             String.Join(",", .PullBackJack)
 
+                        CalcStroke.PullBackJack = .PullBackJack
+
+
                         WriteEventData($"No.{PullJk} のジャッキの引戻し開始しました。", Color.Blue)
                         LosZeroSts = 3
                         Reduce.LstRdGp.Clear() '減圧グループ　クリア
@@ -268,7 +271,7 @@ Module mdlFLEX
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
                         '計算ストローク用に組立ジャッキの設定
-                        CalcStroke.SetAsembleJack(.ClosetJack)
+                        CalcStroke.asembleFinishedJack = .ClosetJack
 
                         'ボイスメッセージ出力
                         PlaySound(My.Resources.SegmentAsem)
@@ -480,7 +483,7 @@ Module mdlFLEX
                 DivCul.操作角 = Reduce.Theta
                 DivCul.操作強 = Reduce.Rc
 
-                If Not InitPara.ReadOnleMode Then
+                If InitPara.ServerMode Then
                     PlcIf.PointX = Reduce.PointX
                     PlcIf.PointY = Reduce.PointY
                     PlcIf.操作角 = Reduce.Theta
@@ -490,7 +493,7 @@ Module mdlFLEX
                 '力点自動
                 DivCul.操作角 = JackMvAuto.操作角
                 DivCul.操作強 = JackMvAuto.操作強
-                If Not InitPara.ReadOnleMode Then
+                If InitPara.ServerMode Then
                     PlcIf.PointX = JackMvAuto.PointX
                     PlcIf.PointY = JackMvAuto.PointY
                     PlcIf.操作角 = JackMvAuto.操作角
@@ -536,7 +539,7 @@ Module mdlFLEX
             '対抗グループのセット ロスゼロありで対抗ジャッキ選択ありで減圧開始から押し込み中まで
             Dim OpposeJ As Boolean =
                 InitPara.LosZeroMode AndAlso CtlPara.LosZeroOpposeJack AndAlso
-                (PlcIf.LosZeroSts_M >= 1 And PlcIf.LosZeroSts_M <= 4) And
+                (PlcIf.LosZeroSts_M >= 1 AndAlso PlcIf.LosZeroSts_M <= 4) AndAlso
                 SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).OpposeGroup.Contains(InitPara.JackGroupPos(i))
             If OpposeJ Then
                 If CtlPara.LosZeroOpposeControl Then
@@ -581,38 +584,38 @@ Module mdlFLEX
                 ''掘進中の処理
                 '減圧中から組立完了
                 If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
-                        For Each i As Short In Reduce.LstRdGp
-                            GpSV(i - 1) =
+                    For Each i As Short In Reduce.LstRdGp
+                        GpSV(i - 1) =
                             Reduce.MvOut(i - 1) * CtlPara.最大全開出力時の目標圧力 / 100
-                            '減圧グループはトラッキング
-                            GpFlg(i - 1) = cTracking
-                        Next
-                    End If
+                        '減圧グループはトラッキング
+                        GpFlg(i - 1) = cTracking
+                    Next
+                End If
 
-                    For i = 0 To InitPara.NumberGroup - 1
-                        If DivCul.PujMax <> 0 AndAlso GpFlg(i) <> cTracking Then
-                            '通常のグループ フィルター後の元圧の割合
-                            GpSV(i) = DivCul.PuGp2(i) / DivCul.PujMax * PlcIf.FilterJkPress
+                For i = 0 To InitPara.NumberGroup - 1
+                    If DivCul.PujMax <> 0 AndAlso GpFlg(i) <> cTracking Then
+                        '通常のグループ フィルター後の元圧の割合
+                        GpSV(i) = DivCul.PuGp2(i) / DivCul.PujMax * PlcIf.FilterJkPress
 
-                            If DivCul.OptinalGpNo.Contains(i) Then ''低圧推進及び対抗グループ
-                                GpSV(i) = DivCul.PuGp2(i) '算出もしくは設定されたSV
-                            End If
-
-                            'ダイレクト制御有効で偏差が設定以上
-                            If Math.Abs(PlcIf.GroupPv(i) - GpSV(i)) < CtlPara.PIDShiftDefl _
-                                        Or CtlPara.DirectControl = False Then
-                                GpFlg(i) = cPIDOut ''ＰＩＤ出力
-                            Else
-                                GpFlg(i) = cDirect  'ダイレクト指令制御
-                            End If
-
-                            If DivCul.FullOpenGruop.Contains(i) Then ''全開出力
-                                GpSV(i) = CtlPara.最大全開出力時の目標圧力
-                                GpFlg(i) = cFillPower
-                            End If
-
+                        If DivCul.OptinalGpNo.Contains(i) Then ''低圧推進及び対抗グループ
+                            GpSV(i) = DivCul.PuGp2(i) '算出もしくは設定されたSV
                         End If
-                    Next i
+
+                        'ダイレクト制御有効で偏差が設定以上
+                        If Math.Abs(PlcIf.GroupPv(i) - GpSV(i)) < CtlPara.PIDShiftDefl _
+                                        Or CtlPara.DirectControl = False Then
+                            GpFlg(i) = cPIDOut ''ＰＩＤ出力
+                        Else
+                            GpFlg(i) = cDirect  'ダイレクト指令制御
+                        End If
+
+                        If DivCul.FullOpenGruop.Contains(i) Then ''全開出力
+                            GpSV(i) = CtlPara.最大全開出力時の目標圧力
+                            GpFlg(i) = cFillPower
+                        End If
+
+                    End If
+                Next i
 
                 'End If
 
@@ -625,7 +628,7 @@ Module mdlFLEX
 
 
         End Select
-        If Not InitPara.ReadOnleMode Then
+        If InitPara.ServerMode Then
             ''シーケンサ出力
             PlcIf.PutSvPress(GpSV, GpFlg)
 
@@ -640,12 +643,11 @@ Module mdlFLEX
     ''' <param name="EventColor">表示用のイベントカラー</param>
     Public Sub WriteEventData(EventMsg As String, EventColor As Color)
 
-        If Not InitPara.ReadOnleMode Then
+        If InitPara.ServerMode Then
             Dim Colorlng As Long = ColorTranslator.ToOle(EventColor)
             'Color.Whiteは、メイン画面には非表示とする
             Dim db As New clsDataBase
 
-            'Dim tb As Odbc.OdbcDataReader = 
             db.ExecuteSqlCmd _
             ($"INSERT INTO FLEXイベントデータ
             (Time,イベントデータ,イベント種類) VALUES('{Now}','{EventMsg}','{Colorlng}')")

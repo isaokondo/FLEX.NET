@@ -717,15 +717,7 @@ Public Class clsInitParameter
         End Set
     End Property
 
-    ''' <summary>
-    ''' クライアントモードかモニタモードのどちらかがON
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property ReadOnleMode As Boolean
-        Get
-            Return _MonitorMode Or _ClientMode
-        End Get
-    End Property
+
     ''' <summary>
     ''' サーバーモード
     ''' </summary>

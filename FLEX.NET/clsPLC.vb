@@ -1256,7 +1256,7 @@ Public Class clsPlcIf
             RaiseEvent ExcavationStatusChange(PreExcaStatus, _excaStatus)
         End If
         '掘削データ保存　ストロークが掘進中に伸びたとき(クライアントモードでないとき）
-        If Not InitPara.ReadOnleMode And (_realStroke > PreRealStroke Or _excaStatus <> PreExcaStatus) And _excaStatus = cKussin Then
+        If InitPara.ServerMode And (_realStroke > PreRealStroke Or _excaStatus <> PreExcaStatus) And _excaStatus = cKussin Then
             DataSave.Save()
         End If
 
@@ -1276,7 +1276,7 @@ Public Class clsPlcIf
         mblnBlink = Not mblnBlink
         t = t Or mblnBlink
 
-        If Not InitPara.ReadOnleMode Then
+        If InitPara.ServerMode Then
             iReturnCode =
             com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
         End If

@@ -26,10 +26,23 @@ Public Class clsCalcuStroke
     ''' ジャッキステータス　掘進中、組立中、組み立て後の掘進中
     ''' </summary>
     Private _jackStatus As Short()
+
+    ''' <summary>
+    ''' 引き戻しジャッキ
+    ''' </summary>
+    Private _PullBackJack As New List(Of Short)
+
     ''' <summary>
     ''' 組立完了のジャッキ
     ''' </summary>
-    Private asembleFinishedJack As New List(Of Short)
+    Private _asembleFinishedJack As New List(Of Short)
+
+    ''' <summary>
+    ''' 計算から除外するジャッキ　引き戻しジャッキで押込み完了してないジャッキ
+    ''' </summary>
+    Private _ExclusionJack As New List(Of Short)
+
+
     ''' <summary>
     ''' 後胴部ローリング
     ''' </summary>
@@ -125,6 +138,17 @@ Public Class clsCalcuStroke
     End Property
 
     ''' <summary>
+    ''' 計算から除外するジャッキ
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ExclusionJack As List(Of Short)
+        Get
+            Return _ExclusionJack
+        End Get
+    End Property
+
+
+    ''' <summary>
     ''' 計算平均掘進ストローク
     ''' </summary>
     ''' <returns></returns>
@@ -147,7 +171,7 @@ Public Class clsCalcuStroke
             Dim jk As New Dictionary(Of Short, String)
             For Each j In InitPara.MesureJackAngle.Keys
                 Dim st As String
-                If asembleFinishedJack.Contains(j) Then
+                If _asembleFinishedJack.Contains(j) Then
                     st = "組立完了"
                 Else
                     st = IIf(PlcIf.JackExecMode(j - 1), "掘進モード", "組立中")
@@ -159,22 +183,40 @@ Public Class clsCalcuStroke
         End Get
     End Property
 
-
-
     ''' <summary>
-    ''' 組立完了ジャッキのセット
+    ''' 組立ジャッキ(押込み、追加押込みジャッキ）
     ''' </summary>
-    Public Sub SetAsembleJack(jk As List(Of Short))
-        For Each i In jk
-            asembleFinishedJack.Add(i)
-        Next
-    End Sub
+    ''' <returns></returns>
+    Public Property asembleFinishedJack As List(Of Short)
+        Get
+            Return _asembleFinishedJack
+        End Get
+        Set(value As List(Of Short))
+            _asembleFinishedJack.AddRange(value)
+        End Set
+    End Property
+    ''' <summary>
+    ''' 引き戻しジャッキ
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property PullBackJack As List(Of Short)
+        Get
+            Return _PullBackJack
+        End Get
+        Set(value As List(Of Short))
+            _PullBackJack.AddRange(value)
+        End Set
+    End Property
+
+
+
     ''' <summary>
     ''' 掘進開始
     ''' </summary>
     Public Sub ExecavStart()
-        '組立完了ジャッキのクリア
-        asembleFinishedJack.Clear()
+        '引き戻し、組立完了ジャッキのクリア
+        _asembleFinishedJack.Clear()
+        _PullBackJack.Clear()
     End Sub
 
 
@@ -192,25 +234,36 @@ Public Class clsCalcuStroke
     ''' 計算ストロークの演算
     ''' </summary>
     Public Sub Calc()
+        _ExclusionJack.Clear()
         '計測ジャッキ
         For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
             _mesureCalcJackStroke(mjJkNo) = _mesureJackStroke(mjJkNo)
             '組立完了ジャッキ
-            For Each asJkNo As Short In asembleFinishedJack
-                If mjJkNo = asJkNo Then
-                    'セグメント幅分を加算
-                    _mesureCalcJackStroke(mjJkNo) +=
+            'For Each asJkNo As Short In _asembleFinishedJack
+            '    If mjJkNo = asJkNo Then
+            If _PullBackJack.Contains(mjJkNo) And Not _asembleFinishedJack.Contains(mjJkNo) Then
+                _ExclusionJack.Add(mjJkNo)
+            End If
+
+            If _asembleFinishedJack.Contains(mjJkNo) Then
+                'セグメント幅分を加算
+                _mesureCalcJackStroke(mjJkNo) +=
                     _SegnebtCenterWidth +
                     _SegmentTaperValue / 2 *
                     Math.Cos((_SegmentMaxTaperLoc + _rearDrumRolling - _segmentRolling - InitPara.MesureJackAngle(mjJkNo)) _
                     / 180 * Math.PI)
-                End If
-            Next
+            End If
+
+            '    End If
+            'Next
             If PlcIf.ExcavMode AndAlso _mesureCalcJackStroke(mjJkNo) >= CtlPara.StartJackStroke(mjJkNo) Then
                 '掘進ストローク 掘進モードのときのみ演算
                 _MesureCalcLogicalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - CtlPara.StartJackStroke(mjJkNo)
             End If
         Next
+        '除外ジャッキのセット
+        clsGetAvg.ExceptionJack = _ExclusionJack
+
         ''計算平均ジャッキストロークの演算
         Dim CalcSt As New clsGetAvg(_mesureCalcJackStroke)
         _mesureCalcAveJackStroke = CalcSt.AvgData
@@ -244,8 +297,7 @@ Public Class clsCalcuStroke
                 Dim jkD As New List(Of Integer) '合計データ
                 For Each sp In JackData
                     '各ジャッキの引き戻し指令がONで引き戻し開始から押し込み中まで　のジャッキは除外 　有効ジャッキ（設定)
-                    If Not ((PlcIf.JackStatus(sp.Key - 1) And 2 ^ 3) = 2 ^ 3 And PlcIf.LosZeroSts_M >= 2 And PlcIf.LosZeroSts_M <= 4) And
-                        Not CtlPara.ExceptMesureJackNo.Contains(sp.Key) Then
+                    If Not ExceptionJack.Contains(sp.Key) And Not CtlPara.ExceptMesureJackNo.Contains(sp.Key) Then
                         jkD.Add(sp.Value)
                     End If
                 Next
@@ -261,11 +313,15 @@ Public Class clsCalcuStroke
             JackData = t
         End Sub
 
+        ''' <summary>
+        ''' 除外ジャッキ
+        ''' </summary>
+        Public Shared ExceptionJack As List(Of Short)
+
+
 
 
     End Class
-
-
 
 
 

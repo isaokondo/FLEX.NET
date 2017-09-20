@@ -1134,8 +1134,6 @@
 
         '汎用データ表示項目セット
         WideDataFldSet()
-        '計算すtロー演算
-        PlcIf_MesureStrokeChange()
 
         '基準方位の算出
         RefernceDirection.sbCulKijun()
@@ -1175,13 +1173,53 @@
 
         ParameterCheck()
 
-        '立ち上がったイベントを表示
-        WriteEventData($"Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]", Color.Blue)
 
+        StrokeSet()
+
+        '計算ストローク演算
+        PlcIf_MesureStrokeChange()
+
+        '立ち上がったイベントを表示
+
+        Dim db As New clsDataBase
+
+        db.ExecuteSqlCmd _
+            ($"INSERT INTO FLEXイベントデータ
+            (Time,イベントデータ,イベント種類) VALUES('{Now}','Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]','0')")
+
+    End Sub
+    ''' <summary>
+    ''' ロスゼロで掘進途中に立ち上げたときのストローク処理
+    ''' </summary>
+    Private Sub StrokeSet()
+        If PlcIf.ExcaStatus <> cTaiki AndAlso PlcIf.LosZeroEnable Then
+            'TODO:最大テーパーの算出
+            CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
+            '最大テーパー位置
+            CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
+            'セグメント幅
+            CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+
+            For Pieace As Short = 1 To PlcIf.AssemblyPieceNo
+                CalcStroke.PullBackJack = SegAsmblyData.ProcessData(Pieace).PullBackJack
+                If Pieace < PlcIf.AssemblyPieceNo Or (Pieace = PlcIf.AssemblyPieceNo And PlcIf.LosZeroSts_M = 5) Then
+                    CalcStroke.asembleFinishedJack = SegAsmblyData.ProcessData(Pieace).ClosetJack
+                    CalcStroke.asembleFinishedJack = SegAsmblyData.ProcessData(Pieace).AddClosetJack
+                End If
+
+
+
+            Next
+        End If
 
     End Sub
 
 
+
+
+    ''' <summary>
+    ''' パラメータのチェック
+    ''' </summary>
     Private Sub ParameterCheck()
         If PlcIf.減圧弁制御P定数 = 0 Or PlcIf.減圧弁制御I定数 = 0 Or PlcIf.DirectControlCoefficient = 0 Then
             frmPressParameterSet.Show()
