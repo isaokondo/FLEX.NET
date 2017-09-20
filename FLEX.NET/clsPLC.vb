@@ -1219,7 +1219,7 @@ Public Class clsPlcIf
             Exit Sub
         End Try
 
-        If Not InitPara.ReadOnleMode And Not InitPara.MonitorMode Then
+        If InitPara.ServerMode Then
             'PLCデータをテーブルに書き込む　
             'データは1秒毎に更新、保存は1分毎
             Try

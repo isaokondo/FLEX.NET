@@ -737,6 +737,8 @@ CatchError:  '例外処理
         Private Sub tmrStrokeSim_Tick(sender As Object, e As EventArgs) Handles tmrStrokeSim.Tick
 
             For i As Short = 0 To StrokeSimCounter.Count - 1
+            '速度がゼロでない時
+            If DgvJackStroke.Rows(i).Cells(2).Value <> 0 Then
 
                 If StrokeSimCounter(i) = 0 Then
                     '1mm加算したストロークを書き込み
@@ -749,12 +751,13 @@ CatchError:  '例外処理
                 Else
                     StrokeSimCounter(i) += -1
                 End If
+            End If
 
 
 
 
 
-            Next
+        Next
 
 
 

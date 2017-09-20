@@ -726,6 +726,15 @@ Public Class clsInitParameter
             Return _MonitorMode Or _ClientMode
         End Get
     End Property
+    ''' <summary>
+    ''' サーバーモード
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ServerMode As Boolean
+        Get
+            Return Not (_MonitorMode Or _ClientMode)
+        End Get
+    End Property
 
     Public ReadOnly Property ModeName As String
         Get

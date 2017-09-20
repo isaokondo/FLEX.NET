@@ -403,7 +403,7 @@ Module mdlFLEX
         CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
         CalcStroke.MesureJackSpeed = PlcIf.MesureJackSpeed
         CalcStroke.Calc() '計算ストローク演算
-        If Not InitPara.MonitorMode And Not InitPara.ClientMode Then
+        If InitPara.ServerMode Then
             PlcIf.AnalogPlcWrite("掘進ストローク", CalcStroke.CalcAveLogicalStroke)
             PlcIf.AnalogPlcWrite("掘進スピード", CalcStroke.MesureAveSpeed)
             PlcIf.AnalogPlcWrite("平均ジャッキストローク", CalcStroke.MesureCalcAveJackStroke)
