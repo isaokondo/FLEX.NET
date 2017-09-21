@@ -29,6 +29,14 @@ Public Class frmCalcStrokeConfirm
             dv.Cells(JackSpeed.Index).Value = PlcIf.MesureJackSpeed(jkNo)    '計測ジャッキスピード
             dv.Cells(CalcStrokeLen.Index).Value = CalcStroke.MesureCalcJackStroke(jkNo)  '計算計測ジャッキストローク
             dv.Cells(JackState.Index).Value = CalcStroke.JackState(jkNo) 'ジャッキステータス
+            Select Case CalcStroke.JackState(jkNo)
+                Case "掘進モード"
+                    dv.DefaultCellStyle.BackColor = Color.LightGreen
+                Case "組立完了"
+                    dv.DefaultCellStyle.BackColor = Color.LightCyan
+                Case "組立中"
+                    dv.DefaultCellStyle.BackColor = Color.LightGray
+            End Select
         Next
 
 
@@ -36,6 +44,7 @@ Public Class frmCalcStrokeConfirm
         DspCenterWidth.Value = CalcStroke.SegnebtCenterWidth    'セグメント幅
         DspMaxTaperLoc.Value = CalcStroke.SegmentMaxTaperLoc '最大テーパー位置
         DspTaperValue.Value = CalcStroke.SegmentTaperValue    'テーパー量
+
         DspAveLogocalStroke.Value = CalcStroke.CalcAveLogicalStroke
         DspAveSpeed.Value = CalcStroke.MesureAveSpeed
 

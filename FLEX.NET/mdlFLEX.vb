@@ -172,13 +172,15 @@ Module mdlFLEX
             'JackManual.ManualOn = False
             WriteEventData("掘進中断しました", Color.Black)
             ElapsedTime.ExcavationStop()
-            '最終ストロークをセグメント割付データに書き込み
-            SegAsmblyData.RingLastStrokeUpdate(PlcIf.RingNo, CalcStroke.MesureCalcAveJackStroke)
+            '最終ストロークをセグメント割付データに書き込み server modeのときのみ更新
+            If InitPara.ServerMode Then
+                SegAsmblyData.RingLastStrokeUpdate(PlcIf.RingNo, CalcStroke.MesureCalcAveJackStroke)
+            End If
 
         End If
 
-        '待機中
-        If NowStatus = cTaiki Then
+            '待機中
+            If NowStatus = cTaiki Then
 
             '自動印字　出力
             ReportAutoPrintOut()
@@ -257,9 +259,9 @@ Module mdlFLEX
 
                         PlaySound(My.Resources.PullFInish)
                     Case 4, 6
-                        '押込みジャッキ
+                        '(追加)押込みジャッキ
                         Dim ClosetJk As String =
-                            String.Join(",", .ClosetJack)
+                            String.Join(",", IIf(NowSts = 4, .ClosetJack, .AddClosetJack))
                         WriteEventData($"No.{ClosetJk} のジャッキ押込み開始しました。", Color.Blue)
                         LosZeroSts = 5
                         'ボイスメッセージ出力
@@ -271,30 +273,19 @@ Module mdlFLEX
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
                         '計算ストローク用に組立ジャッキの設定
-                        CalcStroke.asembleFinishedJack = .ClosetJack
+                        CalcStroke.asembleFinishedJack = .ClosetJack '押込みジャッキ
+                        CalcStroke.asembleFinishedJack = .AddClosetJack '追加押込ジャッキ
 
                         'ボイスメッセージ出力
                         PlaySound(My.Resources.SegmentAsem)
 
-                        'TODO:推進圧力がある程度たってから
-                        ''最終ピース到達前 減圧ジャッキがある場合
-                        'If PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber AndAlso
-                        '    SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).ReduceJack.Count > 0 Then
-
-                        '    If CtlPara.NextPieceConfirm Then
-                        '        '同時施工継続メッセージ出力
-                        '        My.Forms.frmNextPieceConfirm.Show()
-                        '    Else
-                        '        PlcIf.LosZeroSts_FLEX = 1 '減圧開始
-                        '    End If
-                        'End If
                     Case 7
                         WriteEventData("ジャッキ押付け完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 4 '押し付け完了確認
 
 
                     Case 8
-                        WriteEventData("Kセグメント組立完了しました。", Color.Magenta)
+                        WriteEventData("Ｋセグメント組立完了しました。", Color.Magenta)
 
                 End Select
             End With

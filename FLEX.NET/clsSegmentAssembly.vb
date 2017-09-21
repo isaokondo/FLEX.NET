@@ -99,10 +99,8 @@ Friend Class clsSegmentAssembly
     ''' <param name="Stroke"></param>
     Public Sub RingLastStrokeUpdate(RingNo As Integer, Stroke As Short)
         _RingLastStroke(RingNo) = Stroke
-        If InitPara.ServerMode Then    'server modeのときのみ更新
-            ExecuteSqlCmd($"UPDATE flexセグメント組立データ SET 掘進終了ストローク ='{Stroke}'
+        ExecuteSqlCmd($"UPDATE flexセグメント組立データ SET 掘進終了ストローク ='{Stroke}'
             WHERE リング番号 = '{RingNo}'")
-        End If
     End Sub
 
     Public ReadOnly Property AssenblyPtnLst As Dictionary(Of Short, String)

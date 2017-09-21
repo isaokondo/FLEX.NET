@@ -23,6 +23,7 @@ Partial Class frmNextPieceConfirm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.btnClose = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'btnOK
@@ -31,7 +32,9 @@ Partial Class frmNextPieceConfirm
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(244, 97)
+        Me.btnCancel.Location = New System.Drawing.Point(244, 44)
+        Me.btnCancel.Text = "閉じる"
+        Me.btnCancel.Visible = False
         '
         'Label1
         '
@@ -46,21 +49,36 @@ Partial Class frmNextPieceConfirm
         Me.Label1.TabIndex = 9
         Me.Label1.Text = "同時施工継続しますか？"
         '
+        'btnClose
+        '
+        Me.btnClose.BackColor = System.Drawing.Color.Silver
+        Me.btnClose.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnClose.Location = New System.Drawing.Point(244, 97)
+        Me.btnClose.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnClose.Name = "btnClose"
+        Me.btnClose.Size = New System.Drawing.Size(102, 35)
+        Me.btnClose.TabIndex = 10
+        Me.btnClose.Text = "閉じる"
+        Me.btnClose.UseVisualStyleBackColor = False
+        '
         'frmNextPieceConfirm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(357, 143)
+        Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmNextPieceConfirm"
         Me.Text = "同時施工継続"
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents Label1 As Label
+    Protected WithEvents btnClose As Button
 End Class

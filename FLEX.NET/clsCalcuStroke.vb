@@ -138,7 +138,7 @@ Public Class clsCalcuStroke
     End Property
 
     ''' <summary>
-    ''' 計算から除外するジャッキ
+    ''' 計算から除外するジャッキ(引き戻し、押込み中）
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ExclusionJack As List(Of Short)
@@ -170,11 +170,12 @@ Public Class clsCalcuStroke
         Get
             Dim jk As New Dictionary(Of Short, String)
             For Each j In InitPara.MesureJackAngle.Keys
-                Dim st As String
+                Dim st As String = "掘進モード"
                 If _asembleFinishedJack.Contains(j) Then
                     st = "組立完了"
-                Else
-                    st = IIf(PlcIf.JackExecMode(j - 1), "掘進モード", "組立中")
+                End If
+                If _ExclusionJack.Contains(j) Then
+                    st = "組立中"
                 End If
                 jk.Add(j, st)
             Next

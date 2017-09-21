@@ -17,7 +17,11 @@
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         Me.Close()
     End Sub
-
+    ''' <summary>
+    ''' データ更新
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click, btnCLose.Click
 
         CtlPara.測量ポイントリング番号 = ConfirmRingNo.Value
@@ -27,6 +31,8 @@
         'PuchUpStroke.Value=.
         CtlPara.水平入力補正値 = HorCorrentionValue.Value
         CtlPara.鉛直入力補正値 = VerCorrentionValue.Value
+        '押し上がりストロークの更新
+        SegAsmblyData.RingLastStrokeUpdate(ConfirmRingNo.Value, PuchUpStroke.Value)
 
         DspUpdate()
 
@@ -48,7 +54,6 @@
             TipDistance.Value += RefernceDirection.toStartDistance '起点から発進までの距離加算
         End If
 
-        PuchUpStroke.Value = SegAsmblyData.RingLastStroke(CtlPara.測量ポイントリング番号)
         HorCorrentionValue.Value = CtlPara.水平入力補正値
         VerCorrentionValue.Value = CtlPara.鉛直入力補正値
 
@@ -185,6 +190,11 @@
 
             DspUpdate()
         End If
+
+    End Sub
+
+    Private Sub ConfirmRingNo_ValueChanged(sender As Object, e As EventArgs) Handles ConfirmRingNo.ValueChanged
+        PuchUpStroke.Value = SegAsmblyData.RingLastStroke(ConfirmRingNo.Value)
 
     End Sub
 End Class
