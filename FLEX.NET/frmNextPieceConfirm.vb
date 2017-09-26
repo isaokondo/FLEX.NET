@@ -37,17 +37,21 @@ Public Class frmNextPieceConfirm
     ''' <param name="e"></param>
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
 
-        Dim fInfo As New FLASHWINFO()
-        fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo))
-        fInfo.hwnd = Me.Handle
-        fInfo.dwFlags = FLASHW_ALL
-        fInfo.uCount = 1000         ' 点滅する回数
-        fInfo.dwTimeout = 0
+        My.Forms.frmMain.btnLoszeroContinu.Enabled = True
 
-        FlashWindowEx(fInfo)
+        Me.Close()
+
+        'Dim fInfo As New FLASHWINFO()
+        'fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo))
+        'fInfo.hwnd = Me.Handle
+        'fInfo.dwFlags = FLASHW_ALL
+        'fInfo.uCount = 1000         ' 点滅する回数
+        'fInfo.dwTimeout = 0
+
+        'FlashWindowEx(fInfo)
 
 
-        Me.WindowState = FormWindowState.Minimized
+        'Me.WindowState = FormWindowState.Minimized
 
     End Sub
 

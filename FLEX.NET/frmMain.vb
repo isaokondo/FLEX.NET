@@ -240,6 +240,15 @@
             ucnReduceFinish.FieldName = "減圧完了"
         End If
 
+        '減圧中から組立中は次ピース確認ボタン無効
+        If LosZeroSts >= 1 And LosZeroSts <= 5 Then
+            btnLoszeroContinu.Enabled = False
+        End If
+        If btnLoszeroContinu.Enabled Then
+            btnLoszeroContinu.ForeColor = IIf(BlinkFlg, Color.Black, Color.Red)
+        End If
+
+
 
         If ucnPullBackFinish.Blink Then
             ucnPullBackFinish.FieldName = "引戻し中"
@@ -973,7 +982,7 @@
         Handles DspWideUse0.DoubleClick, DspWideUse1.DoubleClick, DspWideUse2.DoubleClick,
         DspWideUse3.DoubleClick, DspWideUse4.DoubleClick, DspWideUse5.DoubleClick,
         DspWideUse6.DoubleClick, DspWideUse7.DoubleClick, DspWideUse8.DoubleClick,
-        DspWideUse9.DoubleClick, DspWideUse10.DoubleClick, DspWideUse11.DoubleClick
+        DspWideUse9.DoubleClick, DspWideUse10.DoubleClick, DspWideUse11.DoubleClick, DspWideUse12.DoubleClick
 
         cmbWideSelct.Tag = sender
         cmbWideSelct.Visible = True
@@ -1000,7 +1009,7 @@
         WideDataFldSet() '汎用データ・セット
     End Sub
 
-    Private Sub DspWideUse0_DoubleClick(sender As Object, e As EventArgs) Handles DspWideUse9.DoubleClick, DspWideUse8.DoubleClick, DspWideUse7.DoubleClick, DspWideUse6.DoubleClick, DspWideUse5.DoubleClick, DspWideUse4.DoubleClick, DspWideUse3.DoubleClick, DspWideUse2.DoubleClick, DspWideUse11.DoubleClick, DspWideUse10.DoubleClick, DspWideUse1.DoubleClick, DspWideUse0.DoubleClick
+    Private Sub DspWideUse0_DoubleClick(sender As Object, e As EventArgs) Handles DspWideUse9.DoubleClick, DspWideUse8.DoubleClick, DspWideUse7.DoubleClick, DspWideUse6.DoubleClick, DspWideUse5.DoubleClick, DspWideUse4.DoubleClick, DspWideUse3.DoubleClick, DspWideUse2.DoubleClick, DspWideUse11.DoubleClick, DspWideUse10.DoubleClick, DspWideUse1.DoubleClick, DspWideUse0.DoubleClick, DspWideUse12.DoubleClick
 
     End Sub
 
@@ -1152,6 +1161,13 @@
         LossZeroConcern.Enabled = InitPara.LosZeroMode
         AssemblyProcessEdit.Enabled = InitPara.LosZeroMode
 
+        btnLoszeroContinu.Visible = InitPara.LosZeroMode
+        btnPieceConfirm.Visible = InitPara.LosZeroMode
+        btnLossZerooCancel.Visible = InitPara.LosZeroMode
+
+
+        DspWideUse12.Visible = Not InitPara.LosZeroMode
+
         '掘削開始時刻の取得
         DspExcavStartDay(getExcecStartTime)
         '姿勢制御自動手動の切替時の処理
@@ -1231,5 +1247,14 @@
 
         frmRingDataView.Show()
 
+    End Sub
+    ''' <summary>
+    ''' 次ピース確認画面
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnLoszeroContinu_Click(sender As Object, e As EventArgs) Handles btnLoszeroContinu.Click
+        frmNextPieceConfirm.Show()
+        btnLoszeroContinu.Enabled = False 'ボタン無効
     End Sub
 End Class

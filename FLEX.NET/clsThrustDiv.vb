@@ -719,10 +719,12 @@ Friend Class clsReducePress
         '減圧完了
         If ReduceFlg And tCount = 5 Then
             PlcIf.LosZeroSts_FLEX = 2
+            FlexAutoManualChange()
+
         End If
         '減圧処理停止 MVがすべて０で、減圧判断圧力以下
         If MvZero = 0 And ReduceFlg And tCount = 5 Then
-            FlexAutoManualChange()
+            'FlexAutoManualChange()
             timer.Stop()
         End If
 

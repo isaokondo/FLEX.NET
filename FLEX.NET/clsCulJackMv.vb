@@ -383,6 +383,13 @@ Friend Class clsCulJackMv
         _圧力調整中 = False
     End Sub
 
+    Public ReadOnly Property MvAutoOn As Boolean
+        Get
+            Return TimerAuto.Enabled
+        End Get
+    End Property
+
+
 
     Public Sub New()
         MyBase.New()

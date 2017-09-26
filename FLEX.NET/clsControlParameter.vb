@@ -976,7 +976,6 @@ Public Class clsControlParameter
     End Property
 
 
-
     Public ReadOnly Property WideUse As Dictionary(Of Short, String)
         Get
             Return _wideUse
@@ -984,15 +983,18 @@ Public Class clsControlParameter
     End Property
 
 
-
-
-
-
     Public Sub WideUseUpdate(iKey As Short, value As String)
         _wideUse.Item(iKey) = value
-        'Dim tb As Odbc.OdbcDataReader =
-        ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{value}' WHERE 項目名称 ='wideuse{iKey}'")
-        'tb.Close()
+
+        Dim WdUsDtExist As DataTable =
+            GetDtfmSQL($"SELECT * FROM FLEX制御パラメータ  WHERE 項目名称 ='wideuse{iKey}'")
+        '存在しなかった場合
+        If WdUsDtExist.Rows.Count <> 0 Then
+            ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{value}' WHERE 項目名称 ='wideuse{iKey}'")
+        Else
+            ExecuteSqlCmd($"INSERT INTO FLEX制御パラメータ (`項目名称`,`値`) VALUES ('wideuse{iKey}','{value}') ")
+        End If
+
 
     End Sub
 

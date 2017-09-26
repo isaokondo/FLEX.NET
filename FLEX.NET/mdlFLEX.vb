@@ -242,13 +242,9 @@ Module mdlFLEX
 
                     Case 2
                         '引き戻しジャッキ
-                        Dim PullJk As String =
-                            String.Join(",", .PullBackJack)
-
                         CalcStroke.PullBackJack = .PullBackJack
 
-
-                        WriteEventData($"No.{PullJk} のジャッキの引戻し開始しました。", Color.Blue)
+                        WriteEventData($"No.{ .PullBackJack.ToCommaDelmit} のジャッキの引戻し開始しました。", Color.Blue)
                         LosZeroSts = 3
                         Reduce.LstRdGp.Clear() '減圧グループ　クリア
 
@@ -258,11 +254,14 @@ Module mdlFLEX
                         LosZeroSts = 4
 
                         PlaySound(My.Resources.PullFInish)
-                    Case 4, 6
-                        '(追加)押込みジャッキ
-                        Dim ClosetJk As String =
-                            String.Join(",", IIf(NowSts = 4, .ClosetJack, .AddClosetJack))
-                        WriteEventData($"No.{ClosetJk} のジャッキ押込み開始しました。", Color.Blue)
+                    Case 4
+
+                        WriteEventData($"No.{ .ClosetJack.ToCommaDelmit} のジャッキ押込み開始しました。", Color.Blue)
+                        LosZeroSts = 5
+                        'ボイスメッセージ出力
+                        PlaySound(My.Resources.ClosetStart)
+                    Case 6
+                        WriteEventData($"No.{ .AddClosetJack.ToCommaDelmit} のジャッキ追加押込み開始しました。", Color.Blue)
                         LosZeroSts = 5
                         'ボイスメッセージ出力
                         PlaySound(My.Resources.ClosetStart)
@@ -303,10 +302,10 @@ Module mdlFLEX
                     My.Forms.frmNextPieceConfirm.Close() '継続確認画面を閉じる
                     With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
                         '減圧グループ
-                        WriteEventData($"{PlcIf.AssemblyPieceNo}ピース目 {String.Join(",", .ReduceGroup)}グループの減圧開始します。", Color.Blue)
+                        WriteEventData($"{PlcIf.AssemblyPieceNo}ピース目 { .ReduceGroup.ToCommaDelmit}グループの減圧開始します。", Color.Blue)
                         If CtlPara.LosZeroOpposeJack And .OpposeGroup.Count <> 0 Then
                             '対抗グループ
-                            WriteEventData($"{String.Join(",", .OpposeGroup)}グループを対抗グループとします。", Color.Blue)
+                            WriteEventData($"{ .OpposeGroup.ToCommaDelmit}グループを対抗グループとします。", Color.Blue)
                         End If
                         'マシンへ指令　
                         PlcIf.LosZeroDataWrite("減圧ジャッキ", .ReduceJack)
@@ -663,7 +662,7 @@ Module mdlFLEX
 
         If PlcIf.FlexControlOn AndAlso CtlPara.AutoDirectionControl Then
             'JackManual.ManualOn = False
-            If PlcIf.ExcaStatus = cKussin Then
+            If PlcIf.ExcaStatus = cKussin AndAlso JackMvAuto.MvAutoOn Then
                 WriteEventData("自動方向制御開始しました。", Color.Blue)
             End If
             'tmrAutoDirect.Enabled = False
