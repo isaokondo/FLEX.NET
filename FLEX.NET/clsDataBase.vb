@@ -1189,6 +1189,15 @@ Public Class clsCheckDictionary
         End If
     End Function
 
+    Public Function GetValue(tKey As String, DefaltVal As String) As String
+        If _dic.ContainsKey(tKey) Then
+            Return _dic(tKey)
+        Else
+            Dim db As New clsDataBase
+            db.ExecuteSqlCmd($"INSERT INTO flex制御パラメータ(`項目名称`,`値`) VALUES('{tKey}','{DefaltVal}')")
+            Return DefaltVal
+        End If
+    End Function
 
 
 

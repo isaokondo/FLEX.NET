@@ -650,8 +650,10 @@ Friend Class clsReducePress
         MomentOpt.Epm = CtlPara.LosZeroEmp 'モーメント偏差許容値
         MomentOpt.InitPointX = PlcIf.PointX '力点初期値
         MomentOpt.InitPointY = PlcIf.PointY
-        MomentOpt.TargetMomentX = DivCul.MomentX '目標モーメント
-        MomentOpt.TargetMomentY = DivCul.MomentY        '掘進モード & 稼働ジャッキをセット
+        '目標モーメント に　モーメント低減率をかける
+        MomentOpt.TargetMomentX = DivCul.MomentX * CtlPara.MomentRdductionRateOnOnewayLimit / 100
+        MomentOpt.TargetMomentY = DivCul.MomentY * CtlPara.MomentRdductionRateOnOnewayLimit / 100
+        '掘進モード & 稼働ジャッキをセット
         For i As Short = 0 To InitPara.NumberJack - 1
             MomentOpt.DivCul0.OnJack(i) =
                 PlcIf.JackExecMode(i) And PlcIf.JackSel(i)

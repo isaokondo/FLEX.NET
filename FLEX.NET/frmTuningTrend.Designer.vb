@@ -238,7 +238,7 @@ Partial Class frmTuningTrend
         Me.lblNowTime.Name = "lblNowTime"
         Me.lblNowTime.Size = New System.Drawing.Size(88, 15)
         Me.lblNowTime.TabIndex = 41
-        Me.lblNowTime.Text = "hh:mm:ss"
+        Me.lblNowTime.Text = "HH:mm:ss"
         Me.lblNowTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lbl5minBefore
@@ -250,7 +250,7 @@ Partial Class frmTuningTrend
         Me.lbl5minBefore.Name = "lbl5minBefore"
         Me.lbl5minBefore.Size = New System.Drawing.Size(88, 15)
         Me.lbl5minBefore.TabIndex = 42
-        Me.lbl5minBefore.Text = "hh:mm:ss"
+        Me.lbl5minBefore.Text = "HH:mm:ss"
         Me.lbl5minBefore.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'barSv

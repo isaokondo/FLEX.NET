@@ -100,6 +100,9 @@ Public Class clsControlParameter
     Private _NextPieceConfirm As Boolean    '次ピース組立確認
     Private _NextPieceConfirmTime As Integer    '組立確認後の減圧開始確認タイマ
 
+    Private _MomentRdductionRateOnReduce As Short   '減圧開始時のモーメント低減率
+    Private _MomentRdductionRateOnOnewayLimit As Short '片押し調整時のモーメント低減率
+
 
     Private _PitchingSel As Integer = 0 'ピッチングの選択　0:ジャイロ　1:マシン
 
@@ -906,6 +909,34 @@ Public Class clsControlParameter
         End Set
     End Property
 
+    ''' <summary>
+    ''' 減圧開始時のモーメント低減率
+    ''' </summary>
+    ''' <returns></returns>
+
+    Public Property MomentRdductionRateOnReduce As Short
+        Get
+            Return _MomentRdductionRateOnReduce
+        End Get
+        Set(value As Short)
+            _MomentRdductionRateOnReduce = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+    ''' <summary>
+    ''' 片押し調整時のモーメント低減率
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MomentRdductionRateOnOnewayLimit As Short
+        Get
+            Return _MomentRdductionRateOnOnewayLimit
+        End Get
+        Set(value As Short)
+            _MomentRdductionRateOnOnewayLimit = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
 
     ''' <summary>
     ''' 掘進開始時の平均ストローク
@@ -951,6 +982,8 @@ Public Class clsControlParameter
             Return _wideUse
         End Get
     End Property
+
+
 
 
 
@@ -1067,6 +1100,15 @@ Public Class clsControlParameter
 
         _CopyCutEnableStroke = chk.GetValue("CopyCutEnableStroke")
         _CopySelect = chk.GetValue("CopySelect")
+
+        '減圧開始時のモーメント低減率
+
+
+
+        _MomentRdductionRateOnReduce = chk.GetValue("MomentRdductionRateOnReduce", "80")
+        '片押し調整時のモーメント低減率
+        _MomentRdductionRateOnOnewayLimit = chk.GetValue("MomentRdductionRateOnOnewayLimit", "80")
+
 
         _optGpEn =
             (From k In Split(chk.GetValue("OptinalGroupSetNumber"), ",") Where IsNumeric(k) Select CShort(k)).ToList

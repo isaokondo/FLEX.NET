@@ -26,7 +26,9 @@
 
             LosZeroEmp.Value = CtlPara.LosZeroEmp
             LosZeroNlp.Value = CtlPara.LosZeroNlp
-            LoszerorStep.Value = CtlPara.LoszerorStep
+        LoszerorStep.Value = CtlPara.LoszerorStep
+
+        MomentRdductionRateOnReduce.Value = CtlPara.MomentRdductionRateOnReduce
 
         '対抗ジャッキの機能使用可／不可
         LosZeroOpposeJack.Selectable = InitPara.OpposeJackEnable
@@ -39,26 +41,26 @@
 
         '対抗ジャッキ有効のとき
         If InitPara.OpposeJackEnable Then
-                CtlPara.LosZeroRollingTake = LosZeroRollingTake.rdbtnValue
-                CtlPara.LosZeroOpposeJack = LosZeroOpposeJack.rdbtnValue
-                CtlPara.LosZeroOpposeControl = LosZeroOpposeControl.rdbtnValue
-                CtlPara.LosZeroOpposeGroupNumber = LosZeroOpposeGroupNumber.Value
-                CtlPara.LosZeroOpposeManualSV = LosZeroOpposeManualSV.Value
-            End If
+            CtlPara.LosZeroRollingTake = LosZeroRollingTake.rdbtnValue
+            CtlPara.LosZeroOpposeJack = LosZeroOpposeJack.rdbtnValue
+            CtlPara.LosZeroOpposeControl = LosZeroOpposeControl.rdbtnValue
+            CtlPara.LosZeroOpposeGroupNumber = LosZeroOpposeGroupNumber.Value
+            CtlPara.LosZeroOpposeManualSV = LosZeroOpposeManualSV.Value
+        End If
 
-            CtlPara.NextPieceConfirm = NextPieceConfirm.rdbtnValue
-            CtlPara.NextPieceConfirmTime = NextPieceConfirmTime.Value
+        CtlPara.NextPieceConfirm = NextPieceConfirm.rdbtnValue
+        CtlPara.NextPieceConfirmTime = NextPieceConfirmTime.Value
 
-            CtlPara.ReduceTime = ReduceTime.Value
-            CtlPara.ReduceJudgePress = ReduceJudgePress.Value
+        CtlPara.ReduceTime = ReduceTime.Value
+        CtlPara.ReduceJudgePress = ReduceJudgePress.Value
 
-            CtlPara.LosZeroEmp = LosZeroEmp.Value
-            CtlPara.LosZeroNlp = LosZeroNlp.Value
-            CtlPara.LoszerorStep = LoszerorStep.Value
+        CtlPara.LosZeroEmp = LosZeroEmp.Value
+        CtlPara.LosZeroNlp = LosZeroNlp.Value
+        CtlPara.LoszerorStep = LoszerorStep.Value
 
+        CtlPara.MomentRdductionRateOnReduce = MomentRdductionRateOnReduce.Value
 
-
-            Me.Close()
+        Me.Close()
 
     End Sub
 

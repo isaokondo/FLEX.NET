@@ -479,6 +479,11 @@ Module mdlFLEX
                     PlcIf.PointY = Reduce.PointY
                     PlcIf.操作角 = Reduce.Theta
                     PlcIf.操作強 = Reduce.Rc
+                    JackMvAuto.操作角 = Reduce.Theta
+                    JackMvAuto.操作強 = Reduce.Rc
+                    JackMvAuto.PointX = Reduce.PointX
+                    JackMvAuto.PointY = Reduce.PointX
+
                 End If
             Else
                 '力点自動
