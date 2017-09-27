@@ -435,7 +435,7 @@
     Public Sub SegmentDataDsp()
         '組立パターン
 
-        If Not InitPara.LosZeroMode Then Exit Sub
+        If Not InitPara.LosZeroEquip Then Exit Sub
 
         'Dim p As Short = 0
         If PlcIf.AssemblyPieceNo <= 0 Then PlcIf.AssemblyPieceNo = 1
@@ -640,7 +640,7 @@
     Private Sub AssemblyProcessEdit_Click(sender As Object, e As EventArgs) Handles AssemblyProcessEdit.Click, DspTypeName.DoubleClick,
         DspAssemblyPattern.DoubleClick, DspAssemblyPieace.DoubleClick, DspPullBackJack.DoubleClick,
         DspClosetJack.DoubleClick, DspClosetThrustJack.DoubleClick, DspAddClosetThrustJack.DoubleClick, DspNextPieceName.DoubleClick
-        If InitPara.LosZeroMode Then
+        If InitPara.LosZeroEquip Then
             My.Forms.frmAssemblyProcessEdit.Show()
         End If
 
@@ -1093,7 +1093,7 @@
 
             .DspInitBaseImg()
 
-            .SegmentDspEnable = InitPara.LosZeroMode
+            .SegmentDspEnable = InitPara.LosZeroEquip
             .MaxCopyStroke = PlcIf.AnalogTag.TagData("コピーストローク1").EngHight
         End With
 
@@ -1151,22 +1151,22 @@
 
         '線形データ画面更新
         LineDataUpdate()
-        If InitPara.LosZeroMode Then
+        If InitPara.LosZeroEquip Then
             '組立パターンの情報を取得
             SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
             '同時施工組立パターン情報表示
             SegmentDataDsp()
         End If
         '同時施工モードのメニュー有効
-        LossZeroConcern.Enabled = InitPara.LosZeroMode
-        AssemblyProcessEdit.Enabled = InitPara.LosZeroMode
+        LossZeroConcern.Enabled = InitPara.LosZeroEquip
+        AssemblyProcessEdit.Enabled = InitPara.LosZeroEquip
 
-        btnLoszeroContinu.Visible = InitPara.LosZeroMode
-        btnPieceConfirm.Visible = InitPara.LosZeroMode
-        btnLossZerooCancel.Visible = InitPara.LosZeroMode
+        btnLoszeroContinu.Visible = InitPara.LosZeroEquip
+        btnPieceConfirm.Visible = InitPara.LosZeroEquip
+        btnLossZerooCancel.Visible = InitPara.LosZeroEquip
 
 
-        DspWideUse12.Visible = Not InitPara.LosZeroMode
+        DspWideUse12.Visible = Not InitPara.LosZeroEquip
 
         '掘削開始時刻の取得
         DspExcavStartDay(getExcecStartTime)

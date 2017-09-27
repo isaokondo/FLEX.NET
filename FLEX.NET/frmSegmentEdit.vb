@@ -40,7 +40,7 @@ Public Class frmSegmentEdit
             DgvSegAssign("RingNo", i).Value = RingNo
             DgvSegAssign("SegmentType", i).Value = SegAsmblyData.TypeData(RingNo).TypeName 'セグメント種類
             DgvSegAssign("SegWidth", i).Value = SegAsmblyData.TypeData(RingNo).CenterWidth * 1000 'セグメント幅
-            If InitPara.LosZeroMode Then
+            If InitPara.LosZeroEquip Then
                 DgvSegAssign("AssemblyPtnName", i).Value = SegAsmblyData.AssemblyPtnName(RingNo) '組立パターン名
             End If
 
@@ -60,7 +60,7 @@ Public Class frmSegmentEdit
                     DgvSegSim("RingNoSim", SimDgvRow).Value = RingNo
                     DgvSegSim("SegmentTypeSim", SimDgvRow).Value =
                         SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
-                    If InitPara.LosZeroMode Then
+                    If InitPara.LosZeroEquip Then
                         DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value =
                             SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
                     End If
@@ -124,7 +124,7 @@ Public Class frmSegmentEdit
             DgvSegAssign("RingNo", i).Value = RingNo
             DgvSegAssign("SegmentType", i).Value = SegAsmblyData.TypeData(RingNo).TypeName 'セグメント種類
             DgvSegAssign("SegWidth", i).Value = SegAsmblyData.TypeData(RingNo).CenterWidth * 1000 'セグメント幅
-            If InitPara.LosZeroMode Then
+            If InitPara.LosZeroEquip Then
                 DgvSegAssign("AssemblyPtnName", i).Value = SegAsmblyData.AssemblyPtnName(RingNo) '組立パターン名
             End If
 
@@ -143,7 +143,7 @@ Public Class frmSegmentEdit
                     DgvSegSim("RingNoSim", SimDgvRow).Value = RingNo
                     DgvSegSim("SegmentTypeSim", SimDgvRow).Value =
                         SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
-                    If InitPara.LosZeroMode Then
+                    If InitPara.LosZeroEquip Then
                         DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value =
                             SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
                     End If

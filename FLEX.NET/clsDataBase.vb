@@ -516,7 +516,7 @@ Public Class clsInitParameter
 
 
     Private _constructionName As String '工事名（環境設定テーブルより
-    Private _LosZeroMode As Boolean = True    '同時施工あり（環境設定テーブルより
+    Private _LosZeroEquip As Boolean = True    '同時施工あり（環境設定テーブルより
 
     Private _ClientMode As Boolean = False  'クライアントモード　データ保存なし、グループ操作出力なしのモード
     Private _MonitorMode As Boolean = False  'モニタモード　データ保存なし、PLC書き込みなし　　グループ操作出力なしのモード
@@ -659,12 +659,12 @@ Public Class clsInitParameter
         End Get
     End Property
     ''' <summary>
-    ''' ロスゼロあり、なし
+    ''' ロスゼロ装備
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property LosZeroMode As Boolean
+    Public ReadOnly Property LosZeroEquip As Boolean
         Get
-            Return _LosZeroMode
+            Return _LosZeroEquip
         End Get
     End Property
 
@@ -849,9 +849,9 @@ Public Class clsInitParameter
             GetDtfmSQL($"SELECT 工事名,施工方法 FROM 環境設定 WHERE シートID='10'")
         If ConNameLosZero.Rows.Count <> 0 Then
             _constructionName = ConNameLosZero.Rows(0).Item(0)
-            _LosZeroMode = (ConNameLosZero.Rows(0).Item(1) = 1)
+            _LosZeroEquip = (ConNameLosZero.Rows(0).Item(1) = 1)
             _OpposeJackEnable =
-                _LosZeroMode And (_constructionName.IndexOf("鹿島") >= 0 Or _constructionName.IndexOf("飛島") >= 0)
+                _LosZeroEquip And (_constructionName.IndexOf("鹿島") >= 0 Or _constructionName.IndexOf("飛島") >= 0)
 
 
         End If

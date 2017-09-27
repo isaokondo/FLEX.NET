@@ -992,37 +992,41 @@ Public Class clsPlcIf
                             _mesureJackSpeed(mj) = _EngValue("ジャッキスピード" & mj)
                         Next
 
-                        '同時施工ステータス読込
-                        Dim p As Short
-                        p = _LosZeroSts_FLEX
-                        _LosZeroSts_FLEX = _EngValue("同時施工ステータス_FLEX")
-                        '同時施工モードでステータス変化時
-                        If _LosZeroMode And p <> _LosZeroSts_FLEX Then
-                            RaiseEvent LosZeroStsChange(p, _LosZeroSts_FLEX, False)
-                        End If
+                        If InitPara.LosZeroEquip Then '同時施工あり
 
-                        p = _LosZeroSts_M
-                        _LosZeroSts_M = _EngValue("同時施工ステータス_Machine")
-                        '同時施工モードでステータス変化時
-                        If _LosZeroMode And p <> _LosZeroSts_M Then
-                            RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
-                        End If
-                        '組立完了後の経過時間カウント
-                        If _LosZeroSts_M = 5 Then
-                            AsmbledPastTime += 1 'カウントアップ
-                            If AsmbledPastTime = CtlPara.NextPieceConfirmTime Then
-                                'カウントアップ後次ピース確認イベント
-                                RaiseEvent NextPieceStart()
+
+                            '同時施工ステータス読込
+                            Dim p As Short
+                            p = _LosZeroSts_FLEX
+                            _LosZeroSts_FLEX = _EngValue("同時施工ステータス_FLEX")
+                            '同時施工モードでステータス変化時
+                            If _LosZeroMode And p <> _LosZeroSts_FLEX Then
+                                RaiseEvent LosZeroStsChange(p, _LosZeroSts_FLEX, False)
                             End If
-                        Else
-                            AsmbledPastTime = 0 'リセット
-                        End If
 
-                        'モニターモードではPLCより組立ピース読込
-                        If InitPara.MonitorMode AndAlso InitPara.LosZeroMode Then
-                            _AssemblyPieceNo = _EngValue("組立ピース")
-                        End If
+                            p = _LosZeroSts_M
+                            _LosZeroSts_M = _EngValue("同時施工ステータス_Machine")
+                            '同時施工モードでステータス変化時
+                            If _LosZeroMode And p <> _LosZeroSts_M Then
+                                RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
+                            End If
+                            '組立完了後の経過時間カウント
+                            If _LosZeroSts_M = 5 Then
+                                AsmbledPastTime += 1 'カウントアップ
+                                If AsmbledPastTime = CtlPara.NextPieceConfirmTime Then
+                                    'カウントアップ後次ピース確認イベント
+                                    RaiseEvent NextPieceStart()
+                                End If
+                            Else
+                                AsmbledPastTime = 0 'リセット
+                            End If
 
+                            'モニターモードではPLCより組立ピース読込
+                            If InitPara.MonitorMode Then
+                                _AssemblyPieceNo = _EngValue("組立ピース")
+                            End If
+
+                        End If
 
                         For i As Short = 0 To InitPara.NumberGroup - 1
                             _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
@@ -1196,18 +1200,26 @@ Public Class clsPlcIf
                     End If
 
                     Dim tmp As Boolean
-                    '同時施工モード
-                    tmp = _LosZeroMode
-                    _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
-                    If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
-                    _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
+
                     tmp = _MachineComErr
                     _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
                     If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(Me, New EventArgs, "シールドマシン伝送異常が発生しました。", 0)
 
-                    tmp = LosZeroCancel
-                    LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
-                    If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
+                    If InitPara.LosZeroEquip Then
+                        '同時施工モード
+                        tmp = _LosZeroMode
+                        _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
+                        If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
+
+
+                        tmp = LosZeroCancel
+                        LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
+                        If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
+
+                        _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
+
+                    End If
+
                 End If
 
             Else    'エラー発生

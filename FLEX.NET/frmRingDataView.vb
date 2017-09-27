@@ -52,6 +52,16 @@ Public Class frmRingDataView
 
 
     End Sub
+    ''' <summary>
+    ''' クリップボードにデータをコピー
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnCpyToClipboard_Click(sender As Object, e As EventArgs) Handles btnCpyToClipboard.Click
+        dgv.SelectAll()
+        Clipboard.SetDataObject(dgv.GetClipboardContent)
+        dgv.ClearSelection()
+    End Sub
 
     Private Class clsRingDb
         Inherits clsDataBase
@@ -113,7 +123,7 @@ Public Class frmRingDataView
 
         Public Function GetData(RingNo As Integer) As DataTable
 
-            _ColList.Remove("リング番号")
+            '_ColList.Remove("リング番号")
 
             Dim dt As DataTable =
                 GetDtfmSQL($"SELECT {String.Join(",", _ColList)}  FROM flex掘削データ WHERE リング番号='{RingNo}'")

@@ -517,7 +517,7 @@ Module mdlFLEX
 
         For i As Short = 0 To InitPara.NumberJack - 1
             '減圧中のジャッキ
-            Dim RdJ As Boolean = InitPara.LosZeroMode AndAlso
+            Dim RdJ As Boolean = InitPara.LosZeroEquip AndAlso
                 (SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Contains(i + 1) And (PlcIf.LosZeroSts_FLEX = 1 Or PlcIf.LosZeroSts_FLEX = 2))
 
             DivCul.OnJack(i) =
@@ -533,7 +533,7 @@ Module mdlFLEX
 
             '対抗グループのセット ロスゼロありで対抗ジャッキ選択ありで減圧開始から押し込み中まで
             Dim OpposeJ As Boolean =
-                InitPara.LosZeroMode AndAlso CtlPara.LosZeroOpposeJack AndAlso
+                InitPara.LosZeroEquip AndAlso CtlPara.LosZeroOpposeJack AndAlso
                 (PlcIf.LosZeroSts_M >= 1 AndAlso PlcIf.LosZeroSts_M <= 4) AndAlso
                 SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).OpposeGroup.Contains(InitPara.JackGroupPos(i))
             If OpposeJ Then

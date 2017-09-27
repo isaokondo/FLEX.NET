@@ -978,7 +978,7 @@ Partial Class frmMain
         'UcnDspBit5
         '
         Me.UcnDspBit5.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspBit5.BitStatus = True
+        Me.UcnDspBit5.BitStatus = False
         Me.UcnDspBit5.Blink = False
         Me.UcnDspBit5.FieldName = "ﾛｰﾘﾝｸﾞ考慮"
         Me.UcnDspBit5.Location = New System.Drawing.Point(10, 125)

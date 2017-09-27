@@ -28,6 +28,7 @@ Partial Class frmRingDataView
         Me.dgv = New System.Windows.Forms.DataGridView()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cmbRingSel = New System.Windows.Forms.ComboBox()
+        Me.btnCpyToClipboard = New System.Windows.Forms.Button()
         CType(Me.dgv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -47,6 +48,7 @@ Partial Class frmRingDataView
         Me.dgv.AllowUserToDeleteRows = False
         Me.dgv.AllowUserToResizeColumns = False
         Me.dgv.AllowUserToResizeRows = False
+        Me.dgv.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
@@ -68,7 +70,6 @@ Partial Class frmRingDataView
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgv.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgv.Location = New System.Drawing.Point(45, 77)
-        Me.dgv.MultiSelect = False
         Me.dgv.Name = "dgv"
         Me.dgv.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
@@ -101,11 +102,24 @@ Partial Class frmRingDataView
         Me.cmbRingSel.Size = New System.Drawing.Size(263, 24)
         Me.cmbRingSel.TabIndex = 12
         '
+        'btnCpyToClipboard
+        '
+        Me.btnCpyToClipboard.BackColor = System.Drawing.Color.Silver
+        Me.btnCpyToClipboard.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnCpyToClipboard.Location = New System.Drawing.Point(445, 21)
+        Me.btnCpyToClipboard.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnCpyToClipboard.Name = "btnCpyToClipboard"
+        Me.btnCpyToClipboard.Size = New System.Drawing.Size(138, 35)
+        Me.btnCpyToClipboard.TabIndex = 14
+        Me.btnCpyToClipboard.Text = "クリップボードにCOPY"
+        Me.btnCpyToClipboard.UseVisualStyleBackColor = False
+        '
         'frmRingDataView
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1439, 692)
+        Me.Controls.Add(Me.btnCpyToClipboard)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.cmbRingSel)
         Me.Controls.Add(Me.dgv)
@@ -116,6 +130,7 @@ Partial Class frmRingDataView
         Me.Controls.SetChildIndex(Me.dgv, 0)
         Me.Controls.SetChildIndex(Me.cmbRingSel, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)
+        Me.Controls.SetChildIndex(Me.btnCpyToClipboard, 0)
         CType(Me.dgv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -125,4 +140,5 @@ Partial Class frmRingDataView
     Protected WithEvents dgv As DataGridView
     Friend WithEvents Label1 As Label
     Friend WithEvents cmbRingSel As ComboBox
+    Protected WithEvents btnCpyToClipboard As Button
 End Class

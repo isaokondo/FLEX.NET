@@ -237,7 +237,7 @@ Friend Class clsSegmentAssembly
     Public Sub AssemblyDataRead(RingNo As Integer)
 
         'ロスゼロのみ
-        If Not InitPara.LosZeroMode Then Exit Sub
+        If Not InitPara.LosZeroEquip Then Exit Sub
         _AssenblyPtnDic.Clear()
         'パターンリストの取得
         Dim rsPtLst As DataTable =
@@ -322,7 +322,7 @@ Friend Class clsSegmentAssembly
         Next
 
         '同時施工タイプ
-        If InitPara.LosZeroMode Then
+        If InitPara.LosZeroEquip Then
 
             '減圧グループの算出
             For Each PrsDt In _ProcessData
@@ -484,13 +484,13 @@ Friend Class clsSegmentAssembly
             If Not IsNumeric(tb.Item("シートID")) Or Not IsNumeric(tb.Item("シートID1")) Then
                 _TypeNo(RingNo) = tb.Item("セグメントNo")
 
-                If InitPara.LosZeroMode Then
+                If InitPara.LosZeroEquip Then
                     _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo")
                 End If
 
             Else
                 _TypeNo(RingNo) = tb.Item("セグメントNo1")
-                If InitPara.LosZeroMode Then
+                If InitPara.LosZeroEquip Then
                     _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo1")
                 End If
             End If

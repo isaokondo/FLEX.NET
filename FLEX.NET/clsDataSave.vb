@@ -182,7 +182,7 @@ Friend Class clsDataSave
 
             Data(ColumnList.IndexOf("姿勢制御自動")) = IIf(CtlPara.AutoDirectionControl, 1, 0)
 
-            If InitPara.LosZeroMode Then
+            If InitPara.LosZeroEquip Then
 
                 Data(ColumnList.IndexOf("同時施工モード")) = IIf(PlcIf.LosZeroMode, 1, 0)
                 Data(ColumnList.IndexOf("同時施工可")) = IIf(PlcIf.LosZeroEnable, 1, 0)
@@ -215,11 +215,11 @@ Friend Class clsDataSave
 
                 Data(ColumnList.IndexOf("同時掘進時間")) = ElapsedTime.LozeroExcavationTime
 
-                End If
+            End If
 
 
-                'TODO:Data(ColumnList.IndexOf("低圧推進設定値")) = CulcMoment.Thrust
-                Data(ColumnList.IndexOf("掘進時間")) = ElapsedTime.ExcavationTime
+            'TODO:Data(ColumnList.IndexOf("低圧推進設定値")) = CulcMoment.Thrust
+            Data(ColumnList.IndexOf("掘進時間")) = ElapsedTime.ExcavationTime
             Data(ColumnList.IndexOf("待機時間")) = ElapsedTime.WatingTime
             Data(ColumnList.IndexOf("サイクル時間")) = ElapsedTime.CycleTime
 
