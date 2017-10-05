@@ -121,7 +121,10 @@ Module mdlFLEX
         '    Dim response = MsgBox($"PLC通信エラー:{ErrMsg}", MsgBoxStyle.AbortRetryIgnore)
         '    If response = MsgBoxResult.Abort Then End
         'Else
-        WriteEventData($"{ErrMsg} ErrorCode:0x{ErrCode.ToString("X8")} ", Color.Red)
+        If ErrCode <> 0 Then
+            WriteEventData($"{ErrMsg} ErrorCode:0x{ErrCode.ToString("X8")} ", Color.Red)
+
+        End If
         'End If
     End Sub
 
@@ -813,5 +816,13 @@ Module mdlFLEX
     Private Sub PlcIf_ExcavModeChange(Mode As Boolean) Handles PlcIf.ExcavModeChange
         WriteEventData(IIf(Mode, "掘進", "セグメント") & "モードになりました。", Color.DarkMagenta)
     End Sub
+    ''' <summary>
+    ''' ジャイロ異常発生
+    ''' </summary>
+    Private Sub PlcIf_GyiroErrOccuerd() Handles PlcIf.GyiroErrOccuerd
 
+        WriteEventData("ジャイロ異常です。", Color.Red)
+
+
+    End Sub
 End Module

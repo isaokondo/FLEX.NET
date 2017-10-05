@@ -26,6 +26,8 @@ Public Class clsSimlationSetting
     Public ReadOnly Property LeftSpeedAdr As String
     Public ReadOnly Property RightSpeedAdr As String
     Public ReadOnly Property PitchingAdr As String
+
+    Public ReadOnly Property MachinePitchingAdr As String
     Public ReadOnly Property GyairoAdr As String
     Public ReadOnly Property ExcavOrSegmentAdr As String
     Public ReadOnly Property PullBackOnAdr As String
@@ -96,6 +98,8 @@ Public Class clsSimlationSetting
                     _RightSpeedAdr = t("値")
                 Case "PitchingAdr"
                     _PitchingAdr = t("値")
+                Case "MachinePitchingAdr"
+                    _MachinePitchingAdr = t("値")
                 Case "GyairoAdr"
                     _GyairoAdr = t("値")
                 Case "ExcavOrSegmentAdr"

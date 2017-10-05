@@ -53,7 +53,7 @@ Public Class ucnRdBtn
         Set(value As Boolean)
             rdbtnNo.Enabled = value
             rdbtnYes.Enabled = value
-            lblFieldName.ForeColor = IIf(value, Color.White, Color.DarkGray)
+            lblFieldName.ForeColor = If(value, Color.White, Color.DarkGray)
         End Set
     End Property
 

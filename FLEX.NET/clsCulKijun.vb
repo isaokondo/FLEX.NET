@@ -350,9 +350,9 @@ Friend Class clsCulKijun
 
         End If
 
+        Debug.Print(HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth)
         RingTarget.掘進累積距離 = HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
         NextRingTarget.掘進累積距離 = RingTarget.掘進累積距離 + SegAsmblyData.TypeData(PlcIf.RingNo + 1).CenterWidth
-
         '01/06/28 修正
         'mdbl平面基準方位 = Hoi2Hoko(mdbl平面計画方位 + PlcIf.水平入力補正値 + clsPlanLine.HorPlan.X軸方位角)
         mdbl平面基準方位 = (mdbl平面計画方位 + CtlPara.水平入力補正値 + HorPlan.X軸方位角)

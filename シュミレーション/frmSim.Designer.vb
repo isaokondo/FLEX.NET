@@ -92,6 +92,8 @@ Partial Class frmSim
         Me.Label14 = New System.Windows.Forms.Label()
         Me.numGpMvRate = New System.Windows.Forms.NumericUpDown()
         Me.numGpOffset = New System.Windows.Forms.NumericUpDown()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.nudMachinePitching = New System.Windows.Forms.NumericUpDown()
         CType(Me.nudSoucePressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudLeftStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudRightStroke, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,6 +109,7 @@ Partial Class frmSim
         CType(Me.nudSumupStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numGpMvRate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numGpOffset, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudMachinePitching, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tmrPlcWR
@@ -746,12 +749,37 @@ Partial Class frmSim
         Me.numGpOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.numGpOffset.Value = New Decimal(New Integer() {2, 0, 0, 0})
         '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label15.Location = New System.Drawing.Point(460, 610)
+        Me.Label15.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(196, 16)
+        Me.Label15.TabIndex = 41
+        Me.Label15.Text = "マシンピッチング（PLCのデータ)"
+        '
+        'nudMachinePitching
+        '
+        Me.nudMachinePitching.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.nudMachinePitching.Location = New System.Drawing.Point(492, 632)
+        Me.nudMachinePitching.Margin = New System.Windows.Forms.Padding(2)
+        Me.nudMachinePitching.Maximum = New Decimal(New Integer() {32767, 0, 0, 0})
+        Me.nudMachinePitching.Minimum = New Decimal(New Integer() {32767, 0, 0, -2147483648})
+        Me.nudMachinePitching.Name = "nudMachinePitching"
+        Me.nudMachinePitching.Size = New System.Drawing.Size(89, 26)
+        Me.nudMachinePitching.TabIndex = 40
+        Me.nudMachinePitching.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
         'frmSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(1594, 876)
+        Me.Controls.Add(Me.Label15)
+        Me.Controls.Add(Me.nudMachinePitching)
         Me.Controls.Add(Me.numGpOffset)
         Me.Controls.Add(Me.numGpMvRate)
         Me.Controls.Add(Me.Label14)
@@ -810,6 +838,7 @@ Partial Class frmSim
         CType(Me.nudSumupStroke, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.numGpMvRate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.numGpOffset, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudMachinePitching, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -869,4 +898,6 @@ Partial Class frmSim
     Friend WithEvents Label14 As Label
     Friend WithEvents numGpMvRate As NumericUpDown
     Friend WithEvents numGpOffset As NumericUpDown
+    Friend WithEvents Label15 As Label
+    Friend WithEvents nudMachinePitching As NumericUpDown
 End Class

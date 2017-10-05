@@ -106,6 +106,7 @@ Public Class clsControlParameter
 
     Private _PitchingSel As Integer = 0 'ピッチングの選択　0:ジャイロ　1:マシン
 
+    Private _RightStrokeDiff As Boolean = True    'ストローク差　右勝ちでTRUE　左勝ちでFLASE
 
     ''' <summary>
     ''' パラメータに対応するPLCアドレスのハッシュテーブル
@@ -410,6 +411,19 @@ Public Class clsControlParameter
         End Set
     End Property
 
+    ''' <summary>
+    ''' ストローク差　右勝ちでTRUE　左勝ちでFLASE
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property RightStrokeDiff As Boolean
+        Get
+            Return _RightStrokeDiff
+        End Get
+        Set(value As Boolean)
+            _RightStrokeDiff = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
 
 
     'Public Property 偏差角許容値() As Single
@@ -1059,6 +1073,8 @@ Public Class clsControlParameter
         _引き戻し実施間隔 = chk.GetValue("引き戻し実施間隔")
 
         _PitchingSel = chk.GetValue("PitchingSel")
+
+        _RightStrokeDiff = fnBoolean(chk.GetValue("RightStrokeDiff", "True"))
 
         Dim Value As Boolean = fnBoolean(chk.GetValue("AutoDirectionControl"))
         If _AutoDirectionControl <> Value Then

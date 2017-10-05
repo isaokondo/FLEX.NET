@@ -876,7 +876,7 @@ Public Class clsInitParameter
     Private Sub CalucFaiJack()
 
         Dim sngStartLoc As Single
-        sngStartLoc = IIf(_firstJackLoc.ToLower = "top", 90, 90 - 360 / _numberJack / 2)
+        sngStartLoc = If(_firstJackLoc.ToLower = "top", 90, 90 - 360 / _numberJack / 2)
 
         ReDim _faiJack(_numberJack)
 

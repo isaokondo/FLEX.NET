@@ -580,6 +580,8 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Resources\基本条件設定forFlexNet.xlsm" />
+    <None Include="基本条件設定forFlexNet.xlsm" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="AcroPDFLib">

@@ -634,7 +634,7 @@ Public Class ucnJackDsp
 
             'グループ圧の表示が重なるときは縦位置を調整する
             If i > 0 Then
-                If Math.Abs(GroupPvDsp(i).Top - GroupPvDsp(i - 1).Top) < 4 Then
+                If Math.Abs(GroupPvDsp(i).Top - GroupPvDsp(i - 1).Top) < 4 And Math.Abs(GroupPvDsp(i).Left - GroupPvDsp(i - 1).Left) < 40 Then
                     GroupPvDsp(i).Top = GroupPvDsp(i - 1).Top + GroupPvDsp(i - 1).Height + 2
                 End If
 

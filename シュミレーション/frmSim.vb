@@ -178,13 +178,17 @@ Public Class frmSim
         iRet = ComPlc.GetDevice(SimlationSetting.FlexMode, plcData)
         If iRet = 0 Then chkFlexOn.Checked = plcData
 
-        '同時施工モード
-        iRet = ComPlc.GetDevice(SimlationSetting.LosZeroModeMachine, plcData)
-        If iRet = 0 Then chkLosZeroMode.Checked = plcData
+        If InitParm.LosZeroEquip Then
 
-        '同時施工可
-        iRet = ComPlc.GetDevice(SimlationSetting.LosZeroEnable, plcData)
-        If iRet = 0 Then chkLosZeroEnable.Checked = plcData
+            '同時施工モード
+            iRet = ComPlc.GetDevice(SimlationSetting.LosZeroModeMachine, plcData)
+            If iRet = 0 Then chkLosZeroMode.Checked = plcData
+
+            '同時施工可
+            iRet = ComPlc.GetDevice(SimlationSetting.LosZeroEnable, plcData)
+            If iRet = 0 Then chkLosZeroEnable.Checked = plcData
+
+        End If
 
 
         '元圧
@@ -231,13 +235,20 @@ Public Class frmSim
         iRet = ComPlc.GetDevice2(SimlationSetting.PitchingAdr, plcData)
         nudPitching.Value = plcData / 100
 
-        'ロスゼロ　fromマシン
-        iRet = ComPlc.GetDevice2(SimlationSetting.LosZeroStMachine, plcData)
-        nudLosZeroStatusMachin.Value = plcData
+        iRet = ComPlc.GetDevice2(SimlationSetting.MachinePitchingAdr, plcData)
+        nudMachinePitching.Value = plcData
 
-        'ロスゼロ　fromFLEX
-        iRet = ComPlc.GetDevice2(SimlationSetting.LosZeroStFlex, plcData)
-        nudLosZeroStsFlex.Value = plcData
+        If InitParm.LosZeroEquip Then
+            'ロスゼロ　fromマシン
+            iRet = ComPlc.GetDevice2(SimlationSetting.LosZeroStMachine, plcData)
+            nudLosZeroStatusMachin.Value = plcData
+
+            'ロスゼロ　fromFLEX
+            iRet = ComPlc.GetDevice2(SimlationSetting.LosZeroStFlex, plcData)
+            nudLosZeroStsFlex.Value = plcData
+
+
+        End If
 
 
 
@@ -282,43 +293,53 @@ Public Class frmSim
 
 
         'ジャッキ選択
-        Dim plcJkData() As Integer
-        ReDim plcJkData(CInt(InitParm.NumberJack / 16) + 1)
-        iRet = ComPlc.ReadDeviceBlock(SimlationSetting.JackSel, plcJkData.Length, plcJkData(0))
+        'Dim plcJkData() As Integer
+        'ReDim plcJkData(CInt(InitParm.NumberJack / 16) + 1)
+        'iRet = ComPlc.ReadDeviceBlock(SimlationSetting.JackSel, plcJkData.Length, plcJkData(0))
 
-        '２進数の文字列に変更
-        Dim JkSts As String = ""
-        For i = 0 To plcJkData.Length - 1
-            JkSts = Convert10to2(plcJkData(i)) & JkSts
-        Next
-
+        ''２進数の文字列に変更
+        'Dim JkSts As String = ""
+        'For i = 0 To plcJkData.Length - 1
+        '    JkSts = Convert10to2(plcJkData(i)) & JkSts
+        'Next
+        Dim plcJacksel As Integer
         For i = 0 To InitParm.NumberJack - 1
-            JackSel(i).Checked = JkSts(JkSts.Length - i - 1).Equals("1"c)
+
+            Dim Jadr As String =
+            "B" & Convert.ToString(Convert.ToInt32(SimlationSetting.JackSel.Substring(1), 16) + i, 16)
+            iRet = ComPlc.GetDevice(Jadr, plcJacksel)
+
+            JackSel(i).Checked = (plcJacksel = 1)
             JackSel(i).BackColor = IIf(JackSel(i).Checked, Color.Red, Color.Transparent)
         Next
 
-        '推進／組立
-        LosZeroStatusRead(SimlationSetting.ExcavOrSegmentAdr, 1)
-        '引戻し中
-        LosZeroStatusRead(SimlationSetting.PullBackOnAdr, 2)
-        '引戻しANS
-        LosZeroStatusRead(SimlationSetting.PullBackAnsAdr, 3)
-        '押込み中
-        LosZeroStatusRead(SimlationSetting.ClosetOnAdr, 4)
-        '押込みANS
-        LosZeroStatusRead(SimlationSetting.ClosetAnsAdr, 5)
+        If InitParm.LosZeroEquip Then
 
-        '引戻し指令
-        LosZeroStatusRead(SimlationSetting.PullBackCommand, 6)
-        '押込み指令
-        LosZeroStatusRead(SimlationSetting.ClosetCommand, 7)
-        '追加押込み指令
-        LosZeroStatusRead(SimlationSetting.AddClosetCommand, 8)
+            '推進／組立
+            LosZeroStatusRead(SimlationSetting.ExcavOrSegmentAdr, 1)
+            '引戻し中
+            LosZeroStatusRead(SimlationSetting.PullBackOnAdr, 2)
+            '引戻しANS
+            LosZeroStatusRead(SimlationSetting.PullBackAnsAdr, 3)
+            '押込み中
+            LosZeroStatusRead(SimlationSetting.ClosetOnAdr, 4)
+            '押込みANS
+            LosZeroStatusRead(SimlationSetting.ClosetAnsAdr, 5)
+
+            '引戻し指令
+            LosZeroStatusRead(SimlationSetting.PullBackCommand, 6)
+            '押込み指令
+            LosZeroStatusRead(SimlationSetting.ClosetCommand, 7)
+            '追加押込み指令
+            LosZeroStatusRead(SimlationSetting.AddClosetCommand, 8)
 
 
-        '減圧開始PBのパルス化
-        If nudLosZeroStatusMachin.Value = "1" Then
-            iRet = ComPlc.SetDevice(SimlationSetting.LoszeroStart, 0)
+            '減圧開始PBのパルス化
+            If nudLosZeroStatusMachin.Value = "1" Then
+                iRet = ComPlc.SetDevice(SimlationSetting.LoszeroStart, 0)
+
+            End If
+
 
         End If
 
@@ -486,71 +507,75 @@ Public Class frmSim
             tmrPlcWR.Enabled = True
 
         End Sub
-        ''' <summary>
-        ''' 元圧、ストローク、ｽﾋﾟｰﾄﾞ変化時
-        ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
-        Private Sub nud_ValueChanged(sender As Object, e As EventArgs) _
+    ''' <summary>
+    ''' 元圧、ストローク、ｽﾋﾟｰﾄﾞ変化時
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub nud_ValueChanged(sender As Object, e As EventArgs) _
         Handles nudSoucePressure.ValueChanged, nudRightStroke.ValueChanged,
         nudLeftStroke.ValueChanged, nudRightSpeed.ValueChanged, nudLeftSpeed.ValueChanged, nudPitching.ValueChanged,
-        nudLosZeroStsFlex.ValueChanged, nudLosZeroStatusMachin.ValueChanged
+        nudLosZeroStsFlex.ValueChanged, nudLosZeroStatusMachin.ValueChanged, nudMachinePitching.ValueChanged
 
-            Dim FieldName As String = New StackFrame(1).GetMethod.Name
-            'タイマー停止
-            tmrPlcWR.Enabled = False
+        Dim FieldName As String = New StackFrame(1).GetMethod.Name
+        'タイマー停止
+        tmrPlcWR.Enabled = False
 
-            Dim NumObj As NumericUpDown = DirectCast(sender, NumericUpDown)
-            Dim PlcAdress As String = ""
-            Dim PlcWriteData As Integer
-            With SimlationSetting
-                Select Case NumObj.Name
-                    Case nudLeftStroke.Name
-                        PlcAdress = .LeftStrokeAdr
-                        PlcWriteData = fnChangeStrokeAnalogOut(NumObj.Value)
-                    Case nudRightStroke.Name
-                        PlcAdress = .RightStrokeAdr
-                        PlcWriteData = fnChangeStrokeAnalogOut(NumObj.Value)
+        Dim NumObj As NumericUpDown = DirectCast(sender, NumericUpDown)
+        Dim PlcAdress As String = ""
+        Dim PlcWriteData As Integer
+        With SimlationSetting
+            Select Case NumObj.Name
+                Case nudLeftStroke.Name
+                    PlcAdress = .LeftStrokeAdr
+                    PlcWriteData = fnChangeStrokeAnalogOut(NumObj.Value)
+                Case nudRightStroke.Name
+                    PlcAdress = .RightStrokeAdr
+                    PlcWriteData = fnChangeStrokeAnalogOut(NumObj.Value)
 
-                    Case nudLeftSpeed.Name
-                        PlcAdress = .LeftSpeedAdr
-                        PlcWriteData = fnChangeSpeedAnalogOut(NumObj.Value)
-                    Case nudRightSpeed.Name
-                        PlcAdress = .RightSpeedAdr
-                        PlcWriteData = fnChangeSpeedAnalogOut(NumObj.Value)
+                Case nudLeftSpeed.Name
+                    PlcAdress = .LeftSpeedAdr
+                    PlcWriteData = fnChangeSpeedAnalogOut(NumObj.Value)
+                Case nudRightSpeed.Name
+                    PlcAdress = .RightSpeedAdr
+                    PlcWriteData = fnChangeSpeedAnalogOut(NumObj.Value)
 
-                    Case nudSoucePressure.Name
-                        PlcAdress = .JkPresAdr
-                        PlcWriteData = fnChangePresAnalogOut(NumObj.Value)
+                Case nudSoucePressure.Name
+                    PlcAdress = .JkPresAdr
+                    PlcWriteData = fnChangePresAnalogOut(NumObj.Value)
 
-                    Case nudPitching.Name
-                        PlcAdress = .PitchingAdr
-                        PlcWriteData = NumObj.Value * 100
+                Case nudPitching.Name
+                    PlcAdress = .PitchingAdr
+                    PlcWriteData = NumObj.Value * 100
 
-                    Case nudLosZeroStatusMachin.Name
-                        PlcAdress = .LosZeroStMachine
-                        PlcWriteData = NumObj.Value
+                Case nudMachinePitching.Name
+                    PlcAdress = .MachinePitchingAdr
+                    PlcWriteData = NumObj.Value
 
-                    Case nudLosZeroStsFlex.Name
-                        PlcAdress = .LosZeroStFlex
-                        PlcWriteData = NumObj.Value
+                Case nudLosZeroStatusMachin.Name
+                    PlcAdress = .LosZeroStMachine
+                    PlcWriteData = NumObj.Value
 
-                End Select
-            End With
+                Case nudLosZeroStsFlex.Name
+                    PlcAdress = .LosZeroStFlex
+                    PlcWriteData = NumObj.Value
 
-            Dim iRet As Long = ComPlc.SetDevice(PlcAdress, PlcWriteData)
+            End Select
+        End With
 
-            tmrPlcWR.Enabled = True
+        Dim iRet As Long = ComPlc.SetDevice(PlcAdress, PlcWriteData)
 
-        End Sub
+        tmrPlcWR.Enabled = True
+
+    End Sub
 
 
-        ''' <summary>
-        ''' ジャッキ全選択
-        ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
-        Private Sub btnJackAllSelect_Click(sender As Object, e As EventArgs) Handles btnJackAllSelect.Click
+    ''' <summary>
+    ''' ジャッキ全選択
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnJackAllSelect_Click(sender As Object, e As EventArgs) Handles btnJackAllSelect.Click
             Dim i As Integer
             For i = 0 To InitParm.NumberJack - 1
                 Dim Jadr As String
@@ -634,9 +659,9 @@ CatchError:  '例外処理
 
         Private Sub DgvLosZero_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvLosZero.CellDoubleClick
 
-            If e.ColumnIndex = -1 Then Exit Sub
+        If e.ColumnIndex = -1 Or Not InitParm.LosZeroEquip Then Exit Sub
 
-            tmrPlcWR.Enabled = False
+        tmrPlcWR.Enabled = False
 
             'PLCのベースアドレス
             Dim PlcWrBaseAdress As String = ""

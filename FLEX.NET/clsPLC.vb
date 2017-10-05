@@ -218,6 +218,11 @@ Public Class clsPlcIf
     ''' <param name="Mode">TRUE:掘進モード　FALSE：セグメントモード</param>
     Public Event ExcavModeChange(Mode As Boolean)
 
+    ''' <summary>
+    ''' ジャイロ異常発生
+    ''' </summary>
+    Public Event GyiroErrOccuerd()
+
 
     Public AnalogTag As clsTag
     Public ParameterTag As clsTag
@@ -534,11 +539,19 @@ Public Class clsPlcIf
             Return _flexControlOn
         End Get
     End Property
+''' <summary>
+''' 掘進ステータス
+''' </summary>
+''' <returns></returns>
     Public ReadOnly Property ExcaStatus As Integer
         Get
             Return _excaStatus
         End Get
     End Property
+    ''' <summary>
+    ''' ジャイロ異常
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property GyiroError As Boolean
         Get
             Return _gyiroError
@@ -1182,7 +1195,12 @@ Public Class clsPlcIf
 
                     'FLEXON（圧力制御中)
                     _flexControlOn = bit(DigtalTag.TagData("圧力制御").OffsetAddress)
+
+                    Dim prgyiroError As Boolean = _gyiroError
                     _gyiroError = bit(DigtalTag.TagData("ジャイロ異常").OffsetAddress)
+                    If _gyiroError And Not prgyiroError Then 'ジャイロ異常発生
+                        RaiseEvent GyiroErrOccuerd()
+                    End If
 
                     '掘進モード、セグメントモード 
                     Dim bf_excvMode As Boolean = _excavMode
@@ -1202,8 +1220,12 @@ Public Class clsPlcIf
                     Dim tmp As Boolean
 
                     tmp = _MachineComErr
+
+
                     _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
-                    If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(Me, New EventArgs, "シールドマシン伝送異常が発生しました。", 0)
+                    If tmp = False And _MachineComErr Then
+                        WriteEventData("シールドマシン伝送異常が発生しました。", Color.Red)
+                    End If
 
                     If InitPara.LosZeroEquip Then
                         '同時施工モード

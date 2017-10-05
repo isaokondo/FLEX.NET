@@ -29,17 +29,18 @@ Partial Class frmDspSetting
         Me.numCopyCutEnableStroke = New System.Windows.Forms.NumericUpDown()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.RightStrokeDiff = New FLEX.NET.ucnRdBtn()
         CType(Me.numCopyNo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numCopyCutEnableStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(197, 294)
+        Me.btnOK.Location = New System.Drawing.Point(197, 327)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(331, 294)
+        Me.btnCancel.Location = New System.Drawing.Point(331, 327)
         '
         'DistanceLoc
         '
@@ -50,6 +51,7 @@ Partial Class frmDspSetting
         Me.DistanceLoc.Margin = New System.Windows.Forms.Padding(2)
         Me.DistanceLoc.Name = "DistanceLoc"
         Me.DistanceLoc.rdbtnValue = False
+        Me.DistanceLoc.Selectable = True
         Me.DistanceLoc.Size = New System.Drawing.Size(408, 34)
         Me.DistanceLoc.SlectNoName = "しない"
         Me.DistanceLoc.SlectYesName = "する"
@@ -64,6 +66,7 @@ Partial Class frmDspSetting
         Me.VerticalUnit.Margin = New System.Windows.Forms.Padding(2)
         Me.VerticalUnit.Name = "VerticalUnit"
         Me.VerticalUnit.rdbtnValue = False
+        Me.VerticalUnit.Selectable = True
         Me.VerticalUnit.Size = New System.Drawing.Size(408, 34)
         Me.VerticalUnit.SlectNoName = "deg"
         Me.VerticalUnit.SlectYesName = "‰"
@@ -131,11 +134,26 @@ Partial Class frmDspSetting
         Me.Label2.TabIndex = 41
         Me.Label2.Text = "mm"
         '
+        'RightStrokeDiff
+        '
+        Me.RightStrokeDiff.BackColor = System.Drawing.Color.Transparent
+        Me.RightStrokeDiff.FieldName = "ストローク差"
+        Me.RightStrokeDiff.Location = New System.Drawing.Point(25, 256)
+        Me.RightStrokeDiff.Margin = New System.Windows.Forms.Padding(2)
+        Me.RightStrokeDiff.Name = "RightStrokeDiff"
+        Me.RightStrokeDiff.rdbtnValue = False
+        Me.RightStrokeDiff.Selectable = True
+        Me.RightStrokeDiff.Size = New System.Drawing.Size(408, 34)
+        Me.RightStrokeDiff.SlectNoName = "左勝ち"
+        Me.RightStrokeDiff.SlectYesName = "右勝ち"
+        Me.RightStrokeDiff.TabIndex = 42
+        '
         'frmDspSetting
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(515, 382)
+        Me.Controls.Add(Me.RightStrokeDiff)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.numCopyCutEnableStroke)
         Me.Controls.Add(Me.Label1)
@@ -154,6 +172,7 @@ Partial Class frmDspSetting
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.numCopyCutEnableStroke, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
+        Me.Controls.SetChildIndex(Me.RightStrokeDiff, 0)
         CType(Me.numCopyNo, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.numCopyCutEnableStroke, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -168,4 +187,5 @@ Partial Class frmDspSetting
     Friend WithEvents numCopyCutEnableStroke As NumericUpDown
     Private WithEvents Label1 As Label
     Private WithEvents Label2 As Label
+    Friend WithEvents RightStrokeDiff As ucnRdBtn
 End Class

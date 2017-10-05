@@ -72,6 +72,12 @@
         DspMachinComErr.Visible = PlcIf.MachineComErr 'マシン伝送異常
         DspMachinComErr.BitStatus = BlinkFlg
 
+        DspGyiroError.Visible = PlcIf.GyiroError
+        DspGyiroError.BitStatus = BlinkFlg
+        DspDirection.Blink = PlcIf.GyiroError
+
+
+
         DspRingNo.Text = PlcIf.RingNo 'リングNo
 
         DspDirection.Value = PlcIf.Gyro              '方位角
@@ -161,7 +167,10 @@
         DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均スピード
 
         DspLRStrokeDiff.Value = CalcStroke.LeftCalcStroke - CalcStroke.RightCalcStroke '左右ｽﾄﾛｰｸ差
-
+        If CtlPara.RightStrokeDiff Then
+            DspLRStrokeDiff.Value = -DspLRStrokeDiff.Value
+        End If
+        DspLRStrokeDiff.FieldName = $"ｽﾄﾛｰｸ差(mm){If(CtlPara.RightStrokeDiff, "右", "左")}勝"
 
         '汎用データ表示
         For Each wu In CtlPara.WideUse
