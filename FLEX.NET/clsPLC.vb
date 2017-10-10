@@ -862,6 +862,12 @@ Public Class clsPlcIf
             _EngValue.Add(an.FieldName, 0)
         Next
 
+        CtlPara.TaleClrMeasurRExit = _EngValue.ContainsKey("クリアランス右")
+        CtlPara.TaleClrMeasurLExit = _EngValue.ContainsKey("クリアランス左")
+        CtlPara.TaleClrMeasurUExit = _EngValue.ContainsKey("クリアランス上")
+        CtlPara.TaleClrMeasurBExit = _EngValue.ContainsKey("クリアランス下")
+
+
         If Not InitPara.MonitorMode Then
             Dim iRet As Long = PLC_Open() 'オープン処理
             If iRet <> 0 Then
@@ -994,11 +1000,19 @@ Public Class clsPlcIf
                         _CopyStroke1 = _EngValue("コピーストローク1")
                         _CopyStroke2 = _EngValue("コピーストローク2")
 
-                        _leftClearance = _EngValue("クリアランス左")
-                        _topClearance = _EngValue("クリアランス上")
-                        _rightClearance = _EngValue("クリアランス右")
-                        _botomClearance = _EngValue("クリアランス下")
+                        If CtlPara.TaleClrMeasurUExit Then
+                            _topClearance = _EngValue("クリアランス上")
+                        End If
 
+                        If CtlPara.TaleClrMeasurLExit Then
+                            _topClearance = _EngValue("クリアランス左")
+                        End If
+                        If CtlPara.TaleClrMeasurBExit Then
+                            _topClearance = _EngValue("クリアランス下")
+                        End If
+                        If CtlPara.TaleClrMeasurRExit Then
+                            _topClearance = _EngValue("クリアランス右")
+                        End If
 
                         For Each mj In InitPara.MesureJackAngle.Keys
                             _mesureJackStroke(mj) = _EngValue("ジャッキストローク" & mj)

@@ -303,16 +303,46 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+    ''' <summary>
+    ''' 右テールクリアランス計あり　
+    ''' アナログTagにあるかどうか
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TaleClrMeasurRExit As Boolean
 
-    Public Property クリアランス計 As Boolean
-        Get
-            Return _クリアランス計
-        End Get
-        Set(value As Boolean)
-            _クリアランス計 = value
-            Call sbUpdateData(value)
-        End Set
-    End Property
+    ''' <summary>
+    ''' 左テールクリアランス計あり
+    '''アナログTagにあるかどうか
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TaleClrMeasurLExit As Boolean
+
+    ''' <summary>
+    ''' 上テールクリアランス計あり
+    ''' アナログTagにあるかどうか
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TaleClrMeasurUExit As Boolean
+
+    ''' <summary>
+    ''' 下テールクリアランス計あり
+    ''' アナログTagにあるかどうか
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TaleClrMeasurBExit As Boolean
+
+
+
+
+    'Public Property クリアランス計 As Boolean
+    '    Get
+    '        Return _クリアランス計
+    '    End Get
+    '    Set(value As Boolean)
+    '        _クリアランス計 = value
+    '        Call sbUpdateData(value)
+    '    End Set
+    'End Property
     Public Property 最大全開出力時の目標圧力() As Single
         Get
             Return _最大全開出力時の目標圧力
