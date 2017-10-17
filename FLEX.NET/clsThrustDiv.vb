@@ -651,8 +651,8 @@ Friend Class clsReducePress
         MomentOpt.InitPointX = PlcIf.PointX '力点初期値
         MomentOpt.InitPointY = PlcIf.PointY
         '目標モーメント に　モーメント低減率をかける
-        MomentOpt.TargetMomentX = DivCul.MomentX * CtlPara.MomentRdductionRateOnOnewayLimit / 100
-        MomentOpt.TargetMomentY = DivCul.MomentY * CtlPara.MomentRdductionRateOnOnewayLimit / 100
+        MomentOpt.TargetMomentX = DivCul.MomentX * CtlPara.MomentRdductionRateOnReduce / 100
+        MomentOpt.TargetMomentY = DivCul.MomentY * CtlPara.MomentRdductionRateOnReduce / 100
         '掘進モード & 稼働ジャッキをセット
         For i As Short = 0 To InitPara.NumberJack - 1
             MomentOpt.DivCul0.OnJack(i) =
@@ -836,7 +836,10 @@ Public Class clsMomentOptimize
     ''' <summary>
     ''' 目標モーメントX
     ''' </summary>
-    Public WriteOnly Property TargetMomentX As Double
+    Public Property TargetMomentX As Double
+        Get
+            Return _TargetMomentX
+        End Get
         Set(value As Double)
             _TargetMomentX = value
         End Set
@@ -844,7 +847,10 @@ Public Class clsMomentOptimize
     ''' <summary>
     ''' 目標モーメントY
     ''' </summary>
-    Public WriteOnly Property TargetMomentY As Double
+    Public Property TargetMomentY As Double
+        Get
+            Return _TargetMomentY
+        End Get
         Set(value As Double)
             _TargetMomentY = value
         End Set

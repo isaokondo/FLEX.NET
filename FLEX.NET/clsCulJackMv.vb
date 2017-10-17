@@ -417,6 +417,9 @@ Friend Class clsCulJackMv
 
         If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
+        TimerAuto.Enabled = False
+
+
         Dim dblHorKp As Double ''水平P定数
         Dim dblVerKp As Double ''鉛直P定数
 
@@ -430,60 +433,28 @@ Friend Class clsCulJackMv
         Dim dblX As Double
         Dim dblY As Double
 
+        ''姿勢制御
+        ''ＰＩＤ演算
 
-        If mblnモーメント制御 Then
-            ''モーメント制御
-            ''ＰＩＤ演算
-            'TODO:モーメント制御
-            _HorDev += _HorDev
-            _VerDev += _VerDev
-
-            ''比例常数→比例帯
-            dblHorKp = 100 / _水平モーメントP定数
-            dblVerKp = 100 / _鉛直モーメントP定数
-
-            dblHorGp = 1 + (cHorKd / _水平モーメントI定数) * (1 - 1 / cHorDg)
-            dblVerGp = 1 + (cVerKd / _鉛直モーメントI定数) * (1 - 1 / cVerDg)
-
-            dblHorGi = cHorDg / _水平モーメントI定数
-            dblVerGi = cVerDg / _鉛直モーメントI定数
-
-            dblX = dblHorKp * (dblHorGp * _水平モーメント偏差 + dblHorGi * _HorDev)
-            dblY = dblVerKp * (dblVerGp * _鉛直モーメント偏差 + dblVerGi * _VerDev)
+        _HorDev += mdbl水平偏差角
+        _VerDev += mdbl鉛直偏差角
 
 
-            ''変化率を制限する
-            If Abs(dblX - mdblPointX) > 0.1 Then
-                dblX = CDbl(IIf(dblX > mdblPointX, mdblPointX + 0.1, mdblPointX - 0.1))
-            End If
+        ''比例常数→比例帯
+        dblHorKp = 100 / _水平P定数
+        dblVerKp = 100 / _鉛直P定数
 
-            If Abs(dblY - mdblPointY) > 0.1 Then
-                dblY = CDbl(IIf(dblY > mdblPointY, mdblPointY + 0.1, mdblPointY - 0.1))
-            End If
+        dblHorGp = 1 + (_水平D定数 / _水平I定数) * (1 - 1 / cHorDg)
+        dblVerGp = 1 + (_鉛直D定数 / _鉛直I定数) * (1 - 1 / cVerDg)
 
+        dblHorGi = cHorDg / _水平I定数
+        dblVerGi = cVerDg / _鉛直I定数
 
-        Else
+        dblX = dblHorKp * (dblHorGp * mdbl水平偏差角 + dblHorGi * _HorDev)
+        dblY = dblVerKp * (dblVerGp * mdbl鉛直偏差角 + dblVerGi * _VerDev)
 
-            ''姿勢制御
-            ''ＰＩＤ演算
+        'Debug.Print($"dblX={dblX.ToString("F2")},dbly={dblY.ToString("F2")}")
 
-            _HorDev += mdbl水平偏差角
-            _VerDev += mdbl鉛直偏差角
-
-            ''比例常数→比例帯
-            dblHorKp = 100 / _水平P定数
-            dblVerKp = 100 / _鉛直P定数
-
-            dblHorGp = 1 + (_水平D定数 / _水平I定数) * (1 - 1 / cHorDg)
-            dblVerGp = 1 + (_鉛直D定数 / _鉛直I定数) * (1 - 1 / cVerDg)
-
-            dblHorGi = cHorDg / _水平I定数
-            dblVerGi = cVerDg / _鉛直I定数
-
-            dblX = dblHorKp * (dblHorGp * mdbl水平偏差角 + dblHorGi * _HorDev)
-            dblY = dblVerKp * (dblVerGp * mdbl鉛直偏差角 + dblVerGi * _VerDev)
-
-        End If
 
         mdblRcDash = Sqrt(dblX ^ 2 + dblY ^ 2)
         'オーバーフロー防止
@@ -525,38 +496,56 @@ Friend Class clsCulJackMv
         End If
 
 
-        If _圧力調整中 And mdblRcDash > mdbl操作強 Then
+        If _片押しR上限超 And mdblRcDash > mdbl操作強 Then
 
             ''圧力調整モード
             dblX = mdbl操作強 * Cos(mdbl操作角.ToRad)
             dblY = mdbl操作強 * Sin(mdbl操作角.ToRad)
 
-            If mblnモーメント制御 Then
-                _HorDev = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * _水平モーメント偏差
-                _VerDev = 1 / (dblVerKp * dblVerGi) * dblY - dblVerGp / dblVerGi * _鉛直モーメント偏差
-            Else
-                _HorDev = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * mdbl水平偏差角
-                _VerDev = 1 / (dblVerKp * dblVerGi) * dblY - dblVerGp / dblVerGi * mdbl鉛直偏差角
-            End If
+            _HorDev = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * mdbl水平偏差角
+            _VerDev = 1 / (dblVerKp * dblVerGi) * dblY - dblVerGp / dblVerGi * mdbl鉛直偏差角
             mdblRcDash = mdbl操作強
 
             mdblRcDash -= CtlPara.単位当r引き戻し量 / CtlPara.引き戻し実施間隔
 
             If mdblRcDash < 0 Then mdblRcDash = 0
 
-            ''制御モードがＰＩＤ→圧力調整に切り替わったとき
-            '    If mbln制御モード Then RaiseEvent 制御モードChanges(False)
-            '
-            '    mbln制御モード = False
+        End If
 
-        Else
-            ''制御モードが圧力調整→ＰＩＤに切り替わったとき
-            ' If Not mbln制御モード Then RaiseEvent 制御モードChanges(True)
+        'モーメント上限超 と　圧力超 は、モーメント低減率により力点移動
+        If _モーメント上限超 Or _圧力超 Then
 
-            ''ＰＩＤモード
-            ' mbln制御モード = True
+
+            Dim MomentOpt As New clsMomentOptimize
+
+
+            '最適化パラメータのセット
+            MomentOpt.Nlp = CtlPara.LosZeroNlp '繰り返し回数
+            MomentOpt.rStep = CtlPara.LoszerorStep '力点変化ステップ
+            MomentOpt.Epm = CtlPara.LosZeroEmp 'モーメント偏差許容値
+            MomentOpt.InitPointX = dblX '力点初期値
+            MomentOpt.InitPointY = dblY
+            '目標モーメント に　モーメント低減率をかける
+            MomentOpt.TargetMomentX = CulcMoment.MomentX * CtlPara.MomentRdductionRateOnOnewayLimit / 100
+            MomentOpt.TargetMomentY = CulcMoment.MomentY * CtlPara.MomentRdductionRateOnOnewayLimit / 100
+            '掘進モード & 稼働ジャッキをセット
+            For i As Short = 0 To InitPara.NumberJack - 1
+                MomentOpt.DivCul0.OnJack(i) =
+                    PlcIf.JackExecMode(i) And PlcIf.JackSel(i)
+            Next
+            '最適化
+            MomentOpt.Optimize()
+
+            dblX = MomentOpt.CulPointX
+            dblY = MomentOpt.CulPointY
+
+            _HorDev = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * mdbl水平偏差角
+            _VerDev = 1 / (dblVerKp * dblVerGi) * dblY - dblVerGp / dblVerGi * mdbl鉛直偏差角
+
+            mdblRcDash = Sqrt(dblX ^ 2 + dblY ^ 2)
 
         End If
+
 
         ''手動→自動トラッキング時は片押しが効かないようにセット
 
@@ -568,6 +557,7 @@ Friend Class clsCulJackMv
 
         RaiseEvent AutoDirectionCulc()
 
+        TimerAuto.Enabled = True
 
 
     End Sub
