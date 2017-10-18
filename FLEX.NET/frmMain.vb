@@ -405,6 +405,10 @@
             DspTargetDirection.Value = .平面基準方位
             DspHorDev.Value = .平面偏角
 
+            ucnHorLineChart.PlanNumData = .平面計画方位
+
+
+
             '縦断線形データ
             If .VerZendoKijun.縦断線形 = 1 Then
                 DspVerLine.Value = "-------"
@@ -417,8 +421,13 @@
             DspTargetPitching.Value = .縦断基準方位
             DspVerDev.Value = .縦断偏角
 
+            ucnVerLineChart.PlanNumData = .縦断計画方位
+
             UcnDspDevImg.HorDev = .平面偏角
             UcnDspDevImg.VerDev = .縦断偏角
+
+
+
 
         End With
 
@@ -429,6 +438,7 @@
         ucnHorLineChart.CorrectData = CtlPara.水平入力補正値
         ucnHorLineChart.TargetData = DspTargetDirection.Value
         ucnHorLineChart.RealData = DspDirection.Value
+
 
         ucnVerLineChart.PlanData = DirectionChartD.VerPData
         ucnVerLineChart.ExecData = DirectionChartD.VerRData

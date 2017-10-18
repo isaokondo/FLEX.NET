@@ -514,10 +514,8 @@ Friend Class clsCulJackMv
 
         'モーメント上限超 と　圧力超 は、モーメント低減率により力点移動
         If _モーメント上限超 Or _圧力超 Then
-
-
+            'モーメント最適化
             Dim MomentOpt As New clsMomentOptimize
-
 
             '最適化パラメータのセット
             MomentOpt.Nlp = CtlPara.LosZeroNlp '繰り返し回数
