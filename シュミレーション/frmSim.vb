@@ -193,7 +193,7 @@ Public Class frmSim
 
         '元圧
         iRet = ComPlc.GetDevice(SimlationSetting.JkPresAdr, plcData)
-        nudSoucePressure.Value = fnChangePresAnalogIn(plcData)
+        'nudSoucePressure.Value = fnChangePresAnalogIn(plcData)
 
         '左ストローク
         iRet = ComPlc.GetDevice(SimlationSetting.LeftStrokeAdr, plcData)
@@ -513,7 +513,7 @@ Public Class frmSim
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub nud_ValueChanged(sender As Object, e As EventArgs) _
-        Handles nudSoucePressure.ValueChanged, nudRightStroke.ValueChanged,
+        Handles nudRightStroke.ValueChanged,
         nudLeftStroke.ValueChanged, nudRightSpeed.ValueChanged, nudLeftSpeed.ValueChanged, nudPitching.ValueChanged,
         nudLosZeroStsFlex.ValueChanged, nudLosZeroStatusMachin.ValueChanged, nudMachinePitching.ValueChanged
 
@@ -540,9 +540,13 @@ Public Class frmSim
                     PlcAdress = .RightSpeedAdr
                     PlcWriteData = fnChangeSpeedAnalogOut(NumObj.Value)
 
-                Case nudSoucePressure.Name
-                    PlcAdress = .JkPresAdr
-                    PlcWriteData = fnChangePresAnalogOut(NumObj.Value)
+                'Case nudSoucePressure.Name
+                '    PlcAdress = .JkPresAdr
+                '    If chkExcavOn.Checked Then
+                '        PlcWriteData = fnChangePresAnalogOut(NumObj.Value)
+                '    Else
+                '        PlcWriteData = 0
+                '    End If
 
                 Case nudPitching.Name
                     PlcAdress = .PitchingAdr
@@ -604,22 +608,38 @@ Public Class frmSim
         ''' <param name="e"></param>
         Private Sub tmrAuto_Tick(sender As Object, e As EventArgs) Handles tmrAuto.Tick
 
-            If GpMvOutReal Is Nothing Then Exit Sub
 
-            Dim GpPv(InitParm.NumberGroup - 1) As Integer
+
+
+
+        If GpMvOutReal Is Nothing Then Exit Sub
+
+        Dim JkPes As Single
+        If chkExcavOn.Checked Then
+            JkPes = fnChangePresAnalogOut(nudSoucePressure.Value)
+        End If
+        Dim iRet As Long = ComPlc.SetDevice(SimlationSetting.JkPresAdr, JkPes)
+
+
+        Dim GpPv(InitParm.NumberGroup - 1) As Integer
+
+        If chkExcavOn.Checked Then
 
             For i As Short = 0 To InitParm.NumberGroup - 1
                 If GpMvOutBefore(i) = 100 Then
                     GpPv(i) = fnChangePresAnalogOut(nudSoucePressure.Value)
                 Else
-                    GpPv(i) = fnChangePresAnalogOut(GpMvOutBefore(i) / 100 * numGpMvRate.Value / 100 * InitParm.JackMaxOilPres + numGpOffset.Value)
+                    Dim jj As Single = GpMvOutBefore(i) / 100 * numGpMvRate.Value / 100 * InitParm.JackMaxOilPres + numGpOffset.Value
+                    If jj > nudSoucePressure.Value Then jj = nudSoucePressure.Value
+                    GpPv(i) = fnChangePresAnalogOut(jj)
                 End If
                 GpMvOutBefore(i) = GpMvOutReal(i)
             Next
 
-            Dim iRet As Long = ComPlc.WriteDeviceBlock(SimlationSetting.GpPresPV, InitParm.NumberGroup, GpPv(0))
+        End If
+        iRet = ComPlc.WriteDeviceBlock(SimlationSetting.GpPresPV, InitParm.NumberGroup, GpPv(0))
 
-        End Sub
+    End Sub
 
         Private Sub nudGyairo_ValueChanged(sender As Object, e As EventArgs) Handles nudGyairo.ValueChanged
 

@@ -1,0 +1,7 @@
+ALTER TABLE `flex掘削データ`
+	CHANGE COLUMN `引戻ジャッキ` `引戻ジャッキ` VARCHAR(50) NULL DEFAULT NULL AFTER `ローリング偏差`,
+	CHANGE COLUMN `減圧グループ` `減圧グループ` VARCHAR(50) NULL DEFAULT NULL AFTER `引戻ジャッキ`,
+	CHANGE COLUMN `押込ジャッキ` `押込ジャッキ` VARCHAR(50) NULL DEFAULT NULL AFTER `減圧グループ`,
+	CHANGE COLUMN `押込推進ジャッキ` `押込推進ジャッキ` VARCHAR(50) NULL DEFAULT NULL AFTER `押込ジャッキ`,
+	CHANGE COLUMN `追加推進ジャッキ` `追加推進ジャッキ` VARCHAR(50) NULL DEFAULT NULL AFTER `押込推進ジャッキ`,
+	CHANGE COLUMN `RL考慮ジャッキ` `RL考慮ジャッキ` VARCHAR(50) NULL DEFAULT NULL AFTER `追加推進ジャッキ`;

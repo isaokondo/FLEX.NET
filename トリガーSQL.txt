@@ -1,0 +1,19 @@
+CREATE TRIGGER `InitPara_UP` AFTER UPDATE ON `flex初期パラメータ` FOR EACH ROW INSERT INTO `updatetable`  (TIME,TableName, ItemName,BeforeValue,AfterValue)   VALUES (now(),'flex初期パラメータ',new.項目名称,old.値,new.値);
+CREATE TRIGGER `ControlPara_UP` AFTER UPDATE ON `flex制御パラメータ` FOR EACH ROW INSERT INTO `updatetable` (TIME,TableName, ItemName,BeforeValue,AfterValue)    VALUES (now(),'flex制御パラメータ',new.項目名称,old.値,new.値);
+CREATE TRIGGER `SegmentAsm_UP` AFTER UPDATE ON `flexセグメント組立データ` FOR EACH ROW INSERT INTO `updatetable` (TIME,TableName, ItemName,BeforeValue,AfterValue)    VALUES (now(),'flexセグメント組立データ',new.リング番号,old.セグメントNo,new.セグメントNo);
+
+CREATE TABLE `updatetable` (
+	`ID` INT(11) NOT NULL AUTO_INCREMENT,
+	`TIME` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`TableName` CHAR(255) NULL DEFAULT NULL,
+	`ItemName` CHAR(255) NULL DEFAULT NULL,
+	`BeforeValue` CHAR(255) NULL DEFAULT NULL,
+	`AfterValue` CHAR(255) NULL DEFAULT NULL,
+	PRIMARY KEY (`ID`),
+	INDEX `TIME` (`TIME`)
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=30
+;
+

@@ -132,7 +132,8 @@ Public Class clsPlcIf
     Private _PreGpFlg() As Integer          ''グループ圧制御フラグ
     Private _PreRingNo As Integer           ''リング番号
     Private _PreJyairo As Single           ''ジャイロ方位角
-    Private _PrePitching As Single         ''ピッチング
+    Private _PrePitching As Single         ''ジャイロピッチング
+    Private _PremachinePitching As Single   'マシンピッチング
     Private PreRealStroke As Integer       ''掘進実ストローク
     Private PreExcaStatus As Integer = -1     ''掘進ステータス
     Private _mintPreIPAdress As Integer         ''操作権のあるＩＰアドレス（下位）
@@ -1296,7 +1297,7 @@ Public Class clsPlcIf
 
         '掘進スロトーク、ステータスの変化　基準方向の変更
         If _realStroke <> PreRealStroke Or _excaStatus <> PreExcaStatus _
-            Or _gyro <> _PreJyairo Or _PrePitching <> _gyroPitching Then
+            Or _gyro <> _PreJyairo Or _PrePitching <> _gyroPitching Or _PremachinePitching <> _machinePitching Then
             RaiseEvent LineDistanceChage()
         End If
         '掘進ステータスの変化
@@ -1315,7 +1316,7 @@ Public Class clsPlcIf
 
         _PreJyairo = _gyro
         _PrePitching = _gyroPitching
-
+        _PremachinePitching = _machinePitching
 
 
         '伝送フラグの送出

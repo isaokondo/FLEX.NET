@@ -205,6 +205,7 @@ Partial Class frmPressParameterSet
         Me.DirectControl.Margin = New System.Windows.Forms.Padding(2)
         Me.DirectControl.Name = "DirectControl"
         Me.DirectControl.rdbtnValue = False
+        Me.DirectControl.Selectable = True
         Me.DirectControl.Size = New System.Drawing.Size(395, 34)
         Me.DirectControl.SlectNoName = "する"
         Me.DirectControl.SlectYesName = "しない"
@@ -218,9 +219,10 @@ Partial Class frmPressParameterSet
         Me.ControlStartThrustOn.Margin = New System.Windows.Forms.Padding(2)
         Me.ControlStartThrustOn.Name = "ControlStartThrustOn"
         Me.ControlStartThrustOn.rdbtnValue = False
+        Me.ControlStartThrustOn.Selectable = True
         Me.ControlStartThrustOn.Size = New System.Drawing.Size(395, 34)
-        Me.ControlStartThrustOn.SlectNoName = "しない"
-        Me.ControlStartThrustOn.SlectYesName = "する"
+        Me.ControlStartThrustOn.SlectNoName = "する"
+        Me.ControlStartThrustOn.SlectYesName = "しない"
         Me.ControlStartThrustOn.TabIndex = 22
         '
         'DirectControlOffset
