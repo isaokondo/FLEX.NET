@@ -331,8 +331,11 @@ Public Class clsControlParameter
     ''' <returns></returns>
     Public Property TaleClrMeasurBExit As Boolean
 
-
-
+    ''' <summary>
+    ''' FLEXからの速度割合あり
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property SpeedRateExit As Boolean
 
     'Public Property クリアランス計 As Boolean
     '    Get

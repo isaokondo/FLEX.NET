@@ -85,7 +85,8 @@ Public Class clsPlcIf
     Private _操作角 As Single
     Private _操作強 As Single
 
-
+    '速度割合　減圧ジャッキ、引きジャッキ本数に応じて速度の割合を算出
+    Private _SpeedRate As Single = 100
 
 
     'パラメータ　Rレジスタ
@@ -540,10 +541,10 @@ Public Class clsPlcIf
             Return _flexControlOn
         End Get
     End Property
-''' <summary>
-''' 掘進ステータス
-''' </summary>
-''' <returns></returns>
+    ''' <summary>
+    ''' 掘進ステータス
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property ExcaStatus As Integer
         Get
             Return _excaStatus
@@ -770,6 +771,23 @@ Public Class clsPlcIf
         End Set
     End Property
 
+    ''' <summary>
+    ''' 引きジャッキ、押込みジャッキの本数により
+    ''' 速度の割合を出力
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property SppedRate As Single
+        Get
+            Return _SpeedRate
+        End Get
+        Set(value As Single)
+            _SpeedRate = value
+            If _SpeedRate > 100 Then _SpeedRate = 100
+            If _SpeedRate < 70 Then _SpeedRate = 70
+            SpeedRateWrite() '速度PLCに書き込み
+        End Set
+    End Property
+
 
     ''' <summary>
     ''' 組立ピース番号
@@ -868,6 +886,7 @@ Public Class clsPlcIf
         CtlPara.TaleClrMeasurUExit = _EngValue.ContainsKey("クリアランス上")
         CtlPara.TaleClrMeasurBExit = _EngValue.ContainsKey("クリアランス下")
 
+        CtlPara.SpeedRateExit = _EngValue.ContainsKey("速度割合")
 
         If Not InitPara.MonitorMode Then
             Dim iRet As Long = PLC_Open() 'オープン処理
@@ -890,7 +909,8 @@ Public Class clsPlcIf
             _segmentMode = DigtalPlcRead("セグメントモード")
 
         End If
-
+        'スピード割合初期値（100%)書き込み
+        SpeedRateWrite()
 
         PLC_Read()
         'TODO:操作権なしの時は、タイマで常時読み込み
@@ -1362,8 +1382,15 @@ Public Class clsPlcIf
         Dim iReturnCode As Long = com_ReferencesEasyIF.WriteDeviceBlock(PlcAdress, PlcWrData.Length, PlcWrData(0))
         'todo:通信エラー時の処理
     End Sub
+    ''' <summary>
+    ''' 速度割合PLC書き込み
+    ''' </summary>
+    Public Sub SpeedRateWrite()
+        If InitPara.ServerMode And CtlPara.SpeedRateExit Then
+            AnalogPlcWrite("速度割合", CInt(_SpeedRate))
+        End If
 
-
+    End Sub
 
 
 

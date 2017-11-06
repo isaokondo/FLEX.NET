@@ -517,6 +517,10 @@ Friend Class clsReducePress
     Private _PointY As Double
     'モーメント最適化
     Public MomentOpt As New clsMomentOptimize
+    '1秒毎の速度低下の割合
+    Private SpeedDownRatePerSec As Single
+    '速度割合の目標値
+    Private SpeedRateSetV As Single
 
     Private XYtoRC As New clsXyToRs(0, 0)
 
@@ -662,6 +666,12 @@ Friend Class clsReducePress
         For Each j As Short In SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack
             MomentOpt.DivCul0.OnJack(j - 1) = False
         Next
+        '１秒毎の速度低下の割合を算出 減圧ジャッキ本数／ジャッキ本数/減圧時間
+        SpeedDownRatePerSec =
+            SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Count / InitPara.NumberJack / CtlPara.ReduceTime * 100
+        SpeedRateSetV = PlcIf.SppedRate -
+            SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Count / InitPara.NumberJack * 100
+
         '最適化
         MomentOpt.Optimize()
         If CtlPara.LosZeroOpposeJack Then
@@ -736,6 +746,10 @@ Friend Class clsReducePress
         End If
         XYtoRC = New clsXyToRs(_PointX, _PointY)
 
+        '減圧時の速度割合の算出
+        If PlcIf.SppedRate > SpeedRateSetV Then
+            PlcIf.SppedRate -= SpeedDownRatePerSec
+        End If
 
 
         '掘進停止時は、減圧完了とする

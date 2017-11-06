@@ -149,7 +149,7 @@ Module mdlFLEX
         'If PreStatus = -1 Then Exit Sub
         '待機中から掘進
         If PreStatus = cTaiki And NowStatus = cKussin Then
-
+            PlcIf.SppedRate = 100
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
             PlcIf.LosZeroSts_FLEX = 0
             WriteEventData($"{PlcIf.RingNo}リング 掘進開始しました", Color.CornflowerBlue)
@@ -277,6 +277,8 @@ Module mdlFLEX
                         '計算ストローク用に組立ジャッキの設定
                         CalcStroke.asembleFinishedJack = .ClosetJack '押込みジャッキ
                         CalcStroke.asembleFinishedJack = .AddClosetJack '追加押込ジャッキ
+
+                        PlcIf.SppedRate += (.ClosetJack.Count + .AddClosetJack.Count) / InitPara.NumberJack * 100
 
                         'ボイスメッセージ出力
                         PlaySound(My.Resources.SegmentAsem)
@@ -414,6 +416,7 @@ Module mdlFLEX
     ''' </summary>
     Private Sub LosZeroSettingInit()
         PlcIf.LosZeroSts_FLEX = 0
+        PlcIf.SppedRate = 100
         PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
         PlcIf.LosZeroDataWrite("引戻しジャッキ", Nothing)
         PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
