@@ -327,7 +327,6 @@ Friend Class clsSegmentAssembly
             '減圧グループの算出
             For Each PrsDt In _ProcessData
 
-                Debug.Print(PrsDt.Value.PieceName)
                 Dim i As Short
                 'リストを配列に
 

@@ -449,6 +449,10 @@ Module mdlFLEX
         'FLEX制御、自動、全押しスタートフラグON
         If CtlPara.AutoDirectionControl And CtlPara.全押しスタート And PlcIf.FlexControlOn Then
 
+            PlcIf.PointX = 0
+            PlcIf.PointY = 0
+
+
             '手動操作の作用点を原点にし
             JackManual.PutPointXY(0, 0)
             '手動から自動制御へ移行
@@ -518,6 +522,7 @@ Module mdlFLEX
         DivCul.OptinalJack.Clear()
         '減圧グループのSVをセット
 
+
         For i As Short = 0 To InitPara.NumberJack - 1
             '減圧中のジャッキ
             Dim RdJ As Boolean = InitPara.LosZeroEquip AndAlso
@@ -567,7 +572,10 @@ Module mdlFLEX
     Private Sub GroupSvOut()
 
         Dim GpFlg(InitPara.NumberGroup - 1) As Short
-        Static GpSV(InitPara.NumberGroup - 1) As Single
+        Dim GpSV() As Single
+
+        GpSV = PlcIf.GroupSV.Clone
+
 
         Select Case PlcIf.ExcaStatus
 
@@ -627,6 +635,7 @@ Module mdlFLEX
         End Select
         If InitPara.ServerMode Then
             ''シーケンサ出力
+
             PlcIf.PutSvPress(GpSV, GpFlg)
 
         End If

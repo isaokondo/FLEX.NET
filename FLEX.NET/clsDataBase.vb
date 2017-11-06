@@ -197,8 +197,8 @@ Public Class clsDataBase
                 Dim dr As OdbcDataReader = cmd.ExecuteReader
 
                 If dr.RecordsAffected = 0 Then
-                    Debug.Print(SQLCommand)
-                End If
+                'Debug.Print(SQLCommand)
+            End If
 
                 dr.Close()
                 conMYSQLDB.Close()
@@ -835,7 +835,7 @@ Public Class clsInitParameter
 
 
             If ht.ContainsKey("測量距離入力") Then
-                _DistanceInputMethod = (ht("測量距離入力").IndexOf("起点") > 0)
+                _DistanceInputMethod = (ht("測量距離入力").IndexOf("起点") >= 0)
             End If
 
 

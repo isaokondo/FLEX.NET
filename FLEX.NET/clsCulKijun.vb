@@ -350,7 +350,7 @@ Friend Class clsCulKijun
 
         End If
 
-        Debug.Print(HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth)
+        'Debug.Print(HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth)
         RingTarget.掘進累積距離 = HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
         NextRingTarget.掘進累積距離 = RingTarget.掘進累積距離 + SegAsmblyData.TypeData(PlcIf.RingNo + 1).CenterWidth
         '01/06/28 修正

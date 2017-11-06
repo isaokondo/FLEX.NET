@@ -519,7 +519,7 @@ Public Class clsReportDb
         'リング情報読込
         Dim RingLst As DataTable =
                 GetDtfmSQL("SELECT リング番号,Min(時間),Max(時間) 
-                FROM flex掘削データ GROUP BY リング番号 ORDER BY リング番号 DESC")
+                FROM flex掘削データ GROUP BY リング番号 ORDER BY 時間 DESC")
 
         'While RingLst.Read
         For Each t In RingLst.Rows

@@ -728,7 +728,7 @@ Friend Class clsReducePress
             timer.Stop()
         End If
 
-        If XYtoRC.OpRc < CtlPara.片押しR制限値 Then
+        If MvZero > 0 And XYtoRC.OpRc < CtlPara.片押しR制限値 Then
             '力点の移動
             _PointX += StepX
             _PointY += StepY

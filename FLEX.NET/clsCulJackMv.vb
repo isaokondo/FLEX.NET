@@ -453,7 +453,6 @@ Friend Class clsCulJackMv
         dblX = dblHorKp * (dblHorGp * mdbl水平偏差角 + dblHorGi * _HorDev)
         dblY = dblVerKp * (dblVerGp * mdbl鉛直偏差角 + dblVerGi * _VerDev)
 
-        'Debug.Print($"dblX={dblX.ToString("F2")},dbly={dblY.ToString("F2")}")
 
 
         mdblRcDash = Sqrt(dblX ^ 2 + dblY ^ 2)

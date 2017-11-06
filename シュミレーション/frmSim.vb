@@ -286,7 +286,8 @@ Public Class frmSim
         ReDim plcGpMv(InitParm.NumberGroup)
         iRet = ComPlc.ReadDeviceBlock(SimlationSetting.GpPresMV, InitParm.NumberGroup, plcGpMv(0))
         For i = 0 To InitParm.NumberGroup - 1
-            GpMvOutReal(i) = plcGpMv(i) * SimlationSetting.GpMvEngScale / SimlationSetting.GpMvPlcScale
+            GpMvOutReal(i) =
+                plcGpMv(i) * SimlationSetting.GpMvEngScale / SimlationSetting.GpMvPlcScale
             DspGpMv(i).Text = GpMvOutReal(i).ToString & "%"
         Next
 
@@ -626,14 +627,14 @@ Public Class frmSim
         If chkExcavOn.Checked Then
 
             For i As Short = 0 To InitParm.NumberGroup - 1
-                If GpMvOutBefore(i) = 100 Then
+                If GpMvOutReal(i) = 100 Then
                     GpPv(i) = fnChangePresAnalogOut(nudSoucePressure.Value)
                 Else
-                    Dim jj As Single = GpMvOutBefore(i) / 100 * numGpMvRate.Value / 100 * InitParm.JackMaxOilPres + numGpOffset.Value
+                    Dim jj As Single = GpMvOutReal(i) / 100 * numGpMvRate.Value / 100 * InitParm.JackMaxOilPres + numGpOffset.Value
                     If jj > nudSoucePressure.Value Then jj = nudSoucePressure.Value
                     GpPv(i) = fnChangePresAnalogOut(jj)
                 End If
-                GpMvOutBefore(i) = GpMvOutReal(i)
+                'GpMvOutBefore(i) = GpMvOutReal(i)
             Next
 
         End If

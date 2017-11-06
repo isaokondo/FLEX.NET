@@ -983,6 +983,14 @@ Public Class clsPlcIf
 
                         _jkPress = _EngValue("ジャッキ圧力")
 
+                        For i As Short = 0 To InitPara.NumberGroup - 1
+                            _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
+                            _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
+                            _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
+                            _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
+                        Next
+
+
                         Dim JkPs As Single = _FilterJkPress
                         _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
                         If _FilterJkPress < 0 Then _FilterJkPress = 0
@@ -1056,12 +1064,6 @@ Public Class clsPlcIf
 
                         End If
 
-                        For i As Short = 0 To InitPara.NumberGroup - 1
-                            _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
-                            _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
-                            _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
-                            _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
-                        Next
                         '掘進中でダイレクト制御ONでFLEX手動モード時
                         If _excaStatus = cKussin AndAlso _flexControlOn And
                             CtlPara.DirectControl And Not CtlPara.AutoDirectionControl Then
@@ -1389,6 +1391,7 @@ Public Class clsPlcIf
                 Else
                     tData = sharrDeviceValue(.OffsetAddress)
                 End If
+
                 'スケール変換
                 Return (tData - Tag.TagData(FieldName).ScaleLow) * (Tag.TagData(FieldName).EngHight - Tag.TagData(FieldName).EngLow) / (Tag.TagData(FieldName).ScaleHigh - Tag.TagData(FieldName).ScaleLow) + Tag.TagData(FieldName).EngLow  ' + .EngLow
 
