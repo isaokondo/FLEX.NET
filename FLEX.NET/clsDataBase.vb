@@ -272,10 +272,11 @@ Public Class clsDataBase
                 Builder.UserID = "toyo"
                 Builder.Password = "yanagi"
                 Builder.Database = DataBaseName
+                Builder.ConnectionTimeout = 60
                 Dim ConStr = Builder.ToString()
-
                 Dim con As New MySqlConnection
                 con.ConnectionString = ConStr
+
                 con.Open()
 
                 Dim adpter As New MySqlDataAdapter(SQLCommand, con)

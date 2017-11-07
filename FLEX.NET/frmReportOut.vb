@@ -518,8 +518,8 @@ Public Class clsReportDb
     Public Sub New()
         'リング情報読込
         Dim RingLst As DataTable =
-                GetDtfmSQL("SELECT リング番号,Min(時間),Max(時間) 
-                FROM flex掘削データ GROUP BY リング番号 ORDER BY 時間 DESC")
+                GetDtfmSQL("Select Replace(`イベントデータ`,'リング 掘進開始しました',''),time 
+                from `flexイベントデータ` where `flexイベントデータ`.`イベントデータ` like '%掘進開始%'ORDER BY Time DESC")
 
         'While RingLst.Read
         For Each t In RingLst.Rows

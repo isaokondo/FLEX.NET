@@ -91,31 +91,31 @@ Public Class frmRingDataView
 
             ' flex掘削データの最新データを取得
             'NULL以外のデータを表示
-            Dim clLst As DataTable = GetDtfmSQL("select * from flex掘削データ ORDER BY 時間 DESC LIMIT 0,1;")
+            Dim clLst As DataTable = GetDtfmSQL("show columns from flex掘削データ;")
 
             Dim cl As List(Of String) = (From cc As DataColumn In clLst.Columns Select cc.ColumnName).ToList
 
             For Each r As DataRow In clLst.Rows
-                For Each cName In cl
+                'For Each cName In cl
+                Dim cName As String = r.Item("Field")
+                If Not IsDBNull(r.Item("Field")) Then
+                    If r.Item("Field") = "時間" Then
+                        _ColList.Add("DATE_FORMAT(`時間`,' %k:%i:%s' ) AS 時間")
+                    End If
 
-                    If Not IsDBNull(r.Item(cName)) Then
-                        If cName = "時間" Then
-                            cName = "DATE_FORMAT(`時間`,' %k:%i:%s' ) AS 時間"
-                        End If
+                    'アナログTAGより単位を取得
+                    If PlcIf.AnalogTag.TagExist(r.Item("Field")) Then
+                        Dim Unit As String = PlcIf.AnalogTag.TagData(r.Item("Field")).Unit
+                        'Dim Dc As Short = PlcIf.AnalogTag.TagData(cName).DigitLoc
 
-                        'アナログTAGより単位を取得
-                        If PlcIf.AnalogTag.TagExist(cName) Then
-                            Dim Unit As String = PlcIf.AnalogTag.TagData(cName).Unit
-                            'Dim Dc As Short = PlcIf.AnalogTag.TagData(cName).DigitLoc
-
-                            Dim fName As String = $"round({cName},{PlcIf.AnalogTag.TagData(cName).DigitLoc + 1})"
-                            If Unit <> "" Then
-                                cName = $"{fName} AS `{cName}{vbCrLf}({Unit})`"
-                            End If
+                        Dim fName As String = $"round({r.Item("Field")},{PlcIf.AnalogTag.TagData(r.Item("Field")).DigitLoc + 1})"
+                        If Unit <> "" Then
+                            cName = $"{fName} AS `{r.Item("Field")}{vbCrLf}({Unit})`"
                         End If
                         _ColList.Add(cName)
                     End If
-                Next
+                End If
+                'Next
             Next
 
         End Sub
