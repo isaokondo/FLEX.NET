@@ -286,6 +286,10 @@ Public Class ucnJackDsp
                 GroupPvDsp(i).Visible = True
                 GroupPvDsp(i).Name = "GroupPvDsp" & i
                 GroupPvDsp(i).BringToFront()
+                If _numberGroup > 32 Then
+                    GroupPvDsp(i).FontSize -= 4
+                    'GroupPvDsp(i).Width -= 5
+                End If
                 Me.Controls.Add(GroupPvDsp(i))
 
             Next
@@ -622,9 +626,18 @@ Public Class ucnJackDsp
         Next
 
 
+
         PointRate -= 0.03
         GrDgree(_numberGroup) = GrDgree(0)
         For i = 0 To _numberGroup - 1
+
+            'If _numberGroup > 32 Then
+            '    GroupPvDsp(i).Width -= 10
+            '    GroupPvDsp(i).Height -= 3
+            '    GroupPvDsp(i).Font = New Font(GroupPvDsp(i).Font.FontFamily, GroupPvDsp(i).Font.Size - 8)
+
+            'End If
+
             'グループの中心角度
             Dim j As Integer = IIf(i - 1 < 0, _numberGroup - 1, i - 1)
             Dim r As Single = IIf(GrDgree(i) < GrDgree(j), (GrDgree(j) + GrDgree(i)) / 2, (GrDgree(j) + GrDgree(i) + 360) / 2)

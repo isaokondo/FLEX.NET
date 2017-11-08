@@ -21,6 +21,19 @@ Public Class ucnDspGpPres
         End Set
     End Property
 
+    Public Property FontSize As Integer
+        Get
+            Return lblData.Font.Size
+        End Get
+        Set(value As Integer)
+            Dim diff As Integer = lblData.Font.Size - value
+            lblData.Width -= diff * 3
+            Me.Width -= diff * 3
+            lblData.Font = New Font(lblData.Font.FontFamily, value)
+        End Set
+    End Property
+
+
 
     Public Sub New()
 
@@ -35,4 +48,7 @@ Public Class ucnDspGpPres
     Private Sub lblData_Click(sender As Object, e As EventArgs) Handles lblData.Click
         RaiseEvent ValueClick(Me.Name)
     End Sub
+
+
+
 End Class

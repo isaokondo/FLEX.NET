@@ -869,7 +869,9 @@
         ''' </summary>
         Public Sub DataUp()
             Dim rsData As DataTable =
-                GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE リング番号 =
+                GetDtfmSQL($"SELECT リング番号,平面起点から発旋回中心までの距離,前胴方位角,水平偏角,
+                平面姿勢角管理値,縦断起点から発旋回中心までの距離,前胴鉛直角,縦断姿勢角管理値,鉛直偏角 
+                FROM flex掘削データ WHERE リング番号 =
                '{PlcIf.RingNo}' ORDER BY 掘進ストローク DESC LIMIT 0,1")
 
             Dim g As ucnChart2.gData
@@ -880,13 +882,13 @@
                 g.Distance = t.Item("平面起点から発旋回中心までの距離") * 1000
                 g.PlanDr = t.Item("前胴方位角")
                 g.TargetDr = t.Item("平面姿勢角管理値")
-                g.RealDr = t.Item("ジャイロ方位角")
+                g.RealDr = g.TargetDr + t.Item("水平偏角") ' t.Item("ジャイロ方位角")
                 _HorRData.Add(g)
 
                 g.Distance = t.Item("縦断起点から発旋回中心までの距離") * 1000
                 g.PlanDr = t.Item("前胴鉛直角")
                 g.TargetDr = t.Item("縦断姿勢角管理値")
-                g.RealDr = t.Item("ジャイロピッチング")
+                g.RealDr = g.TargetDr + t.Item("鉛直偏角") '  t.Item("ジャイロピッチング")
                 _VerRData.Add(g)
 
             End If
@@ -902,7 +904,8 @@
         Public Sub DataGet()
             '過去の掘進データ 10mm毎
             Dim rsData As DataTable =
-                GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE リング番号 >=
+                GetDtfmSQL($"SELECT リング番号,平面起点から発旋回中心までの距離,前胴方位角,水平偏角,
+                平面姿勢角管理値, 縦断起点から発旋回中心までの距離, 前胴鉛直角, 縦断姿勢角管理値, 鉛直偏角  FROM flex掘削データ WHERE リング番号 >=
                 '{PlcIf.RingNo - CtlPara.LineDevStartRing}'
                 AND リング番号<='{PlcIf.RingNo}' AND 掘進ストローク%10 =0;")
 
@@ -920,13 +923,13 @@
                 g.Distance = t.Item("平面起点から発旋回中心までの距離") * 1000
                 g.PlanDr = t.Item("前胴方位角")
                 g.TargetDr = t.Item("平面姿勢角管理値")
-                g.RealDr = t.Item("ジャイロ方位角")
+                g.RealDr = g.TargetDr + t.Item("水平偏角") ' t.Item("ジャイロ方位角")
                 _HorRData.Add(g)
 
                 g.Distance = t.Item("縦断起点から発旋回中心までの距離") * 1000
                 g.PlanDr = t.Item("前胴鉛直角")
                 g.TargetDr = t.Item("縦断姿勢角管理値")
-                g.RealDr = t.Item("ジャイロピッチング")
+                g.RealDr = g.TargetDr + t.Item("鉛直偏角") '  t.Item("ジャイロピッチング")
                 _VerRData.Add(g)
                 RingNo = g.RingNo
 
