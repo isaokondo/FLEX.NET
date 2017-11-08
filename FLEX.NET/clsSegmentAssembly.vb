@@ -495,7 +495,7 @@ Friend Class clsSegmentAssembly
             End If
             '_TypeNo(i) = t.Item("セグメントNo")
             If Not _TypeList.ContainsKey(_TypeNo(RingNo)) Then
-                MsgBox($"{RingNo}リングのセグメントNoが未登録です")
+                MsgBox($"{RingNo}リングのセグメントNo[{_TypeNo(RingNo)}]が未登録です")
             Else
                 '_SegmentWidth(i) = _SegmentTypeList(rsData.Item("セグメントNo")).CenterWidth * 1000
             End If

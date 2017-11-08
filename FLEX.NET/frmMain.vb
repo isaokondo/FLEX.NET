@@ -1207,7 +1207,11 @@
         DspUpRealStroke.Visible = InitPara.topStrokeEnable
         DspUpSpeed.Visible = InitPara.topStrokeEnable
 
-
+        'テールクリアランスの表示
+        DspTopClearance.Visible = CtlPara.TaleClrMeasurUExit
+        DspLeftClearance.Visible = CtlPara.TaleClrMeasurLExit
+        DspRightClearance.Visible = CtlPara.TaleClrMeasurRExit
+        DspBottomClearance.Visible = CtlPara.TaleClrMeasurBExit
 
         ParameterCheck()
 
