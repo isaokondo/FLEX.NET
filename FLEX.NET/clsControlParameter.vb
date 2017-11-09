@@ -93,7 +93,7 @@ Public Class clsControlParameter
     Private _LosZeroOpposeControl As Boolean '対抗圧制御
     Private _LosZeroOpposeGroupNumber As Short '対抗ジャッキ制御グループ数
     Private _LosZeroOpposeManualSV As Single '対抗ジャッキ制御手動設定圧
-
+    Private _ReduceReachStrokeDiff As Integer = 0 '減圧開始可能ストロークの設定（ストロークがセグメント幅＋この設定以上でサウンド出力）
 
     Private _ReduceTime As Integer '減圧時間（単位：SEC）
     Private _ReduceJudgePress As Single '減圧完了判断圧力(Mpa)
@@ -1028,6 +1028,21 @@ Public Class clsControlParameter
             Return _wideUse
         End Get
     End Property
+    ''' <summary>
+    ''' 減圧開始可能ストロークの設定
+    ''' ストロークがセグメント幅＋この設定以上でサウンド出力
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ReduceReachStrokeDiff As Integer
+        Get
+            Return _ReduceReachStrokeDiff
+        End Get
+        Set(value As Integer)
+            _ReduceReachStrokeDiff = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
 
 
     Public Sub WideUseUpdate(iKey As Short, value As String)
@@ -1147,7 +1162,7 @@ Public Class clsControlParameter
         _NextPieceConfirmTime = chk.GetValue("NextPieceConfirmTime")
         _PIDShiftDefl = chk.GetValue("PIDShiftDefl")
         _DirectControl = fnBoolean(chk.GetValue("DirectControl"))
-
+        _ReduceReachStrokeDiff = chk.GetValue("ReduceReachStrokeDiff", 0)
 
         _CopyCutEnableStroke = chk.GetValue("CopyCutEnableStroke")
         _CopySelect = chk.GetValue("CopySelect")

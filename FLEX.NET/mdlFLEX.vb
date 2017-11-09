@@ -64,6 +64,12 @@ Module mdlFLEX
     Public WithEvents TableUpdateConfirm As clsTableUpdateConfirm
 
     ''' <summary>
+    ''' 減圧可能ストロークに達した
+    ''' </summary>
+    Private ReduceEnableStrokeReachFlg As Boolean
+
+
+    ''' <summary>
     ''' MP3再生
     ''' </summary>
     ''' <param name="command"></param>
@@ -407,6 +413,15 @@ Module mdlFLEX
             PlcIf.AnalogPlcWrite("平均ジャッキストローク", CalcStroke.MesureCalcAveJackStroke)
 
         End If
+        Dim tmp As Boolean = Not ReduceEnableStrokeReachFlg
+        '減圧可能ストロークに達したか
+        ReduceEnableStrokeReachFlg =
+            (CalcStroke.MesureCalcAveJackStroke - SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000 - CtlPara.ReduceReachStrokeDiff) > 0
+        If PlcIf.LosZeroEnable AndAlso ReduceEnableStrokeReachFlg AndAlso tmp Then
+            'ボイスメッセージ出力
+            PlaySound(My.Resources.ReduceStrokeReach)
+        End If
+
     End Sub
 
 

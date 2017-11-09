@@ -644,6 +644,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ReduceStrokeReach.wav" />
     <None Include="Resources\SegmentAsem.wav" />
     <None Include="Resources\ReduceStart.wav" />
     <None Include="Resources\ClosetStart.wav">

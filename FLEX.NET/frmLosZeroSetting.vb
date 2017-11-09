@@ -13,22 +13,23 @@
         'TODO:ダイレクト指令制御の取込
         LosZeroRollingTake.rdbtnValue = CtlPara.LosZeroRollingTake
         LosZeroOpposeJack.rdbtnValue = CtlPara.LosZeroOpposeJack
-            LosZeroOpposeControl.rdbtnValue = CtlPara.LosZeroOpposeControl
-            LosZeroOpposeGroupNumber.Value = CtlPara.LosZeroOpposeGroupNumber
-            LosZeroOpposeManualSV.Value = CtlPara.LosZeroOpposeManualSV
+        LosZeroOpposeControl.rdbtnValue = CtlPara.LosZeroOpposeControl
+        LosZeroOpposeGroupNumber.Value = CtlPara.LosZeroOpposeGroupNumber
+        LosZeroOpposeManualSV.Value = CtlPara.LosZeroOpposeManualSV
 
-            NextPieceConfirm.rdbtnValue = CtlPara.NextPieceConfirm
+        NextPieceConfirm.rdbtnValue = CtlPara.NextPieceConfirm
 
-            NextPieceConfirmTime.Value = CtlPara.NextPieceConfirmTime
+        NextPieceConfirmTime.Value = CtlPara.NextPieceConfirmTime
 
-            ReduceTime.Value = CtlPara.ReduceTime
-            ReduceJudgePress.Value = CtlPara.ReduceJudgePress
+        ReduceTime.Value = CtlPara.ReduceTime
+        ReduceJudgePress.Value = CtlPara.ReduceJudgePress
 
-            LosZeroEmp.Value = CtlPara.LosZeroEmp
-            LosZeroNlp.Value = CtlPara.LosZeroNlp
+        LosZeroEmp.Value = CtlPara.LosZeroEmp
+        LosZeroNlp.Value = CtlPara.LosZeroNlp
         LoszerorStep.Value = CtlPara.LoszerorStep
 
         MomentRdductionRateOnReduce.Value = CtlPara.MomentRdductionRateOnReduce
+        ReduceReachStrokeDiff.Value = CtlPara.ReduceReachStrokeDiff
 
         '対抗ジャッキの機能使用可／不可
         LosZeroOpposeJack.Selectable = InitPara.OpposeJackEnable
@@ -59,6 +60,8 @@
         CtlPara.LoszerorStep = LoszerorStep.Value
 
         CtlPara.MomentRdductionRateOnReduce = MomentRdductionRateOnReduce.Value
+
+        CtlPara.ReduceReachStrokeDiff = ReduceReachStrokeDiff.Value
 
         Me.Close()
 

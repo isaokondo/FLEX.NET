@@ -521,7 +521,6 @@ Public Class clsInitParameter
 
     Private _ClientMode As Boolean = False  'クライアントモード　データ保存なし、グループ操作出力なしのモード
     Private _MonitorMode As Boolean = False  'モニタモード　データ保存なし、PLC書き込みなし　　グループ操作出力なしのモード
-    Private _DisplayNarrowMode As Boolean = False   'ディスプレイモード　ロスゼロなしで
 
     Private _OpposeJackEnable As Boolean = False '対抗ジャッキの機能が使用可（鹿島、飛島以外のJVでは仕様不可)
 
@@ -746,15 +745,6 @@ Public Class clsInitParameter
 
 
 
-    ''' <summary>
-    ''' ディスプレイ　ナローモード
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property DisplayNarrowMode As Boolean
-        Get
-            Return _DisplayNarrowMode
-        End Get
-    End Property
 
 
     Public Sub New()
@@ -864,7 +854,6 @@ Public Class clsInitParameter
 
         _ClientMode = (GetIniString("MODE", "ClientMode", IniFilePath) = "True")
         _MonitorMode = (GetIniString("MODE", "MonitorMode", IniFilePath) = "True")
-        _DisplayNarrowMode = (GetIniString("MODE", "DisplayNarrowMode", IniFilePath) = "True")
 
     End Sub
     Function KeySelector(ByVal pair As KeyValuePair(Of String, Integer)) As String
