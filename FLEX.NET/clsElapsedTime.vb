@@ -7,6 +7,14 @@ Public Class clsElapsedTime
     ''' 掘進時間ストップウォッチ
     ''' </summary>
     Private ExcavationTimeSw As New Stopwatch
+
+    ''' <summary>
+    ''' 中断時間ストップウォッチ
+    ''' </summary>
+    Private InterruptTimeSw As New Stopwatch
+
+
+
     ''' <summary>
     ''' 同時施工時間ストップウォッチ
     ''' </summary>
@@ -29,6 +37,17 @@ Public Class clsElapsedTime
             Return ExcavationTimeSw.ElapsedMilliseconds / 1000 / 60
         End Get
     End Property
+    ''' <summary>
+    ''' 中断時間
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property InterruptTime As Integer
+        Get
+            Return InterruptTimeSw.ElapsedMilliseconds / 1000 / 60
+        End Get
+    End Property
+
+
     ''' <summary>
     ''' 同時施工時間
     ''' </summary>
@@ -63,15 +82,26 @@ Public Class clsElapsedTime
 
         WaitingTimeSw.Stop()
         LosZeroExcavationTimeSw.Reset()
+        InterruptTimeSw.Reset()
         ExcavationTimeSw.Reset()
         ExcavationTimeSw.Start()
         CycleTimeSw.Reset()
     End Sub
+    ''' <summary>
+    ''' セグメントモード
+    ''' </summary>
+    Public Sub SegmentMode()
+        InterruptTimeSw.Stop()
+        WaitingTimeSw.Reset()
+        WaitingTimeSw.Start()
+    End Sub
+
 
     ''' <summary>
     ''' 掘進再開
     ''' </summary>
     Public Sub ExcavationStart()
+        InterruptTimeSw.Stop()
         ExcavationTimeSw.Start()
     End Sub
     ''' <summary>
@@ -80,6 +110,7 @@ Public Class clsElapsedTime
     Public Sub ExcavationStop()
         ExcavationTimeSw.Stop()
         LosZeroExcavationTimeSw.Stop()
+        InterruptTimeSw.Start()
 
     End Sub
     ''' <summary>

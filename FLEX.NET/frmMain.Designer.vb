@@ -129,8 +129,7 @@ Partial Class frmMain
         Me.UcnDspData32 = New FLEX.NET.ucnDspData()
         Me.UcnDspData33 = New FLEX.NET.ucnDspData()
         Me.UcnDspData34 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData35 = New FLEX.NET.ucnDspData()
-        Me.DspCycleTime = New FLEX.NET.ucnDspData()
+        Me.DspInterruptTime = New FLEX.NET.ucnDspData()
         Me.DspWatingElapsedTime = New FLEX.NET.ucnDspData()
         Me.DspLosZeroElapsedTime = New FLEX.NET.ucnDspData()
         Me.DspExcationElapsedTime = New FLEX.NET.ucnDspData()
@@ -182,6 +181,7 @@ Partial Class frmMain
         Me.DspVerDev = New FLEX.NET.ucnDspData()
         Me.DspHorDev = New FLEX.NET.ucnDspData()
         Me.DspWideUse12 = New FLEX.NET.ucnDspData()
+        Me.InterruptTime = New FLEX.NET.ucnDspData()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -438,8 +438,7 @@ Partial Class frmMain
         Me.Panel1.Controls.Add(Me.UcnDspData32)
         Me.Panel1.Controls.Add(Me.UcnDspData33)
         Me.Panel1.Controls.Add(Me.UcnDspData34)
-        Me.Panel1.Controls.Add(Me.UcnDspData35)
-        Me.Panel1.Controls.Add(Me.DspCycleTime)
+        Me.Panel1.Controls.Add(Me.DspInterruptTime)
         Me.Panel1.Controls.Add(Me.DspWatingElapsedTime)
         Me.Panel1.Controls.Add(Me.DspLosZeroElapsedTime)
         Me.Panel1.Controls.Add(Me.DspExcationElapsedTime)
@@ -458,7 +457,7 @@ Partial Class frmMain
         '
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label1.Location = New System.Drawing.Point(332, 11)
+        Me.Label1.Location = New System.Drawing.Point(366, 51)
         Me.Label1.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(127, 26)
@@ -1462,47 +1461,26 @@ Partial Class frmMain
         Me.UcnDspData34.Value = "0"
         Me.UcnDspData34.ValueType = False
         '
-        'UcnDspData35
+        'DspInterruptTime
         '
-        Me.UcnDspData35.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData35.Blink = False
-        Me.UcnDspData35.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData35.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData35.DataWidth = 91
-        Me.UcnDspData35.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData35.FieldName = "平均サイクル(分)"
-        Me.UcnDspData35.FieldNameWidth = 175
-        Me.UcnDspData35.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData35.Location = New System.Drawing.Point(297, 51)
-        Me.UcnDspData35.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData35.Name = "UcnDspData35"
-        Me.UcnDspData35.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData35.TabIndex = 128
-        Me.UcnDspData35.Unit = "deg"
-        Me.UcnDspData35.UnitVisible = False
-        Me.UcnDspData35.Value = "0"
-        Me.UcnDspData35.ValueType = False
-        '
-        'DspCycleTime
-        '
-        Me.DspCycleTime.BackColor = System.Drawing.Color.Transparent
-        Me.DspCycleTime.Blink = False
-        Me.DspCycleTime.BlinkColor = System.Drawing.Color.Red
-        Me.DspCycleTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspCycleTime.DataWidth = 91
-        Me.DspCycleTime.DecimalPlaces = CType(0, Short)
-        Me.DspCycleTime.FieldName = "ｻｲｸﾙ時間(分)"
-        Me.DspCycleTime.FieldNameWidth = 175
-        Me.DspCycleTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspCycleTime.Location = New System.Drawing.Point(21, 211)
-        Me.DspCycleTime.Margin = New System.Windows.Forms.Padding(1)
-        Me.DspCycleTime.Name = "DspCycleTime"
-        Me.DspCycleTime.Size = New System.Drawing.Size(275, 32)
-        Me.DspCycleTime.TabIndex = 127
-        Me.DspCycleTime.Unit = "deg"
-        Me.DspCycleTime.UnitVisible = False
-        Me.DspCycleTime.Value = "20"
-        Me.DspCycleTime.ValueType = False
+        Me.DspInterruptTime.BackColor = System.Drawing.Color.Transparent
+        Me.DspInterruptTime.Blink = False
+        Me.DspInterruptTime.BlinkColor = System.Drawing.Color.Red
+        Me.DspInterruptTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspInterruptTime.DataWidth = 91
+        Me.DspInterruptTime.DecimalPlaces = CType(0, Short)
+        Me.DspInterruptTime.FieldName = "中断時間(分)"
+        Me.DspInterruptTime.FieldNameWidth = 175
+        Me.DspInterruptTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspInterruptTime.Location = New System.Drawing.Point(21, 179)
+        Me.DspInterruptTime.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspInterruptTime.Name = "DspInterruptTime"
+        Me.DspInterruptTime.Size = New System.Drawing.Size(275, 32)
+        Me.DspInterruptTime.TabIndex = 127
+        Me.DspInterruptTime.Unit = "deg"
+        Me.DspInterruptTime.UnitVisible = False
+        Me.DspInterruptTime.Value = "20"
+        Me.DspInterruptTime.ValueType = False
         '
         'DspWatingElapsedTime
         '
@@ -1515,7 +1493,7 @@ Partial Class frmMain
         Me.DspWatingElapsedTime.FieldName = "待機時間(分)"
         Me.DspWatingElapsedTime.FieldNameWidth = 175
         Me.DspWatingElapsedTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspWatingElapsedTime.Location = New System.Drawing.Point(21, 179)
+        Me.DspWatingElapsedTime.Location = New System.Drawing.Point(21, 213)
         Me.DspWatingElapsedTime.Margin = New System.Windows.Forms.Padding(1)
         Me.DspWatingElapsedTime.Name = "DspWatingElapsedTime"
         Me.DspWatingElapsedTime.Size = New System.Drawing.Size(275, 32)
@@ -2532,6 +2510,27 @@ Partial Class frmMain
         Me.DspWideUse12.ValueType = False
         Me.DspWideUse12.Visible = False
         '
+        'InterruptTime
+        '
+        Me.InterruptTime.BackColor = System.Drawing.Color.Transparent
+        Me.InterruptTime.Blink = False
+        Me.InterruptTime.BlinkColor = System.Drawing.Color.Red
+        Me.InterruptTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.InterruptTime.DataWidth = 91
+        Me.InterruptTime.DecimalPlaces = CType(0, Short)
+        Me.InterruptTime.FieldName = "中断時間(分)"
+        Me.InterruptTime.FieldNameWidth = 175
+        Me.InterruptTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.InterruptTime.Location = New System.Drawing.Point(21, 179)
+        Me.InterruptTime.Margin = New System.Windows.Forms.Padding(1)
+        Me.InterruptTime.Name = "InterruptTime"
+        Me.InterruptTime.Size = New System.Drawing.Size(275, 32)
+        Me.InterruptTime.TabIndex = 127
+        Me.InterruptTime.Unit = "deg"
+        Me.InterruptTime.UnitVisible = False
+        Me.InterruptTime.Value = "20"
+        Me.InterruptTime.ValueType = False
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -2738,7 +2737,7 @@ Partial Class frmMain
     Friend WithEvents UcnDspData24 As ucnDspData
     Friend WithEvents DspAssemblyPattern As ucnDspData
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents DspCycleTime As ucnDspData
+    Friend WithEvents InterruptTime As ucnDspData
     Friend WithEvents DspWatingElapsedTime As ucnDspData
     Friend WithEvents DspLosZeroElapsedTime As ucnDspData
     Friend WithEvents DspExcationElapsedTime As ucnDspData
@@ -2749,7 +2748,6 @@ Partial Class frmMain
     Friend WithEvents UcnDspData32 As ucnDspData
     Friend WithEvents UcnDspData33 As ucnDspData
     Friend WithEvents UcnDspData34 As ucnDspData
-    Friend WithEvents UcnDspData35 As ucnDspData
     Friend WithEvents Panel2 As Panel
     Friend WithEvents DspFlexGyiroControl As ucnDspBit
     Friend WithEvents DspFlexAutoAzurControl As ucnDspBit
@@ -2805,6 +2803,7 @@ Partial Class frmMain
     Friend WithEvents btnLoszeroContinu As Button
     Friend WithEvents DspWideUse12 As ucnDspData
     Friend WithEvents DspGyiroError As ucnDspBit
+    Friend WithEvents DspInterruptTime As ucnDspData
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

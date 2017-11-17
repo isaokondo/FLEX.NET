@@ -103,22 +103,59 @@ Public Class frmRingDataView
                         _ColList.Add("DATE_FORMAT(`時間`,' %k:%i:%s' ) AS 時間")
                     End If
 
-                    'アナログTAGより単位を取得
-                    If PlcIf.AnalogTag.TagExist(r.Item("Field")) Then
-                        Dim Unit As String = PlcIf.AnalogTag.TagData(r.Item("Field")).Unit
-                        'Dim Dc As Short = PlcIf.AnalogTag.TagData(cName).DigitLoc
-
-                        Dim fName As String = $"round({r.Item("Field")},{PlcIf.AnalogTag.TagData(r.Item("Field")).DigitLoc + 1})"
-                        If Unit <> "" Then
-                            cName = $"{fName} AS `{r.Item("Field")}{vbCrLf}({Unit})`"
+                    If GetGroupNameEnable(cName) Then
+                        If cName.IndexOf("MV") > 0 Then
+                            _ColList.Add($"{cName} AS `{cName}{vbCrLf}(%)`")
                         End If
-                        _ColList.Add(cName)
+                        If cName.IndexOf("SV")>0 Or cName.IndexOf("圧力")>0 Then
+                            _ColList.Add($"{cName} AS `{cName}{vbCrLf}(MPa)`")
+                        End If
+                        If cName.IndexOf("制御フラグ") > 0 Then
+                            _ColList.Add($"{cName} AS `{cName}`")
+                        End If
+
+                    Else
+
+                            'アナログTAGより単位を取得
+                            If PlcIf.AnalogTag.TagExist(cName) Then
+                            Dim Unit As String = PlcIf.AnalogTag.TagData(cName).Unit
+                            'Dim Dc As Short = PlcIf.AnalogTag.TagData(cName).DigitLoc
+
+                            Dim fName As String = $"round({cName},{PlcIf.AnalogTag.TagData(cName).DigitLoc + 1})"
+                            If Unit <> "" Then
+                                cName = $"{fName} AS `{cName}{vbCrLf}({Unit})`"
+                            End If
+                            _ColList.Add(cName)
+                        End If
                     End If
+
                 End If
                 'Next
             Next
 
         End Sub
+
+        ''' <summary>
+        ''' コラム名でグループと言う文字が含まれていて
+        ''' 番号がグループ番号内
+        ''' </summary>
+        ''' <param name="Gstr"></param>
+        ''' <returns></returns>
+        Private Function GetGroupNameEnable(Gstr As String) As Boolean
+            'グループと言う文字が含まれるか？
+            Dim tmpBl As Boolean = Gstr.IndexOf("グループ") >= 0
+            Dim GrNo As Integer = 999
+            If tmpBl Then
+                '数値を取得
+                Dim tt As String = System.Text.RegularExpressions.Regex.Replace(Gstr, "[^0-9]", "")
+                If tt <> "" Then
+                    GrNo = CInt(System.Text.RegularExpressions.Regex.Replace(Gstr, "[^0-9]", ""))
+                End If
+            End If
+            Return tmpBl And GrNo <= InitPara.NumberGroup
+
+        End Function
+
 
 
         Public Function GetData(RingNo As Integer) As DataTable

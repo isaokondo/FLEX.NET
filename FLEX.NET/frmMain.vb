@@ -288,7 +288,9 @@
         DspExcationElapsedTime.Value = ElapsedTime.ExcavationTime
         DspLosZeroElapsedTime.Value = ElapsedTime.LozeroExcavationTime
         DspWatingElapsedTime.Value = ElapsedTime.WatingTime
-        DspCycleTime.Value = ElapsedTime.CycleTime
+        DspInterruptTime.Value = ElapsedTime.InterruptTime
+        'DspIterruptTime.Value == ElapsedTime.InterruptTime
+        'DspCycleTime.Value = ElapsedTime.CycleTime
         If InitPara.MonitorMode Then
             lblNowDate.Text = PlcIf.DataGetTime.ToString("yyyy/MM/dd HH:mm:ss")
         Else

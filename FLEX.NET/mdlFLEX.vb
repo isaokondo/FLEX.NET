@@ -206,7 +206,7 @@ Module mdlFLEX
             PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
             PlcIf.LosZeroDataWrite("押込みジャッキ②", Nothing)
             PlcIf.LosZeroEnable = False   '同時施工可OFF
-            ElapsedTime.WaingStart() '経過時間の算出
+            'ElapsedTime.WaingStart() '経過時間の算出
 
             '掘進開始時のストローク取り込み
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
@@ -840,6 +840,10 @@ Module mdlFLEX
     End Sub
 
     Private Sub PlcIf_ExcavModeChange(Mode As Boolean) Handles PlcIf.ExcavModeChange
+        'セグメントモード時の時間演算
+        If Not Mode Then
+            ElapsedTime.SegmentMode()
+        End If
         WriteEventData(IIf(Mode, "掘進", "セグメント") & "モードになりました。", Color.DarkMagenta)
     End Sub
     ''' <summary>
