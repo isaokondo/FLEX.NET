@@ -124,7 +124,6 @@ Partial Class frmMain
         Me.DspFlexAuto = New FLEX.NET.ucnDspBit()
         Me.DspFlexControlOn = New FLEX.NET.ucnDspBit()
         Me.DspExcaWaiting = New FLEX.NET.ucnDspBit()
-        Me.UcnDspData15 = New FLEX.NET.ucnDspData()
         Me.UcnDspData16 = New FLEX.NET.ucnDspData()
         Me.UcnDspData32 = New FLEX.NET.ucnDspData()
         Me.UcnDspData33 = New FLEX.NET.ucnDspData()
@@ -433,7 +432,6 @@ Partial Class frmMain
         Me.Panel1.BackColor = System.Drawing.Color.Silver
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Controls.Add(Me.UcnDspData15)
         Me.Panel1.Controls.Add(Me.UcnDspData16)
         Me.Panel1.Controls.Add(Me.UcnDspData32)
         Me.Panel1.Controls.Add(Me.UcnDspData33)
@@ -457,7 +455,7 @@ Partial Class frmMain
         '
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label1.Location = New System.Drawing.Point(366, 51)
+        Me.Label1.Location = New System.Drawing.Point(366, 72)
         Me.Label1.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(127, 26)
@@ -1356,27 +1354,6 @@ Partial Class frmMain
         Me.DspExcaWaiting.Size = New System.Drawing.Size(185, 30)
         Me.DspExcaWaiting.TabIndex = 65
         '
-        'UcnDspData15
-        '
-        Me.UcnDspData15.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData15.Blink = False
-        Me.UcnDspData15.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData15.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData15.DataWidth = 91
-        Me.UcnDspData15.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData15.FieldName = "短縮効果(日)"
-        Me.UcnDspData15.FieldNameWidth = 175
-        Me.UcnDspData15.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData15.Location = New System.Drawing.Point(297, 211)
-        Me.UcnDspData15.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData15.Name = "UcnDspData15"
-        Me.UcnDspData15.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData15.TabIndex = 133
-        Me.UcnDspData15.Unit = "deg"
-        Me.UcnDspData15.UnitVisible = False
-        Me.UcnDspData15.Value = "0"
-        Me.UcnDspData15.ValueType = False
-        '
         'UcnDspData16
         '
         Me.UcnDspData16.BackColor = System.Drawing.Color.Transparent
@@ -1388,7 +1365,7 @@ Partial Class frmMain
         Me.UcnDspData16.FieldName = "累計同時掘進(分)"
         Me.UcnDspData16.FieldNameWidth = 175
         Me.UcnDspData16.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData16.Location = New System.Drawing.Point(297, 179)
+        Me.UcnDspData16.Location = New System.Drawing.Point(297, 211)
         Me.UcnDspData16.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData16.Name = "UcnDspData16"
         Me.UcnDspData16.Size = New System.Drawing.Size(275, 32)
@@ -1409,7 +1386,7 @@ Partial Class frmMain
         Me.UcnDspData32.FieldName = "平均同時掘進(分)"
         Me.UcnDspData32.FieldNameWidth = 175
         Me.UcnDspData32.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData32.Location = New System.Drawing.Point(297, 147)
+        Me.UcnDspData32.Location = New System.Drawing.Point(297, 179)
         Me.UcnDspData32.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData32.Name = "UcnDspData32"
         Me.UcnDspData32.Size = New System.Drawing.Size(275, 32)
@@ -1430,7 +1407,7 @@ Partial Class frmMain
         Me.UcnDspData33.FieldName = "累計組立ﾋﾟｰｽ数"
         Me.UcnDspData33.FieldNameWidth = 175
         Me.UcnDspData33.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData33.Location = New System.Drawing.Point(297, 115)
+        Me.UcnDspData33.Location = New System.Drawing.Point(297, 147)
         Me.UcnDspData33.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData33.Name = "UcnDspData33"
         Me.UcnDspData33.Size = New System.Drawing.Size(275, 32)
@@ -1451,7 +1428,7 @@ Partial Class frmMain
         Me.UcnDspData34.FieldName = "平均組立ﾋﾟｰｽ数"
         Me.UcnDspData34.FieldNameWidth = 175
         Me.UcnDspData34.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData34.Location = New System.Drawing.Point(297, 83)
+        Me.UcnDspData34.Location = New System.Drawing.Point(297, 115)
         Me.UcnDspData34.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData34.Name = "UcnDspData34"
         Me.UcnDspData34.Size = New System.Drawing.Size(275, 32)
@@ -2743,7 +2720,6 @@ Partial Class frmMain
     Friend WithEvents DspExcationElapsedTime As ucnDspData
     Friend WithEvents lblUnit As Label
     Friend WithEvents DspRingNo As Label
-    Friend WithEvents UcnDspData15 As ucnDspData
     Friend WithEvents UcnDspData16 As ucnDspData
     Friend WithEvents UcnDspData32 As ucnDspData
     Friend WithEvents UcnDspData33 As ucnDspData

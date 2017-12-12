@@ -1034,13 +1034,13 @@ Public Class clsPlcIf
                         End If
 
                         If CtlPara.TaleClrMeasurLExit Then
-                            _topClearance = _EngValue("クリアランス左")
+                            _leftClearance = _EngValue("クリアランス左")
                         End If
                         If CtlPara.TaleClrMeasurBExit Then
-                            _topClearance = _EngValue("クリアランス下")
+                            _botomClearance = _EngValue("クリアランス下")
                         End If
                         If CtlPara.TaleClrMeasurRExit Then
-                            _topClearance = _EngValue("クリアランス右")
+                            _rightClearance = _EngValue("クリアランス右")
                         End If
 
                         For Each mj In InitPara.MesureJackAngle.Keys
