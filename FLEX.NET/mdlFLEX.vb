@@ -599,7 +599,7 @@ Module mdlFLEX
 
             Case cKussin
 
-                If CtlPara.圧力制御開始推力値有効フラグ AndAlso CtlPara.圧力制御開始推力値 > CulcMoment.Thrust Then
+                If CtlPara.圧力制御開始推力値有効フラグ AndAlso CtlPara.圧力制御開始推力値 > CulcMoment.Thrust AndAlso GpSV.Sum <> 0 Then
                     For i As Short = 0 To InitPara.NumberGroup - 1
                         GpFlg(i) = cIgnoreOut
                     Next
