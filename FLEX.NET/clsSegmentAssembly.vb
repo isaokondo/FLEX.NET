@@ -280,7 +280,7 @@ Friend Class clsSegmentAssembly
 
                 If ColName.Contains("組立順序") AndAlso Not IsDBNull(dRow(ColName)) Then
 
-                    Dim SegDt As New AsseblyProcess '組み立手順データ
+                    Dim SegDt As New AsseblyProcess '組み立手順データっｘ
 
                     SegDt.PatternName = dRow("組立パターン名")
                     SegDt.BoltPitch = dRow("組立ピッチ")
