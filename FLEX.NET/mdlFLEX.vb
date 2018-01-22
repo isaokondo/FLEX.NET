@@ -506,7 +506,7 @@ Module mdlFLEX
                     JackMvAuto.操作角 = Reduce.Theta
                     JackMvAuto.操作強 = Reduce.Rc
                     JackMvAuto.PointX = Reduce.PointX
-                    JackMvAuto.PointY = Reduce.PointX
+                    JackMvAuto.PointY = Reduce.PointY
 
                 End If
             Else

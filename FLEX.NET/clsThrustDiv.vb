@@ -727,7 +727,7 @@ Friend Class clsReducePress
             MvZero += _MvOut(GpNp - 1)
         Next
         '減圧完了
-        If ReduceFlg And tCount = 5 Then
+        If ReduceFlg And tCount = 5 And PlcIf.LosZeroSts_FLEX = 1 Then
             PlcIf.LosZeroSts_FLEX = 2
             FlexAutoManualChange()
 
