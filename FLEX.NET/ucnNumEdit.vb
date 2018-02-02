@@ -87,7 +87,7 @@ Public Class ucnNumEdit
 
 
     <Browsable(True), Description("入力方式の選択")>
-        Public Property InputStyle As InputMethod
+    Public Property InputStyle As InputMethod
         Get
             Return _InputStyle
         End Get
@@ -281,11 +281,15 @@ Public Class ucnNumEdit
 
     End Sub
 
+
+
+
     Private Sub ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox.SelectedIndexChanged
         If Not IsNothing(_SelectItem) Then
             RaiseEvent ValueChanged(sender, e)
         End If
     End Sub
+
 End Class
 
 

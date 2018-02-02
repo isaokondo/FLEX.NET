@@ -46,6 +46,10 @@ Public Class frmDirControlChek
 
         Me.Height = dgv.Top + dgv.Height + btnOK.Height + 30
 
+
+
+
+
         '現在値取得
         GetNowData()
 
@@ -72,7 +76,7 @@ Public Class frmDirControlChek
 
         'lblRealJackPress.Text = PlcIf.JkPress.ToString("F1")
         lblRealJackPress.Text = DivCul.PujMax.ToString("F1")
-        lblRealThrustPower.Text = CulcMoment.Thrust.ToString("F0") '推力
+        lblRealThrustPower.Text = CulcMoment.ThrustOnTime.ToString("F0") '推力
         'lblMomentX.Text = CulcMoment.MomentX.ToString("F0")
         'lblMomentY.Text = CulcMoment.MomentY.ToString("F0")
         lblMomentX.Text = DivCul.MomentX.ToString("F0")
@@ -82,7 +86,17 @@ Public Class frmDirControlChek
 
         For JkNo As Integer = 0 To InitPara.NumberJack - 1
             Dim dSet As New clsDgvSet(dgv.Rows(JkNo))
-            dSet.setData(2, IIf(DivCul.OnJack(JkNo), 1, 0))
+            dSet.setData(2, IIf(DivCul.OnJack(JkNo), "1", "0"))
+            dSet.setData(3, IIf(DivCul.OnJack(JkNo), "1", "0"))
+            '対抗グループ
+            If DivCul.OpposeGpLst.Contains(InitPara.JackGroupPos(JkNo)) Then
+                dSet.setData(3, "3")
+            End If
+            '低圧推進
+            If CtlPara.optGpEn.Contains(InitPara.JackGroupPos(JkNo)) Then
+                dSet.setData(3, "2")
+            End If
+
 
             dSet.setData(4, DivCul.PjDash(JkNo).ToString("F2"))
             dSet.setData(5, DivCul.Pjmax1(JkNo).ToString("F0"))
@@ -96,7 +110,7 @@ Public Class frmDirControlChek
         Next
 
 
-
+        txtOpposeGpSv.Text = CtlPara.LosZeroOpposeManualSV
 
     End Sub
     ''' <summary>
@@ -114,14 +128,19 @@ Public Class frmDirControlChek
 
         Next
     End Sub
-
+    ''' <summary>
+    ''' 変更時のセルの編集
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub dgv_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv.CellDoubleClick
-        If e.ColumnIndex = 3 Then
+        If e.ColumnIndex = 3 And e.RowIndex <> -1 Then
             Dim cell As DataGridViewCell = dgv.Rows(e.RowIndex).Cells(e.ColumnIndex)
-            If IsNumeric(cell.Value) Then
+            If (Control.ModifierKeys And Keys.Shift) = Keys.Shift Then
                 cell.Value += 1
-            Else
-                cell.Value = 1
+            End If
+            If (Control.ModifierKeys And Keys.Control) = Keys.Control And cell.Value <> 0 Then
+                cell.Value -= 1
             End If
 
 
@@ -130,6 +149,77 @@ Public Class frmDirControlChek
     End Sub
 
     Private Sub dgv_DoubleClick(sender As Object, e As EventArgs) Handles dgv.DoubleClick
+
+    End Sub
+    ''' <summary>
+    ''' モーメント最適
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnMomentOptimize_Click(sender As Object, e As EventArgs) Handles btnMomentOptimize.Click
+        Dim MomentOpt As New clsMomentOptimize
+        MomentOpt.Nlp = txtLpMax.Text '繰り返し回数
+        MomentOpt.rStep = txtRst.Text '力点変化ステップ
+        MomentOpt.Epm = txtMomnetDev.Text 'モーメント偏差許容値
+        MomentOpt.InitPointX = lblPointX.Text '力点初期値
+        MomentOpt.InitPointY = lblPointY.Text
+        MomentOpt.TargetMomentX = lblMomentX.Text '目標モーメント
+        MomentOpt.TargetMomentY = lblMomentY.Text
+        '対抗ジャッキのリスト
+        Dim OpposeJkLst As New List(Of Short)
+
+        For JkNo As Integer = 0 To InitPara.NumberJack - 1
+            MomentOpt.DivCul0.OnJack(JkNo) = (dgv.Rows(JkNo).Cells(3).Value <> 0)
+            '低圧推進ジャッキ
+            If dgv.Rows(JkNo).Cells(3).Value = 2 Then
+                MomentOpt.DivCul0.OptinalJack.Add(JkNo + 1, txtLowOptSv.Text)
+            End If
+            '対抗ジャッキ
+            If dgv.Rows(JkNo).Cells(3).Value = 3 Then
+                MomentOpt.DivCul0.OptinalJack.Add(JkNo + 1, txtOpposeGpSv.Text)
+                'OpposeJkLst.Add(JkNo + 1)
+                MomentOpt.DivCul0.OpposeGpLst.Add(JkNo + 1)
+            End If
+            MomentOpt.DivCul0.OpposeGroupSv = txtOpposeGpSv.Text
+        Next
+
+
+        '対抗ジャッキ自動制御
+        If CtlPara.LosZeroOpposeControl Then
+
+            MomentOpt.OpposeSvAutoCulc()    '対抗グループSV自動算出
+
+        Else
+            MomentOpt.Optimize() 'モーメント最適化
+
+        End If
+
+
+
+
+
+        For JkNo As Integer = 0 To InitPara.NumberJack - 1
+            Dim dSet As New clsDgvSet(dgv.Rows(JkNo))
+
+            dSet.setData(11, MomentOpt.DivCul0.PjDash(JkNo).ToString("F2"))
+            dSet.setData(12, MomentOpt.DivCul0.Pjmax1(JkNo).ToString("F0"))
+            dSet.setData(13, MomentOpt.DivCul0.Pjmax2(JkNo).ToString("F0"))
+            dSet.setData(14, MomentOpt.DivCul0.Pj1(JkNo).ToString("F0"))
+            dSet.setData(15, MomentOpt.DivCul0.Pj2(JkNo).ToString("F0"))
+            dSet.setData(16, MomentOpt.DivCul0.Puj1(JkNo).ToString("F2"))
+            dSet.setData(17, MomentOpt.DivCul0.Puj2(JkNo).ToString("F2"))
+
+
+        Next
+
+        lblOptMomentX.Text = MomentOpt.DivCul0.MomentX.ToString("F0")
+        lblOptMomentY.Text = MomentOpt.DivCul0.MomentY.ToString("F0")
+        lblOptPointX.Text = MomentOpt.CulPointX.ToString("F5")
+        lblOptPointY.Text = MomentOpt.CulPointY.ToString("F5")
+        lblOptR.Text = MomentOpt.DivCul0.操作強.ToString("F3")
+        lblOptTheater.Text = MomentOpt.DivCul0.操作角.ToString("F2")
+
+        lblOptJackPress.Text = MomentOpt.DivCul0.PujMax.ToString("F1")
 
     End Sub
 
@@ -160,6 +250,16 @@ Public Class frmDirControlChek
 
             dgvR.Cells(Col).Value = Dspformt
         End Sub
+
+        ''' <summary>
+        ''' セルの列の値をリスト形式で取得
+        ''' </summary>
+        ''' <param name="col"></param>
+        ''' <returns></returns>
+        Public Function getData(col As Integer) As String
+            Return dgvR.Cells(col).Value
+        End Function
+
 
 
     End Class

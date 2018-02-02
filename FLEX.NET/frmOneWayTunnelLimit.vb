@@ -12,6 +12,7 @@
             OneWayRLimit.Value = .片押しR制限値
             OneReduceValue.Value = .単位当r引き戻し量
             OneReduceTime.Value = .引き戻し実施間隔
+            MomentRdductionRateOnOnewayLimit.Value = .MomentRdductionRateOnOnewayLimit
         End With
 
 
@@ -25,6 +26,7 @@
             .片押しR制限値 = OneWayRLimit.Value
             .単位当r引き戻し量 = OneReduceValue.Value
             .引き戻し実施間隔 = OneReduceTime.Value
+            .MomentRdductionRateOnOnewayLimit = MomentRdductionRateOnOnewayLimit.Value
         End With
 
         Me.Close()

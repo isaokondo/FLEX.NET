@@ -9,12 +9,17 @@
         numCopyNo.Value = CtlPara.CopySelect
         numCopyCutEnableStroke.Value = CtlPara.CopyCutEnableStroke
 
+        RightStrokeDiff.rdbtnValue = Not CtlPara.RightStrokeDiff
+
     End Sub
 
     Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
 
         CtlPara.CopySelect = numCopyNo.Value
         CtlPara.CopyCutEnableStroke = numCopyCutEnableStroke.Value
+
+        CtlPara.RightStrokeDiff = Not RightStrokeDiff.rdbtnValue
+
 
         Me.Close()
 

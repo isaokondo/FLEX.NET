@@ -36,6 +36,19 @@ Public Class clsPlcIf
     Private _jackSelect() As Boolean         ''稼働ジャッキ
 
     Private _JackStatus() As Short      ''ジャッキのステータス
+    '0bit:ジャッキ選択
+    '1bit:掘進モード／セグメントモード（ただし、鹿島外環は異なる）
+    '2bit:減圧中
+    '3bit:引き戻し指令
+    '4bit:引戻しANS
+    '5bit:引き戻し中
+    '6bit:押込み指令
+    '7bit:押込みANS
+    '8bit:押込み中
+    '9bit:対抗ジャッキ
+    '10bit:押込み推進中
+
+
 
     Private _excavMode As Boolean    'マシン掘進モード
     Private _segmentMode As Boolean 'マシンセグメントモード
@@ -72,7 +85,8 @@ Public Class clsPlcIf
     Private _操作角 As Single
     Private _操作強 As Single
 
-
+    '速度割合　減圧ジャッキ、引きジャッキ本数に応じて速度の割合を算出
+    Private _SpeedRate As Single = 100
 
 
     'パラメータ　Rレジスタ
@@ -119,7 +133,8 @@ Public Class clsPlcIf
     Private _PreGpFlg() As Integer          ''グループ圧制御フラグ
     Private _PreRingNo As Integer           ''リング番号
     Private _PreJyairo As Single           ''ジャイロ方位角
-    Private _PrePitching As Single         ''ピッチング
+    Private _PrePitching As Single         ''ジャイロピッチング
+    Private _PremachinePitching As Single   'マシンピッチング
     Private PreRealStroke As Integer       ''掘進実ストローク
     Private PreExcaStatus As Integer = -1     ''掘進ステータス
     Private _mintPreIPAdress As Integer         ''操作権のあるＩＰアドレス（下位）
@@ -190,10 +205,25 @@ Public Class clsPlcIf
     Public Event LosZeroModeChange()
 
     ''' <summary>
+    ''' 次ピース組立開始
+    ''' 組立完了後のタイマ
+    ''' </summary>
+    Public Event NextPieceStart()
+    ''' <summary>
+    ''' 組立完了後の経過時間（秒)
+    ''' </summary>
+    Private AsmbledPastTime As Integer = 0
+
+    ''' <summary>
     ''' 掘進モード／セグメントモードの切り替え
     ''' </summary>
     ''' <param name="Mode">TRUE:掘進モード　FALSE：セグメントモード</param>
     Public Event ExcavModeChange(Mode As Boolean)
+
+    ''' <summary>
+    ''' ジャイロ異常発生
+    ''' </summary>
+    Public Event GyiroErrOccuerd()
 
 
     Public AnalogTag As clsTag
@@ -468,7 +498,22 @@ Public Class clsPlcIf
 
 
 
-
+    ''' <summary>
+    ''' ジャッキのステータス
+    ''' </summary>
+    ''' <returns>
+    '''0bit:ジャッキ選択
+    '''1bit:掘進モード／セグメントモード（ただし、鹿島外環は異なる）
+    '''2bit:減圧中
+    '''3bit:引き戻し指令
+    '''4bit:引戻しANS
+    '''5bit:引き戻し中
+    '''6bit:押込み指令
+    '''7bit:押込みANS
+    '''8bit:押込み中
+    '''9bit:対抗ジャッキ
+    '''10bit:押込み推進中
+    ''' </returns>
     Public ReadOnly Property JackStatus() As Short()
         Get
             Return _JackStatus
@@ -496,11 +541,19 @@ Public Class clsPlcIf
             Return _flexControlOn
         End Get
     End Property
+    ''' <summary>
+    ''' 掘進ステータス
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property ExcaStatus As Integer
         Get
             Return _excaStatus
         End Get
     End Property
+    ''' <summary>
+    ''' ジャイロ異常
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property GyiroError As Boolean
         Get
             Return _gyiroError
@@ -718,6 +771,23 @@ Public Class clsPlcIf
         End Set
     End Property
 
+    ''' <summary>
+    ''' 引きジャッキ、押込みジャッキの本数により
+    ''' 速度の割合を出力
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property SppedRate As Single
+        Get
+            Return _SpeedRate
+        End Get
+        Set(value As Single)
+            _SpeedRate = value
+            If _SpeedRate > 100 Then _SpeedRate = 100
+            If _SpeedRate < 70 Then _SpeedRate = 70
+            SpeedRateWrite() '速度PLCに書き込み
+        End Set
+    End Property
+
 
     ''' <summary>
     ''' 組立ピース番号
@@ -753,7 +823,14 @@ Public Class clsPlcIf
     End Property
     ''' <summary>
     ''' 同時施工ステータス　from マシン
+    ''' 1:減圧開始指令（1ピース目)
+    ''' 2:引き戻し開始
+    ''' 3:引き戻し完了
+    ''' 4:押込み中
+    ''' 5:組立完了
+    ''' 
     ''' </summary>
+    ''' 
     Public ReadOnly Property LosZeroSts_M As Short
     ''' <summary>
     ''' 同時施工ステータス　from FLEX
@@ -804,6 +881,13 @@ Public Class clsPlcIf
             _EngValue.Add(an.FieldName, 0)
         Next
 
+        CtlPara.TaleClrMeasurRExit = _EngValue.ContainsKey("クリアランス右")
+        CtlPara.TaleClrMeasurLExit = _EngValue.ContainsKey("クリアランス左")
+        CtlPara.TaleClrMeasurUExit = _EngValue.ContainsKey("クリアランス上")
+        CtlPara.TaleClrMeasurBExit = _EngValue.ContainsKey("クリアランス下")
+
+        CtlPara.SpeedRateExit = _EngValue.ContainsKey("速度割合")
+
         If Not InitPara.MonitorMode Then
             Dim iRet As Long = PLC_Open() 'オープン処理
             If iRet <> 0 Then
@@ -825,7 +909,8 @@ Public Class clsPlcIf
             _segmentMode = DigtalPlcRead("セグメントモード")
 
         End If
-
+        'スピード割合初期値（100%)書き込み
+        SpeedRateWrite()
 
         PLC_Read()
         'TODO:操作権なしの時は、タイマで常時読み込み
@@ -851,8 +936,11 @@ Public Class clsPlcIf
         '計算ジャッキストロークの演算
         'RaiseEvent MesureStrokeChange()
     End Sub
-
+    ''' <summary>
+    ''' シーケンサ読込　１秒毎
+    ''' </summary>
     Public Sub PLC_Read()
+
 
 
         Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
@@ -915,8 +1003,17 @@ Public Class clsPlcIf
 
                         _jkPress = _EngValue("ジャッキ圧力")
 
+                        For i As Short = 0 To InitPara.NumberGroup - 1
+                            _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
+                            _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
+                            _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
+                            _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
+                        Next
+
+
                         Dim JkPs As Single = _FilterJkPress
                         _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
+                        If _FilterJkPress < 0 Then _FilterJkPress = 0
                         'FLEX手動時に掘進中にジャッキ圧力が変化したイベント
                         If _excaStatus = cKussin AndAlso _flexControlOn And
                             Not CtlPara.AutoDirectionControl And JkPs <> _jkPress Then
@@ -932,39 +1029,61 @@ Public Class clsPlcIf
                         _CopyStroke1 = _EngValue("コピーストローク1")
                         _CopyStroke2 = _EngValue("コピーストローク2")
 
-                        _leftClearance = _EngValue("クリアランス左")
-                        _topClearance = _EngValue("クリアランス上")
-                        _rightClearance = _EngValue("クリアランス右")
-                        _botomClearance = _EngValue("クリアランス下")
+                        If CtlPara.TaleClrMeasurUExit Then
+                            _topClearance = _EngValue("クリアランス上")
+                        End If
 
+                        If CtlPara.TaleClrMeasurLExit Then
+                            _leftClearance = _EngValue("クリアランス左")
+                        End If
+                        If CtlPara.TaleClrMeasurBExit Then
+                            _botomClearance = _EngValue("クリアランス下")
+                        End If
+                        If CtlPara.TaleClrMeasurRExit Then
+                            _rightClearance = _EngValue("クリアランス右")
+                        End If
 
                         For Each mj In InitPara.MesureJackAngle.Keys
                             _mesureJackStroke(mj) = _EngValue("ジャッキストローク" & mj)
                             _mesureJackSpeed(mj) = _EngValue("ジャッキスピード" & mj)
                         Next
 
-                        '同時施工ステータス読込
-                        Dim p As Short
-                        p = _LosZeroSts_FLEX
-                        _LosZeroSts_FLEX = _EngValue("同時施工ステータス_FLEX")
-                        '同時施工モードでステータス変化時
-                        If _LosZeroMode And p <> _LosZeroSts_FLEX Then
-                            RaiseEvent LosZeroStsChange(p, _LosZeroSts_FLEX, False)
+                        If InitPara.LosZeroEquip Then '同時施工あり
+
+
+                            '同時施工ステータス読込
+                            Dim p As Short
+                            p = _LosZeroSts_FLEX
+                            _LosZeroSts_FLEX = _EngValue("同時施工ステータス_FLEX")
+                            '同時施工モードでステータス変化時
+                            If _LosZeroMode And p <> _LosZeroSts_FLEX Then
+                                RaiseEvent LosZeroStsChange(p, _LosZeroSts_FLEX, False)
+                            End If
+
+                            p = _LosZeroSts_M
+                            _LosZeroSts_M = _EngValue("同時施工ステータス_Machine")
+                            '同時施工モードでステータス変化時
+                            If _LosZeroMode And p <> _LosZeroSts_M Then
+                                RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
+                            End If
+                            '組立完了後の経過時間カウント
+                            If _LosZeroSts_M = 5 Then
+                                AsmbledPastTime += 1 'カウントアップ
+                                If AsmbledPastTime = CtlPara.NextPieceConfirmTime Then
+                                    'カウントアップ後次ピース確認イベント
+                                    RaiseEvent NextPieceStart()
+                                End If
+                            Else
+                                AsmbledPastTime = 0 'リセット
+                            End If
+
+                            'モニターモードではPLCより組立ピース読込
+                            If InitPara.MonitorMode Then
+                                _AssemblyPieceNo = _EngValue("組立ピース")
+                            End If
+
                         End If
 
-                        p = _LosZeroSts_M
-                        _LosZeroSts_M = _EngValue("同時施工ステータス_Machine")
-                        '同時施工モードでステータス変化時
-                        If _LosZeroMode And p <> _LosZeroSts_M Then
-                            RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
-                        End If
-
-                        For i As Short = 0 To InitPara.NumberGroup - 1
-                            _groupPv(i) = _EngValue("グループ" & (i + 1) & "圧力")
-                            _groupMv(i) = _EngValue("グループ" & (i + 1) & "圧力MV")
-                            _groupSv(i) = _EngValue("グループ" & (i + 1) & "圧力SV")
-                            _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
-                        Next
                         '掘進中でダイレクト制御ONでFLEX手動モード時
                         If _excaStatus = cKussin AndAlso _flexControlOn And
                             CtlPara.DirectControl And Not CtlPara.AutoDirectionControl Then
@@ -1004,7 +1123,7 @@ Public Class clsPlcIf
                         TimeOutErrCount = 0
 
                     Catch ex As Exception
-                        MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.StackTrace.ToString}")
+                        MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.Message}{vbCrLf}{ex.StackTrace.ToString}")
                     End Try
 
                 End If
@@ -1074,7 +1193,7 @@ Public Class clsPlcIf
             End If
 
 
-            '==============================================================================================================
+            '==============================================================================================================え
 
             'デバイス値用の領域を割り当て
             ReDim sharrDeviceValue(DigtalTag.DeviceSize \ 16 + 1)
@@ -1113,7 +1232,12 @@ Public Class clsPlcIf
 
                     'FLEXON（圧力制御中)
                     _flexControlOn = bit(DigtalTag.TagData("圧力制御").OffsetAddress)
+
+                    Dim prgyiroError As Boolean = _gyiroError
                     _gyiroError = bit(DigtalTag.TagData("ジャイロ異常").OffsetAddress)
+                    If _gyiroError And Not prgyiroError Then 'ジャイロ異常発生
+                        RaiseEvent GyiroErrOccuerd()
+                    End If
 
                     '掘進モード、セグメントモード 
                     Dim bf_excvMode As Boolean = _excavMode
@@ -1131,18 +1255,30 @@ Public Class clsPlcIf
                     End If
 
                     Dim tmp As Boolean
-                    '同時施工モード
-                    tmp = _LosZeroMode
-                    _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
-                    If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
-                    _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
-                    tmp = _MachineComErr
-                    _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
-                    If tmp = False And _MachineComErr Then RaiseEvent PLCErrOccur(Me, New EventArgs, "シールドマシン伝送異常が発生しました。", 0)
 
-                    tmp = LosZeroCancel
-                    LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
-                    If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
+                    tmp = _MachineComErr
+
+
+                    _MachineComErr = bit(DigtalTag.TagData("マシン伝送異常").OffsetAddress)
+                    If tmp = False And _MachineComErr Then
+                        WriteEventData("シールドマシン伝送異常が発生しました。", Color.Red)
+                    End If
+
+                    If InitPara.LosZeroEquip Then
+                        '同時施工モード
+                        tmp = _LosZeroMode
+                        _LosZeroMode = bit(DigtalTag.TagData("同時施工モード").OffsetAddress)
+                        If tmp <> _LosZeroMode Then RaiseEvent LosZeroModeChange()
+
+
+                        tmp = LosZeroCancel
+                        LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
+                        If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
+
+                        _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
+
+                    End If
+
                 End If
 
             Else    'エラー発生
@@ -1154,14 +1290,14 @@ Public Class clsPlcIf
             Exit Sub
         End Try
 
-        If Not InitPara.ReadOnleMode And Not InitPara.MonitorMode Then
+        If InitPara.ServerMode Then
             'PLCデータをテーブルに書き込む　
             'データは1秒毎に更新、保存は1分毎
             Try
-                Dim Tm As String = Now.ToString("yyyy/MM/dd HH:mm:") & "00"
+                Dim Tm As String = Now.ToString("yyyy/MM/dd HH:") & "00:00"
 
                 ExecuteSqlCmd($"REPLACE INTO PlcComData VALUES 
-                        ('{Tm}','{Now.ToString("ss")}',
+                        ('{Tm}','{Now.ToString("ss").ToNum + Now.ToString("mm").ToNum * 60}',
                             '{String.Join(",", AnalogComData)}',
                             '{String.Join(",", DigtalComPlcData)}',
                             '{String.Join(",", ParmterComData)}')")
@@ -1183,7 +1319,7 @@ Public Class clsPlcIf
 
         '掘進スロトーク、ステータスの変化　基準方向の変更
         If _realStroke <> PreRealStroke Or _excaStatus <> PreExcaStatus _
-            Or _gyro <> _PreJyairo Or _PrePitching <> _gyroPitching Then
+            Or _gyro <> _PreJyairo Or _PrePitching <> _gyroPitching Or _PremachinePitching <> _machinePitching Then
             RaiseEvent LineDistanceChage()
         End If
         '掘進ステータスの変化
@@ -1191,7 +1327,7 @@ Public Class clsPlcIf
             RaiseEvent ExcavationStatusChange(PreExcaStatus, _excaStatus)
         End If
         '掘削データ保存　ストロークが掘進中に伸びたとき(クライアントモードでないとき）
-        If Not InitPara.ReadOnleMode And (_realStroke > PreRealStroke Or _excaStatus <> PreExcaStatus) And _excaStatus = cKussin Then
+        If InitPara.ServerMode And (_realStroke > PreRealStroke Or _excaStatus <> PreExcaStatus) And _excaStatus = cKussin Then
             DataSave.Save()
         End If
 
@@ -1202,7 +1338,7 @@ Public Class clsPlcIf
 
         _PreJyairo = _gyro
         _PrePitching = _gyroPitching
-
+        _PremachinePitching = _machinePitching
 
 
         '伝送フラグの送出
@@ -1211,7 +1347,7 @@ Public Class clsPlcIf
         mblnBlink = Not mblnBlink
         t = t Or mblnBlink
 
-        If Not InitPara.ReadOnleMode Then
+        If InitPara.ServerMode Then
             iReturnCode =
             com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
         End If
@@ -1246,8 +1382,15 @@ Public Class clsPlcIf
         Dim iReturnCode As Long = com_ReferencesEasyIF.WriteDeviceBlock(PlcAdress, PlcWrData.Length, PlcWrData(0))
         'todo:通信エラー時の処理
     End Sub
+    ''' <summary>
+    ''' 速度割合PLC書き込み
+    ''' </summary>
+    Public Sub SpeedRateWrite()
+        If InitPara.ServerMode And CtlPara.SpeedRateExit Then
+            AnalogPlcWrite("速度割合", CInt(_SpeedRate))
+        End If
 
-
+    End Sub
 
 
 
@@ -1258,10 +1401,6 @@ Public Class clsPlcIf
     Private Function GetAnalogData(ByVal FieldName As String, Tag As clsTag) As Single
         'アナログデータのスケール変換
         Try
-            If FieldName = "ポイントＸ" Then
-                Debug.WriteLine("")
-
-            End If
             With Tag.TagData(FieldName)
                 If .ScaleHigh - .ScaleLow = 0 Then
                     Return 0
@@ -1279,6 +1418,7 @@ Public Class clsPlcIf
                 Else
                     tData = sharrDeviceValue(.OffsetAddress)
                 End If
+
                 'スケール変換
                 Return (tData - Tag.TagData(FieldName).ScaleLow) * (Tag.TagData(FieldName).EngHight - Tag.TagData(FieldName).EngLow) / (Tag.TagData(FieldName).ScaleHigh - Tag.TagData(FieldName).ScaleLow) + Tag.TagData(FieldName).EngLow  ' + .EngLow
 

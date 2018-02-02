@@ -26,6 +26,8 @@ Public Class clsSimlationSetting
     Public ReadOnly Property LeftSpeedAdr As String
     Public ReadOnly Property RightSpeedAdr As String
     Public ReadOnly Property PitchingAdr As String
+
+    Public ReadOnly Property MachinePitchingAdr As String
     Public ReadOnly Property GyairoAdr As String
     Public ReadOnly Property ExcavOrSegmentAdr As String
     Public ReadOnly Property PullBackOnAdr As String
@@ -47,7 +49,7 @@ Public Class clsSimlationSetting
     Public ReadOnly Property SegmentMode As String
 
 
-
+    Public ReadOnly Property LoszeroStart As String
 
 
     Public Sub New()
@@ -96,6 +98,8 @@ Public Class clsSimlationSetting
                     _RightSpeedAdr = t("値")
                 Case "PitchingAdr"
                     _PitchingAdr = t("値")
+                Case "MachinePitchingAdr"
+                    _MachinePitchingAdr = t("値")
                 Case "GyairoAdr"
                     _GyairoAdr = t("値")
                 Case "ExcavOrSegmentAdr"
@@ -127,6 +131,9 @@ Public Class clsSimlationSetting
                     _ExecMode = t("値")
                 Case "SegmentMode"
                     _SegmentMode = t("値")
+
+                Case "LoszeroStart"
+                    _LoszeroStart = t("値")
             End Select
             '計測ジャッキの取込
             If t("項目").ToString.IndexOf("MesureJackStroke") >= 0 Then

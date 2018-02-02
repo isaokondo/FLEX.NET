@@ -225,6 +225,23 @@ Module CommonMdl
         Return Val(Array.FindAll(st.ToString.ToCharArray, AddressOf IsNumeric))
     End Function
 
+    ''' <summary>
+    ''' リストをコンマ区切りの文字列に
+    ''' </summary>
+    ''' <param name="st"></param>
+    ''' <returns></returns>
+    <Extension()>
+    Public Function ToCommaDelmit(st As List(Of Short)) As String
+        If st.Count <> 0 Then
+            Return String.Join(",", st)
+        Else
+            Return ""
+        End If
+
+    End Function
+
+
+
 
 
 End Module

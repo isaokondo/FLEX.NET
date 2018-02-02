@@ -52,8 +52,6 @@ Partial Class frmSim
         Me.Label5 = New System.Windows.Forms.Label()
         Me.nudRightSpeed = New System.Windows.Forms.NumericUpDown()
         Me.nudLeftSpeed = New System.Windows.Forms.NumericUpDown()
-        Me.tmrRightJack = New System.Windows.Forms.Timer(Me.components)
-        Me.tmrLeftJack = New System.Windows.Forms.Timer(Me.components)
         Me.tmrAuto = New System.Windows.Forms.Timer(Me.components)
         Me.Label6 = New System.Windows.Forms.Label()
         Me.nudGyairo = New System.Windows.Forms.NumericUpDown()
@@ -89,7 +87,13 @@ Partial Class frmSim
         Me.Label13 = New System.Windows.Forms.Label()
         Me.nudSumupStroke = New System.Windows.Forms.NumericUpDown()
         Me.btnAllSet = New System.Windows.Forms.Button()
-        Me.chkStrokeAuto = New System.Windows.Forms.CheckBox()
+        Me.btnLoszeroStart = New System.Windows.Forms.Button()
+        Me.tmrStrokeSim = New System.Windows.Forms.Timer(Me.components)
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.numGpMvRate = New System.Windows.Forms.NumericUpDown()
+        Me.numGpOffset = New System.Windows.Forms.NumericUpDown()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.nudMachinePitching = New System.Windows.Forms.NumericUpDown()
         CType(Me.nudSoucePressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudLeftStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudRightStroke, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -103,6 +107,9 @@ Partial Class frmSim
         CType(Me.DgvJackStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudSumupSpeed, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudSumupStroke, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.numGpMvRate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.numGpOffset, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudMachinePitching, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tmrPlcWR
@@ -111,7 +118,7 @@ Partial Class frmSim
         'chkExcavOn
         '
         Me.chkExcavOn.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.chkExcavOn.Location = New System.Drawing.Point(287, 340)
+        Me.chkExcavOn.Location = New System.Drawing.Point(323, 348)
         Me.chkExcavOn.Margin = New System.Windows.Forms.Padding(2)
         Me.chkExcavOn.Name = "chkExcavOn"
         Me.chkExcavOn.Size = New System.Drawing.Size(78, 19)
@@ -122,7 +129,7 @@ Partial Class frmSim
         'chkFlexOn
         '
         Me.chkFlexOn.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.chkFlexOn.Location = New System.Drawing.Point(287, 364)
+        Me.chkFlexOn.Location = New System.Drawing.Point(323, 374)
         Me.chkFlexOn.Margin = New System.Windows.Forms.Padding(2)
         Me.chkFlexOn.Name = "chkFlexOn"
         Me.chkFlexOn.Size = New System.Drawing.Size(78, 19)
@@ -135,7 +142,7 @@ Partial Class frmSim
         Me.nudSoucePressure.DecimalPlaces = 1
         Me.nudSoucePressure.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.nudSoucePressure.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.nudSoucePressure.Location = New System.Drawing.Point(386, 426)
+        Me.nudSoucePressure.Location = New System.Drawing.Point(408, 476)
         Me.nudSoucePressure.Margin = New System.Windows.Forms.Padding(2)
         Me.nudSoucePressure.Name = "nudSoucePressure"
         Me.nudSoucePressure.Size = New System.Drawing.Size(67, 26)
@@ -146,7 +153,7 @@ Partial Class frmSim
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label1.Location = New System.Drawing.Point(372, 408)
+        Me.Label1.Location = New System.Drawing.Point(394, 458)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(121, 16)
@@ -157,7 +164,7 @@ Partial Class frmSim
         '
         Me.nudLeftStroke.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.nudLeftStroke.Increment = New Decimal(New Integer() {5, 0, 0, 0})
-        Me.nudLeftStroke.Location = New System.Drawing.Point(272, 426)
+        Me.nudLeftStroke.Location = New System.Drawing.Point(294, 476)
         Me.nudLeftStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.nudLeftStroke.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.nudLeftStroke.Name = "nudLeftStroke"
@@ -169,7 +176,7 @@ Partial Class frmSim
         '
         Me.nudRightStroke.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.nudRightStroke.Increment = New Decimal(New Integer() {5, 0, 0, 0})
-        Me.nudRightStroke.Location = New System.Drawing.Point(505, 426)
+        Me.nudRightStroke.Location = New System.Drawing.Point(527, 476)
         Me.nudRightStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.nudRightStroke.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.nudRightStroke.Name = "nudRightStroke"
@@ -181,7 +188,7 @@ Partial Class frmSim
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label2.Location = New System.Drawing.Point(259, 408)
+        Me.Label2.Location = New System.Drawing.Point(281, 458)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(117, 16)
@@ -192,7 +199,7 @@ Partial Class frmSim
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label3.Location = New System.Drawing.Point(487, 408)
+        Me.Label3.Location = New System.Drawing.Point(509, 458)
         Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(117, 16)
@@ -213,7 +220,7 @@ Partial Class frmSim
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label4.Location = New System.Drawing.Point(487, 462)
+        Me.Label4.Location = New System.Drawing.Point(509, 512)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(132, 16)
@@ -224,7 +231,7 @@ Partial Class frmSim
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label5.Location = New System.Drawing.Point(259, 462)
+        Me.Label5.Location = New System.Drawing.Point(281, 512)
         Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(132, 16)
@@ -235,7 +242,7 @@ Partial Class frmSim
         '
         Me.nudRightSpeed.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.nudRightSpeed.Increment = New Decimal(New Integer() {5, 0, 0, 0})
-        Me.nudRightSpeed.Location = New System.Drawing.Point(505, 480)
+        Me.nudRightSpeed.Location = New System.Drawing.Point(527, 530)
         Me.nudRightSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.nudRightSpeed.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.nudRightSpeed.Name = "nudRightSpeed"
@@ -247,19 +254,13 @@ Partial Class frmSim
         '
         Me.nudLeftSpeed.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.nudLeftSpeed.Increment = New Decimal(New Integer() {5, 0, 0, 0})
-        Me.nudLeftSpeed.Location = New System.Drawing.Point(272, 480)
+        Me.nudLeftSpeed.Location = New System.Drawing.Point(294, 530)
         Me.nudLeftSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.nudLeftSpeed.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.nudLeftSpeed.Name = "nudLeftSpeed"
         Me.nudLeftSpeed.Size = New System.Drawing.Size(67, 26)
         Me.nudLeftSpeed.TabIndex = 9
         Me.nudLeftSpeed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'tmrRightJack
-        '
-        '
-        'tmrLeftJack
-        '
         '
         'tmrAuto
         '
@@ -270,7 +271,7 @@ Partial Class frmSim
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label6.Location = New System.Drawing.Point(297, 531)
+        Me.Label6.Location = New System.Drawing.Point(319, 560)
         Me.Label6.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(92, 16)
@@ -282,7 +283,7 @@ Partial Class frmSim
         Me.nudGyairo.DecimalPlaces = 2
         Me.nudGyairo.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.nudGyairo.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudGyairo.Location = New System.Drawing.Point(299, 549)
+        Me.nudGyairo.Location = New System.Drawing.Point(321, 578)
         Me.nudGyairo.Margin = New System.Windows.Forms.Padding(2)
         Me.nudGyairo.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
         Me.nudGyairo.Name = "nudGyairo"
@@ -294,7 +295,7 @@ Partial Class frmSim
         '
         Me.label22.AutoSize = True
         Me.label22.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.label22.Location = New System.Drawing.Point(438, 531)
+        Me.label22.Location = New System.Drawing.Point(460, 560)
         Me.label22.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.label22.Name = "label22"
         Me.label22.Size = New System.Drawing.Size(150, 16)
@@ -306,7 +307,7 @@ Partial Class frmSim
         Me.nudPitching.DecimalPlaces = 2
         Me.nudPitching.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.nudPitching.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudPitching.Location = New System.Drawing.Point(470, 553)
+        Me.nudPitching.Location = New System.Drawing.Point(492, 582)
         Me.nudPitching.Margin = New System.Windows.Forms.Padding(2)
         Me.nudPitching.Minimum = New Decimal(New Integer() {100, 0, 0, -2147483648})
         Me.nudPitching.Name = "nudPitching"
@@ -449,7 +450,7 @@ Partial Class frmSim
         'nudLosZeroStatusMachin
         '
         Me.nudLosZeroStatusMachin.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.nudLosZeroStatusMachin.Location = New System.Drawing.Point(911, 36)
+        Me.nudLosZeroStatusMachin.Location = New System.Drawing.Point(941, 36)
         Me.nudLosZeroStatusMachin.Margin = New System.Windows.Forms.Padding(2)
         Me.nudLosZeroStatusMachin.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.nudLosZeroStatusMachin.Name = "nudLosZeroStatusMachin"
@@ -461,7 +462,7 @@ Partial Class frmSim
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label7.Location = New System.Drawing.Point(766, 30)
+        Me.Label7.Location = New System.Drawing.Point(805, 30)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(132, 32)
@@ -493,7 +494,7 @@ Partial Class frmSim
         'chkLosZeroEnable
         '
         Me.chkLosZeroEnable.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.chkLosZeroEnable.Location = New System.Drawing.Point(386, 364)
+        Me.chkLosZeroEnable.Location = New System.Drawing.Point(419, 374)
         Me.chkLosZeroEnable.Margin = New System.Windows.Forms.Padding(2)
         Me.chkLosZeroEnable.Name = "chkLosZeroEnable"
         Me.chkLosZeroEnable.Size = New System.Drawing.Size(176, 19)
@@ -504,7 +505,7 @@ Partial Class frmSim
         'chkLosZeroMode
         '
         Me.chkLosZeroMode.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.chkLosZeroMode.Location = New System.Drawing.Point(386, 340)
+        Me.chkLosZeroMode.Location = New System.Drawing.Point(419, 348)
         Me.chkLosZeroMode.Margin = New System.Windows.Forms.Padding(2)
         Me.chkLosZeroMode.Name = "chkLosZeroMode"
         Me.chkLosZeroMode.Size = New System.Drawing.Size(176, 19)
@@ -612,7 +613,7 @@ Partial Class frmSim
         'chkExecMode
         '
         Me.chkExecMode.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.chkExecMode.Location = New System.Drawing.Point(287, 303)
+        Me.chkExecMode.Location = New System.Drawing.Point(323, 323)
         Me.chkExecMode.Margin = New System.Windows.Forms.Padding(2)
         Me.chkExecMode.Name = "chkExecMode"
         Me.chkExecMode.Size = New System.Drawing.Size(104, 19)
@@ -623,7 +624,7 @@ Partial Class frmSim
         'chkSegmentMode
         '
         Me.chkSegmentMode.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.chkSegmentMode.Location = New System.Drawing.Point(415, 303)
+        Me.chkSegmentMode.Location = New System.Drawing.Point(422, 323)
         Me.chkSegmentMode.Margin = New System.Windows.Forms.Padding(2)
         Me.chkSegmentMode.Name = "chkSegmentMode"
         Me.chkSegmentMode.Size = New System.Drawing.Size(144, 19)
@@ -698,16 +699,78 @@ Partial Class frmSim
         Me.btnAllSet.Text = "一括設定"
         Me.btnAllSet.UseVisualStyleBackColor = True
         '
-        'chkStrokeAuto
+        'btnLoszeroStart
         '
-        Me.chkStrokeAuto.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.chkStrokeAuto.Location = New System.Drawing.Point(147, 22)
-        Me.chkStrokeAuto.Margin = New System.Windows.Forms.Padding(2)
-        Me.chkStrokeAuto.Name = "chkStrokeAuto"
-        Me.chkStrokeAuto.Size = New System.Drawing.Size(172, 19)
-        Me.chkStrokeAuto.TabIndex = 35
-        Me.chkStrokeAuto.Text = "ストローク自動"
-        Me.chkStrokeAuto.UseVisualStyleBackColor = True
+        Me.btnLoszeroStart.Location = New System.Drawing.Point(739, 26)
+        Me.btnLoszeroStart.Name = "btnLoszeroStart"
+        Me.btnLoszeroStart.Size = New System.Drawing.Size(64, 40)
+        Me.btnLoszeroStart.TabIndex = 36
+        Me.btnLoszeroStart.Text = "同時施工スタート"
+        Me.btnLoszeroStart.UseVisualStyleBackColor = True
+        '
+        'tmrStrokeSim
+        '
+        Me.tmrStrokeSim.Interval = 1000
+        '
+        'Label14
+        '
+        Me.Label14.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label14.Location = New System.Drawing.Point(139, 15)
+        Me.Label14.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(532, 32)
+        Me.Label14.TabIndex = 37
+        Me.Label14.Text = "グループ圧ＰＶ(MPa)=グループ圧ＭＶ×            /100 × **.*Mpa +            MPa"
+        '
+        'numGpMvRate
+        '
+        Me.numGpMvRate.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.numGpMvRate.Increment = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.numGpMvRate.Location = New System.Drawing.Point(390, 11)
+        Me.numGpMvRate.Margin = New System.Windows.Forms.Padding(2)
+        Me.numGpMvRate.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
+        Me.numGpMvRate.Name = "numGpMvRate"
+        Me.numGpMvRate.Size = New System.Drawing.Size(51, 26)
+        Me.numGpMvRate.TabIndex = 38
+        Me.numGpMvRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.numGpMvRate.Value = New Decimal(New Integer() {80, 0, 0, 0})
+        '
+        'numGpOffset
+        '
+        Me.numGpOffset.DecimalPlaces = 1
+        Me.numGpOffset.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.numGpOffset.Increment = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.numGpOffset.Location = New System.Drawing.Point(577, 11)
+        Me.numGpOffset.Margin = New System.Windows.Forms.Padding(2)
+        Me.numGpOffset.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
+        Me.numGpOffset.Name = "numGpOffset"
+        Me.numGpOffset.Size = New System.Drawing.Size(51, 26)
+        Me.numGpOffset.TabIndex = 39
+        Me.numGpOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.numGpOffset.Value = New Decimal(New Integer() {2, 0, 0, 0})
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label15.Location = New System.Drawing.Point(460, 610)
+        Me.Label15.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(196, 16)
+        Me.Label15.TabIndex = 41
+        Me.Label15.Text = "マシンピッチング（PLCのデータ)"
+        '
+        'nudMachinePitching
+        '
+        Me.nudMachinePitching.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.nudMachinePitching.Location = New System.Drawing.Point(492, 632)
+        Me.nudMachinePitching.Margin = New System.Windows.Forms.Padding(2)
+        Me.nudMachinePitching.Maximum = New Decimal(New Integer() {32767, 0, 0, 0})
+        Me.nudMachinePitching.Minimum = New Decimal(New Integer() {32767, 0, 0, -2147483648})
+        Me.nudMachinePitching.Name = "nudMachinePitching"
+        Me.nudMachinePitching.Size = New System.Drawing.Size(89, 26)
+        Me.nudMachinePitching.TabIndex = 40
+        Me.nudMachinePitching.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'frmSim
         '
@@ -715,7 +778,12 @@ Partial Class frmSim
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(1594, 876)
-        Me.Controls.Add(Me.chkStrokeAuto)
+        Me.Controls.Add(Me.Label15)
+        Me.Controls.Add(Me.nudMachinePitching)
+        Me.Controls.Add(Me.numGpOffset)
+        Me.Controls.Add(Me.numGpMvRate)
+        Me.Controls.Add(Me.Label14)
+        Me.Controls.Add(Me.btnLoszeroStart)
         Me.Controls.Add(Me.btnAllSet)
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.nudSumupSpeed)
@@ -768,6 +836,9 @@ Partial Class frmSim
         CType(Me.DgvJackStroke, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudSumupSpeed, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudSumupStroke, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.numGpMvRate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.numGpOffset, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudMachinePitching, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -787,8 +858,6 @@ Partial Class frmSim
     Friend WithEvents Label5 As Label
     Friend WithEvents nudRightSpeed As NumericUpDown
     Friend WithEvents nudLeftSpeed As NumericUpDown
-    Friend WithEvents tmrRightJack As Timer
-    Friend WithEvents tmrLeftJack As Timer
     Friend WithEvents tmrAuto As Timer
     Friend WithEvents Label6 As Label
     Friend WithEvents nudGyairo As NumericUpDown
@@ -824,5 +893,11 @@ Partial Class frmSim
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents RealStrokeLen As DataGridViewTextBoxColumn
     Friend WithEvents JackSpeed As DataGridViewTextBoxColumn
-    Friend WithEvents chkStrokeAuto As CheckBox
+    Friend WithEvents btnLoszeroStart As Button
+    Friend WithEvents tmrStrokeSim As Timer
+    Friend WithEvents Label14 As Label
+    Friend WithEvents numGpMvRate As NumericUpDown
+    Friend WithEvents numGpOffset As NumericUpDown
+    Friend WithEvents Label15 As Label
+    Friend WithEvents nudMachinePitching As NumericUpDown
 End Class

@@ -252,7 +252,7 @@ Public Class ucnChart2
         End If
         _ChartCenAbsValue = Math.Round(_ChartCenAbsValue, 1)
         DspScale()
-        PlanNumData = _ExecData.Last.PlanDr
+        'PlanNumData = _ExecData.Last.PlanDr
         TargetData = _ExecData.Last.TargetDr
         RealData = _ExecData.Last.RealDr
         CorrectData = _ExecData.Last.PlanDr - _ExecData.Last.TargetDr

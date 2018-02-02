@@ -27,6 +27,10 @@ Friend Class clsCulKijun
     Public HorNakaKodo As clsCulNakaore1 ''中折れ演算（後胴中心で検討）
     Public HorNakaCul As clsCulNakaore2 ''中折れ計算2（構築中心の方向角で検討）
 
+    Public RingTarget As clsLineMake ''リングの目標値
+    Public NextRingTarget As clsLineMake ''次リングの目標値
+
+
     ''縦断
     Public VerSentanKijun As clsLineMake ''先端位置
     Public VerKodoKijun As clsLineMake ''後胴中心
@@ -220,6 +224,9 @@ Friend Class clsCulKijun
         HorKodoKijun = New clsLineMake
         HorZendoKijun = New clsLineMake
 
+        RingTarget = New clsLineMake
+        NextRingTarget = New clsLineMake
+
         HorNakaKodo = New clsCulNakaore1
         HorNakaCul = New clsCulNakaore2
 
@@ -335,7 +342,7 @@ Friend Class clsCulKijun
 
             '○単胴時旋回中心位置
             HorZendoKijun.掘進累積距離 = HorSentanKijun.掘進累積距離 - MachineSpec.HorSenkaiCyuushin
-            mdbl平面計画方位 = HorZendoKijun.軌道中心方位角
+            mdbl平面計画方位 = Hoko2Hoi((HorZendoKijun.軌道中心方位角))
 
             '○単胴ｼｰﾙﾄﾞでは不要なﾃﾞｰﾀの後始末
             mdbl平面中折角度 = 0 '当然0
@@ -343,6 +350,9 @@ Friend Class clsCulKijun
 
         End If
 
+        'Debug.Print(HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth)
+        RingTarget.掘進累積距離 = HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
+        NextRingTarget.掘進累積距離 = RingTarget.掘進累積距離 + SegAsmblyData.TypeData(PlcIf.RingNo + 1).CenterWidth
         '01/06/28 修正
         'mdbl平面基準方位 = Hoi2Hoko(mdbl平面計画方位 + PlcIf.水平入力補正値 + clsPlanLine.HorPlan.X軸方位角)
         mdbl平面基準方位 = (mdbl平面計画方位 + CtlPara.水平入力補正値 + HorPlan.X軸方位角)

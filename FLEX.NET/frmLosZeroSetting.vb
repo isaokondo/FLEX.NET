@@ -11,34 +11,57 @@
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
         'TODO:ダイレクト指令制御の取込
-        With CtlPara
-            LosZeroRollingTake.rdbtnValue = .LosZeroRollingTake
-            LosZeroOpposeJack.rdbtnValue = .LosZeroOpposeJack
-            LosZeroOpposeControl.rdbtnValue = .LosZeroOpposeControl
-            NextPieceConfirm.rdbtnValue = .NextPieceConfirm
+        LosZeroRollingTake.rdbtnValue = CtlPara.LosZeroRollingTake
+        LosZeroOpposeJack.rdbtnValue = CtlPara.LosZeroOpposeJack
+        LosZeroOpposeControl.rdbtnValue = CtlPara.LosZeroOpposeControl
+        LosZeroOpposeGroupNumber.Value = CtlPara.LosZeroOpposeGroupNumber
+        LosZeroOpposeManualSV.Value = CtlPara.LosZeroOpposeManualSV
 
-            ReduceTime.Value = .ReduceTime
-            ReduceJudgePress.Value = .ReduceJudgePress
+        NextPieceConfirm.rdbtnValue = CtlPara.NextPieceConfirm
 
+        NextPieceConfirmTime.Value = CtlPara.NextPieceConfirmTime
 
-        End With
+        ReduceTime.Value = CtlPara.ReduceTime
+        ReduceJudgePress.Value = CtlPara.ReduceJudgePress
 
+        LosZeroEmp.Value = CtlPara.LosZeroEmp
+        LosZeroNlp.Value = CtlPara.LosZeroNlp
+        LoszerorStep.Value = CtlPara.LoszerorStep
 
+        MomentRdductionRateOnReduce.Value = CtlPara.MomentRdductionRateOnReduce
+        ReduceReachStrokeDiff.Value = CtlPara.ReduceReachStrokeDiff
 
+        '対抗ジャッキの機能使用可／不可
+        LosZeroOpposeJack.Selectable = InitPara.OpposeJackEnable
+        LosZeroOpposeControl.Selectable = InitPara.OpposeJackEnable
+        LosZeroOpposeGroupNumber.Enabled = InitPara.OpposeJackEnable
+        LosZeroOpposeManualSV.Enabled = InitPara.OpposeJackEnable
     End Sub
 
     Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
 
-        With CtlPara
+        '対抗ジャッキ有効のとき
+        If InitPara.OpposeJackEnable Then
+            CtlPara.LosZeroRollingTake = LosZeroRollingTake.rdbtnValue
+            CtlPara.LosZeroOpposeJack = LosZeroOpposeJack.rdbtnValue
+            CtlPara.LosZeroOpposeControl = LosZeroOpposeControl.rdbtnValue
+            CtlPara.LosZeroOpposeGroupNumber = LosZeroOpposeGroupNumber.Value
+            CtlPara.LosZeroOpposeManualSV = LosZeroOpposeManualSV.Value
+        End If
 
-            .LosZeroRollingTake = LosZeroRollingTake.rdbtnValue
-            .LosZeroOpposeJack = LosZeroOpposeJack.rdbtnValue
-            .LosZeroOpposeControl = LosZeroOpposeControl.rdbtnValue
-            .NextPieceConfirm = NextPieceConfirm.rdbtnValue
+        CtlPara.NextPieceConfirm = NextPieceConfirm.rdbtnValue
+        CtlPara.NextPieceConfirmTime = NextPieceConfirmTime.Value
 
-            .ReduceTime = ReduceTime.Value
-            .ReduceJudgePress = ReduceJudgePress.Value
-        End With
+        CtlPara.ReduceTime = ReduceTime.Value
+        CtlPara.ReduceJudgePress = ReduceJudgePress.Value
+
+        CtlPara.LosZeroEmp = LosZeroEmp.Value
+        CtlPara.LosZeroNlp = LosZeroNlp.Value
+        CtlPara.LoszerorStep = LoszerorStep.Value
+
+        CtlPara.MomentRdductionRateOnReduce = MomentRdductionRateOnReduce.Value
+
+        CtlPara.ReduceReachStrokeDiff = ReduceReachStrokeDiff.Value
 
         Me.Close()
 

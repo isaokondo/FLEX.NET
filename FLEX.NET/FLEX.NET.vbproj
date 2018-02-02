@@ -43,6 +43,7 @@
     <DocumentationFile>FLEX.NET.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -579,6 +580,8 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Resources\基本条件設定forFlexNet.xlsm" />
+    <None Include="基本条件設定forFlexNet.xlsm" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="AcroPDFLib">
@@ -641,8 +644,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ReduceStart.wav" />
+    <None Include="Resources\ReduceStrokeReach.wav" />
     <None Include="Resources\SegmentAsem.wav" />
+    <None Include="Resources\ReduceStart.wav" />
     <None Include="Resources\ClosetStart.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -662,6 +666,7 @@
     <Content Include="Resources\excelprt.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\NextPieceConfirm.wav" />
     <Content Include="Resources\ReduceFinished.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

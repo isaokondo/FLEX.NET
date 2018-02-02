@@ -39,7 +39,7 @@ Friend Class clsSegmentAssembly
     ''' <summary>
     ''' セグメント組立データ  ピース番号がKey
     ''' </summary>
-    Private _ProcessData As New Dictionary(Of Short, AsseblyProcess)
+    Private _ProcessData As New SortedDictionary(Of Short, AsseblyProcess)
 
 
     ''' <summary>
@@ -51,9 +51,14 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     Private _SegmentAssenblyPtnIDSim As New Dictionary(Of Integer, Short)
     ''' <summary>
-    ''' シュミレーションデータの指示書転送日
+    ''' シュミレーションデータのSheetID
     ''' </summary>
     Private _SheetIDSim As New Dictionary(Of Integer, Integer)
+
+    ''' <summary>
+    ''' シュミレーションデータの指示書転送日
+    ''' </summary>
+    Private _TransferDate As New Dictionary(Of Integer, Date)
 
 
     ''' <summary>
@@ -93,7 +98,6 @@ Friend Class clsSegmentAssembly
     ''' <param name="RingNo"></param>
     ''' <param name="Stroke"></param>
     Public Sub RingLastStrokeUpdate(RingNo As Integer, Stroke As Short)
-
         _RingLastStroke(RingNo) = Stroke
         ExecuteSqlCmd($"UPDATE flexセグメント組立データ SET 掘進終了ストローク ='{Stroke}'
             WHERE リング番号 = '{RingNo}'")
@@ -115,7 +119,7 @@ Friend Class clsSegmentAssembly
     ''' セグメント組立パターン情報読込 ピース番号がKey
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ProcessData As Dictionary(Of Short, AsseblyProcess)
+    Public ReadOnly Property ProcessData As SortedDictionary(Of Short, AsseblyProcess)
         Get
             Return _ProcessData
         End Get
@@ -213,11 +217,27 @@ Friend Class clsSegmentAssembly
         End Set
     End Property
 
+    Public Property TransferDate() As Dictionary(Of Integer, Date)
+        Get
+            Return _TransferDate
+        End Get
+        Set(value As Dictionary(Of Integer, Date))
+            _TransferDate = value
+            'TODO:データベース更新作業
+        End Set
+    End Property
+
+
+
+
     ''' <summary>
     ''' 組立パターンの情報を取得
     ''' </summary>
     ''' <param name="RingNo">リング番号</param>
     Public Sub AssemblyDataRead(RingNo As Integer)
+
+        'ロスゼロのみ
+        If Not InitPara.LosZeroEquip Then Exit Sub
         _AssenblyPtnDic.Clear()
         'パターンリストの取得
         Dim rsPtLst As DataTable =
@@ -243,10 +263,11 @@ Friend Class clsSegmentAssembly
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンリスト`.`分割No` 
             WHERE `組立パターンNo` = '{_SegmentAssenblyPtnID(RingNo)}'")
         Else
+            '線形管理のセグメント割付シュミレーションで転送済みの場合
             dsSegAsm =
               GetDtfmSQL($"SELECT  * FROM `セグメント割付シュミレーション`  
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント割付シュミレーション`.`分割No` 
-            WHERE `リングＮｏ` = '{RingNo}' AND `シートID`>='{SheetID.Rows(0).Item(0)}'")
+            WHERE `リングＮｏ` = '{RingNo}' AND `シートID`='{SheetID.Rows(0).Item(0)}'")
 
         End If
 
@@ -259,7 +280,7 @@ Friend Class clsSegmentAssembly
 
                 If ColName.Contains("組立順序") AndAlso Not IsDBNull(dRow(ColName)) Then
 
-                    Dim SegDt As New AsseblyProcess '組み立手順データ
+                    Dim SegDt As New AsseblyProcess '組み立手順データっｘ
 
                     SegDt.PatternName = dRow("組立パターン名")
                     SegDt.BoltPitch = dRow("組立ピッチ")
@@ -290,24 +311,124 @@ Friend Class clsSegmentAssembly
                         'If SegDt.PieceName <> "" Then
                         SegDt.PullBackJack = JkList(dRow($"{AsOrder}引戻"))
                         SegDt.ClosetJack = JkList(dRow($"{AsOrder}押込"))
+                        SegDt.ThrustJack = JkList(dRow($"{AsOrder}推進"))
                         SegDt.AddClosetJack = JkList(dRow($"{AsOrder}追加"))
 
                         _ProcessData(SegDt.AssemblyOrder) = SegDt
                     End If
 
                 End If
+            Next
+        Next
+
+        '同時施工タイプ
+        If InitPara.LosZeroEquip Then
+
+            '減圧グループの算出
+            For Each PrsDt In _ProcessData
+
+                Dim i As Short
+                'リストを配列に
+
+                '前ピースまでの引き戻しジャッキと押し込みジャッキと追加押込ジャッキをリストに
+                Dim PujJ As New List(Of Short), ClosetJ As New List(Of Short)
+                For Each pd In _ProcessData
+                    If pd.Key < PrsDt.Key Then
+                        PujJ.AddRange(pd.Value.PullBackJack)
+                        ClosetJ.AddRange(pd.Value.ClosetJack)
+                        ClosetJ.AddRange(pd.Value.AddClosetJack)
+                    End If
+                Next
+
+                Dim PulPreJk As New List(Of Short)    '前ピースまでのの引き戻しジャッキ
+
+                '前ピースまでのの引き戻しジャッキで押し込んでないジャッキ
+                For Each pl In PujJ
+                    If Not ClosetJ.Contains(pl) Then
+                        PulPreJk.Add(pl)
+                    End If
+                Next
+
+                '上述のジャッキの属するグループと現ピースの引き戻しジャッキの属するグループが等しい場合に
+                '含める
+                Dim AddRdJk As New List(Of Short)
+                For Each t In PrsDt.Value.PullBackJack
+                    For Each k In PulPreJk
+                        If InitPara.JackGroupPos(k - 1) = InitPara.JackGroupPos(t - 1) Then
+                            AddRdJk.Add(k)
+                        End If
+                    Next
+                Next
+
+                '減圧グループ　すべてTRUEに
+                Dim Gr As Boolean() =
+                    Enumerable.Repeat(Of Boolean)(True, InitPara.NumberGroup).ToArray()
+
+                '引戻しジャッキ(Kの場合は追加押込み)から減圧グループを
+                Dim rd As List(Of Short)
+                If PrsDt.Value.PieceName = "K" Then
+
+                    rd = New List(Of Short)(PrsDt.Value.ThrustJack)
+                Else
+                    rd = New List(Of Short)(PrsDt.Value.PullBackJack)
+
+                End If
+
+                For i = 1 To InitPara.NumberJack
+                    If Not (rd.Contains(i) Or AddRdJk.Contains(i)) Then
+                        Gr(InitPara.JackGroupPos(i - 1) - 1) = False
+                    End If
+                Next
+                '減圧グループリスト作成
+                PrsDt.Value.ReduceGroup = New List(Of Short)
+                PrsDt.Value.ReduceJack = New List(Of Short)
+
+                For i = 0 To InitPara.NumberGroup - 1
+                    If Gr(i) Then
+                        PrsDt.Value.ReduceGroup.Add(i + 1)
+                    End If
+                Next
+
+                '減圧グループを減圧ジャッキに
+                For i = 1 To InitPara.NumberJack
+                    If Gr(InitPara.JackGroupPos(i - 1) - 1) Then
+                        PrsDt.Value.ReduceJack.Add(i)
+                    End If
+                Next
+
+                '***********減圧グループから対抗グループを算出する**************
+                If PrsDt.Value.ReduceGroup.Count <> 0 Then
+
+                    '減圧グループの中心角度を求める
+                    Dim GpCenterAngle As New List(Of Single)
+                    For Each Gp In PrsDt.Value.ReduceGroup
+                        GpCenterAngle.Add(InitPara.FaiGroup(Gp - 1))
+                    Next
+                    '対抗グループの中心角度
+                    Dim OppseAngle As Single = GpCenterAngle.Average + 180
+                    If OppseAngle > 360 Then OppseAngle -= 360
+                    '各グループの中心角度との絶対値差を求める
+                    Dim AnglDiff As New Dictionary(Of Short, Single)
+                    For i = 0 To InitPara.NumberGroup - 1
+                        AnglDiff.Add(i + 1, Math.Abs(InitPara.FaiGroup(i) - OppseAngle))
+                        If AnglDiff(i + 1) > 360 Then AnglDiff(i + 1) -= 360
+                    Next
+                    '対抗グループ(差の少ない上位設定数分を抽出）
+                    PrsDt.Value.OpposeGroup =
+                    (From q In AnglDiff Order By q.Value Ascending Select q.Key).Take(CtlPara.LosZeroOpposeGroupNumber).ToList
+                End If
 
             Next
 
-        Next
 
-        If _ProcessData.Count = 0 Then
-            MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、組立順序が設定されてません'", vbCritical)
-        Else
-            '組立ピース数を取得
-            _AssemblyPieceNumber = (From i In _ProcessData Select i.Value.AssemblyOrder).Max
+            If _ProcessData.Count = 0 Then
+                'MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、組立順序が設定されてません'", vbCritical)
+            Else
+                '組立ピース数を取得
+                _AssemblyPieceNumber = (From i In _ProcessData Select i.Value.AssemblyOrder).Max
+            End If
+
         End If
-
 
 
 
@@ -319,13 +440,13 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     ''' <param name="tmpS">文字列</param>
     ''' <returns></returns>
-    Private Function JkList(ByVal tmpS As String) As List(Of Short)
+    Overloads Function JkList(ByVal tmpS As String) As List(Of Short)
 
         Dim lst As New List(Of Short)
 
-        If TypeName(tmpS) = "DBNull" OrElse tmpS = "" Then
-            Return lst
-        End If
+        'If TypeName(tmpS) = "DBNull" OrElse tmpS = "" Then
+        '    Return lst
+        'End If
 
         For i As Short = 0 To tmpS.Length - 1
             If tmpS.Substring(i, 1) = "1" Then
@@ -333,19 +454,14 @@ Friend Class clsSegmentAssembly
             End If
         Next
 
-        'Dim i As String() = tmpS.split(",")
-        'For Each k As Short In i
-        '    lst.Add(k)
-        'Next
-
         Return lst
 
     End Function
 
     'TODO:オーバーライドを使いたい！
-    'Private Function JkList(ByVal tmpS As DBNull) As List(Of Short)
-    '    Return New List(Of Short)
-    'End Function
+    Overloads Function JkList(ByVal tmpS As DBNull) As List(Of Short)
+        Return New List(Of Short)
+    End Function
     ''' <summary>
     ''' データベース読込
     ''' </summary>
@@ -367,19 +483,19 @@ Friend Class clsSegmentAssembly
             If Not IsNumeric(tb.Item("シートID")) Or Not IsNumeric(tb.Item("シートID1")) Then
                 _TypeNo(RingNo) = tb.Item("セグメントNo")
 
-                If InitPara.LosZeroMode Then
+                If InitPara.LosZeroEquip Then
                     _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo")
                 End If
 
             Else
                 _TypeNo(RingNo) = tb.Item("セグメントNo1")
-                If InitPara.LosZeroMode Then
+                If InitPara.LosZeroEquip Then
                     _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo1")
                 End If
             End If
             '_TypeNo(i) = t.Item("セグメントNo")
             If Not _TypeList.ContainsKey(_TypeNo(RingNo)) Then
-                MsgBox($"{RingNo}リングのセグメントNoが未登録です")
+                MsgBox($"{RingNo}リングのセグメントNo[{_TypeNo(RingNo)}]が未登録です")
             Else
                 '_SegmentWidth(i) = _SegmentTypeList(rsData.Item("セグメントNo")).CenterWidth * 1000
             End If
@@ -460,16 +576,14 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     Public Sub SegmentSimDataRead()
 
-
+        '割り付けシュミレーションで転送日の最新のレコードをリング番号ごとに取得        
         Dim rsData As DataTable =
-            GetDtfmSQL("SELECT  distinct( リングＮｏ) as  リング番号,組立パターンNo,max(転送日) as 転送日,セグメントNo 
-            ,組立パターンNo,シートID from `セグメント割付シュミレーション`  group by リングＮｏ order by リングＮｏ asc;")
+            GetDtfmSQL("SELECT * FROM `セグメント割付シュミレーション` AS m WHERE `転送日`= (SELECT max(`転送日`)
+            FROM `セグメント割付シュミレーション` AS s WHERE m.`リングＮｏ` = s.`リングＮｏ`) order by `リングＮｏ`;")
 
-        'rsData = ExecuteSql _
-        '("SELECT * FROM flexセグメント組立データ Inner Join セグメント組立パターンベース")
 
         For Each t As DataRow In rsData.Rows
-            Dim RingNo As Integer = t.Item("リング番号")
+            Dim RingNo As Integer = t.Item("リングＮｏ")
             _TypeNoSim(RingNo) = t.Item("セグメントNo")
             If Not IsDBNull(t.Item("組立パターンNo")) Then
                 _SegmentAssenblyPtnIDSim(RingNo) = t.Item("組立パターンNo")
@@ -477,6 +591,7 @@ Friend Class clsSegmentAssembly
 
             If Not IsDBNull(t.Item("転送日")) Then
                 _SheetIDSim(RingNo) = t.Item("シートID")
+                _TransferDate(RingNo) = t.Item("転送日")
             End If
 
         Next
@@ -621,9 +736,9 @@ Friend Class clsSegmentAssembly
         ''' </summary>
         Public Property PieceCenterAngle As Double
         ''' <summary>
-        ''' 対抗ジャッキ
+        ''' 対抗グループ
         ''' </summary>
-        Public Property OpposeJack As List(Of Short)
+        Public Property OpposeGroup As List(Of Short)
         ''' <summary>
         ''' 甲組乙組の識別
         ''' </summary>
@@ -650,13 +765,33 @@ Friend Class clsSegmentAssembly
             End Get
             Set(value As List(Of Short))
                 _PullBackJack = value
-                GetReduceJackAndGr()
+                'GetReduceJackAndGr()
             End Set
         End Property
         ''' <summary>
         ''' 押込みジャッキ
         ''' </summary>
         Public Property ClosetJack As List(Of Short)
+
+        ''' <summary>
+        ''' 推進ジャッキ
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ThrustJack As List(Of Short)
+
+        ''' <summary>
+        ''' 押込推進ジャッキ
+        ''' 推進ジャッキから追加押込みを除外したジャッキ
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ClosetThrustJack As List(Of Short)
+            Get
+                Dim CloseTJ As List(Of Short) = New List(Of Short)(_ThrustJack)
+                CloseTJ.RemoveAll(AddressOf AddClosetJack.Contains)
+                Return CloseTJ
+            End Get
+        End Property
+
         ''' <summary>
         ''' 追加押込みジャッキ
         ''' </summary>
@@ -711,6 +846,27 @@ Friend Class clsSegmentAssembly
                 End If
             Next
 
+            '減圧グループから対抗グループを算出する
+
+            '減圧グループの中心角度を求める
+            Dim GpCenterAngle As New List(Of Single)
+            For Each Gp In _ReduceGroup
+                GpCenterAngle.Add(InitPara.FaiGroup(Gp - 1))
+            Next
+            '対抗グループの中心角度
+            Dim OppseAngle As Single = GpCenterAngle.Average + 180
+            If OppseAngle > 360 Then OppseAngle -= 360
+            '各グループの中心角度との絶対値を求める
+            Dim AnglDiff As New Dictionary(Of Short, Single)
+            For i = 0 To InitPara.NumberGroup - 1
+                AnglDiff.Add(1 + 1, Math.Abs(InitPara.FaiGroup(i) - OppseAngle))
+                If AnglDiff(i + 1) > 360 Then AnglDiff(i + 1) -= 360
+            Next
+            '対抗グループ
+            _OpposeGroup =
+                    (From q In AnglDiff Order By q.Value Descending Select q.Key).Take(CtlPara.LosZeroOpposeGroupNumber).ToList
+
+
 
         End Sub
 
@@ -726,7 +882,26 @@ Friend Class clsSegmentAssembly
         ElseIf t.Count = 1 Then
             Return t(0)
         Else
-            Return t(0) & "-" & t(t.Count - 1)
+            '１番と最終番号のジャッキが含まれてる場合
+            If t.Contains(1) And t.Contains(InitPara.NumberJack) Then
+                Dim st As Integer = 1
+                Do While t.Contains(st + 1)
+                    st += 1
+                Loop
+                Dim la As Integer = InitPara.NumberJack
+                Do While t.Contains(la - 1)
+                    la -= 1
+                Loop
+
+                Return la & "-" & st
+
+
+
+            Else
+                Return t(0) & "-" & t(t.Count - 1)
+            End If
+
+
 
         End If
     End Function

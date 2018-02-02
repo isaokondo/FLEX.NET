@@ -28,12 +28,12 @@ Partial Class ucnDspGpPres
         'lblData
         '
         Me.lblData.BackColor = System.Drawing.Color.Black
-        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblData.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblData.ForeColor = System.Drawing.Color.LightGreen
         Me.lblData.Location = New System.Drawing.Point(0, 0)
         Me.lblData.Margin = New System.Windows.Forms.Padding(0)
         Me.lblData.Name = "lblData"
-        Me.lblData.Size = New System.Drawing.Size(35, 16)
+        Me.lblData.Size = New System.Drawing.Size(43, 15)
         Me.lblData.TabIndex = 8
         Me.lblData.Text = "99.9"
         Me.lblData.TextAlign = System.Drawing.ContentAlignment.MiddleRight

@@ -52,6 +52,16 @@ Public Class frmRingDataView
 
 
     End Sub
+    ''' <summary>
+    ''' クリップボードにデータをコピー
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnCpyToClipboard_Click(sender As Object, e As EventArgs) Handles btnCpyToClipboard.Click
+        dgv.SelectAll()
+        Clipboard.SetDataObject(dgv.GetClipboardContent)
+        dgv.ClearSelection()
+    End Sub
 
     Private Class clsRingDb
         Inherits clsDataBase
@@ -81,20 +91,33 @@ Public Class frmRingDataView
 
             ' flex掘削データの最新データを取得
             'NULL以外のデータを表示
-            Dim clLst As DataTable = GetDtfmSQL("select * from flex掘削データ ORDER BY 時間 DESC LIMIT 0,1;")
+            Dim clLst As DataTable = GetDtfmSQL("show columns from flex掘削データ;")
 
             Dim cl As List(Of String) = (From cc As DataColumn In clLst.Columns Select cc.ColumnName).ToList
 
             For Each r As DataRow In clLst.Rows
-                For Each cName In cl
+                'For Each cName In cl
+                Dim cName As String = r.Item("Field")
+                If Not IsDBNull(r.Item("Field")) Then
+                    If r.Item("Field") = "時間" Then
+                        _ColList.Add("DATE_FORMAT(`時間`,' %k:%i:%s' ) AS 時間")
+                    End If
 
-                    If Not IsDBNull(r.Item(cName)) Then
-                        If cName = "時間" Then
-                            cName = "DATE_FORMAT(`時間`,' %k:%i:%s' ) AS 時間"
+                    If GetGroupNameEnable(cName) Then
+                        If cName.IndexOf("MV") > 0 Then
+                            _ColList.Add($"{cName} AS `{cName}{vbCrLf}(%)`")
+                        End If
+                        If cName.IndexOf("SV")>0 Or cName.IndexOf("圧力")>0 Then
+                            _ColList.Add($"{cName} AS `{cName}{vbCrLf}(MPa)`")
+                        End If
+                        If cName.IndexOf("制御フラグ") > 0 Then
+                            _ColList.Add($"{cName} AS `{cName}`")
                         End If
 
-                        'アナログTAGより単位を取得
-                        If PlcIf.AnalogTag.TagExist(cName) Then
+                    Else
+
+                            'アナログTAGより単位を取得
+                            If PlcIf.AnalogTag.TagExist(cName) Then
                             Dim Unit As String = PlcIf.AnalogTag.TagData(cName).Unit
                             'Dim Dc As Short = PlcIf.AnalogTag.TagData(cName).DigitLoc
 
@@ -102,18 +125,42 @@ Public Class frmRingDataView
                             If Unit <> "" Then
                                 cName = $"{fName} AS `{cName}{vbCrLf}({Unit})`"
                             End If
+                            _ColList.Add(cName)
                         End If
-                        _ColList.Add(cName)
                     End If
-                Next
+
+                End If
+                'Next
             Next
 
         End Sub
 
+        ''' <summary>
+        ''' コラム名でグループと言う文字が含まれていて
+        ''' 番号がグループ番号内
+        ''' </summary>
+        ''' <param name="Gstr"></param>
+        ''' <returns></returns>
+        Private Function GetGroupNameEnable(Gstr As String) As Boolean
+            'グループと言う文字が含まれるか？
+            Dim tmpBl As Boolean = Gstr.IndexOf("グループ") >= 0
+            Dim GrNo As Integer = 999
+            If tmpBl Then
+                '数値を取得
+                Dim tt As String = System.Text.RegularExpressions.Regex.Replace(Gstr, "[^0-9]", "")
+                If tt <> "" Then
+                    GrNo = CInt(System.Text.RegularExpressions.Regex.Replace(Gstr, "[^0-9]", ""))
+                End If
+            End If
+            Return tmpBl And GrNo <= InitPara.NumberGroup
+
+        End Function
+
+
 
         Public Function GetData(RingNo As Integer) As DataTable
 
-            _ColList.Remove("リング番号")
+            '_ColList.Remove("リング番号")
 
             Dim dt As DataTable =
                 GetDtfmSQL($"SELECT {String.Join(",", _ColList)}  FROM flex掘削データ WHERE リング番号='{RingNo}'")

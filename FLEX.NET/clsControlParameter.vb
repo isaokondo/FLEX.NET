@@ -63,7 +63,9 @@ Public Class clsControlParameter
     Private _圧力制御開始推力値 As Double ''圧力制御開始推力値
     Private _圧力制御開始推力値有効フラグ As Boolean ''圧力制御開始推力値有効フラグ
     Private _全押しスタート As Boolean ''全押しスタート
-
+    ''' <summary>
+    ''' 自動方向制御
+    ''' </summary>
     Private _AutoDirectionControl As Boolean
     ''' <summary>
     ''' FLEX姿勢制御の自動手動の切り替わり
@@ -82,16 +84,29 @@ Public Class clsControlParameter
     Private _DevTolerance As Single         '偏角許容値
 
 
+    Private _LosZeroNlp As Integer  '同時施工 最適化ループ回数
+    Private _LosZeroEmp As Single   'モーメント偏差許容値
+    Private _LoszerorStep As Single '1ループの演算の力点変化量
+
     Private _LosZeroRollingTake As Boolean  '同時施工：ローリング考慮
     Private _LosZeroOpposeJack As Boolean '対抗ジャッキ選択
     Private _LosZeroOpposeControl As Boolean '対抗圧制御
+    Private _LosZeroOpposeGroupNumber As Short '対抗ジャッキ制御グループ数
+    Private _LosZeroOpposeManualSV As Single '対抗ジャッキ制御手動設定圧
+    Private _ReduceReachStrokeDiff As Integer = 0 '減圧開始可能ストロークの設定（ストロークがセグメント幅＋この設定以上でサウンド出力）
 
     Private _ReduceTime As Integer '減圧時間（単位：SEC）
     Private _ReduceJudgePress As Single '減圧完了判断圧力(Mpa)
     Private _NextPieceConfirm As Boolean    '次ピース組立確認
+    Private _NextPieceConfirmTime As Integer    '組立確認後の減圧開始確認タイマ
+
+    Private _MomentRdductionRateOnReduce As Short   '減圧開始時のモーメント低減率
+    Private _MomentRdductionRateOnOnewayLimit As Short '片押し調整時のモーメント低減率
+
 
     Private _PitchingSel As Integer = 0 'ピッチングの選択　0:ジャイロ　1:マシン
 
+    Private _RightStrokeDiff As Boolean = True    'ストローク差　右勝ちでTRUE　左勝ちでFLASE
 
     ''' <summary>
     ''' パラメータに対応するPLCアドレスのハッシュテーブル
@@ -111,6 +126,11 @@ Public Class clsControlParameter
     ''' 任意圧力設定
     ''' </summary>
     Private _optGpSv(InitPara.NumberGroup - 1) As Single
+
+    ''' <summary>
+    ''' 任意圧力設定グループとその圧力設定
+    ''' </summary>
+    Private _OptGpSvDic As Dictionary(Of Short, Single)
 
 
     ''' <summary>
@@ -188,6 +208,19 @@ Public Class clsControlParameter
             'Dim tb As Odbc.OdbcDataReader =
             ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{String.Join(",", _optGpEn.ToArray)}'
                 WHERE 項目名称='OptinalGroupSetNumber'")
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 任意設定有効グループとその設定値
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property OptGpSvDic As Dictionary(Of Short, Single)
+        Get
+            Return _OptGpSvDic
+        End Get
+        Set(value As Dictionary(Of Short, Single))
+            _OptGpSvDic = value
         End Set
     End Property
 
@@ -270,16 +303,49 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+    ''' <summary>
+    ''' 右テールクリアランス計あり　
+    ''' アナログTagにあるかどうか
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TaleClrMeasurRExit As Boolean
 
-    Public Property クリアランス計 As Boolean
-        Get
-            Return _クリアランス計
-        End Get
-        Set(value As Boolean)
-            _クリアランス計 = value
-            Call sbUpdateData(value)
-        End Set
-    End Property
+    ''' <summary>
+    ''' 左テールクリアランス計あり
+    '''アナログTagにあるかどうか
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TaleClrMeasurLExit As Boolean
+
+    ''' <summary>
+    ''' 上テールクリアランス計あり
+    ''' アナログTagにあるかどうか
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TaleClrMeasurUExit As Boolean
+
+    ''' <summary>
+    ''' 下テールクリアランス計あり
+    ''' アナログTagにあるかどうか
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TaleClrMeasurBExit As Boolean
+
+    ''' <summary>
+    ''' FLEXからの速度割合あり
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property SpeedRateExit As Boolean
+
+    'Public Property クリアランス計 As Boolean
+    '    Get
+    '        Return _クリアランス計
+    '    End Get
+    '    Set(value As Boolean)
+    '        _クリアランス計 = value
+    '        Call sbUpdateData(value)
+    '    End Set
+    'End Property
     Public Property 最大全開出力時の目標圧力() As Single
         Get
             Return _最大全開出力時の目標圧力
@@ -378,6 +444,19 @@ Public Class clsControlParameter
         End Set
     End Property
 
+    ''' <summary>
+    ''' ストローク差　右勝ちでTRUE　左勝ちでFLASE
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property RightStrokeDiff As Boolean
+        Get
+            Return _RightStrokeDiff
+        End Get
+        Set(value As Boolean)
+            _RightStrokeDiff = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
 
 
     'Public Property 偏差角許容値() As Single
@@ -495,7 +574,10 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
-
+    ''' <summary>
+    ''' 自動方向制御
+    ''' </summary>
+    ''' <returns></returns>
     Public Property AutoDirectionControl As Boolean
         Get
             Return _AutoDirectionControl
@@ -688,6 +770,45 @@ Public Class clsControlParameter
         End Set
     End Property
     ''' <summary>
+    ''' 同時施工 最適化ループ回数
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LosZeroNlp As Integer
+        Get
+            Return _LosZeroNlp
+        End Get
+        Set(value As Integer)
+            _LosZeroNlp = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+    ''' <summary>
+    ''' モーメント偏差許容値
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LosZeroEmp As Single
+        Get
+            Return _LosZeroEmp
+        End Get
+        Set(value As Single)
+            _LosZeroEmp = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+    ''' <summary>
+    ''' 1ループの演算の力点変化量
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LoszerorStep As Single
+        Get
+            Return _LoszerorStep
+        End Get
+        Set(value As Single)
+            _LoszerorStep = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+    ''' <summary>
     ''' 同時施工：ローリング考慮
     ''' </summary>
     ''' <returns></returns>
@@ -714,7 +835,7 @@ Public Class clsControlParameter
         End Set
     End Property
     ''' <summary>
-    ''' 対抗圧制御
+    ''' 対抗圧制御　有効
     ''' </summary>
     ''' <returns></returns>
     Public Property LosZeroOpposeControl As Boolean
@@ -726,6 +847,40 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+
+    ''' <summary>
+    ''' 対抗ジャッキ制御グループ数
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LosZeroOpposeGroupNumber As Short
+        Get
+            Return _LosZeroOpposeGroupNumber
+        End Get
+        Set(value As Short)
+            _LosZeroOpposeGroupNumber = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 対抗ジャッキ制御手動設定圧
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LosZeroOpposeManualSV As Single
+        Get
+            Return _LosZeroOpposeManualSV
+        End Get
+        Set(value As Single)
+            _LosZeroOpposeManualSV = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+
+
+
+
     ''' <summary>
     ''' 減圧時間（単位：SEC）
     ''' </summary>
@@ -762,6 +917,20 @@ Public Class clsControlParameter
         End Set
     End Property
     ''' <summary>
+    ''' 組立確認後の減圧開始確認タイマ
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property NextPieceConfirmTime As Integer
+        Get
+            Return _NextPieceConfirmTime
+        End Get
+        Set(value As Integer)
+            _NextPieceConfirmTime = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
+    ''' <summary>
     ''' コピーストローク表示
     ''' コピーカッタの色表示が有効になるストローク
     ''' </summary>
@@ -783,6 +952,34 @@ Public Class clsControlParameter
         End Get
         Set(value As Short)
             _CopySelect = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 減圧開始時のモーメント低減率
+    ''' </summary>
+    ''' <returns></returns>
+
+    Public Property MomentRdductionRateOnReduce As Short
+        Get
+            Return _MomentRdductionRateOnReduce
+        End Get
+        Set(value As Short)
+            _MomentRdductionRateOnReduce = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+    ''' <summary>
+    ''' 片押し調整時のモーメント低減率
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MomentRdductionRateOnOnewayLimit As Short
+        Get
+            Return _MomentRdductionRateOnOnewayLimit
+        End Get
+        Set(value As Short)
+            _MomentRdductionRateOnOnewayLimit = value
             Call sbUpdateData(value)
         End Set
     End Property
@@ -826,21 +1023,40 @@ Public Class clsControlParameter
     End Property
 
 
-
     Public ReadOnly Property WideUse As Dictionary(Of Short, String)
         Get
             Return _wideUse
         End Get
     End Property
+    ''' <summary>
+    ''' 減圧開始可能ストロークの設定
+    ''' ストロークがセグメント幅＋この設定以上でサウンド出力
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ReduceReachStrokeDiff As Integer
+        Get
+            Return _ReduceReachStrokeDiff
+        End Get
+        Set(value As Integer)
+            _ReduceReachStrokeDiff = value
+            Call sbUpdateData(value)
 
-
+        End Set
+    End Property
 
 
     Public Sub WideUseUpdate(iKey As Short, value As String)
         _wideUse.Item(iKey) = value
-        'Dim tb As Odbc.OdbcDataReader =
-        ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{value}' WHERE 項目名称 ='wideuse{iKey}'")
-        'tb.Close()
+
+        Dim WdUsDtExist As DataTable =
+            GetDtfmSQL($"SELECT * FROM FLEX制御パラメータ  WHERE 項目名称 ='wideuse{iKey}'")
+        '存在しなかった場合
+        If WdUsDtExist.Rows.Count <> 0 Then
+            ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{value}' WHERE 項目名称 ='wideuse{iKey}'")
+        Else
+            ExecuteSqlCmd($"INSERT INTO FLEX制御パラメータ (`項目名称`,`値`) VALUES ('wideuse{iKey}','{value}') ")
+        End If
+
 
     End Sub
 
@@ -906,6 +1122,8 @@ Public Class clsControlParameter
 
         _PitchingSel = chk.GetValue("PitchingSel")
 
+        _RightStrokeDiff = fnBoolean(chk.GetValue("RightStrokeDiff", "True"))
+
         Dim Value As Boolean = fnBoolean(chk.GetValue("AutoDirectionControl"))
         If _AutoDirectionControl <> Value Then
             _AutoDirectionControl = Value
@@ -921,18 +1139,42 @@ Public Class clsControlParameter
         _LineDevLastRing = chk.GetValue("LineDevLastRing")
         _PresBarGraphWidt = chk.GetValue("PresBarGraphWidt")
         _DevTolerance = chk.GetValue("DevTolerance")
+
+        _LosZeroNlp = chk.GetValue("LosZeroNlp")
+        _LosZeroEmp = chk.GetValue("LosZeroEmp")
+        _LoszerorStep = chk.GetValue("LoszerorStep")
+
         _LosZeroRollingTake = fnBoolean(chk.GetValue("LosZeroRollingTake"))
-        _LosZeroOpposeJack = fnBoolean(chk.GetValue("LosZeroOpposeJack"))
-        _LosZeroOpposeControl = fnBoolean(chk.GetValue("LosZeroOpposeControl"))
+        If InitPara.OpposeJackEnable Then
+            _LosZeroOpposeJack = fnBoolean(chk.GetValue("LosZeroOpposeJack"))
+            _LosZeroOpposeControl = fnBoolean(chk.GetValue("LosZeroOpposeControl"))
+            _LosZeroOpposeGroupNumber = chk.GetValue("LosZeroOpposeGroupNumber")
+            _LosZeroOpposeManualSV = chk.GetValue("LosZeroOpposeManualSV")
+        Else
+            _LosZeroOpposeJack = False
+            _LosZeroOpposeControl = False
+            _LosZeroOpposeGroupNumber=0
+        End If
+
         _ReduceTime = chk.GetValue("ReduceTime")
         _ReduceJudgePress = chk.GetValue("ReduceJudgePress")
         _NextPieceConfirm = chk.GetValue("NextPieceConfirm")
+        _NextPieceConfirmTime = chk.GetValue("NextPieceConfirmTime")
         _PIDShiftDefl = chk.GetValue("PIDShiftDefl")
         _DirectControl = fnBoolean(chk.GetValue("DirectControl"))
-
+        _ReduceReachStrokeDiff = chk.GetValue("ReduceReachStrokeDiff", 0)
 
         _CopyCutEnableStroke = chk.GetValue("CopyCutEnableStroke")
         _CopySelect = chk.GetValue("CopySelect")
+
+        '減圧開始時のモーメント低減率
+
+
+
+        _MomentRdductionRateOnReduce = chk.GetValue("MomentRdductionRateOnReduce", "80")
+        '片押し調整時のモーメント低減率
+        _MomentRdductionRateOnOnewayLimit = chk.GetValue("MomentRdductionRateOnOnewayLimit", "80")
+
 
         _optGpEn =
             (From k In Split(chk.GetValue("OptinalGroupSetNumber"), ",") Where IsNumeric(k) Select CShort(k)).ToList
@@ -950,7 +1192,9 @@ Public Class clsControlParameter
                 _wideUse(k.Key.ToGetNum) = k.Value
             End If
             If k.Key.Contains("OptinalGroupSetValue") Then
-                OptGpSv(k.Key.ToGetNum - 1) = k.Value
+                If k.Key.ToGetNum <= InitPara.NumberGroup Then
+                    _optGpSv(k.Key.ToGetNum - 1) = k.Value
+                End If
             End If
         Next
 

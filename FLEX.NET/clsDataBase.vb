@@ -197,8 +197,8 @@ Public Class clsDataBase
                 Dim dr As OdbcDataReader = cmd.ExecuteReader
 
                 If dr.RecordsAffected = 0 Then
-                    Debug.Print(SQLCommand)
-                End If
+                'Debug.Print(SQLCommand)
+            End If
 
                 dr.Close()
                 conMYSQLDB.Close()
@@ -272,10 +272,11 @@ Public Class clsDataBase
                 Builder.UserID = "toyo"
                 Builder.Password = "yanagi"
                 Builder.Database = DataBaseName
+                Builder.ConnectionTimeout = 60
                 Dim ConStr = Builder.ToString()
-
                 Dim con As New MySqlConnection
                 con.ConnectionString = ConStr
+
                 con.Open()
 
                 Dim adpter As New MySqlDataAdapter(SQLCommand, con)
@@ -516,11 +517,14 @@ Public Class clsInitParameter
 
 
     Private _constructionName As String '工事名（環境設定テーブルより
-    Private _LosZeroMode As Boolean = True    '同時施工あり（環境設定テーブルより
+    Private _LosZeroEquip As Boolean = True    '同時施工あり（環境設定テーブルより
 
     Private _ClientMode As Boolean = False  'クライアントモード　データ保存なし、グループ操作出力なしのモード
     Private _MonitorMode As Boolean = False  'モニタモード　データ保存なし、PLC書き込みなし　　グループ操作出力なしのモード
-    Private _DisplayNarrowMode As Boolean = False   'ディスプレイモード　ロスゼロなしで
+
+    Private _OpposeJackEnable As Boolean = False '対抗ジャッキの機能が使用可（鹿島、飛島以外のJVでは仕様不可)
+
+    Private _DistanceInputMethod As Boolean = False 'False:発進からの入力　True:起点からの入力
 
 
     Private WithEvents Htb As New clsHashtableRead
@@ -655,15 +659,24 @@ Public Class clsInitParameter
         End Get
     End Property
     ''' <summary>
-    ''' ロスゼロあり、なし
+    ''' ロスゼロ装備
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property LosZeroMode As Boolean
+    Public ReadOnly Property LosZeroEquip As Boolean
         Get
-            Return _LosZeroMode
+            Return _LosZeroEquip
         End Get
     End Property
 
+    ''' <summary>
+    ''' 対抗ジャッキの機能使用可（特許の関係で鹿島、飛島以外のJVでは使用不可)
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property OpposeJackEnable As Boolean
+        Get
+            Return _OpposeJackEnable
+        End Get
+    End Property
 
     ''' <summary>
     ''' クライアントモード
@@ -690,23 +703,48 @@ Public Class clsInitParameter
         End Set
     End Property
     ''' <summary>
-    ''' クライアントモードかモニタモードのどちらかがON
+    ''' 測量距離入力方法
     ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property ReadOnleMode As Boolean
+    ''' <returns>Flase:発進から
+    ''' True:起点から
+    ''' </returns>
+    Public Property DistanceInputMethod As Boolean
         Get
-            Return _MonitorMode Or _ClientMode
+            Return _DistanceInputMethod
         End Get
+        Set(value As Boolean)
+            _DistanceInputMethod = value
+        End Set
     End Property
+
+
     ''' <summary>
-    ''' ディスプレイ　ナローモード
+    ''' サーバーモード
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property DisplayNarrowMode As Boolean
+    Public ReadOnly Property ServerMode As Boolean
         Get
-            Return _DisplayNarrowMode
+            Return Not (_MonitorMode Or _ClientMode)
         End Get
     End Property
+
+    Public ReadOnly Property ModeName As String
+        Get
+            If _MonitorMode Then
+                Return "MonitorMode"
+            ElseIf _ClientMode Then
+                Return "ClientMode"
+            Else
+                Return "ServerMode"
+            End If
+
+
+        End Get
+    End Property
+
+
+
+
 
 
     Public Sub New()
@@ -786,6 +824,13 @@ Public Class clsInitParameter
             _topStrokeEnable = (_mesureJackNo(0) <> 0)
             _bottomStrokeEnable = (_mesureJackNo(2) <> 0)
 
+
+            If ht.ContainsKey("測量距離入力") Then
+                _DistanceInputMethod = (ht("測量距離入力").IndexOf("起点") >= 0)
+            End If
+
+
+
         Catch ex As Exception
 
         End Try
@@ -795,7 +840,11 @@ Public Class clsInitParameter
             GetDtfmSQL($"SELECT 工事名,施工方法 FROM 環境設定 WHERE シートID='10'")
         If ConNameLosZero.Rows.Count <> 0 Then
             _constructionName = ConNameLosZero.Rows(0).Item(0)
-            _LosZeroMode = (ConNameLosZero.Rows(0).Item(1) = 1)
+            _LosZeroEquip = (ConNameLosZero.Rows(0).Item(1) = 1)
+            _OpposeJackEnable =
+                _LosZeroEquip And (_constructionName.IndexOf("鹿島") >= 0 Or _constructionName.IndexOf("飛島") >= 0)
+
+
         End If
 
         'モニタモード、クライアントモードの設定読み込み
@@ -805,7 +854,6 @@ Public Class clsInitParameter
 
         _ClientMode = (GetIniString("MODE", "ClientMode", IniFilePath) = "True")
         _MonitorMode = (GetIniString("MODE", "MonitorMode", IniFilePath) = "True")
-        _DisplayNarrowMode = (GetIniString("MODE", "DisplayNarrowMode", IniFilePath) = "True")
 
     End Sub
     Function KeySelector(ByVal pair As KeyValuePair(Of String, Integer)) As String
@@ -818,7 +866,7 @@ Public Class clsInitParameter
     Private Sub CalucFaiJack()
 
         Dim sngStartLoc As Single
-        sngStartLoc = IIf(_firstJackLoc.ToLower = "top", 90, 90 - 360 / _numberJack / 2)
+        sngStartLoc = If(_firstJackLoc.ToLower = "top", 90, 90 - 360 / _numberJack / 2)
 
         ReDim _faiJack(_numberJack)
 
@@ -1019,7 +1067,9 @@ Public Class clsTableUpdateConfirm
             Dim tableUpDt As DataTable =
             GetDtfmSQL($"SELECT * FROM updatetable WHERE TIME>'{tbUpdateTime.ToString}' ORDER BY TIME DESC")
 
-
+            If tableUpDt.Rows.Count <> 0 Then
+                tbUpdateTime = tableUpDt.Rows(0).Item("TIME")
+            End If
 
             For i As Integer = 0 To tableUpDt.Rows.Count - 1
                 Select Case tableUpDt.Rows(i).Item("TableName")
@@ -1032,11 +1082,16 @@ Public Class clsTableUpdateConfirm
                         InitPara = New clsInitParameter
                     Case "flexセグメント組立データ"
                         SegAsmblyData.SegmentRingDataRead()
+                        '組立パターンの情報を取得
+                        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+
+
+                        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+
                         RaiseEvent SegmentAsmChange()
 
 
                 End Select
-                tbUpdateTime = tableUpDt.Rows(i).Item("TIME")
 
             Next
 
@@ -1124,6 +1179,15 @@ Public Class clsCheckDictionary
         End If
     End Function
 
+    Public Function GetValue(tKey As String, DefaltVal As String) As String
+        If _dic.ContainsKey(tKey) Then
+            Return _dic(tKey)
+        Else
+            Dim db As New clsDataBase
+            db.ExecuteSqlCmd($"INSERT INTO flex制御パラメータ(`項目名称`,`値`) VALUES('{tKey}','{DefaltVal}')")
+            Return DefaltVal
+        End If
+    End Function
 
 
 

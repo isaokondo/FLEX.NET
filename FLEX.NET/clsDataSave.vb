@@ -182,7 +182,7 @@ Friend Class clsDataSave
 
             Data(ColumnList.IndexOf("姿勢制御自動")) = IIf(CtlPara.AutoDirectionControl, 1, 0)
 
-            If InitPara.LosZeroMode Then
+            If InitPara.LosZeroEquip Then
 
                 Data(ColumnList.IndexOf("同時施工モード")) = IIf(PlcIf.LosZeroMode, 1, 0)
                 Data(ColumnList.IndexOf("同時施工可")) = IIf(PlcIf.LosZeroEnable, 1, 0)
@@ -195,19 +195,23 @@ Friend Class clsDataSave
 
                 Data(ColumnList.IndexOf("組立ピース")) = PlcIf.AssemblyPieceNo
 
-                With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
-                    'TODO:Data(ColumnList.IndexOf("組立セグメント")) = 
-                    Data(ColumnList.IndexOf("組立ボルトピッチ")) = .BoltPitch
-                    Data(ColumnList.IndexOf("組立パターン")) = .PatternName
-                    'TODO:Data(ColumnList.IndexOf("ローリング偏差")) = .r
-                    Data(ColumnList.IndexOf("引戻ジャッキ")) = LstToJoinDl(.PullBackJack)
-                    Data(ColumnList.IndexOf("減圧グループ")) = LstToJoinDl(.ReduceGroup)
-                    Data(ColumnList.IndexOf("押込ジャッキ")) = LstToJoinDl(.ClosetJack)
-                    'TODO:Data(ColumnList.IndexOf("押込推進ジャッキ")) = CulcMoment.Thrust
-                    Data(ColumnList.IndexOf("追加推進ジャッキ")) = LstToJoinDl(.AddClosetJack)
-                    'TODO:Data(ColumnList.IndexOf("RL考慮ジャッキ")) = CulcMoment.Thrust
+                If SegAsmblyData.ProcessData.ContainsKey(PlcIf.AssemblyPieceNo) Then
+                    With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
+                        'TODO:Data(ColumnList.IndexOf("組立セグメント")) = 
+                        Data(ColumnList.IndexOf("組立ボルトピッチ")) = .BoltPitch
+                        Data(ColumnList.IndexOf("組立パターン")) = .PatternName
+                        'TODO:Data(ColumnList.IndexOf("ローリング偏差")) = .r
+                        Data(ColumnList.IndexOf("引戻ジャッキ")) = .PullBackJack.ToCommaDelmit
+                        Data(ColumnList.IndexOf("減圧グループ")) = .ReduceGroup.ToCommaDelmit
+                        Data(ColumnList.IndexOf("押込ジャッキ")) = .ClosetJack.ToCommaDelmit
+                        'TODO:Data(ColumnList.IndexOf("押込推進ジャッキ")) = CulcMoment.Thrust
+                        Data(ColumnList.IndexOf("追加推進ジャッキ")) = .AddClosetJack.ToCommaDelmit
+                        'TODO:Data(ColumnList.IndexOf("RL考慮ジャッキ")) = CulcMoment.Thrust
 
-                End With
+                    End With
+
+                End If
+
 
                 Data(ColumnList.IndexOf("同時掘進時間")) = ElapsedTime.LozeroExcavationTime
 
@@ -245,20 +249,6 @@ Friend Class clsDataSave
             Return "'" & String.Join("','", Data) & "'"
         End Try
 
-
-    End Function
-    ''' <summary>
-    ''' リスト形式をコンマで区切った値に変換
-    ''' </summary>
-    ''' <param name="t"></param>
-    ''' <returns></returns>
-    Private Function LstToJoinDl(t As List(Of Short)) As String
-        'データないとき
-        If IsNothing(t) OrElse t.Count = 0 Then
-            Return ""
-        Else
-            Return String.Join(",", t)
-        End If
 
     End Function
 

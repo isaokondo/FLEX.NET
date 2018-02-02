@@ -53,7 +53,7 @@ Partial Class frmOtherSetting
         '
         Me.JackCullControl.BackColor = System.Drawing.Color.Transparent
         Me.JackCullControl.FieldName = "ジャッキの間引き制御"
-        Me.JackCullControl.Location = New System.Drawing.Point(18, 140)
+        Me.JackCullControl.Location = New System.Drawing.Point(18, 195)
         Me.JackCullControl.Margin = New System.Windows.Forms.Padding(2)
         Me.JackCullControl.Name = "JackCullControl"
         Me.JackCullControl.rdbtnValue = False
@@ -61,12 +61,13 @@ Partial Class frmOtherSetting
         Me.JackCullControl.SlectNoName = "しない"
         Me.JackCullControl.SlectYesName = "する"
         Me.JackCullControl.TabIndex = 34
+        Me.JackCullControl.Visible = False
         '
         'ClearanceMeterExist
         '
         Me.ClearanceMeterExist.BackColor = System.Drawing.Color.Transparent
         Me.ClearanceMeterExist.FieldName = "クリアランス計"
-        Me.ClearanceMeterExist.Location = New System.Drawing.Point(18, 194)
+        Me.ClearanceMeterExist.Location = New System.Drawing.Point(18, 141)
         Me.ClearanceMeterExist.Margin = New System.Windows.Forms.Padding(2)
         Me.ClearanceMeterExist.Name = "ClearanceMeterExist"
         Me.ClearanceMeterExist.rdbtnValue = False
@@ -74,6 +75,7 @@ Partial Class frmOtherSetting
         Me.ClearanceMeterExist.SlectNoName = "なし"
         Me.ClearanceMeterExist.SlectYesName = "あり"
         Me.ClearanceMeterExist.TabIndex = 35
+        Me.ClearanceMeterExist.Visible = False
         '
         'PitchingSelect
         '

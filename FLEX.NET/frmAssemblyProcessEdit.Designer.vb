@@ -42,6 +42,8 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPieace = New FLEX.NET.ucnDspData()
         Me.DspTypeName = New FLEX.NET.ucnDspData()
         Me.DspReduceGroup = New FLEX.NET.ucnDspData()
+        Me.btnApply = New System.Windows.Forms.Button()
+        Me.DspOpposeGroup = New FLEX.NET.ucnDspData()
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -51,7 +53,7 @@ Partial Class frmAssemblyProcessEdit
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(266, 402)
+        Me.btnCancel.Location = New System.Drawing.Point(350, 401)
         '
         'AssemblyBoltPitchSel
         '
@@ -271,7 +273,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClosetJack.TabIndex = 143
         Me.DspClosetJack.Unit = "deg"
         Me.DspClosetJack.UnitVisible = False
-        Me.DspClosetJack.Value = "20"
+        Me.DspClosetJack.Value = "-"
         Me.DspClosetJack.ValueType = True
         '
         'DspBoltPitch
@@ -292,7 +294,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspBoltPitch.TabIndex = 140
         Me.DspBoltPitch.Unit = "deg"
         Me.DspBoltPitch.UnitVisible = False
-        Me.DspBoltPitch.Value = "3"
+        Me.DspBoltPitch.Value = "-"
         Me.DspBoltPitch.ValueType = False
         '
         'DspAssemblyPattern
@@ -313,7 +315,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPattern.TabIndex = 148
         Me.DspAssemblyPattern.Unit = "deg"
         Me.DspAssemblyPattern.UnitVisible = False
-        Me.DspAssemblyPattern.Value = "RC甲1"
+        Me.DspAssemblyPattern.Value = "-------"
         Me.DspAssemblyPattern.ValueType = True
         '
         'DspNextPieceName
@@ -334,7 +336,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspNextPieceName.TabIndex = 147
         Me.DspNextPieceName.Unit = "deg"
         Me.DspNextPieceName.UnitVisible = False
-        Me.DspNextPieceName.Value = "A1-3"
+        Me.DspNextPieceName.Value = "-----"
         Me.DspNextPieceName.ValueType = True
         '
         'DspAddClosetThrustJack
@@ -355,7 +357,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAddClosetThrustJack.TabIndex = 145
         Me.DspAddClosetThrustJack.Unit = "deg"
         Me.DspAddClosetThrustJack.UnitVisible = False
-        Me.DspAddClosetThrustJack.Value = "24"
+        Me.DspAddClosetThrustJack.Value = "-"
         Me.DspAddClosetThrustJack.ValueType = True
         '
         'DspClosetThrustJack
@@ -397,7 +399,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspPullBackJack.TabIndex = 142
         Me.DspPullBackJack.Unit = "deg"
         Me.DspPullBackJack.UnitVisible = False
-        Me.DspPullBackJack.Value = "19-23"
+        Me.DspPullBackJack.Value = "-"
         Me.DspPullBackJack.ValueType = True
         '
         'DspAssemblyPieace
@@ -418,7 +420,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPieace.TabIndex = 141
         Me.DspAssemblyPieace.Unit = "deg"
         Me.DspAssemblyPieace.UnitVisible = False
-        Me.DspAssemblyPieace.Value = "A2-1"
+        Me.DspAssemblyPieace.Value = "-----"
         Me.DspAssemblyPieace.ValueType = True
         '
         'DspTypeName
@@ -460,14 +462,49 @@ Partial Class frmAssemblyProcessEdit
         Me.DspReduceGroup.TabIndex = 149
         Me.DspReduceGroup.Unit = "deg"
         Me.DspReduceGroup.UnitVisible = False
-        Me.DspReduceGroup.Value = "19-23"
+        Me.DspReduceGroup.Value = "-"
         Me.DspReduceGroup.ValueType = True
+        '
+        'btnApply
+        '
+        Me.btnApply.BackColor = System.Drawing.Color.Silver
+        Me.btnApply.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnApply.Location = New System.Drawing.Point(246, 401)
+        Me.btnApply.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnApply.Name = "btnApply"
+        Me.btnApply.Size = New System.Drawing.Size(102, 35)
+        Me.btnApply.TabIndex = 150
+        Me.btnApply.Text = "適用"
+        Me.btnApply.UseVisualStyleBackColor = False
+        '
+        'DspOpposeGroup
+        '
+        Me.DspOpposeGroup.BackColor = System.Drawing.Color.Transparent
+        Me.DspOpposeGroup.Blink = False
+        Me.DspOpposeGroup.BlinkColor = System.Drawing.Color.Red
+        Me.DspOpposeGroup.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.DspOpposeGroup.DataWidth = 91
+        Me.DspOpposeGroup.DecimalPlaces = CType(2, Short)
+        Me.DspOpposeGroup.FieldName = "対抗ｸﾞﾙｰﾌﾟ"
+        Me.DspOpposeGroup.FieldNameWidth = 146
+        Me.DspOpposeGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspOpposeGroup.Location = New System.Drawing.Point(740, 226)
+        Me.DspOpposeGroup.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspOpposeGroup.Name = "DspOpposeGroup"
+        Me.DspOpposeGroup.Size = New System.Drawing.Size(243, 32)
+        Me.DspOpposeGroup.TabIndex = 151
+        Me.DspOpposeGroup.Unit = "deg"
+        Me.DspOpposeGroup.UnitVisible = False
+        Me.DspOpposeGroup.Value = "-"
+        Me.DspOpposeGroup.ValueType = True
         '
         'frmAssemblyProcessEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1078, 769)
+        Me.Controls.Add(Me.DspOpposeGroup)
+        Me.Controls.Add(Me.btnApply)
         Me.Controls.Add(Me.DspReduceGroup)
         Me.Controls.Add(Me.UcnDspData24)
         Me.Controls.Add(Me.DspClosetJack)
@@ -512,6 +549,8 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.SetChildIndex(Me.DspClosetJack, 0)
         Me.Controls.SetChildIndex(Me.UcnDspData24, 0)
         Me.Controls.SetChildIndex(Me.DspReduceGroup, 0)
+        Me.Controls.SetChildIndex(Me.btnApply, 0)
+        Me.Controls.SetChildIndex(Me.DspOpposeGroup, 0)
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -536,4 +575,6 @@ Partial Class frmAssemblyProcessEdit
     Friend WithEvents DspAssemblyPieace As ucnDspData
     Friend WithEvents DspTypeName As ucnDspData
     Friend WithEvents DspReduceGroup As ucnDspData
+    Protected WithEvents btnApply As Button
+    Friend WithEvents DspOpposeGroup As ucnDspData
 End Class

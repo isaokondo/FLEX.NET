@@ -80,6 +80,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
+        '''</summary>
+        Friend ReadOnly Property NextPieceConfirm() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("NextPieceConfirm", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         '''</summary>
         Friend ReadOnly Property point() As System.Drawing.Bitmap
@@ -132,6 +141,15 @@ Namespace My.Resources
         Friend ReadOnly Property ReduceStart() As System.IO.UnmanagedMemoryStream
             Get
                 Return ResourceManager.GetStream("ReduceStart", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
+        '''</summary>
+        Friend ReadOnly Property ReduceStrokeReach() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("ReduceStrokeReach", resourceCulture)
             End Get
         End Property
         

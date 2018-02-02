@@ -31,7 +31,9 @@ Partial Class ucnDspDataMin2
         '
         'lblFieldName
         '
-        Me.lblFieldName.Location = New System.Drawing.Point(-1, 3)
+        Me.lblFieldName.Location = New System.Drawing.Point(-2, 9)
+        Me.lblFieldName.Size = New System.Drawing.Size(105, 12)
+        Me.lblFieldName.Text = "余掘 1 "
         '
         'ucnDspDataMin2
         '

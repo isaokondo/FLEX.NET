@@ -64,6 +64,12 @@ Module mdlFLEX
     Public WithEvents TableUpdateConfirm As clsTableUpdateConfirm
 
     ''' <summary>
+    ''' 減圧可能ストロークに達した
+    ''' </summary>
+    Private ReduceEnableStrokeReachFlg As Boolean
+
+
+    ''' <summary>
     ''' MP3再生
     ''' </summary>
     ''' <param name="command"></param>
@@ -121,7 +127,10 @@ Module mdlFLEX
         '    Dim response = MsgBox($"PLC通信エラー:{ErrMsg}", MsgBoxStyle.AbortRetryIgnore)
         '    If response = MsgBoxResult.Abort Then End
         'Else
-        WriteEventData($"{ErrMsg} ErrorCode:0x{ErrCode.ToString("X8")} ", Color.Red)
+        If ErrCode <> 0 Then
+            WriteEventData($"{ErrMsg} ErrorCode:0x{ErrCode.ToString("X8")} ", Color.Red)
+
+        End If
         'End If
     End Sub
 
@@ -138,13 +147,15 @@ Module mdlFLEX
         frmMain.DirectionChartD.DataGet()
         'TODO:最大テーパーの算出
         CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
+        '最大テーパー位置
+        CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
         'セグメント幅
         CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
 
         'If PreStatus = -1 Then Exit Sub
         '待機中から掘進
         If PreStatus = cTaiki And NowStatus = cKussin Then
-
+            PlcIf.SppedRate = 100
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
             PlcIf.LosZeroSts_FLEX = 0
             WriteEventData($"{PlcIf.RingNo}リング 掘進開始しました", Color.CornflowerBlue)
@@ -170,13 +181,15 @@ Module mdlFLEX
             'JackManual.ManualOn = False
             WriteEventData("掘進中断しました", Color.Black)
             ElapsedTime.ExcavationStop()
-            '最終ストロークをセグメント割付データに書き込み
-            SegAsmblyData.RingLastStrokeUpdate(PlcIf.RingNo, CalcStroke.MesureCalcAveJackStroke)
+            '最終ストロークをセグメント割付データに書き込み server modeのときのみ更新
+            If InitPara.ServerMode Then
+                SegAsmblyData.RingLastStrokeUpdate(PlcIf.RingNo, CalcStroke.MesureCalcAveJackStroke)
+            End If
 
         End If
 
-        '待機中
-        If NowStatus = cTaiki Then
+            '待機中
+            If NowStatus = cTaiki Then
 
             '自動印字　出力
             ReportAutoPrintOut()
@@ -193,7 +206,7 @@ Module mdlFLEX
             PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
             PlcIf.LosZeroDataWrite("押込みジャッキ②", Nothing)
             PlcIf.LosZeroEnable = False   '同時施工可OFF
-            ElapsedTime.WaingStart() '経過時間の算出
+            'ElapsedTime.WaingStart() '経過時間の算出
 
             '掘進開始時のストローク取り込み
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
@@ -238,12 +251,11 @@ Module mdlFLEX
 
                     Case 2
                         '引き戻しジャッキ
-                        Dim PullJk As String =
-                            String.Join(",", .PullBackJack)
+                        CalcStroke.PullBackJack = .PullBackJack
 
-                        WriteEventData($"No.{PullJk} のジャッキの引戻し開始しました。", Color.Blue)
+                        WriteEventData($"No.{ .PullBackJack.ToCommaDelmit} のジャッキの引戻し開始しました。", Color.Blue)
                         LosZeroSts = 3
-                        Reduce.LstR.Clear() '減圧グループ　クリア
+                        Reduce.LstRdGp.Clear() '減圧グループ　クリア
 
                         PlaySound(My.Resources.PullStart)
                     Case 3
@@ -251,11 +263,14 @@ Module mdlFLEX
                         LosZeroSts = 4
 
                         PlaySound(My.Resources.PullFInish)
-                    Case 4, 6
-                        '押込みジャッキ
-                        Dim ClosetJk As String =
-                            String.Join(",", .ClosetJack)
-                        WriteEventData($"No.{ClosetJk} のジャッキ押込み開始しました。", Color.Blue)
+                    Case 4
+
+                        WriteEventData($"No.{ .ClosetJack.ToCommaDelmit} のジャッキ押込み開始しました。", Color.Blue)
+                        LosZeroSts = 5
+                        'ボイスメッセージ出力
+                        PlaySound(My.Resources.ClosetStart)
+                    Case 6
+                        WriteEventData($"No.{ .AddClosetJack.ToCommaDelmit} のジャッキ追加押込み開始しました。", Color.Blue)
                         LosZeroSts = 5
                         'ボイスメッセージ出力
                         PlaySound(My.Resources.ClosetStart)
@@ -266,29 +281,21 @@ Module mdlFLEX
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
                         '計算ストローク用に組立ジャッキの設定
-                        CalcStroke.SetAsembleJack(.ClosetJack)
+                        CalcStroke.asembleFinishedJack = .ClosetJack '押込みジャッキ
+                        CalcStroke.asembleFinishedJack = .AddClosetJack '追加押込ジャッキ
+
+                        PlcIf.SppedRate += (.ClosetJack.Count + .AddClosetJack.Count) / InitPara.NumberJack * 100
 
                         'ボイスメッセージ出力
                         PlaySound(My.Resources.SegmentAsem)
 
-                        'TODO:推進圧力がある程度たってから
-                        '最終ピース到達前 減圧ジャッキがある場合
-                        If PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber AndAlso
-                            SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).ReduceJack.Count > 0 Then
-                            If CtlPara.NextPieceConfirm Then
-                                '同時施工継続メッセージ出力
-                                My.Forms.frmNextPieceConfirm.Show()
-                            Else
-                                PlcIf.LosZeroSts_FLEX = 1 '減圧開始
-                            End If
-                        End If
                     Case 7
                         WriteEventData("ジャッキ押付け完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 4 '押し付け完了確認
 
 
                     Case 8
-                        WriteEventData("Kセグメント組立完了しました。", Color.Magenta)
+                        WriteEventData("Ｋセグメント組立完了しました。", Color.Magenta)
 
                 End Select
             End With
@@ -297,14 +304,20 @@ Module mdlFLEX
             'FLEXからのステータス
             Select Case NowSts
                 Case 1  '減圧開始
+                    '姿勢制御停止
+                    JackMvAuto.MvAutoStop()
+
                     If PlcIf.LosZeroSts_M <> 1 And PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber Then
                         PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
                     End If
                     My.Forms.frmNextPieceConfirm.Close() '継続確認画面を閉じる
                     With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
                         '減圧グループ
-                        WriteEventData($"{PlcIf.AssemblyPieceNo}ピース目 {String.Join(",", .ReduceGroup)}グループの減圧開始します。", Color.Blue)
-
+                        WriteEventData($"{PlcIf.AssemblyPieceNo}ピース目 { .ReduceGroup.ToCommaDelmit}グループの減圧開始します。", Color.Blue)
+                        If CtlPara.LosZeroOpposeJack And .OpposeGroup.Count <> 0 Then
+                            '対抗グループ
+                            WriteEventData($"{ .OpposeGroup.ToCommaDelmit}グループを対抗グループとします。", Color.Blue)
+                        End If
                         'マシンへ指令　
                         PlcIf.LosZeroDataWrite("減圧ジャッキ", .ReduceJack)
                         PlcIf.LosZeroDataWrite("引戻しジャッキ", .PullBackJack)
@@ -337,6 +350,30 @@ Module mdlFLEX
 
     End Sub
     ''' <summary>
+    ''' 組立完了後のタイマーアップで次ピース減圧開始
+    ''' </summary>
+    Private Sub PlcIf_NextPieceStart() Handles PlcIf.NextPieceStart
+        '最終ピース到達前 減圧ジャッキがある場合
+        If PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber AndAlso
+            SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).ReduceJack.Count > 0 Then
+
+            If CtlPara.NextPieceConfirm Then
+                'ボイスメッセージ出力(次ピース確認)
+                PlaySound(My.Resources.NextPieceConfirm)
+
+                '同時施工継続メッセージ出力
+                My.Forms.frmNextPieceConfirm.Show()
+            Else
+                PlcIf.LosZeroSts_FLEX = 1 '減圧開始
+            End If
+        End If
+    End Sub
+
+
+
+
+
+    ''' <summary>
     ''' 同時施工モード変化
     ''' </summary>
     Private Sub PlcIf_LosZeroModeChange() Handles PlcIf.LosZeroModeChange
@@ -350,6 +387,7 @@ Module mdlFLEX
             LosZeroSts = 0
             ElapsedTime.LosZeroStop()
         End If
+
     End Sub
     ''' <summary>
     ''' 同時施工キャンセル
@@ -369,9 +407,21 @@ Module mdlFLEX
         CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
         CalcStroke.MesureJackSpeed = PlcIf.MesureJackSpeed
         CalcStroke.Calc() '計算ストローク演算
-        PlcIf.AnalogPlcWrite("掘進ストローク", CalcStroke.CalcAveLogicalStroke)
-        PlcIf.AnalogPlcWrite("掘進スピード", CalcStroke.MesureAveSpeed)
-        PlcIf.AnalogPlcWrite("平均ジャッキストローク", CalcStroke.MesureCalcAveJackStroke)
+        If InitPara.ServerMode Then
+            PlcIf.AnalogPlcWrite("掘進ストローク", CalcStroke.CalcAveLogicalStroke)
+            PlcIf.AnalogPlcWrite("掘進スピード", CalcStroke.MesureAveSpeed)
+            PlcIf.AnalogPlcWrite("平均ジャッキストローク", CalcStroke.MesureCalcAveJackStroke)
+
+        End If
+        Dim tmp As Boolean = Not ReduceEnableStrokeReachFlg
+        '減圧可能ストロークに達したか
+        ReduceEnableStrokeReachFlg =
+            (CalcStroke.MesureCalcAveJackStroke - SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000 - CtlPara.ReduceReachStrokeDiff) > 0
+        If PlcIf.LosZeroEnable AndAlso ReduceEnableStrokeReachFlg AndAlso tmp Then
+            'ボイスメッセージ出力
+            PlaySound(My.Resources.ReduceStrokeReach)
+        End If
+
     End Sub
 
 
@@ -381,6 +431,7 @@ Module mdlFLEX
     ''' </summary>
     Private Sub LosZeroSettingInit()
         PlcIf.LosZeroSts_FLEX = 0
+        PlcIf.SppedRate = 100
         PlcIf.LosZeroDataWrite("減圧ジャッキ", Nothing)
         PlcIf.LosZeroDataWrite("引戻しジャッキ", Nothing)
         PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
@@ -416,10 +467,14 @@ Module mdlFLEX
         'FLEX制御、自動、全押しスタートフラグON
         If CtlPara.AutoDirectionControl And CtlPara.全押しスタート And PlcIf.FlexControlOn Then
 
+            PlcIf.PointX = 0
+            PlcIf.PointY = 0
+
+
             '手動操作の作用点を原点にし
             JackManual.PutPointXY(0, 0)
             '手動から自動制御へ移行
-            ControlParameter_FlexAutoManualChange()
+            FlexAutoManualChange()
 
         End If
 
@@ -431,40 +486,97 @@ Module mdlFLEX
     Private Sub JackManual_PointChanges() Handles PlcIf.ExcavationStatusChange, PlcIf.JkPressFilterChange,
         JackMvAuto.AutoDirectionCulc, Reduce.ReduceOn, PlcIf.LosZeroStsChange, JackManual.PointChanges
 
-        With DivCul
-            'パラメータセット
-            DivCul.最低全開グループ数 = CtlPara.最低全開グループ数
-            DivCul.全開作動指令値 = CtlPara.全開作動指令値
-            DivCul.全開作動範囲 = CtlPara.全開作動範囲
-            'DivCul.全開グループ制限 = CtlPara.全開グループ制限
+        'パラメータセット
+        DivCul.最低全開グループ数 = CtlPara.最低全開グループ数
+        DivCul.全開作動指令値 = CtlPara.全開作動指令値
+        DivCul.全開作動範囲 = CtlPara.全開作動範囲
 
-            If CtlPara.AutoDirectionControl Then
+        If CtlPara.AutoDirectionControl Then
+            '減圧中
+            If PlcIf.LosZeroSts_FLEX = 1 Then
+                '力点自動
+                DivCul.操作角 = Reduce.Theta
+                DivCul.操作強 = Reduce.Rc
+
+                If InitPara.ServerMode Then
+                    PlcIf.PointX = Reduce.PointX
+                    PlcIf.PointY = Reduce.PointY
+                    PlcIf.操作角 = Reduce.Theta
+                    PlcIf.操作強 = Reduce.Rc
+                    JackMvAuto.操作角 = Reduce.Theta
+                    JackMvAuto.操作強 = Reduce.Rc
+                    JackMvAuto.PointX = Reduce.PointX
+                    JackMvAuto.PointY = Reduce.PointY
+
+                End If
+            Else
                 '力点自動
                 DivCul.操作角 = JackMvAuto.操作角
                 DivCul.操作強 = JackMvAuto.操作強
-                If Not InitPara.ReadOnleMode Then
+                If InitPara.ServerMode Then
                     PlcIf.PointX = JackMvAuto.PointX
                     PlcIf.PointY = JackMvAuto.PointY
                     PlcIf.操作角 = JackMvAuto.操作角
                     PlcIf.操作強 = JackMvAuto.操作強
                 End If
-            Else
-                '力点手動操作時
-
-                DivCul.操作角 = JackManual.操作角
-                DivCul.操作強 = JackManual.操作強
-                PlcIf.操作角 = JackManual.操作角
-                PlcIf.操作強 = JackManual.操作強
             End If
-            'TODO:ジャッキステータスを追加するように
-            '掘進モードをセット
-            DivCul.OnJack = PlcIf.JackExecMode
-            DivCul.sbCul() ''推力分担率の演算
-            '力点の更新
-            PlcIf.PointWrite()
+        Else
+            '力点手動操作時
+            DivCul.操作角 = JackManual.操作角
+            DivCul.操作強 = JackManual.操作強
+            PlcIf.操作角 = JackManual.操作角
+            PlcIf.操作強 = JackManual.操作強
 
-        End With
+            '減圧中に手動操作
+            If PlcIf.LosZeroSts_FLEX = 1 Then
+                Reduce.PointX = PlcIf.PointX
+                Reduce.PointY = PlcIf.PointY
+            End If
 
+        End If
+
+        'TODO:ジャッキステータスを追加するように
+        '掘進モード & 稼働ジャッキをセット
+        DivCul.OptinalJack.Clear()
+        '減圧グループのSVをセット
+
+
+        For i As Short = 0 To InitPara.NumberJack - 1
+            '減圧中のジャッキ
+            Dim RdJ As Boolean = InitPara.LosZeroEquip AndAlso (PlcIf.LosZeroSts_FLEX = 1 Or PlcIf.LosZeroSts_FLEX = 2) AndAlso
+                (SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Contains(i + 1))
+
+            DivCul.OnJack(i) =
+                PlcIf.JackExecMode(i) And PlcIf.JackSel(i) And Not RdJ
+            '減圧中で減圧中ジャッキのSVをセット
+            If Reduce.ReduceNow AndAlso Reduce.LstRdGp.Contains(InitPara.JackGroupPos(i)) Then
+                DivCul.OptinalJack(i) = Reduce.MvOut(InitPara.JackGroupPos(i) - 1) / 100 * CtlPara.最大全開出力時の目標圧力
+            End If
+            '低圧推進ジャッキのセット
+            If CtlPara.optGpEn.Contains(InitPara.JackGroupPos(i)) Then
+                DivCul.OptinalJack.Add(i, CtlPara.optGpSv(InitPara.JackGroupPos(i) - 1))
+            End If
+
+            '対抗グループのセット ロスゼロありで対抗ジャッキ選択ありで減圧開始から押し込み中まで
+            Dim OpposeJ As Boolean =
+                InitPara.LosZeroEquip AndAlso CtlPara.LosZeroOpposeJack AndAlso
+                (PlcIf.LosZeroSts_M >= 1 AndAlso PlcIf.LosZeroSts_M <= 4) AndAlso
+                SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).OpposeGroup.Contains(InitPara.JackGroupPos(i))
+            If OpposeJ Then
+                If CtlPara.LosZeroOpposeControl Then
+                    DivCul.OptinalJack.Add(i, Reduce.MomentOpt.DivCul0.OpposeGroupSv)
+                Else
+                    DivCul.OptinalJack.Add(i, CtlPara.LosZeroOpposeManualSV)
+
+                End If
+            End If
+
+
+        Next
+
+        DivCul.sbCul() ''推力分担率の演算
+        '力点の更新
+        PlcIf.PointWrite()
 
         GroupSvOut() 'シーケンサへ圧力分担値の送出
 
@@ -477,77 +589,75 @@ Module mdlFLEX
     ''' </summary>
     Private Sub GroupSvOut()
 
+        Dim GpFlg(InitPara.NumberGroup - 1) As Short
+        Dim GpSV() As Single
 
-        Dim sngGpSV(InitPara.NumberGroup - 1) As Single
-        Dim intGpFl(InitPara.NumberGroup - 1) As Short
-
+        GpSV = PlcIf.GroupSV.Clone
 
 
         Select Case PlcIf.ExcaStatus
 
             Case cKussin
-                ''掘進中の処理
-                '減圧中から組立完了
-                If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
-                    Dim Gp As List(Of Short) =
-                        SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceGroup
-                    For Each R As Short In Gp
-                        sngGpSV(R - 1) =
-                        Reduce.MvOut(R - 1) * CtlPara.最大全開出力時の目標圧力 / 100
-                        intGpFl(R - 1) = cTracking
-                    Next
-                End If
 
-                For i = 0 To InitPara.NumberGroup - 1
-                    If intGpFl(i) <> cTracking Then
-                        If DivCul.FullOpenGruop.Contains(i) Then ''全開出力
-                            sngGpSV(i) = CtlPara.最大全開出力時の目標圧力
-                            intGpFl(i) = cFillPower
-                        Else
-                            sngGpSV(i) = DivCul.分担率指令値(i) / 100 * PlcIf.FilterJkPress
-                            '低圧推進の設定値 
-                            'TODO:最適化は考慮してない！
-                            If CtlPara.optGpEn.Contains(i + 1) AndAlso
-                                sngGpSV(i) > CtlPara.optGpSv(i) Then
-                                sngGpSV(i) = CtlPara.optGpSv(i)
+                If CtlPara.圧力制御開始推力値有効フラグ AndAlso CtlPara.圧力制御開始推力値 > CulcMoment.Thrust AndAlso GpSV.Sum <> 0 Then
+                    For i As Short = 0 To InitPara.NumberGroup - 1
+                        GpFlg(i) = cIgnoreOut
+                    Next
+                Else
+                    ''掘進中の処理
+                    '減圧中から組立完了
+                    If PlcIf.LosZeroSts_FLEX >= 1 And PlcIf.LosZeroSts_FLEX < 3 Then
+                        For Each i As Short In Reduce.LstRdGp
+                            GpSV(i - 1) =
+                                Reduce.MvOut(i - 1) * CtlPara.最大全開出力時の目標圧力 / 100
+                            '減圧グループはトラッキング
+                            GpFlg(i - 1) = cTracking
+                        Next
+                    End If
+
+                    For i = 0 To InitPara.NumberGroup - 1
+                        If DivCul.PujMax <> 0 AndAlso GpFlg(i) <> cTracking Then
+                            '通常のグループ フィルター後の元圧の割合
+                            GpSV(i) = DivCul.PuGp2(i) / DivCul.PujMax * PlcIf.FilterJkPress
+
+                            If DivCul.OptinalGpNo.Contains(i) Then ''低圧推進及び対抗グループ
+                                GpSV(i) = DivCul.PuGp2(i) '算出もしくは設定されたSV
                             End If
+
                             'ダイレクト制御有効で偏差が設定以上
-                            If Math.Abs(PlcIf.GroupPv(i) - PlcIf.GroupSV(i)) < CtlPara.PIDShiftDefl _
-                                    Or CtlPara.DirectControl = False Then
-                                intGpFl(i) = cPIDOut ''ＰＩＤ出力
+                            If Math.Abs(PlcIf.GroupPv(i) - GpSV(i)) < CtlPara.PIDShiftDefl _
+                                            Or CtlPara.DirectControl = False Then
+                                GpFlg(i) = cPIDOut ''ＰＩＤ出力
                             Else
-                                intGpFl(i) = cDirect  'ダイレクト指令制御
+                                GpFlg(i) = cDirect  'ダイレクト指令制御
+                            End If
+
+                            If DivCul.FullOpenGruop.Contains(i) Then ''全開出力
+                                GpSV(i) = CtlPara.最大全開出力時の目標圧力
+                                GpFlg(i) = cFillPower
                             End If
 
                         End If
-                    End If
-                    'TODO:トラッキングの意味
-                    ''01/09/20 追加
-                    'If mblnTracking Then
-                    '    intGpFl(i) = cTracking ''トラッキング
-                    '    'frmTuningMonitor.lblPID(intCnt).Text = "T" ''チューニングモニタのステータス
-                    'End If
+                    Next i
 
-                Next i
-                    ''中断中及び待機中の処理
+                End If
+
+
+                ''中断中及び待機中の処理
             Case cChudan, cTaiki
                 For intCnt = 0 To InitPara.NumberGroup - 1
-                    intGpFl(intCnt) = cIgnoreOut
+                    GpFlg(intCnt) = cIgnoreOut
                 Next intCnt
 
+
         End Select
-        If Not InitPara.ReadOnleMode Then
+        If InitPara.ServerMode Then
             ''シーケンサ出力
-            PlcIf.PutSvPress(sngGpSV, intGpFl)
+
+            PlcIf.PutSvPress(GpSV, GpFlg)
 
         End If
-
-
-
-
     End Sub
-
-
 
 
     ''' <summary>
@@ -557,32 +667,31 @@ Module mdlFLEX
     ''' <param name="EventColor">表示用のイベントカラー</param>
     Public Sub WriteEventData(EventMsg As String, EventColor As Color)
 
-        If Not InitPara.ReadOnleMode Then
+        If InitPara.ServerMode Then
             Dim Colorlng As Long = ColorTranslator.ToOle(EventColor)
-
+            'Color.Whiteは、メイン画面には非表示とする
             Dim db As New clsDataBase
 
-            'Dim tb As Odbc.OdbcDataReader = 
             db.ExecuteSqlCmd _
             ($"INSERT INTO FLEXイベントデータ
             (Time,イベントデータ,イベント種類) VALUES('{Now}','{EventMsg}','{Colorlng}')")
 
         End If
 
-        frmMain.EventlogUpdate()
+        'frmMain.EventlogUpdate()
 
     End Sub
     ''' <summary>
     ''' 姿勢制御自動手動の切替時の処理
     ''' </summary>
     ''' 
-    Public Sub ControlParameter_FlexAutoManualChange() Handles CtlPara.FlexAutoManualChange ', PlcIf.ExcavationStatusChange
+    Public Sub FlexAutoManualChange() Handles CtlPara.FlexAutoManualChange ', PlcIf.ExcavationStatusChange
         '掘進中以外はスキップ
         'If PlcIf.ExcaStatus <> cKussin Then Exit Sub
 
         If PlcIf.FlexControlOn AndAlso CtlPara.AutoDirectionControl Then
             'JackManual.ManualOn = False
-            If PlcIf.ExcaStatus = cKussin Then
+            If PlcIf.ExcaStatus = cKussin AndAlso JackMvAuto.MvAutoOn Then
                 WriteEventData("自動方向制御開始しました。", Color.Blue)
             End If
             'tmrAutoDirect.Enabled = False
@@ -598,8 +707,10 @@ Module mdlFLEX
             JackMvAuto.水平偏差角 = RefernceDirection.平面偏角
             JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
             ''自動から手動時のトラッキング処理
-            JackMvAuto.PointX = JackManual.PointX
-            JackMvAuto.PointY = JackManual.PointY
+            'JackMvAuto.PointX = JackManual.PointX
+            'JackMvAuto.PointY = JackManual.PointY
+            JackMvAuto.PointX = PlcIf.PointX
+            JackMvAuto.PointY = PlcIf.PointY
             JackMvAuto.sbMnToAutTracking()
             ''自動演算開始
             JackMvAuto.MvAutoStart()
@@ -614,18 +725,22 @@ Module mdlFLEX
             'If mneSosa.Checked Then
             ''自動から手動時のトラッキング処理
             ''自動時の座標を手動時の座標へ渡す
-            JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
+            'JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
+            JackManual.PutPointXY(PlcIf.PointX, PlcIf.PointY)
 
         End If
     End Sub
 
-    Private Sub JackMvAuto_OneWayLimitModeChanges(Flg As Boolean) Handles JackMvAuto.OneWayLimitModeChanges
-        If Flg Then
-            WriteEventData("圧力調整中になりました。", Color.Magenta)
-            WriteEventData("方向制御　自動に変わりました", Color.Orange)
+    Private Sub JackMvAuto_OneWayLimitModeChanges(ByVal flg0 As Boolean, flg1 As Boolean, flg2 As Boolean) Handles JackMvAuto.OneWayLimitModeChanges
+        If flg0 Or flg1 Or flg2 Then
+            Dim msg As String = "上限です。圧力調整中になりました。"
+            If flg0 Then msg = "圧力" & msg
+            If flg1 Then msg = "モーメント" & msg
+            If flg2 Then msg = "片押しR" & msg
+            WriteEventData(msg, Color.Magenta)
 
-        Else
-            WriteEventData("PID制御に変わりました。", Color.Blue)
+            'Else
+            '    WriteEventData("PID制御に変わりました。", Color.Blue)
         End If
     End Sub
     ''' <summary>
@@ -725,6 +840,19 @@ Module mdlFLEX
     End Sub
 
     Private Sub PlcIf_ExcavModeChange(Mode As Boolean) Handles PlcIf.ExcavModeChange
+        'セグメントモード時の時間演算
+        If Not Mode Then
+            ElapsedTime.SegmentMode()
+        End If
         WriteEventData(IIf(Mode, "掘進", "セグメント") & "モードになりました。", Color.DarkMagenta)
+    End Sub
+    ''' <summary>
+    ''' ジャイロ異常発生
+    ''' </summary>
+    Private Sub PlcIf_GyiroErrOccuerd() Handles PlcIf.GyiroErrOccuerd
+
+        WriteEventData("ジャイロ異常です。", Color.Red)
+
+
     End Sub
 End Module

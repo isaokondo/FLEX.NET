@@ -17,25 +17,28 @@
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         Me.Close()
     End Sub
-
+    ''' <summary>
+    ''' データ更新
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click, btnCLose.Click
-        With CtlPara
-            .測量ポイントリング番号 = ConfirmRingNo.Value
-            .測量ポイント総距離 = TipDistance.Value
 
-            'PuchUpStroke.Value=.
-            .水平入力補正値 = HorCorrentionValue.Value
-            .鉛直入力補正値 = VerCorrentionValue.Value
-
-        End With
+        CtlPara.測量ポイントリング番号 = ConfirmRingNo.Value
+        '起点入力の場合は、起点から発進までの距離を減算
+        CtlPara.測量ポイント総距離 =
+                TipDistance.Value - IIf(InitPara.DistanceInputMethod, RefernceDirection.toStartDistance, 0)
+        'PuchUpStroke.Value=.
+        CtlPara.水平入力補正値 = HorCorrentionValue.Value
+        CtlPara.鉛直入力補正値 = VerCorrentionValue.Value
+        '押し上がりストロークの更新
+        SegAsmblyData.RingLastStrokeUpdate(ConfirmRingNo.Value, PuchUpStroke.Value)
 
         DspUpdate()
 
         If sender Is btnCLose Then
             Me.Close()
         End If
-        'Me.Close()
-
 
     End Sub
 
@@ -45,12 +48,14 @@
         NowRing.Value = PlcIf.RingNo
         ConfirmRingNo.Value = CtlPara.測量ポイントリング番号
         TipDistance.Value = CtlPara.測量ポイント総距離
+        '起点入力
+        If InitPara.DistanceInputMethod Then
+            TipDistance.FieldName = TipDistance.FieldName.Replace("発進", "起点") '文字変更
+            TipDistance.Value += RefernceDirection.toStartDistance '起点から発進までの距離加算
+        End If
 
-        PuchUpStroke.Value = SegAsmblyData.RingLastStroke(CtlPara.測量ポイントリング番号)
         HorCorrentionValue.Value = CtlPara.水平入力補正値
         VerCorrentionValue.Value = CtlPara.鉛直入力補正値
-
-
 
         DspUpdate()
 
@@ -121,7 +126,10 @@
                                 p.Value = Hoko2Hoi(.HorKodoKijun.軌道中心方位角 + HorPlan.X軸方位角)
                             Case "姿勢角管理値"
                                 p.Value = .平面基準方位
-
+                            Case "現リング目標方向角"
+                                p.Value = Hoko2Hoi(RefernceDirection.RingTarget.軌道中心方位角) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
+                            Case "次リング目標方向角"
+                                p.Value = Hoko2Hoi(RefernceDirection.NextRingTarget.軌道中心方位角) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
                         End Select
                     End If
 
@@ -182,6 +190,11 @@
 
             DspUpdate()
         End If
+
+    End Sub
+
+    Private Sub ConfirmRingNo_ValueChanged(sender As Object, e As EventArgs) Handles ConfirmRingNo.ValueChanged
+        PuchUpStroke.Value = SegAsmblyData.RingLastStroke(ConfirmRingNo.Value)
 
     End Sub
 End Class

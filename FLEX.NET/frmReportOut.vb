@@ -518,8 +518,8 @@ Public Class clsReportDb
     Public Sub New()
         'リング情報読込
         Dim RingLst As DataTable =
-                GetDtfmSQL("SELECT リング番号,Min(時間),Max(時間) 
-                FROM flex掘削データ GROUP BY リング番号 ORDER BY リング番号 DESC")
+                GetDtfmSQL("Select Replace(`イベントデータ`,'リング 掘進開始しました',''),time 
+                from `flexイベントデータ` where `flexイベントデータ`.`イベントデータ` like '%掘進開始%'ORDER BY Time DESC")
 
         'While RingLst.Read
         For Each t In RingLst.Rows
@@ -597,7 +597,7 @@ Public Class clsReportDb
     Public ReadOnly Property RingSel As List(Of String)
         Get
             Return (From i In _RingData
-                    Select $"{String.Format("{0, 6}", i.RingNo)} リング {i.StartDate.ToString("yyyy/MM/dd hh:mm:ss")}").ToList
+                    Select $"{String.Format("{0, 6}", i.RingNo)} リング {i.StartDate.ToString("yyyy/MM/dd HH:mm:ss")}").ToList
         End Get
     End Property
 

@@ -7,7 +7,10 @@
 
     Private DspGp() As ucnDspGpPres 'グループ圧PV数値表示用
     Private BlinkFlg As Boolean '点滅フラグ
-
+    ''' <summary>
+    ''' イベントログのID
+    ''' </summary>
+    Private EventID As Long
 
 
 
@@ -69,6 +72,12 @@
         DspMachinComErr.Visible = PlcIf.MachineComErr 'マシン伝送異常
         DspMachinComErr.BitStatus = BlinkFlg
 
+        DspGyiroError.Visible = PlcIf.GyiroError
+        DspGyiroError.BitStatus = BlinkFlg
+        DspDirection.Blink = PlcIf.GyiroError
+
+
+
         DspRingNo.Text = PlcIf.RingNo 'リングNo
 
         DspDirection.Value = PlcIf.Gyro              '方位角
@@ -98,8 +107,13 @@
         DspHorBroken.Value = PlcIf.NakaoreLR         '中折左右
         DspVerBroken.Value = PlcIf.NakaoreTB         '中折上下
 
-        DspCopyStroke1.Value = PlcIf.CopyStroke1 'コピーストローク
-        DspCopyStroke2.Value = PlcIf.CopyStroke2
+        Select Case CtlPara.CopySelect
+            Case 1
+                DspCopyStroke.Value = PlcIf.CopyStroke1 'コピーストローク
+            Case 2
+                DspCopyStroke.Value = PlcIf.CopyStroke2 'コピーストローク
+
+        End Select
 
         DspMachineRolling.Value = PlcIf.MashineRolling  'マシンローリング
 
@@ -152,6 +166,11 @@
         DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
         DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均スピード
 
+        DspLRStrokeDiff.Value = CalcStroke.LeftCalcStroke - CalcStroke.RightCalcStroke '左右ｽﾄﾛｰｸ差
+        If CtlPara.RightStrokeDiff Then
+            DspLRStrokeDiff.Value = -DspLRStrokeDiff.Value
+        End If
+        DspLRStrokeDiff.FieldName = $"ｽﾄﾛｰｸ差(mm){If(CtlPara.RightStrokeDiff, "右", "左")}勝"
 
         '汎用データ表示
         For Each wu In CtlPara.WideUse
@@ -192,6 +211,10 @@
         '同時施工用
         ucnLosZeroMode.BitStatus = PlcIf.LosZeroEnable And PlcIf.LosZeroMode
         ucnLosZeroMode.Blink = Not PlcIf.LosZeroEnable And PlcIf.LosZeroMode
+        '対抗ジャッキ
+        UcnOpposeJackControl.BitStatus = CtlPara.LosZeroOpposeControl
+        UcnOpposeJackSelect.BitStatus = CtlPara.LosZeroOpposeJack
+
         '同時施工ピース確認ボタンブリンク
         btnPieceConfirm.Enabled = ucnLosZeroMode.Blink
         If btnPieceConfirm.Enabled Then
@@ -220,6 +243,35 @@
         '組立完了
         ucnAssemblyFinish.BitStatus = (LosZeroSts >= 6)
 
+        If ucnReduceFinish.Blink Then
+            ucnReduceFinish.FieldName = "減圧中"
+        Else
+            ucnReduceFinish.FieldName = "減圧完了"
+        End If
+
+        '減圧中から組立中は次ピース確認ボタン無効
+        If LosZeroSts >= 1 And LosZeroSts <= 5 Then
+            btnLoszeroContinu.Enabled = False
+        End If
+        If btnLoszeroContinu.Enabled Then
+            btnLoszeroContinu.ForeColor = IIf(BlinkFlg, Color.Black, Color.Red)
+        End If
+
+
+
+        If ucnPullBackFinish.Blink Then
+            ucnPullBackFinish.FieldName = "引戻し中"
+        Else
+            ucnPullBackFinish.FieldName = "引戻完了"
+        End If
+
+
+        If ucnAssemblyFinish.Blink Then
+            ucnAssemblyFinish.FieldName = "組立中"
+        Else
+            ucnAssemblyFinish.FieldName = "組立完了"
+        End If
+
         '点滅用フラグ
         BlinkFlg = Not BlinkFlg
         'ロスゼロ工程表示
@@ -236,7 +288,9 @@
         DspExcationElapsedTime.Value = ElapsedTime.ExcavationTime
         DspLosZeroElapsedTime.Value = ElapsedTime.LozeroExcavationTime
         DspWatingElapsedTime.Value = ElapsedTime.WatingTime
-        DspCycleTime.Value = ElapsedTime.CycleTime
+        DspInterruptTime.Value = ElapsedTime.InterruptTime
+        'DspIterruptTime.Value == ElapsedTime.InterruptTime
+        'DspCycleTime.Value = ElapsedTime.CycleTime
         If InitPara.MonitorMode Then
             lblNowDate.Text = PlcIf.DataGetTime.ToString("yyyy/MM/dd HH:mm:ss")
         Else
@@ -246,7 +300,7 @@
         'TODO:線形データ画面更新　LineDistanceChage に記述したい
         'Call LineDataUpdate()
 
-
+        EventlogUpdate()
     End Sub
     ''' <summary>
     ''' 偏角、モーメントのチャート初期化
@@ -353,6 +407,10 @@
             DspTargetDirection.Value = .平面基準方位
             DspHorDev.Value = .平面偏角
 
+            ucnHorLineChart.PlanNumData = .平面計画方位
+
+
+
             '縦断線形データ
             If .VerZendoKijun.縦断線形 = 1 Then
                 DspVerLine.Value = "-------"
@@ -365,8 +423,13 @@
             DspTargetPitching.Value = .縦断基準方位
             DspVerDev.Value = .縦断偏角
 
+            ucnVerLineChart.PlanNumData = .縦断計画方位
+
             UcnDspDevImg.HorDev = .平面偏角
             UcnDspDevImg.VerDev = .縦断偏角
+
+
+
 
         End With
 
@@ -378,12 +441,14 @@
         ucnHorLineChart.TargetData = DspTargetDirection.Value
         ucnHorLineChart.RealData = DspDirection.Value
 
+
         ucnVerLineChart.PlanData = DirectionChartD.VerPData
         ucnVerLineChart.ExecData = DirectionChartD.VerRData
         ucnVerLineChart.CorrectData = CtlPara.鉛直入力補正値
         ucnVerLineChart.TargetData = DspTargetPitching.Value
         ucnVerLineChart.RealData = DspPitching.Value
 
+        DspRingTargetDir.Value = Hoko2Hoi(RefernceDirection.RingTarget.軌道中心方位角) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
     End Sub
     ''' <summary>
     ''' 同時施工組立パターン情報表示
@@ -391,24 +456,27 @@
     Public Sub SegmentDataDsp()
         '組立パターン
 
-        If Not InitPara.LosZeroMode Then Exit Sub
+        If Not InitPara.LosZeroEquip Then Exit Sub
 
         'Dim p As Short = 0
         If PlcIf.AssemblyPieceNo <= 0 Then PlcIf.AssemblyPieceNo = 1
 
         DspTypeName.Value = SegAsmblyData.TypeData(PlcIf.RingNo).TypeName 'セグメント種類
+        DspAssemblyPattern.Value = SegAsmblyData.AssemblyPtnName(PlcIf.RingNo) '組立パターン名
+
         If PlcIf.AnalogTag.TagExist("ｾｸﾞﾒﾝﾄの種類信号") Then
             PlcIf.AnalogPlcWrite("ｾｸﾞﾒﾝﾄの種類信号", SegAsmblyData.TypeData(PlcIf.RingNo).TypeNameID) 'セグメント種類
         End If
+
         If SegAsmblyData.ProcessData.Count <> 0 Then
 
             With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
                 'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
-                DspAssemblyPattern.Value = .PatternName '組立パターン名
                 DspBoltPitch.Value = .BoltPitch '組立ボルトピッチ
                 DspAssemblyPieace.Value = .PieceName  '組立ピース名称
                 DspPullBackJack.Value = SegAsmblyData.JackListDsp(.PullBackJack) '引戻しジャッキ
                 DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
+                DspClosetThrustJack.Value = SegAsmblyData.JackListDsp(.ClosetThrustJack) '押込み推進ジャッキ
                 DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
                 If PlcIf.AnalogTag.TagExist("甲乙表示用信号") Then
@@ -416,6 +484,16 @@
                 End If
 
             End With
+
+
+        Else
+            DspBoltPitch.Value = "-" '組立ボルトピッチ
+            DspAssemblyPieace.Value = "-----"  '組立ピース名称
+            DspPullBackJack.Value = "-" '引戻しジャッキ
+            DspClosetJack.Value = "-" '押込みジャッキ
+            DspAddClosetThrustJack.Value = "-" '追加押込みジャッキ
+
+
         End If
         'MAXのピース番号内で表示
         If SegAsmblyData.AssemblyPieceNumber > PlcIf.AssemblyPieceNo AndAlso SegAsmblyData.ProcessData.Count <> 0 Then
@@ -583,7 +661,7 @@
     Private Sub AssemblyProcessEdit_Click(sender As Object, e As EventArgs) Handles AssemblyProcessEdit.Click, DspTypeName.DoubleClick,
         DspAssemblyPattern.DoubleClick, DspAssemblyPieace.DoubleClick, DspPullBackJack.DoubleClick,
         DspClosetJack.DoubleClick, DspClosetThrustJack.DoubleClick, DspAddClosetThrustJack.DoubleClick, DspNextPieceName.DoubleClick
-        If InitPara.LosZeroMode Then
+        If InitPara.LosZeroEquip Then
             My.Forms.frmAssemblyProcessEdit.Show()
         End If
 
@@ -676,18 +754,30 @@
     ''' <summary>
     ''' イベントログ更新
     ''' </summary>
-    Public Sub EventlogUpdate()
-        rtbEventLog.Clear()
+    Private Sub EventlogUpdate()
+        '最新のIDを比較
         Dim DB As New clsDataBase
-        Dim tb As DataTable = DB.GetDtfmSQL _
-            ("SELECT TIME,イベントデータ,イベント種類 FROM FLEXイベントデータ ORDER BY TIME DESC LIMIT 0,50")
+        Dim tbEvID As DataTable = DB.GetDtfmSQL _
+            ($"SELECT ID FROM FLEXイベントデータ 
+             ORDER BY ID DESC LIMIT 0,1")
+        'IDが更新されてれば表示更新
+        If tbEvID.Rows.Count <> 0 Then
+            If EventID <> tbEvID.Rows(0).Item(0) Then
+                rtbEventLog.Clear()
+                Dim tb As DataTable = DB.GetDtfmSQL _
+            ($"SELECT TIME,イベントデータ,イベント種類 FROM FLEXイベントデータ 
+            WHERE イベント種類 <> '{ColorTranslator.ToOle(Color.White)}' ORDER BY TIME DESC LIMIT 0,50")
 
-        For Each t As DataRow In tb.Rows
-            rtbEventLog.SelectionColor =
+                For Each t As DataRow In tb.Rows
+                    rtbEventLog.SelectionColor =
                 ColorTranslator.FromOle(t.Item(2))
-            rtbEventLog.AppendText(CDate(t.Item(0)).ToString("yyyy/MM/dd HH:mm:ss") & Space(2) & t.Item(1).ToString & vbCrLf)
+                    rtbEventLog.AppendText(CDate(t.Item(0)).ToString("yyyy/MM/dd HH:mm:ss") & Space(2) & t.Item(1).ToString & vbCrLf)
 
-        Next
+                Next
+
+            End If
+            EventID = tbEvID.Rows(0).Item(0)
+        End If
 
     End Sub
     ''' <summary>
@@ -704,12 +794,23 @@
     End Sub
 
     Private Sub btnPieceConfirm_Click(sender As Object, e As EventArgs) Handles btnPieceConfirm.Click
-        PlcIf.LosZeroEnable = True '同時施工可　信号出力
+
+        If SegAsmblyData.ProcessData.Count = 0 Then
+            MsgBox($"{PlcIf.RingNo}リングの'{SegAsmblyData.AssemblyPtnName(PlcIf.RingNo)}'の、組立順序が設定されてません'", vbCritical)
+        Else
+            PlcIf.LosZeroEnable = True '同時施工可　信号出力
+            '組立ピース確認
+            WriteEventData("同時施工　組立ピース確認しました。", Color.Blue)
+
+        End If
+
+
     End Sub
 
     Private Sub ｂｔｎLossZerooCancel_Click(sender As Object, e As EventArgs) Handles btnLossZerooCancel.Click
         PlcIf.DigtalPlcWrite("同時施工キャンセル", True)
         PlcIf.LosZeroEnable = False '同時施工キャンセル
+        PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
     End Sub
 
     Private Sub StrokeMonitor_Click(sender As Object, e As EventArgs) Handles StrokeMonitor.Click
@@ -770,7 +871,9 @@
         ''' </summary>
         Public Sub DataUp()
             Dim rsData As DataTable =
-                GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE リング番号 =
+                GetDtfmSQL($"SELECT リング番号,平面起点から発旋回中心までの距離,前胴方位角,水平偏角,
+                平面姿勢角管理値,縦断起点から発旋回中心までの距離,前胴鉛直角,縦断姿勢角管理値,鉛直偏角 
+                FROM flex掘削データ WHERE リング番号 =
                '{PlcIf.RingNo}' ORDER BY 掘進ストローク DESC LIMIT 0,1")
 
             Dim g As ucnChart2.gData
@@ -781,13 +884,13 @@
                 g.Distance = t.Item("平面起点から発旋回中心までの距離") * 1000
                 g.PlanDr = t.Item("前胴方位角")
                 g.TargetDr = t.Item("平面姿勢角管理値")
-                g.RealDr = t.Item("ジャイロ方位角")
+                g.RealDr = g.TargetDr + t.Item("水平偏角") ' t.Item("ジャイロ方位角")
                 _HorRData.Add(g)
 
                 g.Distance = t.Item("縦断起点から発旋回中心までの距離") * 1000
                 g.PlanDr = t.Item("前胴鉛直角")
                 g.TargetDr = t.Item("縦断姿勢角管理値")
-                g.RealDr = t.Item("ジャイロピッチング")
+                g.RealDr = g.TargetDr + t.Item("鉛直偏角") '  t.Item("ジャイロピッチング")
                 _VerRData.Add(g)
 
             End If
@@ -803,7 +906,8 @@
         Public Sub DataGet()
             '過去の掘進データ 10mm毎
             Dim rsData As DataTable =
-                GetDtfmSQL($"SELECT * FROM flex掘削データ WHERE リング番号 >=
+                GetDtfmSQL($"SELECT リング番号,平面起点から発旋回中心までの距離,前胴方位角,水平偏角,
+                平面姿勢角管理値, 縦断起点から発旋回中心までの距離, 前胴鉛直角, 縦断姿勢角管理値, 鉛直偏角  FROM flex掘削データ WHERE リング番号 >=
                 '{PlcIf.RingNo - CtlPara.LineDevStartRing}'
                 AND リング番号<='{PlcIf.RingNo}' AND 掘進ストローク%10 =0;")
 
@@ -821,13 +925,13 @@
                 g.Distance = t.Item("平面起点から発旋回中心までの距離") * 1000
                 g.PlanDr = t.Item("前胴方位角")
                 g.TargetDr = t.Item("平面姿勢角管理値")
-                g.RealDr = t.Item("ジャイロ方位角")
+                g.RealDr = g.TargetDr + t.Item("水平偏角") ' t.Item("ジャイロ方位角")
                 _HorRData.Add(g)
 
                 g.Distance = t.Item("縦断起点から発旋回中心までの距離") * 1000
                 g.PlanDr = t.Item("前胴鉛直角")
                 g.TargetDr = t.Item("縦断姿勢角管理値")
-                g.RealDr = t.Item("ジャイロピッチング")
+                g.RealDr = g.TargetDr + t.Item("鉛直偏角") '  t.Item("ジャイロピッチング")
                 _VerRData.Add(g)
                 RingNo = g.RingNo
 
@@ -902,7 +1006,7 @@
         Handles DspWideUse0.DoubleClick, DspWideUse1.DoubleClick, DspWideUse2.DoubleClick,
         DspWideUse3.DoubleClick, DspWideUse4.DoubleClick, DspWideUse5.DoubleClick,
         DspWideUse6.DoubleClick, DspWideUse7.DoubleClick, DspWideUse8.DoubleClick,
-        DspWideUse9.DoubleClick, DspWideUse10.DoubleClick, DspWideUse11.DoubleClick
+        DspWideUse9.DoubleClick, DspWideUse10.DoubleClick, DspWideUse11.DoubleClick, DspWideUse12.DoubleClick
 
         cmbWideSelct.Tag = sender
         cmbWideSelct.Visible = True
@@ -929,7 +1033,7 @@
         WideDataFldSet() '汎用データ・セット
     End Sub
 
-    Private Sub DspWideUse0_DoubleClick(sender As Object, e As EventArgs) Handles DspWideUse9.DoubleClick, DspWideUse8.DoubleClick, DspWideUse7.DoubleClick, DspWideUse6.DoubleClick, DspWideUse5.DoubleClick, DspWideUse4.DoubleClick, DspWideUse3.DoubleClick, DspWideUse2.DoubleClick, DspWideUse11.DoubleClick, DspWideUse10.DoubleClick, DspWideUse1.DoubleClick, DspWideUse0.DoubleClick
+    Private Sub DspWideUse0_DoubleClick(sender As Object, e As EventArgs) Handles DspWideUse9.DoubleClick, DspWideUse8.DoubleClick, DspWideUse7.DoubleClick, DspWideUse6.DoubleClick, DspWideUse5.DoubleClick, DspWideUse4.DoubleClick, DspWideUse3.DoubleClick, DspWideUse2.DoubleClick, DspWideUse11.DoubleClick, DspWideUse10.DoubleClick, DspWideUse1.DoubleClick, DspWideUse0.DoubleClick, DspWideUse12.DoubleClick
 
     End Sub
 
@@ -992,17 +1096,9 @@
         Dim ReportTbl As New clsRingReport
         '        ReportTbl.CheckRingItem()
         'フォームのタイトル
-        Me.Text += $"{GetVersionNo()} [{InitPara.ConstructionName}]"
+        Me.Text += $"{GetVersionNo()} [{InitPara.ConstructionName}] "
 
-        If InitPara.MonitorMode Then
-            Me.Text += " MonitorMode"
-        End If
-
-        If InitPara.ClientMode Then
-            Me.Text += " ClientMode"
-        End If
-
-
+        Me.Text += InitPara.ModeName
 
 
         'ジャッキ稼働画面の初期データ
@@ -1021,7 +1117,7 @@
 
             .DspInitBaseImg()
 
-
+            .SegmentDspEnable = InitPara.LosZeroEquip
             .MaxCopyStroke = PlcIf.AnalogTag.TagData("コピーストローク1").EngHight
         End With
 
@@ -1071,8 +1167,6 @@
 
         '汎用データ表示項目セット
         WideDataFldSet()
-        '計算すtロー演算
-        PlcIf_MesureStrokeChange()
 
         '基準方位の算出
         RefernceDirection.sbCulKijun()
@@ -1081,20 +1175,27 @@
 
         '線形データ画面更新
         LineDataUpdate()
-        If InitPara.LosZeroMode Then
+        If InitPara.LosZeroEquip Then
             '組立パターンの情報を取得
             SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
             '同時施工組立パターン情報表示
             SegmentDataDsp()
         End If
         '同時施工モードのメニュー有効
-        LossZeroConcern.Enabled = InitPara.LosZeroMode
-        AssemblyProcessEdit.Enabled = InitPara.LosZeroMode
+        LossZeroConcern.Enabled = InitPara.LosZeroEquip
+        AssemblyProcessEdit.Enabled = InitPara.LosZeroEquip
+
+        btnLoszeroContinu.Visible = InitPara.LosZeroEquip
+        btnPieceConfirm.Visible = InitPara.LosZeroEquip
+        btnLossZerooCancel.Visible = InitPara.LosZeroEquip
+
+
+        DspWideUse12.Visible = Not InitPara.LosZeroEquip
 
         '掘削開始時刻の取得
         DspExcavStartDay(getExcecStartTime)
         '姿勢制御自動手動の切替時の処理
-        ControlParameter_FlexAutoManualChange()
+        FlexAutoManualChange()
 
 
         '上下ストローク計の有無で表示設定
@@ -1108,14 +1209,61 @@
         DspUpRealStroke.Visible = InitPara.topStrokeEnable
         DspUpSpeed.Visible = InitPara.topStrokeEnable
 
-
+        'テールクリアランスの表示
+        DspTopClearance.Visible = CtlPara.TaleClrMeasurUExit
+        DspLeftClearance.Visible = CtlPara.TaleClrMeasurLExit
+        DspRightClearance.Visible = CtlPara.TaleClrMeasurRExit
+        DspBottomClearance.Visible = CtlPara.TaleClrMeasurBExit
 
         ParameterCheck()
 
 
+        StrokeSet()
+
+        '計算ストローク演算
+        PlcIf_MesureStrokeChange()
+
+        '立ち上がったイベントを表示
+
+        Dim db As New clsDataBase
+
+        db.ExecuteSqlCmd _
+            ($"INSERT INTO FLEXイベントデータ
+            (Time,イベントデータ,イベント種類) VALUES('{Now}','Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]','0')")
+
+    End Sub
+    ''' <summary>
+    ''' ロスゼロで掘進途中に立ち上げたときのストローク処理
+    ''' </summary>
+    Private Sub StrokeSet()
+        If PlcIf.ExcaStatus <> cTaiki AndAlso PlcIf.LosZeroEnable Then
+            'TODO:最大テーパーの算出
+            CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
+            '最大テーパー位置
+            CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
+            'セグメント幅
+            CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+
+            For Pieace As Short = 1 To PlcIf.AssemblyPieceNo
+                CalcStroke.PullBackJack = SegAsmblyData.ProcessData(Pieace).PullBackJack
+                If Pieace < PlcIf.AssemblyPieceNo Or (Pieace = PlcIf.AssemblyPieceNo And PlcIf.LosZeroSts_M = 5) Then
+                    CalcStroke.asembleFinishedJack = SegAsmblyData.ProcessData(Pieace).ClosetJack
+                    CalcStroke.asembleFinishedJack = SegAsmblyData.ProcessData(Pieace).AddClosetJack
+                End If
+
+
+
+            Next
+        End If
+
     End Sub
 
 
+
+
+    ''' <summary>
+    ''' パラメータのチェック
+    ''' </summary>
     Private Sub ParameterCheck()
         If PlcIf.減圧弁制御P定数 = 0 Or PlcIf.減圧弁制御I定数 = 0 Or PlcIf.DirectControlCoefficient = 0 Then
             frmPressParameterSet.Show()
@@ -1127,5 +1275,14 @@
 
         frmRingDataView.Show()
 
+    End Sub
+    ''' <summary>
+    ''' 次ピース確認画面
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnLoszeroContinu_Click(sender As Object, e As EventArgs) Handles btnLoszeroContinu.Click
+        frmNextPieceConfirm.Show()
+        btnLoszeroContinu.Enabled = False 'ボタン無効
     End Sub
 End Class

@@ -29,13 +29,12 @@ Public Class clsPlanData
     Public Property シフトゾーン残距離 As Double()    'シフトゾーン残距離
 
 
-
     Public Overridable Sub RedimData()
         ReDim _線形(_ゾーン総数 + 1), _前胴中心(_ゾーン総数 + 1), _後胴中心(_ゾーン総数 + 1), _中折(_ゾーン総数 + 1),
             _中折開始(_ゾーン総数 + 1), _戻し開始(_ゾーン総数 + 1), _最大中折れ角(_ゾーン総数 + 1),
             _姿勢変化率(_ゾーン総数 + 1), _中心角(_ゾーン総数 + 1), _線分長(_ゾーン総数 + 1)
-        ReDim _シフト区間長(_ゾーン総数 + 1), _始点シフト量(_ゾーン総数 + 1),
-            _終点シフト量(_ゾーン総数 + 1), _シフトゾーン距離(_ゾーン総数 + 1), _シフトゾーン残距離(_ゾーン総数 + 1)
+        'ReDim _シフト区間長(_ゾーン総数 + 1), _始点シフト量(_ゾーン総数 + 1),
+        '    _終点シフト量(_ゾーン総数 + 1), _シフトゾーン距離(_ゾーン総数 + 1), _シフトゾーン残距離(_ゾーン総数 + 1)
 
 
     End Sub
@@ -280,6 +279,12 @@ Public Class clsHorPanData
         'For i = 0 To tb.Rows.Count - 1
         シフトゾーン総数 = (From zo In tblHorShift.AsEnumerable Select zo("シフト№")).Last
 
+        ReDim シフト区間長(シフトゾーン総数 + 1), 始点シフト量(シフトゾーン総数 + 1),
+            終点シフト量(シフトゾーン総数 + 1), シフトゾーン距離(シフトゾーン総数 + 1), シフトゾーン残距離(シフトゾーン総数 + 1)
+
+
+
+
         For Each t As DataRow In tblHorShift.Rows
             Dim shiftNo As Integer = t.Item("シフト№")
             シフト区間長(shiftNo) = t.Item("区間長")
@@ -438,6 +443,10 @@ Public Class clsVerPlanData
             GetDtfmSQL($"SELECT * FROM 縦断シフト WHERE シートID = {InitPara.SheetID} ORDER BY 'シフト№'")
 
         シフトゾーン総数 = tblVerShift.Rows.Count
+
+        ReDim シフト区間長(シフトゾーン総数 + 1), 始点シフト量(シフトゾーン総数 + 1),
+            終点シフト量(シフトゾーン総数 + 1), シフトゾーン距離(シフトゾーン総数 + 1), シフトゾーン残距離(シフトゾーン総数 + 1)
+
 
         For Each t As DataRow In tblVerShift.Rows
             Dim shiftNo As Integer = t.Item("シフト№")

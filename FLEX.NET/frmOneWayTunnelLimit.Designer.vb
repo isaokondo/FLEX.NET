@@ -30,15 +30,16 @@ Partial Class frmOneWayTunnelLimit
         Me.OneReduceValue = New FLEX.NET.ucnNumEdit()
         Me.RectangleShape1 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
+        Me.MomentRdductionRateOnOnewayLimit = New FLEX.NET.ucnNumEdit()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(219, 337)
+        Me.btnOK.Location = New System.Drawing.Point(219, 389)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(343, 338)
+        Me.btnCancel.Location = New System.Drawing.Point(343, 390)
         '
         'OneWayRLimit
         '
@@ -48,7 +49,7 @@ Partial Class frmOneWayTunnelLimit
         Me.OneWayRLimit.FieldName = "片押R制限値"
         Me.OneWayRLimit.Increment = 0.1!
         Me.OneWayRLimit.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.OneWayRLimit.Location = New System.Drawing.Point(29, 141)
+        Me.OneWayRLimit.Location = New System.Drawing.Point(29, 205)
         Me.OneWayRLimit.Margin = New System.Windows.Forms.Padding(2)
         Me.OneWayRLimit.MaxValue = "10"
         Me.OneWayRLimit.MinValue = "0"
@@ -111,6 +112,7 @@ Partial Class frmOneWayTunnelLimit
         Me.DirectDirectionControl.Margin = New System.Windows.Forms.Padding(2)
         Me.DirectDirectionControl.Name = "DirectDirectionControl"
         Me.DirectDirectionControl.rdbtnValue = False
+        Me.DirectDirectionControl.Selectable = True
         Me.DirectDirectionControl.Size = New System.Drawing.Size(399, 34)
         Me.DirectDirectionControl.SlectNoName = "する"
         Me.DirectDirectionControl.SlectYesName = "しない"
@@ -124,7 +126,7 @@ Partial Class frmOneWayTunnelLimit
         Me.OneReduceTime.FieldName = "実施間隔"
         Me.OneReduceTime.Increment = 1.0!
         Me.OneReduceTime.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.OneReduceTime.Location = New System.Drawing.Point(29, 242)
+        Me.OneReduceTime.Location = New System.Drawing.Point(29, 282)
         Me.OneReduceTime.Margin = New System.Windows.Forms.Padding(2)
         Me.OneReduceTime.MaxValue = "200"
         Me.OneReduceTime.MinValue = "0"
@@ -145,7 +147,7 @@ Partial Class frmOneWayTunnelLimit
         Me.OneReduceValue.FieldName = "１回のr引き戻し量"
         Me.OneReduceValue.Increment = 0.05!
         Me.OneReduceValue.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.OneReduceValue.Location = New System.Drawing.Point(29, 204)
+        Me.OneReduceValue.Location = New System.Drawing.Point(29, 244)
         Me.OneReduceValue.Margin = New System.Windows.Forms.Padding(2)
         Me.OneReduceValue.MaxValue = "200"
         Me.OneReduceValue.MinValue = "0"
@@ -162,9 +164,9 @@ Partial Class frmOneWayTunnelLimit
         '
         Me.RectangleShape1.BorderColor = System.Drawing.Color.White
         Me.RectangleShape1.CornerRadius = 10
-        Me.RectangleShape1.Location = New System.Drawing.Point(14, 12)
+        Me.RectangleShape1.Location = New System.Drawing.Point(11, 8)
         Me.RectangleShape1.Name = "RectangleShape1"
-        Me.RectangleShape1.Size = New System.Drawing.Size(449, 290)
+        Me.RectangleShape1.Size = New System.Drawing.Size(449, 347)
         '
         'ShapeContainer1
         '
@@ -172,16 +174,38 @@ Partial Class frmOneWayTunnelLimit
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(489, 399)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(485, 466)
         Me.ShapeContainer1.TabIndex = 35
         Me.ShapeContainer1.TabStop = False
+        '
+        'MomentRdductionRateOnOnewayLimit
+        '
+        Me.MomentRdductionRateOnOnewayLimit.DataDspWidth = 110
+        Me.MomentRdductionRateOnOnewayLimit.DecimalPlaces = CType(0, Short)
+        Me.MomentRdductionRateOnOnewayLimit.DspFieldName = True
+        Me.MomentRdductionRateOnOnewayLimit.FieldName = "片押し時モーメント低減率"
+        Me.MomentRdductionRateOnOnewayLimit.Increment = 1.0!
+        Me.MomentRdductionRateOnOnewayLimit.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.MomentRdductionRateOnOnewayLimit.Location = New System.Drawing.Point(29, 145)
+        Me.MomentRdductionRateOnOnewayLimit.Margin = New System.Windows.Forms.Padding(2)
+        Me.MomentRdductionRateOnOnewayLimit.MaxValue = "100"
+        Me.MomentRdductionRateOnOnewayLimit.MinValue = "0"
+        Me.MomentRdductionRateOnOnewayLimit.Name = "MomentRdductionRateOnOnewayLimit"
+        Me.MomentRdductionRateOnOnewayLimit.SelectItem = Nothing
+        Me.MomentRdductionRateOnOnewayLimit.Size = New System.Drawing.Size(409, 39)
+        Me.MomentRdductionRateOnOnewayLimit.TabIndex = 36
+        Me.MomentRdductionRateOnOnewayLimit.ttMsg = ""
+        Me.MomentRdductionRateOnOnewayLimit.ttTile = ""
+        Me.MomentRdductionRateOnOnewayLimit.Unit = "%"
+        Me.MomentRdductionRateOnOnewayLimit.Value = 0R
         '
         'frmOneWayTunnelLimit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
-        Me.ClientSize = New System.Drawing.Size(489, 399)
+        Me.ClientSize = New System.Drawing.Size(485, 466)
+        Me.Controls.Add(Me.MomentRdductionRateOnOnewayLimit)
         Me.Controls.Add(Me.OneReduceTime)
         Me.Controls.Add(Me.OneReduceValue)
         Me.Controls.Add(Me.DirectDirectionControl)
@@ -200,6 +224,7 @@ Partial Class frmOneWayTunnelLimit
         Me.Controls.SetChildIndex(Me.OneReduceTime, 0)
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
+        Me.Controls.SetChildIndex(Me.MomentRdductionRateOnOnewayLimit, 0)
         Me.ResumeLayout(False)
 
     End Sub
@@ -211,4 +236,5 @@ Partial Class frmOneWayTunnelLimit
     Friend WithEvents OneReduceValue As ucnNumEdit
     Friend WithEvents RectangleShape1 As PowerPacks.RectangleShape
     Friend WithEvents ShapeContainer1 As PowerPacks.ShapeContainer
+    Friend WithEvents MomentRdductionRateOnOnewayLimit As ucnNumEdit
 End Class

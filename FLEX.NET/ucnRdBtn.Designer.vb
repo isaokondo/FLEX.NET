@@ -30,6 +30,7 @@ Partial Class ucnRdBtn
         'lblFieldName
         '
         Me.lblFieldName.AutoSize = True
+        Me.lblFieldName.BackColor = System.Drawing.Color.Gray
         Me.lblFieldName.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblFieldName.ForeColor = System.Drawing.Color.White
         Me.lblFieldName.Location = New System.Drawing.Point(5, 12)
