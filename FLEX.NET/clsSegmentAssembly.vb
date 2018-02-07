@@ -469,7 +469,9 @@ Friend Class clsSegmentAssembly
 
 
         Dim rsData As DataTable =
-            GetDtfmSQL("select  `flexセグメント組立データ`.* ,`セグメント割付シュミレーション`.*  
+            GetDtfmSQL("select  `flexセグメント組立データ`.`シートID`, `flexセグメント組立データ`.`リング番号`, `flexセグメント組立データ`.`セグメントNo` ,
+            `flexセグメント組立データ`.`組立パターンNo`,`flexセグメント組立データ`.`掘進終了ストローク`,
+            `セグメント割付シュミレーション`.`セグメントNo`,`セグメント割付シュミレーション`.`組立パターンNo`  ,`セグメント割付シュミレーション`.`シートID`   
             FROM `flexセグメント組立データ`
             LEFT OUTER JOIN `セグメント割付シュミレーション` ON `flexセグメント組立データ`.`シートID`=`セグメント割付シュミレーション`.`シートID`
             AND `flexセグメント組立データ`.`リング番号`=`セグメント割付シュミレーション`.`リングＮｏ` ORDER BY `リング番号`")
@@ -578,7 +580,7 @@ Friend Class clsSegmentAssembly
 
         '割り付けシュミレーションで転送日の最新のレコードをリング番号ごとに取得        
         Dim rsData As DataTable =
-            GetDtfmSQL("SELECT * FROM `セグメント割付シュミレーション` AS m WHERE `転送日`= (SELECT max(`転送日`)
+            GetDtfmSQL("SELECT リングＮｏ,セグメントNo,組立パターンNo,転送日,シートID FROM `セグメント割付シュミレーション` AS m WHERE `転送日`= (SELECT max(`転送日`)
             FROM `セグメント割付シュミレーション` AS s WHERE m.`リングＮｏ` = s.`リングＮｏ`) order by `リングＮｏ`;")
 
 
