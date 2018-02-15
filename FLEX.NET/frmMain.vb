@@ -297,6 +297,20 @@
             lblNowDate.Text = Now.ToString("yyyy/MM/dd HH:mm:ss")
         End If
 
+
+        '同時施工実績表示
+        If InitPara.LosZeroEquip Then
+            DspAveAsmPiece.Value = LosZeroPerform.AveAsmPiece
+            DspSumAsmPiece.Value = LosZeroPerform.SumAsmPiece
+            DspAveLoszeroTime.Value = LosZeroPerform.AveLoszeroTime
+            DspSumLoszeroTime.Value = LosZeroPerform.SumLoszeroTime
+
+        End If
+
+
+
+
+
         'TODO:線形データ画面更新　LineDistanceChage に記述したい
         'Call LineDataUpdate()
 
@@ -1217,6 +1231,8 @@
 
         ParameterCheck()
 
+        'ロスゼロ実績
+        LosZeroPerform.Caluc()
 
         StrokeSet()
 
@@ -1284,5 +1300,9 @@
     Private Sub btnLoszeroContinu_Click(sender As Object, e As EventArgs) Handles btnLoszeroContinu.Click
         frmNextPieceConfirm.Show()
         btnLoszeroContinu.Enabled = False 'ボタン無効
+    End Sub
+
+    Private Sub DspExcationElapsedTime_Load(sender As Object, e As EventArgs) Handles DspExcationElapsedTime.Load
+
     End Sub
 End Class

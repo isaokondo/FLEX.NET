@@ -62,11 +62,17 @@ Module mdlFLEX
     ''' テーブル更新日付取得
     ''' </summary>
     Public WithEvents TableUpdateConfirm As clsTableUpdateConfirm
+    ''' <summary>
+    ''' 同時施工実績　算出
+    ''' </summary>
+    Public LosZeroPerform As New clsLosZeroPerform
 
     ''' <summary>
     ''' 減圧可能ストロークに達した
     ''' </summary>
     Private ReduceEnableStrokeReachFlg As Boolean
+
+
 
 
     ''' <summary>
@@ -193,7 +199,8 @@ Module mdlFLEX
 
             '自動印字　出力
             ReportAutoPrintOut()
-
+            'ロスゼロの実績算出
+            LosZeroPerform.Caluc()
 
             LosZeroSts = 0
             If PreStatus <> -1 Then

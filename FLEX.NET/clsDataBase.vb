@@ -272,7 +272,8 @@ Public Class clsDataBase
                 Builder.UserID = "toyo"
                 Builder.Password = "yanagi"
                 Builder.Database = DataBaseName
-                Builder.ConnectionTimeout = 60
+                Builder.ConnectionTimeout = 600
+                Builder.DefaultCommandTimeout = 300
                 Dim ConStr = Builder.ToString()
                 Dim con As New MySqlConnection
                 con.ConnectionString = ConStr
@@ -976,7 +977,93 @@ Public Class clsRingReport
 
 End Class
 
+Public Class clsLosZeroPerform
+    Inherits clsDataBase
 
+    Private _AveAsmPiece As Single '平均組立ピース数
+    Private _SumAsmPiece As Integer '累計組立ピース数
+
+    Private _AveLoszeroTime As Single '同時施工平均時間
+    Private _SumLoszeroTime As Integer '同時施工累積時間
+
+
+
+    Public ReadOnly Property AveAsmPiece As Single
+        Get
+            Return _AveAsmPiece
+        End Get
+    End Property
+    Public ReadOnly Property SumAsmPiece As Integer
+        Get
+            Return _SumAsmPiece
+        End Get
+    End Property
+
+
+    Public ReadOnly Property AveLoszeroTime As Integer
+        Get
+            Return _AveLoszeroTime
+        End Get
+    End Property
+
+    Public ReadOnly Property SumLoszeroTime As Integer
+        Get
+            Return _SumLoszeroTime
+        End Get
+    End Property
+
+
+
+
+    ''' <summary>
+    ''' 組立ピース数の算出
+    ''' </summary>
+    Public Async Sub Caluc()
+
+        If InitPara.LosZeroEquip Then
+            Dim PieceLst As New List(Of Integer)
+            Dim RingLoszeroTime As New List(Of Integer)
+
+            Dim anaTag As New DataTable
+
+            Dim task As Task = Task.Run(
+        Sub()
+
+            anaTag =
+            GetDtfmSQL("select max(`組立ピース`),max(`同時掘進時間`) from `flex掘削データ`
+            where `同時施工ステータス_Machine`='5'  group by `リング番号`")
+
+            For Each t As DataRow In anaTag.Rows
+                PieceLst.Add(t(0))
+                RingLoszeroTime.Add(t(1))
+            Next
+
+            _AveAsmPiece = PieceLst.Average
+            _SumAsmPiece = PieceLst.Sum
+
+            _AveLoszeroTime = RingLoszeroTime.Average
+            _SumLoszeroTime = RingLoszeroTime.Sum
+
+
+        End Sub)
+
+            Await task
+
+
+
+
+
+
+
+        End If
+
+    End Sub
+
+
+
+
+
+End Class
 
 
 

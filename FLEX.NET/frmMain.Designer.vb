@@ -124,10 +124,10 @@ Partial Class frmMain
         Me.DspFlexAuto = New FLEX.NET.ucnDspBit()
         Me.DspFlexControlOn = New FLEX.NET.ucnDspBit()
         Me.DspExcaWaiting = New FLEX.NET.ucnDspBit()
-        Me.UcnDspData16 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData32 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData33 = New FLEX.NET.ucnDspData()
-        Me.UcnDspData34 = New FLEX.NET.ucnDspData()
+        Me.DspSumLoszeroTime = New FLEX.NET.ucnDspData()
+        Me.DspAveLoszeroTime = New FLEX.NET.ucnDspData()
+        Me.DspSumAsmPiece = New FLEX.NET.ucnDspData()
+        Me.DspAveAsmPiece = New FLEX.NET.ucnDspData()
         Me.DspInterruptTime = New FLEX.NET.ucnDspData()
         Me.DspWatingElapsedTime = New FLEX.NET.ucnDspData()
         Me.DspLosZeroElapsedTime = New FLEX.NET.ucnDspData()
@@ -432,10 +432,10 @@ Partial Class frmMain
         Me.Panel1.BackColor = System.Drawing.Color.Silver
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Controls.Add(Me.UcnDspData16)
-        Me.Panel1.Controls.Add(Me.UcnDspData32)
-        Me.Panel1.Controls.Add(Me.UcnDspData33)
-        Me.Panel1.Controls.Add(Me.UcnDspData34)
+        Me.Panel1.Controls.Add(Me.DspSumLoszeroTime)
+        Me.Panel1.Controls.Add(Me.DspAveLoszeroTime)
+        Me.Panel1.Controls.Add(Me.DspSumAsmPiece)
+        Me.Panel1.Controls.Add(Me.DspAveAsmPiece)
         Me.Panel1.Controls.Add(Me.DspInterruptTime)
         Me.Panel1.Controls.Add(Me.DspWatingElapsedTime)
         Me.Panel1.Controls.Add(Me.DspLosZeroElapsedTime)
@@ -1354,89 +1354,89 @@ Partial Class frmMain
         Me.DspExcaWaiting.Size = New System.Drawing.Size(185, 30)
         Me.DspExcaWaiting.TabIndex = 65
         '
-        'UcnDspData16
+        'DspSumLoszeroTime
         '
-        Me.UcnDspData16.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData16.Blink = False
-        Me.UcnDspData16.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData16.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData16.DataWidth = 91
-        Me.UcnDspData16.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData16.FieldName = "累計同時掘進(分)"
-        Me.UcnDspData16.FieldNameWidth = 175
-        Me.UcnDspData16.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData16.Location = New System.Drawing.Point(297, 211)
-        Me.UcnDspData16.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData16.Name = "UcnDspData16"
-        Me.UcnDspData16.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData16.TabIndex = 132
-        Me.UcnDspData16.Unit = "deg"
-        Me.UcnDspData16.UnitVisible = False
-        Me.UcnDspData16.Value = "0"
-        Me.UcnDspData16.ValueType = False
+        Me.DspSumLoszeroTime.BackColor = System.Drawing.Color.Transparent
+        Me.DspSumLoszeroTime.Blink = False
+        Me.DspSumLoszeroTime.BlinkColor = System.Drawing.Color.Red
+        Me.DspSumLoszeroTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspSumLoszeroTime.DataWidth = 91
+        Me.DspSumLoszeroTime.DecimalPlaces = CType(0, Short)
+        Me.DspSumLoszeroTime.FieldName = "累計同時掘進(分)"
+        Me.DspSumLoszeroTime.FieldNameWidth = 175
+        Me.DspSumLoszeroTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspSumLoszeroTime.Location = New System.Drawing.Point(297, 211)
+        Me.DspSumLoszeroTime.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspSumLoszeroTime.Name = "DspSumLoszeroTime"
+        Me.DspSumLoszeroTime.Size = New System.Drawing.Size(275, 32)
+        Me.DspSumLoszeroTime.TabIndex = 132
+        Me.DspSumLoszeroTime.Unit = "deg"
+        Me.DspSumLoszeroTime.UnitVisible = False
+        Me.DspSumLoszeroTime.Value = "0"
+        Me.DspSumLoszeroTime.ValueType = False
         '
-        'UcnDspData32
+        'DspAveLoszeroTime
         '
-        Me.UcnDspData32.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData32.Blink = False
-        Me.UcnDspData32.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData32.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData32.DataWidth = 91
-        Me.UcnDspData32.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData32.FieldName = "平均同時掘進(分)"
-        Me.UcnDspData32.FieldNameWidth = 175
-        Me.UcnDspData32.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData32.Location = New System.Drawing.Point(297, 179)
-        Me.UcnDspData32.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData32.Name = "UcnDspData32"
-        Me.UcnDspData32.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData32.TabIndex = 131
-        Me.UcnDspData32.Unit = "deg"
-        Me.UcnDspData32.UnitVisible = False
-        Me.UcnDspData32.Value = "0"
-        Me.UcnDspData32.ValueType = False
+        Me.DspAveLoszeroTime.BackColor = System.Drawing.Color.Transparent
+        Me.DspAveLoszeroTime.Blink = False
+        Me.DspAveLoszeroTime.BlinkColor = System.Drawing.Color.Red
+        Me.DspAveLoszeroTime.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspAveLoszeroTime.DataWidth = 91
+        Me.DspAveLoszeroTime.DecimalPlaces = CType(0, Short)
+        Me.DspAveLoszeroTime.FieldName = "平均同時掘進(分)"
+        Me.DspAveLoszeroTime.FieldNameWidth = 175
+        Me.DspAveLoszeroTime.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspAveLoszeroTime.Location = New System.Drawing.Point(297, 179)
+        Me.DspAveLoszeroTime.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspAveLoszeroTime.Name = "DspAveLoszeroTime"
+        Me.DspAveLoszeroTime.Size = New System.Drawing.Size(275, 32)
+        Me.DspAveLoszeroTime.TabIndex = 131
+        Me.DspAveLoszeroTime.Unit = "deg"
+        Me.DspAveLoszeroTime.UnitVisible = False
+        Me.DspAveLoszeroTime.Value = "0"
+        Me.DspAveLoszeroTime.ValueType = False
         '
-        'UcnDspData33
+        'DspSumAsmPiece
         '
-        Me.UcnDspData33.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData33.Blink = False
-        Me.UcnDspData33.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData33.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData33.DataWidth = 91
-        Me.UcnDspData33.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData33.FieldName = "累計組立ﾋﾟｰｽ数"
-        Me.UcnDspData33.FieldNameWidth = 175
-        Me.UcnDspData33.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData33.Location = New System.Drawing.Point(297, 147)
-        Me.UcnDspData33.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData33.Name = "UcnDspData33"
-        Me.UcnDspData33.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData33.TabIndex = 130
-        Me.UcnDspData33.Unit = "deg"
-        Me.UcnDspData33.UnitVisible = False
-        Me.UcnDspData33.Value = "0"
-        Me.UcnDspData33.ValueType = False
+        Me.DspSumAsmPiece.BackColor = System.Drawing.Color.Transparent
+        Me.DspSumAsmPiece.Blink = False
+        Me.DspSumAsmPiece.BlinkColor = System.Drawing.Color.Red
+        Me.DspSumAsmPiece.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspSumAsmPiece.DataWidth = 91
+        Me.DspSumAsmPiece.DecimalPlaces = CType(0, Short)
+        Me.DspSumAsmPiece.FieldName = "累計組立ﾋﾟｰｽ数"
+        Me.DspSumAsmPiece.FieldNameWidth = 175
+        Me.DspSumAsmPiece.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspSumAsmPiece.Location = New System.Drawing.Point(297, 147)
+        Me.DspSumAsmPiece.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspSumAsmPiece.Name = "DspSumAsmPiece"
+        Me.DspSumAsmPiece.Size = New System.Drawing.Size(275, 32)
+        Me.DspSumAsmPiece.TabIndex = 130
+        Me.DspSumAsmPiece.Unit = "deg"
+        Me.DspSumAsmPiece.UnitVisible = False
+        Me.DspSumAsmPiece.Value = "0"
+        Me.DspSumAsmPiece.ValueType = False
         '
-        'UcnDspData34
+        'DspAveAsmPiece
         '
-        Me.UcnDspData34.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData34.Blink = False
-        Me.UcnDspData34.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData34.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.UcnDspData34.DataWidth = 91
-        Me.UcnDspData34.DecimalPlaces = CType(0, Short)
-        Me.UcnDspData34.FieldName = "平均組立ﾋﾟｰｽ数"
-        Me.UcnDspData34.FieldNameWidth = 175
-        Me.UcnDspData34.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData34.Location = New System.Drawing.Point(297, 115)
-        Me.UcnDspData34.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData34.Name = "UcnDspData34"
-        Me.UcnDspData34.Size = New System.Drawing.Size(275, 32)
-        Me.UcnDspData34.TabIndex = 129
-        Me.UcnDspData34.Unit = "deg"
-        Me.UcnDspData34.UnitVisible = False
-        Me.UcnDspData34.Value = "0"
-        Me.UcnDspData34.ValueType = False
+        Me.DspAveAsmPiece.BackColor = System.Drawing.Color.Transparent
+        Me.DspAveAsmPiece.Blink = False
+        Me.DspAveAsmPiece.BlinkColor = System.Drawing.Color.Red
+        Me.DspAveAsmPiece.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspAveAsmPiece.DataWidth = 91
+        Me.DspAveAsmPiece.DecimalPlaces = CType(1, Short)
+        Me.DspAveAsmPiece.FieldName = "平均組立ﾋﾟｰｽ数"
+        Me.DspAveAsmPiece.FieldNameWidth = 175
+        Me.DspAveAsmPiece.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspAveAsmPiece.Location = New System.Drawing.Point(297, 115)
+        Me.DspAveAsmPiece.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspAveAsmPiece.Name = "DspAveAsmPiece"
+        Me.DspAveAsmPiece.Size = New System.Drawing.Size(275, 32)
+        Me.DspAveAsmPiece.TabIndex = 129
+        Me.DspAveAsmPiece.Unit = "deg"
+        Me.DspAveAsmPiece.UnitVisible = False
+        Me.DspAveAsmPiece.Value = "0"
+        Me.DspAveAsmPiece.ValueType = False
         '
         'DspInterruptTime
         '
@@ -2720,10 +2720,10 @@ Partial Class frmMain
     Friend WithEvents DspExcationElapsedTime As ucnDspData
     Friend WithEvents lblUnit As Label
     Friend WithEvents DspRingNo As Label
-    Friend WithEvents UcnDspData16 As ucnDspData
-    Friend WithEvents UcnDspData32 As ucnDspData
-    Friend WithEvents UcnDspData33 As ucnDspData
-    Friend WithEvents UcnDspData34 As ucnDspData
+    Friend WithEvents DspSumLoszeroTime As ucnDspData
+    Friend WithEvents DspAveLoszeroTime As ucnDspData
+    Friend WithEvents DspSumAsmPiece As ucnDspData
+    Friend WithEvents DspAveAsmPiece As ucnDspData
     Friend WithEvents Panel2 As Panel
     Friend WithEvents DspFlexGyiroControl As ucnDspBit
     Friend WithEvents DspFlexAutoAzurControl As ucnDspBit
