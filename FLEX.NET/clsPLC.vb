@@ -1392,7 +1392,53 @@ Public Class clsPlcIf
 
     End Sub
 
+    Const ELEMENT_SIZE_32BITINTEGER = 2 '32bit整数の書込み/読出し時、シーケンサ格納データ用配列の使用要素数
 
+    ''' <summary>
+    ''' アナログ２Word書込　モーメント等
+    ''' </summary>
+    ''' <param name="TagName"></param>
+    ''' <param name="Value"></param>
+    Public Sub Anlog2WordWite(TagName As String, ByVal Value As Single)
+
+        _EngValue(TagName) = Value
+        Dim wD As Integer
+        Dim PlcAdress As String
+
+        With AnalogTag.TagData(TagName)
+            PlcAdress = .Address
+            'アナログデータをPLC書込データに変換
+            wD =
+                (Value - .EngLow) / (.EngHight - .EngLow) * (.ScaleHigh - .ScaleLow) + .ScaleLow
+            'PLC書込
+        End With
+
+        Dim byarrBufferByte() As Byte                                           '編集用バイトバッファの宣言
+        Dim sharrBufferForDeviceValue(ELEMENT_SIZE_32BITINTEGER - 1) As Short   'シーケンサ用バッファの宣言
+
+        '入力されたデータを32bit整数に変換し、バイト配列に代入(データ量は4バイト固定)
+        byarrBufferByte = BitConverter.GetBytes(CInt(wD))
+
+        'バイト配列からシーケンサ用データバッファに代入
+        sharrBufferForDeviceValue(0) = BitConverter.ToInt16(byarrBufferByte, 0)
+        sharrBufferForDeviceValue(1) = BitConverter.ToInt16(byarrBufferByte, 2)
+
+
+        Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
+        Try
+            iReturnCode = com_ReferencesEasyIF.WriteDeviceBlock2(PlcAdress, ELEMENT_SIZE_32BITINTEGER,
+                                                     sharrBufferForDeviceValue(0))
+        Catch exException As Exception
+            '例外処理	
+            MessageBox.Show(exException.Message, "Anlog2WordWite", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End Try
+
+
+
+
+
+    End Sub
 
 
 
