@@ -533,7 +533,9 @@ Friend Class clsSegmentAssembly
             st.TFTaper = t.Item("テーパー量切羽")
             'st.Note = rsData.Item("備考")
             st.OuterDiameter = t.Item("外径")
-            st.TaperAngle = t.Item("位置")
+            If Not IsDBNull(t.Item("位置")) Then
+                st.TaperAngle = t.Item("位置")
+            End If
 
             _TypeList.Add(t.Item("セグメントNo"), st)
 

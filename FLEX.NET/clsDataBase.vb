@@ -1038,11 +1038,14 @@ Public Class clsLosZeroPerform
                 RingLoszeroTime.Add(t(1))
             Next
 
-            _AveAsmPiece = PieceLst.Average
-            _SumAsmPiece = PieceLst.Sum
+            If PieceLst.Count <> 0 Then
+                _AveAsmPiece = PieceLst.Average
+                _SumAsmPiece = PieceLst.Sum
 
-            _AveLoszeroTime = RingLoszeroTime.Average
-            _SumLoszeroTime = RingLoszeroTime.Sum
+                _AveLoszeroTime = RingLoszeroTime.Average
+                _SumLoszeroTime = RingLoszeroTime.Sum
+            End If
+
 
 
         End Sub)
