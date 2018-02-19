@@ -463,6 +463,10 @@ Module mdlFLEX
             JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
         End If
 
+
+        PlcIf.LineDatalePlcWrite(RefernceDirection.平面偏角, RefernceDirection.縦断偏角, CtlPara.水平入力補正値, CtlPara.鉛直入力補正値)
+
+
         frmMain.DirectionChartD.DataUp()
 
 

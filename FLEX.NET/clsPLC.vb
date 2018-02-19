@@ -306,6 +306,37 @@ Public Class clsPlcIf
             End If
         End Set
     End Property
+    ''' <summary>
+    ''' 偏角のPLC書込
+    ''' </summary>
+    ''' <param name="HorDev"></param>
+    ''' <param name="VerDev"></param>
+    Public Sub LineDatalePlcWrite(HorDev As Single, VerDev As Single, HorCorrention As Single, VerCorrentionValue As Single)
+        If _EngValue.ContainsKey("水平偏角") Then
+            AnalogPlcWrite("水平偏角", HorDev)
+
+        End If
+
+        If _EngValue.ContainsKey("鉛直偏角") Then
+            AnalogPlcWrite("鉛直偏角", VerDev)
+        End If
+
+        If _EngValue.ContainsKey("水平入力補正値") Then
+            AnalogPlcWrite("水平入力補正値", HorCorrention)
+
+        End If
+
+        If _EngValue.ContainsKey("鉛直入力補正値") Then
+            AnalogPlcWrite("鉛直入力補正値", VerCorrentionValue)
+        End If
+
+
+
+    End Sub
+
+
+
+
 
     Public ReadOnly Property Gyro() As Single
         Get
@@ -1350,6 +1381,10 @@ Public Class clsPlcIf
         If InitPara.ServerMode Then
             iReturnCode =
             com_ReferencesEasyIF.SetDevice(DigtalTag.TagData("伝送フラグ").Address, t)
+
+            Anlog2WordWite("水平モーメント", CulcMoment.MomentX)
+            Anlog2WordWite("鉛直モーメント", CulcMoment.MomentY)
+
         End If
 
         'モーメント推力の演算
@@ -1401,41 +1436,42 @@ Public Class clsPlcIf
     ''' <param name="Value"></param>
     Public Sub Anlog2WordWite(TagName As String, ByVal Value As Single)
 
-        _EngValue(TagName) = Value
-        Dim wD As Integer
-        Dim PlcAdress As String
 
-        With AnalogTag.TagData(TagName)
-            PlcAdress = .Address
-            'アナログデータをPLC書込データに変換
-            wD =
+        If _EngValue.ContainsKey(TagName) Then
+            _EngValue(TagName) = Value
+            Dim wD As Integer
+            Dim PlcAdress As String
+
+            With AnalogTag.TagData(TagName)
+                PlcAdress = .Address
+                'アナログデータをPLC書込データに変換
+                wD =
                 (Value - .EngLow) / (.EngHight - .EngLow) * (.ScaleHigh - .ScaleLow) + .ScaleLow
-            'PLC書込
-        End With
+                'PLC書込
+            End With
 
-        Dim byarrBufferByte() As Byte                                           '編集用バイトバッファの宣言
-        Dim sharrBufferForDeviceValue(ELEMENT_SIZE_32BITINTEGER - 1) As Short   'シーケンサ用バッファの宣言
+            Dim byarrBufferByte() As Byte                                           '編集用バイトバッファの宣言
+            Dim sharrBufferForDeviceValue(ELEMENT_SIZE_32BITINTEGER - 1) As Short   'シーケンサ用バッファの宣言
 
-        '入力されたデータを32bit整数に変換し、バイト配列に代入(データ量は4バイト固定)
-        byarrBufferByte = BitConverter.GetBytes(CInt(wD))
+            '入力されたデータを32bit整数に変換し、バイト配列に代入(データ量は4バイト固定)
+            byarrBufferByte = BitConverter.GetBytes(CInt(wD))
 
-        'バイト配列からシーケンサ用データバッファに代入
-        sharrBufferForDeviceValue(0) = BitConverter.ToInt16(byarrBufferByte, 0)
-        sharrBufferForDeviceValue(1) = BitConverter.ToInt16(byarrBufferByte, 2)
+            'バイト配列からシーケンサ用データバッファに代入
+            sharrBufferForDeviceValue(0) = BitConverter.ToInt16(byarrBufferByte, 0)
+            sharrBufferForDeviceValue(1) = BitConverter.ToInt16(byarrBufferByte, 2)
 
 
-        Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
-        Try
-            iReturnCode = com_ReferencesEasyIF.WriteDeviceBlock2(PlcAdress, ELEMENT_SIZE_32BITINTEGER,
+            Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
+            Try
+                iReturnCode = com_ReferencesEasyIF.WriteDeviceBlock2(PlcAdress, ELEMENT_SIZE_32BITINTEGER,
                                                      sharrBufferForDeviceValue(0))
-        Catch exException As Exception
-            '例外処理	
-            MessageBox.Show(exException.Message, "Anlog2WordWite", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Sub
-        End Try
+            Catch exException As Exception
+                '例外処理	
+                MessageBox.Show(exException.Message, "Anlog2WordWite", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End Try
 
-
-
+        End If
 
 
     End Sub
