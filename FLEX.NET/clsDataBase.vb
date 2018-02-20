@@ -1170,7 +1170,7 @@ Public Class clsTableUpdateConfirm
                         PlcIf.TagRead()
                     Case "flex初期パラメータ"
                         InitPara = New clsInitParameter
-                    Case "flexセグメント組立データ"
+                    Case "flexセグメント組立データ", "セグメント割付シュミレーション"
                         SegAsmblyData.SegmentRingDataRead()
                         '組立パターンの情報を取得
                         SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
