@@ -10,11 +10,11 @@ Public Class clsDataBase
     ''' <summary>
     ''' ホスト名
     ''' </summary>
-    Private Shared HostName As String
+    Public Shared HostName As String
     ''' <summary>
     ''' データベース名
     ''' </summary>
-    Private Shared DataBaseName As String
+    Public Shared DataBaseName As String
 
     ''' <summary>
     ''' ポート番号
@@ -1068,6 +1068,64 @@ Public Class clsLosZeroPerform
 
 End Class
 
+Public Class clsDBBackUp
+
+    Inherits clsDataBase
+    Sub New()
+        'Processオブジェクトを作成
+        Dim p As New System.Diagnostics.Process()
+
+        '入力できるようにする
+        p.StartInfo.UseShellExecute = False
+        p.StartInfo.RedirectStandardInput = True
+
+        '非同期で出力を読み取れるようにする
+        p.StartInfo.RedirectStandardOutput = True
+        AddHandler p.OutputDataReceived, AddressOf p_OutputDataReceived
+
+        p.StartInfo.FileName =
+            System.Environment.GetEnvironmentVariable("ComSpec")
+        p.StartInfo.CreateNoWindow = True
+
+        '起動
+        p.Start()
+
+        '非同期で出力の読み取りを開始
+        p.BeginOutputReadLine()
+
+        '入力のストリームを取得
+        Dim sw As System.IO.StreamWriter = p.StandardInput
+        If sw.BaseStream.CanWrite Then
+            '「dir c:\ /w」を実行する
+            sw.WriteLine($"C:\Program Files\MariaDB 10.1\bin\mysqldump.exe  -utoyo -pyanagi
+                    -h{HostName} {DataBaseName} -ignore-table=flex掘削データ -ignore-table=flexイベントデータ> backup\{DataBaseName}.sql")
+            '終了する
+            sw.WriteLine("exit")
+        End If
+        sw.Close()
+
+        p.WaitForExit()
+        p.Close()
+
+        Console.ReadLine()
+    End Sub
+
+    'OutputDataReceivedイベントハンドラ
+    '行が出力されるたびに呼び出される
+    Private Shared Sub p_OutputDataReceived(sender As Object,
+            e As System.Diagnostics.DataReceivedEventArgs)
+        '出力された文字列を表示する
+        Console.WriteLine(e.Data)
+    End Sub
+
+
+
+
+End Class
+
+
+
+
 
 
 ''' <summary>
@@ -1184,27 +1242,7 @@ Public Class clsTableUpdateConfirm
                 End Select
 
             Next
-
-
-
-
-
-
         End If
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     End Sub
 

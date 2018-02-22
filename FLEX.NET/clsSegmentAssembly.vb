@@ -467,6 +467,7 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     Public Sub SegmentRingDataRead()
 
+        SegmentListRead() 'セグメントリスト読込
 
         Dim rsData As DataTable =
             GetDtfmSQL("select  `flexセグメント組立データ`.`シートID`, `flexセグメント組立データ`.`リング番号`, `flexセグメント組立データ`.`セグメントNo` ,
