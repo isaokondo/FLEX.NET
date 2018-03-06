@@ -194,8 +194,8 @@ Module mdlFLEX
 
         End If
 
-            '待機中
-            If NowStatus = cTaiki Then
+        '待機中
+        If NowStatus = cTaiki Then
 
             '自動印字　出力
             ReportAutoPrintOut()
@@ -217,6 +217,10 @@ Module mdlFLEX
 
             '掘進開始時のストローク取り込み
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
+
+            'データのバックアップ
+            Dim batest As New clsDBBackUp
+            batest.BakUp()
 
 
         End If

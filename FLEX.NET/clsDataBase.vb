@@ -516,6 +516,11 @@ Public Class clsInitParameter
     Private _topStrokeEnable As Boolean     '上ストローク計あり
     Private _bottomStrokeEnable As Boolean '下ストローク計あり
 
+    Private _backUpFolder As String 'バックアップフォルダ
+    Private _backUpTime As String = "07:00:00" 'バックアップ時間
+
+    Private _backUpFTPHostUserPass As String 'FTPバックアップ
+
 
     Private _constructionName As String '工事名（環境設定テーブルより
     Private _LosZeroEquip As Boolean = True    '同時施工あり（環境設定テーブルより
@@ -652,6 +657,27 @@ Public Class clsInitParameter
             Return _bottomStrokeEnable
         End Get
     End Property
+
+    Public ReadOnly Property BackUpFTPHostUserPass As String
+        Get
+            Return _backUpFTPHostUserPass
+        End Get
+    End Property
+
+
+
+    Public ReadOnly Property BackUpFolder As String
+        Get
+            Return _backUpFolder
+        End Get
+    End Property
+
+    Public ReadOnly Property BackUpTime As String
+        Get
+            Return _backUpTime
+        End Get
+    End Property
+
 
 
     Public ReadOnly Property ConstructionName As String
@@ -830,7 +856,15 @@ Public Class clsInitParameter
                 _DistanceInputMethod = (ht("測量距離入力").IndexOf("起点") >= 0)
             End If
 
-
+            If ht.ContainsKey("BackUpFolder") Then
+                _backUpFolder = ht("BackUpFolder")
+            End If
+            If ht.ContainsKey("BackUpTime") Then
+                _backUpTime = ht("BackUpTime")
+            End If
+            If ht.ContainsKey("BackUpFTPHostUserPass") Then
+                _backUpFTPHostUserPass = ht("BackUpFTPHostUserPass")
+            End If
 
         Catch ex As Exception
 
@@ -1071,44 +1105,169 @@ End Class
 Public Class clsDBBackUp
 
     Inherits clsDataBase
-    Sub New()
-        'Processオブジェクトを作成
-        Dim p As New System.Diagnostics.Process()
+    Public Async Sub BakUp()
 
-        '入力できるようにする
-        p.StartInfo.UseShellExecute = False
-        p.StartInfo.RedirectStandardInput = True
 
-        '非同期で出力を読み取れるようにする
-        p.StartInfo.RedirectStandardOutput = True
-        AddHandler p.OutputDataReceived, AddressOf p_OutputDataReceived
 
-        p.StartInfo.FileName =
-            System.Environment.GetEnvironmentVariable("ComSpec")
-        p.StartInfo.CreateNoWindow = True
+        Dim task As Task = Task.Run(
+                Sub()
+                    'このデータベースのテーブルリストを作成
 
-        '起動
-        p.Start()
+                    Dim tbDt As DataTable = GetDtfmSQL($"SHOW TABLES  FROM `{DataBaseName}`;")
 
-        '非同期で出力の読み取りを開始
-        p.BeginOutputReadLine()
+                    If IO.Directory.Exists(InitPara.BackUpFolder) Then
 
-        '入力のストリームを取得
-        Dim sw As System.IO.StreamWriter = p.StandardInput
-        If sw.BaseStream.CanWrite Then
-            '「dir c:\ /w」を実行する
-            sw.WriteLine($"C:\Program Files\MariaDB 10.1\bin\mysqldump.exe  -utoyo -pyanagi
-                    -h{HostName} {DataBaseName} -ignore-table=flex掘削データ -ignore-table=flexイベントデータ> backup\{DataBaseName}.sql")
-            '終了する
-            sw.WriteLine("exit")
-        End If
-        sw.Close()
+                        '保存先のsqlファイルのパス
+                        Dim sqlPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}.sql"
+                        'sqlファイルに書き込むときに使うEncoding
+                        Dim enc As Text.Encoding = Text.Encoding.GetEncoding("Shift_JIS")
 
-        p.WaitForExit()
-        p.Close()
+                        'ファイルは上書き
+                        Dim sr0 As New IO.StreamWriter(sqlPath, False, enc)
+                        For Each tbk As DataRow In tbDt.Rows
+                            If tbk(0) <> "flex掘削データ" And tbk(0) <> "flexイベントデータ" And tbk(0) <> "plccomdata" And tbk(0) <> "updatetable" Then
+                                'Dim bkdtDt As DataTable = GetDtfmSQL($"SELECT *  FROM `{tbk(0)}`;")
+                                ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `{tbk(0)}`;"), tbk(0), sr0)
 
-        Console.ReadLine()
+                            End If
+                        Next
+
+                        '閉じる
+                        sr0.Close()
+
+                        '掘削データの保存　1リング分を日付ファイルにに追加
+                        '最終リング番号取得
+                        Dim LastRingNo As Integer = (New clsReportDb).LastRing
+                        Dim sqlPath1 As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}掘削データ{Now.ToString("yyyyMMdd")}.sql"
+                        Dim sr1 As New IO.StreamWriter(sqlPath1, True, enc)
+
+                        ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `flex掘削データ` WHERE `リング番号`='{LastRingNo}';"), "flex掘削データ", sr1)
+
+                        sr1.Close()
+
+                        'FTPに転送
+                        Dim FtpUri As Uri, FtpUser As String, FtpPass As String
+
+                        Dim stArrayData As String() = InitPara.BackUpFTPHostUserPass.Split(","c)
+
+                        If stArrayData.Count = 3 Then
+
+                            FtpUri = New Uri($"ftp://{stArrayData(0)}/Bakup{DataBaseName}.sql")
+                            'ユーザー名、パスワード追加
+                            FtpUser = stArrayData(1)
+                            FtpPass = stArrayData(2)
+
+                            'データFTP転送(1)
+                            ftpUpload(FtpUri, sqlPath, FtpUser, FtpPass)
+
+                            'データFTP転送(2) 
+                            FtpUri = New Uri($"ftp://{stArrayData(0)}/Bakup{DataBaseName}掘削データ{Now.ToString("yyyyMMdd")}.sql")
+                            ftpUpload(FtpUri, sqlPath1, FtpUser, FtpPass)
+
+                        End If
+                    End If
+
+                End Sub)
+        Await task
+
+
+
+
+
     End Sub
+
+    Private Sub ExportInsetSQL(ByVal pDt As DataTable, tblName As String, sr As IO.StreamWriter)
+        'CSVで保存するDataTable
+        Dim dt As DataTable = pDt
+
+        If dt.Rows.Count = 0 Then Exit Sub
+
+        Dim lstValue As New List(Of String)
+
+        For Each row As DataRow In dt.Rows
+
+            'フィールドの取得
+            Dim lstFld As New List(Of String)
+
+            For i = 0 To dt.Columns.Count - 1
+                If IsDBNull(row(i)) Then
+                    lstFld.Add("NULL")
+                ElseIf row(i).ToString = "True" Or row(i).ToString = "False" Then
+                    lstFld.Add(row(i).ToString)
+                Else
+                    lstFld.Add($"'{row(i).ToString}'")
+                End If
+            Next i
+
+            lstValue.Add($"({Join(lstFld.ToArray, ", ")})")
+
+        Next row
+
+        sr.Write($"REPLACE INTO {tblName} VALUES ")
+
+        sr.Write(Join(lstValue.ToArray, ","))
+        '改行する
+        sr.Write(";" + ControlChars.Cr + ControlChars.Lf)
+
+    End Sub
+
+
+    Private Sub ftpUpload(u As Uri, upFile As String, FtpUser As String, FtpPass As String)
+        'アップロードするファイル
+        'Dim upFile As String = "C:\test.txt"
+        'アップロード先のURI
+        'Dim u As New Uri("ftp://localhost/test.txt")
+
+        'FtpWebRequestの作成
+        Dim ftpReq As System.Net.FtpWebRequest =
+            CType(System.Net.WebRequest.Create(u), System.Net.FtpWebRequest)
+        'ログインユーザー名とパスワードを設定
+        ftpReq.Credentials = New System.Net.NetworkCredential(FtpUser, FtpPass)
+        'MethodにWebRequestMethods.Ftp.UploadFile("STOR")を設定
+        ftpReq.Method = System.Net.WebRequestMethods.Ftp.UploadFile
+        '要求の完了後に接続を閉じる
+        ftpReq.KeepAlive = False
+        'ASCIIモードで転送する
+        ftpReq.UseBinary = False
+        'PASVモードを無効にする
+        ftpReq.UsePassive = False
+        Try
+
+            'ファイルをアップロードするためのStreamを取得
+            Dim reqStrm As System.IO.Stream = ftpReq.GetRequestStream()
+            'アップロードするファイルを開く
+            Dim fs As New System.IO.FileStream(
+            upFile, System.IO.FileMode.Open, System.IO.FileAccess.Read)
+            'アップロードStreamに書き込む
+            Dim buffer(1023) As Byte
+            While True
+                Dim readSize As Integer = fs.Read(buffer, 0, buffer.Length)
+                If readSize = 0 Then
+                    Exit While
+                End If
+                reqStrm.Write(buffer, 0, readSize)
+            End While
+            fs.Close()
+            reqStrm.Close()
+
+            'FtpWebResponseを取得
+            Dim ftpRes As System.Net.FtpWebResponse =
+            CType(ftpReq.GetResponse(), System.Net.FtpWebResponse)
+            'FTPサーバーから送信されたステータスを表示
+            Console.WriteLine("{0}: {1}", ftpRes.StatusCode, ftpRes.StatusDescription)
+            '閉じる
+            ftpRes.Close()
+
+
+        Catch ex As Exception
+            Console.WriteLine("FTP転送：" & ex.ToString)
+            WriteEventData("FTP転送：" & ex.ToString, Color.White)
+
+        End Try
+
+    End Sub
+
+
 
     'OutputDataReceivedイベントハンドラ
     '行が出力されるたびに呼び出される
@@ -1215,7 +1374,7 @@ Public Class clsTableUpdateConfirm
             Dim tableUpDt As DataTable =
             GetDtfmSQL($"SELECT * FROM updatetable WHERE TIME>'{tbUpdateTime.ToString}' ORDER BY TIME DESC")
 
-            If tableUpDt.Rows.Count <> 0 Then
+        If tableUpDt.Rows.Count <> 0 Then
                 tbUpdateTime = tableUpDt.Rows(0).Item("TIME")
             End If
 

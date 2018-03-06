@@ -11,8 +11,10 @@
     ''' イベントログのID
     ''' </summary>
     Private EventID As Long
-
-
+    ''' <summary>
+    ''' バックアップした時間
+    ''' </summary>
+    Private BackUpTime As Date
 
 
     'Private WideUse As New List(Of ucnDspData) '汎用データ表示用
@@ -366,7 +368,6 @@
         JackMvAuto.鉛直P定数 = CtlPara.鉛直ジャッキ制御P定数
         JackMvAuto.鉛直I定数 = CtlPara.鉛直ジャッキ制御I定数
         JackMvAuto.鉛直D定数 = CtlPara.鉛直ジャッキ制御D定数
-
 
 
 
