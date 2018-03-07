@@ -1253,15 +1253,16 @@ Public Class clsDBBackUp
             'FtpWebResponseを取得
             Dim ftpRes As System.Net.FtpWebResponse =
             CType(ftpReq.GetResponse(), System.Net.FtpWebResponse)
-            'FTPサーバーから送信されたステータスを表示
-            Console.WriteLine("{0}: {1}", ftpRes.StatusCode, ftpRes.StatusDescription)
+            'FTPサーバーから送信されたステータスをログに
+            WriteEventData($"FTP転送：{ftpRes.StatusCode} {ftpRes.StatusDescription}", Color.White)
+
             '閉じる
             ftpRes.Close()
 
 
         Catch ex As Exception
             Console.WriteLine("FTP転送：" & ex.ToString)
-            WriteEventData("FTP転送：" & ex.ToString, Color.White)
+            WriteEventData("FTP転送エラー：" & ex.ToString, Color.White)
 
         End Try
 
