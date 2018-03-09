@@ -12,10 +12,9 @@
     ''' </summary>
     Private EventID As Long
     ''' <summary>
-    ''' バックアップした時間
+    ''' バックアップした日付
     ''' </summary>
-    Private BackUpTime As Date
-
+    Private BackUpDate As Date
 
     'Private WideUse As New List(Of ucnDspData) '汎用データ表示用
     'Private WideUseDsp() As ucnDspData
@@ -293,12 +292,12 @@
         DspInterruptTime.Value = ElapsedTime.InterruptTime
         'DspIterruptTime.Value == ElapsedTime.InterruptTime
         'DspCycleTime.Value = ElapsedTime.CycleTime
+        'モニターモードの時はデータベースより
         If InitPara.MonitorMode Then
             lblNowDate.Text = PlcIf.DataGetTime.ToString("yyyy/MM/dd HH:mm:ss")
         Else
             lblNowDate.Text = Now.ToString("yyyy/MM/dd HH:mm:ss")
         End If
-
 
         '同時施工実績表示
         If InitPara.LosZeroEquip Then
@@ -306,12 +305,15 @@
             DspSumAsmPiece.Value = LosZeroPerform.SumAsmPiece
             DspAveLoszeroTime.Value = LosZeroPerform.AveLoszeroTime
             DspSumLoszeroTime.Value = LosZeroPerform.SumLoszeroTime
-
         End If
 
-
-
-
+        '定期バックアップの実行
+        If Date.Compare(Now.Date, BackUpDate.Date) <> 0 AndAlso
+            TimeSpan.Parse(Now.ToLongTimeString).TotalMinutes = InitPara.BackUpTime.TotalMinutes Then
+            Dim DailyBackup = New clsDBBackUp
+            DailyBackup.DailyBackup()
+            BackUpDate = Now
+        End If
 
         'TODO:線形データ画面更新　LineDistanceChage に記述したい
         'Call LineDataUpdate()

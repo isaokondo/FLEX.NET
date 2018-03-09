@@ -219,8 +219,8 @@ Module mdlFLEX
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
 
             'データのバックアップ
-            Dim batest As New clsDBBackUp
-            batest.BakUp()
+            Dim RingDataBackUp As New clsDBBackUp
+            RingDataBackUp.RingIntervalBakUp()
 
 
         End If

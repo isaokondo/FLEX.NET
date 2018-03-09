@@ -939,7 +939,17 @@ Public Class clsPlcIf
             _excavMode = DigtalPlcRead("掘進モード")
             _segmentMode = DigtalPlcRead("セグメントモード")
 
+            If _LosZeroSts_FLEX <= 2 Then LosZeroSts = _LosZeroSts_FLEX '減圧開始or完了
+            If _LosZeroSts_M = 2 Then LosZeroSts = 3    '引き戻し中
+            If _LosZeroSts_FLEX = 3 Then LosZeroSts = 6 '組立完了
+            '減圧中で掘進してない時は減圧完了とする
+            If _excaStatus <> cKussin And LosZeroSts = 1 Then
+                LosZeroSts = 2
+                LosZeroSts_FLEX = 2
+            End If
+
         End If
+
         'スピード割合初期値（100%)書き込み
         SpeedRateWrite()
 
@@ -1098,7 +1108,7 @@ Public Class clsPlcIf
                                 RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
                             End If
                             '組立完了後の経過時間カウント
-                            If _LosZeroSts_M = 5 Then
+                            If _LosZeroSts_M = 5 And _LosZeroSts_FLEX <> 2 Then
                                 AsmbledPastTime += 1 'カウントアップ
                                 If AsmbledPastTime = CtlPara.NextPieceConfirmTime Then
                                     'カウントアップ後次ピース確認イベント

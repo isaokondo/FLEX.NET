@@ -517,7 +517,7 @@ Public Class clsInitParameter
     Private _bottomStrokeEnable As Boolean '下ストローク計あり
 
     Private _backUpFolder As String 'バックアップフォルダ
-    Private _backUpTime As String = "07:00:00" 'バックアップ時間
+    Private _backUpTime As TimeSpan 'バックアップ時間
 
     Private _backUpFTPHostUserPass As String 'FTPバックアップ
 
@@ -672,7 +672,7 @@ Public Class clsInitParameter
         End Get
     End Property
 
-    Public ReadOnly Property BackUpTime As String
+    Public ReadOnly Property BackUpTime As TimeSpan
         Get
             Return _backUpTime
         End Get
@@ -860,7 +860,7 @@ Public Class clsInitParameter
                 _backUpFolder = ht("BackUpFolder")
             End If
             If ht.ContainsKey("BackUpTime") Then
-                _backUpTime = ht("BackUpTime")
+                _backUpTime = TimeSpan.Parse(ht("BackUpTime"))
             End If
             If ht.ContainsKey("BackUpFTPHostUserPass") Then
                 _backUpFTPHostUserPass = ht("BackUpFTPHostUserPass")
@@ -1105,7 +1105,66 @@ End Class
 Public Class clsDBBackUp
 
     Inherits clsDataBase
-    Public Async Sub BakUp()
+
+    '接続情報　ホスト名、ユーザー名、パスワード
+    Private FtpHost As String, FtpUser As String, FtpPass As String
+    Private enc As Text.Encoding = Text.Encoding.GetEncoding("Shift_JIS")
+
+    Sub New()
+        Dim stArrayData As String() = InitPara.BackUpFTPHostUserPass.Split(","c)
+        If stArrayData.Count = 3 Then
+            'ユーザー名、パスワード追加
+            FtpHost = stArrayData(0)
+            FtpUser = stArrayData(1)
+            FtpPass = stArrayData(2)
+
+        End If
+
+
+    End Sub
+
+
+    ''' <summary>
+    ''' 指定時間にバックアップ
+    ''' flexイベントデータ、plccomdata、updatetablをバックアップ
+    ''' </summary>
+    Public Async Sub DailyBackup()
+
+        Dim taskBak As Task = Task.Run(
+            Sub()
+                If IO.Directory.Exists(InitPara.BackUpFolder) Then
+
+                    '保存先のsqlファイルのパス
+                    Dim sqlPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}イベントデータ他{Now.ToString("yyyyMM")}.sql"
+                    'ファイルは追加書込
+                    Dim sr0 As New IO.StreamWriter(sqlPath, True, enc)
+                    Dim dt As String = Now.AddDays(-1).ToString("yyyy/MM/dd HH:mm:00")
+                    ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `flexイベントデータ` WHERE TIME >= '{dt}'  ;"), "flexイベントデータ", sr0)
+                    ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `plccomdata` WHERE TIME >= '{dt}'  ;"), "plccomdata", sr0)
+                    ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `updatetable` WHERE TIME >= '{dt}'  ;"), "updatetable", sr0)
+                    sr0.Close()
+
+                    'データFTP転送(1)
+                    ftpUpload(sqlPath)
+
+
+                End If
+
+
+            End Sub)
+
+        Await taskBak
+
+    End Sub
+
+
+
+
+
+
+    Public Async Sub RingIntervalBakUp()
+
+
 
 
 
@@ -1126,9 +1185,7 @@ Public Class clsDBBackUp
                         Dim sr0 As New IO.StreamWriter(sqlPath, False, enc)
                         For Each tbk As DataRow In tbDt.Rows
                             If tbk(0) <> "flex掘削データ" And tbk(0) <> "flexイベントデータ" And tbk(0) <> "plccomdata" And tbk(0) <> "updatetable" Then
-                                'Dim bkdtDt As DataTable = GetDtfmSQL($"SELECT *  FROM `{tbk(0)}`;")
                                 ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `{tbk(0)}`;"), tbk(0), sr0)
-
                             End If
                         Next
 
@@ -1138,7 +1195,8 @@ Public Class clsDBBackUp
                         '掘削データの保存　1リング分を日付ファイルにに追加
                         '最終リング番号取得
                         Dim LastRingNo As Integer = (New clsReportDb).LastRing
-                        Dim sqlPath1 As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}掘削データ{Now.ToString("yyyyMMdd")}.sql"
+                        Dim sqlPath1 As String =
+                        $"{InitPara.BackUpFolder}\Bakup{DataBaseName}掘削データ{Now.ToString("yyyyMMdd")}.sql"
                         Dim sr1 As New IO.StreamWriter(sqlPath1, True, enc)
 
                         ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `flex掘削データ` WHERE `リング番号`='{LastRingNo}';"), "flex掘削データ", sr1)
@@ -1146,25 +1204,11 @@ Public Class clsDBBackUp
                         sr1.Close()
 
                         'FTPに転送
-                        Dim FtpUri As Uri, FtpUser As String, FtpPass As String
+                        'データFTP転送(1)
+                        ftpUpload(sqlPath)
+                        'データFTP転送(2) 
+                        ftpUpload(sqlPath1)
 
-                        Dim stArrayData As String() = InitPara.BackUpFTPHostUserPass.Split(","c)
-
-                        If stArrayData.Count = 3 Then
-
-                            FtpUri = New Uri($"ftp://{stArrayData(0)}/Bakup{DataBaseName}.sql")
-                            'ユーザー名、パスワード追加
-                            FtpUser = stArrayData(1)
-                            FtpPass = stArrayData(2)
-
-                            'データFTP転送(1)
-                            ftpUpload(FtpUri, sqlPath, FtpUser, FtpPass)
-
-                            'データFTP転送(2) 
-                            FtpUri = New Uri($"ftp://{stArrayData(0)}/Bakup{DataBaseName}掘削データ{Now.ToString("yyyyMMdd")}.sql")
-                            ftpUpload(FtpUri, sqlPath1, FtpUser, FtpPass)
-
-                        End If
                     End If
 
                 End Sub)
@@ -1212,15 +1256,17 @@ Public Class clsDBBackUp
     End Sub
 
 
-    Private Sub ftpUpload(u As Uri, upFile As String, FtpUser As String, FtpPass As String)
-        'アップロードするファイル
-        'Dim upFile As String = "C:\test.txt"
-        'アップロード先のURI
-        'Dim u As New Uri("ftp://localhost/test.txt")
+    Private Sub ftpUpload(upFile As String)
+
+        If IsNothing(FtpHost) Then Exit Sub
+
+
+        Dim ftpUri As Uri = New Uri($"ftp://{FtpHost}/{IO.Path.GetFileName(upFile)}")
+
 
         'FtpWebRequestの作成
         Dim ftpReq As System.Net.FtpWebRequest =
-            CType(System.Net.WebRequest.Create(u), System.Net.FtpWebRequest)
+            CType(System.Net.WebRequest.Create(ftpUri), System.Net.FtpWebRequest)
         'ログインユーザー名とパスワードを設定
         ftpReq.Credentials = New System.Net.NetworkCredential(FtpUser, FtpPass)
         'MethodにWebRequestMethods.Ftp.UploadFile("STOR")を設定
@@ -1234,10 +1280,10 @@ Public Class clsDBBackUp
         Try
 
             'ファイルをアップロードするためのStreamを取得
-            Dim reqStrm As System.IO.Stream = ftpReq.GetRequestStream()
+            Dim reqStrm As IO.Stream = ftpReq.GetRequestStream()
             'アップロードするファイルを開く
-            Dim fs As New System.IO.FileStream(
-            upFile, System.IO.FileMode.Open, System.IO.FileAccess.Read)
+            Dim fs As New IO.FileStream(
+            upFile, IO.FileMode.Open, IO.FileAccess.Read)
             'アップロードStreamに書き込む
             Dim buffer(1023) As Byte
             While True
@@ -1254,19 +1300,35 @@ Public Class clsDBBackUp
             Dim ftpRes As System.Net.FtpWebResponse =
             CType(ftpReq.GetResponse(), System.Net.FtpWebResponse)
             'FTPサーバーから送信されたステータスをログに
-            WriteEventData($"FTP転送：{ftpRes.StatusCode} {ftpRes.StatusDescription}", Color.White)
-
+            SystemEventlogWrite($"FTP転送：{ftpRes.StatusCode} {ftpRes.StatusDescription}  uri:{ftpUri.ToString}")
             '閉じる
             ftpRes.Close()
 
 
         Catch ex As Exception
-            Console.WriteLine("FTP転送：" & ex.ToString)
-            WriteEventData("FTP転送エラー：" & ex.ToString, Color.White)
+            'Console.WriteLine("FTP転送：" & ex.ToString)
+            SystemEventlogWrite($"FTP転送エラー：{ex.ToString} uri:{ftpUri.ToString}")
 
         End Try
 
     End Sub
+
+
+    Private Sub SystemEventlogWrite(Msg As String)
+        'ソース
+        Dim sourceName As String = "FLEX.NET"
+
+        'ソースが存在していない時は、作成する
+        If Not System.Diagnostics.EventLog.SourceExists(sourceName) Then
+            'ログ名を空白にすると、"Application"となる
+            System.Diagnostics.EventLog.CreateEventSource(sourceName, "")
+        End If
+
+        System.Diagnostics.EventLog.WriteEntry(
+            sourceName, Msg)
+
+    End Sub
+
 
 
 
