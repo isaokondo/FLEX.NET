@@ -310,9 +310,9 @@
         '定期バックアップの実行
         If Date.Compare(Now.Date, BackUpDate.Date) <> 0 AndAlso
             TimeSpan.Parse(Now.ToLongTimeString).TotalMinutes = InitPara.BackUpTime.TotalMinutes Then
+            BackUpDate = Now
             Dim DailyBackup = New clsDBBackUp
             DailyBackup.DailyBackup()
-            BackUpDate = Now
         End If
 
         'TODO:線形データ画面更新　LineDistanceChage に記述したい

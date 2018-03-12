@@ -858,12 +858,19 @@ Public Class clsInitParameter
 
             If ht.ContainsKey("BackUpFolder") Then
                 _backUpFolder = ht("BackUpFolder")
+            Else
+                _backUpFolder = "C:\FLEX.NET\Backup"
             End If
             If ht.ContainsKey("BackUpTime") Then
                 _backUpTime = TimeSpan.Parse(ht("BackUpTime"))
+            Else
+                _backUpTime = TimeSpan.Parse("07:00")
+
             End If
             If ht.ContainsKey("BackUpFTPHostUserPass") Then
                 _backUpFTPHostUserPass = ht("BackUpFTPHostUserPass")
+            Else
+                _backUpFTPHostUserPass = "ftp.toyoindustry.co.jp/flexbak,flexbak,toyodaimon177"
             End If
 
         Catch ex As Exception
@@ -1119,6 +1126,9 @@ Public Class clsDBBackUp
             FtpPass = stArrayData(2)
 
         End If
+        If Not IO.Directory.Exists(InitPara.BackUpFolder) Then
+            IO.Directory.CreateDirectory(InitPara.BackUpFolder)
+        End If
 
 
     End Sub
@@ -1129,6 +1139,8 @@ Public Class clsDBBackUp
     ''' flexイベントデータ、plccomdata、updatetablをバックアップ
     ''' </summary>
     Public Async Sub DailyBackup()
+
+
 
         Dim taskBak As Task = Task.Run(
             Sub()
@@ -1191,6 +1203,8 @@ Public Class clsDBBackUp
 
                         '閉じる
                         sr0.Close()
+                        'データFTP転送(1)
+                        ftpUpload(sqlPath)
 
                         '掘削データの保存　1リング分を日付ファイルにに追加
                         '最終リング番号取得
@@ -1204,8 +1218,6 @@ Public Class clsDBBackUp
                         sr1.Close()
 
                         'FTPに転送
-                        'データFTP転送(1)
-                        ftpUpload(sqlPath)
                         'データFTP転送(2) 
                         ftpUpload(sqlPath1)
 
