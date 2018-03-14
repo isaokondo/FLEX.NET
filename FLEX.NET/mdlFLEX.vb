@@ -223,6 +223,7 @@ Module mdlFLEX
             RingDataBackUp.RingIntervalBakUp()
 
 
+
         End If
         '掘進中で手動方向制御
         If NowStatus = cKussin And CtlPara.AutoDirectionControl = False Then

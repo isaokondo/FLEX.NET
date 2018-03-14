@@ -105,13 +105,13 @@ Public Class frmRingDataView
 
                     If GetGroupNameEnable(cName) Then
                         If cName.IndexOf("MV") > 0 Then
-                            _ColList.Add($"{cName} AS `{cName}{vbCrLf}(%)`")
+                            _ColList.Add($"`{cName}` AS `{cName}{vbCrLf}(%)`")
                         End If
                         If cName.IndexOf("SV")>0 Or cName.IndexOf("圧力")>0 Then
-                            _ColList.Add($"{cName} AS `{cName}{vbCrLf}(MPa)`")
+                            _ColList.Add($"`{cName}` AS `{cName}{vbCrLf}(MPa)`")
                         End If
                         If cName.IndexOf("制御フラグ") > 0 Then
-                            _ColList.Add($"{cName} AS `{cName}`")
+                            _ColList.Add($"`{cName}` AS `{cName}`")
                         End If
 
                     Else
@@ -121,7 +121,7 @@ Public Class frmRingDataView
                             Dim Unit As String = PlcIf.AnalogTag.TagData(cName).Unit
                             'Dim Dc As Short = PlcIf.AnalogTag.TagData(cName).DigitLoc
 
-                            Dim fName As String = $"round({cName},{PlcIf.AnalogTag.TagData(cName).DigitLoc + 1})"
+                            Dim fName As String = $"round(`{cName}`,{PlcIf.AnalogTag.TagData(cName).DigitLoc + 1})"
                             If Unit <> "" Then
                                 cName = $"{fName} AS `{cName}{vbCrLf}({Unit})`"
                             End If

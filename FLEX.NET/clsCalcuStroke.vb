@@ -166,6 +166,11 @@ Public Class clsCalcuStroke
     Public ReadOnly Property MesureAveSpeed As Integer
     'Public Property StartMesureStroke As New Dictionary(Of Short, Integer)
 
+
+
+
+
+
     Public ReadOnly Property JackState As Dictionary(Of Short, String)
         Get
             Dim jk As New Dictionary(Of Short, String)

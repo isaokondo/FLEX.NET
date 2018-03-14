@@ -870,7 +870,7 @@ Public Class clsInitParameter
             If ht.ContainsKey("BackUpFTPHostUserPass") Then
                 _backUpFTPHostUserPass = ht("BackUpFTPHostUserPass")
             Else
-                _backUpFTPHostUserPass = "ftp.toyoindustry.co.jp/flexbak,flexbak,toyodaimon177"
+                _backUpFTPHostUserPass = $"ftp.toyoindustry.co.jp/flexbak/{DataBaseName.Replace("flex", "")},flexbak,toyodaimon177"
             End If
 
         Catch ex As Exception
@@ -1146,19 +1146,24 @@ Public Class clsDBBackUp
             Sub()
                 If IO.Directory.Exists(InitPara.BackUpFolder) Then
 
-                    '保存先のsqlファイルのパス
-                    Dim sqlPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}イベントデータ他{Now.ToString("yyyyMM")}.sql"
-                    'ファイルは追加書込
-                    Dim sr0 As New IO.StreamWriter(sqlPath, True, enc)
-                    Dim dt As String = Now.AddDays(-1).ToString("yyyy/MM/dd HH:mm:00")
-                    ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `flexイベントデータ` WHERE TIME >= '{dt}'  ;"), "flexイベントデータ", sr0)
-                    ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `plccomdata` WHERE TIME >= '{dt}'  ;"), "plccomdata", sr0)
-                    ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `updatetable` WHERE TIME >= '{dt}'  ;"), "updatetable", sr0)
-                    sr0.Close()
+                    Try
+                        '保存先のsqlファイルのパス
+                        Dim sqlPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}イベントデータ他{Now.ToString("yyyyMM")}.sql"
+                        'ファイルは追加書込
+                        Dim sr0 As New IO.StreamWriter(sqlPath, True, enc)
+                        Dim dt As String = Now.AddDays(-1).ToString("yyyy/MM/dd HH:mm:00")
+                        ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `flexイベントデータ` WHERE TIME >= '{dt}'  ;"), "flexイベントデータ", sr0)
+                        ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `plccomdata` WHERE TIME >= '{dt}'  ;"), "plccomdata", sr0)
+                        ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `updatetable` WHERE TIME >= '{dt}'  ;"), "updatetable", sr0)
+                        sr0.Close()
 
-                    'データFTP転送(1)
-                    ftpUpload(sqlPath)
+                        'データFTP転送(1)
+                        ftpUpload(sqlPath)
 
+
+                    Catch ex As Exception
+                        WriteEventData($"DailyBackup:{System.Net.Dns.GetHostName()}　{ex.ToString}", Color.White)
+                    End Try
 
                 End If
 
@@ -1188,39 +1193,48 @@ Public Class clsDBBackUp
 
                     If IO.Directory.Exists(InitPara.BackUpFolder) Then
 
-                        '保存先のsqlファイルのパス
-                        Dim sqlPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}.sql"
                         'sqlファイルに書き込むときに使うEncoding
                         Dim enc As Text.Encoding = Text.Encoding.GetEncoding("Shift_JIS")
 
-                        'ファイルは上書き
-                        Dim sr0 As New IO.StreamWriter(sqlPath, False, enc)
-                        For Each tbk As DataRow In tbDt.Rows
-                            If tbk(0) <> "flex掘削データ" And tbk(0) <> "flexイベントデータ" And tbk(0) <> "plccomdata" And tbk(0) <> "updatetable" Then
-                                ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `{tbk(0)}`;"), tbk(0), sr0)
-                            End If
-                        Next
 
-                        '閉じる
-                        sr0.Close()
-                        'データFTP転送(1)
-                        ftpUpload(sqlPath)
+                        Try
+                            '保存先のsqlファイルのパス
+                            Dim sqlPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}.sql"
+                            'ファイルは上書き
+                            Dim sr0 As New IO.StreamWriter(sqlPath, False, enc)
+                            '掘削データの保存　1リング分を日付ファイルにに追加
+                            '最終リング番号取得
+                            Dim LastRingNo As Integer = (New clsReportDb).LastRing
+                            Dim sqlPath1 As String =
+                            $"{InitPara.BackUpFolder}\Bakup{DataBaseName}掘削データ{Now.ToString("yyyyMMdd")}.sql"
 
-                        '掘削データの保存　1リング分を日付ファイルにに追加
-                        '最終リング番号取得
-                        Dim LastRingNo As Integer = (New clsReportDb).LastRing
-                        Dim sqlPath1 As String =
-                        $"{InitPara.BackUpFolder}\Bakup{DataBaseName}掘削データ{Now.ToString("yyyyMMdd")}.sql"
-                        Dim sr1 As New IO.StreamWriter(sqlPath1, True, enc)
+                            Dim sr1 As New IO.StreamWriter(sqlPath1, True, enc)
 
-                        ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `flex掘削データ` WHERE `リング番号`='{LastRingNo}';"), "flex掘削データ", sr1)
 
-                        sr1.Close()
+                            For Each tbk As DataRow In tbDt.Rows
+                                If tbk(0) <> "flex掘削データ" And tbk(0) <> "flexイベントデータ" And tbk(0) <> "plccomdata" And tbk(0) <> "updatetable" Then
+                                    ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `{tbk(0)}`;"), tbk(0), sr0)
+                                End If
+                            Next
 
-                        'FTPに転送
-                        'データFTP転送(2) 
-                        ftpUpload(sqlPath1)
+                            '閉じる
+                            sr0.Close()
+                            'データFTP転送(1)
+                            ftpUpload(sqlPath)
 
+
+                            ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `flex掘削データ` WHERE `リング番号`='{LastRingNo}';"), "flex掘削データ", sr1)
+
+                            sr1.Close()
+
+                            'FTPに転送
+                            'データFTP転送(2) 
+                            ftpUpload(sqlPath1)
+
+                        Catch ex As Exception
+                            WriteEventData($"RingIntervalBakUpError:{System.Net.Dns.GetHostName()}　{ex.ToString}", Color.White)
+
+                        End Try
                     End If
 
                 End Sub)
@@ -1311,35 +1325,23 @@ Public Class clsDBBackUp
             'FtpWebResponseを取得
             Dim ftpRes As System.Net.FtpWebResponse =
             CType(ftpReq.GetResponse(), System.Net.FtpWebResponse)
-            'FTPサーバーから送信されたステータスをログに
-            SystemEventlogWrite($"FTP転送：{ftpRes.StatusCode} {ftpRes.StatusDescription}  uri:{ftpUri.ToString}")
+            'FTPサーバーから送信されたステータスをログに 長過ぎるので２行に
+            WriteEventData($"FTP転送：{ftpRes.StatusCode} {ftpRes.StatusDescription}", Color.White)
+            WriteEventData($"FTP転送： uri:{ftpUri.ToString}", Color.White)
             '閉じる
             ftpRes.Close()
 
 
         Catch ex As Exception
             'Console.WriteLine("FTP転送：" & ex.ToString)
-            SystemEventlogWrite($"FTP転送エラー：{ex.ToString} uri:{ftpUri.ToString}")
+            WriteEventData($"FTP転送エラー：{ex.ToString} uri:{ftpUri.ToString}", Color.White)
 
         End Try
 
     End Sub
 
 
-    Private Sub SystemEventlogWrite(Msg As String)
-        'ソース
-        Dim sourceName As String = "FLEX.NET"
 
-        'ソースが存在していない時は、作成する
-        If Not System.Diagnostics.EventLog.SourceExists(sourceName) Then
-            'ログ名を空白にすると、"Application"となる
-            System.Diagnostics.EventLog.CreateEventSource(sourceName, "")
-        End If
-
-        System.Diagnostics.EventLog.WriteEntry(
-            sourceName, Msg)
-
-    End Sub
 
 
 
