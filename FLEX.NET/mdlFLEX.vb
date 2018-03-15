@@ -418,7 +418,7 @@ Module mdlFLEX
     Public Sub PlcIf_MesureStrokeChange() Handles PlcIf.MesureStrokeChange, PlcIf.ExcavationStatusChange
         CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
         CalcStroke.MesureJackSpeed = PlcIf.MesureJackSpeed
-        CalcStroke.Calc() '計算ストローク演算
+        CalcStroke.Calc2() '計算ストローク演算
         If InitPara.ServerMode Then
             PlcIf.AnalogPlcWrite("掘進ストローク", CalcStroke.CalcAveLogicalStroke)
             PlcIf.AnalogPlcWrite("掘進スピード", CalcStroke.MesureAveSpeed)

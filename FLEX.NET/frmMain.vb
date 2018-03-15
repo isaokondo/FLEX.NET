@@ -351,11 +351,14 @@
         JackMvAuto = New clsCulJackMv ''ジャッキ操作量の演算
         DivCul = New clsThrustDiv ''推力分担
         RefernceDirection = New clsCulKijun '基準方位演算
-        CalcStroke = New clsCalcuStroke   'ロスゼロ時の計算ストローク
         PlcIf = New clsPlcIf 'PLCインターフェース
+        CalcStroke = New clsCalcuStroke   'ロスゼロ時の計算ストローク
         JackManual = New clsJkManualOut 'ジャッキ手動操作出力
         Reduce = New clsReducePress 'ロスゼロ減圧処理
         TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
+
+        CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
+        CalcStroke.MesureCalcAveJackStroke = PlcIf.MesureCalcAveJackStroke '平均ジャッキストロークのセット
 
         'TODO:画面ナロータイプを作成したい
         'If InitPara.DisplayNarrowMode Then
@@ -1205,6 +1208,19 @@
         btnLoszeroContinu.Visible = InitPara.LosZeroEquip
         btnPieceConfirm.Visible = InitPara.LosZeroEquip
         btnLossZerooCancel.Visible = InitPara.LosZeroEquip
+
+
+        DspUpRealStroke.Visible = InitPara.LosZeroEquip
+        DspRightRealStroke.Visible = InitPara.LosZeroEquip
+        DspLeftRealStroke.Visible = InitPara.LosZeroEquip
+        DspBottomRealStroke.Visible = InitPara.LosZeroEquip
+
+        DspUpRawStroke.FieldName = "上ストローク"
+        DspRightRawStroke.FieldName = "右ストローク"
+        DspLeftRawStroke.FieldName = "左ストローク"
+        DspBottomRawStroke.FieldName = "下ストローク"
+
+
 
 
         DspWideUse12.Visible = Not InitPara.LosZeroEquip

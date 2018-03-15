@@ -805,9 +805,9 @@ CatchError:  '例外処理
 
         Next
 
+        Debug.Print(Now.ToLongTimeString)
 
-
-        End Sub
+    End Sub
 
         Private Sub DgvJackStroke_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DgvJackStroke.CellEndEdit
             Dim PlcAdr As String = ""

@@ -68,6 +68,8 @@ Public Class clsPlcIf
 
     Private _gyiroError As Boolean ''ジャイロエラー
 
+    Private _MesureCalcAveJackStroke As Integer
+
     'Private _mint元圧フィルタ係数 As Integer
 
     Private _FilterJkPress As Single     ''フィルター後のシールド圧
@@ -618,6 +620,17 @@ Public Class clsPlcIf
             Return _MaxExcavingStroke
         End Get
     End Property
+
+    Public Property MesureCalcAveJackStroke As Integer
+        Get
+            Return _MesureCalcAveJackStroke
+        End Get
+        Set(value As Integer)
+            _MesureCalcAveJackStroke = value
+
+        End Set
+    End Property
+
     ''' <summary>
     ''' フィルタ後のジャッキ元圧
     ''' </summary>
@@ -954,6 +967,7 @@ Public Class clsPlcIf
         SpeedRateWrite()
 
         PLC_Read()
+
         'TODO:操作権なしの時は、タイマで常時読み込み
         _PointX = _EngValue("ポイントＸ")
         _PointY = _EngValue("ポイントＹ")
@@ -1069,6 +1083,7 @@ Public Class clsPlcIf
                         _CopyAngle = _EngValue("コピー角度")
                         _CopyStroke1 = _EngValue("コピーストローク1")
                         _CopyStroke2 = _EngValue("コピーストローク2")
+                        _MesureCalcAveJackStroke = _EngValue("平均ジャッキストローク")
 
                         If CtlPara.TaleClrMeasurUExit Then
                             _topClearance = _EngValue("クリアランス上")

@@ -214,6 +214,9 @@ Public Class clsDataBase
             Builder.UserID = "toyo"
             Builder.Password = "yanagi"
             Builder.Database = DataBaseName
+            Builder.ConnectionTimeout = 600
+            Builder.DefaultCommandTimeout = 300
+
             Dim ConStr = Builder.ToString()
 
             Dim con As New MySqlConnection
@@ -272,8 +275,8 @@ Public Class clsDataBase
                 Builder.UserID = "toyo"
                 Builder.Password = "yanagi"
                 Builder.Database = DataBaseName
-                Builder.ConnectionTimeout = 600
-                Builder.DefaultCommandTimeout = 300
+                Builder.ConnectionTimeout = 1000
+                Builder.DefaultCommandTimeout = 1000
                 Dim ConStr = Builder.ToString()
                 Dim con As New MySqlConnection
                 con.ConnectionString = ConStr
