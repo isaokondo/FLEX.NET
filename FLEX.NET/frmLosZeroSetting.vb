@@ -30,6 +30,7 @@
 
         MomentRdductionRateOnReduce.Value = CtlPara.MomentRdductionRateOnReduce
         ReduceReachStrokeDiff.Value = CtlPara.ReduceReachStrokeDiff
+        OpposeJackExcep.rdbtnValue = CtlPara.LosZeroOpposeJackExcept
 
         '対抗ジャッキの機能使用可／不可
         LosZeroOpposeJack.Selectable = InitPara.OpposeJackEnable
@@ -48,6 +49,9 @@
             CtlPara.LosZeroOpposeGroupNumber = LosZeroOpposeGroupNumber.Value
             CtlPara.LosZeroOpposeManualSV = LosZeroOpposeManualSV.Value
         End If
+
+        CtlPara.LosZeroOpposeJackExcept = OpposeJackExcep.rdbtnValue
+
 
         CtlPara.NextPieceConfirm = NextPieceConfirm.rdbtnValue
         CtlPara.NextPieceConfirmTime = NextPieceConfirmTime.Value

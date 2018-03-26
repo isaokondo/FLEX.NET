@@ -114,7 +114,7 @@
                             Case "Y座標"
                                 p.Value = .HorZendoKijun.軌道中心Y座標
                             Case "シフト"
-                                p.Value = .HorZendoKijun.平面シフト量 * 1000
+                                p.Value = .HorZendoKijun.平面シフト量 * 1000 * HorPlan.座標系
                             Case "シフト追加角"
                                 p.Value = .HorZendoKijun.平面シフト追加角
                             Case "水平中折角"

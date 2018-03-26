@@ -16,7 +16,7 @@ Public Class frmCalcStrokeConfirm
         For Each i In InitPara.MesureJackAngle
             DgvJackStroke.Rows.Add(i.Key, 0, 0, 0, 0, 0, i.Value, "", Not CtlPara.ExceptMesureJackNo.Contains(i.Key))
         Next
-
+        OpposeJackExcep.rdbtnValue = CtlPara.LosZeroOpposeJackExcept
     End Sub
 
     Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick, Me.Load
@@ -48,6 +48,11 @@ Public Class frmCalcStrokeConfirm
         DspAveLogocalStroke.Value = CalcStroke.CalcAveLogicalStroke
         DspAveSpeed.Value = CalcStroke.MesureAveSpeed
 
+
+    End Sub
+
+    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
+        CtlPara.LosZeroOpposeJackExcept = OpposeJackExcep.rdbtnValue
 
     End Sub
 End Class

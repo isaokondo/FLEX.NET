@@ -40,6 +40,8 @@ Partial Class frmLosZeroSetting
         Me.MomentRdductionRateOnReduce = New FLEX.NET.ucnNumEdit()
         Me.ReduceReachStrokeDiff = New FLEX.NET.ucnNumEdit()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.OpposeJackExcep = New FLEX.NET.ucnRdBtn()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'btnOK
@@ -359,11 +361,40 @@ Partial Class frmLosZeroSetting
         Me.Label2.Text = "ジャッキストロークがセグメント幅＋下記設定値で減圧可能（ボイスアナウンス)"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'OpposeJackExcep
+        '
+        Me.OpposeJackExcep.BackColor = System.Drawing.Color.Transparent
+        Me.OpposeJackExcep.FieldName = "対抗ｼﾞｬｯｷのｽﾄﾛｰｸ除外"
+        Me.OpposeJackExcep.Location = New System.Drawing.Point(16, 445)
+        Me.OpposeJackExcep.Margin = New System.Windows.Forms.Padding(2)
+        Me.OpposeJackExcep.Name = "OpposeJackExcep"
+        Me.OpposeJackExcep.rdbtnValue = False
+        Me.OpposeJackExcep.Selectable = True
+        Me.OpposeJackExcep.Size = New System.Drawing.Size(389, 34)
+        Me.OpposeJackExcep.SlectNoName = "する"
+        Me.OpposeJackExcep.SlectYesName = "しない"
+        Me.OpposeJackExcep.TabIndex = 143
+        '
+        'Label3
+        '
+        Me.Label3.BackColor = System.Drawing.Color.Silver
+        Me.Label3.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.Navy
+        Me.Label3.Location = New System.Drawing.Point(16, 414)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(166, 29)
+        Me.Label3.TabIndex = 144
+        Me.Label3.Text = "平均ストローク算出"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'frmLosZeroSetting
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(887, 545)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.OpposeJackExcep)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.ReduceReachStrokeDiff)
         Me.Controls.Add(Me.MomentRdductionRateOnReduce)
@@ -403,6 +434,8 @@ Partial Class frmLosZeroSetting
         Me.Controls.SetChildIndex(Me.MomentRdductionRateOnReduce, 0)
         Me.Controls.SetChildIndex(Me.ReduceReachStrokeDiff, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
+        Me.Controls.SetChildIndex(Me.OpposeJackExcep, 0)
+        Me.Controls.SetChildIndex(Me.Label3, 0)
         Me.ResumeLayout(False)
 
     End Sub
@@ -425,4 +458,6 @@ Partial Class frmLosZeroSetting
     Friend WithEvents MomentRdductionRateOnReduce As ucnNumEdit
     Friend WithEvents ReduceReachStrokeDiff As ucnNumEdit
     Friend WithEvents Label2 As Label
+    Friend WithEvents OpposeJackExcep As ucnRdBtn
+    Friend WithEvents Label3 As Label
 End Class

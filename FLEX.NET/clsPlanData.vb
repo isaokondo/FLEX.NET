@@ -171,8 +171,8 @@ Public Class clsHorPanData
             If 線形(zoneNo) <> 1 Then
                 _始点曲率半径(zoneNo) = CheckItemData(h.Item("始点半径")) * _座標系
                 _終点曲率半径(zoneNo) = CheckItemData(h.Item("終点半径")) * _座標系
-                _始点カント(zoneNo) = CheckItemData(h.Item("始点シフト")) * _座標系
-                _終点カント(zoneNo) = CheckItemData(h.Item("終点シフト")) * _座標系
+                '_始点カント(zoneNo) = CheckItemData(h.Item("始点シフト")) * _座標系
+                '_終点カント(zoneNo) = CheckItemData(h.Item("終点シフト")) * _座標系
 
                 中折(zoneNo) = h.Item("中折使用").ToString.ToNum
                 前胴中心(zoneNo) = h.Item("前胴中心").ToString.ToNum
@@ -305,6 +305,10 @@ Public Class clsHorPanData
         'tblHorLine.Close()
 
     End Sub
+
+
+
+
 
 
 End Class
@@ -614,6 +618,9 @@ Public Class AccessMdb
         Disconnect()
         MyBase.Finalize()
     End Sub
+
+
+
 End Class
 
 

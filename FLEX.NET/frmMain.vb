@@ -343,6 +343,9 @@
         InitPara = New clsInitParameter '初期値パラメータ
         CtlPara = New clsControlParameter  '制御パラメータ
         HorPlan = New clsHorPanData '平面掘進計画線
+        Dim Kant As New clsLineMake
+        Kant.CulcZoneKant()
+
         VerPlan = New clsVerPlanData '縦断掘進計画線
         MachineSpec = New clsMachinSpec
         SegAsmblyData = New clsSegmentAssembly ''セグメント組立データ

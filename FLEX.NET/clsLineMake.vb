@@ -298,7 +298,11 @@ Public Class clsLineMake
             mdbl平面ゾーン掘進距離 = mdbl掘進累積距離 - .始点累積距離(HorZoneNo)
             mdbl平面ゾーン残距離 = .終点累積距離(HorZoneNo) - mdbl掘進累積距離
 
-            Call sbCalcHorShift() ''02/09/12 変更　Ver1.1 シフトの演算
+            'Call sbCalcHorShift() ''02/09/12 変更　Ver1.1 シフトの演算
+
+            Dim CulcHorShift As New clsCulcHorShift(mdbl掘進累積距離)
+            mdbl平面シフト量 = CulcHorShift.平面シフト量
+            mdbl平面シフト追加角 = CulcHorShift.平面シフト追加角
 
             mint平面線形 = .線形(HorZoneNo)
             Select Case .線形(HorZoneNo)
@@ -393,6 +397,113 @@ Public Class clsLineMake
 
 
     End Sub
+
+    ''' <summary>
+    ''' ソーンのカント量の算出
+    ''' </summary>
+    Public Sub CulcZoneKant()
+
+        For ZoneNo As Integer = 0 To HorPlan.ゾーン総数
+            Dim StartCulcShft As New clsCulcHorShift(HorPlan.始点累積距離(ZoneNo))
+            HorPlan.始点カント(ZoneNo) = StartCulcShft.平面シフト量
+            HorPlan.始点シフト量(ZoneNo) = StartCulcShft.平面シフト追加角
+
+
+            Dim LastCulcShft As New clsCulcHorShift(HorPlan.終点累積距離(ZoneNo))
+            HorPlan.終点カント(ZoneNo) = LastCulcShft.平面シフト量
+            HorPlan.終点シフト量(ZoneNo) = LastCulcShft.平面シフト追加角
+
+        Next
+
+
+    End Sub
+
+
+
+    Public Class clsCulcHorShift
+
+        'Private _掘進累積距離 As Double
+        Private _平面シフト量 As Double
+        Private _平面シフト追加角 As Double ''02/09/12 追加
+
+
+        'Public WriteOnly Property 掘進累積距離 As Double
+        '    Set(value As Double)
+        '        _掘進累積距離 = value
+        '    End Set
+        'End Property
+
+        Public ReadOnly Property 平面シフト量 As Double
+            Get
+                Return _平面シフト量
+            End Get
+        End Property
+
+        Public ReadOnly Property 平面シフト追加角 As Double
+            Get
+                Return _平面シフト追加角
+            End Get
+        End Property
+
+
+        Public Sub New(_掘進累積距離 As Double)
+            ' @(f)
+            '
+            ' 機能      :平面シフトの演算
+            '
+            ' 返り値    :
+            ' 　　　    :
+            '
+            ' 機能説明  :
+            '
+            ' 備考      :02/09/12 追加
+            ' シフトゾーン数が０の時は演算を行わない　03/03/18
+
+            Dim intZone As Short
+            Dim intShiftZoneNo As Short
+            Dim dblZoneLen As Double
+            With HorPlan
+
+                If .シフトゾーン総数 = 0 Then Exit Sub ''03/03/18 追加
+
+
+                'intShiftZoneNo:抽出したシフトゾーン
+                'dblZoneLen:シフトゾーン内の距離
+
+                intZone = 0
+                Do While .シフト区間長(intZone) <> 0
+                    If intZone = 0 Then
+                        .シフトゾーン距離(intZone) = - .シフト区間長(intZone)
+                        .シフトゾーン残距離(intZone) = 0
+                    Else
+                        .シフトゾーン距離(intZone) = .シフトゾーン残距離(intZone - 1)
+                        .シフトゾーン残距離(intZone) = .シフトゾーン距離(intZone) + .シフト区間長(intZone)
+                    End If
+                    If _掘進累積距離 >= .シフトゾーン距離(intZone) And _掘進累積距離 < .シフトゾーン残距離(intZone) Then
+                        intShiftZoneNo = intZone
+                        dblZoneLen = _掘進累積距離 - .シフトゾーン距離(intZone)
+                        _平面シフト量 = .始点シフト量(intZone) + (.終点シフト量(intZone) - .始点シフト量(intZone)) * dblZoneLen / .シフト区間長(intZone)
+                        _平面シフト追加角 = Atan((.終点シフト量(intZone) - .始点シフト量(intZone)) / .シフト区間長(intZone)) * 180 / PI
+                        Exit Sub
+                    End If
+                    intZone = CShort(intZone + 1)
+                Loop
+                If .シフト区間長(intZone) = 0 Then
+                    intShiftZoneNo = -1
+                    dblZoneLen = _掘進累積距離 - .シフトゾーン残距離(intZone - 1)
+                    _平面シフト量 = 0
+                    _平面シフト追加角 = 0
+                End If
+            End With
+
+
+
+        End Sub
+
+    End Class
+
+
+
 
     Private Sub sbCalcHorShift()
         ' @(f)

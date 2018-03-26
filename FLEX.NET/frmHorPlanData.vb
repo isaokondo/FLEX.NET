@@ -68,8 +68,8 @@
             dSet.setData(3, HorPlan.線分長(ZoneNo))
             dSet.setData(4, HorPlan.始点曲率半径(ZoneNo) * HorPlan.座標系)
             dSet.setData(5, HorPlan.終点曲率半径(ZoneNo) * HorPlan.座標系)
-            dSet.setData(6, HorPlan.始点シフト量(ZoneNo) * HorPlan.座標系)
-            dSet.setData(7, HorPlan.終点シフト量(ZoneNo) * HorPlan.座標系)
+            dSet.setData(6, HorPlan.始点カント(ZoneNo) * HorPlan.座標系)
+            dSet.setData(7, HorPlan.終点カント(ZoneNo) * HorPlan.座標系)
 
             dSet.setData(8, HorPlan.中折(ZoneNo))
             dSet.setData(9, HorPlan.前胴中心(ZoneNo))

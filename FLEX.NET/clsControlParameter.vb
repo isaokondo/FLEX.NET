@@ -95,6 +95,9 @@ Public Class clsControlParameter
     Private _LosZeroOpposeManualSV As Single '対抗ジャッキ制御手動設定圧
     Private _ReduceReachStrokeDiff As Integer = 0 '減圧開始可能ストロークの設定（ストロークがセグメント幅＋この設定以上でサウンド出力）
 
+    Private _LosZeroOpposeJackExcept As Boolean  '平均ジャッキストロークで引きストロークの対抗ジャッキのストロークを除外する
+
+
     Private _ReduceTime As Integer '減圧時間（単位：SEC）
     Private _ReduceJudgePress As Single '減圧完了判断圧力(Mpa)
     Private _NextPieceConfirm As Boolean    '次ピース組立確認
@@ -878,6 +881,22 @@ Public Class clsControlParameter
         End Set
     End Property
 
+    ''' <summary>
+    ''' '平均ジャッキストロークで引きストロークの
+    ''' 対抗ジャッキのストロークを除外する
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LosZeroOpposeJackExcept As Boolean
+        Get
+            Return _LosZeroOpposeJackExcept
+        End Get
+        Set(value As Boolean)
+            _LosZeroOpposeJackExcept = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+
 
 
 
@@ -988,7 +1007,7 @@ Public Class clsControlParameter
     ''' <summary>
     ''' 掘進開始時の平均ストローク
     ''' </summary>
-    Private _StartAveJackStroke As Integer
+    Private _StartAveJackStroke As Single
 
     Private _StartJackStroke As New Dictionary(Of Short, Integer)
 
@@ -1016,7 +1035,7 @@ Public Class clsControlParameter
     End Property
 
 
-    Public ReadOnly Property StartAveStroke As Integer
+    Public ReadOnly Property StartAveStroke As Single
         Get
             Return _StartAveJackStroke
         End Get
@@ -1150,6 +1169,7 @@ Public Class clsControlParameter
             _LosZeroOpposeControl = fnBoolean(chk.GetValue("LosZeroOpposeControl"))
             _LosZeroOpposeGroupNumber = chk.GetValue("LosZeroOpposeGroupNumber")
             _LosZeroOpposeManualSV = chk.GetValue("LosZeroOpposeManualSV")
+            _LosZeroOpposeJackExcept = fnBoolean(chk.GetValue("LosZeroOpposeJackExcept", "False"))
         Else
             _LosZeroOpposeJack = False
             _LosZeroOpposeControl = False

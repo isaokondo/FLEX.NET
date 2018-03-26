@@ -19,7 +19,7 @@ Public Class clsCalcuStroke
     ''' <summary>
     ''' 計算平均ジャッキストローク
     ''' </summary>
-    Private _mesureCalcAveJackStroke As Integer
+    Private _mesureCalcAveJackStroke As Single
 
     ''' <summary>
     ''' 計測ジャッキオフセットストローク
@@ -108,11 +108,11 @@ Public Class clsCalcuStroke
     ''' 計算平均ジャッキストローク
     ''' </summary>
     ''' <returns></returns>
-    Public Property MesureCalcAveJackStroke As Integer
+    Public Property MesureCalcAveJackStroke As Single
         Get
             Return _mesureCalcAveJackStroke
         End Get
-        Set(value As Integer)
+        Set(value As Single)
             _mesureCalcAveJackStroke = value
             GetOffsetStroke() 'オフセットストロークの算出
 
@@ -170,7 +170,7 @@ Public Class clsCalcuStroke
     ''' 計算平均掘進ストローク
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property CalcAveLogicalStroke As Integer
+    Public ReadOnly Property CalcAveLogicalStroke As Single
 
     ''' <summary>
     ''' 計算計測掘進ストローク

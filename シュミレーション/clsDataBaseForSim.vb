@@ -65,7 +65,17 @@ Public Class clsDataBase
         If IO.File.Exists(IniFilePath) Then
             HostName = GetIniString("DataBase", "HostName", IniFilePath)
             DataBaseName = GetIniString("DataBase", "DataBaseName", IniFilePath)
-            PortNo = GetIniString("DataBase", "port", IniFilePath)
+            'HostName名に「:」がありその後の文字が整数であればそれをポート番号とする
+            Dim dlmt As Integer = HostName.IndexOf(":")
+            If dlmt > 0 AndAlso IsNumeric(HostName.Substring(dlmt + 1)) Then
+                PortNo = HostName.Substring(dlmt + 1)
+                HostName = HostName.Substring(0, dlmt)
+            Else
+
+                PortNo = GetIniString("DataBase", "port", IniFilePath)
+
+            End If
+
         Else
             MsgBox($"FLEX.INIファイルが見つかりません。{vbCrLf}ファイルパス：{IniFilePath}",
                    MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation, "初期ファイル読込不良")
@@ -79,61 +89,62 @@ Public Class clsDataBase
     ''' </summary>
     Public Shared Sub GetMySQKVersion()
 
-        ' ソケット生成
-        Dim objSck As New System.Net.Sockets.TcpClient
-        Dim objStm As System.Net.Sockets.NetworkStream
+        '' ソケット生成
+        'Dim objSck As New System.Net.Sockets.TcpClient
+        'Dim objStm As System.Net.Sockets.NetworkStream
 
-        Try
-            ' TCP/IP接続
-            objSck.Connect(HostName, PortNo)
-        Catch ex As System.Net.Sockets.SocketException '
-            '接続出来ない場合
-            MsgBox(ex.Message,
-                   MsgBoxStyle.Exclamation,
-                   "データベース接続エラー" & "ホスト名:    " & HostName & vbCrLf & "  ポート番号:" & PortNo)
-            End
-        End Try
+        'Try
+        '    ' TCP/IP接続
+        '    objSck.Connect(HostName, PortNo)
+        'Catch ex As System.Net.Sockets.SocketException '
+        '    '接続出来ない場合
+        '    MsgBox(ex.Message,
+        '           MsgBoxStyle.Exclamation,
+        '           "データベース接続エラー" & "ホスト名:    " & HostName & vbCrLf & "  ポート番号:" & PortNo)
+        '    End
+        'End Try
 
-        objStm = objSck.GetStream()
+        'objStm = objSck.GetStream()
 
-        ' TCP/IP接続待ち 
-        Do While objSck.Connected = False
-            System.Threading.Thread.Sleep(500)
-        Loop
-
-
-        ' データ受信
-        Do
-            System.Threading.Thread.Sleep(500)
-            If objSck.Available > 0 Then
-                ' Byte配列にデータ受信
-                Dim rdat As Byte() =
-            New Byte(objSck.Available - 1) {}
-                objStm.Read(rdat, 0, rdat.GetLength(0))
-                ' Byte配列を文字列に変換して表示
-                Dim rString As String = System.Text.Encoding.GetEncoding("SHIFT-JIS").GetString(rdat)
-
-                If rString.Contains("4.0.25") Then
-                    MySQLVersion = "4.0.25"
-                End If
-                If rString.Contains("MariaDB") Then
-                    MySQLVersion = "MariaDB"
-                End If
-                If IsNothing(MySQLVersion) Then
-                    MsgBox($"データベースが異常です　{rString}",,)
-
-                End If
-
-                Exit Do
-            End If
-        Loop
+        '' TCP/IP接続待ち 
+        'Do While objSck.Connected = False
+        '    System.Threading.Thread.Sleep(500)
+        'Loop
 
 
+        '' データ受信
+        'Do
+        '    System.Threading.Thread.Sleep(500)
+        '    If objSck.Available > 0 Then
+        '        ' Byte配列にデータ受信
+        '        Dim rdat As Byte() =
+        '    New Byte(objSck.Available - 1) {}
+        '        objStm.Read(rdat, 0, rdat.GetLength(0))
+        '        ' Byte配列を文字列に変換して表示
+        '        Dim rString As String = System.Text.Encoding.GetEncoding("SHIFT-JIS").GetString(rdat)
+
+        '        If rString.Contains("4.0.25") Then
+        '            MySQLVersion = "4.0.25"
+        '        End If
+        '        If rString.Contains("MariaDB") Then
+        '            MySQLVersion = "MariaDB"
+        '        End If
+        '        If IsNothing(MySQLVersion) Then
+        '            MsgBox($"データベースが異常です　{rString}",,)
+
+        '        End If
+
+        '        Exit Do
+        '    End If
+        'Loop
 
 
-        ' TCP/IP切断
-        objSck.Close()
 
+
+        '' TCP/IP切断
+        'objSck.Close()
+
+        MySQLVersion = "MariaDB"
 
     End Sub
 
@@ -181,22 +192,9 @@ Public Class clsDataBase
 
 
 
-        If MySQLVersion = "4.0.25" Then
-            Dim cmd As New OdbcCommand(SQLCommand, conMYSQLDB)
-            Dim dr As OdbcDataReader = cmd.ExecuteReader
 
-            If dr.RecordsAffected = 0 Then
-                Debug.Print(SQLCommand)
-            End If
 
-            dr.Close()
-            conMYSQLDB.Close()
-            conMYSQLDB.Dispose()
-        End If
-
-        If MySQLVersion = "MariaDB" Then
-
-            Dim Builder = New MySqlConnectionStringBuilder()
+        Dim Builder = New MySqlConnectionStringBuilder()
             ' データベースに接続するために必要な情報をBuilderに与える
             Builder.Server = HostName
             Builder.Port = PortNo
@@ -219,7 +217,6 @@ Public Class clsDataBase
             con.Close()
             con.Dispose()
 
-        End If
 
 
 
@@ -322,7 +319,7 @@ End Structure
 
 
 Public Class clsTag
-    Inherits FLEX.NET.clsDataBase
+    Inherits clsDataBase
 
     Private _Tag() As _tag
     Private _startAddress As String  '読み込み開始アドレス
@@ -419,6 +416,9 @@ End Class
 
 
 
+
+
+
 Public Class clsInitParameter
     Inherits clsDataBase
 
@@ -436,7 +436,35 @@ Public Class clsInitParameter
     Private _sheetID As Integer = 20                 ''計画路線のシートID（10:計画路線　20:掘進計画線)
     'Private _planDataMdb As String '計画路線（線形データ）のファイルパス
 
+    Private _mesureJackAngle As New SortedDictionary(Of Short, Single) '計測ジャッキの角度
+
+    Private _mesureJackNo As New List(Of Short) '計測ジャッキ番号 上右下左の順番
+
+    Private _topStrokeEnable As Boolean     '上ストローク計あり
+    Private _bottomStrokeEnable As Boolean '下ストローク計あり
+
+    Private _backUpFolder As String 'バックアップフォルダ
+    Private _backUpTime As TimeSpan 'バックアップ時間
+
+    Private _backUpFTPHostUserPass As String 'FTPバックアップ
+
+
+    Private _constructionName As String '工事名（環境設定テーブルより
+    Private _LosZeroEquip As Boolean = True    '同時施工あり（環境設定テーブルより
+
+    Private _ClientMode As Boolean = False  'クライアントモード　データ保存なし、グループ操作出力なしのモード
+    Private _MonitorMode As Boolean = False  'モニタモード　データ保存なし、PLC書き込みなし　　グループ操作出力なしのモード
+
+    Private _OpposeJackEnable As Boolean = False '対抗ジャッキの機能が使用可（鹿島、飛島以外のJVでは仕様不可)
+
+    Private _DistanceInputMethod As Boolean = False 'False:発進からの入力　True:起点からの入力
+
+
     Private WithEvents Htb As New clsHashtableRead
+
+
+
+
     ''' <summary>
     ''' ジャッキ本数
     ''' </summary>
@@ -527,34 +555,172 @@ Public Class clsInitParameter
             Return _firstJackLoc
         End Get
     End Property
+    ''' <summary>
+    ''' 計測ジャッキ　角度
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MesureJackAngle As SortedDictionary(Of Short, Single)
+        Get
+            Return _mesureJackAngle
+        End Get
+    End Property
+    ''' <summary>
+    ''' 計測ジャッキ番号
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property mesureJackNo As List(Of Short)
+        Get
+            Return _mesureJackNo
+        End Get
+    End Property
 
-    'Public ReadOnly Property PlanMdbPath As String
-    '    Get
-    '        Return _planDataMdb
-    '    End Get
-    'End Property
+    Public ReadOnly Property topStrokeEnable As Boolean
+        Get
+            Return _topStrokeEnable
+        End Get
+    End Property
+    Public ReadOnly Property bottomStrokeEnable As Boolean
+        Get
+            Return _bottomStrokeEnable
+        End Get
+    End Property
+
+    Public ReadOnly Property BackUpFTPHostUserPass As String
+        Get
+            Return _backUpFTPHostUserPass
+        End Get
+    End Property
+
+
+
+    Public ReadOnly Property BackUpFolder As String
+        Get
+            Return _backUpFolder
+        End Get
+    End Property
+
+    Public ReadOnly Property BackUpTime As TimeSpan
+        Get
+            Return _backUpTime
+        End Get
+    End Property
+
+
+
+    Public ReadOnly Property ConstructionName As String
+        Get
+            Return _constructionName
+        End Get
+    End Property
+    ''' <summary>
+    ''' ロスゼロ装備
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property LosZeroEquip As Boolean
+        Get
+            Return _LosZeroEquip
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 対抗ジャッキの機能使用可（特許の関係で鹿島、飛島以外のJVでは使用不可)
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property OpposeJackEnable As Boolean
+        Get
+            Return _OpposeJackEnable
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' クライアントモード
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ClientMode As Boolean
+        Get
+            Return _ClientMode
+        End Get
+        Set(value As Boolean)
+            _ClientMode = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' モニタモード
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MonitorMode As Boolean
+        Get
+            Return _MonitorMode
+        End Get
+        Set(value As Boolean)
+            _MonitorMode = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' 測量距離入力方法
+    ''' </summary>
+    ''' <returns>Flase:発進から
+    ''' True:起点から
+    ''' </returns>
+    Public Property DistanceInputMethod As Boolean
+        Get
+            Return _DistanceInputMethod
+        End Get
+        Set(value As Boolean)
+            _DistanceInputMethod = value
+        End Set
+    End Property
+
+
+    ''' <summary>
+    ''' サーバーモード
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ServerMode As Boolean
+        Get
+            Return Not (_MonitorMode Or _ClientMode)
+        End Get
+    End Property
+
+    Public ReadOnly Property ModeName As String
+        Get
+            If _MonitorMode Then
+                Return "MonitorMode"
+            ElseIf _ClientMode Then
+                Return "ClientMode"
+            Else
+                Return "ServerMode"
+            End If
+
+
+        End Get
+    End Property
+
+
+
+
+
+
     Public Sub New()
-        Dim paraDB As DataTable = GetDtfmSQL("SELECT * FROM FLEX初期パラメータ")
 
-        Dim ht As Hashtable = New Hashtable
+        Dim paraDB As DataTable =
+            GetDtfmSQL("SELECT * FROM FLEX初期パラメータ")
 
         Try
-            'While paraDB.Read()
-            For Each t As DataRow In paraDB.Rows
-                ht(t("項目名称")) = t("値")
+            Dim ht As New Dictionary(Of String, String)
 
+            For Each dt As DataRow In paraDB.Rows
+                ht(dt("項目名称")) = dt("値")
             Next
-            'End While
 
-            Htb.htb = ht
-            _numberJack = Htb.GetValue("使用ジャッキ本数")
-            _numberGroup = Htb.GetValue("グループ数")
-            _jackPower = Htb.GetValue("ジャッキ能力")
-            _jackRadius = Htb.GetValue("ジャッキ取付半径")
-            _JackMaxOilPres = Htb.GetValue("ジャッキの最大油圧")
-            _actLogicalStationNumber = Htb.GetValue("PLC論理局")
-            _firstJackLoc = Htb.GetValue("No1ジャッキの位置")
-            _sheetID = Htb.GetValue("SheetID")
+            _numberJack = ht("使用ジャッキ本数")
+            _numberGroup = ht("グループ数")
+            _jackPower = ht("ジャッキ能力")
+            _jackRadius = ht("ジャッキ取付半径")
+            _JackMaxOilPres = ht("ジャッキの最大油圧")
+            _actLogicalStationNumber = ht("PLC論理局")
+            _firstJackLoc = ht("No1ジャッキの位置")
+            _sheetID = ht("SheetID")
             '_planDataMdb = Htb.GetValue("PlanDataMdb")
             ''絶対パスに変換
             'If Not (System.IO.Path.IsPathRooted(_planDataMdb)) Then
@@ -568,7 +734,7 @@ Public Class clsInitParameter
             Dim i As Integer
             For i = 0 To _numberJack - 1
                 '_faiJack(i) = Htb.GetValue("ジャッキ取付位置" & (i + 1))
-                _JackGroupPos(i) = Htb.GetValue("所属するジャッキグループの番号" & (i + 1))
+                _JackGroupPos(i) = ht("所属するジャッキグループの番号" & (i + 1))
                 _numberJackOfGroup(_JackGroupPos(i) - 1) += 1
             Next
             'ジャッキ取付角度の演算(degree)
@@ -592,24 +758,69 @@ Public Class clsInitParameter
                 End If
 
             Next
-            Dim test As Single = 0
+            'Dim test As Single = 0
             For i = 0 To _numberGroup - 1
                 _faiGroup(i) = _faiGroup(i) / _numberJackOfGroup(i)
             Next
+            '計測ジャッキの番号と角度を取得
+
+            For Each mj As String In ht.Keys
+                If mj.Contains("計測ジャッキNo") Then
+                    _mesureJackAngle.Add(mj.Replace("計測ジャッキNo", ""), ht(mj))
+                End If
+            Next
+
+            '計測ジャッキ番号
+            For Each JkNo In ht("計測ジャッキ上右下左").ToString.Split(",")
+                _mesureJackNo.Add(JkNo)
+            Next
+            '上下のストローク計の有無
+            _topStrokeEnable = (_mesureJackNo(0) <> 0)
+            _bottomStrokeEnable = (_mesureJackNo(2) <> 0)
+
+
+            If ht.ContainsKey("測量距離入力") Then
+                _DistanceInputMethod = (ht("測量距離入力").IndexOf("起点") >= 0)
+            End If
+
+
 
         Catch ex As Exception
 
         End Try
 
+        '工事名の取得,同時施工あり／なし
+        Dim ConNameLosZero As DataTable =
+            GetDtfmSQL($"SELECT 工事名,施工方法 FROM 環境設定 WHERE シートID='10'")
+        If ConNameLosZero.Rows.Count <> 0 Then
+            _constructionName = ConNameLosZero.Rows(0).Item(0)
+            _LosZeroEquip = (ConNameLosZero.Rows(0).Item(1) = 1)
+            _OpposeJackEnable =
+                _LosZeroEquip And (_constructionName.IndexOf("鹿島") >= 0 Or _constructionName.IndexOf("飛島") >= 0)
+
+
+        End If
+
+        'モニタモード、クライアントモードの設定読み込み
+        'FLEX.INIより読込
+        Dim IniFilePath As String =
+           AppDomain.CurrentDomain.SetupInformation.ApplicationBase & "FLEX.INI"
+
+        _ClientMode = (GetIniString("MODE", "ClientMode", IniFilePath) = "True")
+        _MonitorMode = (GetIniString("MODE", "MonitorMode", IniFilePath) = "True")
 
     End Sub
+    Function KeySelector(ByVal pair As KeyValuePair(Of String, Integer)) As String
+        ' 並べ替えの際のキーにKeyの値を使用する
+        Return pair.Key
+    End Function
     ''' <summary>
     ''' ジャッキ取付角度の演算(degree)
     ''' </summary>
     Private Sub CalucFaiJack()
 
         Dim sngStartLoc As Single
-        sngStartLoc = IIf(_firstJackLoc.ToLower = "top", 90, 90 - 360 / _numberJack / 2)
+        sngStartLoc = If(_firstJackLoc.ToLower = "top", 90, 90 - 360 / _numberJack / 2)
 
         ReDim _faiJack(_numberJack)
 
@@ -661,4 +872,3 @@ Public Class clsHashtableRead
 
 
 End Class
-

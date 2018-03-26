@@ -97,7 +97,7 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     ''' <param name="RingNo"></param>
     ''' <param name="Stroke"></param>
-    Public Sub RingLastStrokeUpdate(RingNo As Integer, Stroke As Short)
+    Public Sub RingLastStrokeUpdate(RingNo As Integer, Stroke As Integer)
         _RingLastStroke(RingNo) = Stroke
         ExecuteSqlCmd($"UPDATE flexセグメント組立データ SET 掘進終了ストローク ='{Stroke}'
             WHERE リング番号 = '{RingNo}'")

@@ -23,29 +23,20 @@ Partial Class frmCalcStrokeConfirm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Timer = New System.Windows.Forms.Timer(Me.components)
         Me.DgvJackStroke = New System.Windows.Forms.DataGridView()
-        Me.DspAveStroke = New FLEX.NET.ucnDspData()
-        Me.DspCenterWidth = New FLEX.NET.ucnDspData()
-        Me.DspTaperValue = New FLEX.NET.ucnDspData()
-        Me.DspMaxTaperLoc = New FLEX.NET.ucnDspData()
-        Me.RectangleShape2 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
-        Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.DspAveLogocalStroke = New FLEX.NET.ucnDspData()
-        Me.DspAveSpeed = New FLEX.NET.ucnDspData()
         Me.JackNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RealStrokeLen = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CalcStrokeLen = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -55,6 +46,16 @@ Partial Class frmCalcStrokeConfirm
         Me.Angle = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.JackState = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.JackEnable = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.DspAveStroke = New FLEX.NET.ucnDspData()
+        Me.DspCenterWidth = New FLEX.NET.ucnDspData()
+        Me.DspTaperValue = New FLEX.NET.ucnDspData()
+        Me.DspMaxTaperLoc = New FLEX.NET.ucnDspData()
+        Me.RectangleShape2 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
+        Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.DspAveLogocalStroke = New FLEX.NET.ucnDspData()
+        Me.DspAveSpeed = New FLEX.NET.ucnDspData()
+        Me.OpposeJackExcep = New FLEX.NET.ucnRdBtn()
         CType(Me.DgvJackStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -78,28 +79,28 @@ Partial Class frmCalcStrokeConfirm
         Me.DgvJackStroke.AllowUserToDeleteRows = False
         Me.DgvJackStroke.AllowUserToResizeColumns = False
         Me.DgvJackStroke.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.DgvJackStroke.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DgvJackStroke.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.DgvJackStroke.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DgvJackStroke.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle14
         Me.DgvJackStroke.ColumnHeadersHeight = 40
         Me.DgvJackStroke.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.DgvJackStroke.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.JackNo, Me.RealStrokeLen, Me.CalcStrokeLen, Me.CalcLogcalStroke, Me.StartStroke, Me.JackSpeed, Me.Angle, Me.JackState, Me.JackEnable})
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle12.NullValue = Nothing
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DgvJackStroke.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle24.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle24.NullValue = Nothing
+        DataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DgvJackStroke.DefaultCellStyle = DataGridViewCellStyle24
         Me.DgvJackStroke.Location = New System.Drawing.Point(14, 250)
         Me.DgvJackStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DgvJackStroke.MultiSelect = False
@@ -114,6 +115,121 @@ Partial Class frmCalcStrokeConfirm
         Me.DgvJackStroke.Size = New System.Drawing.Size(794, 249)
         Me.DgvJackStroke.TabIndex = 18
         '
+        'JackNo
+        '
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle15.Format = "N0"
+        DataGridViewCellStyle15.NullValue = Nothing
+        Me.JackNo.DefaultCellStyle = DataGridViewCellStyle15
+        Me.JackNo.DividerWidth = 1
+        Me.JackNo.Frozen = True
+        Me.JackNo.HeaderText = "No"
+        Me.JackNo.Name = "JackNo"
+        Me.JackNo.ReadOnly = True
+        Me.JackNo.Width = 30
+        '
+        'RealStrokeLen
+        '
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle16.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle16.NullValue = "0"
+        Me.RealStrokeLen.DefaultCellStyle = DataGridViewCellStyle16
+        Me.RealStrokeLen.Frozen = True
+        Me.RealStrokeLen.HeaderText = "読ストローク"
+        Me.RealStrokeLen.Name = "RealStrokeLen"
+        Me.RealStrokeLen.ReadOnly = True
+        Me.RealStrokeLen.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.RealStrokeLen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'CalcStrokeLen
+        '
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle17.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle17.NullValue = Nothing
+        Me.CalcStrokeLen.DefaultCellStyle = DataGridViewCellStyle17
+        Me.CalcStrokeLen.Frozen = True
+        Me.CalcStrokeLen.HeaderText = "実ストローク"
+        Me.CalcStrokeLen.Name = "CalcStrokeLen"
+        Me.CalcStrokeLen.ReadOnly = True
+        Me.CalcStrokeLen.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CalcStrokeLen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'CalcLogcalStroke
+        '
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.CalcLogcalStroke.DefaultCellStyle = DataGridViewCellStyle18
+        Me.CalcLogcalStroke.Frozen = True
+        Me.CalcLogcalStroke.HeaderText = "推進量"
+        Me.CalcLogcalStroke.Name = "CalcLogcalStroke"
+        Me.CalcLogcalStroke.ReadOnly = True
+        Me.CalcLogcalStroke.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CalcLogcalStroke.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'StartStroke
+        '
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle19.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.StartStroke.DefaultCellStyle = DataGridViewCellStyle19
+        Me.StartStroke.Frozen = True
+        Me.StartStroke.HeaderText = "開始ストローク"
+        Me.StartStroke.Name = "StartStroke"
+        Me.StartStroke.ReadOnly = True
+        Me.StartStroke.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.StartStroke.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'JackSpeed
+        '
+        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.JackSpeed.DefaultCellStyle = DataGridViewCellStyle20
+        Me.JackSpeed.Frozen = True
+        Me.JackSpeed.HeaderText = "速度(mm/min)"
+        Me.JackSpeed.Name = "JackSpeed"
+        Me.JackSpeed.ReadOnly = True
+        Me.JackSpeed.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.JackSpeed.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Angle
+        '
+        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle21.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle21.NullValue = Nothing
+        Me.Angle.DefaultCellStyle = DataGridViewCellStyle21
+        Me.Angle.Frozen = True
+        Me.Angle.HeaderText = "取付角度(deg)"
+        Me.Angle.Name = "Angle"
+        Me.Angle.ReadOnly = True
+        Me.Angle.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Angle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'JackState
+        '
+        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle22.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle22.NullValue = Nothing
+        Me.JackState.DefaultCellStyle = DataGridViewCellStyle22
+        Me.JackState.Frozen = True
+        Me.JackState.HeaderText = "状態"
+        Me.JackState.Name = "JackState"
+        Me.JackState.ReadOnly = True
+        Me.JackState.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.JackState.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'JackEnable
+        '
+        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle23.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle23.NullValue = False
+        Me.JackEnable.DefaultCellStyle = DataGridViewCellStyle23
+        Me.JackEnable.HeaderText = "有効"
+        Me.JackEnable.Name = "JackEnable"
+        Me.JackEnable.ReadOnly = True
+        Me.JackEnable.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.JackEnable.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.JackEnable.Width = 60
+        '
         'DspAveStroke
         '
         Me.DspAveStroke.BackColor = System.Drawing.Color.Transparent
@@ -121,7 +237,7 @@ Partial Class frmCalcStrokeConfirm
         Me.DspAveStroke.BlinkColor = System.Drawing.Color.Red
         Me.DspAveStroke.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.DspAveStroke.DataWidth = 80
-        Me.DspAveStroke.DecimalPlaces = CType(0, Short)
+        Me.DspAveStroke.DecimalPlaces = CType(1, Short)
         Me.DspAveStroke.FieldName = "平均ストローク"
         Me.DspAveStroke.FieldNameWidth = 160
         Me.DspAveStroke.ImeMode = System.Windows.Forms.ImeMode.NoControl
@@ -270,126 +386,26 @@ Partial Class frmCalcStrokeConfirm
         Me.DspAveSpeed.Value = "123.45 "
         Me.DspAveSpeed.ValueType = False
         '
-        'JackNo
+        'OpposeJackExcep
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle3.Format = "N0"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.JackNo.DefaultCellStyle = DataGridViewCellStyle3
-        Me.JackNo.DividerWidth = 1
-        Me.JackNo.Frozen = True
-        Me.JackNo.HeaderText = "No"
-        Me.JackNo.Name = "JackNo"
-        Me.JackNo.ReadOnly = True
-        Me.JackNo.Width = 30
-        '
-        'RealStrokeLen
-        '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle4.NullValue = "0"
-        Me.RealStrokeLen.DefaultCellStyle = DataGridViewCellStyle4
-        Me.RealStrokeLen.Frozen = True
-        Me.RealStrokeLen.HeaderText = "読ストローク"
-        Me.RealStrokeLen.Name = "RealStrokeLen"
-        Me.RealStrokeLen.ReadOnly = True
-        Me.RealStrokeLen.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.RealStrokeLen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'CalcStrokeLen
-        '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.CalcStrokeLen.DefaultCellStyle = DataGridViewCellStyle5
-        Me.CalcStrokeLen.Frozen = True
-        Me.CalcStrokeLen.HeaderText = "実ストローク"
-        Me.CalcStrokeLen.Name = "CalcStrokeLen"
-        Me.CalcStrokeLen.ReadOnly = True
-        Me.CalcStrokeLen.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.CalcStrokeLen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'CalcLogcalStroke
-        '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.CalcLogcalStroke.DefaultCellStyle = DataGridViewCellStyle6
-        Me.CalcLogcalStroke.Frozen = True
-        Me.CalcLogcalStroke.HeaderText = "推進量"
-        Me.CalcLogcalStroke.Name = "CalcLogcalStroke"
-        Me.CalcLogcalStroke.ReadOnly = True
-        Me.CalcLogcalStroke.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.CalcLogcalStroke.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'StartStroke
-        '
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.StartStroke.DefaultCellStyle = DataGridViewCellStyle7
-        Me.StartStroke.Frozen = True
-        Me.StartStroke.HeaderText = "開始ストローク"
-        Me.StartStroke.Name = "StartStroke"
-        Me.StartStroke.ReadOnly = True
-        Me.StartStroke.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.StartStroke.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'JackSpeed
-        '
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.JackSpeed.DefaultCellStyle = DataGridViewCellStyle8
-        Me.JackSpeed.Frozen = True
-        Me.JackSpeed.HeaderText = "速度(mm/min)"
-        Me.JackSpeed.Name = "JackSpeed"
-        Me.JackSpeed.ReadOnly = True
-        Me.JackSpeed.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.JackSpeed.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Angle
-        '
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle9.NullValue = Nothing
-        Me.Angle.DefaultCellStyle = DataGridViewCellStyle9
-        Me.Angle.Frozen = True
-        Me.Angle.HeaderText = "取付角度(deg)"
-        Me.Angle.Name = "Angle"
-        Me.Angle.ReadOnly = True
-        Me.Angle.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Angle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'JackState
-        '
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle10.NullValue = Nothing
-        Me.JackState.DefaultCellStyle = DataGridViewCellStyle10
-        Me.JackState.Frozen = True
-        Me.JackState.HeaderText = "状態"
-        Me.JackState.Name = "JackState"
-        Me.JackState.ReadOnly = True
-        Me.JackState.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.JackState.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'JackEnable
-        '
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle11.NullValue = False
-        Me.JackEnable.DefaultCellStyle = DataGridViewCellStyle11
-        Me.JackEnable.HeaderText = "有効"
-        Me.JackEnable.Name = "JackEnable"
-        Me.JackEnable.ReadOnly = True
-        Me.JackEnable.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.JackEnable.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.JackEnable.Width = 60
+        Me.OpposeJackExcep.BackColor = System.Drawing.Color.Transparent
+        Me.OpposeJackExcep.FieldName = "対抗ｼﾞｬｯｷのｽﾄﾛｰｸ除外"
+        Me.OpposeJackExcep.Location = New System.Drawing.Point(406, 71)
+        Me.OpposeJackExcep.Margin = New System.Windows.Forms.Padding(2)
+        Me.OpposeJackExcep.Name = "OpposeJackExcep"
+        Me.OpposeJackExcep.rdbtnValue = False
+        Me.OpposeJackExcep.Selectable = True
+        Me.OpposeJackExcep.Size = New System.Drawing.Size(422, 34)
+        Me.OpposeJackExcep.SlectNoName = "する"
+        Me.OpposeJackExcep.SlectYesName = "しない"
+        Me.OpposeJackExcep.TabIndex = 138
         '
         'frmCalcStrokeConfirm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(851, 559)
+        Me.Controls.Add(Me.OpposeJackExcep)
         Me.Controls.Add(Me.DspAveSpeed)
         Me.Controls.Add(Me.DspAveLogocalStroke)
         Me.Controls.Add(Me.Label1)
@@ -412,6 +428,7 @@ Partial Class frmCalcStrokeConfirm
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.DspAveLogocalStroke, 0)
         Me.Controls.SetChildIndex(Me.DspAveSpeed, 0)
+        Me.Controls.SetChildIndex(Me.OpposeJackExcep, 0)
         CType(Me.DgvJackStroke, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -437,4 +454,5 @@ Partial Class frmCalcStrokeConfirm
     Friend WithEvents Angle As DataGridViewTextBoxColumn
     Friend WithEvents JackState As DataGridViewTextBoxColumn
     Friend WithEvents JackEnable As DataGridViewCheckBoxColumn
+    Friend WithEvents OpposeJackExcep As ucnRdBtn
 End Class

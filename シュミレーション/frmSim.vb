@@ -1,12 +1,13 @@
 ﻿Imports System.Text
+Imports System.Threading
 
 Public Class frmSim
 
-    Public InitParm As FLEX.NET.clsInitParameter '初期値パラメータ
+    Public InitParm As clsInitParameter '初期値パラメータ
 
     Private WithEvents ComPlc As ACTMULTILib.ActEasyIF
 
-    Private DspGpPv() As FLEX.NET.ucnDspGpPres
+    Private DspGpPv() As ucnDspGpPres
     Private DspGpMv() As Label
     Private JackSel() As CheckBox
     Private GpMvOutReal() As Integer '現在のグループ圧出力
@@ -29,11 +30,11 @@ Public Class frmSim
         InitializeComponent()
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
-        Dim db As New FLEX.NET.clsDataBase
+        Dim db As New clsDataBase
         'MYSQLのバージョン取得
         db.GetMySQKVersion()
 
-        InitParm = New FLEX.NET.clsInitParameter
+        InitParm = New clsInitParameter
 
         SimlationSetting = New clsSimlationSetting
 
@@ -104,7 +105,7 @@ Public Class frmSim
 
 
         For i = 0 To InitParm.NumberGroup - 1
-            DspGpPv(i) = New FLEX.NET.ucnDspGpPres
+            DspGpPv(i) = New ucnDspGpPres
             DspGpMv(i) = New Label
             Dim Deg As Single = (i * 360 / InitParm.NumberGroup - 90) / 180 * Math.PI
             DspGpPv(i).Location =
@@ -134,10 +135,13 @@ Public Class frmSim
         ReDim StrokeSimCounter(SimlationSetting.MesureJackNo.Count - 1)
 
         'フォームに情報表示
-        Me.Text &= $"　論理局番=[{ComPlc.ActLogicalStationNumber}] [{InitParm.constructionName}]"
+        Me.Text &= $"　論理局番=[{ComPlc.ActLogicalStationNumber}] ]"
+
+
 
 
     End Sub
+
 
     ''' <summary>
     ''' ジャッキ選択変更
@@ -153,6 +157,12 @@ Public Class frmSim
 
     End Sub
     Private Sub tmrPlcWR_Tick(sender As Object, e As EventArgs) Handles tmrPlcWR.Tick
+
+
+        lblTime.Text = Now.ToLongTimeString
+
+        Dim startDt As DateTime = DateTime.Now
+
 
         'PLC読込
         Dim iRet As Long
@@ -344,6 +354,10 @@ Public Class frmSim
 
         End If
 
+        'Debug.Print(Now.ToLongTimeString)
+         'Console.WriteLine(ts.TotalMinutes) ' 経過時間（分）
+        Console.WriteLine(ts.TotalSeconds & "秒") ' 経過時間（秒）
+        'Console.WriteLine(ts.TotalMilliseconds) ' 経過時間（ミリ秒）
 
     End Sub
 
@@ -766,23 +780,25 @@ CatchError:  '例外処理
 
 
         End Sub
-        ''' <summary>
-        ''' ロスゼロ開始（減圧開始）
-        ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
-        Private Sub btnLoszeroStart_Click(sender As Object, e As EventArgs) Handles btnLoszeroStart.Click
-            Dim iret = ComPlc.SetDevice(SimlationSetting.LoszeroStart, 1)
+    ''' <summary>
+    ''' ロスゼロ開始（減圧開始）
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnLoszeroStart_Click(sender As Object, e As EventArgs) Handles btnLoszeroStart.Click
+        Dim iret = ComPlc.SetDevice(SimlationSetting.LoszeroStart, 1)
 
-        End Sub
-        ''' <summary>
-        ''' ストローク　シュミレーション
-        ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
-        Private Sub tmrStrokeSim_Tick(sender As Object, e As EventArgs) Handles tmrStrokeSim.Tick
+    End Sub
 
-            For i As Short = 0 To StrokeSimCounter.Count - 1
+
+    ''' <summary>
+    ''' ストローク　シュミレーション
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub tmrStrokeSim_Tick(sender As Object, e As EventArgs) Handles tmrStrokeSim.Tick
+
+        For i As Short = 0 To StrokeSimCounter.Count - 1
             '速度がゼロでない時
             If DgvJackStroke.Rows(i).Cells(2).Value <> 0 Then
 
@@ -805,7 +821,9 @@ CatchError:  '例外処理
 
         Next
 
-        Debug.Print(Now.ToLongTimeString)
+
+        Console.WriteLine("tmrStrokeSim_Tick " & DateTime.Now)
+
 
     End Sub
 
