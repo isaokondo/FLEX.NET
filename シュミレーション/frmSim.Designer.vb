@@ -23,20 +23,20 @@ Partial Class frmSim
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle37 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle38 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle42 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle39 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle40 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle41 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSim))
         Me.tmrPlcWR = New System.Windows.Forms.Timer(Me.components)
         Me.chkExcavOn = New System.Windows.Forms.CheckBox()
@@ -115,7 +115,7 @@ Partial Class frmSim
         '
         'tmrPlcWR
         '
-        Me.tmrPlcWR.Interval = 10
+        Me.tmrPlcWR.Interval = 1000
         '
         'chkExcavOn
         '
@@ -339,10 +339,10 @@ Partial Class frmSim
         '
         'JackNo
         '
-        DataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle29.Format = "N0"
-        DataGridViewCellStyle29.NullValue = Nothing
-        Me.JackNo.DefaultCellStyle = DataGridViewCellStyle29
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.Format = "N0"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.JackNo.DefaultCellStyle = DataGridViewCellStyle1
         Me.JackNo.Frozen = True
         Me.JackNo.HeaderText = "No"
         Me.JackNo.Name = "JackNo"
@@ -351,8 +351,8 @@ Partial Class frmSim
         '
         'ExcavOrSegment
         '
-        DataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.ExcavOrSegment.DefaultCellStyle = DataGridViewCellStyle30
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.ExcavOrSegment.DefaultCellStyle = DataGridViewCellStyle2
         Me.ExcavOrSegment.Frozen = True
         Me.ExcavOrSegment.HeaderText = "推進／組立"
         Me.ExcavOrSegment.Name = "ExcavOrSegment"
@@ -364,8 +364,8 @@ Partial Class frmSim
         '
         'PullBakOn
         '
-        DataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.PullBakOn.DefaultCellStyle = DataGridViewCellStyle31
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.PullBakOn.DefaultCellStyle = DataGridViewCellStyle3
         Me.PullBakOn.Frozen = True
         Me.PullBakOn.HeaderText = "引き戻し中"
         Me.PullBakOn.Name = "PullBakOn"
@@ -377,8 +377,8 @@ Partial Class frmSim
         '
         'PullBackAns
         '
-        DataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.PullBackAns.DefaultCellStyle = DataGridViewCellStyle32
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.PullBackAns.DefaultCellStyle = DataGridViewCellStyle4
         Me.PullBackAns.Frozen = True
         Me.PullBackAns.HeaderText = "引き戻しAns"
         Me.PullBackAns.Name = "PullBackAns"
@@ -390,8 +390,8 @@ Partial Class frmSim
         '
         'ClosetOn
         '
-        DataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.ClosetOn.DefaultCellStyle = DataGridViewCellStyle33
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.ClosetOn.DefaultCellStyle = DataGridViewCellStyle5
         Me.ClosetOn.Frozen = True
         Me.ClosetOn.HeaderText = "押込み中"
         Me.ClosetOn.Name = "ClosetOn"
@@ -403,8 +403,8 @@ Partial Class frmSim
         '
         'ClosetAns
         '
-        DataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.ClosetAns.DefaultCellStyle = DataGridViewCellStyle34
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.ClosetAns.DefaultCellStyle = DataGridViewCellStyle6
         Me.ClosetAns.Frozen = True
         Me.ClosetAns.HeaderText = "押込みAns"
         Me.ClosetAns.Name = "ClosetAns"
@@ -415,8 +415,8 @@ Partial Class frmSim
         '
         'PullBackCommand
         '
-        DataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.PullBackCommand.DefaultCellStyle = DataGridViewCellStyle35
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.PullBackCommand.DefaultCellStyle = DataGridViewCellStyle7
         Me.PullBackCommand.Frozen = True
         Me.PullBackCommand.HeaderText = "引戻し指令"
         Me.PullBackCommand.Name = "PullBackCommand"
@@ -427,8 +427,8 @@ Partial Class frmSim
         '
         'ClosetCommand
         '
-        DataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.ClosetCommand.DefaultCellStyle = DataGridViewCellStyle36
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.ClosetCommand.DefaultCellStyle = DataGridViewCellStyle8
         Me.ClosetCommand.Frozen = True
         Me.ClosetCommand.HeaderText = "押込み指令"
         Me.ClosetCommand.Name = "ClosetCommand"
@@ -439,8 +439,8 @@ Partial Class frmSim
         '
         'AddClosetCommand
         '
-        DataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.AddClosetCommand.DefaultCellStyle = DataGridViewCellStyle37
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.AddClosetCommand.DefaultCellStyle = DataGridViewCellStyle9
         Me.AddClosetCommand.Frozen = True
         Me.AddClosetCommand.HeaderText = "追加押込み指令"
         Me.AddClosetCommand.Name = "AddClosetCommand"
@@ -544,23 +544,23 @@ Partial Class frmSim
         Me.DgvJackStroke.AllowUserToDeleteRows = False
         Me.DgvJackStroke.AllowUserToResizeColumns = False
         Me.DgvJackStroke.AllowUserToResizeRows = False
-        DataGridViewCellStyle38.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle38.Format = "N0"
-        DataGridViewCellStyle38.NullValue = "0"
-        Me.DgvJackStroke.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle38
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle10.Format = "N0"
+        DataGridViewCellStyle10.NullValue = "0"
+        Me.DgvJackStroke.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle10
         Me.DgvJackStroke.ColumnHeadersHeight = 40
         Me.DgvJackStroke.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.DgvJackStroke.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.RealStrokeLen, Me.JackSpeed})
-        DataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle42.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle42.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle42.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle42.Format = "N0"
-        DataGridViewCellStyle42.NullValue = "0"
-        DataGridViewCellStyle42.SelectionBackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle42.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle42.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DgvJackStroke.DefaultCellStyle = DataGridViewCellStyle42
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle14.Format = "N0"
+        DataGridViewCellStyle14.NullValue = "0"
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DgvJackStroke.DefaultCellStyle = DataGridViewCellStyle14
         Me.DgvJackStroke.Location = New System.Drawing.Point(884, 447)
         Me.DgvJackStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DgvJackStroke.MultiSelect = False
@@ -575,11 +575,11 @@ Partial Class frmSim
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle39.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle39.Format = "N0"
-        DataGridViewCellStyle39.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle39
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle11.Format = "N0"
+        DataGridViewCellStyle11.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle11
         Me.DataGridViewTextBoxColumn1.DividerWidth = 1
         Me.DataGridViewTextBoxColumn1.Frozen = True
         Me.DataGridViewTextBoxColumn1.HeaderText = "No"
@@ -588,11 +588,11 @@ Partial Class frmSim
         '
         'RealStrokeLen
         '
-        DataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle40.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle40.Format = "N0"
-        DataGridViewCellStyle40.NullValue = "0"
-        Me.RealStrokeLen.DefaultCellStyle = DataGridViewCellStyle40
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle12.Format = "N0"
+        DataGridViewCellStyle12.NullValue = "0"
+        Me.RealStrokeLen.DefaultCellStyle = DataGridViewCellStyle12
         Me.RealStrokeLen.Frozen = True
         Me.RealStrokeLen.HeaderText = "実ストローク(mm)"
         Me.RealStrokeLen.Name = "RealStrokeLen"
@@ -601,11 +601,11 @@ Partial Class frmSim
         '
         'JackSpeed
         '
-        DataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle41.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle41.Format = "N0"
-        DataGridViewCellStyle41.NullValue = "0"
-        Me.JackSpeed.DefaultCellStyle = DataGridViewCellStyle41
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle13.Format = "N0"
+        DataGridViewCellStyle13.NullValue = "0"
+        Me.JackSpeed.DefaultCellStyle = DataGridViewCellStyle13
         Me.JackSpeed.Frozen = True
         Me.JackSpeed.HeaderText = "速度(mm/min)"
         Me.JackSpeed.Name = "JackSpeed"

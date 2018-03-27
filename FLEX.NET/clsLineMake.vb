@@ -406,12 +406,12 @@ Public Class clsLineMake
         For ZoneNo As Integer = 0 To HorPlan.ゾーン総数
             Dim StartCulcShft As New clsCulcHorShift(HorPlan.始点累積距離(ZoneNo))
             HorPlan.始点カント(ZoneNo) = StartCulcShft.平面シフト量
-            HorPlan.始点シフト量(ZoneNo) = StartCulcShft.平面シフト追加角
+            'HorPlan.始点シフト量(ZoneNo) = StartCulcShft.平面シフト追加角
 
 
             Dim LastCulcShft As New clsCulcHorShift(HorPlan.終点累積距離(ZoneNo))
             HorPlan.終点カント(ZoneNo) = LastCulcShft.平面シフト量
-            HorPlan.終点シフト量(ZoneNo) = LastCulcShft.平面シフト追加角
+            'HorPlan.終点シフト量(ZoneNo) = LastCulcShft.平面シフト追加角
 
         Next
 
@@ -459,38 +459,38 @@ Public Class clsLineMake
             ' 備考      :02/09/12 追加
             ' シフトゾーン数が０の時は演算を行わない　03/03/18
 
-            Dim intZone As Short
-            Dim intShiftZoneNo As Short
+            Dim ZoneNo As Integer
+            Dim ShiftZoneNo As Integer
             Dim dblZoneLen As Double
             With HorPlan
 
-                If .シフトゾーン総数 = 0 Then Exit Sub ''03/03/18 追加
+                If HorPlan.シフトゾーン総数 = 0 Then Exit Sub ''03/03/18 追加
 
 
                 'intShiftZoneNo:抽出したシフトゾーン
                 'dblZoneLen:シフトゾーン内の距離
 
-                intZone = 0
-                Do While .シフト区間長(intZone) <> 0
-                    If intZone = 0 Then
-                        .シフトゾーン距離(intZone) = - .シフト区間長(intZone)
-                        .シフトゾーン残距離(intZone) = 0
+                ZoneNo = 0
+                Do While HorPlan.シフト区間長(ZoneNo) <> 0
+                    If ZoneNo = 0 Then
+                        HorPlan.シフトゾーン距離(ZoneNo) = -HorPlan.シフト区間長(ZoneNo)
+                        HorPlan.シフトゾーン残距離(ZoneNo) = 0
                     Else
-                        .シフトゾーン距離(intZone) = .シフトゾーン残距離(intZone - 1)
-                        .シフトゾーン残距離(intZone) = .シフトゾーン距離(intZone) + .シフト区間長(intZone)
+                        HorPlan.シフトゾーン距離(ZoneNo) = HorPlan.シフトゾーン残距離(ZoneNo - 1)
+                        HorPlan.シフトゾーン残距離(ZoneNo) = HorPlan.シフトゾーン距離(ZoneNo) + HorPlan.シフト区間長(ZoneNo)
                     End If
-                    If _掘進累積距離 >= .シフトゾーン距離(intZone) And _掘進累積距離 < .シフトゾーン残距離(intZone) Then
-                        intShiftZoneNo = intZone
-                        dblZoneLen = _掘進累積距離 - .シフトゾーン距離(intZone)
-                        _平面シフト量 = .始点シフト量(intZone) + (.終点シフト量(intZone) - .始点シフト量(intZone)) * dblZoneLen / .シフト区間長(intZone)
-                        _平面シフト追加角 = Atan((.終点シフト量(intZone) - .始点シフト量(intZone)) / .シフト区間長(intZone)) * 180 / PI
+                    If _掘進累積距離 >= HorPlan.シフトゾーン距離(ZoneNo) And _掘進累積距離 <= HorPlan.シフトゾーン残距離(ZoneNo) Then
+                        ShiftZoneNo = ZoneNo
+                        dblZoneLen = _掘進累積距離 - HorPlan.シフトゾーン距離(ZoneNo)
+                        _平面シフト量 = HorPlan.始点シフト量(ZoneNo) + (HorPlan.終点シフト量(ZoneNo) - HorPlan.始点シフト量(ZoneNo)) * dblZoneLen / HorPlan.シフト区間長(ZoneNo)
+                        _平面シフト追加角 = Atan((HorPlan.終点シフト量(ZoneNo) - HorPlan.始点シフト量(ZoneNo)) / HorPlan.シフト区間長(ZoneNo)) * 180 / PI
                         Exit Sub
                     End If
-                    intZone = CShort(intZone + 1)
+                    ZoneNo += 1
                 Loop
-                If .シフト区間長(intZone) = 0 Then
-                    intShiftZoneNo = -1
-                    dblZoneLen = _掘進累積距離 - .シフトゾーン残距離(intZone - 1)
+                If HorPlan.シフト区間長(ZoneNo) = 0 Then
+                    ShiftZoneNo = -1
+                    dblZoneLen = _掘進累積距離 - HorPlan.シフトゾーン残距離(ZoneNo - 1)
                     _平面シフト量 = 0
                     _平面シフト追加角 = 0
                 End If
@@ -532,7 +532,7 @@ Public Class clsLineMake
             intZone = 0
             Do While .シフト区間長(intZone) <> 0
                 If intZone = 0 Then
-                    .シフトゾーン距離(intZone) = -.シフト区間長(intZone)
+                    .シフトゾーン距離(intZone) = - .シフト区間長(intZone)
                     .シフトゾーン残距離(intZone) = 0
                 Else
                     .シフトゾーン距離(intZone) = .シフトゾーン残距離(intZone - 1)
@@ -706,7 +706,7 @@ Public Class clsLineMake
             intZone = 0
             Do While .シフト区間長(intZone) <> 0
                 If intZone = 0 Then
-                    .シフトゾーン距離(intZone) = -.シフト区間長(intZone)
+                    .シフトゾーン距離(intZone) = - .シフト区間長(intZone)
                     .シフトゾーン残距離(intZone) = 0
                 Else
                     .シフトゾーン距離(intZone) = .シフトゾーン残距離(intZone - 1)

@@ -24,6 +24,10 @@ Public Class frmSim
     Private StrokeSimCounter() As Integer
 
 
+    Private MachineStartAdress As String    'マシンのPLCアドレスの先頭
+    Private MachinePlcReadCount As Integer  '先頭からの読込個数
+
+
     Public Sub New()
 
         ' この呼び出しはデザイナーで必要です。
@@ -79,6 +83,51 @@ Public Class frmSim
         '        txt_ReturnCode.Text = String.Format("0x{0:x8} [HEX]", iReturnCode)
         Return iReturnCode
     End Function
+
+    ''' <summary>
+    ''' マシンの読込開始アドレスと読込個数の取得
+    ''' </summary>
+    Private Sub GetMachinePlcInfo()
+        Dim db As New clsDataBase
+
+        Dim dtSHape As DataTable =
+            db.GetDtfmSQL("SELECT * FROM  `flexシュミレーション設定` where left(`値`,1)='W' or left(`値`,1)='B'  ")
+
+
+        For Each t As DataRow In dtSHape.Rows
+            If t.Item("値").ToString.Length < 5 Then
+                '先頭を除いた文字に4文字になるようにゼロを左から
+                Dim s As String = t.Item("値").ToString
+                Dim NewVal As String = s.Substring(0, 1) & s.Remove(0, 1).PadLeft(4, "0") '整形した値
+                db.ExecuteSqlCmd($"UPDATE  `flexシュミレーション設定` SET `値`='{NewVal}' WHERE `ID`='{t.Item("ID")}'")
+            End If
+        Next
+
+        'マシンの読込部分
+        Dim dtAdr As DataTable =
+            db.GetDtfmSQL("SELECT MIN(`値`), MAX(`値`)  from `flexシュミレーション設定` where (left(`値`,1)='W' AND `項目`<>'GpPresMV' AND `項目`<>'LosZeroStFlex' AND `項目`<>'GyairoAdr' AND `項目`<>'PitchingAdr')")
+        '開始アドレスと個数の取得
+        MachineStartAdress = dtAdr.Rows(0).Item(0).ToString
+        MachinePlcReadCount = CInt(dtAdr.Rows(0).Item(1).ToString.Replace("W", "&H")) - CInt(MachineStartAdress.Replace("W", "&H")) + 1 + InitParm.NumberGroup
+
+    End Sub
+
+    ''' <summary>
+    ''' マシンの読込アドレスからのオフセットを取得
+    ''' </summary>
+    ''' <param name="PlcAdr"></param>
+    ''' <returns></returns>
+    Private Function GetMachineOfAdr(PlcAdr As String) As Integer
+        If Not IsNothing(PlcAdr) Then
+            Return CInt(PlcAdr.Replace("W", "&h")) - CInt(MachineStartAdress.Replace("W", "&H"))
+        Else
+            Return 0
+        End If
+
+    End Function
+
+
+
 
     Private Sub frmSimlation_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -138,6 +187,10 @@ Public Class frmSim
         Me.Text &= $"　論理局番=[{ComPlc.ActLogicalStationNumber}] ]"
 
 
+        GetMachinePlcInfo()
+
+
+
 
 
     End Sub
@@ -161,14 +214,16 @@ Public Class frmSim
 
         lblTime.Text = Now.ToLongTimeString
 
-        Dim startDt As DateTime = DateTime.Now
-
 
         'PLC読込
         Dim iRet As Long
         Dim plcData As Integer
 
         Dim i As Integer
+
+
+        Dim plcMachineRd(MachinePlcReadCount) As Integer
+        iRet = ComPlc.ReadDeviceBlock(MachineStartAdress, MachinePlcReadCount, plcMachineRd(0))
 
 
         '掘進モード
@@ -202,36 +257,47 @@ Public Class frmSim
 
 
         '元圧
-        iRet = ComPlc.GetDevice(SimlationSetting.JkPresAdr, plcData)
+        'iRet = ComPlc.GetDevice(SimlationSetting.JkPresAdr, plcData)
+
+
+
         'nudSoucePressure.Value = fnChangePresAnalogIn(plcData)
 
+        nudSoucePressure.Value = fnChangePresAnalogIn(plcMachineRd(GetMachineOfAdr(SimlationSetting.JkPresAdr)))
+
         '左ストローク
-        iRet = ComPlc.GetDevice(SimlationSetting.LeftStrokeAdr, plcData)
-        nudLeftStroke.Value = fnChangeStrokeAnalogIn(plcData)
+        'iRet = ComPlc.GetDevice(SimlationSetting.LeftStrokeAdr, plcData)
+        'nudLeftStroke.Value = fnChangeStrokeAnalogIn(plcData)
+        nudLeftStroke.Value = fnChangeStrokeAnalogIn(plcMachineRd(GetMachineOfAdr(SimlationSetting.LeftStrokeAdr)))
 
         '右ストローク
-        iRet = ComPlc.GetDevice(SimlationSetting.RightStrokeAdr, plcData)
-        nudRightStroke.Value = fnChangeStrokeAnalogIn(plcData)
+        'iRet = ComPlc.GetDevice(SimlationSetting.RightStrokeAdr, plcData)
+        'nudRightStroke.Value = fnChangeStrokeAnalogIn(plcData)
+        nudRightStroke.Value = fnChangeStrokeAnalogIn(plcMachineRd(GetMachineOfAdr(SimlationSetting.RightStrokeAdr)))
+
 
         '左ｽﾋﾟｰﾄﾞ
-        iRet = ComPlc.GetDevice(SimlationSetting.LeftSpeedAdr, plcData)
-        nudLeftSpeed.Value = fnChangeSpeedAnalogIn(plcData)
-
+        'iRet = ComPlc.GetDevice(SimlationSetting.LeftSpeedAdr, plcData)
+        'nudLeftSpeed.Value = fnChangeSpeedAnalogIn(plcData)
+        nudLeftSpeed.Value = fnChangeSpeedAnalogIn(plcMachineRd(GetMachineOfAdr(SimlationSetting.LeftSpeedAdr)))
 
 
         '右ｽﾋﾟｰﾄﾞ
-        iRet = ComPlc.GetDevice(SimlationSetting.RightSpeedAdr, plcData)
-        nudRightSpeed.Value = fnChangeSpeedAnalogIn(plcData)
+        'iRet = ComPlc.GetDevice(SimlationSetting.RightSpeedAdr, plcData)
+        'nudRightSpeed.Value = fnChangeSpeedAnalogIn(plcData)
+        nudRightSpeed.Value = fnChangeSpeedAnalogIn(plcMachineRd(GetMachineOfAdr(SimlationSetting.RightSpeedAdr)))
 
         If Not DgvJackStroke.IsCurrentCellInEditMode Then
             '計測ジャッキの取込
             For i = 0 To SimlationSetting.MesureJackNo.Count - 1
 
-                iRet = ComPlc.GetDevice(SimlationSetting.MesureJackStroke(i), plcData)
-                DgvJackStroke.Rows(i).Cells(1).Value = fnChangeStrokeAnalogIn(plcData)
+                'iRet = ComPlc.GetDevice(SimlationSetting.MesureJackStroke(i), plcData)
+                'DgvJackStroke.Rows(i).Cells(1).Value = fnChangeStrokeAnalogIn(plcData)
+                DgvJackStroke.Rows(i).Cells(1).Value = fnChangeStrokeAnalogIn(plcMachineRd(GetMachineOfAdr(SimlationSetting.MesureJackStroke(i))))
 
-                iRet = ComPlc.GetDevice(SimlationSetting.MesureJackSpeed(i), plcData)
-                DgvJackStroke.Rows(i).Cells(2).Value = fnChangeSpeedAnalogIn(plcData)
+                'iRet = ComPlc.GetDevice(SimlationSetting.MesureJackSpeed(i), plcData)
+                'DgvJackStroke.Rows(i).Cells(2).Value = fnChangeSpeedAnalogIn(plcData)
+                DgvJackStroke.Rows(i).Cells(2).Value = fnChangeSpeedAnalogIn(plcMachineRd(GetMachineOfAdr(SimlationSetting.MesureJackSpeed(i))))
 
             Next
 
@@ -242,11 +308,13 @@ Public Class frmSim
         tmrStrokeSim.Enabled = chkExcavOn.Checked
 
         'ピッチング
-        iRet = ComPlc.GetDevice2(SimlationSetting.PitchingAdr, plcData)
-        nudPitching.Value = plcData / 100
+        'iRet = ComPlc.GetDevice2(SimlationSetting.PitchingAdr, plcData)
+        'nudPitching.Value = plcData / 100
+        nudPitching.Value = plcMachineRd(GetMachineOfAdr(SimlationSetting.PitchingAdr)) / 100
 
-        iRet = ComPlc.GetDevice2(SimlationSetting.MachinePitchingAdr, plcData)
-        nudMachinePitching.Value = plcData
+        'iRet = ComPlc.GetDevice2(SimlationSetting.MachinePitchingAdr, plcData)
+        'nudMachinePitching.Value = plcData
+        nudMachinePitching.Value = plcMachineRd(GetMachineOfAdr(SimlationSetting.MachinePitchingAdr))
 
         If InitParm.LosZeroEquip Then
             'ロスゼロ　fromマシン
@@ -285,9 +353,13 @@ Public Class frmSim
 
 
         'グループ圧PV
-        Dim plcGpPv() As Integer
-        ReDim plcGpPv(InitParm.NumberGroup)
-        iRet = ComPlc.ReadDeviceBlock(SimlationSetting.GpPresPV, InitParm.NumberGroup, plcGpPv(0))
+        Dim plcGpPv(InitParm.NumberGroup) As Integer
+        'iRet = ComPlc.ReadDeviceBlock(SimlationSetting.GpPresPV, InitParm.NumberGroup, plcGpPv(0))
+
+        Dim PvOf As Integer = GetMachineOfAdr(SimlationSetting.GpPresPV)
+
+        Array.Copy(plcMachineRd, PvOf, plcGpPv, 0, InitParm.NumberGroup)
+
         For i = 0 To InitParm.NumberGroup - 1
             DspGpPv(i).Value = fnChangePresAnalogIn(plcGpPv(i))
         Next
@@ -354,9 +426,9 @@ Public Class frmSim
 
         End If
 
-        'Debug.Print(Now.ToLongTimeString)
-         'Console.WriteLine(ts.TotalMinutes) ' 経過時間（分）
-        Console.WriteLine(ts.TotalSeconds & "秒") ' 経過時間（秒）
+
+        'Console.WriteLine(ts.TotalMinutes) ' 経過時間（分）
+        'Console.WriteLine(ts.TotalSeconds & "秒") ' 経過時間（秒）
         'Console.WriteLine(ts.TotalMilliseconds) ' 経過時間（ミリ秒）
 
     End Sub
@@ -797,22 +869,23 @@ CatchError:  '例外処理
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub tmrStrokeSim_Tick(sender As Object, e As EventArgs) Handles tmrStrokeSim.Tick
+        Dim startDt As DateTime = DateTime.Now
 
-        For i As Short = 0 To StrokeSimCounter.Count - 1
+        For i As Short = 0 To SimlationSetting.MesureJackNo.Count - 1
             '速度がゼロでない時
             If DgvJackStroke.Rows(i).Cells(2).Value <> 0 Then
 
-                If StrokeSimCounter(i) = 0 Then
-                    '1mm加算したストロークを書き込み
-                    Dim Stk As Integer = DgvJackStroke.Rows(i).Cells(1).Value + 1
-                    If Stk < SimlationSetting.StrokeEngScale Then
-                        Dim iret = ComPlc.SetDevice(SimlationSetting.MesureJackStroke(i), fnChangeStrokeAnalogOut(Stk))
-                        StrokeSimCounter(i) = 60 / DgvJackStroke.Rows(i).Cells(2).Value
-                    End If
-
-                Else
-                    StrokeSimCounter(i) += -1
+                'If StrokeSimCounter(i) = 0 Then
+                '1mm加算したストロークを書き込み
+                Dim Stk As Integer = DgvJackStroke.Rows(i).Cells(1).Value + 1
+                If Stk < SimlationSetting.StrokeEngScale Then
+                    Dim iret = ComPlc.SetDevice(SimlationSetting.MesureJackStroke(i), fnChangeStrokeAnalogOut(Stk))
+                    StrokeSimCounter(i) = 60 / DgvJackStroke.Rows(i).Cells(2).Value
                 End If
+
+                'Else
+                '    StrokeSimCounter(i) += -1
+                'End If
             End If
 
 
@@ -821,8 +894,19 @@ CatchError:  '例外処理
 
         Next
 
+        Dim endDt As DateTime = DateTime.Now
 
-        Console.WriteLine("tmrStrokeSim_Tick " & DateTime.Now)
+        Dim ts As TimeSpan = endDt - startDt ' 時間の差分を取得
+
+        'Console.WriteLine(ts.TotalMinutes) ' 経過時間（分）
+        'Console.WriteLine(ts.TotalSeconds) ' 経過時間（秒）
+        'Console.WriteLine(ts.TotalMilliseconds) ' 経過時間（ミリ秒）
+
+
+        Console.WriteLine("tmrStrokeSim_Tick :" & ts.TotalMilliseconds & ":" & tmrStrokeSim.Interval)
+
+        tmrStrokeSim.Interval = 1000 - ts.TotalMilliseconds
+
 
 
     End Sub
