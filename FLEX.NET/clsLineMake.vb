@@ -67,7 +67,7 @@ Public Class clsLineMake
 
 
 
-
+    Public Property 平面計画方位 As Double
 
     Public Property 掘進累積距離() As Double
         Get

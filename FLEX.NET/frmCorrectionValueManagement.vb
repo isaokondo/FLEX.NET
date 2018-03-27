@@ -127,7 +127,8 @@
                             Case "姿勢角管理値"
                                 p.Value = .平面基準方位
                             Case "現リング目標方向角"
-                                p.Value = Hoko2Hoi(RefernceDirection.RingTarget.軌道中心方位角) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
+                                'p.Value = Hoko2Hoi(RefernceDirection.RingTarget.軌道中心方位角) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
+                                p.Value = Hoko2Hoi(RefernceDirection.RingTarget.平面計画方位) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
                             Case "次リング目標方向角"
                                 p.Value = Hoko2Hoi(RefernceDirection.NextRingTarget.軌道中心方位角) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
                         End Select

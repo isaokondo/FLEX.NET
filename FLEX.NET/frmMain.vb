@@ -471,7 +471,8 @@
         ucnVerLineChart.TargetData = DspTargetPitching.Value
         ucnVerLineChart.RealData = DspPitching.Value
 
-        DspRingTargetDir.Value = Hoko2Hoi(RefernceDirection.RingTarget.軌道中心方位角) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
+        'DspRingTargetDir.Value = Hoko2Hoi(RefernceDirection.RingTarget.軌道中心方位角) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
+        DspRingTargetDir.Value = Hoko2Hoi(RefernceDirection.RingTarget.平面計画方位) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
     End Sub
     ''' <summary>
     ''' 同時施工組立パターン情報表示

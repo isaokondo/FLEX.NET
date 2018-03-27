@@ -314,7 +314,7 @@ Friend Class clsCulKijun
                     .現中折計算区分 = HorNakaKodo.現中折計算区分
                     .現姿勢変化率 = HorNakaKodo.現姿勢変化率
                     .現中折角度 = HorNakaKodo.現中折角度
-                    .sbCul_Nakaore2()
+                    HorNakaCul.sbCul_Nakaore2()
                     mdbl平面中折角度 = .中折角度 'HorNakaKodo.現中折角度
                     mdbl平面計画方位 = Hoko2Hoi(.基準方位)
                 End With
@@ -352,6 +352,40 @@ Friend Class clsCulKijun
 
         'Debug.Print(HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth)
         RingTarget.掘進累積距離 = HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
+        Dim RingTargetKodo As New clsLineMake
+        RingTargetKodo.掘進累積距離 = HorKodoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
+
+        Dim RgTgNkKodo As New clsCulNakaore1
+        With RgTgNkKodo
+            .ZoneNo = RingTargetKodo.平面ゾーン番号
+            .ゾーン掘進距離 = RingTargetKodo.平面ゾーン掘進距離
+            .ゾーン残距離 = RingTargetKodo.平面ゾーン内残距離
+            .前胴長 = MachineSpec.ZendoLen
+            '               .後胴前 = dblKodoMae 'initParameter.HorZendoCenter 'initParameter.KodoLen
+            .後胴前 = dbl後胴長 'initParameter.HorZendoCenter 'MachineSpec
+            .ディフォルト旋回中心 = MachineSpec.HorSenkaiCyuushin
+            .sbCulNakaore1(HorPlan)
+        End With
+
+        Dim RgTgNk2 As New clsCulNakaore2
+        '中折れ計算2（構築中心の方向角で検討）
+        With RgTgNk2
+
+            ''以下　追加　 01.06.25 by Isao Kondo
+            .前胴中心姿勢角 = RingTarget.軌道中心方位角
+            .後胴中心姿勢角 = RingTargetKodo.軌道中心方位角
+            .前胴中心姿勢角カント補正 = RingTarget.構築中心方位角
+            .後胴中心姿勢角カント補正 = RingTargetKodo.構築中心方位角
+
+            .現中折計算区分 = RgTgNkKodo.現中折計算区分
+            .現姿勢変化率 = RgTgNkKodo.現姿勢変化率
+            .現中折角度 = RgTgNkKodo.現中折角度
+            RgTgNk2.sbCul_Nakaore2()
+            'mdbl平面中折角度 = .中折角度 'HorNakaKodo.現中折角度
+            RingTarget.平面計画方位 = RgTgNk2.基準方位
+        End With
+
+
         NextRingTarget.掘進累積距離 = RingTarget.掘進累積距離 + SegAsmblyData.TypeData(PlcIf.RingNo + 1).CenterWidth
         '01/06/28 修正
         'mdbl平面基準方位 = Hoi2Hoko(mdbl平面計画方位 + PlcIf.水平入力補正値 + clsPlanLine.HorPlan.X軸方位角)
