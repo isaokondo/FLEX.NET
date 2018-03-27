@@ -712,7 +712,7 @@ Partial Class frmSim
         '
         'tmrStrokeSim
         '
-        Me.tmrStrokeSim.Interval = 1000
+        Me.tmrStrokeSim.Enabled = True
         '
         'Label14
         '
