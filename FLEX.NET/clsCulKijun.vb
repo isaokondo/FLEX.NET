@@ -351,9 +351,11 @@ Friend Class clsCulKijun
         End If
 
         'Debug.Print(HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth)
-        RingTarget.掘進累積距離 = HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
-        Dim RingTargetKodo As New clsLineMake
-        RingTargetKodo.掘進累積距離 = HorKodoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
+        RingTarget.掘進累積距離 =
+            HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
+        Dim RingTargetKodo As New clsLineMake '中折演算用
+        RingTargetKodo.掘進累積距離 =
+            HorKodoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth
 
         Dim RgTgNkKodo As New clsCulNakaore1
         With RgTgNkKodo
@@ -370,8 +372,6 @@ Friend Class clsCulKijun
         Dim RgTgNk2 As New clsCulNakaore2
         '中折れ計算2（構築中心の方向角で検討）
         With RgTgNk2
-
-            ''以下　追加　 01.06.25 by Isao Kondo
             .前胴中心姿勢角 = RingTarget.軌道中心方位角
             .後胴中心姿勢角 = RingTargetKodo.軌道中心方位角
             .前胴中心姿勢角カント補正 = RingTarget.構築中心方位角
@@ -385,8 +385,36 @@ Friend Class clsCulKijun
             RingTarget.平面計画方位 = RgTgNk2.基準方位
         End With
 
-
+        '次リングの目標値算出
         NextRingTarget.掘進累積距離 = RingTarget.掘進累積距離 + SegAsmblyData.TypeData(PlcIf.RingNo + 1).CenterWidth
+        Dim NextRingTargetKodo As New clsLineMake '中折演算用
+        NextRingTargetKodo.掘進累積距離 =
+            RingTargetKodo.掘進累積距離 + SegAsmblyData.TypeData(PlcIf.RingNo + 1).CenterWidth
+
+        With RgTgNkKodo
+            .ZoneNo = NextRingTargetKodo.平面ゾーン番号
+            .ゾーン掘進距離 = NextRingTargetKodo.平面ゾーン掘進距離
+            .ゾーン残距離 = NextRingTargetKodo.平面ゾーン内残距離
+            .sbCulNakaore1(HorPlan)
+        End With
+
+        '中折れ計算2（構築中心の方向角で検討）
+        With RgTgNk2
+            .前胴中心姿勢角 = NextRingTarget.軌道中心方位角
+            .後胴中心姿勢角 = NextRingTargetKodo.軌道中心方位角
+            .前胴中心姿勢角カント補正 = NextRingTarget.構築中心方位角
+            .後胴中心姿勢角カント補正 = NextRingTargetKodo.構築中心方位角
+
+            .現中折計算区分 = RgTgNkKodo.現中折計算区分
+            .現姿勢変化率 = RgTgNkKodo.現姿勢変化率
+            .現中折角度 = RgTgNkKodo.現中折角度
+            RgTgNk2.sbCul_Nakaore2()
+            'mdbl平面中折角度 = .中折角度 'HorNakaKodo.現中折角度
+            NextRingTarget.平面計画方位 = RgTgNk2.基準方位
+        End With
+
+
+
         '01/06/28 修正
         'mdbl平面基準方位 = Hoi2Hoko(mdbl平面計画方位 + PlcIf.水平入力補正値 + clsPlanLine.HorPlan.X軸方位角)
         mdbl平面基準方位 = (mdbl平面計画方位 + CtlPara.水平入力補正値 + HorPlan.X軸方位角)
@@ -936,44 +964,29 @@ Friend Class clsCulKijun
         Private mint現中折計算区分 As Short
         Private mdbl現戻し開始 As Double
 
+        ''' <summary>
+        ''' 後胴基準
+        ''' </summary>
+        Private _KodoKijun As clsLineMake
+
+        Public Property KodoKijun As clsLineMake
+            Get
+                Return _KodoKijun
+            End Get
+            Set(value As clsLineMake)
+                _KodoKijun = value
+                _ZoneNo = _KodoKijun.平面ゾーン番号
 
 
-        'Public WriteOnly Property 線形 As Integer()
-        '    Set(value As Integer())
-        '        mint線形 = CType(value.Clone, Integer())
-        '    End Set
-        'End Property
-        'Public WriteOnly Property 前胴中心 As Double()
-        '    Set(value As Double())
-        '        mdbl前胴中心 = CType(value.Clone, Double())
-        '    End Set
-        'End Property
-        'Public WriteOnly Property 中折 As Integer()
-        '    Set(value As Integer())
-        '        mint中折 = CType(value.Clone, Integer())
-        '    End Set
-        'End Property
-        'Public WriteOnly Property 中折開始 As Double()
-        '    Set(value As Double())
-        '        mdbl中折開始 = CType(value.Clone, Double())
-        '    End Set
-        'End Property
-        'Public WriteOnly Property 戻し開始 As Double()
-        '    Set(value As Double())
-        '        mdbl戻し開始 = CType(value.Clone, Double())
-        '    End Set
-        'End Property
+            End Set
+        End Property
+
 
         Public WriteOnly Property 最大中折角 As Double()
             Set(value As Double())
                 mdbl最大中折角 = CType(value.Clone, Double())
             End Set
         End Property
-        'Public WriteOnly Property 姿勢変化率 As Double()
-        '    Set(value As Double())
-        '        mdbl姿勢変化率 = CType(value.Clone, Double())
-        '    End Set
-        'End Property
 
         Public ReadOnly Property 現戻し開始() As Double
             Get

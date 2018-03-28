@@ -974,6 +974,7 @@
 
             For i As Integer = 0 To Distance Step 10
                 dis.掘進累積距離 = (i + _HorRData.Last.Distance) / 1000
+                'todo:軌道中心方位角でなく平面計画方位を演算　中折演算を加味
                 _HorPData.Add(i, Hoko2Hoi(dis.軌道中心方位角 + HorPlan.X軸方位角))
                 _VerPData.Add(i, dis.鉛直角)
             Next

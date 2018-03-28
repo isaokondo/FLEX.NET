@@ -371,12 +371,14 @@ Public Class clsCalcuStroke
             _MesureCalcLogicalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - CtlPara.StartJackStroke(mjJkNo)
             'End If
         Next
+
+        '掘進モード時は、有効ストローク増加分の平均を加算
+        _mesureCalcAveJackStroke = _aveOffsetJackStroke
+        If AddStroke.Count > 0 Then
+            _mesureCalcAveJackStroke += AddStroke.Average
+        End If
+
         If PlcIf.ExcavMode Then
-            '掘進モード時は、有効ストローク増加分の平均を加算
-            _mesureCalcAveJackStroke = _aveOffsetJackStroke
-            If AddStroke.Count > 0 Then
-                _mesureCalcAveJackStroke += AddStroke.Average
-            End If
             _CalcAveLogicalStroke = _mesureCalcAveJackStroke - CtlPara.StartJackStroke.Values.Average
         Else
             _CalcAveLogicalStroke = SegAsmblyData.RingLastStroke(PlcIf.RingNo) - CtlPara.StartJackStroke.Values.Average
