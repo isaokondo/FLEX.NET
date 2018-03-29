@@ -185,12 +185,12 @@
     Private AveStroke As Integer
 
     Private Sub tmrLineUpdate_Tick(sender As Object, e As EventArgs) Handles tmrLineUpdate.Tick
+        '常時更新するように変更
 
+        'If PlcIf.ExcaStatus = cKussin Then
 
-        If PlcIf.ExcaStatus = cKussin Then
-
-            DspUpdate()
-        End If
+        DspUpdate()
+        'End If
 
     End Sub
 

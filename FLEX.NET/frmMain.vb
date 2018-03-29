@@ -361,7 +361,7 @@
         TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
 
         CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
-        CalcStroke.MesureCalcAveJackStroke = PlcIf.MesureCalcAveJackStroke '平均ジャッキストロークのセット
+        'CalcStroke.MesureCalcAveJackStroke = PlcIf.MesureCalcAveJackStroke '平均ジャッキストロークのセット
 
         'TODO:画面ナロータイプを作成したい
         'If InitPara.DisplayNarrowMode Then

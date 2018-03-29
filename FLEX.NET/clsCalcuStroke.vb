@@ -360,12 +360,12 @@ Public Class clsCalcuStroke
             If _PullBackJack.Contains(mjJkNo) And Not _asembleFinishedJack.Contains(mjJkNo) Then
                 _ExclusionJack.Add(mjJkNo) '計算から除外するジャッキ
             Else
-                If _mesureJackStroke(mjJkNo) - _mesureOffsetJackStroke(mjJkNo) >= 0 Then
-                    '計算するジャッキの伸び分
-                    AddStroke.Add(_mesureJackStroke(mjJkNo) - _mesureOffsetJackStroke(mjJkNo))
+                'If _mesureJackStroke(mjJkNo) - _mesureOffsetJackStroke(mjJkNo) >= 0 Then
+                '計算するジャッキの伸び分
+                AddStroke.Add(_mesureJackStroke(mjJkNo) - _mesureOffsetJackStroke(mjJkNo))
                     '計算するジャッキ速度
                     LstSpeed.Add(_mesureJackSpeed(mjJkNo))
-                End If
+                'End If
             End If
             '    '掘進ストローク 掘進モードのときのみ演算
             _MesureCalcLogicalStroke(mjJkNo) = _mesureCalcJackStroke(mjJkNo) - CtlPara.StartJackStroke(mjJkNo)
