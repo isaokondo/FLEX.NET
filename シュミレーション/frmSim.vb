@@ -859,7 +859,7 @@ CatchError:  '例外処理
         Dim PlcAdr As String = ""
         If e.ColumnIndex = 1 Then
             PlcAdr = SimSet.MesureJackStroke(e.RowIndex)
-            Dim iret = ComPlc.SetDevice(PlcAdr, fnChangeStrokeAnalogIn(DgvJackStroke.CurrentCell.Value))
+            Dim iret = ComPlc.SetDevice(PlcAdr, fnChangeStrokeAnalogOut(DgvJackStroke.CurrentCell.Value))
 
         End If
         If e.ColumnIndex = 2 Then
@@ -870,20 +870,31 @@ CatchError:  '例外処理
         End Sub
 
 
-
+    Private PreTmStTime As DateTime
     Private Sub tmrStrokeSim_Tick(sender As Object, e As EventArgs) Handles tmrStrokeSim.Tick
-        Dim startDt As DateTime = DateTime.Now
+
+        Dim ts As TimeSpan = DateTime.Now - PreTmStTime ' 時間の差分を取得
+        'Console.WriteLine(ts.TotalMilliseconds) ' 経過時間（ミリ秒）
+        Console.WriteLine($"tmrStrokeSim_Tick :{ts.TotalMilliseconds}:NowTIme {Now.ToLongTimeString}:strokeadd(0) {StrokeAdd(0)}")
+
+        PreTmStTime = DateTime.Now
+
 
         For i As Short = 0 To SimSet.MesureJackNo.Count - 1
             '速度がゼロでない時
             If DgvJackStroke.Rows(i).Cells(2).Value <> 0 Then
                 '0.1秒で増加するストローク量
-                StrokeAdd(i) += DgvJackStroke.Rows(i).Cells(2).Value / 600
+                StrokeAdd(i) += DgvJackStroke.Rows(i).Cells(2).Value / 6000 * ts.TotalMilliseconds / 10
 
-                If StrokeAdd(i) > 1 Then
+                Dim StOfAd As Integer = Math.Ceiling(DgvJackStroke.Rows(i).Cells(2).Value / 60)
+
+                If StrokeAdd(i) > StOfAd Then
                     StrokeAdd(i) = 0
                     '1mm加算したストロークを書き込み
-                    Dim Stk As Integer = DgvJackStroke.Rows(i).Cells(1).Value + 1
+                    Dim Stk As Integer = DgvJackStroke.Rows(i).Cells(1).Value + StOfAd
+                    If i = 0 Then
+                        Console.WriteLine(Stk)
+                    End If
                     If Stk < SimSet.StrokeEngScale Then
                         Dim iret = ComPlc.SetDevice(SimSet.MesureJackStroke(i), fnChangeStrokeAnalogOut(Stk))
                     End If
@@ -894,12 +905,11 @@ CatchError:  '例外処理
 
         Next
 
-        Dim endDt As DateTime = DateTime.Now
 
-        Dim ts As TimeSpan = endDt - startDt ' 時間の差分を取得
-        Console.WriteLine(ts.TotalMilliseconds) ' 経過時間（ミリ秒）
-        Console.WriteLine($"tmrStrokeSim_Tick :{ts.TotalMilliseconds}:{tmrStrokeSim.Interval}:NowTIme {Now.ToLongTimeString}")
 
+    End Sub
+
+    Private Sub DgvJackStroke_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvJackStroke.CellContentClick
 
     End Sub
 End Class

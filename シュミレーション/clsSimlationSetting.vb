@@ -63,7 +63,7 @@ Public Class clsSimlationSetting
                 Case "LeftStrokeAdr"
                     _LeftStrokeAdr = t("値")
                 Case "RightStrokeAdr"
-                    _RightStrokeAdr = t("値")
+                    RightStrokeAdr = t("値")
                 Case "JkPresAdr"
                     _JkPresAdr = t("値")
                 Case "GpPresPV"
