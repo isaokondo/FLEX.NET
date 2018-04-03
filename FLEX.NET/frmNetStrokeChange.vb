@@ -20,13 +20,14 @@
         '現リングのセグメント幅
         ThisRingSegmentW = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
         '前リングのセグメント幅
-        PreRingSegmentW = SegAsmblyData.TypeData(PlcIf.RingNo - 1).CenterWidth * 100
+        PreRingSegmentW = SegAsmblyData.TypeData(PlcIf.RingNo - 1).CenterWidth * 1000
 
         If ThisRingSegmentW <> PreRingSegmentW Then
             lblText.Text =
-            $"このリングのセグメント幅が{PreRingSegmentW}mmから{ThisRingSegmentW}mmに{vbCrLf}変更になります。{vbCrLf}推進量が異なる場合は、変更してください。"
+            $"{PlcIf.RingNo}リングのセグメント幅が{PreRingSegmentW}mmから{ThisRingSegmentW}mmに{vbCrLf}変更になります。{vbCrLf}推進量が異なる場合は、変更してください。"
         Else
-            lblText.Visible = False
+            lblText.Text =
+           $"{vbCrLf}目標推進量が異なる場合は、変更してください。"
         End If
 
 

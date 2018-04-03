@@ -677,7 +677,7 @@
         My.Forms.frmHorPlanData.Show()
     End Sub
 
-    Private Sub SegmentEdit_Click(sender As Object, e As EventArgs) Handles SegmentEdit.Click
+    Private Sub SegmentEdit_Click(sender As Object, e As EventArgs) Handles SegmentEdit.Click, DspSegmentW.DoubleClick
         My.Forms.frmSegmentEdit.Show()
 
     End Sub
@@ -1346,7 +1346,7 @@
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub NetStrokeChange_Click(sender As Object, e As EventArgs) Handles NetStrokeChange.Click, DspRingTargetDir.DoubleClick
+    Private Sub NetStrokeChange_Click(sender As Object, e As EventArgs) Handles NetStrokeChange.Click, DspTargetNetStroke.DoubleClick, DspRingTargetDir.DoubleClick
         frmNetStrokeChange.Show()
     End Sub
 End Class

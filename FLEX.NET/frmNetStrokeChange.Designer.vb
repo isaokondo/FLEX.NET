@@ -44,7 +44,7 @@ Partial Class frmNetStrokeChange
         Me.NetStrokeEdt.Increment = 1.0!
         Me.NetStrokeEdt.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.NetStrokeEdt.Location = New System.Drawing.Point(89, 91)
-        Me.NetStrokeEdt.Margin = New System.Windows.Forms.Padding(7, 7, 7, 7)
+        Me.NetStrokeEdt.Margin = New System.Windows.Forms.Padding(7)
         Me.NetStrokeEdt.MaxValue = "10000"
         Me.NetStrokeEdt.MinValue = "0"
         Me.NetStrokeEdt.Name = "NetStrokeEdt"
@@ -74,7 +74,7 @@ Partial Class frmNetStrokeChange
         Me.Controls.Add(Me.lblText)
         Me.Controls.Add(Me.NetStrokeEdt)
         Me.Name = "frmNetStrokeChange"
-        Me.Text = "推進量の変更"
+        Me.Text = "目標推進量の変更"
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.NetStrokeEdt, 0)

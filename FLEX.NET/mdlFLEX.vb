@@ -694,6 +694,9 @@ Module mdlFLEX
         If InitPara.ServerMode Then
             Dim Colorlng As Long = ColorTranslator.ToOle(EventColor)
             'Color.Whiteは、メイン画面には非表示とする
+            '文字数の制限
+            EventMsg = EventMsg.Replace("'", "")
+            If Len(EventMsg) > 100 Then EventMsg = EventMsg.Substring(0, 100)
             Dim db As New clsDataBase
 
             db.ExecuteSqlCmd _

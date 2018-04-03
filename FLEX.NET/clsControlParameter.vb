@@ -1050,8 +1050,8 @@ Public Class clsControlParameter
                 'tb.Close()
             Next
             '平均開始ストロークの算出
-            '_StartAveJackStroke =
-            '    (From i In _StartJackStroke Where Not _ExceptMesureJackNo.Contains(i.Key) Select (i.Value)).Average
+            _StartAveJackStroke =
+                (From i In _StartJackStroke Where Not _ExceptMesureJackNo.Contains(i.Key) Select (i.Value)).Average
         End Set
     End Property
 

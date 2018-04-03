@@ -1244,7 +1244,7 @@ Public Class clsPlcIf
                     _RingNo = GetAnalogData("RingNo", ParameterTag)
                     If rno <> _RingNo Then
                         If _excaStatus = cTaiki Then
-                            RaiseEvent ExcavationStatusChange(0, cTaiki)
+                            RaiseEvent ExcavationStatusChange(-1, cTaiki)
 
                         Else
                             RaiseEvent ExcavationStatusChange(0, 0)
