@@ -111,6 +111,9 @@ Public Class clsControlParameter
 
     Private _RightStrokeDiff As Boolean = True    'ストローク差　右勝ちでTRUE　左勝ちでFLASE
 
+
+    Private _TargetNetStroke As Integer = 0   'ネットストローク　セグメント幅が変更になった時にリング目標値を開始よりこの値を距離を目標に
+
     ''' <summary>
     ''' パラメータに対応するPLCアドレスのハッシュテーブル
     ''' </summary>
@@ -460,6 +463,24 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+
+    ''' <summary>
+    ''' 'ネットストローク　セグメント幅が変更になった時に
+    ''' リング目標値を開始よりこの値を距離を目標に
+    ''' </summary>
+    ''' <returns>単位mm</returns>
+    Public Property TargetNetStroke As Integer
+        Get
+            Return _TargetNetStroke
+        End Get
+        Set(value As Integer)
+            _TargetNetStroke = value
+            Call sbUpdateData(value)
+            RaiseEvent ReferChnge()
+        End Set
+    End Property
+
+
 
 
     'Public Property 偏差角許容値() As Single
@@ -1142,6 +1163,8 @@ Public Class clsControlParameter
         _PitchingSel = chk.GetValue("PitchingSel")
 
         _RightStrokeDiff = fnBoolean(chk.GetValue("RightStrokeDiff", "True"))
+
+        _TargetNetStroke = chk.GetValue("TargetNetStroke", 0)
 
         Dim Value As Boolean = fnBoolean(chk.GetValue("AutoDirectionControl"))
         If _AutoDirectionControl <> Value Then

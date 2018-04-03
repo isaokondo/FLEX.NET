@@ -53,6 +53,7 @@ Public Class clsSimlationSetting
 
     Public ReadOnly Property LoszeroStart As String
 
+    Public ReadOnly Property MachineComPls As String
 
     Public Sub New()
         Dim DB As New clsDataBase
@@ -136,6 +137,10 @@ Public Class clsSimlationSetting
 
                 Case "LoszeroStart"
                     _LoszeroStart = t("値")
+
+                Case "MachineComPls"
+                    _MachineComPls = t("値")
+
             End Select
             '計測ジャッキの取込
             If t("項目").ToString.IndexOf("MesureJackStroke") >= 0 Then

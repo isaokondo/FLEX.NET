@@ -55,6 +55,10 @@ Public Class clsCalcuStroke
     ''' </summary>
     Private _ExclusionJack As New List(Of Short)
 
+    ''' <summary>
+    ''' 引きジャッキの計測ｼﾞｬｯｷの対抗ｼﾞｬｯｷ
+    ''' </summary>
+    Private _ExclusionOpposeJack As New List(Of Short)
 
     ''' <summary>
     ''' 後胴部ローリング
@@ -164,6 +168,16 @@ Public Class clsCalcuStroke
             Return _ExclusionJack
         End Get
     End Property
+    ''' <summary>
+    ''' 引きジャッキの計測ｼﾞｬｯｷの対抗ｼﾞｬｯｷ
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ExclusionOpposeJack As List(Of Short)
+        Get
+            Return _ExclusionOpposeJack
+        End Get
+    End Property
+
 
 
     ''' <summary>
@@ -200,6 +214,11 @@ Public Class clsCalcuStroke
                 If _ExclusionJack.Contains(j) Then
                     st = "組立中"
                 End If
+                If _ExclusionOpposeJack.Contains(j) Then
+                    st = "対抗ジャッキ"
+                End If
+
+
                 jk.Add(j, st)
             Next
 
@@ -217,6 +236,8 @@ Public Class clsCalcuStroke
         End Get
         Set(value As List(Of Short))
             _asembleFinishedJack.AddRange(value)
+            GetOffsetStroke() 'オフセットストロークの算出
+
         End Set
     End Property
     ''' <summary>
@@ -229,7 +250,7 @@ Public Class clsCalcuStroke
         End Get
         Set(value As List(Of Short))
             _PullBackJack.AddRange(value)
-            GetOffsetStroke() 'オフセットストロークの算出
+            'GetOffsetStroke() 'オフセットストロークの算出
         End Set
     End Property
 
@@ -333,6 +354,32 @@ Public Class clsCalcuStroke
 
     End Sub
 
+    ''' <summary>
+    ''' 対抗の計測ジャッキ番号を求める
+    ''' </summary>
+    ''' <param name="JkNo"></param>
+    ''' <returns></returns>
+    Private Function GetOpsiJk(JkNo As Short) As Short
+
+        Dim TrAngle As Single = InitPara.MesureJackAngle(JkNo) + 180
+        If TrAngle > 380 Then TrAngle -= 360
+
+        For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
+
+            If InitPara.MesureJackAngle(mjJkNo) > TrAngle - 10 And InitPara.MesureJackAngle(mjJkNo) < TrAngle + 10 Then
+                Return mjJkNo
+            End If
+
+        Next
+
+        Return Nothing
+
+
+
+    End Function
+
+
+
 
 
     ''' <summary>
@@ -340,6 +387,18 @@ Public Class clsCalcuStroke
     ''' </summary>
     Public Sub Calc2()
         _ExclusionJack.Clear()
+        _ExclusionOpposeJack.Clear()
+
+        '除外ジャッキの算出
+        For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
+            If _PullBackJack.Contains(mjJkNo) And Not _asembleFinishedJack.Contains(mjJkNo) Then
+                _ExclusionJack.Add(mjJkNo) '計算から除外するジャッキ
+                If CtlPara.LosZeroOpposeJackExcept Then
+                    _ExclusionOpposeJack.Add(GetOpsiJk(mjJkNo)) '対抗する計測ジャッキ
+                End If
+            End If
+        Next
+
         '各ストロークの伸び分
         Dim AddStroke As New List(Of Integer)
         Dim LstSpeed As New List(Of Integer)
@@ -357,14 +416,17 @@ Public Class clsCalcuStroke
                     / 180 * Math.PI)
             End If
 
-            If _PullBackJack.Contains(mjJkNo) And Not _asembleFinishedJack.Contains(mjJkNo) Then
-                _ExclusionJack.Add(mjJkNo) '計算から除外するジャッキ
-            Else
-                'If _mesureJackStroke(mjJkNo) - _mesureOffsetJackStroke(mjJkNo) >= 0 Then
+            If Not _ExclusionOpposeJack.Contains(mjJkNo) And Not _ExclusionJack.Contains(mjJkNo) Then
+                '    _ExclusionJack.Add(mjJkNo) '計算から除外するジャッキ
+                '    If CtlPara.LosZeroOpposeJackExcept Then
+                '        _ExclusionJack.Add(GetOpsiJk(mjJkNo))
+                '    End If
+                'Else
+                '    'If _mesureJackStroke(mjJkNo) - _mesureOffsetJackStroke(mjJkNo) >= 0 Then
                 '計算するジャッキの伸び分
                 AddStroke.Add(_mesureJackStroke(mjJkNo) - _mesureOffsetJackStroke(mjJkNo))
-                    '計算するジャッキ速度
-                    LstSpeed.Add(_mesureJackSpeed(mjJkNo))
+                '計算するジャッキ速度
+                LstSpeed.Add(_mesureJackSpeed(mjJkNo))
                 'End If
             End If
             '    '掘進ストローク 掘進モードのときのみ演算

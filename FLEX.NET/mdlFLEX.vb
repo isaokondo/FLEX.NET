@@ -159,7 +159,7 @@ Module mdlFLEX
         CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
 
         'If PreStatus = -1 Then Exit Sub
-        '待機中から掘進
+        '待機中から掘進-----------------------------------------------------------
         If PreStatus = cTaiki And NowStatus = cKussin Then
             PlcIf.SppedRate = 100
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
@@ -182,7 +182,7 @@ Module mdlFLEX
 
 
         End If
-        '中断
+        '中断-----------------------------------------------------------
         If NowStatus = cChudan Then
             'JackManual.ManualOn = False
             WriteEventData("掘進中断しました", Color.Black)
@@ -194,13 +194,19 @@ Module mdlFLEX
 
         End If
 
-        '待機中
+        '待機中-----------------------------------------------------------
         If NowStatus = cTaiki Then
 
             '自動印字　出力
             ReportAutoPrintOut()
             'ロスゼロの実績算出
             LosZeroPerform.Caluc()
+            'サーバーモードで前リングと100mm以上異なる場合
+            CtlPara.TargetNetStroke = 0
+            If InitPara.ServerMode AndAlso
+                Math.Abs(SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth - SegAsmblyData.TypeData(PlcIf.RingNo - 1).CenterWidth) > 0.1 Then
+                frmNetStrokeChange.Show() '推進量の変更
+            End If
 
             LosZeroSts = 0
             If PreStatus <> -1 Then
@@ -219,8 +225,10 @@ Module mdlFLEX
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
 
             'データのバックアップ
-            Dim RingDataBackUp As New clsDBBackUp
-            RingDataBackUp.RingIntervalBakUp()
+            If InitPara.ServerMode Then
+                Dim RingDataBackUp As New clsDBBackUp
+                RingDataBackUp.RingIntervalBakUp()
+            End If
 
 
 
@@ -326,7 +334,7 @@ Module mdlFLEX
                     With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
                         '減圧グループ
                         WriteEventData($"{PlcIf.AssemblyPieceNo}ピース目 { .ReduceGroup.ToCommaDelmit}グループの減圧開始します。", Color.Blue)
-                        If CtlPara.LosZeroOpposeJack And .OpposeGroup.Count <> 0 Then
+                        If CtlPara.LosZeroOpposeJack AndAlso .OpposeGroup.Count <> 0 Then
                             '対抗グループ
                             WriteEventData($"{ .OpposeGroup.ToCommaDelmit}グループを対抗グループとします。", Color.Blue)
                         End If

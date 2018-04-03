@@ -1235,8 +1235,8 @@ Public Class clsDBBackUp
                             ftpUpload(sqlPath1)
 
                         Catch ex As Exception
-                            WriteEventData($"RingIntervalBakUpError:{System.Net.Dns.GetHostName()}　{ex.ToString}", Color.White)
-
+                            WriteEventData($"RingIntervalBakUpError", Color.White)
+                            WriteEventData($":{ex.ToString}", Color.White)
                         End Try
                     End If
 

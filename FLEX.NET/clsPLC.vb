@@ -961,6 +961,12 @@ Public Class clsPlcIf
                 LosZeroSts_FLEX = 2
             End If
 
+            If _excaStatus <> cTaiki Then
+                _MesureCalcAveJackStroke = AnalogPlcRead("平均ジャッキストローク")
+            End If
+
+
+
         End If
 
         'スピード割合初期値（100%)書き込み
@@ -1237,7 +1243,14 @@ Public Class clsPlcIf
                     Dim rno As Integer = _RingNo
                     _RingNo = GetAnalogData("RingNo", ParameterTag)
                     If rno <> _RingNo Then
-                        RaiseEvent ExcavationStatusChange(0, 0)
+                        If _excaStatus = cTaiki Then
+                            RaiseEvent ExcavationStatusChange(0, cTaiki)
+
+                        Else
+                            RaiseEvent ExcavationStatusChange(0, 0)
+                        End If
+
+
                         RaiseEvent LineDistanceChage()
 
                     End If

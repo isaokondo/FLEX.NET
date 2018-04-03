@@ -31,6 +31,7 @@ Public Class frmSim
     ''' </summary>
     Private StrokeAdd() As Single
 
+    Private PlsSts As Boolean
 
     Public Sub New()
 
@@ -429,6 +430,14 @@ Public Class frmSim
 
 
         End If
+
+        'マシン通信パルス出力
+        If Not IsNothing(SimSet.MachineComPls) Then
+            iRet = ComPlc.SetDevice(SimSet.MachineComPls, PlsSts)
+            PlsSts = Not PlsSts
+        End If
+
+
         Dim endDt As DateTime = DateTime.Now
 
         Dim ts As TimeSpan = endDt - startDt ' 時間の差分を取得
@@ -599,7 +608,7 @@ Public Class frmSim
     Private Sub nud_ValueChanged(sender As Object, e As EventArgs) _
         Handles nudRightSpeed.ValueChanged, nudLeftSpeed.ValueChanged, nudPitching.ValueChanged,
         nudLosZeroStsFlex.ValueChanged, nudLosZeroStatusMachin.ValueChanged, nudMachinePitching.ValueChanged, nudSoucePressure.ValueChanged,
-        nudLeftStroke.LostFocus, nudRightStroke.LostFocus
+        nudLeftStroke.Click, nudLeftStroke.Enter, nudLeftStroke.KeyPress, nudRightStroke.Click
 
         Dim FieldName As String = New StackFrame(1).GetMethod.Name
 
@@ -910,6 +919,10 @@ CatchError:  '例外処理
     End Sub
 
     Private Sub DgvJackStroke_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvJackStroke.CellContentClick
+
+    End Sub
+
+    Private Sub nudLeftStroke_ValueChanged(sender As Object, e As EventArgs) Handles nudLeftStroke.ValueChanged
 
     End Sub
 End Class

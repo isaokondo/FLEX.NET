@@ -29,6 +29,7 @@ Partial Class frmMain
         Me.ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RingNoChange = New System.Windows.Forms.ToolStripMenuItem()
         Me.RingNoUpdateSetting = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NetStrokeChange = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ReportOut = New System.Windows.Forms.ToolStripMenuItem()
         Me.RingDataViewer = New System.Windows.Forms.ToolStripMenuItem()
@@ -124,6 +125,8 @@ Partial Class frmMain
         Me.DspFlexAuto = New FLEX.NET.ucnDspBit()
         Me.DspFlexControlOn = New FLEX.NET.ucnDspBit()
         Me.DspExcaWaiting = New FLEX.NET.ucnDspBit()
+        Me.DspTargetNetStroke = New FLEX.NET.ucnDspData()
+        Me.DspSegmentW = New FLEX.NET.ucnDspData()
         Me.DspSumLoszeroTime = New FLEX.NET.ucnDspData()
         Me.DspAveLoszeroTime = New FLEX.NET.ucnDspData()
         Me.DspSumAsmPiece = New FLEX.NET.ucnDspData()
@@ -203,7 +206,7 @@ Partial Class frmMain
         '
         'ToolStripMenuItem
         '
-        Me.ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RingNoChange, Me.RingNoUpdateSetting, Me.ToolStripMenuItem1, Me.ReportOut, Me.RingDataViewer, Me.ToolStripMenuItem2, Me.ExcavEnforceStart, Me.ExcavEnforceStop, Me.ToolStripMenuItem3, Me.SystemEnd})
+        Me.ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RingNoChange, Me.RingNoUpdateSetting, Me.NetStrokeChange, Me.ToolStripMenuItem1, Me.ReportOut, Me.RingDataViewer, Me.ToolStripMenuItem2, Me.ExcavEnforceStart, Me.ExcavEnforceStop, Me.ToolStripMenuItem3, Me.SystemEnd})
         Me.ToolStripMenuItem.Name = "ToolStripMenuItem"
         Me.ToolStripMenuItem.Size = New System.Drawing.Size(70, 20)
         Me.ToolStripMenuItem.Text = "システム(&S)"
@@ -219,6 +222,13 @@ Partial Class frmMain
         Me.RingNoUpdateSetting.Name = "RingNoUpdateSetting"
         Me.RingNoUpdateSetting.Size = New System.Drawing.Size(183, 22)
         Me.RingNoUpdateSetting.Text = "リング番号更新設定(&U)"
+        '
+        'NetStrokeChange
+        '
+        Me.NetStrokeChange.Name = "NetStrokeChange"
+        Me.NetStrokeChange.Size = New System.Drawing.Size(183, 22)
+        Me.NetStrokeChange.Text = "推進量の変更"
+        Me.NetStrokeChange.ToolTipText = "リング目標方向角の距離変更"
         '
         'ToolStripMenuItem1
         '
@@ -431,6 +441,8 @@ Partial Class frmMain
         '
         Me.Panel1.BackColor = System.Drawing.Color.Silver
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.DspTargetNetStroke)
+        Me.Panel1.Controls.Add(Me.DspSegmentW)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.DspSumLoszeroTime)
         Me.Panel1.Controls.Add(Me.DspAveLoszeroTime)
@@ -481,7 +493,7 @@ Partial Class frmMain
         Me.lblUnit.Location = New System.Drawing.Point(115, 12)
         Me.lblUnit.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblUnit.Name = "lblUnit"
-        Me.lblUnit.Size = New System.Drawing.Size(74, 26)
+        Me.lblUnit.Size = New System.Drawing.Size(64, 26)
         Me.lblUnit.TabIndex = 120
         Me.lblUnit.Text = "リング"
         Me.lblUnit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -1353,6 +1365,48 @@ Partial Class frmMain
         Me.DspExcaWaiting.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.DspExcaWaiting.Size = New System.Drawing.Size(185, 30)
         Me.DspExcaWaiting.TabIndex = 65
+        '
+        'DspTargetNetStroke
+        '
+        Me.DspTargetNetStroke.BackColor = System.Drawing.Color.Transparent
+        Me.DspTargetNetStroke.Blink = False
+        Me.DspTargetNetStroke.BlinkColor = System.Drawing.Color.Red
+        Me.DspTargetNetStroke.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspTargetNetStroke.DataWidth = 70
+        Me.DspTargetNetStroke.DecimalPlaces = CType(0, Short)
+        Me.DspTargetNetStroke.FieldName = "目標推進量(mm)"
+        Me.DspTargetNetStroke.FieldNameWidth = 120
+        Me.DspTargetNetStroke.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspTargetNetStroke.Location = New System.Drawing.Point(380, 11)
+        Me.DspTargetNetStroke.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspTargetNetStroke.Name = "DspTargetNetStroke"
+        Me.DspTargetNetStroke.Size = New System.Drawing.Size(189, 32)
+        Me.DspTargetNetStroke.TabIndex = 136
+        Me.DspTargetNetStroke.Unit = "deg"
+        Me.DspTargetNetStroke.UnitVisible = False
+        Me.DspTargetNetStroke.Value = "1200"
+        Me.DspTargetNetStroke.ValueType = False
+        '
+        'DspSegmentW
+        '
+        Me.DspSegmentW.BackColor = System.Drawing.Color.Transparent
+        Me.DspSegmentW.Blink = False
+        Me.DspSegmentW.BlinkColor = System.Drawing.Color.Red
+        Me.DspSegmentW.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspSegmentW.DataWidth = 70
+        Me.DspSegmentW.DecimalPlaces = CType(0, Short)
+        Me.DspSegmentW.FieldName = "ｾｸﾞﾒﾝﾄ幅(mm)"
+        Me.DspSegmentW.FieldNameWidth = 120
+        Me.DspSegmentW.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspSegmentW.Location = New System.Drawing.Point(184, 11)
+        Me.DspSegmentW.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspSegmentW.Name = "DspSegmentW"
+        Me.DspSegmentW.Size = New System.Drawing.Size(198, 32)
+        Me.DspSegmentW.TabIndex = 135
+        Me.DspSegmentW.Unit = "deg"
+        Me.DspSegmentW.UnitVisible = False
+        Me.DspSegmentW.Value = "1200"
+        Me.DspSegmentW.ValueType = False
         '
         'DspSumLoszeroTime
         '
@@ -2780,6 +2834,9 @@ Partial Class frmMain
     Friend WithEvents DspWideUse12 As ucnDspData
     Friend WithEvents DspGyiroError As ucnDspBit
     Friend WithEvents DspInterruptTime As ucnDspData
+    Friend WithEvents NetStrokeChange As ToolStripMenuItem
+    Friend WithEvents DspTargetNetStroke As ucnDspData
+    Friend WithEvents DspSegmentW As ucnDspData
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

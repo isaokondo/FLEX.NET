@@ -285,6 +285,10 @@
             End If
         Next
 
+        DspSegmentW.Value = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+        DspTargetNetStroke.Value = If(CtlPara.TargetNetStroke = 0, DspSegmentW.Value, CtlPara.TargetNetStroke)
+
+
         '経過時間の表示
         DspExcationElapsedTime.Value = ElapsedTime.ExcavationTime
         DspLosZeroElapsedTime.Value = ElapsedTime.LozeroExcavationTime
@@ -308,7 +312,7 @@
         End If
 
         '定期バックアップの実行
-        If Date.Compare(Now.Date, BackUpDate.Date) <> 0 AndAlso
+        If InitPara.ServerMode AndAlso Date.Compare(Now.Date, BackUpDate.Date) <> 0 AndAlso
             TimeSpan.Parse(Now.ToLongTimeString).TotalMinutes = InitPara.BackUpTime.TotalMinutes Then
             BackUpDate = Now
             Dim DailyBackup = New clsDBBackUp
@@ -1283,9 +1287,12 @@
             CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
             'セグメント幅
             CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+            '引き戻し中から押込み中の間は引き戻しｼﾞｬｯｷをセット
+            If PlcIf.LosZeroSts_M >= 2 And PlcIf.LosZeroSts_M <= 4 Then
+                CalcStroke.PullBackJack = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).PullBackJack
+            End If
 
             For Pieace As Short = 1 To PlcIf.AssemblyPieceNo
-                CalcStroke.PullBackJack = SegAsmblyData.ProcessData(Pieace).PullBackJack
                 If Pieace < PlcIf.AssemblyPieceNo Or (Pieace = PlcIf.AssemblyPieceNo And PlcIf.LosZeroSts_M = 5) Then
                     CalcStroke.asembleFinishedJack = SegAsmblyData.ProcessData(Pieace).ClosetJack
                     CalcStroke.asembleFinishedJack = SegAsmblyData.ProcessData(Pieace).AddClosetJack
@@ -1328,5 +1335,18 @@
 
     Private Sub DspExcationElapsedTime_Load(sender As Object, e As EventArgs) Handles DspExcationElapsedTime.Load
 
+    End Sub
+
+    Private Sub DspRingTargetDir_Load(sender As Object, e As EventArgs) Handles DspRingTargetDir.Load
+
+    End Sub
+
+    ''' <summary>
+    ''' 目標推進量の入力
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub NetStrokeChange_Click(sender As Object, e As EventArgs) Handles NetStrokeChange.Click, DspRingTargetDir.DoubleClick
+        frmNetStrokeChange.Show()
     End Sub
 End Class
