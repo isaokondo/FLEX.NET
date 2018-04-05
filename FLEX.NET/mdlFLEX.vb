@@ -303,6 +303,7 @@ Module mdlFLEX
                         '計算ストローク用に組立ジャッキの設定
                         CalcStroke.asembleFinishedJack = .ClosetJack '押込みジャッキ
                         CalcStroke.asembleFinishedJack = .AddClosetJack '追加押込ジャッキ
+                        CalcStroke.SetOffsetStroke() 'オフセットストロークの算出
 
                         PlcIf.SppedRate += (.ClosetJack.Count + .AddClosetJack.Count) / InitPara.NumberJack * 100
 
@@ -614,16 +615,16 @@ Module mdlFLEX
     Private Sub GroupSvOut()
 
         Dim GpFlg(InitPara.NumberGroup - 1) As Short
-        Dim GpSV() As Single
-
-        GpSV = PlcIf.GroupSV.Clone
+        '圧力設定値
+        Dim GpSV() As Single = PlcIf.GroupSV.Clone
+        Dim GpMv() As Single = PlcIf.GroupMV.Clone
 
 
         Select Case PlcIf.ExcaStatus
 
             Case cKussin
 
-                If CtlPara.圧力制御開始推力値有効フラグ AndAlso CtlPara.圧力制御開始推力値 > CulcMoment.Thrust AndAlso GpSV.Sum <> 0 Then
+                If CtlPara.圧力制御開始推力値有効フラグ AndAlso CtlPara.圧力制御開始推力値 > CulcMoment.Thrust AndAlso GpSV.Sum <> 0 And GpMv.Min <> 0 Then
                     For i As Short = 0 To InitPara.NumberGroup - 1
                         GpFlg(i) = cIgnoreOut
                     Next

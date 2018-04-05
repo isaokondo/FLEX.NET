@@ -16,6 +16,8 @@ Public Class frmCalcStrokeConfirm
         For Each i In InitPara.MesureJackAngle
             DgvJackStroke.Rows.Add(i.Key, 0, 0, 0, 0, 0, i.Value, "", Not CtlPara.ExceptMesureJackNo.Contains(i.Key))
         Next
+
+        OpposeJackExcep.Visible = InitPara.LosZeroEquip 'ロスゼロのときのみ表示
         OpposeJackExcep.rdbtnValue = CtlPara.LosZeroOpposeJackExcept
     End Sub
 

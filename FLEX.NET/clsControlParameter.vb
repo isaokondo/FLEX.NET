@@ -97,6 +97,10 @@ Public Class clsControlParameter
 
     Private _LosZeroOpposeJackExcept As Boolean  '平均ジャッキストロークで引きストロークの対抗ジャッキのストロークを除外する
 
+    Private _aveOffsetJackStroke As Single '計算平均ジャッキオフセットストローク
+
+    Private _mesureOffsetJackStroke As New Dictionary(Of Short, Integer) '計測ジャッキオフセットストローク
+
 
     Private _ReduceTime As Integer '減圧時間（単位：SEC）
     Private _ReduceJudgePress As Single '減圧完了判断圧力(Mpa)
@@ -1084,6 +1088,56 @@ Public Class clsControlParameter
         End Set
     End Property
 
+    ''' <summary>
+    ''' 計算平均ジャッキオフセットストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property aveOffsetJackStroke As Integer
+        Get
+            Return _aveOffsetJackStroke
+        End Get
+        Set(value As Integer)
+            _aveOffsetJackStroke = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+    ''' <summary>
+    ''' 計測ジャッキオフセットストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property mesureOffsetJackStroke As Dictionary(Of Short, Integer)
+        Get
+            _mesureOffsetJackStroke = New Dictionary(Of Short, Integer)
+
+            Dim OffsetJk As DataTable =
+            GetDtfmSQL($"SELECT * FROM FLEX制御パラメータ  WHERE 項目名称 LIKE 'mesureOffsetJackStroke%'")
+            If OffsetJk.Rows.Count = 0 Then
+                For Each JkNo As Short In InitPara.MesureJackAngle.Keys
+                    _mesureOffsetJackStroke.Add(JkNo, 0)
+                Next
+            Else
+                For Each t As DataRow In OffsetJk.Rows
+                    _mesureOffsetJackStroke.Add(t.Item("項目名称").ToString.Replace("mesureOffsetJackStroke", ""), t.Item("値"))
+                Next
+            End If
+            Return _mesureOffsetJackStroke
+        End Get
+
+        Set(value As Dictionary(Of Short, Integer))
+            _mesureOffsetJackStroke = value
+            'Call sbUpdateData(value.ToString)
+            If InitPara.ServerMode Then
+                ExecuteSqlCmd("DELETE FROM FLEX制御パラメータ WHERE `項目名称` LIKE 'mesureOffsetJackStroke%'")
+                For Each fds As KeyValuePair(Of Short, Integer) In _mesureOffsetJackStroke
+                    ExecuteSqlCmd($"INSERT INTO FLEX制御パラメータ (`項目名称`,`値`) VALUES ('mesureOffsetJackStroke{fds.Key}','{fds.Value}') ")
+                Next
+            End If
+        End Set
+    End Property
+
+
+
 
     Public Sub WideUseUpdate(iKey As Short, value As String)
         _wideUse.Item(iKey) = value
@@ -1206,6 +1260,8 @@ Public Class clsControlParameter
         _PIDShiftDefl = chk.GetValue("PIDShiftDefl")
         _DirectControl = fnBoolean(chk.GetValue("DirectControl"))
         _ReduceReachStrokeDiff = chk.GetValue("ReduceReachStrokeDiff", 0)
+
+        _aveOffsetJackStroke = chk.GetValue("aveOffsetJackStroke", 0)
 
         _CopyCutEnableStroke = chk.GetValue("CopyCutEnableStroke")
         _CopySelect = chk.GetValue("CopySelect")

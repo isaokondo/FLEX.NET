@@ -1261,7 +1261,7 @@
 
         'ロスゼロ実績
         LosZeroPerform.Caluc()
-
+        'ロスゼロで掘進途中に立ち上げたときのストローク処理
         StrokeSet()
 
         '計算ストローク演算
@@ -1296,11 +1296,12 @@
                 If Pieace < PlcIf.AssemblyPieceNo Or (Pieace = PlcIf.AssemblyPieceNo And PlcIf.LosZeroSts_M = 5) Then
                     CalcStroke.asembleFinishedJack = SegAsmblyData.ProcessData(Pieace).ClosetJack
                     CalcStroke.asembleFinishedJack = SegAsmblyData.ProcessData(Pieace).AddClosetJack
+                    'CalcStroke.MesureCalcAveJackStroke = PlcIf.MesureCalcAveJackStroke
                 End If
-
-
-
             Next
+            '計測ジャッキオフセットストロークの読込
+            CalcStroke.mesureOffsetJackStroke = CtlPara.mesureOffsetJackStroke
+
         End If
 
     End Sub
@@ -1312,9 +1313,13 @@
     ''' パラメータのチェック
     ''' </summary>
     Private Sub ParameterCheck()
-        If PlcIf.減圧弁制御P定数 = 0 Or PlcIf.減圧弁制御I定数 = 0 Or PlcIf.DirectControlCoefficient = 0 Then
-            frmPressParameterSet.Show()
 
+        If PlcIf.DirectControlCoefficient = 0 Then
+            PlcIf.DirectControlCoefficient = 1
+        End If
+
+        If PlcIf.減圧弁制御P定数 = 0 Or PlcIf.減圧弁制御I定数 = 0 Then
+            frmPressParameterSet.Show()
         End If
     End Sub
 

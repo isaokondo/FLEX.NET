@@ -68,7 +68,7 @@ Public Class clsPlcIf
 
     Private _gyiroError As Boolean ''ジャイロエラー
 
-    Private _MesureCalcAveJackStroke As Integer
+    Private _MesureCalcAveJackStroke As Single
 
     'Private _mint元圧フィルタ係数 As Integer
 
@@ -621,11 +621,11 @@ Public Class clsPlcIf
         End Get
     End Property
 
-    Public Property MesureCalcAveJackStroke As Integer
+    Public Property MesureCalcAveJackStroke As Single
         Get
             Return _MesureCalcAveJackStroke
         End Get
-        Set(value As Integer)
+        Set(value As Single)
             _MesureCalcAveJackStroke = value
 
         End Set

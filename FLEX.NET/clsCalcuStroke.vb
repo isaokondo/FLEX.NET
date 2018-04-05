@@ -112,15 +112,14 @@ Public Class clsCalcuStroke
     ''' 計算平均ジャッキストローク
     ''' </summary>
     ''' <returns></returns>
-    Public Property MesureCalcAveJackStroke As Single
+    Public ReadOnly Property MesureCalcAveJackStroke As Single
         Get
             Return _mesureCalcAveJackStroke
         End Get
-        Set(value As Single)
-            _mesureCalcAveJackStroke = value
-            GetOffsetStroke() 'オフセットストロークの算出
+        'Set(value As Single)
+        '    _mesureCalcAveJackStroke = value
 
-        End Set
+        'End Set
     End Property
     ''' <summary>
     ''' 上計算ジャッキストローク
@@ -236,7 +235,7 @@ Public Class clsCalcuStroke
         End Get
         Set(value As List(Of Short))
             _asembleFinishedJack.AddRange(value)
-            GetOffsetStroke() 'オフセットストロークの算出
+            'GetOffsetStroke() 'オフセットストロークの算出
 
         End Set
     End Property
@@ -250,7 +249,6 @@ Public Class clsCalcuStroke
         End Get
         Set(value As List(Of Short))
             _PullBackJack.AddRange(value)
-            'GetOffsetStroke() 'オフセットストロークの算出
         End Set
     End Property
 
@@ -264,7 +262,7 @@ Public Class clsCalcuStroke
         _asembleFinishedJack.Clear()
         _PullBackJack.Clear()
         _aveOffsetJackStroke = 0
-
+        CtlPara.aveOffsetJackStroke = 0
         For Each i As Short In InitPara.MesureJackAngle.Keys
             _mesureOffsetJackStroke(i) = 0
         Next
@@ -281,6 +279,7 @@ Public Class clsCalcuStroke
             _MesureCalcLogicalStroke.Add(i, 0)
             _mesureOffsetJackStroke.Add(i, 0)
         Next
+        _aveOffsetJackStroke = CtlPara.aveOffsetJackStroke
     End Sub
 
     '計算方法を変更
@@ -340,18 +339,33 @@ Public Class clsCalcuStroke
 
 
     'End Sub
+    ''' <summary>
+    ''' 計測ジャッキオフセットストローク
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property mesureOffsetJackStroke As Dictionary(Of Short, Integer)
+        Get
+            Return _mesureOffsetJackStroke
+        End Get
+        Set(value As Dictionary(Of Short, Integer))
+            _mesureOffsetJackStroke = value
+        End Set
+    End Property
+
+
 
     ''' <summary>
     ''' オフセットストロークの算出
     ''' 各計測ジャッキ及び平均ジャッキストローク
     ''' 引き戻し開始時に実行
     ''' </summary>
-    Private Sub GetOffsetStroke()
+    Public Sub SetOffsetStroke()
         For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
             _mesureOffsetJackStroke(mjJkNo) = _mesureJackStroke(mjJkNo)
         Next
         _aveOffsetJackStroke = _mesureCalcAveJackStroke
-
+        CtlPara.mesureOffsetJackStroke = _mesureOffsetJackStroke
+        CtlPara.aveOffsetJackStroke = _aveOffsetJackStroke
     End Sub
 
     ''' <summary>
@@ -439,11 +453,13 @@ Public Class clsCalcuStroke
         If AddStroke.Count > 0 Then
             _mesureCalcAveJackStroke += AddStroke.Average
         End If
-
-        If PlcIf.ExcavMode Then
-            _CalcAveLogicalStroke = _mesureCalcAveJackStroke - CtlPara.StartJackStroke.Values.Average
-        Else
-            _CalcAveLogicalStroke = SegAsmblyData.RingLastStroke(PlcIf.RingNo) - CtlPara.StartJackStroke.Values.Average
+        '待機中以外
+        If PlcIf.ExcaStatus <> cTaiki Then
+            If PlcIf.ExcavMode Then '掘進モード
+                _CalcAveLogicalStroke = _mesureCalcAveJackStroke - CtlPara.StartJackStroke.Values.Average
+            Else
+                _CalcAveLogicalStroke = SegAsmblyData.RingLastStroke(PlcIf.RingNo) - CtlPara.StartJackStroke.Values.Average
+            End If
         End If
 
 
