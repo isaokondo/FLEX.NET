@@ -494,7 +494,8 @@ Module mdlFLEX
 
             PlcIf.PointX = 0
             PlcIf.PointY = 0
-
+            JackMvAuto.PointX = 0
+            JackMvAuto.PointY = 0
 
             '手動操作の作用点を原点にし
             JackManual.PutPointXY(0, 0)
@@ -585,7 +586,7 @@ Module mdlFLEX
             '対抗グループのセット ロスゼロありで対抗ジャッキ選択ありで減圧開始から押し込み中まで
             Dim OpposeJ As Boolean =
                 InitPara.LosZeroEquip AndAlso CtlPara.LosZeroOpposeJack AndAlso
-                (PlcIf.LosZeroSts_M >= 1 AndAlso PlcIf.LosZeroSts_M <= 4) AndAlso
+                (LosZeroSts >= 1 AndAlso LosZeroSts <= 4) AndAlso
                 SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).OpposeGroup.Contains(InitPara.JackGroupPos(i))
             If OpposeJ Then
                 If CtlPara.LosZeroOpposeControl Then
@@ -624,7 +625,7 @@ Module mdlFLEX
 
             Case cKussin
 
-                If CtlPara.圧力制御開始推力値有効フラグ AndAlso CtlPara.圧力制御開始推力値 > CulcMoment.Thrust AndAlso GpSV.Sum <> 0 And GpMv.Min <> 0 Then
+                If CtlPara.圧力制御開始推力値有効フラグ AndAlso CtlPara.圧力制御開始推力値 > CulcMoment.Thrust AndAlso GpSV.Sum <> 0 And GpMv.Min <> 0 And (PlcIf.PointX <> 0 Or PlcIf.PointY <> 0) Then
                     For i As Short = 0 To InitPara.NumberGroup - 1
                         GpFlg(i) = cIgnoreOut
                     Next

@@ -1129,7 +1129,7 @@ Public Class clsPlcIf
                                 RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
                             End If
                             '組立完了後の経過時間カウント
-                            If _LosZeroSts_M = 5 And _LosZeroSts_FLEX <> 2 Then
+                            If _LosZeroSts_M = 5 And _LosZeroSts_FLEX <> 2 And _LosZeroEnable Then
                                 AsmbledPastTime += 1 'カウントアップ
                                 If AsmbledPastTime = CtlPara.NextPieceConfirmTime Then
                                     'カウントアップ後次ピース確認イベント
