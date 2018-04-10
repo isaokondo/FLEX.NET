@@ -267,8 +267,8 @@ Public Class frmSim
         Dim i As Integer
 
 
-        Dim AiMachineRd(MachineAiPlcRdCount) As Integer
-        iRet = ComPlc.ReadDeviceBlock(MachineAiStartAdress, MachineAiPlcRdCount, AiMachineRd(0))
+        Dim AiMachineRd(MachineAiPlcRdCount) As Short
+        iRet = ComPlc.ReadDeviceBlock2(MachineAiStartAdress, MachineAiPlcRdCount, AiMachineRd(0))
 
 
         Dim plcMachineDiRd(MachineDiPlcRdCount \ 16 + 1) As Short

@@ -155,9 +155,12 @@
 
 
         '掘進モード／セグメントモードの表示
-        lblMachineMode.Text = IIf(PlcIf.ExcavMode, "掘進", "セグメント") & "モード"
-        lblMachineMode.BackColor = IIf(PlcIf.ExcavMode, Color.Magenta, Color.Aqua)
+        lblMachineMode.Text = If(PlcIf.ExcavMode, "掘進", "セグメント") & "モード"
+        lblMachineMode.BackColor = If(PlcIf.ExcavMode, Color.Magenta, Color.Aqua)
         'End With
+        If PlcIf.assembleSegFinish Then
+            lblMachineMode.BackColor = Color.Yellow
+        End If
 
 
         UcnJackDsp.MakeBmp()
@@ -1243,12 +1246,12 @@
         '上下ストローク計の有無で表示設定
 
         DspBottomRawStroke.Visible = InitPara.bottomStrokeEnable
-        DspBottomRealStroke.Visible = InitPara.bottomStrokeEnable
+        DspBottomRealStroke.Visible = InitPara.bottomStrokeEnable And InitPara.LosZeroEquip
         DspBottomSpeed.Visible = InitPara.bottomStrokeEnable
 
 
         DspUpRawStroke.Visible = InitPara.topStrokeEnable
-        DspUpRealStroke.Visible = InitPara.topStrokeEnable
+        DspUpRealStroke.Visible = InitPara.topStrokeEnable And InitPara.LosZeroEquip
         DspUpSpeed.Visible = InitPara.topStrokeEnable
 
         'テールクリアランスの表示

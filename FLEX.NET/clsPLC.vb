@@ -145,6 +145,8 @@ Public Class clsPlcIf
 
     Private LosZeroCancel As Boolean ''同時施工キャンセル
 
+    Private _assembleSegFinish As Boolean   '組立完了
+
     'ロスゼロデータ
     ''' <summary>
     ''' 組立ピース番号
@@ -336,6 +338,15 @@ Public Class clsPlcIf
 
     End Sub
 
+    ''' <summary>
+    ''' 組立完了　リング更新条件
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property assembleSegFinish As Boolean
+        Get
+            Return _assembleSegFinish
+        End Get
+    End Property
 
 
 
@@ -1292,12 +1303,11 @@ Public Class clsPlcIf
                     DigtalTag.TagData("伝送フラグ").OffsetAddress
 
                 DigtalComData(ComFlgAdr) = bit(ComFlgAdr)
-                'モニタモード時は無条件に実施
+                'モニタモード時は無条件に実施 データに変更があった時
                 If InitPara.MonitorMode OrElse Not bit.SequenceEqual(DigtalComData) Then
 
                     '保存用データ保持
                     DigtalComData = bit.Clone
-
 
                     'FLEXON（圧力制御中)
                     _flexControlOn = bit(DigtalTag.TagData("圧力制御").OffsetAddress)
@@ -1315,6 +1325,11 @@ Public Class clsPlcIf
                         '掘進モードに変わったとき
                         RaiseEvent ExcavModeChange(True)
                     End If
+
+                    If DigtalTag.TagExist("組立完了") Then
+                        _assembleSegFinish = bit(DigtalTag.TagData("組立完了").OffsetAddress)
+                    End If
+
 
                     Dim bf_segmentoMode As Boolean = _segmentMode
                     _segmentMode = bit(DigtalTag.TagData("セグメントモード").OffsetAddress)
