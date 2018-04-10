@@ -1241,12 +1241,13 @@ Public Class clsControlParameter
         _LoszerorStep = chk.GetValue("LoszerorStep")
 
         _LosZeroRollingTake = fnBoolean(chk.GetValue("LosZeroRollingTake"))
+        _LosZeroOpposeJackExcept = fnBoolean(chk.GetValue("LosZeroOpposeJackExcept", "False"))
+
         If InitPara.OpposeJackEnable Then
             _LosZeroOpposeJack = fnBoolean(chk.GetValue("LosZeroOpposeJack"))
             _LosZeroOpposeControl = fnBoolean(chk.GetValue("LosZeroOpposeControl"))
             _LosZeroOpposeGroupNumber = chk.GetValue("LosZeroOpposeGroupNumber")
             _LosZeroOpposeManualSV = chk.GetValue("LosZeroOpposeManualSV")
-            _LosZeroOpposeJackExcept = fnBoolean(chk.GetValue("LosZeroOpposeJackExcept", "False"))
         Else
             _LosZeroOpposeJack = False
             _LosZeroOpposeControl = False
