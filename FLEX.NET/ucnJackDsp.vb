@@ -21,6 +21,8 @@ Public Class ucnJackDsp
     Private _GpPv() As Single       'グループ圧力
     Private _JackOrgPress As Single 'ジャッキ元圧　グループ圧との割合算出用
 
+    Private _MeasurJkNo As List(Of Short) '計測ジャッキ番号
+
     ''' <summary>
     ''' 自動方向制御　Auto:True　Manual:False
     ''' </summary>
@@ -78,7 +80,7 @@ Public Class ucnJackDsp
     ''' <summary>
     ''' コピー表示位置
     ''' </summary>
-    Private Const CopyRadiousRate As Single = 0.9
+    Private Const CopyRadiousRate As Single = 0.91
     ''' <summary>
     ''' コピー角度
     ''' </summary>
@@ -381,6 +383,19 @@ Public Class ucnJackDsp
     End Property
 
     ''' <summary>
+    ''' 計測ジャッキ番号
+    ''' </summary>
+    Public WriteOnly Property MeasureJkNo As List(Of Short)
+        Set(value As List(Of Short))
+            _MeasurJkNo = value
+        End Set
+
+
+    End Property
+
+
+
+    ''' <summary>
     ''' 自動方向制御PID
     ''' </summary>
     ''' <returns></returns>
@@ -545,7 +560,7 @@ Public Class ucnJackDsp
             Dim fnt As New Font("MS UI Gothic", 13) 'ジャッキ番号の表示フォント
             '組立順序、ピース名称表示
             'g.DrawString(_PieceName(i), fnt, Brushes.Black, New Point(-_PieceName(i).Length * fnt.Size / 2, 0))
-            '組立順序を丸手囲まれた数値表示
+            '組立順序を丸で囲まれた数値表示
             g.DrawString(ChrW(9311 + _AssemblyOrder(i)) & _PieceName(i), fnt,
                          Brushes.Black, New Point((-_PieceName(i).Length - 1) * fnt.Size / 2, 0))
             g.ResetTransform() 'ワールド座標系リセット
@@ -574,7 +589,7 @@ Public Class ucnJackDsp
 
         g.Clear(Color.Transparent)  '消去
 
-        Dim fnt As New Font("Arial", 8) 'ジャッキ番号、グループ番号の表示フォント
+        Dim fnt As New Font("Arial", 10) 'ジャッキ番号、グループ番号の表示フォント
 
         FillACircle(New SolidBrush(Color.FromArgb(224, 219, 215)), g, CenterPos, MaxRadios * 0.8)
 
@@ -617,11 +632,14 @@ Public Class ucnJackDsp
             'ワールド座標系リセット
             g.ResetTransform()
             '移動
-            g.TranslateTransform(MaxRadios * 0.85 * Cos(_faiJack(i).ToRad) + CenterPos.X,
-                                 -MaxRadios * 0.85 * Sin(_faiJack(i).ToRad) + CenterPos.Y)
+            g.TranslateTransform(MaxRadios * 0.86 * Cos(_faiJack(i).ToRad) + CenterPos.X,
+                                 -MaxRadios * 0.86 * Sin(_faiJack(i).ToRad) + CenterPos.Y)
             g.RotateTransform(360 / _numberJack * i + IIf(_firstJackLoc = "top", 0, 360 / _numberJack / 2)) '回転
             'ジャッキ番号の表示
-            g.DrawString((i + 1).ToString, fnt, Brushes.Black, IIf(i + 1 >= 10, -fnt.Size, -fnt.Size / 2), -fnt.Size / 2)
+            Dim MeasureJ As Boolean = _MeasurJkNo.Contains(i + 1) '計測ジャッキかどうか
+            g.DrawString((i + 1).ToString, New Font("Arial", 12, If(MeasureJ, FontStyle.Bold, FontStyle.Regular)),
+                        If(MeasureJ, Brushes.Red, Brushes.Black),
+                         IIf(i + 1 >= 10, -fnt.Size, -fnt.Size / 2), -fnt.Size / 2)
 
         Next
 

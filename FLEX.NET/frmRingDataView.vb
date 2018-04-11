@@ -125,8 +125,10 @@ Public Class frmRingDataView
                             If Unit <> "" Then
                                 cName = $"{fName} AS `{cName}{vbCrLf}({Unit})`"
                             End If
-                            _ColList.Add(cName)
+                            '_ColList.Add(cName)
                         End If
+                        _ColList.Add(cName)
+
                     End If
 
                 End If

@@ -1140,6 +1140,7 @@
             .FaiJack = InitPara.FaiJack
             .JackGroupPos = InitPara.JackGroupPos
             .NumberJack = InitPara.NumberJack
+            .MeasureJkNo = InitPara.MesureJackAngle.Keys.ToList
 
             .FlexPointX = PlcIf.PointX
             .FlexPointY = PlcIf.PointY
