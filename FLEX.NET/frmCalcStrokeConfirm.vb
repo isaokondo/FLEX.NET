@@ -19,6 +19,15 @@ Public Class frmCalcStrokeConfirm
 
         OpposeJackExcep.Visible = InitPara.LosZeroEquip 'ロスゼロのときのみ表示
         OpposeJackExcep.rdbtnValue = CtlPara.LosZeroOpposeJackExcept
+        DspCenterWidth.Visible = InitPara.LosZeroEquip    'セグメント幅
+        DspMaxTaperLoc.Visible = InitPara.LosZeroEquip '最大テーパー位置
+        DspTaperValue.Visible = InitPara.LosZeroEquip    'テーパー量
+        RectangleShape2.Visible = InitPara.LosZeroEquip
+
+        DspAveStroke.Value = CalcStroke.MesureCalcAveJackStroke '平均ストローク表示
+
+
+
     End Sub
 
     Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick, Me.Load
@@ -41,11 +50,12 @@ Public Class frmCalcStrokeConfirm
             End Select
         Next
 
-
-        DspAveStroke.Value = CalcStroke.MesureCalcAveJackStroke '平均ストローク表示
-        DspCenterWidth.Value = CalcStroke.SegnebtCenterWidth    'セグメント幅
-        DspMaxTaperLoc.Value = CalcStroke.SegmentMaxTaperLoc '最大テーパー位置
-        DspTaperValue.Value = CalcStroke.SegmentTaperValue    'テーパー量
+        If InitPara.LosZeroEquip Then
+            DspAveStroke.Value = CalcStroke.MesureCalcAveJackStroke '平均ストローク表示
+            DspCenterWidth.Value = CalcStroke.SegnebtCenterWidth    'セグメント幅
+            DspMaxTaperLoc.Value = CalcStroke.SegmentMaxTaperLoc '最大テーパー位置
+            DspTaperValue.Value = CalcStroke.SegmentTaperValue    'テーパー量
+        End If
 
         DspAveLogocalStroke.Value = CalcStroke.CalcAveLogicalStroke
         DspAveSpeed.Value = CalcStroke.MesureAveSpeed
