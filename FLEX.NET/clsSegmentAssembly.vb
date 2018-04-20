@@ -542,24 +542,6 @@ Friend Class clsSegmentAssembly
 
         Next
 
-        'While rsData.Read
-        '    Dim st As New SegmentType
-        '    'Dim i As Short = rsData.Item("セグメントNo")
-        '    st.TypeName = rsData.Item("種類")
-        '    st.CenterWidth = rsData.Item("中心幅")
-        '    st.ETTaper = rsData.Item("坑口")
-        '    st.TFTaper = rsData.Item("テーパー量切羽")
-        '    'st.Note = rsData.Item("備考")
-        '    st.OuterDiameter = rsData.Item("外径")
-        '    st.TaperAngle = rsData.Item("位置")
-
-        '    _TypeList.Add(rsData.Item("セグメントNo"), st)
-
-        'End While
-
-        'rsData.Close()
-
-
 
     End Sub
     ''' <summary>

@@ -885,7 +885,7 @@ Public Class clsInitParameter
             GetDtfmSQL($"SELECT 工事名,施工方法 FROM 環境設定 WHERE シートID='10'")
         If ConNameLosZero.Rows.Count <> 0 Then
             _constructionName = ConNameLosZero.Rows(0).Item(0)
-            _LosZeroEquip = (ConNameLosZero.Rows(0).Item(1) = 1)
+            _LosZeroEquip = (ConNameLosZero.Rows(0).Item(1) >= 1)
             _OpposeJackEnable =
                 _LosZeroEquip And (_constructionName.IndexOf("鹿島") >= 0 Or _constructionName.IndexOf("飛島") >= 0)
 
@@ -1216,7 +1216,10 @@ Public Class clsDBBackUp
 
                             For Each tbk As DataRow In tbDt.Rows
                                 If tbk(0) <> "flex掘削データ" And tbk(0) <> "flexイベントデータ" And tbk(0) <> "plccomdata" And tbk(0) <> "updatetable" Then
+                                    'If tbk(0) = "セグメント組立パターンリスト" Then
+
                                     ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `{tbk(0)}`;"), tbk(0), sr0)
+                                    'End If
                                 End If
                             Next
 
@@ -1267,8 +1270,8 @@ Public Class clsDBBackUp
                     lstFld.Add("NULL")
                 ElseIf row(i).ToString = "True" Or row(i).ToString = "False" Then
                     lstFld.Add(row(i).ToString)
-                Else
-                    lstFld.Add($"'{row(i).ToString}'")
+                Else '特殊文字エスケープシーケンス対応
+                    lstFld.Add($"'{row(i).ToString.Replace("'", "\'")}'")
                 End If
             Next i
 

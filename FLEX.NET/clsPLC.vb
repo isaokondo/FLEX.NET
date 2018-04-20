@@ -623,7 +623,7 @@ Public Class clsPlcIf
         End Get
     End Property
     ''' <summary>
-    ''' 掘進ストローク(未使用)
+    ''' 掘進中の最大ストローク（保持用）
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property MaxExcavingStroke As Short
@@ -974,6 +974,8 @@ Public Class clsPlcIf
 
             If _excaStatus <> cTaiki Then
                 _MesureCalcAveJackStroke = AnalogPlcRead("平均ジャッキストローク")
+                RaiseEvent MesureStrokeChange()
+
             End If
 
 

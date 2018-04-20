@@ -350,11 +350,12 @@ Friend Class clsCulKijun
 
         End If
 
-        'Debug.Print(HorZendoKijun.掘進累積距離 - CalcStroke.CalcAveLogicalStroke / 1000 + SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth)
-        Dim NetStroke As Single = If(CtlPara.TargetNetStroke = 0, SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth, CtlPara.TargetNetStroke / 1000)
+        Dim NetStroke As Single =
+            If(CtlPara.TargetNetStroke = 0, SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth, CtlPara.TargetNetStroke / 1000)
 
         '待機中はネットストロークをゼロに
-        Dim AveStoke As Single = If(PlcIf.ExcaStatus = cTaiki, 0, CalcStroke.CalcAveLogicalStroke / 1000)
+        Dim AveStoke As Single =
+            If(PlcIf.ExcaStatus = cTaiki, 0, CalcStroke.CalcAveLogicalStroke / 1000)
 
         RingTarget.掘進累積距離 =
             HorZendoKijun.掘進累積距離 - AveStoke + NetStroke

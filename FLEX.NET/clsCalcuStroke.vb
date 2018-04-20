@@ -194,7 +194,7 @@ Public Class clsCalcuStroke
     ''' 計測ジャッキ平均スピード
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property MesureAveSpeed As Integer
+    Public ReadOnly Property MesureAveSpeed As Single
     'Public Property StartMesureStroke As New Dictionary(Of Short, Integer)
 
 

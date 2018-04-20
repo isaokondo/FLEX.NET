@@ -223,6 +223,7 @@ Module mdlFLEX
 
             '掘進開始時のストローク取り込み
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
+            CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
 
             'データのバックアップ
             If InitPara.ServerMode Then
