@@ -127,7 +127,8 @@
         DspMoment.Value = CulcMoment.MomentR 'モーメント
         'FLEXの制御ON/OFF
         DspFlexControlOn.BitStatus = PlcIf.FlexControlOn
-        UcnJackDsp.FlexOn = PlcIf.FlexControlOn
+        '常時表示に変更
+        'UcnJackDsp.FlexOn = PlcIf.FlexControlOn
 
         '掘進ステータス　掘進中、中断中、待機中
         DspExcavingOn.BitStatus = (PlcIf.ExcaStatus = cKussin)
@@ -725,15 +726,12 @@
     ''' ポイント座標が入力され演算完了したイベント
     ''' </summary>
     Private Sub UcnJackDsp_ManualPointChange() Handles UcnJackDsp.ManualPointChange
-        With PlcIf
-            .PointX = UcnJackDsp.FlexPointX
-            .PointY = UcnJackDsp.FlexPointY
+        PlcIf.PointX = UcnJackDsp.FlexPointX
+        PlcIf.PointY = UcnJackDsp.FlexPointY
 
-            JackManual.PutPointXY(.PointX, .PointY)
+        JackManual.PutPointXY(PlcIf.PointX, PlcIf.PointY)
 
-            .PointWrite()
-
-        End With
+        PlcIf.PointWrite()
 
     End Sub
     ''' <summary>

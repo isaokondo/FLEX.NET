@@ -835,7 +835,7 @@ Partial Class frmCorrectionValueManagement
         Me.ConfirmRingNo.ttMsg = "測量で距離を確認したシールド機の押し上がりリング番号"
         Me.ConfirmRingNo.ttTile = "補正値管理"
         Me.ConfirmRingNo.Unit = "リング"
-        Me.ConfirmRingNo.Value = 10.0R
+        Me.ConfirmRingNo.Value = 9999.0R
         '
         'frmCorrectionValueManagement
         '
