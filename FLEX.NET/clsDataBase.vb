@@ -1259,6 +1259,8 @@ Public Class clsDBBackUp
         If dt.Rows.Count = 0 Then Exit Sub
 
         Dim lstValue As New List(Of String)
+        'todo:コラム名の情報を取得し、bitのtypeの判別
+
 
         For Each row As DataRow In dt.Rows
 
