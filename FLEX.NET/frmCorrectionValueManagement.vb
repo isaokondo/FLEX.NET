@@ -195,7 +195,8 @@
     End Sub
 
     Private Sub ConfirmRingNo_ValueChanged(sender As Object, e As EventArgs) Handles ConfirmRingNo.ValueChanged
-        PuchUpStroke.Value = SegAsmblyData.RingLastStroke(ConfirmRingNo.Value)
-
+        If SegAsmblyData.RingLastStroke.ContainsKey(ConfirmRingNo.Value) Then
+            PuchUpStroke.Value = SegAsmblyData.RingLastStroke(ConfirmRingNo.Value)
+        End If
     End Sub
 End Class
