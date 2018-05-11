@@ -68,7 +68,11 @@ Friend Class clsSegmentAssembly
     Public ReadOnly Property TypeData(ByVal RingNo As Integer) As SegmentType
         Get
             'If RingNo <> 0 Then
-            Return _TypeList(_TypeNo(RingNo))
+            If _TypeList.ContainsKey(_TypeNo(RingNo)) Then
+                Return _TypeList(_TypeNo(RingNo))
+            Else
+                Return Nothing
+            End If
             'Else
             '    Return New SegmentType
             'End If
@@ -147,7 +151,11 @@ Friend Class clsSegmentAssembly
     ''' <returns></returns>
     Public ReadOnly Property AssemblyPtnName(RingNo As Integer) As String
         Get
-            Return _AssenblyPtnDic(_SegmentAssenblyPtnID(RingNo))
+            If _AssenblyPtnDic.ContainsKey(_SegmentAssenblyPtnID(RingNo)) Then
+                Return _AssenblyPtnDic(_SegmentAssenblyPtnID(RingNo))
+            Else
+                Return "未登録"
+            End If
         End Get
     End Property
 
@@ -164,7 +172,12 @@ Friend Class clsSegmentAssembly
 
     Public ReadOnly Property TypeDataSim(ByVal RingNo As Integer) As SegmentType
         Get
-            Return _TypeList(_TypeNoSim(RingNo))
+            If _TypeList.ContainsKey(_TypeNoSim(RingNo)) Then
+                Return _TypeList(_TypeNoSim(RingNo))
+            Else
+                Return Nothing
+            End If
+
 
         End Get
     End Property
@@ -203,7 +216,12 @@ Friend Class clsSegmentAssembly
 
     Public ReadOnly Property AssemblyPtnNameSim(RingNo As Integer) As String
         Get
-            Return _AssenblyPtnDic(_SegmentAssenblyPtnIDSim(RingNo))
+            If _AssenblyPtnDic.ContainsKey(_SegmentAssenblyPtnIDSim(RingNo)) Then
+                Return _AssenblyPtnDic(_SegmentAssenblyPtnIDSim(RingNo))
+            Else
+                Return "未登録"
+            End If
+
         End Get
     End Property
 
@@ -239,6 +257,10 @@ Friend Class clsSegmentAssembly
         'ロスゼロのみ
         If Not InitPara.LosZeroEquip Then Exit Sub
         _AssenblyPtnDic.Clear()
+
+        '名称リストのテーブルが存在するか
+        Dim PieceNameLstExist As Boolean = GetDtfmSQL("SHOW TABLES LIKE '名称リスト';").Rows.Count > 0
+
         'パターンリストの取得
         Dim rsPtLst As DataTable =
             GetDtfmSQL("SELECT 組立パターンNo,組立パターン名 FROM セグメント組立パターンリスト")
@@ -256,6 +278,8 @@ Friend Class clsSegmentAssembly
 
         '検索
         Dim dsSegAsm As DataTable
+        'ピース名リスト
+        Dim dsPieceNameLst As DataTable = Nothing
 
         If SheetID.Rows.Count = 0 OrElse IsDBNull(SheetID.Rows(0).Item(0)) Then
             dsSegAsm =
@@ -274,6 +298,12 @@ Friend Class clsSegmentAssembly
         _ProcessData.Clear()
 
         For Each dRow As DataRow In dsSegAsm.Rows
+
+            'If PieceNameLstExist AndAlso dsSegAsm.Columns.Contains("名称No") Then '名称リストがある場合
+            '    dsPieceNameLst = GetDtfmSQL($"SELECT * FROM 名称リスト WHERE  名称No='{dRow.Item("名称No")}'")
+            'End If
+
+
 
             For Each Col As DataColumn In dsSegAsm.Columns
                 Dim ColName As String = Col.ColumnName
@@ -302,7 +332,11 @@ Friend Class clsSegmentAssembly
                             SegDt.PieceCenterAngle = dRow(PieaceNo & "中心")
                         End If
 
+                        'If IsNothing(dsPieceNameLst) OrElse dsPieceNameLst.Rows.Count = 0 Then
                         SegDt.PieceName = dRow($"{PieaceNo}名称")
+                        'Else
+                        '    SegDt.PieceName = dsPieceNameLst.Rows(0).Item($"{PieaceNo}")
+                        'End If
 
                         SegDt.PieceAngle = dRow(PieaceNo & "スパン")
 
@@ -470,12 +504,12 @@ Friend Class clsSegmentAssembly
         SegmentListRead() 'セグメントリスト読込
 
         Dim rsData As DataTable =
-            GetDtfmSQL("select  `flexセグメント組立データ`.`シートID`, `flexセグメント組立データ`.`リング番号`, `flexセグメント組立データ`.`セグメントNo` ,
+            GetDtfmSQL($"select  `flexセグメント組立データ`.`シートID`, `flexセグメント組立データ`.`リング番号`, `flexセグメント組立データ`.`セグメントNo` ,
             `flexセグメント組立データ`.`組立パターンNo`,`flexセグメント組立データ`.`掘進終了ストローク`,
             `セグメント割付シュミレーション`.`セグメントNo`,`セグメント割付シュミレーション`.`組立パターンNo`  ,`セグメント割付シュミレーション`.`シートID`   
             FROM `flexセグメント組立データ`
             LEFT OUTER JOIN `セグメント割付シュミレーション` ON `flexセグメント組立データ`.`シートID`=`セグメント割付シュミレーション`.`シートID`
-            AND `flexセグメント組立データ`.`リング番号`=`セグメント割付シュミレーション`.`リングＮｏ` ORDER BY `リング番号`")
+            AND `flexセグメント組立データ`.`リング番号`=`セグメント割付シュミレーション`.`リングＮｏ` where `リング番号` >='{CtlPara.測量ポイントリング番号}'  ORDER BY `リング番号`")
 
         'rsData = ExecuteSql _
         '("SELECT * FROM flexセグメント組立データ Inner Join セグメント組立パターンベース")
@@ -566,7 +600,7 @@ Friend Class clsSegmentAssembly
         '割り付けシュミレーションで転送日の最新のレコードをリング番号ごとに取得        
         Dim rsData As DataTable =
             GetDtfmSQL("SELECT リングＮｏ,セグメントNo,組立パターンNo,転送日,シートID FROM `セグメント割付シュミレーション` AS m WHERE `転送日`= (SELECT max(`転送日`)
-            FROM `セグメント割付シュミレーション` AS s WHERE m.`リングＮｏ` = s.`リングＮｏ`) order by `リングＮｏ`;")
+            FROM `セグメント割付シュミレーション` AS s WHERE m.`リングＮｏ` = s.`リングＮｏ`)  AND 指示書転送 = '-1' order by `リングＮｏ`;")
 
 
         For Each t As DataRow In rsData.Rows

@@ -38,8 +38,10 @@ Public Class frmSegmentEdit
             DgvSegAssign.Rows.Add()
             Dim RingNo As Integer = SegAsmblyData.TypeNo.Keys(i)
             DgvSegAssign("RingNo", i).Value = RingNo
-            DgvSegAssign("SegmentType", i).Value = SegAsmblyData.TypeData(RingNo).TypeName 'セグメント種類
-            DgvSegAssign("SegWidth", i).Value = SegAsmblyData.TypeData(RingNo).CenterWidth * 1000 'セグメント幅
+            If Not IsNothing(SegAsmblyData.TypeData(RingNo)) Then
+                DgvSegAssign("SegmentType", i).Value = SegAsmblyData.TypeData(RingNo).TypeName 'セグメント種類
+                DgvSegAssign("SegWidth", i).Value = SegAsmblyData.TypeData(RingNo).CenterWidth * 1000 'セグメント幅
+            End If
             If InitPara.LosZeroEquip Then
                 DgvSegAssign("AssemblyPtnName", i).Value = SegAsmblyData.AssemblyPtnName(RingNo) '組立パターン名
             End If
@@ -58,8 +60,11 @@ Public Class frmSegmentEdit
                     DgvSegAssign("TransferSet", i).Value = "☓"
                     DgvSegSim.Rows.Add()
                     DgvSegSim("RingNoSim", SimDgvRow).Value = RingNo
-                    DgvSegSim("SegmentTypeSim", SimDgvRow).Value =
+                    If Not IsNothing(SegAsmblyData.TypeDataSim(RingNo)) Then
+                        DgvSegSim("SegmentTypeSim", SimDgvRow).Value =
                         SegAsmblyData.TypeDataSim(RingNo).TypeName 'セグメント種類
+
+                    End If
                     If InitPara.LosZeroEquip Then
                         DgvSegSim("AssemblyPtnNameSim", SimDgvRow).Value =
                             SegAsmblyData.AssemblyPtnNameSim(RingNo) '組立パターン名
