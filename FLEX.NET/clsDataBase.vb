@@ -531,6 +531,8 @@ Public Class clsInitParameter
     Private _ClientMode As Boolean = False  'クライアントモード　データ保存なし、グループ操作出力なしのモード
     Private _MonitorMode As Boolean = False  'モニタモード　データ保存なし、PLC書き込みなし　　グループ操作出力なしのモード
 
+    Private _MonitorModePlcCom As Boolean = False 'モニタモード　データ保存なし、PLC書き込みOK パラメータのみ書込
+
     Private _OpposeJackEnable As Boolean = False '対抗ジャッキの機能が使用可（鹿島、飛島以外のJVでは仕様不可)
 
     Private _DistanceInputMethod As Boolean = False 'False:発進からの入力　True:起点からの入力
@@ -732,6 +734,21 @@ Public Class clsInitParameter
             _MonitorMode = value
         End Set
     End Property
+
+    ''' <summary>
+    ''' モニタモード　PLC書き込み可
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MonitorModePlcCom As Boolean
+        Get
+            Return _MonitorMode
+        End Get
+        Set(value As Boolean)
+            _MonitorModePlcCom = value
+        End Set
+    End Property
+
+
     ''' <summary>
     ''' 測量距離入力方法
     ''' </summary>
@@ -761,7 +778,7 @@ Public Class clsInitParameter
     Public ReadOnly Property ModeName As String
         Get
             If _MonitorMode Then
-                Return "MonitorMode"
+                Return $"MonitorMode{If(_MonitorModePlcCom, " PlcComOK", "NoPlcCom")}"
             ElseIf _ClientMode Then
                 Return "ClientMode"
             Else

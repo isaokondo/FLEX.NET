@@ -946,7 +946,8 @@ Public Class clsPlcIf
         If Not InitPara.MonitorMode Then
             Dim iRet As Long = PLC_Open() 'オープン処理
             If iRet <> 0 Then
-                MsgBox("シーケンサと通信出来ません！" & vbCrLf & "論理局番：" & com_ReferencesEasyIF.ActLogicalStationNumber.ToString, MsgBoxStyle.Exclamation)
+                MsgBox($"シーケンサと通信出来ません！{vbCrLf}論理局番：{com_ReferencesEasyIF.ActLogicalStationNumber.ToString}",
+                       MsgBoxStyle.Exclamation)
                 End
             End If
 
@@ -978,8 +979,9 @@ Public Class clsPlcIf
 
             End If
 
-
-
+        Else
+            'モニターモードでもPLC書き込み可能か
+            InitPara.MonitorModePlcCom = (PLC_Open() = 0)
         End If
 
         'スピード割合初期値（100%)書き込み
