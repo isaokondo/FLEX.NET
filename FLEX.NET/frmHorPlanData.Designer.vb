@@ -42,7 +42,7 @@ Partial Class frmHorPlanData
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(1230, 673)
+        Me.btnOK.Location = New System.Drawing.Point(1221, 152)
         '
         'btnCancel
         '
@@ -53,7 +53,7 @@ Partial Class frmHorPlanData
         Me.lblFieldName.BackColor = System.Drawing.SystemColors.Control
         Me.lblFieldName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblFieldName.Location = New System.Drawing.Point(65, 18)
+        Me.lblFieldName.Location = New System.Drawing.Point(27, 19)
         Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblFieldName.Name = "lblFieldName"
         Me.lblFieldName.Size = New System.Drawing.Size(137, 19)
@@ -66,7 +66,7 @@ Partial Class frmHorPlanData
         Me.lblStartX.BackColor = System.Drawing.Color.White
         Me.lblStartX.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblStartX.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblStartX.Location = New System.Drawing.Point(203, 18)
+        Me.lblStartX.Location = New System.Drawing.Point(165, 19)
         Me.lblStartX.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblStartX.Name = "lblStartX"
         Me.lblStartX.Size = New System.Drawing.Size(107, 19)
@@ -79,7 +79,7 @@ Partial Class frmHorPlanData
         Me.lblStartY.BackColor = System.Drawing.Color.White
         Me.lblStartY.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblStartY.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblStartY.Location = New System.Drawing.Point(203, 37)
+        Me.lblStartY.Location = New System.Drawing.Point(165, 38)
         Me.lblStartY.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblStartY.Name = "lblStartY"
         Me.lblStartY.Size = New System.Drawing.Size(107, 19)
@@ -92,7 +92,7 @@ Partial Class frmHorPlanData
         Me.Label3.BackColor = System.Drawing.SystemColors.Control
         Me.Label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label3.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label3.Location = New System.Drawing.Point(65, 37)
+        Me.Label3.Location = New System.Drawing.Point(27, 38)
         Me.Label3.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(137, 19)
@@ -105,7 +105,7 @@ Partial Class frmHorPlanData
         Me.lblStartDir.BackColor = System.Drawing.Color.White
         Me.lblStartDir.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblStartDir.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblStartDir.Location = New System.Drawing.Point(203, 56)
+        Me.lblStartDir.Location = New System.Drawing.Point(165, 57)
         Me.lblStartDir.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblStartDir.Name = "lblStartDir"
         Me.lblStartDir.Size = New System.Drawing.Size(107, 19)
@@ -118,7 +118,7 @@ Partial Class frmHorPlanData
         Me.Label5.BackColor = System.Drawing.SystemColors.Control
         Me.Label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label5.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label5.Location = New System.Drawing.Point(65, 56)
+        Me.Label5.Location = New System.Drawing.Point(27, 57)
         Me.Label5.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(137, 19)
@@ -131,7 +131,7 @@ Partial Class frmHorPlanData
         Me.lblDepartY.BackColor = System.Drawing.Color.White
         Me.lblDepartY.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblDepartY.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblDepartY.Location = New System.Drawing.Point(203, 98)
+        Me.lblDepartY.Location = New System.Drawing.Point(165, 99)
         Me.lblDepartY.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblDepartY.Name = "lblDepartY"
         Me.lblDepartY.Size = New System.Drawing.Size(107, 19)
@@ -144,7 +144,7 @@ Partial Class frmHorPlanData
         Me.Label7.BackColor = System.Drawing.SystemColors.Control
         Me.Label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label7.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label7.Location = New System.Drawing.Point(65, 98)
+        Me.Label7.Location = New System.Drawing.Point(27, 99)
         Me.Label7.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(137, 19)
@@ -157,7 +157,7 @@ Partial Class frmHorPlanData
         Me.lblDepartX.BackColor = System.Drawing.Color.White
         Me.lblDepartX.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblDepartX.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblDepartX.Location = New System.Drawing.Point(203, 79)
+        Me.lblDepartX.Location = New System.Drawing.Point(165, 80)
         Me.lblDepartX.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblDepartX.Name = "lblDepartX"
         Me.lblDepartX.Size = New System.Drawing.Size(107, 19)
@@ -170,7 +170,7 @@ Partial Class frmHorPlanData
         Me.Label9.BackColor = System.Drawing.SystemColors.Control
         Me.Label9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label9.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label9.Location = New System.Drawing.Point(65, 79)
+        Me.Label9.Location = New System.Drawing.Point(27, 80)
         Me.Label9.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(137, 19)
@@ -183,7 +183,7 @@ Partial Class frmHorPlanData
         Me.lblReachDir.BackColor = System.Drawing.Color.White
         Me.lblReachDir.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblReachDir.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblReachDir.Location = New System.Drawing.Point(203, 159)
+        Me.lblReachDir.Location = New System.Drawing.Point(165, 160)
         Me.lblReachDir.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblReachDir.Name = "lblReachDir"
         Me.lblReachDir.Size = New System.Drawing.Size(107, 19)
@@ -196,7 +196,7 @@ Partial Class frmHorPlanData
         Me.Label11.BackColor = System.Drawing.SystemColors.Control
         Me.Label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label11.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label11.Location = New System.Drawing.Point(65, 159)
+        Me.Label11.Location = New System.Drawing.Point(27, 160)
         Me.Label11.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(137, 19)
@@ -209,7 +209,7 @@ Partial Class frmHorPlanData
         Me.lblReachY.BackColor = System.Drawing.Color.White
         Me.lblReachY.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblReachY.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblReachY.Location = New System.Drawing.Point(203, 140)
+        Me.lblReachY.Location = New System.Drawing.Point(165, 141)
         Me.lblReachY.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblReachY.Name = "lblReachY"
         Me.lblReachY.Size = New System.Drawing.Size(107, 19)
@@ -222,7 +222,7 @@ Partial Class frmHorPlanData
         Me.Label13.BackColor = System.Drawing.SystemColors.Control
         Me.Label13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label13.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label13.Location = New System.Drawing.Point(65, 140)
+        Me.Label13.Location = New System.Drawing.Point(27, 141)
         Me.Label13.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(137, 19)
@@ -235,7 +235,7 @@ Partial Class frmHorPlanData
         Me.lblReachX.BackColor = System.Drawing.Color.White
         Me.lblReachX.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblReachX.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblReachX.Location = New System.Drawing.Point(203, 121)
+        Me.lblReachX.Location = New System.Drawing.Point(165, 122)
         Me.lblReachX.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblReachX.Name = "lblReachX"
         Me.lblReachX.Size = New System.Drawing.Size(107, 19)
@@ -248,7 +248,7 @@ Partial Class frmHorPlanData
         Me.Label15.BackColor = System.Drawing.SystemColors.Control
         Me.Label15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label15.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label15.Location = New System.Drawing.Point(65, 121)
+        Me.Label15.Location = New System.Drawing.Point(27, 122)
         Me.Label15.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(137, 19)

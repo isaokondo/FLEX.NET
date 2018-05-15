@@ -36,6 +36,16 @@
 
     End Sub
 
+    Private Sub frmPlanView_MaximumSizeChanged(sender As Object, e As EventArgs) Handles Me.MaximumSizeChanged
+
+    End Sub
+
+    Private Sub frmPlanView_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd, Me.SizeChanged
+        dgv.Width = Me.Width - 100
+        dgv.Height = Me.Height - 120
+
+    End Sub
+
     Friend Class clsDgvSet
         Private dgvR As DataGridViewRow
         Public Sub New(r As DataGridViewRow)

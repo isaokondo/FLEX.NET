@@ -31,12 +31,12 @@ Partial Class frmPlanView
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(1230, 647)
-        Me.btnOK.Text = "CLOSE"
+        Me.btnOK.Location = New System.Drawing.Point(1230, 82)
+        Me.btnOK.Text = "閉じる"
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(1257, 626)
+        Me.btnCancel.Location = New System.Drawing.Point(1230, 99)
         Me.btnCancel.Visible = False
         '
         'dgv
@@ -65,7 +65,7 @@ Partial Class frmPlanView
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgv.DefaultCellStyle = DataGridViewCellStyle2
-        Me.dgv.Location = New System.Drawing.Point(65, 205)
+        Me.dgv.Location = New System.Drawing.Point(27, 205)
         Me.dgv.MultiSelect = False
         Me.dgv.Name = "dgv"
         Me.dgv.ReadOnly = True
@@ -76,7 +76,7 @@ Partial Class frmPlanView
         Me.dgv.RowTemplate.Height = 18
         Me.dgv.RowTemplate.ReadOnly = True
         Me.dgv.ShowCellErrors = False
-        Me.dgv.Size = New System.Drawing.Size(1267, 416)
+        Me.dgv.Size = New System.Drawing.Size(1332, 453)
         Me.dgv.TabIndex = 10
         '
         'frmPlanView
@@ -95,5 +95,5 @@ Partial Class frmPlanView
 
     End Sub
 
-    Protected WithEvents dgv As DataGridView
+    Public WithEvents dgv As DataGridView
 End Class
