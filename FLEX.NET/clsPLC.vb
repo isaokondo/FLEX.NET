@@ -1413,7 +1413,7 @@ Public Class clsPlcIf
             RaiseEvent ExcavationStatusChange(PreExcaStatus, _excaStatus)
         End If
         '掘削データ保存　ストロークが掘進中に伸びたとき(クライアントモードでないとき）
-        If InitPara.ServerMode And (_realStroke > PreRealStroke Or _excaStatus <> PreExcaStatus) And _excaStatus = cKussin Then
+        If InitPara.ServerMode And _realStroke > PreRealStroke And _excaStatus = cKussin Then
             DataSave.Save()
         End If
 
