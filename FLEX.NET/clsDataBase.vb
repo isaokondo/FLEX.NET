@@ -1202,9 +1202,6 @@ Public Class clsDBBackUp
     Public Async Sub RingIntervalBakUp()
 
 
-
-
-
         Dim task As Task = Task.Run(
                 Sub()
                     'このデータベースのテーブルリストを作成
@@ -1275,9 +1272,15 @@ Public Class clsDBBackUp
 
         If dt.Rows.Count = 0 Then Exit Sub
 
+
+        Dim ColumnsInfo As DataTable = GetDtfmSQL($"SHOW columns from {tblName}")
+
+
         Dim lstValue As New List(Of String)
         'todo:コラム名の情報を取得し、bitのtypeの判別
 
+        'SQL文の１文の処理行数カウント
+        Dim RowCount As Integer = 0
 
         For Each row As DataRow In dt.Rows
 
@@ -1289,20 +1292,61 @@ Public Class clsDBBackUp
                     lstFld.Add("NULL")
                 ElseIf row(i).ToString = "True" Or row(i).ToString = "False" Then
                     lstFld.Add(row(i).ToString)
-                Else '特殊文字エスケープシーケンス対応
+                ElseIf ColumnsInfo.Rows(i).Item("Type") = "bit(1)" Then
+                    lstFld.Add($"b'{row(i).ToString}'")
+                Else
+                    '特殊文字エスケープシーケンス対応
                     lstFld.Add($"'{row(i).ToString.Replace("'", "\'")}'")
                 End If
+
+
+
             Next i
+
+
+            RowCount += 1
+
 
             lstValue.Add($"({Join(lstFld.ToArray, ", ")})")
 
+
+            If RowCount > 500 Then '500行ごとにSQL文作成
+                sr.Write($"REPLACE INTO {tblName} VALUES ")
+
+                sr.Write(Join(lstValue.ToArray, ","))
+                '改行する
+                sr.Write(";" + ControlChars.Cr + ControlChars.Lf)
+
+                RowCount = 0
+
+                lstValue.Clear()
+
+            End If
+
+            'sr.Write($"REPLACE INTO {tblName} VALUES ({Join(lstFld.ToArray, ", ")})")
+
+            'sr.Write(Join(lstValue.ToArray, ","))
+            ''改行する
+            'sr.Write(";" + ControlChars.Cr + ControlChars.Lf)
+
+
+
         Next row
 
-        sr.Write($"REPLACE INTO {tblName} VALUES ")
 
-        sr.Write(Join(lstValue.ToArray, ","))
-        '改行する
-        sr.Write(";" + ControlChars.Cr + ControlChars.Lf)
+        If lstValue.Count <> 0 Then
+            sr.Write($"REPLACE INTO {tblName} VALUES ")
+
+            sr.Write(Join(lstValue.ToArray, ","))
+            '改行する
+            sr.Write(";" + ControlChars.Cr + ControlChars.Lf)
+
+        End If
+        'sr.Write($"REPLACE INTO {tblName} VALUES ")
+
+        'sr.Write(Join(lstValue.ToArray, ","))
+        ''改行する
+        'sr.Write(";" + ControlChars.Cr + ControlChars.Lf)
 
     End Sub
 
