@@ -1260,10 +1260,6 @@ Public Class clsDBBackUp
                 End Sub)
         Await task
 
-
-
-
-
     End Sub
 
     Private Sub ExportInsetSQL(ByVal pDt As DataTable, tblName As String, sr As IO.StreamWriter)
@@ -1273,11 +1269,10 @@ Public Class clsDBBackUp
         If dt.Rows.Count = 0 Then Exit Sub
 
 
+        'コラム名の情報を取得し、bitのtypeの判別
         Dim ColumnsInfo As DataTable = GetDtfmSQL($"SHOW columns from {tblName}")
 
-
         Dim lstValue As New List(Of String)
-        'todo:コラム名の情報を取得し、bitのtypeの判別
 
         'SQL文の１文の処理行数カウント
         Dim RowCount As Integer = 0
@@ -1299,16 +1294,11 @@ Public Class clsDBBackUp
                     lstFld.Add($"'{row(i).ToString.Replace("'", "\'")}'")
                 End If
 
-
-
             Next i
-
 
             RowCount += 1
 
-
             lstValue.Add($"({Join(lstFld.ToArray, ", ")})")
-
 
             If RowCount > 500 Then '500行ごとにSQL文作成
                 sr.Write($"REPLACE INTO {tblName} VALUES ")
@@ -1322,31 +1312,16 @@ Public Class clsDBBackUp
                 lstValue.Clear()
 
             End If
-
-            'sr.Write($"REPLACE INTO {tblName} VALUES ({Join(lstFld.ToArray, ", ")})")
-
-            'sr.Write(Join(lstValue.ToArray, ","))
-            ''改行する
-            'sr.Write(";" + ControlChars.Cr + ControlChars.Lf)
-
-
-
         Next row
 
-
         If lstValue.Count <> 0 Then
-            sr.Write($"REPLACE INTO {tblName} VALUES ")
 
+            sr.Write($"REPLACE INTO {tblName} VALUES ")
             sr.Write(Join(lstValue.ToArray, ","))
             '改行する
             sr.Write(";" + ControlChars.Cr + ControlChars.Lf)
 
         End If
-        'sr.Write($"REPLACE INTO {tblName} VALUES ")
-
-        'sr.Write(Join(lstValue.ToArray, ","))
-        ''改行する
-        'sr.Write(";" + ControlChars.Cr + ControlChars.Lf)
 
     End Sub
 
@@ -1372,13 +1347,14 @@ Public Class clsDBBackUp
         ftpReq.UseBinary = False
         'PASVモードを無効にする
         ftpReq.UsePassive = False
+        Dim fs As New IO.FileStream(
+            upFile, IO.FileMode.Open, IO.FileAccess.Read)
+
         Try
 
             'ファイルをアップロードするためのStreamを取得
             Dim reqStrm As IO.Stream = ftpReq.GetRequestStream()
             'アップロードするファイルを開く
-            Dim fs As New IO.FileStream(
-            upFile, IO.FileMode.Open, IO.FileAccess.Read)
             'アップロードStreamに書き込む
             Dim buffer(1023) As Byte
             While True
@@ -1404,6 +1380,7 @@ Public Class clsDBBackUp
         Catch ex As Exception
             'Console.WriteLine("FTP転送：" & ex.ToString)
             WriteEventData($"FTP転送エラー：{ex.ToString} uri:{ftpUri.ToString}", Color.White)
+            fs.Close()
 
         End Try
 
