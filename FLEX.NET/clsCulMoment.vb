@@ -104,7 +104,8 @@ Friend Class clsCulMoment
         Dim i As Short
         For i = 0 To InitPara.NumberJack - 1
             If _JackSel(i) Then
-                Dim GpPv As Single = _GroupPv(InitPara.JackGroupPos(i) - 1)
+                'FLEX未使用時のモーメント演算用　ジャッキ選択時は元圧を使用
+                Dim GpPv As Single = If(_FlexControlOn, _GroupPv(InitPara.JackGroupPos(i) - 1), PlcIf.JkPress)
                 ''水平方向のモーメントの演算    01/09/11 変更
                 _MomentX +=
                     Cos(InitPara.FaiJack(i).ToRad) * GpPv / InitPara.JackMaxOilPres * InitPara.JackPower * InitPara.JackRadius
@@ -128,7 +129,7 @@ Friend Class clsCulMoment
         Next i
         '方向を掘削管理のデータと合わせる
         _MomentX = -_MomentX
-            _MomentY = -_MomentY
+        _MomentY = -_MomentY
 
         ''合成値の演算
         _MomentR = Sqrt(_MomentX ^ 2 + _MomentY ^ 2)

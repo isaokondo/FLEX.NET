@@ -34,14 +34,14 @@ Partial Class frmVerPlanData
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(1230, 631)
+        Me.btnOK.Location = New System.Drawing.Point(1230, 85)
         '
         'lblReachZ
         '
         Me.lblReachZ.BackColor = System.Drawing.Color.White
         Me.lblReachZ.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblReachZ.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblReachZ.Location = New System.Drawing.Point(203, 79)
+        Me.lblReachZ.Location = New System.Drawing.Point(165, 66)
         Me.lblReachZ.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblReachZ.Name = "lblReachZ"
         Me.lblReachZ.Size = New System.Drawing.Size(107, 19)
@@ -54,7 +54,7 @@ Partial Class frmVerPlanData
         Me.Label5.BackColor = System.Drawing.SystemColors.Control
         Me.Label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label5.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label5.Location = New System.Drawing.Point(65, 79)
+        Me.Label5.Location = New System.Drawing.Point(27, 66)
         Me.Label5.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(137, 19)
@@ -67,7 +67,7 @@ Partial Class frmVerPlanData
         Me.lblStartSlope.BackColor = System.Drawing.Color.White
         Me.lblStartSlope.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblStartSlope.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblStartSlope.Location = New System.Drawing.Point(203, 60)
+        Me.lblStartSlope.Location = New System.Drawing.Point(165, 47)
         Me.lblStartSlope.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblStartSlope.Name = "lblStartSlope"
         Me.lblStartSlope.Size = New System.Drawing.Size(107, 19)
@@ -80,7 +80,7 @@ Partial Class frmVerPlanData
         Me.Label3.BackColor = System.Drawing.SystemColors.Control
         Me.Label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label3.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label3.Location = New System.Drawing.Point(65, 60)
+        Me.Label3.Location = New System.Drawing.Point(27, 47)
         Me.Label3.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(137, 19)
@@ -93,7 +93,7 @@ Partial Class frmVerPlanData
         Me.lblStartZ.BackColor = System.Drawing.Color.White
         Me.lblStartZ.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblStartZ.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblStartZ.Location = New System.Drawing.Point(203, 41)
+        Me.lblStartZ.Location = New System.Drawing.Point(165, 28)
         Me.lblStartZ.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblStartZ.Name = "lblStartZ"
         Me.lblStartZ.Size = New System.Drawing.Size(107, 19)
@@ -106,7 +106,7 @@ Partial Class frmVerPlanData
         Me.lblFieldName.BackColor = System.Drawing.SystemColors.Control
         Me.lblFieldName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblFieldName.Location = New System.Drawing.Point(65, 41)
+        Me.lblFieldName.Location = New System.Drawing.Point(27, 28)
         Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblFieldName.Name = "lblFieldName"
         Me.lblFieldName.Size = New System.Drawing.Size(137, 19)
@@ -119,7 +119,7 @@ Partial Class frmVerPlanData
         Me.lblReachSlope.BackColor = System.Drawing.Color.White
         Me.lblReachSlope.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblReachSlope.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblReachSlope.Location = New System.Drawing.Point(203, 98)
+        Me.lblReachSlope.Location = New System.Drawing.Point(165, 85)
         Me.lblReachSlope.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblReachSlope.Name = "lblReachSlope"
         Me.lblReachSlope.Size = New System.Drawing.Size(107, 19)
@@ -132,7 +132,7 @@ Partial Class frmVerPlanData
         Me.Label2.BackColor = System.Drawing.SystemColors.Control
         Me.Label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label2.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label2.Location = New System.Drawing.Point(65, 98)
+        Me.Label2.Location = New System.Drawing.Point(27, 85)
         Me.Label2.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(137, 19)

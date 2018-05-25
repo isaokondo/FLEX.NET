@@ -193,17 +193,17 @@ Public Class clsDataBase
 
 
         If MySQLVersion = "4.0.25" Then
-            Dim cmd As New OdbcCommand(SQLCommand, conMYSQLDB)
-            Dim dr As OdbcDataReader = cmd.ExecuteReader
+                Dim cmd As New OdbcCommand(SQLCommand, conMYSQLDB)
+                Dim dr As OdbcDataReader = cmd.ExecuteReader
 
-            If dr.RecordsAffected = 0 Then
+                If dr.RecordsAffected = 0 Then
                 'Debug.Print(SQLCommand)
             End If
 
-            dr.Close()
-            conMYSQLDB.Close()
-            conMYSQLDB.Dispose()
-        End If
+                dr.Close()
+                conMYSQLDB.Close()
+                conMYSQLDB.Dispose()
+            End If
 
         If MySQLVersion = "MariaDB" Then
 
@@ -258,13 +258,13 @@ Public Class clsDataBase
         Try
 
             If MySQLVersion = "4.0.25" Then
-                Dim Adpter = New OdbcDataAdapter(SQLCommand, conMYSQLDB)
-                Adpter.Fill(ds)
-                Adpter.Dispose()
-                conMYSQLDB.Close()
-                conMYSQLDB.Dispose()
+                    Dim Adpter = New OdbcDataAdapter(SQLCommand, conMYSQLDB)
+                    Adpter.Fill(ds)
+                    Adpter.Dispose()
+                    conMYSQLDB.Close()
+                    conMYSQLDB.Dispose()
 
-            End If
+                End If
 
             If MySQLVersion = "MariaDB" Then
 
@@ -1212,20 +1212,21 @@ Public Class clsDBBackUp
 
                         'sqlファイルに書き込むときに使うEncoding
                         Dim enc As Text.Encoding = Text.Encoding.GetEncoding("Shift_JIS")
-
+                        Dim sr0 As IO.StreamWriter
+                        Dim sr1 As IO.StreamWriter
 
                         Try
                             '保存先のsqlファイルのパス
                             Dim sqlPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}.sql"
                             'ファイルは上書き
-                            Dim sr0 As New IO.StreamWriter(sqlPath, False, enc)
+                            sr0 = New IO.StreamWriter(sqlPath, False, enc)
                             '掘削データの保存　1リング分を日付ファイルにに追加
                             '最終リング番号取得
                             Dim LastRingNo As Integer = (New clsReportDb).LastRing
                             Dim sqlPath1 As String =
                             $"{InitPara.BackUpFolder}\Bakup{DataBaseName}掘削データ{Now.ToString("yyyyMMdd")}.sql"
 
-                            Dim sr1 As New IO.StreamWriter(sqlPath1, True, enc)
+                            sr1 = New IO.StreamWriter(sqlPath1, True, enc)
 
 
                             For Each tbk As DataRow In tbDt.Rows
@@ -1252,6 +1253,8 @@ Public Class clsDBBackUp
                             ftpUpload(sqlPath1)
 
                         Catch ex As Exception
+                            sr1.Close()
+                            sr0.Close()
                             WriteEventData($"RingIntervalBakUpError", Color.White)
                             WriteEventData($":{ex.ToString}", Color.White)
                         End Try
@@ -1497,7 +1500,7 @@ Public Class clsTableUpdateConfirm
             Dim tableUpDt As DataTable =
             GetDtfmSQL($"SELECT * FROM updatetable WHERE TIME>'{tbUpdateTime.ToString}' ORDER BY TIME DESC")
 
-            If tableUpDt.Rows.Count <> 0 Then
+        If tableUpDt.Rows.Count <> 0 Then
                 tbUpdateTime = tableUpDt.Rows(0).Item("TIME")
             End If
 

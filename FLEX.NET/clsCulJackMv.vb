@@ -490,7 +490,7 @@ Friend Class clsCulJackMv
         Dim LimitOn As Boolean = _圧力調整中
         _圧力調整中 = ((_圧力超 Or _モーメント上限超 Or _片押しR上限超)
             ) And CtlPara.片押し制限フラグ And Not mblnStartTraking
-        If LimitOn <> _圧力調整中 Then
+        If CtlPara.AutoDirectionControl AndAlso LimitOn <> _圧力調整中 Then
             RaiseEvent OneWayLimitModeChanges(_圧力超, _モーメント上限超, _片押しR上限超)
         End If
 
