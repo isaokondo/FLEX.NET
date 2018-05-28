@@ -373,6 +373,32 @@ Friend Class clsCulJackMv
     ''' 自動方向制御開始
     ''' </summary>
     Public Sub MvAutoStart()
+
+
+        '自動制御開始時は、力点位置より偏差の重みを計算
+
+        Dim dblHorKp As Double ''水平P定数
+        Dim dblVerKp As Double ''鉛直P定数
+
+        Dim dblHorGp As Double
+        Dim dblVerGp As Double
+
+        Dim dblHorGi As Double
+        Dim dblVerGi As Double
+
+        dblHorKp = 100 / _水平P定数
+        dblVerKp = 100 / _鉛直P定数
+
+        dblHorGp = 1 + (_水平D定数 / _水平I定数) * (1 - 1 / cHorDg)
+        dblVerGp = 1 + (_鉛直D定数 / _鉛直I定数) * (1 - 1 / cVerDg)
+
+        dblHorGi = cHorDg / _水平I定数
+        dblVerGi = cVerDg / _鉛直I定数
+
+        '力点位置はPLCより取得
+        _HorDev = (PlcIf.PointX / dblHorKp - dblHorGp * mdbl水平偏差角) / dblHorGi
+        _VerDev = (PlcIf.PointY / dblVerKp - dblVerGp * mdbl鉛直偏差角) / dblVerGi
+
         TimerAuto.Start()
     End Sub
     ''' <summary>
@@ -473,6 +499,9 @@ Friend Class clsCulJackMv
             End If
         End If
         '
+
+        'Debug.Print($"{Now.ToLocalTime}  dblx={dblX} ,dlbY={dblY}    PLCX={PlcIf.PointX} PLCY={PlcIf.PointY}")
+
 
         EstValue.sbCulc() ''予測値の演算
         '予測値は使わない！　.netより
