@@ -439,8 +439,10 @@ Public Class clsCalcuStroke
                 '    'If _mesureJackStroke(mjJkNo) - _mesureOffsetJackStroke(mjJkNo) >= 0 Then
                 '計算するジャッキの伸び分
                 AddStroke.Add(_mesureJackStroke(mjJkNo) - _mesureOffsetJackStroke(mjJkNo))
-                '計算するジャッキ速度
-                LstSpeed.Add(_mesureJackSpeed(mjJkNo))
+                '計算するジャッキ速度 異常値は除外
+                If _mesureJackSpeed(mjJkNo) < 100 Then
+                    LstSpeed.Add(_mesureJackSpeed(mjJkNo))
+                End If
                 'End If
             End If
             '    '掘進ストローク 掘進モードのときのみ演算

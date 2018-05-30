@@ -1449,7 +1449,7 @@ Public Class clsTableUpdateConfirm
         timer.Interval = 2000   '5秒ごとの処理
         timer.Enabled = True ' timer.Start()と同じ
 
-        Dim td As DataTable = GetDtfmSQL("SELECT TIME FROM updatetable ORDER BY TIME DESC")
+        Dim td As DataTable = GetDtfmSQL("SELECT TIME FROM updatetable ORDER BY TIME DESC LIMIT 1")
         If td.Rows.Count <> 0 Then
             tbUpdateTime = td.Rows(0).Item(0)
 
@@ -1511,14 +1511,19 @@ Public Class clsTableUpdateConfirm
                     Case "flex初期パラメータ"
                         InitPara = New clsInitParameter
                     Case "flexセグメント組立データ", "セグメント割付シュミレーション"
-                        SegAsmblyData.SegmentRingDataRead()
-                        '組立パターンの情報を取得
-                        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+                        If tableUpDt.Rows(i).Item("beforevalue") <> tableUpDt.Rows(i).Item("aftervalue") Then
+                            SegAsmblyData.SegmentRingDataRead()
+                            '組立パターンの情報を取得
+                            SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
 
 
-                        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+                            My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
 
-                        RaiseEvent SegmentAsmChange()
+                            RaiseEvent SegmentAsmChange()
+
+                        End If
+
+
 
 
                 End Select
