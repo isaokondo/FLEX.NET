@@ -1460,42 +1460,42 @@ Public Class clsTableUpdateConfirm
 
     Private Sub TableUpdateTimeGet()
 
-        If clsDataBase.MySQLVersion = "4.0.25" Then
-            '更新時刻を取得
-            Dim NewUpTime As Dictionary(Of String, Date) = GetUpdateTIme()
+        'If clsDataBase.MySQLVersion = "4.0.25" Then
+        '    '更新時刻を取得
+        '    Dim NewUpTime As Dictionary(Of String, Date) = GetUpdateTIme()
 
-            For Each t In NewUpTime
-                If t.Value <> tbTime(t.Key) Then '更新時刻が変化
-                    Select Case t.Key
-                        Case "flexアナログtag", "flexデジタルtag"
-                            PlcIf.TagRead()
-                        Case "flex初期パラメータ"
-                            InitPara = New clsInitParameter
-                        Case "flex制御パラメータ"
-                            CtlPara.ReadParameter()
-                            My.Forms.frmMain.WideDataFldSet() '汎用データの更新
+        '    For Each t In NewUpTime
+        '        If t.Value <> tbTime(t.Key) Then '更新時刻が変化
+        '            Select Case t.Key
+        '                Case "flexアナログtag", "flexデジタルtag"
+        '                    PlcIf.TagRead()
+        '                Case "flex初期パラメータ"
+        '                    InitPara = New clsInitParameter
+        '                Case "flex制御パラメータ"
+        '                    CtlPara.ReadParameter()
+        '                    My.Forms.frmMain.WideDataFldSet() '汎用データの更新
 
-                    End Select
+        '            End Select
 
-                    If t.Key.Contains("セグメント") Then
-                        SegAsmblyData.SegmentRingDataRead()
-                        '組立パターンの情報を取得
-                        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+        '            If t.Key.Contains("セグメント") Then
+        '                SegAsmblyData.SegmentRingDataRead()
+        '                '組立パターンの情報を取得
+        '                SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
 
-                        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+        '                My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
 
-                    End If
-                End If
-            Next
-            '現在の更新時刻を保持
-            tbTime = New Dictionary(Of String, Date)(NewUpTime)
+        '            End If
+        '        End If
+        '    Next
+        '    '現在の更新時刻を保持
+        '    tbTime = New Dictionary(Of String, Date)(NewUpTime)
 
-        End If
+        'End If
 
         'MariaDBのときは、triggerを利用
         If clsDataBase.MySQLVersion = "MariaDB" Then
             Dim tableUpDt As DataTable =
-            GetDtfmSQL($"SELECT * FROM updatetable WHERE TIME>'{tbUpdateTime.ToString}' ORDER BY TIME DESC")
+            GetDtfmSQL($"SELECT * FROM updatetable WHERE TIME>'{tbUpdateTime.ToString}' ORDER BY TIME DESC LIMIT 1")
 
             If tableUpDt.Rows.Count <> 0 Then
                 tbUpdateTime = tableUpDt.Rows(0).Item("TIME")
@@ -1511,8 +1511,8 @@ Public Class clsTableUpdateConfirm
                     Case "flex初期パラメータ"
                         InitPara = New clsInitParameter
                     Case "flexセグメント組立データ", "セグメント割付シュミレーション"
-                        If tableUpDt.Rows(i).Item("beforevalue") <> tableUpDt.Rows(i).Item("aftervalue") Then
-                            SegAsmblyData.SegmentRingDataRead()
+                        'If tableUpDt.Rows(i).Item("beforevalue") <> tableUpDt.Rows(i).Item("aftervalue") Then
+                        SegAsmblyData.SegmentRingDataRead()
                             '組立パターンの情報を取得
                             SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
 
@@ -1521,7 +1521,7 @@ Public Class clsTableUpdateConfirm
 
                             RaiseEvent SegmentAsmChange()
 
-                        End If
+                        'End If
 
 
 
