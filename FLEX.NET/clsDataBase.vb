@@ -741,7 +741,7 @@ Public Class clsInitParameter
     ''' <returns></returns>
     Public Property MonitorModePlcCom As Boolean
         Get
-            Return _MonitorMode
+            Return _MonitorModePlcCom
         End Get
         Set(value As Boolean)
             _MonitorModePlcCom = value
