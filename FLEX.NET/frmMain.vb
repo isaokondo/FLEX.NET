@@ -255,7 +255,7 @@
         End If
 
         '減圧中から組立中は次ピース確認ボタン無効
-        If LosZeroSts >= 1 And LosZeroSts <= 5 Then
+        If (LosZeroSts >= 1 And LosZeroSts <= 5) Or Not PlcIf.LosZeroMode Then
             btnLoszeroContinu.Enabled = False
         End If
         If btnLoszeroContinu.Enabled Then
@@ -496,7 +496,7 @@
         DspTypeName.Value = SegAsmblyData.TypeData(PlcIf.RingNo).TypeName 'セグメント種類
         DspAssemblyPattern.Value = SegAsmblyData.AssemblyPtnName(PlcIf.RingNo) '組立パターン名
 
-        If PlcIf.AnalogTag.TagExist("ｾｸﾞﾒﾝﾄの種類信号") Then
+        If PlcIf.AnalogTag.TagExist("ｾｸﾞﾒﾝﾄの種類信号") And InitPara.ServerMode Then
             PlcIf.AnalogPlcWrite("ｾｸﾞﾒﾝﾄの種類信号", SegAsmblyData.TypeData(PlcIf.RingNo).TypeNameID) 'セグメント種類
         End If
 
@@ -511,7 +511,7 @@
                 DspClosetThrustJack.Value = SegAsmblyData.JackListDsp(.ClosetThrustJack) '押込み推進ジャッキ
                 DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
-                If PlcIf.AnalogTag.TagExist("甲乙表示用信号") Then
+                If PlcIf.AnalogTag.TagExist("甲乙表示用信号") And InitPara.ServerMode Then
                     PlcIf.AnalogPlcWrite("甲乙表示用信号", .PatternKouOtuID)
                 End If
 
@@ -555,8 +555,9 @@
                 Dim angle As Single
                 angle = 90 - pca.PieceCenterAngle
                 If angle < 0 Then angle += 360
-
-                PlcIf.AnalogPlcWrite(pca.AssemblyOrder & "ピースセグメント位置角度", angle)
+                If InitPara.ServerMode Then
+                    PlcIf.AnalogPlcWrite(pca.AssemblyOrder & "ピースセグメント位置角度", angle)
+                End If
             End If
 
             'End If
@@ -1193,8 +1194,10 @@
         EventlogUpdate()
 
         'PLCにグループ数、ジャッキ本数書込
-        PlcIf.ParameterWrite("グループ数", InitPara.NumberGroup)
-        PlcIf.ParameterWrite("ジャッキ本数", InitPara.NumberJack)
+        If InitPara.ServerMode Then
+            PlcIf.ParameterWrite("グループ数", InitPara.NumberGroup)
+            PlcIf.ParameterWrite("ジャッキ本数", InitPara.NumberJack)
+        End If
 
         '汎用データ表示項目セット
         WideDataFldSet()

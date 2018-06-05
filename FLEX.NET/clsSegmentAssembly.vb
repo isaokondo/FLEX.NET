@@ -588,7 +588,7 @@ Friend Class clsSegmentAssembly
 
 
     Public Sub SegmentAsemblyDataUpdat(RingNo As Integer, PatternName As String, TypeName As String, SheetID As String)
-        ' @(f)
+        ' @(f)  
         '
         ' 機能      :データ更新
         '
