@@ -30,7 +30,7 @@ Public Class frmSegmentEdit
 
         'データ読み込み
         SegAsmblyData.SegmentRingDataRead()
-
+        'セグメントシュミレーションデータ読込
         SegAsmblyData.SegmentSimDataRead()
 
         Dim SimDgvRow As Integer = 0

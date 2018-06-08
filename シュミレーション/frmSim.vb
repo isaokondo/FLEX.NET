@@ -529,7 +529,10 @@ Public Class frmSim
     ''' <param name="PlcData"></param>
     ''' <returns>PLCからの    ''' データ</returns>
     Private Function fnChangeStrokeAnalogIn(PlcData As Integer) As Integer
-        Return PlcData / SimSet.StrokePlcScale * SimSet.StrokeEngScale
+        Dim Stroke As Integer = PlcData / SimSet.StrokePlcScale * SimSet.StrokeEngScale
+        If Stroke < 0 Then Stroke = 0
+        If Stroke > SimSet.StrokeEngScale Then Stroke = SimSet.StrokeEngScale
+        Return Stroke
     End Function
 
     Private Function fnChangeStrokeAnalogOut(OrData As Single) As Integer

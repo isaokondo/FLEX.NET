@@ -159,8 +159,9 @@ Module mdlFLEX
         CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
 
         'If PreStatus = -1 Then Exit Sub
-        '待機中から掘進-----------------------------------------------------------
-        If PreStatus = cTaiki And NowStatus = cKussin Then
+        '待機中から掘進or 中断中-----------------------------------------------------------
+        'If PreStatus = cTaiki And NowStatus = cKussin Then
+        If PreStatus = cTaiki Then
             PlcIf.SppedRate = 100
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
             PlcIf.LosZeroSts_FLEX = 0
