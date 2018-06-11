@@ -1216,40 +1216,36 @@ Public Class clsDBBackUp
 
                         Try
                             '保存先のsqlファイルのパス
-                            Dim sqlPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}.sql"
+                            Dim BaseBackupPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}.sql"
                             'ファイルは上書き
-                            Dim sr0 As New IO.StreamWriter(sqlPath, False, enc)
+                            Dim srBaseBackupPath As New IO.StreamWriter(BaseBackupPath, False, enc)
                             '掘削データの保存　1リング分を日付ファイルにに追加
                             '最終リング番号取得
                             Dim LastRingNo As Integer = (New clsReportDb).LastRing
-                            Dim sqlPath1 As String =
+
+                            Dim ExecDataPath As String =
                             $"{InitPara.BackUpFolder}\Bakup{DataBaseName}掘削データ{Now.ToString("yyyyMMdd")}.sql"
 
-                            Dim sr1 As New IO.StreamWriter(sqlPath1, True, enc)
-
+                            Dim srExecData As New IO.StreamWriter(ExecDataPath, True, enc)
 
                             For Each tbk As DataRow In tbDt.Rows
                                 If tbk(0) <> "flex掘削データ" And tbk(0) <> "flexイベントデータ" And tbk(0) <> "plccomdata" And tbk(0) <> "updatetable" Then
-                                    'If tbk(0) = "セグメント組立パターンリスト" Then
-
-                                    ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `{tbk(0)}`;"), tbk(0), sr0)
-                                    'End If
+                                    ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `{tbk(0)}`;"), tbk(0), srBaseBackupPath)
                                 End If
                             Next
 
                             '閉じる
-                            sr0.Close()
+                            srBaseBackupPath.Close()
                             'データFTP転送(1)
-                            ftpUpload(sqlPath)
+                            ftpUpload(BaseBackupPath)
 
+                            ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `flex掘削データ` WHERE `リング番号`='{LastRingNo}';"), "flex掘削データ", srExecData)
 
-                            ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `flex掘削データ` WHERE `リング番号`='{LastRingNo}';"), "flex掘削データ", sr1)
-
-                            sr1.Close()
+                            srExecData.Close()
 
                             'FTPに転送
                             'データFTP転送(2) 
-                            ftpUpload(sqlPath1)
+                            ftpUpload(ExecDataPath)
 
                         Catch ex As Exception
                             WriteEventData($"RingIntervalBakUpError", Color.White)
@@ -1325,7 +1321,10 @@ Public Class clsDBBackUp
 
     End Sub
 
-
+    ''' <summary>
+    ''' FTPサーバーへアップロード
+    ''' </summary>
+    ''' <param name="upFile">アップするファイルパス</param>
     Private Sub ftpUpload(upFile As String)
 
         If IsNothing(FtpHost) Then Exit Sub
@@ -1376,9 +1375,7 @@ Public Class clsDBBackUp
             '閉じる
             ftpRes.Close()
 
-
         Catch ex As Exception
-            'Console.WriteLine("FTP転送：" & ex.ToString)
             WriteEventData($"FTP転送エラー：{ex.ToString} uri:{ftpUri.ToString}", Color.White)
             fs.Close()
 
