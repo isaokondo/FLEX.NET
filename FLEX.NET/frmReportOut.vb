@@ -168,7 +168,7 @@ Public Class frmReportOut
         Dim RingNo As Integer = RprDB.SelectRingNo(cmbRingSel.SelectedIndex)
         'テンポラリファイル名
         Dim TmpPath As String =
-            $"{AppDomain.CurrentDomain.BaseDirectory}tmp\RingReport_Ptn{PtnSelNo()}_Ring{RingNo}_{Now.ToString("yyyymmddhhmmssff")}.xlsx"
+            $"{AppDomain.CurrentDomain.BaseDirectory}tmp\RingReport_Ptn{PtnSelNo()}_Ring{RingNo}_{DateTime.Now.ToString("yyyymmddhhmmssff")}.xlsx"
 
         'シートにデータ書き込み
         'テンポラリファイルにリング報保存
@@ -198,7 +198,7 @@ Public Class frmReportOut
         Dim RingNo As Integer = RprDB.SelectRingNo(cmbRingSel.SelectedIndex)
         'テンポラリファイル名
         Dim TmpPath As String =
-            $"{AppDomain.CurrentDomain.BaseDirectory}tmp\RingReport_Ptn{PtnSelNo()}_Ring{RingNo}_{Now.ToString("yyyymmddhhmmssff")}.xlsx"
+            $"{AppDomain.CurrentDomain.BaseDirectory}tmp\RingReport_Ptn{PtnSelNo()}_Ring{RingNo}_{DateTime.Now.ToString("yyyymmddhhmmssff")}.xlsx"
 
         'シートにデータ書き込み
         'テンポラリファイルにリング報保存
@@ -518,14 +518,19 @@ Public Class clsReportDb
     Public Sub New()
         'リング情報読込
         Dim RingLst As DataTable =
-                GetDtfmSQL("select `リング番号`,min(`時間`)  from `flex掘削データ` group by `リング番号`  desc")
+                GetDtfmSQL("select `リング番号`  from `flex掘削データ` group by `リング番号`  desc")
+        'Dim RingLst As DataTable =
+        '        GetDtfmSQL("select `リング番号`,min(`時間`)  from `flex掘削データ` group by `リング番号`  desc")
         'GetDtfmSQL("Select Replace(`イベントデータ`,'リング 掘進開始しました',''),time 
         '        from `flexイベントデータ` where `flexイベントデータ`.`イベントデータ` like '%掘進開始%'ORDER BY Time DESC")
 
         'While RingLst.Read
         For Each t In RingLst.Rows
-            If Not IsDBNull(t.item(1)) And Not IsDBNull(t.item(0)) Then
-                _RingData.Add(New RingInfo(t.Item(0), t.Item(1)))
+            If Not IsDBNull(t.item(0)) Then
+                Dim RingStartTime As DataRowCollection =
+                GetDtfmSQL($"select `時間`  from `flex掘削データ` where `リング番号`='{t.item(0)}' LIMIT 1").Rows
+
+                _RingData.Add(New RingInfo(t.Item(0), RingStartTime(0).Item(0).ToString))
             End If
         Next
         'End While

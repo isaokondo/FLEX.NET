@@ -164,7 +164,12 @@ Friend Class clsSegmentAssembly
 
     Public ReadOnly Property TypeDataSim(ByVal RingNo As Integer) As SegmentType
         Get
-            Return _TypeList(_TypeNoSim(RingNo))
+            Try
+                Return _TypeList(_TypeNoSim(RingNo))
+
+            Catch ex As Exception
+                Return Nothing
+            End Try
 
         End Get
     End Property
@@ -203,7 +208,11 @@ Friend Class clsSegmentAssembly
 
     Public ReadOnly Property AssemblyPtnNameSim(RingNo As Integer) As String
         Get
-            Return _AssenblyPtnDic(_SegmentAssenblyPtnIDSim(RingNo))
+            Try
+                Return _AssenblyPtnDic(_SegmentAssenblyPtnIDSim(RingNo))
+            Catch ex As Exception
+                Return Nothing
+            End Try
         End Get
     End Property
 

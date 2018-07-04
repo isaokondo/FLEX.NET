@@ -304,7 +304,7 @@
         If InitPara.MonitorMode Then
             lblNowDate.Text = PlcIf.DataGetTime.ToString("yyyy/MM/dd HH:mm:ss")
         Else
-            lblNowDate.Text = Now.ToString("yyyy/MM/dd HH:mm:ss")
+            lblNowDate.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")
         End If
 
         '同時施工実績表示
@@ -316,9 +316,9 @@
         End If
 
         '定期バックアップの実行
-        If InitPara.ServerMode AndAlso Date.Compare(Now.Date, BackUpDate.Date) <> 0 AndAlso
-            TimeSpan.Parse(Now.ToLongTimeString).TotalMinutes = InitPara.BackUpTime.TotalMinutes Then
-            BackUpDate = Now
+        If InitPara.ServerMode AndAlso Date.Compare(DateTime.Now.Date, BackUpDate.Date) <> 0 AndAlso
+            TimeSpan.Parse(DateTime.Now.ToLongTimeString).TotalMinutes = InitPara.BackUpTime.TotalMinutes Then
+            BackUpDate = DateTime.Now
             Dim DailyBackup = New clsDBBackUp
             DailyBackup.DailyBackup()
         End If
@@ -411,7 +411,7 @@
              db.GetDtfmSQL($"SELECT 時間 FROM flex掘削データ 
             WHERE リング番号='{PlcIf.RingNo}' ORDER BY 時間  LIMIT 0,1")
         If tb.Rows.Count = 0 Then
-            Return Now
+            Return DateTime.Now
         Else
             Return tb.Rows(0).Item(0)
         End If
@@ -1278,7 +1278,7 @@
 
         db.ExecuteSqlCmd _
             ($"INSERT INTO FLEXイベントデータ
-            (Time,イベントデータ,イベント種類) VALUES('{Now}','Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]','0')")
+            (Time,イベントデータ,イベント種類) VALUES('{DateTime.Now}','Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]','0')")
 
     End Sub
     ''' <summary>

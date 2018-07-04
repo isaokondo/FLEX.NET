@@ -167,7 +167,7 @@ Module mdlFLEX
             PlcIf.LosZeroSts_FLEX = 0
             WriteEventData($"{PlcIf.RingNo}リング 掘進開始しました", Color.CornflowerBlue)
             My.Forms.frmMain.ChartClear() 'チャート初期化
-            My.Forms.frmMain.DspExcavStartDay(Now)
+            My.Forms.frmMain.DspExcavStartDay(DateTime.Now)
             ElapsedTime.Reset() '掘進時間計算開始
             CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
             '掘進開始時のストローク取り込み
@@ -706,7 +706,7 @@ Module mdlFLEX
 
             db.ExecuteSqlCmd _
             ($"INSERT INTO FLEXイベントデータ
-            (Time,イベントデータ,イベント種類) VALUES('{Now}','{EventMsg}','{Colorlng}')")
+            (Time,イベントデータ,イベント種類) VALUES('{DateTime.Now}','{EventMsg}','{Colorlng}')")
 
         End If
 
@@ -791,7 +791,7 @@ Module mdlFLEX
 
             'テンポラリファイル名
             Dim TmpPath As String =
-            $"{AppDomain.CurrentDomain.BaseDirectory}tmp\RingReport_Ptn{PtnSelNo}_Ring{LstRingNo}_{Now.ToString("yyyymmddhhmmssff")}.xlsx"
+            $"{AppDomain.CurrentDomain.BaseDirectory}tmp\RingReport_Ptn{PtnSelNo}_Ring{LstRingNo}_{DateTime.Now.ToString("yyyymmddhhmmssff")}.xlsx"
 
             'シートにデータ書き込み
             'テンポラリファイルにリング報保存

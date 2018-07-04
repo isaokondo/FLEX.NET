@@ -44,7 +44,7 @@ Friend Class clsDataSave
 
             Data(ColumnList.IndexOf("リング番号")) = PlcIf.RingNo.ToString
             Data(ColumnList.IndexOf("掘進ストローク")) = PlcIf.RealStroke.ToString
-            Data(ColumnList.IndexOf("時間")) = Now.ToString
+            Data(ColumnList.IndexOf("時間")) = DateTime.Now.ToString
 
             For i As Short = 0 To InitPara.NumberGroup - 1
                 Data(ColumnList.IndexOf("グループ" & (i + 1) & "圧力")) = PlcIf.GroupPv(i).ToString("F1")

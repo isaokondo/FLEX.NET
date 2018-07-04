@@ -1168,10 +1168,10 @@ Public Class clsDBBackUp
 
                     Try
                         '保存先のsqlファイルのパス
-                        Dim sqlPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}イベントデータ他{Now.ToString("yyyyMM")}.sql"
+                        Dim sqlPath As String = $"{InitPara.BackUpFolder}\Bakup{DataBaseName}イベントデータ他{DateTime.Now.ToString("yyyyMM")}.sql"
                         'ファイルは追加書込
                         Dim sr0 As New IO.StreamWriter(sqlPath, True, enc)
-                        Dim dt As String = Now.AddDays(-1).ToString("yyyy/MM/dd HH:mm:00")
+                        Dim dt As String = DateTime.Now.AddDays(-1).ToString("yyyy/MM/dd HH:mm:00")
                         ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `flexイベントデータ` WHERE TIME >= '{dt}'  ;"), "flexイベントデータ", sr0)
                         ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `plccomdata` WHERE TIME >= '{dt}'  ;"), "plccomdata", sr0)
                         ExportInsetSQL(GetDtfmSQL($"SELECT *  FROM `updatetable` WHERE TIME >= '{dt}'  ;"), "updatetable", sr0)
@@ -1224,7 +1224,7 @@ Public Class clsDBBackUp
                             Dim LastRingNo As Integer = (New clsReportDb).LastRing
 
                             Dim ExecDataPath As String =
-                            $"{InitPara.BackUpFolder}\Bakup{DataBaseName}掘削データ{Now.ToString("yyyyMMdd")}.sql"
+                            $"{InitPara.BackUpFolder}\Bakup{DataBaseName}掘削データ{DateTime.Now.ToString("yyyyMMdd")}.sql"
 
                             Dim srExecData As New IO.StreamWriter(ExecDataPath, True, enc)
 
@@ -1329,9 +1329,7 @@ Public Class clsDBBackUp
 
         If IsNothing(FtpHost) Then Exit Sub
 
-
         Dim ftpUri As Uri = New Uri($"ftp://{FtpHost}/{IO.Path.GetFileName(upFile)}")
-
 
         'FtpWebRequestの作成
         Dim ftpReq As System.Net.FtpWebRequest =
@@ -1350,7 +1348,6 @@ Public Class clsDBBackUp
             upFile, IO.FileMode.Open, IO.FileAccess.Read)
 
         Try
-
             'ファイルをアップロードするためのStreamを取得
             Dim reqStrm As IO.Stream = ftpReq.GetRequestStream()
             'アップロードするファイルを開く
@@ -1382,11 +1379,6 @@ Public Class clsDBBackUp
         End Try
 
     End Sub
-
-
-
-
-
 
 
     'OutputDataReceivedイベントハンドラ

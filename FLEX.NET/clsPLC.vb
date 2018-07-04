@@ -1029,17 +1029,19 @@ Public Class clsPlcIf
         If InitPara.MonitorMode Then
             'モニタモード時は、DBよびPLC通信データを読込
             Dim tb As DataTable = GetDtfmSQL("SELECT * FROM plccomdata ORDER BY TIME DESC LIMIT 0,1")
-            'アナログデータ
-            AnalogComData =
+            If tb.Rows.Count > 0 Then
+                'アナログデータ
+                AnalogComData =
                 (From i In tb.Rows(0).Item("Analog").ToString.Split(",") Select Int16.Parse(i)).ToArray
-            'パラメータ
-            ParmterComData =
+                'パラメータ
+                ParmterComData =
                 (From i In tb.Rows(0).Item("Parameter").ToString.Split(",") Select CShort(i)).ToArray
-            'デジタルデータ
-            DigtalComPlcData =
+                'デジタルデータ
+                DigtalComPlcData =
                 (From i In tb.Rows(0).Item("Digtal").ToString.Split(",") Select CShort(i)).ToArray
-            'データを取得した時刻　フォームに表示
-            _DataGetTime = DateTime.Parse(tb.Rows(0).Item("TIME")).AddSeconds(tb.Rows(0).Item("SEC"))
+                'データを取得した時刻　フォームに表示
+                _DataGetTime = DateTime.Parse(tb.Rows(0).Item("TIME")).AddSeconds(tb.Rows(0).Item("SEC"))
+            End If
 
         End If
 
@@ -1200,7 +1202,13 @@ Public Class clsPlcIf
                         TimeOutErrCount = 0
 
                     Catch ex As Exception
-                        MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.Message}{vbCrLf}{ex.StackTrace.ToString}")
+
+                        If IsNothing(sharrDeviceValue) Then
+                        Else
+
+                            MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.Message}{vbCrLf}{ex.StackTrace.ToString}")
+                        End If
+
                     End Try
 
                 End If
@@ -1382,10 +1390,10 @@ Public Class clsPlcIf
             'PLCデータをテーブルに書き込む　
             'データは1秒毎に更新、保存は1分毎
             Try
-                Dim Tm As String = Now.ToString("yyyy/MM/dd HH:") & "00:00"
+                Dim Tm As String = DateTime.Now.ToString("yyyy/MM/dd HH:") & "00:00"
 
                 ExecuteSqlCmd($"REPLACE INTO PlcComData VALUES 
-                        ('{Tm}','{Now.ToString("ss").ToNum + Now.ToString("mm").ToNum * 60}',
+                        ('{Tm}','{DateTime.Now.ToString("ss").ToNum + DateTime.Now.ToString("mm").ToNum * 60}',
                             '{String.Join(",", AnalogComData)}',
                             '{String.Join(",", DigtalComPlcData)}',
                             '{String.Join(",", ParmterComData)}')")
