@@ -87,6 +87,8 @@ Public Class clsPlcIf
     Private _操作角 As Single
     Private _操作強 As Single
 
+
+
     '速度割合　減圧ジャッキ、引きジャッキ本数に応じて速度の割合を算出
     Private _SpeedRate As Single = 100
 
@@ -263,6 +265,8 @@ Public Class clsPlcIf
             Return _EngValue
         End Get
     End Property
+
+
 
     Public Property PointX As Single
         Get
@@ -1449,6 +1453,10 @@ Public Class clsPlcIf
 
             Anlog2WordWite("水平モーメント", CulcMoment.MomentX)
             Anlog2WordWite("鉛直モーメント", CulcMoment.MomentY)
+            '作用点追加
+            AnalogPlcWrite("作用点Ｘ", CulcMoment.ActivePointX)
+            AnalogPlcWrite("作用点Ｙ", CulcMoment.ActivePointY)
+
 
         End If
 

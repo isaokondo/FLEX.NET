@@ -111,7 +111,7 @@ Public Class frmSim
         'マシンの読込部分
         'アナログ
         Dim dtAiAdr As DataTable =
-            db.GetDtfmSQL("SELECT MIN(`値`), MAX(`値`)  from `flexシュミレーション設定` where (left(`値`,1)='W' AND `項目`<>'GpPresMV' AND `項目`<>'LosZeroStFlex' AND `項目`<>'GyairoAdr' AND `項目`<>'PitchingAdr')")
+            db.GetDtfmSQL("SELECT MIN(`値`), MAX(`値`)  from `flexシュミレーション設定` where (left(`値`,1)='W')") ' AND `項目`<>'GpPresMV' AND `項目`<>'LosZeroStFlex' AND `項目`<>'GyairoAdr' AND `項目`<>'PitchingAdr')")
         '開始アドレスと個数の取得
         MachineAiStartAdress = dtAiAdr.Rows(0).Item(0).ToString
         MachineAiPlcRdCount = CInt(dtAiAdr.Rows(0).Item(1).ToString.Replace("W", "&H")) - CInt(MachineAiStartAdress.Replace("W", "&H")) + 1 + InitParm.NumberGroup

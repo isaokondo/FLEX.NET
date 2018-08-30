@@ -51,6 +51,9 @@ Friend Class clsCulMoment
     End Property
 
 
+
+
+
     Public ReadOnly Property MomentX() As Single
         Get
             MomentX = _MomentX
@@ -71,6 +74,34 @@ Friend Class clsCulMoment
             Thrust = _Thrust
         End Get
     End Property
+    ''' <summary>
+    ''' 作用点X　モーメントX/推力
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ActivePointX As Single
+        Get
+            Dim _APX As Single = 0
+            If _Thrust <> 0 Then
+                _APX = -_MomentX / _Thrust
+            End If
+            Return _APX
+        End Get
+    End Property
+    ''' <summary>
+    ''' 作用点Y　モーメントY/推力
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ActivePointY As Single
+        Get
+            Dim _APY As Single = 0
+            If _Thrust <> 0 Then
+                _APY = -_MomentY / _Thrust
+            End If
+            Return _APY
+        End Get
+    End Property
+
+
 
     Public ReadOnly Property ThrustOnTime As Single
         Get
