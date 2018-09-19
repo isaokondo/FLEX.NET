@@ -110,9 +110,17 @@ Public Class clsMachinSpec
     ''' </summary>
     Public Sub DataRead()
         ''選択クエリー実行
+        Dim MachineSPecTable As String
+        Select Case InitPara.MachineType
+            Case 0, 1
+                MachineSPecTable = "シールド機データ３"
+            Case 2, 5
+                MachineSPecTable = "v中折シールド機非対称データ"
+
+        End Select
 
         Dim tblShield As DataTable =
-            GetDtfmSQL("SELECT * FROM シールド機データ３;")
+            GetDtfmSQL($"SELECT * FROM {MachineSPecTable};")
 
         For Each t As DataRow In tblShield.Rows
             _ZendoLen = t.Item("前胴長")

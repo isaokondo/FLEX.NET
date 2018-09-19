@@ -527,6 +527,13 @@ Public Class clsInitParameter
 
     Private _constructionName As String '工事名（環境設定テーブルより
     Private _LosZeroEquip As Boolean = True    '同時施工あり（環境設定テーブルより
+    Private _MachineType As Integer = 1
+    '0：標準中折なし
+    '1：標準Ｘ中折
+    '2：標準Ｖ中折
+    '3：デュアル中折３段
+    '4；コンパクト中折２段
+    '5；標準V中折J非対称
 
     Private _ClientMode As Boolean = False  'クライアントモード　データ保存なし、グループ操作出力なしのモード
     Private _MonitorMode As Boolean = False  'モニタモード　データ保存なし、PLC書き込みなし　　グループ操作出力なしのモード
@@ -697,6 +704,23 @@ Public Class clsInitParameter
     Public ReadOnly Property LosZeroEquip As Boolean
         Get
             Return _LosZeroEquip
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' マシンの種類
+    ''' '0：標準中折なし    
+    ''' '1：標準Ｘ中折    
+    ''' '2：標準Ｖ中折    
+    ''' '3：デュアル中折３段    
+    ''' '4；コンパクト中折２段    
+    ''' '5；標準V中折J非対称
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    Public ReadOnly Property MachineType As Integer
+        Get
+            Return _MachineType
         End Get
     End Property
 
@@ -899,10 +923,11 @@ Public Class clsInitParameter
 
         '工事名の取得,同時施工あり／なし
         Dim ConNameLosZero As DataTable =
-            GetDtfmSQL($"SELECT 工事名,施工方法 FROM 環境設定 WHERE シートID='10'")
+            GetDtfmSQL($"SELECT 工事名,施工方法,シールド種類 FROM 環境設定 WHERE シートID='10'")
         If ConNameLosZero.Rows.Count <> 0 Then
             _constructionName = ConNameLosZero.Rows(0).Item(0)
             _LosZeroEquip = (ConNameLosZero.Rows(0).Item(1) >= 1)
+            _MachineType = ConNameLosZero.Rows(0).Item(2)
             _OpposeJackEnable =
                 _LosZeroEquip And (_constructionName.IndexOf("鹿島") >= 0 Or _constructionName.IndexOf("飛島") >= 0)
 
