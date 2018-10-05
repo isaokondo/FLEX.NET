@@ -285,12 +285,21 @@ Public Class clsDataBase
 
                 Dim adpter As New MySqlDataAdapter(SQLCommand, con)
 
-                adpter.Fill(ds)
-                adpter.Dispose()
+                Try
+
+                    adpter.Fill(ds)
+                    adpter.Dispose()
 
 
-                con.Close()
-                con.Dispose()
+                    con.Close()
+                    con.Dispose()
+
+                Catch ex As Exception
+                    MsgBox($"データベースSQLコマンドエラー{vbCrLf}
+                    {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}　FLEXを終了します  ", vbCritical)
+                    Application.Exit()
+
+                End Try
             End If
 
 

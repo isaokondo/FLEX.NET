@@ -1092,7 +1092,6 @@ Public Class clsPlcIf
                             _groupFlg(i) = _EngValue("グループ" & (i + 1) & "制御フラグ")
                         Next
 
-
                         Dim JkPs As Single = _FilterJkPress
                         _FilterJkPress = _jkPress + CtlPara.元圧フィルタ係数 / 100 * (_FilterJkPress - _jkPress)
                         If _FilterJkPress < 0 Then _FilterJkPress = 0
@@ -1102,14 +1101,15 @@ Public Class clsPlcIf
                             RaiseEvent JkPressFilterChange()
                         End If
 
-
                         _nakaoreLR = _EngValue("中折左右角")
                         _nakaoreTB = _EngValue("中折上下角")
                         _realStroke = _EngValue("掘進ストローク")
                         _excaStatus = _EngValue("掘進ステータス")
                         _CopyAngle = _EngValue("コピー角度")
                         _CopyStroke1 = _EngValue("コピーストローク1")
-                        _CopyStroke2 = _EngValue("コピーストローク2")
+                        If _EngValue.ContainsKey("コピーストローク2") Then
+                                _CopyStroke2 = _EngValue("コピーストローク2")
+                            End If
                         _MesureCalcAveJackStroke = _EngValue("平均ジャッキストローク")
 
                         If CtlPara.TaleClrMeasurUExit Then
@@ -1210,7 +1210,8 @@ Public Class clsPlcIf
                         If IsNothing(sharrDeviceValue) Then
                         Else
 
-                            MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.Message}{vbCrLf}{ex.StackTrace.ToString}")
+                            'MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.Message}{vbCrLf}{ex.StackTrace.ToString}")
+                            RaiseEvent PLCErrOccur(Me, New EventArgs, $"PLC ReadErr {ex.Message}{vbCrLf}{ex.StackTrace.ToString}", 0)
                         End If
 
                     End Try
@@ -1386,7 +1387,8 @@ Public Class clsPlcIf
             End If
         Catch exException As Exception
             '例外処理	
-            MessageBox.Show(exException.Message & vbCrLf & exException.StackTrace, "PLC_READ", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            'MessageBox.Show(exException.Message & vbCrLf & exException.StackTrace, "PLC_READ", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            RaiseEvent PLCErrOccur(Me, New EventArgs, $"PLC デジタル読込エラー {exException.Message}{exException.StackTrace.ToString}", 0)
             Exit Sub
         End Try
 
@@ -1454,8 +1456,8 @@ Public Class clsPlcIf
             Anlog2WordWite("水平モーメント", CulcMoment.MomentX)
             Anlog2WordWite("鉛直モーメント", CulcMoment.MomentY)
             '作用点追加
-            AnalogPlcWrite("作用点Ｘ", CulcMoment.ActivePointX)
-            AnalogPlcWrite("作用点Ｙ", CulcMoment.ActivePointY)
+            AnlogPlcWriteIfTagExit("作用点Ｘ", CulcMoment.ActivePointX)
+            AnlogPlcWriteIfTagExit("作用点Ｙ", CulcMoment.ActivePointY)
 
 
         End If
@@ -1667,6 +1669,19 @@ Public Class clsPlcIf
             'PLC書込
             PLC_Write(PlcAdress, wD)
         End With
+    End Sub
+
+    ''' <summary>
+    ''' アナログtag存在チェック後書き込む
+    ''' </summary>
+    ''' <param name="TagName"></param>
+    ''' <param name="Value"></param>
+    Public Sub AnlogPlcWriteIfTagExit(TagName As String, ByVal Value As Single)
+        If _EngValue.ContainsKey(TagName) Then
+            AnalogPlcWrite(TagName, Value)
+        End If
+
+
     End Sub
 
 

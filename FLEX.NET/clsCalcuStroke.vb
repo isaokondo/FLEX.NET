@@ -266,7 +266,7 @@ Public Class clsCalcuStroke
         For Each i As Short In InitPara.MesureJackAngle.Keys
             _mesureOffsetJackStroke(i) = 0
         Next
-
+        CtlPara.mesureOffsetJackStroke = _mesureOffsetJackStroke
     End Sub
 
 
