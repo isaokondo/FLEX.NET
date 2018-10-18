@@ -794,7 +794,7 @@ Public Class clsInitParameter
             GetDtfmSQL($"SELECT 工事名,施工方法 FROM 環境設定 WHERE シートID='10'")
         If ConNameLosZero.Rows.Count <> 0 Then
             _constructionName = ConNameLosZero.Rows(0).Item(0)
-            _LosZeroEquip = (ConNameLosZero.Rows(0).Item(1) = 1)
+            _LosZeroEquip = (ConNameLosZero.Rows(0).Item(1) >= 1)
             _OpposeJackEnable =
                 _LosZeroEquip And (_constructionName.IndexOf("鹿島") >= 0 Or _constructionName.IndexOf("飛島") >= 0)
 

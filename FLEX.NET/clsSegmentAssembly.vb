@@ -404,8 +404,8 @@ Friend Class clsSegmentAssembly
                     End If
                 Next
 
-                '***********減圧グループから対抗グループを算出する**************
-                If PrsDt.Value.ReduceGroup.Count <> 0 Then
+                '***********減圧グループから対抗グループを算出する************** 
+                If PrsDt.Value.ReduceGroup.Count <> 0 And CtlPara.LosZeroOpposeControl And CtlPara.LosZeroOpposeGroupNumber <> 0 Then
 
                     '減圧グループの中心角度を求める
                     Dim GpCenterAngle As New List(Of Single)

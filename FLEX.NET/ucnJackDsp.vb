@@ -765,7 +765,7 @@ Public Class ucnJackDsp
             End If
 
             'ジャッキ本数により幅を変える
-            Dim wd As Integer = 580 / InitPara.NumberJack
+            Dim wd As Integer = 580 / _numberJack
             'ジャッキステータス（色識別の表示)
             g.FillRectangle(JackBrush, -wd, 20, wd * 2, 15) '四角形の中心を０
             'ワールド座標系リセット
