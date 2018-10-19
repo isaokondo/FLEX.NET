@@ -34,6 +34,13 @@ Public Class ucnJackDsp
     Private _FlexPointSeater As Single
 
     ''' <summary>
+    ''' 操作なし　操作ボタン非表示
+    ''' </summary>
+    Private _NoOperation As Boolean = False
+
+    Private _CopyVisible As Boolean = True
+
+    ''' <summary>
     ''' コピーストローク表示
     ''' コピーカッタの色表示が有効になるストローク
     ''' </summary>
@@ -129,6 +136,8 @@ Public Class ucnJackDsp
     Public Property SegmentDspEnable As Boolean
 
 
+
+
     ''' <summary>
     ''' ジャッキの状態表示
     ''' </summary>
@@ -222,6 +231,46 @@ Public Class ucnJackDsp
             'DspCopy()
         End Set
     End Property
+
+    <Browsable(True), Description("操作なし")>
+    Public Property NoOperation As Boolean
+        Get
+            Return _NoOperation
+        End Get
+        Set(value As Boolean)
+            _NoOperation = value
+            imgPointXDOWN.Visible = Not _NoOperation
+            imgPointYDOWN.Visible = Not _NoOperation
+            imgPointXUP.Visible = Not _NoOperation
+            imgPointYUP.Visible = Not _NoOperation
+            btnPointCenter.Visible = Not _NoOperation
+            btnPointAutoMan.Visible = Not _NoOperation
+            lblPointR.Visible = Not _NoOperation
+            lblPointX.Visible = Not _NoOperation
+            lblPointY.Visible = Not _NoOperation
+            lblSeater.Visible = Not _NoOperation
+            lblr.Visible = Not _NoOperation
+            lblS.Visible = Not _NoOperation
+            lblX.Visible = Not _NoOperation
+            lblY.Visible = Not _NoOperation
+
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' コピーの表示あり
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property CopyVisible As Boolean
+        Get
+            Return _CopyVisible
+        End Get
+        Set(value As Boolean)
+            _CopyVisible = value
+        End Set
+    End Property
+
+
     Public Property PieceName As New List(Of String)
     Public Property PieceAngle As New List(Of Single)
     Public Property PieceCenterAngle As New List(Of Single)
@@ -786,6 +835,9 @@ Public Class ucnJackDsp
     ''' コピー位置、ステータスの表示
     ''' </summary>
     Private Sub DspCopy()
+
+        If Not _CopyVisible Then Exit Sub
+
 
         Dim bmpForDso As New Bitmap(imgJack)
 

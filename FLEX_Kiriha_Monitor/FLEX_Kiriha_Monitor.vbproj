@@ -98,6 +98,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsCalcuStroke.vb" />
+    <Compile Include="clsControlParameter.vb" />
+    <Compile Include="clsCulcDistance.vb" />
+    <Compile Include="clsCulKijun.vb" />
+    <Compile Include="clsCulMoment.vb" />
+    <Compile Include="clsDataBase.vb" />
+    <Compile Include="clsLineMake.vb" />
+    <Compile Include="clsMachinSpec.vb" />
+    <Compile Include="clsPlanData.vb" />
+    <Compile Include="clsPLC.vb" />
+    <Compile Include="clsSegmentAssembly.vb" />
     <Compile Include="frmMain.Designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
     </Compile>
@@ -165,6 +176,17 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ACTMULTILib">
+      <Guid>{A306B141-AE98-11D3-83AE-00A024BDBF2B}</Guid>
+      <VersionMajor>3</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
