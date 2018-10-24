@@ -2,7 +2,7 @@
 Imports System.Math
 Imports System.Runtime.CompilerServices
 
-Module Module1
+Module mdlFlexMonitor
 
     Public InitPara As clsInitParameter '初期値パラメータ
     Public SegAsmblyData As clsSegmentAssembly ''セグメント組立データ
@@ -310,6 +310,154 @@ Module Module1
     End Function
 
 
+    ''' <summary>
+    ''' 計測ストロークの変化時
+    ''' ステータス変化時
+    ''' </summary>
+    Public Sub PlcIf_MesureStrokeChange() Handles PlcIf.MesureStrokeChange, PlcIf.ExcavationStatusChange
+        CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
+        CalcStroke.MesureJackSpeed = PlcIf.MesureJackSpeed
+        CalcStroke.Calc2() '計算ストローク演算
+        If InitPara.ServerMode Then
+            PlcIf.AnalogPlcWrite("掘進ストローク", CalcStroke.CalcAveLogicalStroke)
+            PlcIf.AnalogPlcWrite("掘進スピード", CalcStroke.MesureAveSpeed)
+            PlcIf.AnalogPlcWrite("平均ジャッキストローク", CalcStroke.MesureCalcAveJackStroke)
 
+        End If
+
+    End Sub
+
+    ''' <summary>
+    ''' 掘進ステータス変化時
+    ''' </summary>
+    ''' <param name="PreStatus">変化前</param>
+    ''' <param name="NowStatus">変化後</param>
+    Private Sub PlcIf_ExcavationStatusChange(PreStatus As Integer, NowStatus As Integer) _
+        Handles PlcIf.ExcavationStatusChange
+        '組立パターンの情報を取得
+        SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+        'TODO:最大テーパーの算出
+        CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
+        '最大テーパー位置
+        CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
+        'セグメント幅
+        CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+
+        '待機中から掘進or 中断中-----------------------------------------------------------
+        If PreStatus = cTaiki Then
+            My.Forms.frmMain.DspExcavStartDay(DateTime.Now)
+            ElapsedTime.Reset() '掘進時間計算開始
+            CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
+            '掘進開始時のストローク取り込み
+            CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
+        End If
+        If PreStatus = cChudan And NowStatus = cKussin Then
+            ElapsedTime.ExcavationStart()
+            If LosZeroSts >= 1 Then ElapsedTime.LosZeroStart()
+
+
+
+        End If
+        '中断-----------------------------------------------------------
+        If NowStatus = cChudan Then
+            'JackManual.ManualOn = False
+            ElapsedTime.ExcavationStop()
+
+        End If
+
+        '待機中-----------------------------------------------------------
+        If NowStatus = cTaiki Then
+            'ロスゼロの実績算出
+            LosZeroPerform.Caluc()
+            LosZeroSts = 0
+            PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
+            PlcIf.LosZeroSts_FLEX = 0
+
+            '掘進開始時のストローク取り込み
+            CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
+            CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
+
+        End If
+        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+    End Sub
+
+    ''' <summary>
+    ''' 同時施工ステータス変化
+    ''' </summary>
+    ''' <param name="PreSts">変化前のステータス</param>
+    ''' <param name="NowSts">変化後のステータス</param>
+    ''' <param name="FromDev">True:マシン　False：FLEX</param>
+    Private Sub PlcIf_LosZeroStsChange(PreSts As Short,
+                                       NowSts As Short, FromDev As Boolean) Handles PlcIf.LosZeroStsChange
+        'マシンからのステータス
+        If FromDev Then
+
+            With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
+                Select Case NowSts
+                    Case 1 'マシンからの減圧開始
+                        LosZeroSts = 1
+                        ElapsedTime.LosZeroStart()  '同時施工時間算出
+                    Case 2
+                        '引き戻しジャッキ
+
+                        LosZeroSts = 3
+
+                    Case 3
+                        LosZeroSts = 4
+
+                    Case 4
+                        LosZeroSts = 5
+                    Case 6
+                        LosZeroSts = 5
+                    Case 5, 7
+                        LosZeroSts = 6
+                        '計算ストローク用に組立ジャッキの設定
+                        CalcStroke.asembleFinishedJack = .ClosetJack '押込みジャッキ
+                        CalcStroke.asembleFinishedJack = .AddClosetJack '追加押込ジャッキ
+                        CalcStroke.SetOffsetStroke() 'オフセットストロークの算出
+
+                End Select
+            End With
+
+        Else
+            'FLEXからのステータス
+            Select Case NowSts
+                Case 1  '減圧開始
+                    LosZeroSts = 1
+
+                    '計算ストローク用セグメント幅等設定
+                    CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+                    'todo:テーパー量等？
+
+                Case 2
+                    LosZeroSts = 2
+            End Select
+
+        End If
+
+        My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
+
+    End Sub
+
+    ''' <summary>
+    ''' マシン先端距離の変化時の処理
+    ''' </summary>
+    Private Sub LineDistanceChage() Handles PlcIf.LineDistanceChage, CtlPara.ReferChnge, TableUpdateConfirm.SegmentAsmChange
+
+        RefernceDirection.sbCulKijun()
+
+        My.Forms.frmMain.LineDataUpdate()
+
+        'If CtlPara.AutoDirectionControl Then
+        '    JackMvAuto.水平偏差角 = RefernceDirection.平面偏角
+        '    JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
+        'End If
+
+
+
+
+
+
+    End Sub
 
 End Module

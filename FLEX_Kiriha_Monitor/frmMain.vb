@@ -1,9 +1,14 @@
 ﻿Imports FLEX.NET
 Public Class frmMain
 
+    ''' <summary>
+    ''' イベントログのID
+    ''' </summary>
+    Private EventID As Long
 
 
 
+    Private BlinkFlg As Boolean '点滅フラグ
 
 
 
@@ -35,6 +40,16 @@ Public Class frmMain
         'JackManual = New clsJkManualOut 'ジャッキ手動操作出力
         'Reduce = New clsReducePress 'ロスゼロ減圧処理
         'TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
+
+        For Each ctp As Control In pnlLosZero.Controls
+            Debug.Print(ctp.Name)
+            If ctp.Name.Contains("ucnAssemblyPieceNo") Then
+                DirectCast(ctp, ucnDspBit).FieldName = StrConv(Strings.Right(ctp.Name, 2).ToNum.ToString, VbStrConv.Wide) & "ピース目"
+            End If
+
+        Next
+
+
 
     End Sub
 
@@ -77,6 +92,20 @@ Public Class frmMain
             SegmentDataDsp()
         End If
 
+        'ロスゼロ実績
+        LosZeroPerform.Caluc()
+        'ロスゼロで掘進途中に立ち上げたときのストローク処理
+        StrokeSet()
+
+
+        '汎用データ表示項目セット
+        WideDataFldSet()
+
+
+        For i As Short = 0 To 9
+            Panel4.Controls("lblGpPvColor" & i).BackColor = UcnJackDsp.GpPvColor(i)
+        Next
+
 
 
         '掘削開始時刻の取得
@@ -97,7 +126,32 @@ Public Class frmMain
         End If
 
     End Function
+    Private Sub EventlogUpdate()
+        '最新のIDを比較
+        Dim DB As New clsDataBase
+        Dim tbEvID As DataTable = DB.GetDtfmSQL _
+            ($"SELECT ID FROM FLEXイベントデータ 
+             ORDER BY ID DESC LIMIT 0,1")
+        'IDが更新されてれば表示更新
+        If tbEvID.Rows.Count <> 0 Then
+            If EventID <> tbEvID.Rows(0).Item(0) Then
+                rtbEventLog.Clear()
+                Dim tb As DataTable = DB.GetDtfmSQL _
+            ($"SELECT TIME,イベントデータ,イベント種類 FROM FLEXイベントデータ 
+            WHERE イベント種類 <> '{ColorTranslator.ToOle(Color.White)}' ORDER BY TIME DESC LIMIT 0,50")
 
+                For Each t As DataRow In tb.Rows
+                    rtbEventLog.SelectionColor =
+                ColorTranslator.FromOle(t.Item(2))
+                    rtbEventLog.AppendText(CDate(t.Item(0)).ToString("yyyy/MM/dd HH:mm:ss") & Space(2) & t.Item(1).ToString & vbCrLf)
+
+                Next
+
+            End If
+            EventID = tbEvID.Rows(0).Item(0)
+        End If
+
+    End Sub
     Private Sub tmrDataDsp_Tick(sender As Object, e As EventArgs) Handles tmrDataDsp.Tick
 
 
@@ -108,7 +162,7 @@ Public Class frmMain
 
         DspRingNo.Text = PlcIf.RingNo 'リングNo
 
-        'DspDirection.Value = PlcIf.Gyro              '方位角
+        DspDirection.Value = PlcIf.Gyro              '方位角
         'If InitPara.bottomStrokeEnable Then
         '    DspBottomRealStroke.Value = CalcStroke.BottomCalcStroke '下ｽﾄﾛｰｸ
         '    DspBottomRawStroke.Value = PlcIf.BotomStroke '下ｽﾄﾛｰｸ
@@ -136,13 +190,6 @@ Public Class frmMain
         DspVerBroken.Value = PlcIf.NakaoreTB         '中折上下
 
 
-        'DspMachineRolling.Value = PlcIf.MashineRolling  'マシンローリング
-
-        'DspBottomClearance.Value = PlcIf.botomClearance
-        'DspTopClearance.Value = PlcIf.topClearance
-        'DspRightClearance.Value = PlcIf.rightClearance
-        'DspLeftClearance.Value = PlcIf.leftClearance
-
         DspThrust.Value = CulcMoment.Thrust '推力
         DspMoment.Value = CulcMoment.MomentR 'モーメント
         ''FLEXの制御ON/OFF
@@ -164,119 +211,81 @@ Public Class frmMain
         UcnJackDsp.CopyStroke = PlcIf.CopyStroke1
         UcnJackDsp.CopyCutEnableStroke = CtlPara.CopyCutEnableStroke
 
-        '力点座標数値表示
-        UcnJackDsp.FlexPointX = PlcIf.PointX
-        UcnJackDsp.FlexPointY = PlcIf.PointY
-
         UcnJackDsp.FlexPointR = PlcIf.操作強
         UcnJackDsp.FlexPointSeater = PlcIf.操作角
 
-
-        ''掘進モード／セグメントモードの表示
-        'lblMachineMode.Text = If(PlcIf.ExcavMode, "掘進", "セグメント") & "モード"
-        'lblMachineMode.BackColor = If(PlcIf.ExcavMode, Color.Magenta, Color.Aqua)
-        ''End With
-        'If PlcIf.assembleSegFinish Then
-        '    lblMachineMode.BackColor = Color.Yellow
-        'End If
+        UcnJackDsp.FlexPointX = PlcIf.PointX
+        UcnJackDsp.FlexPointY = PlcIf.PointY
 
 
         UcnJackDsp.MakeBmp()
 
 
         DspAveStartStroke.Value = CtlPara.StartAveStroke '平均開始ストローク
-        DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
+        DspAveStroke.Value = PlcIf.RealStroke ' CalcStroke.CalcAveLogicalStroke '計算平均ストローク
         DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均スピード
 
-        'DspLRStrokeDiff.Value = CalcStroke.LeftCalcStroke - CalcStroke.RightCalcStroke '左右ｽﾄﾛｰｸ差
-        'If CtlPara.RightStrokeDiff Then
-        '    DspLRStrokeDiff.Value = -DspLRStrokeDiff.Value
-        'End If
-        'DspLRStrokeDiff.FieldName = $"ｽﾄﾛｰｸ差(mm){If(CtlPara.RightStrokeDiff, "右", "左")}勝"
 
-        ''汎用データ表示
-        'For Each wu In CtlPara.WideUse
-        '    Dim dd As ucnDspData = Me.Controls("DspWideUse" & wu.Key)
-        '    If dd.FieldName <> "" Then
-        '        dd.Value = PlcIf.EngValue(dd.FieldName)
-        '    Else
-        '        dd.Value = "-------"
-        '    End If
-        'Next
+        '汎用データ表示
+        For Each wu In CtlPara.WideUse
+            Dim dd As ucnDspData = Me.Controls("DspWideUse" & wu.Key)
+            If dd.FieldName <> "" Then
+                dd.Value = PlcIf.EngValue(dd.FieldName)
+            Else
+                dd.Value = "-------"
+            End If
+        Next
 
-        With CtlPara
-            '自動方向制御ON／OFF
-            UcnJackDsp.FlexAutoManual = .AutoDirectionControl
-            DspFlexAuto.BitStatus = .AutoDirectionControl
-        End With
-
-        ''圧力調整用フラグ
-        'DspJackPress.Blink = JackMvAuto.圧力超
-        'DspMoment.Blink = JackMvAuto.モーメント上限超
-        'UcnJackDsp.PointRLimitOver = JackMvAuto.片押しR上限超
-
-        'DspHorDev.Blink = RefernceDirection.HorDevLimitOver
-        'DspVerDev.Blink = RefernceDirection.VerDevLimitOver
+        '自動方向制御ON／OFF
+        DspFlexAuto.BitStatus = CtlPara.AutoDirectionControl
 
 
 
+        Dim DspPieceNo As New Dictionary(Of Integer, ucnDspBit)
+        For Each c As Control In pnlLosZero.Controls
+            If c.Name.Contains("ucnAssemblyPieceNo") Then
+                DspPieceNo.Add(Strings.Right(c.Name, 2), c)
+            End If
+        Next
 
-        ''チャートの更新
-        'If PlcIf.ExcaStatus = cKussin Then
-        '    'ﾓｰﾒﾝﾄ
-        '    ucnHorMomentChart.ChartDataAdd(PlcIf.RealStroke, CulcMoment.MomentX)
-        '    ucnVerMomentChart.ChartDataAdd(PlcIf.RealStroke, CulcMoment.MomentY)
-        '    ucnHorDevChart.ChartDataAdd(PlcIf.RealStroke, RefernceDirection.平面偏角)
-        '    ucnVerDevChart.ChartDataAdd(PlcIf.RealStroke, RefernceDirection.縦断偏角)
-        'End If
+        ucnLosZeroSts.BitStatus = PlcIf.LosZeroEnable And PlcIf.LosZeroMode
+        ucnLosZeroSts.Blink = (LosZeroSts > 0)
 
-        ''同時施工用
-        'ucnLosZeroMode.BitStatus = PlcIf.LosZeroEnable And PlcIf.LosZeroMode
-        'ucnLosZeroMode.Blink = Not PlcIf.LosZeroEnable And PlcIf.LosZeroMode
-        ''対抗ジャッキ
-        'UcnOpposeJackControl.BitStatus = CtlPara.LosZeroOpposeControl
-        'UcnOpposeJackSelect.BitStatus = CtlPara.LosZeroOpposeJack
+        If PlcIf.LosZeroEnable And PlcIf.LosZeroMode Then
+            ''組立ピース番号
+            For Each c In DspPieceNo
+                c.Value.BitStatus = (c.Key <= PlcIf.AssemblyPieceNo)
+                c.Value.Blink = (c.Key = PlcIf.AssemblyPieceNo)
+            Next
 
-        ''同時施工ピース確認ボタンブリンク
-        'btnPieceConfirm.Enabled = ucnLosZeroMode.Blink
-        'If btnPieceConfirm.Enabled Then
-        '    btnPieceConfirm.ForeColor = IIf(BlinkFlg, Color.Black, Color.Red)
-        'End If
-        ''同時施工キャンセルボタン有効／無効
-        'btnLossZerooCancel.Enabled = ucnLosZeroMode.BitStatus
 
-        ''組立ピース番号
-        'If ucnLosZeroMode.BitStatus Then
-        '    ucnAssemblyPieceNo.FieldName = PlcIf.AssemblyPieceNo & "ピース目"
-        'Else
-        '    ucnAssemblyPieceNo.FieldName = "-------"
-        'End If
+        Else
+            For Each c As ucnDspBit In DspPieceNo.Values
+                c.BitStatus = False
+                c.Blink = False
+            Next
 
+        End If
         ''減圧中
-        'ucnReduceFinish.Blink = (LosZeroSts = 1)
+        ucnReduceStart.Blink = (LosZeroSts = 1)
+        ucnReduceStart.BitStatus = (LosZeroSts = 1)
         ''減圧完了
-        'ucnReduceFinish.BitStatus = (LosZeroSts >= 2)
+        ucnReduceFinish.BitStatus = (LosZeroSts = 2)
         ''引戻し中
-        'ucnPullBackFinish.Blink = (LosZeroSts = 3)
+        ucnPullBackStart.Blink = (LosZeroSts = 3)
+        ucnPullBackStart.BitStatus = (LosZeroSts = 3)
         ''引戻完了
-        'ucnPullBackFinish.BitStatus = (LosZeroSts >= 4)
+        ucnPullBackFinish.BitStatus = (LosZeroSts = 4)
         ''組立中
-        'ucnAssemblyFinish.Blink = (LosZeroSts = 5)
+        ucnAssemblyStart.Blink = (LosZeroSts = 5)
+        ucnAssemblyStart.BitStatus = (LosZeroSts = 5)
         ''組立完了
-        'ucnAssemblyFinish.BitStatus = (LosZeroSts >= 6)
+        ucnAssemblyFinish.BitStatus = (LosZeroSts >= 6)
 
         'If ucnReduceFinish.Blink Then
         '    ucnReduceFinish.FieldName = "減圧中"
         'Else
         '    ucnReduceFinish.FieldName = "減圧完了"
-        'End If
-
-        ''減圧中から組立中は次ピース確認ボタン無効
-        'If (LosZeroSts >= 1 And LosZeroSts <= 5) Or Not PlcIf.LosZeroMode Then
-        '    btnLoszeroContinu.Enabled = False
-        'End If
-        'If btnLoszeroContinu.Enabled Then
-        '    btnLoszeroContinu.ForeColor = IIf(BlinkFlg, Color.Black, Color.Red)
         'End If
 
 
@@ -294,20 +303,17 @@ Public Class frmMain
         '    ucnAssemblyFinish.FieldName = "組立完了"
         'End If
 
-        ''点滅用フラグ
-        'BlinkFlg = Not BlinkFlg
-        ''ロスゼロ工程表示
-        'For Each cControl As Control In pnlLosZero.Controls
-        '    If TypeOf cControl Is ucnDspBit Then
-        '        Dim u As ucnDspBit = DirectCast(cControl, ucnDspBit)
-        '        If u.Blink Then
-        '            u.BitStatus = BlinkFlg
-        '        End If
-        '    End If
-        'Next
-
-        'DspSegmentW.Value = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
-        'DspTargetNetStroke.Value = If(CtlPara.TargetNetStroke = 0, DspSegmentW.Value, CtlPara.TargetNetStroke)
+        '点滅用フラグ
+        BlinkFlg = Not BlinkFlg
+        'ロスゼロ工程表示
+        For Each cControl As Control In pnlLosZero.Controls
+            If TypeOf cControl Is ucnDspBit Then
+                Dim u As ucnDspBit = DirectCast(cControl, ucnDspBit)
+                If u.Blink Then
+                    u.BitStatus = BlinkFlg
+                End If
+            End If
+        Next
 
 
         ''経過時間の表示
@@ -335,7 +341,7 @@ Public Class frmMain
         ''TODO:線形データ画面更新　LineDistanceChage に記述したい
         Call LineDataUpdate()
 
-        'EventlogUpdate()
+        EventlogUpdate()
 
 
 
@@ -346,7 +352,51 @@ Public Class frmMain
 
 
     End Sub
+    ''' <summary>
+    ''' 汎用データ表示項目セット
+    ''' </summary>
+    Public Sub WideDataFldSet()
+        For Each wu In CtlPara.WideUse
+            Dim dd As ucnDspData = Me.Controls("DspWideUse" & wu.Key)
+            If wu.Value <> "" Then
+                If PlcIf.AnalogTag.TagExist(wu.Value) Then
+                    dd.FieldName = wu.Value
+                    dd.Unit = PlcIf.AnalogTag.TagData(wu.Value).Unit
+                    dd.DecimalPlaces = PlcIf.AnalogTag.TagData(wu.Value).DigitLoc
+                End If
+            End If
+        Next
 
+    End Sub
+    ''' <summary>
+    ''' ロスゼロで掘進途中に立ち上げたときのストローク処理
+    ''' </summary>
+    Private Sub StrokeSet()
+        If PlcIf.ExcaStatus <> cTaiki AndAlso PlcIf.LosZeroEnable Then
+            'TODO:最大テーパーの算出
+            CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
+            '最大テーパー位置
+            CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
+            'セグメント幅
+            CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+            '引き戻し中から押込み中の間は引き戻しｼﾞｬｯｷをセット
+            If PlcIf.LosZeroSts_M >= 2 And PlcIf.LosZeroSts_M <= 4 Then
+                CalcStroke.PullBackJack = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).PullBackJack
+            End If
+
+            For Pieace As Short = 1 To PlcIf.AssemblyPieceNo
+                If Pieace < PlcIf.AssemblyPieceNo Or (Pieace = PlcIf.AssemblyPieceNo And PlcIf.LosZeroSts_M = 5) Then
+                    CalcStroke.asembleFinishedJack = SegAsmblyData.ProcessData(Pieace).ClosetJack
+                    CalcStroke.asembleFinishedJack = SegAsmblyData.ProcessData(Pieace).AddClosetJack
+                    'CalcStroke.MesureCalcAveJackStroke = PlcIf.MesureCalcAveJackStroke
+                End If
+            Next
+            '計測ジャッキオフセットストロークの読込
+            CalcStroke.mesureOffsetJackStroke = CtlPara.mesureOffsetJackStroke
+
+        End If
+
+    End Sub
     ''' <summary>
     ''' 線形データ画面更新
     ''' </summary>

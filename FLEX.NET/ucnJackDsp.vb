@@ -117,7 +117,7 @@ Public Class ucnJackDsp
     Private GroupPvDsp() As ucnDspGpPres
     Private _JackStatus() As Short
 
-    Private GpPvColor(9) As Color
+    Private _GpPvColor(9) As Color
 
 
     Private BlinkFlag As Boolean    '点滅用フラグ
@@ -136,6 +136,11 @@ Public Class ucnJackDsp
     Public Property SegmentDspEnable As Boolean
 
 
+    Public ReadOnly Property GpPvColor As Color()
+        Get
+            Return _GpPvColor
+        End Get
+    End Property
 
 
     ''' <summary>
@@ -240,6 +245,7 @@ Public Class ucnJackDsp
         Set(value As Boolean)
             _NoOperation = value
             imgPointXDOWN.Visible = Not _NoOperation
+            imgPointXDOWN.Enabled = Not _NoOperation
             imgPointYDOWN.Visible = Not _NoOperation
             imgPointXUP.Visible = Not _NoOperation
             imgPointYUP.Visible = Not _NoOperation
@@ -484,16 +490,16 @@ Public Class ucnJackDsp
         'CenterPos.Offset(ovsPoint.Width / 2, ovsPoint.Height / 2)
 
         'グループ圧の色設定　アプリケーション設定より読込
-        GpPvColor(0) = My.Settings.GpPsColor1
-        GpPvColor(1) = My.Settings.GpPsColor2
-        GpPvColor(2) = My.Settings.GpPsColor3
-        GpPvColor(3) = My.Settings.GpPsColor4
-        GpPvColor(4) = My.Settings.GpPsColor5
-        GpPvColor(5) = My.Settings.GpPsColor6
-        GpPvColor(6) = My.Settings.GpPsColor7
-        GpPvColor(7) = My.Settings.GpPsColor8
-        GpPvColor(8) = My.Settings.GpPsColor9
-        GpPvColor(9) = My.Settings.GpPsColor10
+        _GpPvColor(0) = My.Settings.GpPsColor1
+        _GpPvColor(1) = My.Settings.GpPsColor2
+        _GpPvColor(2) = My.Settings.GpPsColor3
+        _GpPvColor(3) = My.Settings.GpPsColor4
+        _GpPvColor(4) = My.Settings.GpPsColor5
+        _GpPvColor(5) = My.Settings.GpPsColor6
+        _GpPvColor(6) = My.Settings.GpPsColor7
+        _GpPvColor(7) = My.Settings.GpPsColor8
+        _GpPvColor(8) = My.Settings.GpPsColor9
+        _GpPvColor(9) = My.Settings.GpPsColor10
 
         '力点のイメージ設定
         Dim bmp As New Bitmap(My.Resources.point)
@@ -927,7 +933,7 @@ Public Class ucnJackDsp
                 ColorIndex = 0
             End If
             If ColorIndex > 9 Then ColorIndex = 9
-            GpColor = GpPvColor(ColorIndex)
+            GpColor = _GpPvColor(ColorIndex)
 
             Dim startAng As Single = 360 - GrDgree(i) '+ 0.5 '開始角度
             Dim endAng As Single = -GrJkNum(i) * 360 / _numberJack + 0.5　 'スイープ角度
