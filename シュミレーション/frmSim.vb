@@ -364,8 +364,12 @@ Public Class frmSim
             byarrBufferByte(iNumber * 2 + 1) = byarrTemp(1)
         Next iNumber
 
-        'バイト配列より32bit整数に変換してから、読出し用テキストボックスに格納
-        nudGyairo.Value = BitConverter.ToInt32(byarrBufferByte, 0) / 100
+        Try
+            'バイト配列より32bit整数に変換してから、読出し用テキストボックスに格納
+            nudGyairo.Value = BitConverter.ToInt32(byarrBufferByte, 0) / 100
+        Catch ex As Exception
+
+        End Try
 
 
         'グループ圧PV

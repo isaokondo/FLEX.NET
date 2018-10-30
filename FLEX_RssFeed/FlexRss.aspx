@@ -6,17 +6,17 @@
 <script runat="Server">
     Public Sub Page_Load(sender As Object, e As EventArgs)
 
-           Dim Builder = New MySqlConnectionStringBuilder()
-            ' データベースに接続するために必要な情報をBuilderに与える
-            Builder.Server = "localhost"
-            Builder.Port = 25565
-            Builder.UserID = "toyo"
-            Builder.Password = "yanagi"
-            Builder.Database = "flex大成外環大泉"
-            Builder.ConnectionTimeout = 600
-            Builder.DefaultCommandTimeout = 300
+        Dim Builder = New MySqlConnectionStringBuilder()
+        ' データベースに接続するために必要な情報をBuilderに与える
+        Builder.Server = "localhost"
+        Builder.Port = 25565
+        Builder.UserID = "toyo"
+        Builder.Password = "yanagi"
+        Builder.Database = "flex大成外環大泉"
+        Builder.ConnectionTimeout = 600
+        Builder.DefaultCommandTimeout = 300
 
-            Dim ConStr = Builder.ToString()
+        Dim ConStr = Builder.ToString()
 
 
         Dim con As New MySqlConnection

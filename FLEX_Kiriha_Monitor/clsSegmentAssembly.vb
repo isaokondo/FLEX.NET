@@ -794,7 +794,7 @@ Public Class clsSegmentAssembly
             End Get
             Set(value As List(Of Short))
                 _PullBackJack = value
-                'GetReduceJackAndGr()
+                GetReduceJackAndGr()
             End Set
         End Property
         ''' <summary>

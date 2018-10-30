@@ -589,7 +589,7 @@ Module mdlFLEX
             '対抗グループのセット ロスゼロありで対抗ジャッキ選択ありで減圧開始から押し込み中まで
             Dim OpposeJ As Boolean =
                 InitPara.LosZeroEquip AndAlso CtlPara.LosZeroOpposeJack AndAlso
-                (LosZeroSts >= 1 AndAlso LosZeroSts <= 4) AndAlso
+                (LosZeroSts >= 1 AndAlso LosZeroSts <= 5) AndAlso
                 SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).OpposeGroup.Contains(InitPara.JackGroupPos(i))
             If OpposeJ Then
                 If CtlPara.LosZeroOpposeControl Then

@@ -442,37 +442,8 @@ Friend Class clsSegmentAssembly
         End If
 
     End Sub
-    ''' <summary>
-    ''' 角度の平均を取得
-    ''' </summary>
-    ''' <param name="Dg"></param>
-    ''' <returns></returns>
-    Private Function GetDegAv(Dg As List(Of Single)) As Single
-        Dim LstX As New List(Of Single), LstY As New List(Of Single)
 
-        For Each EaDg In Dg
-            LstX.Add(Math.Cos(EaDg * Math.PI / 180))
-            LstY.Add(Math.Sin(EaDg * Math.PI / 180))
-        Next
-        Return Math.Atan2(LstY.Average, LstX.Average) * 180 / Math.PI
-    End Function
 
-    ''' <summary>
-    ''' 開始グループからの対抗グループ数のグループのリストを取得
-    ''' </summary>
-    ''' <param name="StartG">開始グループ</param>
-    ''' <returns>グループのリスト</returns>
-    Private Function GetGpLst(StartG As Short) As List(Of Short)
-        Dim GpLst As New List(Of Short)
-        For g As Short = StartG To StartG + CtlPara.LosZeroOpposeGroupNumber - 1
-            If g > InitPara.NumberGroup Then
-                GpLst.Add(g - InitPara.NumberGroup)
-            Else
-                GpLst.Add(g)
-            End If
-        Next
-        Return GpLst
-    End Function
 
 
 
@@ -794,7 +765,7 @@ Friend Class clsSegmentAssembly
             End Get
             Set(value As List(Of Short))
                 _PullBackJack = value
-                'GetReduceJackAndGr()
+                GetReduceJackAndGr()
             End Set
         End Property
         ''' <summary>
@@ -876,28 +847,74 @@ Friend Class clsSegmentAssembly
             Next
 
             '減圧グループから対抗グループを算出する
+            If _ReduceGroup.Count > 0 Then
+                '減圧グループの中心角度を求める
+                Dim GpCenterAngle As New List(Of Single)
+                For Each Gp In _ReduceGroup
+                    GpCenterAngle.Add(InitPara.FaiGroup(Gp - 1))
+                Next
+                '対抗グループの中心角度+180度
+                Dim OppseAngle As Single = GetDegAv(GpCenterAngle) + 180 'GpCenterAngle.Average + 180
+                If OppseAngle > 360 Then OppseAngle -= 360
+                Dim AnglDiff As New Dictionary(Of Short, Single)
+                For i = 1 To InitPara.NumberGroup
+                    '各グループからの対抗グループ設定数分の平均角度を算出
+                    Dim AvDg As New List(Of Single)
+                    For Each g As Short In GetGpLst(i)
+                        AvDg.Add(InitPara.FaiGroup(g - 1))
+                    Next
+                    '各グループの中心角度との絶対値差を求める
+                    AnglDiff.Add(i, Math.Abs(Hoi2Hoko(GetDegAv(AvDg) - OppseAngle)))
+                Next
+                '最小値の先頭グループNoを取得
+                Dim StartG As Short = (From q In AnglDiff Order By q.Value Select q.Key).First
+                '対抗グループのリスト取得
+                _OpposeGroup = GetGpLst(StartG)
+                ''対抗グループ
+                '_OpposeGroup =
+                '    (From q In AnglDiff Order By q.Value Descending Select q.Key).Take(CtlPara.LosZeroOpposeGroupNumber).ToList
 
-            '減圧グループの中心角度を求める
-            Dim GpCenterAngle As New List(Of Single)
-            For Each Gp In _ReduceGroup
-                GpCenterAngle.Add(InitPara.FaiGroup(Gp - 1))
-            Next
-            '対抗グループの中心角度
-            Dim OppseAngle As Single = GpCenterAngle.Average + 180
-            If OppseAngle > 360 Then OppseAngle -= 360
-            '各グループの中心角度との絶対値を求める
-            Dim AnglDiff As New Dictionary(Of Short, Single)
-            For i = 0 To InitPara.NumberGroup - 1
-                AnglDiff.Add(1 + 1, Math.Abs(InitPara.FaiGroup(i) - OppseAngle))
-                If AnglDiff(i + 1) > 360 Then AnglDiff(i + 1) -= 360
-            Next
-            '対抗グループ
-            _OpposeGroup =
-                    (From q In AnglDiff Order By q.Value Descending Select q.Key).Take(CtlPara.LosZeroOpposeGroupNumber).ToList
+            Else
+                _OpposeGroup = New List(Of Short)
+            End If
 
 
 
         End Sub
+
+
+        ''' <summary>
+        ''' 角度の平均を取得
+        ''' </summary>
+        ''' <param name="Dg"></param>
+        ''' <returns></returns>
+        Private Function GetDegAv(Dg As List(Of Single)) As Single
+            Dim LstX As New List(Of Single), LstY As New List(Of Single)
+
+            For Each EaDg In Dg
+                LstX.Add(Math.Cos(EaDg * Math.PI / 180))
+                LstY.Add(Math.Sin(EaDg * Math.PI / 180))
+            Next
+            Return Math.Atan2(LstY.Average, LstX.Average) * 180 / Math.PI
+        End Function
+
+        ''' <summary>
+        ''' 開始グループからの対抗グループ数のグループのリストを取得
+        ''' </summary>
+        ''' <param name="StartG">開始グループ</param>
+        ''' <returns>グループのリスト</returns>
+        Private Function GetGpLst(StartG As Short) As List(Of Short)
+            Dim GpLst As New List(Of Short)
+            For g As Short = StartG To StartG + CtlPara.LosZeroOpposeGroupNumber - 1
+                If g > InitPara.NumberGroup Then
+                    GpLst.Add(g - InitPara.NumberGroup)
+                Else
+                    GpLst.Add(g)
+                End If
+            Next
+            Return GpLst
+        End Function
+
 
 
 
@@ -995,7 +1012,38 @@ Friend Class clsSegmentAssembly
         Public Property Note As String
     End Class
 
+    'todo:同じ処理がこのファイルのクラス内あるので共通化したい
 
+    ''' <summary>
+    ''' 角度の平均を取得
+    ''' </summary>
+    ''' <param name="Dg"></param>
+    ''' <returns></returns>
+    Private Function GetDegAv(Dg As List(Of Single)) As Single
+        Dim LstX As New List(Of Single), LstY As New List(Of Single)
 
+        For Each EaDg In Dg
+            LstX.Add(Math.Cos(EaDg * Math.PI / 180))
+            LstY.Add(Math.Sin(EaDg * Math.PI / 180))
+        Next
+        Return Math.Atan2(LstY.Average, LstX.Average) * 180 / Math.PI
+    End Function
+
+    ''' <summary>
+    ''' 開始グループからの対抗グループ数のグループのリストを取得
+    ''' </summary>
+    ''' <param name="StartG">開始グループ</param>
+    ''' <returns>グループのリスト</returns>
+    Private Function GetGpLst(StartG As Short) As List(Of Short)
+        Dim GpLst As New List(Of Short)
+        For g As Short = StartG To StartG + CtlPara.LosZeroOpposeGroupNumber - 1
+            If g > InitPara.NumberGroup Then
+                GpLst.Add(g - InitPara.NumberGroup)
+            Else
+                GpLst.Add(g)
+            End If
+        Next
+        Return GpLst
+    End Function
 
 End Class
