@@ -147,6 +147,11 @@ Friend Class clsSegmentAssembly
     ''' <returns></returns>
     Public ReadOnly Property AssemblyPtnName(RingNo As Integer) As String
         Get
+            If _AssenblyPtnDic.ContainsKey(_SegmentAssenblyPtnID(RingNo)) Then
+                Return _AssenblyPtnDic(_SegmentAssenblyPtnID(RingNo))
+            Else
+                Return "未登録"
+            End If
         End Get
     End Property
 

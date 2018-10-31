@@ -319,6 +319,7 @@ Module mdlFLEX
 
                     Case 8
                         WriteEventData("Ｋセグメント組立完了しました。", Color.Magenta)
+                        PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
 
                 End Select
             End With
@@ -383,9 +384,10 @@ Module mdlFLEX
             If CtlPara.NextPieceConfirm Then
                 'ボイスメッセージ出力(次ピース確認)
                 PlaySound(My.Resources.NextPieceConfirm)
-
-                '同時施工継続メッセージ出力
-                My.Forms.frmNextPieceConfirm.Show()
+                If InitPara.ServerMode Then
+                    '同時施工継続メッセージ出力
+                    My.Forms.frmNextPieceConfirm.Show()
+                End If
             Else
                 PlcIf.LosZeroSts_FLEX = 1 '減圧開始
             End If
