@@ -23,13 +23,14 @@ Public Class frmAssemblyProcessEdit
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub btnApply_Click(sender As Object, e As EventArgs) Handles btnApply.Click
+    Private Sub btnApply_Click(sender As Object, e As EventArgs) Handles btnApply.Click, btnOK.Click
+        CtlPara.AssemblyPieceNumber = AssemblyPieceNumber.Value
         SegAsmblyData.SegmentAsemblyDataUpdat(ConfirmRingNo.Value, AssemblyPatternSel.ComboBox.SelectedItem, DspSegmentTypeName.ComboBox.SelectedItem, Nothing)
         ConfirmRingNo_ValueChanged(sender, e)
     End Sub
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
-        SegAsmblyData.SegmentAsemblyDataUpdat(ConfirmRingNo.Value, AssemblyPatternSel.ComboBox.SelectedItem, DspSegmentTypeName.ComboBox.SelectedItem, Nothing)
+        'SegAsmblyData.SegmentAsemblyDataUpdat(ConfirmRingNo.Value, AssemblyPatternSel.ComboBox.SelectedItem, DspSegmentTypeName.ComboBox.SelectedItem, Nothing)
         'ConfirmRingNo_ValueChanged(sender, e)
         Me.Close()
     End Sub
@@ -40,6 +41,9 @@ Public Class frmAssemblyProcessEdit
 
     Private Sub ConfirmRingNo_ValueChanged(sender As Object, e As EventArgs) Handles ConfirmRingNo.ValueChanged,
         AssemblyPieceNo.ValueChanged, OperattionJackSel.ValueChanged ', DspSegmentTypeName.ValueChanged, AssemblyPatternSel.ValueChanged
+
+        AssemblyPieceNumber.MaxValue = SegAsmblyData.AssemblyPlanPieceNumber '組み立てピース計画数
+        AssemblyPieceNumber.Value = CtlPara.AssemblyPieceNumber '組み立てピース数
 
         If IsNothing(OperattionJackSel.SelectItem) Then Exit Sub
 
@@ -82,7 +86,7 @@ Public Class frmAssemblyProcessEdit
 
                 DspReduceGroup.Value = SegAsbly.JackListDsp(.ReduceGroup)
                 DspOpposeGroup.Value = SegAsbly.JackListDsp(.OpposeGroup)
-                AssemblyPieceNo.MaxValue = SegAsbly.AssemblyPieceNumber '組立ピース番号MAX値設定
+                AssemblyPieceNo.MaxValue = SegAsbly.AssemblyPlanPieceNumber '組立ピース番号MAX値設定
 
                 '作動ジャッキの表示
                 If OperattionJackSel.ComboBox.SelectedIndex = -1 Then
@@ -115,7 +119,7 @@ Public Class frmAssemblyProcessEdit
         End If
 
         'MAXのピース番号内で表示
-        If SegAsmblyData.AssemblyPieceNumber > AssemblyPieceNo.Value AndAlso SegAsmblyData.ProcessData.Count <> 0 Then
+        If SegAsmblyData.AssemblyPlanPieceNumber > AssemblyPieceNo.Value AndAlso SegAsmblyData.ProcessData.Count <> 0 Then
             DspNextPieceName.Value =
             SegAsmblyData.ProcessData(AssemblyPieceNo.Value + 1).PieceName '組立次ピース名称
         Else
@@ -296,6 +300,10 @@ Public Class frmAssemblyProcessEdit
     End Sub
 
     Private Sub StartJackNo_Load(sender As Object, e As EventArgs) Handles StartJackNo.Load
+
+    End Sub
+
+    Private Sub AssemblyPieceNumber_Load(sender As Object, e As EventArgs) Handles AssemblyPieceNumber.Load
 
     End Sub
 End Class

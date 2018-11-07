@@ -204,6 +204,8 @@ Module mdlFLEX
             LosZeroPerform.Caluc()
             'サーバーモードで前リングと100mm以上異なる場合
             CtlPara.TargetNetStroke = 0
+            'ストローク補正値
+            CtlPara.OffsetStroke = 0
             If InitPara.ServerMode AndAlso
                 Math.Abs(SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth - SegAsmblyData.TypeData(PlcIf.RingNo - 1).CenterWidth) > 0.1 Then
                 frmNetStrokeChange.Show() '推進量の変更
@@ -331,7 +333,7 @@ Module mdlFLEX
                     '姿勢制御停止
                     JackMvAuto.MvAutoStop()
 
-                    If PlcIf.LosZeroSts_M <> 1 And PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber Then
+                    If PlcIf.LosZeroSts_M <> 1 And PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPlanPieceNumber Then
                         PlcIf.AssemblyPieceNo += 1  '組立ピース　更新
                     End If
                     My.Forms.frmNextPieceConfirm.Close() '継続確認画面を閉じる
@@ -378,9 +380,11 @@ Module mdlFLEX
     ''' </summary>
     Private Sub PlcIf_NextPieceStart() Handles PlcIf.NextPieceStart
         '最終ピース到達前 減圧ジャッキがある場合
-        If PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPieceNumber AndAlso
+        'If PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPlanPieceNumber AndAlso
+        If PlcIf.AssemblyPieceNo < CtlPara.AssemblyPieceNumber AndAlso
             SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).ReduceJack.Count > 0 Then
-
+            '鹿島外環Kピースまで同時施工を行わないように一時的に対応
+            'If PlcIf.AssemblyPieceNo < 12 Then
             If CtlPara.NextPieceConfirm Then
                 'ボイスメッセージ出力(次ピース確認)
                 PlaySound(My.Resources.NextPieceConfirm)
@@ -392,6 +396,7 @@ Module mdlFLEX
                 PlcIf.LosZeroSts_FLEX = 1 '減圧開始
             End If
         End If
+        'End If
     End Sub
 
 

@@ -43,6 +43,7 @@ Public Class frmSegmentEdit
                 DgvSegAssign("SegWidth", i).Value = SegAsmblyData.TypeData(RingNo).CenterWidth * 1000 'セグメント幅
             End If
             If InitPara.LosZeroEquip Then
+                'Debug.WriteLine(RingNo &":" & SegAsmblyData.AssemblyPtnName(RingNo))
                 DgvSegAssign("AssemblyPtnName", i).Value = SegAsmblyData.AssemblyPtnName(RingNo) '組立パターン名
             End If
 

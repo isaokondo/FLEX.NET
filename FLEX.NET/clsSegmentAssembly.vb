@@ -109,10 +109,10 @@ Friend Class clsSegmentAssembly
         End Get
     End Property
     ''' <summary>
-    ''' 組立ピース数
+    ''' 組立計画ピース数
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property AssemblyPieceNumber As Short
+    Public ReadOnly Property AssemblyPlanPieceNumber As Short
 
     'TODO:データベース書込
     ''' <summary>
@@ -150,7 +150,7 @@ Friend Class clsSegmentAssembly
             If _AssenblyPtnDic.ContainsKey(_SegmentAssenblyPtnID(RingNo)) Then
                 Return _AssenblyPtnDic(_SegmentAssenblyPtnID(RingNo))
             Else
-                Return "未登録"
+                Return ""
             End If
         End Get
     End Property
@@ -441,7 +441,7 @@ Friend Class clsSegmentAssembly
                 'MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、組立順序が設定されてません'", vbCritical)
             Else
                 '組立ピース数を取得
-                _AssemblyPieceNumber = (From i In _ProcessData Select i.Value.AssemblyOrder).Max
+                _AssemblyPlanPieceNumber = (From i In _ProcessData Select i.Value.AssemblyOrder).Max
             End If
 
         End If

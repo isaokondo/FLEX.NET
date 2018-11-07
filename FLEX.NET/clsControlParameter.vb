@@ -22,7 +22,11 @@ Public Class clsControlParameter
     'Private _操作角 As Double
     'Private _操作強 As Double
 
+    '組み立てピース数
+    Private _AssemblyPieceNumber As Integer = 0
 
+
+    Private _OffsetStroke As Integer = 0 'ストローク補正値
 
     Private _片押しR制限値 As Single = 2
     Private _圧力許容値 As Single = 35
@@ -1028,6 +1032,35 @@ Public Class clsControlParameter
         End Set
     End Property
 
+    ''' <summary>
+    ''' 組み立てピース数
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property AssemblyPieceNumber As Integer
+        Get
+            Return _AssemblyPieceNumber
+        End Get
+        Set(value As Integer)
+            _AssemblyPieceNumber = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' ストローク補正値
+    ''' ジャッキストローク演算にエラーが有った場合の補正値
+    ''' リング更新でリセット
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property OffsetStroke As Integer
+        Get
+            Return _OffsetStroke
+        End Get
+        Set(value As Integer)
+            _OffsetStroke = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
 
     ''' <summary>
     ''' 掘進開始時の平均ストローク
@@ -1268,13 +1301,14 @@ Public Class clsControlParameter
         _CopySelect = chk.GetValue("CopySelect")
 
         '減圧開始時のモーメント低減率
-
-
-
         _MomentRdductionRateOnReduce = chk.GetValue("MomentRdductionRateOnReduce", "80")
         '片押し調整時のモーメント低減率
         _MomentRdductionRateOnOnewayLimit = chk.GetValue("MomentRdductionRateOnOnewayLimit", "80")
 
+        '組み立てピース数
+        _AssemblyPieceNumber = chk.GetValue("AssemblyPieceNumber", "0")
+        'ストローク補正値
+        _OffsetStroke = chk.GetValue("OffsetStroke", "0")
 
         _optGpEn =
             (From k In Split(chk.GetValue("OptinalGroupSetNumber"), ",") Where IsNumeric(k) Select CShort(k)).ToList
@@ -1321,8 +1355,12 @@ Public Class clsControlParameter
         '現在の値と異なる場合のみUPDATE
         Dim NowVal As DataTable =
             GetDtfmSQL($"SELECT 値 FROM FLEX制御パラメータ WHERE 項目名称='{FieldName}'")
-        If NowVal.Rows(0).Item(0) <> WrValue Then
-            ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値 ='{WrValue}' WHERE 項目名称='{FieldName}'")
+        If NowVal.Rows.Count = 0 Then
+            ExecuteSqlCmd($"INSERT INTO FLEX制御パラメータ (`項目名称`,`値`) values('{FieldName}','{WrValue}')")
+        Else
+            If NowVal.Rows(0).Item(0) <> WrValue Then
+                ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値 ='{WrValue}' WHERE 項目名称='{FieldName}'")
+            End If
         End If
 
         Debug.WriteLine($"WrValue={WrValue} FieldName={FieldName}")

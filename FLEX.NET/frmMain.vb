@@ -528,7 +528,7 @@
 
         End If
         'MAXのピース番号内で表示
-        If SegAsmblyData.AssemblyPieceNumber > PlcIf.AssemblyPieceNo AndAlso SegAsmblyData.ProcessData.Count <> 0 Then
+        If SegAsmblyData.AssemblyPlanPieceNumber > PlcIf.AssemblyPieceNo AndAlso SegAsmblyData.ProcessData.Count <> 0 Then
             DspNextPieceName.Value =
             SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo + 1).PieceName '組立次ピース名称
         Else
@@ -1212,6 +1212,10 @@
         If InitPara.LosZeroEquip Then
             '組立パターンの情報を取得
             SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
+            '組み立てピースがゼロの場合は初期化
+            If CtlPara.AssemblyPieceNumber = 0 Then
+                CtlPara.AssemblyPieceNumber = SegAsmblyData.AssemblyPlanPieceNumber
+            End If
             '同時施工組立パターン情報表示
             SegmentDataDsp()
         End If
@@ -1276,9 +1280,9 @@
 
         Dim db As New clsDataBase
 
-        db.ExecuteSqlCmd _
-            ($"INSERT INTO FLEXイベントデータ
-            (Time,イベントデータ,イベント種類) VALUES('{DateTime.Now}','Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]','0')")
+        'db.ExecuteSqlCmd _
+        '    ($"INSERT INTO FLEXイベントデータ
+        '    (Time,イベントデータ,イベント種類) VALUES('{DateTime.Now}','Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]','0')")
 
     End Sub
     ''' <summary>

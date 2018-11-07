@@ -15,7 +15,7 @@
         CloseJudgePullStroke.Value = PlcIf.終了判定引きストローク
 
 
-
+        OffsetStroke.Value = CtlPara.OffsetStroke
 
 
     End Sub
@@ -33,6 +33,7 @@
         Next
 
         CtlPara.ExceptMesureJackNo = ExceptJk
+        CtlPara.OffsetStroke = OffsetStroke.Value
 
         Me.Close()
 

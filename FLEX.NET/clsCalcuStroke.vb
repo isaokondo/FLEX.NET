@@ -180,7 +180,7 @@ Public Class clsCalcuStroke
 
 
     ''' <summary>
-    ''' 計算平均掘進ストローク
+    ''' 計算平均掘進ストローク（ネットストローク)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property CalcAveLogicalStroke As Single
@@ -404,9 +404,11 @@ Public Class clsCalcuStroke
         _ExclusionOpposeJack.Clear()
 
         '除外ジャッキの算出
-        '引き戻しジャッキで組み立て完了していないジャッキ　及び　有効ジャッキ
+        'ジャッキが組み立てモード
+        '引き戻しジャッキで組み立て完了していないジャッキ及び　有効ジャッキ
         For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
-            If (_PullBackJack.Contains(mjJkNo) And Not _asembleFinishedJack.Contains(mjJkNo)) Or CtlPara.ExceptMesureJackNo.Contains(mjJkNo) Then
+            If Not PlcIf.JackExecMode(mjJkNo-1) OrElse ((_PullBackJack.Contains(mjJkNo) _
+                And Not _asembleFinishedJack.Contains(mjJkNo)) Or CtlPara.ExceptMesureJackNo.Contains(mjJkNo)) Then
                 _ExclusionJack.Add(mjJkNo) '計算から除外するジャッキ
                 If CtlPara.LosZeroOpposeJackExcept Then
                     _ExclusionOpposeJack.Add(GetOpsiJk(mjJkNo)) '対抗する計測ジャッキ　ロスゼロジャッキ組み立てモード時のみ
@@ -452,6 +454,10 @@ Public Class clsCalcuStroke
         If AddStroke.Count > 0 Then
             _mesureCalcAveJackStroke += AddStroke.Average
         End If
+
+        _mesureCalcAveJackStroke += CtlPara.OffsetStroke
+
+
         '待機中以外
         '計算平均掘進ストロークの算出（ネットストローク)
         If PlcIf.ExcaStatus <> cTaiki Then

@@ -27,6 +27,8 @@
         LosZeroEmp.Value = CtlPara.LosZeroEmp
         LosZeroNlp.Value = CtlPara.LosZeroNlp
         LoszerorStep.Value = CtlPara.LoszerorStep
+        AssemblyPieceNumber.Value = CtlPara.AssemblyPieceNumber '組み立てピース数
+
 
         MomentRdductionRateOnReduce.Value = CtlPara.MomentRdductionRateOnReduce
         ReduceReachStrokeDiff.Value = CtlPara.ReduceReachStrokeDiff
@@ -51,6 +53,7 @@
         End If
 
         CtlPara.LosZeroOpposeJackExcept = OpposeJackExcep.rdbtnValue
+        CtlPara.AssemblyPieceNumber = AssemblyPieceNumber.Value '組み立てピース数
 
 
         CtlPara.NextPieceConfirm = NextPieceConfirm.rdbtnValue

@@ -44,16 +44,17 @@ Partial Class frmAssemblyProcessEdit
         Me.DspReduceGroup = New FLEX.NET.ucnDspData()
         Me.btnApply = New System.Windows.Forms.Button()
         Me.DspOpposeGroup = New FLEX.NET.ucnDspData()
+        Me.AssemblyPieceNumber = New FLEX.NET.ucnNumEdit()
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(140, 401)
+        Me.btnOK.Location = New System.Drawing.Point(145, 471)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(350, 401)
+        Me.btnCancel.Location = New System.Drawing.Point(355, 471)
         '
         'AssemblyBoltPitchSel
         '
@@ -147,7 +148,7 @@ Partial Class frmAssemblyProcessEdit
         Me.LastJackNo.FieldName = "終点ジャッキ番号"
         Me.LastJackNo.Increment = 1.0!
         Me.LastJackNo.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.LastJackNo.Location = New System.Drawing.Point(21, 330)
+        Me.LastJackNo.Location = New System.Drawing.Point(26, 400)
         Me.LastJackNo.Margin = New System.Windows.Forms.Padding(2)
         Me.LastJackNo.MaxValue = "10000"
         Me.LastJackNo.MinValue = "0"
@@ -169,7 +170,7 @@ Partial Class frmAssemblyProcessEdit
         Me.StartJackNo.FieldName = "始点ジャッキ番号"
         Me.StartJackNo.Increment = 1.0!
         Me.StartJackNo.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.StartJackNo.Location = New System.Drawing.Point(21, 291)
+        Me.StartJackNo.Location = New System.Drawing.Point(26, 361)
         Me.StartJackNo.Margin = New System.Windows.Forms.Padding(2)
         Me.StartJackNo.MaxValue = "10"
         Me.StartJackNo.MinValue = "0"
@@ -190,7 +191,7 @@ Partial Class frmAssemblyProcessEdit
         Me.OperattionJackSel.FieldName = "作動ジャッキの種類"
         Me.OperattionJackSel.Increment = 0.01!
         Me.OperattionJackSel.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.SelectType
-        Me.OperattionJackSel.Location = New System.Drawing.Point(21, 253)
+        Me.OperattionJackSel.Location = New System.Drawing.Point(26, 323)
         Me.OperattionJackSel.Margin = New System.Windows.Forms.Padding(2)
         Me.OperattionJackSel.MaxValue = "10000"
         Me.OperattionJackSel.MinValue = "-100"
@@ -211,7 +212,7 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblyPieceNo.FieldName = "組立ピース番号"
         Me.AssemblyPieceNo.Increment = 1.0!
         Me.AssemblyPieceNo.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.AssemblyPieceNo.Location = New System.Drawing.Point(21, 216)
+        Me.AssemblyPieceNo.Location = New System.Drawing.Point(26, 286)
         Me.AssemblyPieceNo.Margin = New System.Windows.Forms.Padding(2)
         Me.AssemblyPieceNo.MaxValue = "30"
         Me.AssemblyPieceNo.MinValue = "1"
@@ -469,7 +470,7 @@ Partial Class frmAssemblyProcessEdit
         '
         Me.btnApply.BackColor = System.Drawing.Color.Silver
         Me.btnApply.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnApply.Location = New System.Drawing.Point(246, 401)
+        Me.btnApply.Location = New System.Drawing.Point(251, 471)
         Me.btnApply.Margin = New System.Windows.Forms.Padding(2)
         Me.btnApply.Name = "btnApply"
         Me.btnApply.Size = New System.Drawing.Size(102, 35)
@@ -498,11 +499,33 @@ Partial Class frmAssemblyProcessEdit
         Me.DspOpposeGroup.Value = "-"
         Me.DspOpposeGroup.ValueType = True
         '
+        'AssemblyPieceNumber
+        '
+        Me.AssemblyPieceNumber.DataDspWidth = 160
+        Me.AssemblyPieceNumber.DecimalPlaces = CType(0, Short)
+        Me.AssemblyPieceNumber.DspFieldName = True
+        Me.AssemblyPieceNumber.FieldName = "組立ピース数"
+        Me.AssemblyPieceNumber.Increment = 1.0!
+        Me.AssemblyPieceNumber.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.AssemblyPieceNumber.Location = New System.Drawing.Point(26, 221)
+        Me.AssemblyPieceNumber.Margin = New System.Windows.Forms.Padding(2)
+        Me.AssemblyPieceNumber.MaxValue = "30"
+        Me.AssemblyPieceNumber.MinValue = "1"
+        Me.AssemblyPieceNumber.Name = "AssemblyPieceNumber"
+        Me.AssemblyPieceNumber.SelectItem = Nothing
+        Me.AssemblyPieceNumber.Size = New System.Drawing.Size(391, 37)
+        Me.AssemblyPieceNumber.TabIndex = 152
+        Me.AssemblyPieceNumber.ttMsg = ""
+        Me.AssemblyPieceNumber.ttTile = ""
+        Me.AssemblyPieceNumber.Unit = ""
+        Me.AssemblyPieceNumber.Value = 1.0R
+        '
         'frmAssemblyProcessEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1078, 769)
+        Me.Controls.Add(Me.AssemblyPieceNumber)
         Me.Controls.Add(Me.DspOpposeGroup)
         Me.Controls.Add(Me.btnApply)
         Me.Controls.Add(Me.DspReduceGroup)
@@ -551,6 +574,7 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.SetChildIndex(Me.DspReduceGroup, 0)
         Me.Controls.SetChildIndex(Me.btnApply, 0)
         Me.Controls.SetChildIndex(Me.DspOpposeGroup, 0)
+        Me.Controls.SetChildIndex(Me.AssemblyPieceNumber, 0)
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -577,4 +601,5 @@ Partial Class frmAssemblyProcessEdit
     Friend WithEvents DspReduceGroup As ucnDspData
     Protected WithEvents btnApply As Button
     Friend WithEvents DspOpposeGroup As ucnDspData
+    Friend WithEvents AssemblyPieceNumber As ucnNumEdit
 End Class
