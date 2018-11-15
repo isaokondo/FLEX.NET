@@ -19,7 +19,10 @@ Module mdlFlexMonitor
     Public MachineSpec As clsMachinSpec
 
     ''Public SegAsmblyData As clsSegmentAssembly ''セグメント組立データ
-
+    ''' <summary>
+    ''' 電光掲示板表示
+    ''' </summary>
+    Public WithEvents LedLiner As clsLedLiner
 
     ''Public CulcMoment As clsCulMoment ''モーメント、推力の演算
 
@@ -350,6 +353,7 @@ Module mdlFlexMonitor
             CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
             '掘進開始時のストローク取り込み
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
+            LedLiner.SendMsg = $"{PlcIf.RingNo}リング、掘進開始しました"
         End If
         If PreStatus = cChudan And NowStatus = cKussin Then
             ElapsedTime.ExcavationStart()
@@ -362,6 +366,7 @@ Module mdlFlexMonitor
         If NowStatus = cChudan Then
             'JackManual.ManualOn = False
             ElapsedTime.ExcavationStop()
+            LedLiner.SendMsg = $"掘進停止しました"
 
         End If
 
@@ -397,19 +402,26 @@ Module mdlFlexMonitor
                     Case 1 'マシンからの減圧開始
                         LosZeroSts = 1
                         ElapsedTime.LosZeroStart()  '同時施工時間算出
+
                     Case 2
                         '引き戻しジャッキ
 
                         LosZeroSts = 3
+                        LedLiner.SendMsg = $"{PlcIf.AssemblyPieceNo}ピース目、同時施工　ジャッキ引戻し中です"
 
                     Case 3
                         LosZeroSts = 4
+                        LedLiner.SendMsg = $"{PlcIf.AssemblyPieceNo}ピース目、同時施工　ジャッキ引戻し完了です"
 
                     Case 4
                         LosZeroSts = 5
+                        LedLiner.SendMsg = $"{PlcIf.AssemblyPieceNo}ピース目、同時施工　セグメント組立中です"
+
                     Case 6
                         LosZeroSts = 5
+
                     Case 5, 7
+                        LedLiner.SendMsg = $"{PlcIf.AssemblyPieceNo}ピース目、同時施工　セグメント組立完了しました"
                         LosZeroSts = 6
                         '計算ストローク用に組立ジャッキの設定
                         CalcStroke.asembleFinishedJack = .ClosetJack '押込みジャッキ
@@ -424,7 +436,7 @@ Module mdlFlexMonitor
             Select Case NowSts
                 Case 1  '減圧開始
                     LosZeroSts = 1
-
+                    LedLiner.SendMsg = $"{PlcIf.AssemblyPieceNo}ピース目、同時施工　減圧中です"
                     '計算ストローク用セグメント幅等設定
                     CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
                     'todo:テーパー量等？
@@ -460,4 +472,7 @@ Module mdlFlexMonitor
 
     End Sub
 
+    Private Sub LedLiner_ErrorOccur(msg As String) Handles LedLiner.ErrorOccur
+
+    End Sub
 End Module

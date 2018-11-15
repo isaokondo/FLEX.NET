@@ -105,6 +105,7 @@
     <Compile Include="clsCulKijun.vb" />
     <Compile Include="clsCulMoment.vb" />
     <Compile Include="clsDataBase.vb" />
+    <Compile Include="clsLedLiner.vb" />
     <Compile Include="clsLineMake.vb" />
     <Compile Include="clsMachinSpec.vb" />
     <Compile Include="clsPlanData.vb" />

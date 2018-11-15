@@ -55,5 +55,9 @@ Public Class frmNextPieceConfirm
 
     End Sub
 
+    Private Sub frmNextPieceConfirm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        'ピース番号の表示追加
+        lblNextPieceNo.Text = (PlcIf.AssemblyPieceNo + 1).ToString.ToUpper & "ピース"
 
+    End Sub
 End Class

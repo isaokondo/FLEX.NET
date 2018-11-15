@@ -23,7 +23,6 @@ Public Class clsDataBase
 
     'Private cn As OdbcConnection
 
-
     Public Shared MySQLVersion As String
 
     <DllImport("KERNEL32.DLL", CharSet:=CharSet.Auto)>
@@ -72,9 +71,6 @@ Public Class clsDataBase
                 PortNo = GetIniString("DataBase", "port", IniFilePath)
 
             End If
-
-
-
 
 
 
@@ -542,6 +538,10 @@ Public Class clsInitParameter
     Private _DistanceInputMethod As Boolean = False 'False:発進からの入力　True:起点からの入力
 
 
+    Private _LedLinerHostName As String '電光掲示板　ホスト名
+    Private _LedLinerPortNo As Integer '電光掲示板　ポート番号
+
+
     Private WithEvents Htb As New clsHashtableRead
 
 
@@ -788,30 +788,48 @@ Public Class clsInitParameter
 
     ''' <summary>
     ''' サーバーモード
+    ''' 無条件にサーバーモードOFF
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ServerMode As Boolean
         Get
-            Return Not (_MonitorMode Or _ClientMode)
+            'Return Not (_MonitorMode Or _ClientMode)
+            Return False
         End Get
     End Property
 
     Public ReadOnly Property ModeName As String
         Get
-            If _MonitorMode Then
-                Return $"MonitorMode{If(_MonitorModePlcCom, " PlcComOK", "NoPlcCom")}"
-            ElseIf _ClientMode Then
-                Return "ClientMode"
-            Else
-                Return "ServerMode"
-            End If
+            'If _MonitorMode Then
+            '    Return $"MonitorMode{If(_MonitorModePlcCom, " PlcComOK", "NoPlcCom")}"
+            'ElseIf _ClientMode Then
+            Return "ClientMode"
+            'Else
+            '    Return "ServerMode"
+            'End If
 
 
         End Get
     End Property
+    ''' <summary>
+    ''' 電光掲示板　ホスト名
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property LedLinerHostName As String
+        Get
+            Return _LedLinerHostName
+        End Get
+    End Property
 
-
-
+    ''' <summary>
+    ''' 電光掲示板　ポート番号
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property LedLinerPortNo As Integer
+        Get
+            Return _LedLinerPortNo
+        End Get
+    End Property
 
 
 
@@ -936,8 +954,15 @@ Public Class clsInitParameter
         Dim IniFilePath As String =
            AppDomain.CurrentDomain.SetupInformation.ApplicationBase & "FLEX.INI"
 
-        _ClientMode = (GetIniString("MODE", "ClientMode", IniFilePath) = "True")
-        _MonitorMode = (GetIniString("MODE", "MonitorMode", IniFilePath) = "True")
+        '_ClientMode = (GetIniString("MODE", "ClientMode", IniFilePath) = "True")
+        '_MonitorMode = (GetIniString("MODE", "MonitorMode", IniFilePath) = "True")
+        _ClientMode = True
+        _MonitorMode = True
+
+        '電光掲示板のホスト名、ポート番号取得
+        _LedLinerHostName = GetIniString("LEDLINER", "HostName", IniFilePath)
+        _LedLinerPortNo = GetIniString("LEDLINER", "port", IniFilePath)
+
 
     End Sub
     Function KeySelector(ByVal pair As KeyValuePair(Of String, Integer)) As String

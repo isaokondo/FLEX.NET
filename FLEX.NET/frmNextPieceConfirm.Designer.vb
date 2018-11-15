@@ -24,6 +24,7 @@ Partial Class frmNextPieceConfirm
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnClose = New System.Windows.Forms.Button()
+        Me.lblNextPieceNo = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'btnOK
@@ -42,7 +43,7 @@ Partial Class frmNextPieceConfirm
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(19, 25)
+        Me.Label1.Location = New System.Drawing.Point(19, 60)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(202, 19)
@@ -61,11 +62,25 @@ Partial Class frmNextPieceConfirm
         Me.btnClose.Text = "閉じる"
         Me.btnClose.UseVisualStyleBackColor = False
         '
+        'lblNextPieceNo
+        '
+        Me.lblNextPieceNo.AutoSize = True
+        Me.lblNextPieceNo.BackColor = System.Drawing.Color.Transparent
+        Me.lblNextPieceNo.Font = New System.Drawing.Font("MS UI Gothic", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblNextPieceNo.ForeColor = System.Drawing.Color.White
+        Me.lblNextPieceNo.Location = New System.Drawing.Point(19, 26)
+        Me.lblNextPieceNo.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblNextPieceNo.Name = "lblNextPieceNo"
+        Me.lblNextPieceNo.Size = New System.Drawing.Size(119, 24)
+        Me.lblNextPieceNo.TabIndex = 11
+        Me.lblNextPieceNo.Text = "＿＿ピース"
+        '
         'frmNextPieceConfirm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(357, 143)
+        Me.Controls.Add(Me.lblNextPieceNo)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmNextPieceConfirm"
@@ -74,6 +89,7 @@ Partial Class frmNextPieceConfirm
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.btnClose, 0)
+        Me.Controls.SetChildIndex(Me.lblNextPieceNo, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -81,4 +97,5 @@ Partial Class frmNextPieceConfirm
 
     Friend WithEvents Label1 As Label
     Protected WithEvents btnClose As Button
+    Friend WithEvents lblNextPieceNo As Label
 End Class

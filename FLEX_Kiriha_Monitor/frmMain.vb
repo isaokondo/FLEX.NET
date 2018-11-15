@@ -41,6 +41,10 @@ Public Class frmMain
         'Reduce = New clsReducePress 'ロスゼロ減圧処理
         'TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
 
+        LedLiner = New clsLedLiner '電光掲示板表示
+
+        LedLiner.SendMsg = " "
+
         For Each ctp As Control In pnlLosZero.Controls
             Debug.Print(ctp.Name)
             If ctp.Name.Contains("ucnAssemblyPieceNo") Then
