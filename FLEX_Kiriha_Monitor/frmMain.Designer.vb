@@ -1222,7 +1222,7 @@ Partial Class frmMain
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(162, 26)
         Me.Label8.TabIndex = 139
-        Me.Label8.Text = "ジャッキ　判例　"
+        Me.Label8.Text = "ジャッキ　凡例"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Panel4
@@ -1417,7 +1417,7 @@ Partial Class frmMain
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(103, 44)
         Me.Label30.TabIndex = 140
-        Me.Label30.Text = "グループ圧" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "判例　"
+        Me.Label30.Text = "グループ圧" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "凡例　"
         Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'DspWideUse11
@@ -1954,7 +1954,7 @@ Partial Class frmMain
         Me.DspAveStroke.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.DspAveStroke.DataWidth = 110
         Me.DspAveStroke.DecimalPlaces = CType(0, Short)
-        Me.DspAveStroke.FieldName = "推進量"
+        Me.DspAveStroke.FieldName = "掘進量"
         Me.DspAveStroke.FieldNameWidth = 146
         Me.DspAveStroke.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspAveStroke.Location = New System.Drawing.Point(11, 134)
