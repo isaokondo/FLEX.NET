@@ -528,6 +528,7 @@ Public Class clsInitParameter
     Private _topStrokeEnable As Boolean     '上ストローク計あり
     Private _bottomStrokeEnable As Boolean '下ストローク計あり
 
+
     Private _backUpFolder As String 'バックアップフォルダ
     Private _backUpTime As TimeSpan 'バックアップ時間
 
@@ -678,6 +679,7 @@ Public Class clsInitParameter
             Return _bottomStrokeEnable
         End Get
     End Property
+
 
     Public ReadOnly Property BackUpFTPHostUserPass As String
         Get

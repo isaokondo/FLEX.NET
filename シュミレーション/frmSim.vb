@@ -338,6 +338,8 @@ Public Class frmSim
 
         nudMachinePitching.Value = AiMachineRd(GetMachineOfAiAdr(SimSet.MachinePitchingAdr))
 
+        numMRRolling.Value = AiMachineRd(GetMachineOfAiAdr(SimSet.MRRollingAdr))
+
         If InitParm.LosZeroEquip Then
             'ロスゼロ　fromマシン
             nudLosZeroStatusMachin.Value = AiMachineRd(GetMachineOfAiAdr(SimSet.LosZeroStMachine))
@@ -615,7 +617,7 @@ Public Class frmSim
     Private Sub nud_ValueChanged(sender As Object, e As EventArgs) _
         Handles nudRightSpeed.ValueChanged, nudLeftSpeed.ValueChanged, nudPitching.ValueChanged,
         nudLosZeroStsFlex.ValueChanged, nudLosZeroStatusMachin.ValueChanged, nudMachinePitching.ValueChanged, nudSoucePressure.ValueChanged,
-        nudLeftStroke.Click, nudLeftStroke.Enter, nudLeftStroke.KeyPress, nudRightStroke.Click
+        nudLeftStroke.Click, nudLeftStroke.Enter, nudLeftStroke.KeyPress, nudRightStroke.Click, numMRRolling.Click, numMRRolling.ValueChanged
 
         Dim FieldName As String = New StackFrame(1).GetMethod.Name
 
@@ -656,6 +658,10 @@ Public Class frmSim
 
                 Case nudLosZeroStsFlex.Name
                     PlcAdress = .LosZeroStFlex
+                    PlcWriteData = NumObj.Value
+
+                Case numMRRolling.Name
+                    PlcAdress = .MRRollingAdr
                     PlcWriteData = NumObj.Value
 
             End Select

@@ -107,10 +107,14 @@ Partial Class frmMain
         Me.cmbWideSelct = New System.Windows.Forms.ComboBox()
         Me.lblMachineMode = New System.Windows.Forms.Label()
         Me.btnLoszeroContinu = New System.Windows.Forms.Button()
+        Me.lblMRRolling = New System.Windows.Forms.Label()
+        Me.DspChangeMRRolling = New FLEX.NET.ucnDspDataMin2()
+        Me.DspAntiClockwiseMargin = New FLEX.NET.ucnDspData()
+        Me.DspClockwiseMargin = New FLEX.NET.ucnDspData()
         Me.DspGyiroError = New FLEX.NET.ucnDspBit()
         Me.DspLRStrokeDiff = New FLEX.NET.ucnDspDataMin()
         Me.DspRingTargetDir = New FLEX.NET.ucnDspData()
-        Me.UcnDspData24 = New FLEX.NET.ucnDspData()
+        Me.DspSegmentRolling = New FLEX.NET.ucnDspData()
         Me.DspClosetJack = New FLEX.NET.ucnDspData()
         Me.DspBoltPitch = New FLEX.NET.ucnDspData()
         Me.DspAveStartStroke = New FLEX.NET.ucnDspData()
@@ -118,8 +122,8 @@ Partial Class frmMain
         Me.DspAveStroke = New FLEX.NET.ucnDspData()
         Me.UcnGpPvBarGraph = New FLEX.NET.ucnGpPvBarGraph()
         Me.DspCopyStroke = New FLEX.NET.ucnDspDataMin2()
-        Me.DspSegmentRolling = New FLEX.NET.ucnDspDataMin2()
-        Me.DspMachineRolling = New FLEX.NET.ucnDspDataMin2()
+        Me.DspTransMRRolling = New FLEX.NET.ucnDspDataMin2()
+        Me.DspRealMRRolling = New FLEX.NET.ucnDspDataMin2()
         Me.DspUpRealStroke = New FLEX.NET.ucnDspDataMin()
         Me.DspRightClearance = New FLEX.NET.ucnDspDataMin()
         Me.DspLeftClearance = New FLEX.NET.ucnDspDataMin()
@@ -184,6 +188,8 @@ Partial Class frmMain
         Me.DspHorDev = New FLEX.NET.ucnDspData()
         Me.DspWideUse12 = New FLEX.NET.ucnDspData()
         Me.InterruptTime = New FLEX.NET.ucnDspData()
+        Me.ｌｂｌRollingAlarm = New System.Windows.Forms.Label()
+        Me.btnConfirm = New System.Windows.Forms.Button()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -457,10 +463,10 @@ Partial Class frmMain
         Me.Panel1.Controls.Add(Me.rtbEventLog)
         Me.Panel1.Controls.Add(Me.lblUnit)
         Me.Panel1.Controls.Add(Me.DspRingNo)
-        Me.Panel1.Location = New System.Drawing.Point(1306, 678)
+        Me.Panel1.Location = New System.Drawing.Point(1306, 687)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(575, 370)
+        Me.Panel1.Size = New System.Drawing.Size(575, 350)
         Me.Panel1.TabIndex = 119
         '
         'DspTargetNetStroke
@@ -1131,6 +1137,71 @@ Partial Class frmMain
         Me.btnLoszeroContinu.Text = "同時施工継続"
         Me.btnLoszeroContinu.UseVisualStyleBackColor = False
         '
+        'lblMRRolling
+        '
+        Me.lblMRRolling.AutoSize = True
+        Me.lblMRRolling.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblMRRolling.Location = New System.Drawing.Point(917, 190)
+        Me.lblMRRolling.Name = "lblMRRolling"
+        Me.lblMRRolling.Size = New System.Drawing.Size(94, 13)
+        Me.lblMRRolling.TabIndex = 162
+        Me.lblMRRolling.Text = "マシンローリング"
+        '
+        'DspChangeMRRolling
+        '
+        Me.DspChangeMRRolling.BackColor = System.Drawing.Color.Transparent
+        Me.DspChangeMRRolling.DecimalPlaces = CType(2, Short)
+        Me.DspChangeMRRolling.FieldName = "変化量"
+        Me.DspChangeMRRolling.Location = New System.Drawing.Point(865, 257)
+        Me.DspChangeMRRolling.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspChangeMRRolling.Name = "DspChangeMRRolling"
+        Me.DspChangeMRRolling.Size = New System.Drawing.Size(193, 30)
+        Me.DspChangeMRRolling.TabIndex = 161
+        Me.DspChangeMRRolling.Unit = "deg"
+        Me.DspChangeMRRolling.Value = 0R
+        '
+        'DspAntiClockwiseMargin
+        '
+        Me.DspAntiClockwiseMargin.BackColor = System.Drawing.Color.Transparent
+        Me.DspAntiClockwiseMargin.Blink = False
+        Me.DspAntiClockwiseMargin.BlinkColor = System.Drawing.Color.Red
+        Me.DspAntiClockwiseMargin.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspAntiClockwiseMargin.DataWidth = 56
+        Me.DspAntiClockwiseMargin.DecimalPlaces = CType(2, Short)
+        Me.DspAntiClockwiseMargin.FieldName = "反時計端側の余裕度(deg)"
+        Me.DspAntiClockwiseMargin.FieldNameWidth = 180
+        Me.DspAntiClockwiseMargin.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspAntiClockwiseMargin.Location = New System.Drawing.Point(1633, 648)
+        Me.DspAntiClockwiseMargin.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspAntiClockwiseMargin.Name = "DspAntiClockwiseMargin"
+        Me.DspAntiClockwiseMargin.Size = New System.Drawing.Size(243, 30)
+        Me.DspAntiClockwiseMargin.TabIndex = 160
+        Me.DspAntiClockwiseMargin.Unit = "deg"
+        Me.DspAntiClockwiseMargin.UnitVisible = False
+        Me.DspAntiClockwiseMargin.Value = "-"
+        Me.DspAntiClockwiseMargin.ValueType = True
+        '
+        'DspClockwiseMargin
+        '
+        Me.DspClockwiseMargin.BackColor = System.Drawing.Color.Transparent
+        Me.DspClockwiseMargin.Blink = False
+        Me.DspClockwiseMargin.BlinkColor = System.Drawing.Color.Red
+        Me.DspClockwiseMargin.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspClockwiseMargin.DataWidth = 56
+        Me.DspClockwiseMargin.DecimalPlaces = CType(1, Short)
+        Me.DspClockwiseMargin.FieldName = "時計端側の余裕度(deg)"
+        Me.DspClockwiseMargin.FieldNameWidth = 180
+        Me.DspClockwiseMargin.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspClockwiseMargin.Location = New System.Drawing.Point(1398, 649)
+        Me.DspClockwiseMargin.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspClockwiseMargin.Name = "DspClockwiseMargin"
+        Me.DspClockwiseMargin.Size = New System.Drawing.Size(243, 30)
+        Me.DspClockwiseMargin.TabIndex = 159
+        Me.DspClockwiseMargin.Unit = "deg"
+        Me.DspClockwiseMargin.UnitVisible = False
+        Me.DspClockwiseMargin.Value = "-"
+        Me.DspClockwiseMargin.ValueType = False
+        '
         'DspGyiroError
         '
         Me.DspGyiroError.BackColor = System.Drawing.Color.Transparent
@@ -1180,26 +1251,26 @@ Partial Class frmMain
         Me.DspRingTargetDir.Value = "999.99"
         Me.DspRingTargetDir.ValueType = False
         '
-        'UcnDspData24
+        'DspSegmentRolling
         '
-        Me.UcnDspData24.BackColor = System.Drawing.Color.Transparent
-        Me.UcnDspData24.Blink = False
-        Me.UcnDspData24.BlinkColor = System.Drawing.Color.Red
-        Me.UcnDspData24.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.UcnDspData24.DataWidth = 91
-        Me.UcnDspData24.DecimalPlaces = CType(2, Short)
-        Me.UcnDspData24.FieldName = "ローリング偏差"
-        Me.UcnDspData24.FieldNameWidth = 146
-        Me.UcnDspData24.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData24.Location = New System.Drawing.Point(1634, 625)
-        Me.UcnDspData24.Margin = New System.Windows.Forms.Padding(1)
-        Me.UcnDspData24.Name = "UcnDspData24"
-        Me.UcnDspData24.Size = New System.Drawing.Size(243, 32)
-        Me.UcnDspData24.TabIndex = 109
-        Me.UcnDspData24.Unit = "deg"
-        Me.UcnDspData24.UnitVisible = False
-        Me.UcnDspData24.Value = "-"
-        Me.UcnDspData24.ValueType = True
+        Me.DspSegmentRolling.BackColor = System.Drawing.Color.Transparent
+        Me.DspSegmentRolling.Blink = False
+        Me.DspSegmentRolling.BlinkColor = System.Drawing.Color.Red
+        Me.DspSegmentRolling.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.DspSegmentRolling.DataWidth = 91
+        Me.DspSegmentRolling.DecimalPlaces = CType(2, Short)
+        Me.DspSegmentRolling.FieldName = "セグメントローリング"
+        Me.DspSegmentRolling.FieldNameWidth = 146
+        Me.DspSegmentRolling.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspSegmentRolling.Location = New System.Drawing.Point(1634, 617)
+        Me.DspSegmentRolling.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspSegmentRolling.Name = "DspSegmentRolling"
+        Me.DspSegmentRolling.Size = New System.Drawing.Size(243, 30)
+        Me.DspSegmentRolling.TabIndex = 109
+        Me.DspSegmentRolling.Unit = "deg"
+        Me.DspSegmentRolling.UnitVisible = False
+        Me.DspSegmentRolling.Value = "-"
+        Me.DspSegmentRolling.ValueType = True
         '
         'DspClosetJack
         '
@@ -1212,10 +1283,10 @@ Partial Class frmMain
         Me.DspClosetJack.FieldName = "押込ｼﾞｬｯｷ"
         Me.DspClosetJack.FieldNameWidth = 146
         Me.DspClosetJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetJack.Location = New System.Drawing.Point(1633, 561)
+        Me.DspClosetJack.Location = New System.Drawing.Point(1633, 555)
         Me.DspClosetJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetJack.Name = "DspClosetJack"
-        Me.DspClosetJack.Size = New System.Drawing.Size(243, 32)
+        Me.DspClosetJack.Size = New System.Drawing.Size(243, 30)
         Me.DspClosetJack.TabIndex = 106
         Me.DspClosetJack.Unit = "deg"
         Me.DspClosetJack.UnitVisible = False
@@ -1233,10 +1304,10 @@ Partial Class frmMain
         Me.DspBoltPitch.FieldName = "組立ﾎﾞﾙﾄ位置"
         Me.DspBoltPitch.FieldNameWidth = 146
         Me.DspBoltPitch.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspBoltPitch.Location = New System.Drawing.Point(1399, 626)
+        Me.DspBoltPitch.Location = New System.Drawing.Point(1399, 618)
         Me.DspBoltPitch.Margin = New System.Windows.Forms.Padding(1)
         Me.DspBoltPitch.Name = "DspBoltPitch"
-        Me.DspBoltPitch.Size = New System.Drawing.Size(242, 32)
+        Me.DspBoltPitch.Size = New System.Drawing.Size(243, 30)
         Me.DspBoltPitch.TabIndex = 102
         Me.DspBoltPitch.Unit = "deg"
         Me.DspBoltPitch.UnitVisible = False
@@ -1333,31 +1404,31 @@ Partial Class frmMain
         Me.DspCopyStroke.Unit = "mm"
         Me.DspCopyStroke.Value = 0R
         '
-        'DspSegmentRolling
+        'DspTransMRRolling
         '
-        Me.DspSegmentRolling.BackColor = System.Drawing.Color.Transparent
-        Me.DspSegmentRolling.DecimalPlaces = CType(2, Short)
-        Me.DspSegmentRolling.FieldName = "SG ﾛｰﾘﾝｸﾞ"
-        Me.DspSegmentRolling.Location = New System.Drawing.Point(867, 231)
-        Me.DspSegmentRolling.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspSegmentRolling.Name = "DspSegmentRolling"
-        Me.DspSegmentRolling.Size = New System.Drawing.Size(193, 30)
-        Me.DspSegmentRolling.TabIndex = 148
-        Me.DspSegmentRolling.Unit = "deg"
-        Me.DspSegmentRolling.Value = 0R
+        Me.DspTransMRRolling.BackColor = System.Drawing.Color.Transparent
+        Me.DspTransMRRolling.DecimalPlaces = CType(2, Short)
+        Me.DspTransMRRolling.FieldName = "転送時"
+        Me.DspTransMRRolling.Location = New System.Drawing.Point(865, 233)
+        Me.DspTransMRRolling.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspTransMRRolling.Name = "DspTransMRRolling"
+        Me.DspTransMRRolling.Size = New System.Drawing.Size(193, 30)
+        Me.DspTransMRRolling.TabIndex = 148
+        Me.DspTransMRRolling.Unit = "deg"
+        Me.DspTransMRRolling.Value = 0R
         '
-        'DspMachineRolling
+        'DspRealMRRolling
         '
-        Me.DspMachineRolling.BackColor = System.Drawing.Color.Transparent
-        Me.DspMachineRolling.DecimalPlaces = CType(2, Short)
-        Me.DspMachineRolling.FieldName = "ﾏｼﾝﾛｰﾘﾝｸﾞ"
-        Me.DspMachineRolling.Location = New System.Drawing.Point(867, 199)
-        Me.DspMachineRolling.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspMachineRolling.Name = "DspMachineRolling"
-        Me.DspMachineRolling.Size = New System.Drawing.Size(193, 30)
-        Me.DspMachineRolling.TabIndex = 147
-        Me.DspMachineRolling.Unit = "deg"
-        Me.DspMachineRolling.Value = 0R
+        Me.DspRealMRRolling.BackColor = System.Drawing.Color.Transparent
+        Me.DspRealMRRolling.DecimalPlaces = CType(2, Short)
+        Me.DspRealMRRolling.FieldName = "現在値"
+        Me.DspRealMRRolling.Location = New System.Drawing.Point(865, 209)
+        Me.DspRealMRRolling.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspRealMRRolling.Name = "DspRealMRRolling"
+        Me.DspRealMRRolling.Size = New System.Drawing.Size(193, 30)
+        Me.DspRealMRRolling.TabIndex = 147
+        Me.DspRealMRRolling.Unit = "deg"
+        Me.DspRealMRRolling.Value = 0R
         '
         'DspUpRealStroke
         '
@@ -1629,10 +1700,10 @@ Partial Class frmMain
         Me.DspAssemblyPattern.FieldName = "組立パターン"
         Me.DspAssemblyPattern.FieldNameWidth = 260
         Me.DspAssemblyPattern.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAssemblyPattern.Location = New System.Drawing.Point(1399, 498)
+        Me.DspAssemblyPattern.Location = New System.Drawing.Point(1399, 496)
         Me.DspAssemblyPattern.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPattern.Name = "DspAssemblyPattern"
-        Me.DspAssemblyPattern.Size = New System.Drawing.Size(472, 32)
+        Me.DspAssemblyPattern.Size = New System.Drawing.Size(472, 30)
         Me.DspAssemblyPattern.TabIndex = 111
         Me.DspAssemblyPattern.Unit = "deg"
         Me.DspAssemblyPattern.UnitVisible = False
@@ -1650,10 +1721,10 @@ Partial Class frmMain
         Me.DspNextPieceName.FieldName = "次の組立ピース"
         Me.DspNextPieceName.FieldNameWidth = 146
         Me.DspNextPieceName.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspNextPieceName.Location = New System.Drawing.Point(1634, 529)
+        Me.DspNextPieceName.Location = New System.Drawing.Point(1634, 525)
         Me.DspNextPieceName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspNextPieceName.Name = "DspNextPieceName"
-        Me.DspNextPieceName.Size = New System.Drawing.Size(243, 32)
+        Me.DspNextPieceName.Size = New System.Drawing.Size(243, 30)
         Me.DspNextPieceName.TabIndex = 110
         Me.DspNextPieceName.Unit = "deg"
         Me.DspNextPieceName.UnitVisible = False
@@ -1671,10 +1742,10 @@ Partial Class frmMain
         Me.DspAddClosetThrustJack.FieldName = "追加推進ｼﾞｬｯｷ"
         Me.DspAddClosetThrustJack.FieldNameWidth = 146
         Me.DspAddClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(1633, 593)
+        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(1633, 586)
         Me.DspAddClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAddClosetThrustJack.Name = "DspAddClosetThrustJack"
-        Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(243, 32)
+        Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(243, 30)
         Me.DspAddClosetThrustJack.TabIndex = 108
         Me.DspAddClosetThrustJack.Unit = "deg"
         Me.DspAddClosetThrustJack.UnitVisible = False
@@ -1692,10 +1763,10 @@ Partial Class frmMain
         Me.DspClosetThrustJack.FieldName = "押込推進ｼﾞｬｯｷ"
         Me.DspClosetThrustJack.FieldNameWidth = 146
         Me.DspClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetThrustJack.Location = New System.Drawing.Point(1399, 594)
+        Me.DspClosetThrustJack.Location = New System.Drawing.Point(1399, 588)
         Me.DspClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetThrustJack.Name = "DspClosetThrustJack"
-        Me.DspClosetThrustJack.Size = New System.Drawing.Size(243, 32)
+        Me.DspClosetThrustJack.Size = New System.Drawing.Size(243, 30)
         Me.DspClosetThrustJack.TabIndex = 107
         Me.DspClosetThrustJack.Unit = "deg"
         Me.DspClosetThrustJack.UnitVisible = False
@@ -1713,10 +1784,10 @@ Partial Class frmMain
         Me.DspPullBackJack.FieldName = "引戻ｼﾞｬｯｷ"
         Me.DspPullBackJack.FieldNameWidth = 146
         Me.DspPullBackJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspPullBackJack.Location = New System.Drawing.Point(1399, 562)
+        Me.DspPullBackJack.Location = New System.Drawing.Point(1399, 556)
         Me.DspPullBackJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspPullBackJack.Name = "DspPullBackJack"
-        Me.DspPullBackJack.Size = New System.Drawing.Size(243, 32)
+        Me.DspPullBackJack.Size = New System.Drawing.Size(243, 30)
         Me.DspPullBackJack.TabIndex = 105
         Me.DspPullBackJack.Unit = "deg"
         Me.DspPullBackJack.UnitVisible = False
@@ -1734,10 +1805,10 @@ Partial Class frmMain
         Me.DspAssemblyPieace.FieldName = "組立ピース"
         Me.DspAssemblyPieace.FieldNameWidth = 146
         Me.DspAssemblyPieace.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAssemblyPieace.Location = New System.Drawing.Point(1399, 530)
+        Me.DspAssemblyPieace.Location = New System.Drawing.Point(1399, 525)
         Me.DspAssemblyPieace.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPieace.Name = "DspAssemblyPieace"
-        Me.DspAssemblyPieace.Size = New System.Drawing.Size(243, 32)
+        Me.DspAssemblyPieace.Size = New System.Drawing.Size(243, 30)
         Me.DspAssemblyPieace.TabIndex = 103
         Me.DspAssemblyPieace.Unit = "deg"
         Me.DspAssemblyPieace.UnitVisible = False
@@ -1758,7 +1829,7 @@ Partial Class frmMain
         Me.DspTypeName.Location = New System.Drawing.Point(1399, 466)
         Me.DspTypeName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspTypeName.Name = "DspTypeName"
-        Me.DspTypeName.Size = New System.Drawing.Size(475, 32)
+        Me.DspTypeName.Size = New System.Drawing.Size(472, 30)
         Me.DspTypeName.TabIndex = 101
         Me.DspTypeName.Unit = "deg"
         Me.DspTypeName.UnitVisible = False
@@ -2564,17 +2635,47 @@ Partial Class frmMain
         Me.InterruptTime.Value = "20"
         Me.InterruptTime.ValueType = False
         '
+        'ｌｂｌRollingAlarm
+        '
+        Me.ｌｂｌRollingAlarm.BackColor = System.Drawing.Color.Yellow
+        Me.ｌｂｌRollingAlarm.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.ｌｂｌRollingAlarm.Font = New System.Drawing.Font("MS UI Gothic", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.ｌｂｌRollingAlarm.ForeColor = System.Drawing.Color.Red
+        Me.ｌｂｌRollingAlarm.Location = New System.Drawing.Point(405, 181)
+        Me.ｌｂｌRollingAlarm.Name = "ｌｂｌRollingAlarm"
+        Me.ｌｂｌRollingAlarm.Size = New System.Drawing.Size(376, 94)
+        Me.ｌｂｌRollingAlarm.TabIndex = 163
+        Me.ｌｂｌRollingAlarm.Text = "マシンローリングの余裕限界を超えました。" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "セグメントピースとジャッキスプレッダーが" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "干渉する恐れがあります。" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "注意してください！!" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.ｌｂｌRollingAlarm.Visible = False
+        '
+        'btnConfirm
+        '
+        Me.btnConfirm.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnConfirm.Location = New System.Drawing.Point(691, 238)
+        Me.btnConfirm.Name = "btnConfirm"
+        Me.btnConfirm.Size = New System.Drawing.Size(63, 30)
+        Me.btnConfirm.TabIndex = 164
+        Me.btnConfirm.Text = "確認"
+        Me.btnConfirm.UseVisualStyleBackColor = True
+        Me.btnConfirm.Visible = False
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.btnConfirm)
+        Me.Controls.Add(Me.ｌｂｌRollingAlarm)
+        Me.Controls.Add(Me.lblMRRolling)
+        Me.Controls.Add(Me.DspChangeMRRolling)
+        Me.Controls.Add(Me.DspAntiClockwiseMargin)
+        Me.Controls.Add(Me.DspClockwiseMargin)
         Me.Controls.Add(Me.DspGyiroError)
         Me.Controls.Add(Me.btnLoszeroContinu)
         Me.Controls.Add(Me.DspLRStrokeDiff)
         Me.Controls.Add(Me.DspRingTargetDir)
-        Me.Controls.Add(Me.UcnDspData24)
+        Me.Controls.Add(Me.DspSegmentRolling)
         Me.Controls.Add(Me.DspClosetJack)
         Me.Controls.Add(Me.DspBoltPitch)
         Me.Controls.Add(Me.DspAveStartStroke)
@@ -2584,8 +2685,8 @@ Partial Class frmMain
         Me.Controls.Add(Me.cmbWideSelct)
         Me.Controls.Add(Me.UcnGpPvBarGraph)
         Me.Controls.Add(Me.DspCopyStroke)
-        Me.Controls.Add(Me.DspSegmentRolling)
-        Me.Controls.Add(Me.DspMachineRolling)
+        Me.Controls.Add(Me.DspTransMRRolling)
+        Me.Controls.Add(Me.DspRealMRRolling)
         Me.Controls.Add(Me.DspUpRealStroke)
         Me.Controls.Add(Me.DspRightClearance)
         Me.Controls.Add(Me.DspLeftClearance)
@@ -2766,7 +2867,7 @@ Partial Class frmMain
     Friend WithEvents DspAddClosetThrustJack As ucnDspData
     Friend WithEvents DspClosetThrustJack As ucnDspData
     Friend WithEvents DspNextPieceName As ucnDspData
-    Friend WithEvents UcnDspData24 As ucnDspData
+    Friend WithEvents DspSegmentRolling As ucnDspData
     Friend WithEvents DspAssemblyPattern As ucnDspData
     Friend WithEvents Panel1 As Panel
     Friend WithEvents InterruptTime As ucnDspData
@@ -2820,8 +2921,8 @@ Partial Class frmMain
     Friend WithEvents DspBottomClearance As ucnDspDataMin
     Friend WithEvents DspLeftClearance As ucnDspDataMin
     Friend WithEvents DspRightClearance As ucnDspDataMin
-    Friend WithEvents DspMachineRolling As ucnDspDataMin2
-    Friend WithEvents DspSegmentRolling As ucnDspDataMin2
+    Friend WithEvents DspRealMRRolling As ucnDspDataMin2
+    Friend WithEvents DspTransMRRolling As ucnDspDataMin2
     Friend WithEvents DspCopyStroke As ucnDspDataMin2
     Friend WithEvents cmbWideSelct As ComboBox
     Friend WithEvents 平面ToolStripMenuItem As ToolStripMenuItem
@@ -2838,6 +2939,12 @@ Partial Class frmMain
     Friend WithEvents NetStrokeChange As ToolStripMenuItem
     Friend WithEvents DspTargetNetStroke As ucnDspData
     Friend WithEvents DspSegmentW As ucnDspData
+    Friend WithEvents DspAntiClockwiseMargin As ucnDspData
+    Friend WithEvents DspClockwiseMargin As ucnDspData
+    Friend WithEvents DspChangeMRRolling As ucnDspDataMin2
+    Friend WithEvents lblMRRolling As Label
+    Friend WithEvents ｌｂｌRollingAlarm As Label
+    Friend WithEvents btnConfirm As Button
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

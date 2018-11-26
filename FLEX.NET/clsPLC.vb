@@ -24,6 +24,7 @@ Public Class clsPlcIf
     Private _gyroRolling As Single              'ジャイロローリング
     Private _machinePitching As Single         ''マシンピッチング
     Private _mashineRolling As Single          ''マシンローリング
+    Private _mashineRearRolling As Single   'マシン後胴ローリング
     Private _nakaoreLR As Single           '中折左右角
     Private _nakaoreTB As Single           '中折上下角
     Private _jkPress As Single           'シールド元圧
@@ -440,6 +441,16 @@ Public Class clsPlcIf
     Public ReadOnly Property MashineRolling As Single
         Get
             Return _mashineRolling
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 後胴ローリング
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MashineRearRolling As Single
+        Get
+            Return _mashineRearRolling
         End Get
     End Property
 
@@ -940,12 +951,15 @@ Public Class clsPlcIf
             _EngValue.Add(an.FieldName, 0)
         Next
 
-        CtlPara.TaleClrMeasurRExit = _EngValue.ContainsKey("クリアランス右")
-        CtlPara.TaleClrMeasurLExit = _EngValue.ContainsKey("クリアランス左")
-        CtlPara.TaleClrMeasurUExit = _EngValue.ContainsKey("クリアランス上")
-        CtlPara.TaleClrMeasurBExit = _EngValue.ContainsKey("クリアランス下")
+        CtlPara.TaleClrMeasurRExist = _EngValue.ContainsKey("クリアランス右")
+        CtlPara.TaleClrMeasurLExist = _EngValue.ContainsKey("クリアランス左")
+        CtlPara.TaleClrMeasurUExist = _EngValue.ContainsKey("クリアランス上")
+        CtlPara.TaleClrMeasurBExist = _EngValue.ContainsKey("クリアランス下")
 
-        CtlPara.SpeedRateExit = _EngValue.ContainsKey("速度割合")
+        CtlPara.SpeedRateExist = _EngValue.ContainsKey("速度割合")
+
+        CtlPara.MachineRearRollingExist = _EngValue.ContainsKey("後胴ローリング")
+
 
         If Not InitPara.MonitorMode Then
             Dim iRet As Long = PLC_Open() 'オープン処理
@@ -1083,6 +1097,11 @@ Public Class clsPlcIf
                         _machinePitching = _EngValue("マシンピッチング")
                         _mashineRolling = _EngValue("マシンローリング")
 
+                        If CtlPara.MachineRearRollingExist Then
+                            _mashineRearRolling = _EngValue("後胴ローリング")
+                        End If
+
+
                         _jkPress = _EngValue("ジャッキ圧力")
 
                         For i As Short = 0 To InitPara.NumberGroup - 1
@@ -1108,21 +1127,21 @@ Public Class clsPlcIf
                         _CopyAngle = _EngValue("コピー角度")
                         _CopyStroke1 = _EngValue("コピーストローク1")
                         If _EngValue.ContainsKey("コピーストローク2") Then
-                                _CopyStroke2 = _EngValue("コピーストローク2")
-                            End If
+                            _CopyStroke2 = _EngValue("コピーストローク2")
+                        End If
                         _MesureCalcAveJackStroke = _EngValue("平均ジャッキストローク")
 
-                        If CtlPara.TaleClrMeasurUExit Then
+                        If CtlPara.TaleClrMeasurUExist Then
                             _topClearance = _EngValue("クリアランス上")
                         End If
 
-                        If CtlPara.TaleClrMeasurLExit Then
+                        If CtlPara.TaleClrMeasurLExist Then
                             _leftClearance = _EngValue("クリアランス左")
                         End If
-                        If CtlPara.TaleClrMeasurBExit Then
+                        If CtlPara.TaleClrMeasurBExist Then
                             _botomClearance = _EngValue("クリアランス下")
                         End If
-                        If CtlPara.TaleClrMeasurRExit Then
+                        If CtlPara.TaleClrMeasurRExist Then
                             _rightClearance = _EngValue("クリアランス右")
                         End If
 
@@ -1496,7 +1515,7 @@ Public Class clsPlcIf
     ''' 速度割合PLC書き込み
     ''' </summary>
     Public Sub SpeedRateWrite()
-        If InitPara.ServerMode And CtlPara.SpeedRateExit Then
+        If InitPara.ServerMode And CtlPara.SpeedRateExist Then
             AnalogPlcWrite("速度割合", CInt(_SpeedRate))
         End If
 

@@ -95,6 +95,8 @@ Partial Class frmSim
         Me.Label15 = New System.Windows.Forms.Label()
         Me.nudMachinePitching = New System.Windows.Forms.NumericUpDown()
         Me.lblTime = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.numMRRolling = New System.Windows.Forms.NumericUpDown()
         CType(Me.nudSoucePressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudLeftStroke, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudRightStroke, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -111,6 +113,7 @@ Partial Class frmSim
         CType(Me.numGpMvRate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numGpOffset, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudMachinePitching, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.numMRRolling, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tmrPlcWR
@@ -784,12 +787,37 @@ Partial Class frmSim
         Me.lblTime.TabIndex = 42
         Me.lblTime.Text = "Label16"
         '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label16.Location = New System.Drawing.Point(292, 610)
+        Me.Label16.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(134, 16)
+        Me.Label16.TabIndex = 44
+        Me.Label16.Text = "後胴ローリング（deg)"
+        '
+        'numMRRolling
+        '
+        Me.numMRRolling.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.numMRRolling.Location = New System.Drawing.Point(324, 632)
+        Me.numMRRolling.Margin = New System.Windows.Forms.Padding(2)
+        Me.numMRRolling.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.numMRRolling.Minimum = New Decimal(New Integer() {10000, 0, 0, -2147483648})
+        Me.numMRRolling.Name = "numMRRolling"
+        Me.numMRRolling.Size = New System.Drawing.Size(89, 26)
+        Me.numMRRolling.TabIndex = 43
+        Me.numMRRolling.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
         'frmSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(1594, 876)
+        Me.Controls.Add(Me.Label16)
+        Me.Controls.Add(Me.numMRRolling)
         Me.Controls.Add(Me.lblTime)
         Me.Controls.Add(Me.Label15)
         Me.Controls.Add(Me.nudMachinePitching)
@@ -852,6 +880,7 @@ Partial Class frmSim
         CType(Me.numGpMvRate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.numGpOffset, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudMachinePitching, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.numMRRolling, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -914,4 +943,6 @@ Partial Class frmSim
     Public WithEvents tmrAuto As Timer
     Public WithEvents tmrStrokeSim As Timer
     Friend WithEvents lblTime As Label
+    Friend WithEvents Label16 As Label
+    Friend WithEvents numMRRolling As NumericUpDown
 End Class

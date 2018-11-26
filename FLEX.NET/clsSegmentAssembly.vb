@@ -284,6 +284,8 @@ Friend Class clsSegmentAssembly
 
         End If
 
+        Dim RollinEn As Boolean = dsSegAsm.Columns.Contains("時計端差異") And dsSegAsm.Columns.Contains("反時計端差異")
+
         _ProcessData.Clear()
 
         For Each dRow As DataRow In dsSegAsm.Rows
@@ -293,10 +295,23 @@ Friend Class clsSegmentAssembly
 
                 If ColName.Contains("組立順序") AndAlso Not IsDBNull(dRow(ColName)) Then
 
+
+
                     Dim SegDt As New AsseblyProcess '組み立手順データっｘ
+
 
                     SegDt.PatternName = dRow("組立パターン名")
                     SegDt.BoltPitch = dRow("組立ピッチ")
+
+                    SegDt.MarginEnable = (ColName.Contains("時計端差異") And ColName.Contains("反時計端差異"))
+
+                    If SegDt.MarginEnable Then
+                        SegDt.SegmentRolling = dRow("SGローリング")
+                        SegDt.MachineRearRolling = dRow("MRローリング")
+                        SegDt.ClockWiseSegMargin = dRow("時計端差異")
+                        SegDt.AntiClockWiseSegMargin = dRow("反時計端差異")
+                    End If
+
 
 
                     Dim AsOrder As Short = dRow(ColName)  '組立順番
@@ -720,6 +735,43 @@ Friend Class clsSegmentAssembly
         ''' </summary>
         ''' <returns></returns>
         Public Property BoltPitch As Single
+
+        ''' <summary>
+        ''' 余裕度の入力あるかどうか
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property MarginEnable As Boolean
+
+
+        ''' <summary>
+        ''' 時計端側の余裕度(deg)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ClockWiseSegMargin As Single
+
+
+        ''' <summary>
+        ''' セグメントローリング
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property SegmentRolling As Single
+
+
+        ''' <summary>
+        ''' マシン後胴ローリング
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property MachineRearRolling As Single
+
+
+        ''' <summary>
+        ''' 反時計端側の余裕度(deg)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property AntiClockWiseSegMargin As Single
+
+
+
 
         Dim _PullBackJack As List(Of Short)
         ''' <summary>

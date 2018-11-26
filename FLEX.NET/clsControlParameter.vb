@@ -322,34 +322,42 @@ Public Class clsControlParameter
     ''' アナログTagにあるかどうか
     ''' </summary>
     ''' <returns></returns>
-    Public Property TaleClrMeasurRExit As Boolean
+    Public Property TaleClrMeasurRExist As Boolean
 
     ''' <summary>
     ''' 左テールクリアランス計あり
     '''アナログTagにあるかどうか
     ''' </summary>
     ''' <returns></returns>
-    Public Property TaleClrMeasurLExit As Boolean
+    Public Property TaleClrMeasurLExist As Boolean
 
     ''' <summary>
     ''' 上テールクリアランス計あり
     ''' アナログTagにあるかどうか
     ''' </summary>
     ''' <returns></returns>
-    Public Property TaleClrMeasurUExit As Boolean
+    Public Property TaleClrMeasurUExist As Boolean
 
     ''' <summary>
     ''' 下テールクリアランス計あり
     ''' アナログTagにあるかどうか
     ''' </summary>
     ''' <returns></returns>
-    Public Property TaleClrMeasurBExit As Boolean
+    Public Property TaleClrMeasurBExist As Boolean
+
+
+    ''' <summary>
+    ''' 後胴ローリングあり
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MachineRearRollingExist As Boolean
+
 
     ''' <summary>
     ''' FLEXからの速度割合あり
     ''' </summary>
     ''' <returns></returns>
-    Public Property SpeedRateExit As Boolean
+    Public Property SpeedRateExist As Boolean
 
     'Public Property クリアランス計 As Boolean
     '    Get

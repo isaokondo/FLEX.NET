@@ -51,6 +51,9 @@ Public Class clsSimlationSetting
     Public ReadOnly Property SegmentMode As String
 
 
+    Public ReadOnly Property MRRollingAdr As String
+
+
     Public ReadOnly Property LoszeroStart As String
 
     Public ReadOnly Property MachineComPls As String
@@ -105,6 +108,9 @@ Public Class clsSimlationSetting
                     _MachinePitchingAdr = t("値")
                 Case "GyairoAdr"
                     _GyairoAdr = t("値")
+
+                Case "MRRollingAdr"
+                    _MRRollingAdr = t("値")
                 Case "ExcavOrSegmentAdr"
                     _ExcavOrSegmentAdr = t("値")
                 Case "PullBackOnAdr"

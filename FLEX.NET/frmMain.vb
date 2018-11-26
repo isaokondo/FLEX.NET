@@ -116,7 +116,15 @@
 
         End Select
 
-        DspMachineRolling.Value = PlcIf.MashineRolling  'マシンローリング
+        If CtlPara.MachineRearRollingExist And InitPara.LosZeroEquip Then
+            DspRealMRRolling.Value = PlcIf.MashineRearRolling  'マシンローリング
+            '転送時マシンローリング
+            DspTransMRRolling.Value = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MachineRearRolling
+            DspChangeMRRolling.Value = DspRealMRRolling.Value - DspTransMRRolling.Value 'マシンローリング変化量
+        End If
+
+
+
 
         DspBottomClearance.Value = PlcIf.botomClearance
         DspTopClearance.Value = PlcIf.topClearance
@@ -510,6 +518,18 @@
                 DspClosetJack.Value = SegAsmblyData.JackListDsp(.ClosetJack) '押込みジャッキ
                 DspClosetThrustJack.Value = SegAsmblyData.JackListDsp(.ClosetThrustJack) '押込み推進ジャッキ
                 DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
+
+                DspSegmentRolling.Value = .SegmentRolling
+                If .MarginEnable Then
+                    DspAntiClockwiseMargin.Value = .AntiClockWiseSegMargin '反時計端余裕度
+                    DspClockwiseMargin.Value = .ClockWiseSegMargin '時計端余裕度
+                Else
+                    DspAntiClockwiseMargin.Value = "-" '反時計端余裕度
+                    DspClockwiseMargin.Value = "-" '時計端余裕度
+
+                End If
+
+
 
                 If PlcIf.AnalogTag.TagExist("甲乙表示用信号") And InitPara.ServerMode Then
                     PlcIf.AnalogPlcWrite("甲乙表示用信号", .PatternKouOtuID)
@@ -1261,10 +1281,18 @@
         DspUpSpeed.Visible = InitPara.topStrokeEnable
 
         'テールクリアランスの表示
-        DspTopClearance.Visible = CtlPara.TaleClrMeasurUExit
-        DspLeftClearance.Visible = CtlPara.TaleClrMeasurLExit
-        DspRightClearance.Visible = CtlPara.TaleClrMeasurRExit
-        DspBottomClearance.Visible = CtlPara.TaleClrMeasurBExit
+        DspTopClearance.Visible = CtlPara.TaleClrMeasurUExist
+        DspLeftClearance.Visible = CtlPara.TaleClrMeasurLExist
+        DspRightClearance.Visible = CtlPara.TaleClrMeasurRExist
+        DspBottomClearance.Visible = CtlPara.TaleClrMeasurBExist
+
+        '後胴ローリングの表示
+        '同時組立　および　後胴ローリング装備時
+        lblMRRolling.Visible = CtlPara.MachineRearRollingExist And InitPara.LosZeroEquip
+        DspRealMRRolling.Visible = lblMRRolling.Visible
+        Dim VisiEn As Boolean = CtlPara.MachineRearRollingExist AndAlso InitPara.LosZeroEquip AndAlso SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MarginEnable
+        DspTransMRRolling.Visible = VisiEn
+        DspChangeMRRolling.Visible = VisiEn
 
         ParameterCheck()
 
