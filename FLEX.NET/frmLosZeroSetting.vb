@@ -17,6 +17,8 @@
         LosZeroOpposeGroupNumber.Value = CtlPara.LosZeroOpposeGroupNumber
         LosZeroOpposeManualSV.Value = CtlPara.LosZeroOpposeManualSV
 
+        LoszeroRollingTolerance.Value = CtlPara.LoszeroRollingTolerance
+
         NextPieceConfirm.rdbtnValue = CtlPara.NextPieceConfirm
 
         NextPieceConfirmTime.Value = CtlPara.NextPieceConfirmTime
@@ -53,6 +55,8 @@
         End If
 
         CtlPara.LosZeroOpposeJackExcept = OpposeJackExcep.rdbtnValue
+        CtlPara.LoszeroRollingTolerance = LoszeroRollingTolerance.Value
+
         CtlPara.AssemblyPieceNumber = AssemblyPieceNumber.Value '組み立てピース数
 
 

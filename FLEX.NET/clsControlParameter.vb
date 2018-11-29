@@ -93,6 +93,7 @@ Public Class clsControlParameter
     Private _LoszerorStep As Single '1ループの演算の力点変化量
 
     Private _LosZeroRollingTake As Boolean  '同時施工：ローリング考慮
+    Private _LoszeroRollingTolerance As Single 'ローリング許容値
     Private _LosZeroOpposeJack As Boolean '対抗ジャッキ選択
     Private _LosZeroOpposeControl As Boolean '対抗圧制御
     Private _LosZeroOpposeGroupNumber As Short '対抗ジャッキ制御グループ数
@@ -861,6 +862,21 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+
+    ''' <summary>
+    ''' 同時施工：ローリング考慮
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LoszeroRollingTolerance As Single
+        Get
+            Return _LoszeroRollingTolerance
+        End Get
+        Set(value As Single)
+            _LoszeroRollingTolerance = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
     ''' <summary>
     ''' 対抗ジャッキ選択
     ''' </summary>
@@ -1282,6 +1298,7 @@ Public Class clsControlParameter
         _LoszerorStep = chk.GetValue("LoszerorStep")
 
         _LosZeroRollingTake = fnBoolean(chk.GetValue("LosZeroRollingTake"))
+        _LoszeroRollingTolerance = chk.GetValue("LoszeroRollingTolerance", "0.05")
         _LosZeroOpposeJackExcept = fnBoolean(chk.GetValue("LosZeroOpposeJackExcept", "False"))
 
         If InitPara.OpposeJackEnable Then

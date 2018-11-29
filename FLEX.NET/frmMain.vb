@@ -119,8 +119,13 @@
         If CtlPara.MachineRearRollingExist And InitPara.LosZeroEquip Then
             DspRealMRRolling.Value = PlcIf.MashineRearRolling  'マシンローリング
             '転送時マシンローリング
-            DspTransMRRolling.Value = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MachineRearRolling
-            DspChangeMRRolling.Value = DspRealMRRolling.Value - DspTransMRRolling.Value 'マシンローリング変化量
+            If SegAsmblyData.ProcessData.ContainsKey(PlcIf.AssemblyPieceNo) AndAlso SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MarginEnable Then
+                DspTransMRRolling.Value = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MachineRearRolling
+                DspChangeMRRolling.Value = DspRealMRRolling.Value - DspTransMRRolling.Value 'マシンローリング変化量
+            Else
+                DspTransMRRolling.Text = "---"
+                DspChangeMRRolling.Text = "---"
+            End If
         End If
 
 
@@ -1290,9 +1295,8 @@
         '同時組立　および　後胴ローリング装備時
         lblMRRolling.Visible = CtlPara.MachineRearRollingExist And InitPara.LosZeroEquip
         DspRealMRRolling.Visible = lblMRRolling.Visible
-        Dim VisiEn As Boolean = CtlPara.MachineRearRollingExist AndAlso InitPara.LosZeroEquip AndAlso SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MarginEnable
-        DspTransMRRolling.Visible = VisiEn
-        DspChangeMRRolling.Visible = VisiEn
+        DspTransMRRolling.Visible = lblMRRolling.Visible
+        DspChangeMRRolling.Visible = lblMRRolling.Visible
 
         ParameterCheck()
 
@@ -1390,5 +1394,14 @@
     ''' <param name="e"></param>
     Private Sub NetStrokeChange_Click(sender As Object, e As EventArgs) Handles NetStrokeChange.Click, DspTargetNetStroke.DoubleClick, DspRingTargetDir.DoubleClick
         frmNetStrokeChange.Show()
+    End Sub
+    ''' <summary>
+    ''' ロスゼロ時のローリング許容値超のメッセージ確認ボタン
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        btnConfirm.Visible = False
+        lblMRRolling.Visible = False
     End Sub
 End Class

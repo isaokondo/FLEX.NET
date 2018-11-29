@@ -60,6 +60,20 @@ Public Class ucnDspDataMin
             Call sbIndustrialValueSet()
         End Set
     End Property
+    ''' <summary>
+    ''' テキストの表示
+    ''' </summary>
+    ''' <returns></returns>
+    <Browsable(True)>
+    Public Property Text As String
+        Get
+            Return lblData.Text
+        End Get
+        Set(value As String)
+            '_Value = value
+            lblData.Text = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' 工業値の表示
@@ -68,6 +82,11 @@ Public Class ucnDspDataMin
     Private Sub sbIndustrialValueSet()
         lblData.Text = _Value.ToString("F" & _DecimalPlaces.ToString) & " "
     End Sub
+
+
+
+
+
 
     Private Sub ucnDspDataMin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 

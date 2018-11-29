@@ -290,6 +290,9 @@ Friend Class clsSegmentAssembly
 
         For Each dRow As DataRow In dsSegAsm.Rows
 
+            RollinEn = RollinEn And Not IsDBNull(dRow("SGローリング")) And
+                Not IsDBNull(dRow("MRローリング")) And Not IsDBNull(dRow("時計端差異")) And Not IsDBNull(dRow("反時計端差異"))
+
             For Each Col As DataColumn In dsSegAsm.Columns
                 Dim ColName As String = Col.ColumnName
 
@@ -303,7 +306,7 @@ Friend Class clsSegmentAssembly
                     SegDt.PatternName = dRow("組立パターン名")
                     SegDt.BoltPitch = dRow("組立ピッチ")
 
-                    SegDt.MarginEnable = (ColName.Contains("時計端差異") And ColName.Contains("反時計端差異"))
+                    SegDt.MarginEnable = RollinEn
 
                     If SegDt.MarginEnable Then
                         SegDt.SegmentRolling = dRow("SGローリング")
