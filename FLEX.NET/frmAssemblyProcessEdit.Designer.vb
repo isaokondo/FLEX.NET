@@ -45,6 +45,8 @@ Partial Class frmAssemblyProcessEdit
         Me.btnApply = New System.Windows.Forms.Button()
         Me.DspOpposeGroup = New FLEX.NET.ucnDspData()
         Me.AssemblyPieceNumber = New FLEX.NET.ucnNumEdit()
+        Me.DspAntiClockwiseMargin = New FLEX.NET.ucnDspData()
+        Me.DspClockwiseMargin = New FLEX.NET.ucnDspData()
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -228,7 +230,7 @@ Partial Class frmAssemblyProcessEdit
         'picAssemblySeg
         '
         Me.picAssemblySeg.BackColor = System.Drawing.Color.Transparent
-        Me.picAssemblySeg.Location = New System.Drawing.Point(504, 271)
+        Me.picAssemblySeg.Location = New System.Drawing.Point(504, 302)
         Me.picAssemblySeg.Margin = New System.Windows.Forms.Padding(2)
         Me.picAssemblySeg.Name = "picAssemblySeg"
         Me.picAssemblySeg.Size = New System.Drawing.Size(465, 496)
@@ -244,9 +246,9 @@ Partial Class frmAssemblyProcessEdit
         Me.UcnDspData24.DataWidth = 91
         Me.UcnDspData24.DecimalPlaces = CType(2, Short)
         Me.UcnDspData24.FieldName = "ローリング偏差"
-        Me.UcnDspData24.FieldNameWidth = 146
+        Me.UcnDspData24.FieldNameWidth = 152
         Me.UcnDspData24.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.UcnDspData24.Location = New System.Drawing.Point(740, 192)
+        Me.UcnDspData24.Location = New System.Drawing.Point(750, 193)
         Me.UcnDspData24.Margin = New System.Windows.Forms.Padding(1)
         Me.UcnDspData24.Name = "UcnDspData24"
         Me.UcnDspData24.Size = New System.Drawing.Size(243, 32)
@@ -265,9 +267,9 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClosetJack.DataWidth = 91
         Me.DspClosetJack.DecimalPlaces = CType(0, Short)
         Me.DspClosetJack.FieldName = "押込ｼﾞｬｯｷ"
-        Me.DspClosetJack.FieldNameWidth = 146
+        Me.DspClosetJack.FieldNameWidth = 152
         Me.DspClosetJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetJack.Location = New System.Drawing.Point(739, 128)
+        Me.DspClosetJack.Location = New System.Drawing.Point(749, 129)
         Me.DspClosetJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetJack.Name = "DspClosetJack"
         Me.DspClosetJack.Size = New System.Drawing.Size(243, 32)
@@ -286,7 +288,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspBoltPitch.DataWidth = 91
         Me.DspBoltPitch.DecimalPlaces = CType(1, Short)
         Me.DspBoltPitch.FieldName = "組立ﾎﾞﾙﾄ位置"
-        Me.DspBoltPitch.FieldNameWidth = 146
+        Me.DspBoltPitch.FieldNameWidth = 152
         Me.DspBoltPitch.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspBoltPitch.Location = New System.Drawing.Point(505, 193)
         Me.DspBoltPitch.Margin = New System.Windows.Forms.Padding(1)
@@ -304,7 +306,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPattern.Blink = False
         Me.DspAssemblyPattern.BlinkColor = System.Drawing.Color.Red
         Me.DspAssemblyPattern.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspAssemblyPattern.DataWidth = 216
+        Me.DspAssemblyPattern.DataWidth = 230
         Me.DspAssemblyPattern.DecimalPlaces = CType(0, Short)
         Me.DspAssemblyPattern.FieldName = "組立パターン"
         Me.DspAssemblyPattern.FieldNameWidth = 260
@@ -312,7 +314,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPattern.Location = New System.Drawing.Point(505, 65)
         Me.DspAssemblyPattern.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPattern.Name = "DspAssemblyPattern"
-        Me.DspAssemblyPattern.Size = New System.Drawing.Size(472, 32)
+        Me.DspAssemblyPattern.Size = New System.Drawing.Size(488, 32)
         Me.DspAssemblyPattern.TabIndex = 148
         Me.DspAssemblyPattern.Unit = "deg"
         Me.DspAssemblyPattern.UnitVisible = False
@@ -328,9 +330,9 @@ Partial Class frmAssemblyProcessEdit
         Me.DspNextPieceName.DataWidth = 91
         Me.DspNextPieceName.DecimalPlaces = CType(2, Short)
         Me.DspNextPieceName.FieldName = "次の組立ピース"
-        Me.DspNextPieceName.FieldNameWidth = 146
+        Me.DspNextPieceName.FieldNameWidth = 152
         Me.DspNextPieceName.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspNextPieceName.Location = New System.Drawing.Point(740, 96)
+        Me.DspNextPieceName.Location = New System.Drawing.Point(750, 97)
         Me.DspNextPieceName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspNextPieceName.Name = "DspNextPieceName"
         Me.DspNextPieceName.Size = New System.Drawing.Size(243, 32)
@@ -349,9 +351,9 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAddClosetThrustJack.DataWidth = 91
         Me.DspAddClosetThrustJack.DecimalPlaces = CType(0, Short)
         Me.DspAddClosetThrustJack.FieldName = "追加推進ｼﾞｬｯｷ"
-        Me.DspAddClosetThrustJack.FieldNameWidth = 146
+        Me.DspAddClosetThrustJack.FieldNameWidth = 152
         Me.DspAddClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(739, 160)
+        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(749, 161)
         Me.DspAddClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAddClosetThrustJack.Name = "DspAddClosetThrustJack"
         Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(243, 32)
@@ -370,7 +372,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClosetThrustJack.DataWidth = 91
         Me.DspClosetThrustJack.DecimalPlaces = CType(2, Short)
         Me.DspClosetThrustJack.FieldName = "押込推進ｼﾞｬｯｷ"
-        Me.DspClosetThrustJack.FieldNameWidth = 146
+        Me.DspClosetThrustJack.FieldNameWidth = 152
         Me.DspClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspClosetThrustJack.Location = New System.Drawing.Point(505, 161)
         Me.DspClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
@@ -391,7 +393,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspPullBackJack.DataWidth = 91
         Me.DspPullBackJack.DecimalPlaces = CType(2, Short)
         Me.DspPullBackJack.FieldName = "引戻ｼﾞｬｯｷ"
-        Me.DspPullBackJack.FieldNameWidth = 146
+        Me.DspPullBackJack.FieldNameWidth = 152
         Me.DspPullBackJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspPullBackJack.Location = New System.Drawing.Point(505, 129)
         Me.DspPullBackJack.Margin = New System.Windows.Forms.Padding(1)
@@ -412,7 +414,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPieace.DataWidth = 91
         Me.DspAssemblyPieace.DecimalPlaces = CType(2, Short)
         Me.DspAssemblyPieace.FieldName = "組立ピース"
-        Me.DspAssemblyPieace.FieldNameWidth = 146
+        Me.DspAssemblyPieace.FieldNameWidth = 152
         Me.DspAssemblyPieace.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspAssemblyPieace.Location = New System.Drawing.Point(505, 97)
         Me.DspAssemblyPieace.Margin = New System.Windows.Forms.Padding(1)
@@ -430,7 +432,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspTypeName.Blink = False
         Me.DspTypeName.BlinkColor = System.Drawing.Color.Red
         Me.DspTypeName.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspTypeName.DataWidth = 216
+        Me.DspTypeName.DataWidth = 230
         Me.DspTypeName.DecimalPlaces = CType(0, Short)
         Me.DspTypeName.FieldName = "組立セグメント"
         Me.DspTypeName.FieldNameWidth = 260
@@ -438,7 +440,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspTypeName.Location = New System.Drawing.Point(505, 33)
         Me.DspTypeName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspTypeName.Name = "DspTypeName"
-        Me.DspTypeName.Size = New System.Drawing.Size(475, 32)
+        Me.DspTypeName.Size = New System.Drawing.Size(491, 32)
         Me.DspTypeName.TabIndex = 139
         Me.DspTypeName.Unit = "deg"
         Me.DspTypeName.UnitVisible = False
@@ -454,7 +456,7 @@ Partial Class frmAssemblyProcessEdit
         Me.DspReduceGroup.DataWidth = 91
         Me.DspReduceGroup.DecimalPlaces = CType(2, Short)
         Me.DspReduceGroup.FieldName = "減圧ｸﾞﾙｰﾌﾟ"
-        Me.DspReduceGroup.FieldNameWidth = 146
+        Me.DspReduceGroup.FieldNameWidth = 152
         Me.DspReduceGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspReduceGroup.Location = New System.Drawing.Point(504, 226)
         Me.DspReduceGroup.Margin = New System.Windows.Forms.Padding(1)
@@ -487,9 +489,9 @@ Partial Class frmAssemblyProcessEdit
         Me.DspOpposeGroup.DataWidth = 91
         Me.DspOpposeGroup.DecimalPlaces = CType(2, Short)
         Me.DspOpposeGroup.FieldName = "対抗ｸﾞﾙｰﾌﾟ"
-        Me.DspOpposeGroup.FieldNameWidth = 146
+        Me.DspOpposeGroup.FieldNameWidth = 152
         Me.DspOpposeGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspOpposeGroup.Location = New System.Drawing.Point(740, 226)
+        Me.DspOpposeGroup.Location = New System.Drawing.Point(750, 227)
         Me.DspOpposeGroup.Margin = New System.Windows.Forms.Padding(1)
         Me.DspOpposeGroup.Name = "DspOpposeGroup"
         Me.DspOpposeGroup.Size = New System.Drawing.Size(243, 32)
@@ -520,11 +522,55 @@ Partial Class frmAssemblyProcessEdit
         Me.AssemblyPieceNumber.Unit = ""
         Me.AssemblyPieceNumber.Value = 1.0R
         '
+        'DspAntiClockwiseMargin
+        '
+        Me.DspAntiClockwiseMargin.BackColor = System.Drawing.Color.Transparent
+        Me.DspAntiClockwiseMargin.Blink = False
+        Me.DspAntiClockwiseMargin.BlinkColor = System.Drawing.Color.Red
+        Me.DspAntiClockwiseMargin.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspAntiClockwiseMargin.DataWidth = 75
+        Me.DspAntiClockwiseMargin.DecimalPlaces = CType(2, Short)
+        Me.DspAntiClockwiseMargin.FieldName = "反時計端側の余裕度(deg)"
+        Me.DspAntiClockwiseMargin.FieldNameWidth = 170
+        Me.DspAntiClockwiseMargin.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspAntiClockwiseMargin.Location = New System.Drawing.Point(748, 258)
+        Me.DspAntiClockwiseMargin.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspAntiClockwiseMargin.Name = "DspAntiClockwiseMargin"
+        Me.DspAntiClockwiseMargin.Size = New System.Drawing.Size(250, 30)
+        Me.DspAntiClockwiseMargin.TabIndex = 162
+        Me.DspAntiClockwiseMargin.Unit = "deg"
+        Me.DspAntiClockwiseMargin.UnitVisible = False
+        Me.DspAntiClockwiseMargin.Value = "-"
+        Me.DspAntiClockwiseMargin.ValueType = False
+        '
+        'DspClockwiseMargin
+        '
+        Me.DspClockwiseMargin.BackColor = System.Drawing.Color.Transparent
+        Me.DspClockwiseMargin.Blink = False
+        Me.DspClockwiseMargin.BlinkColor = System.Drawing.Color.Red
+        Me.DspClockwiseMargin.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.DspClockwiseMargin.DataWidth = 75
+        Me.DspClockwiseMargin.DecimalPlaces = CType(2, Short)
+        Me.DspClockwiseMargin.FieldName = "時計端側の余裕度(deg)"
+        Me.DspClockwiseMargin.FieldNameWidth = 170
+        Me.DspClockwiseMargin.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.DspClockwiseMargin.Location = New System.Drawing.Point(504, 258)
+        Me.DspClockwiseMargin.Margin = New System.Windows.Forms.Padding(1)
+        Me.DspClockwiseMargin.Name = "DspClockwiseMargin"
+        Me.DspClockwiseMargin.Size = New System.Drawing.Size(250, 30)
+        Me.DspClockwiseMargin.TabIndex = 161
+        Me.DspClockwiseMargin.Unit = "deg"
+        Me.DspClockwiseMargin.UnitVisible = False
+        Me.DspClockwiseMargin.Value = "-"
+        Me.DspClockwiseMargin.ValueType = False
+        '
         'frmAssemblyProcessEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1078, 769)
+        Me.ClientSize = New System.Drawing.Size(1078, 809)
+        Me.Controls.Add(Me.DspAntiClockwiseMargin)
+        Me.Controls.Add(Me.DspClockwiseMargin)
         Me.Controls.Add(Me.AssemblyPieceNumber)
         Me.Controls.Add(Me.DspOpposeGroup)
         Me.Controls.Add(Me.btnApply)
@@ -575,6 +621,8 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.SetChildIndex(Me.btnApply, 0)
         Me.Controls.SetChildIndex(Me.DspOpposeGroup, 0)
         Me.Controls.SetChildIndex(Me.AssemblyPieceNumber, 0)
+        Me.Controls.SetChildIndex(Me.DspClockwiseMargin, 0)
+        Me.Controls.SetChildIndex(Me.DspAntiClockwiseMargin, 0)
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -602,4 +650,6 @@ Partial Class frmAssemblyProcessEdit
     Protected WithEvents btnApply As Button
     Friend WithEvents DspOpposeGroup As ucnDspData
     Friend WithEvents AssemblyPieceNumber As ucnNumEdit
+    Friend WithEvents DspAntiClockwiseMargin As ucnDspData
+    Friend WithEvents DspClockwiseMargin As ucnDspData
 End Class

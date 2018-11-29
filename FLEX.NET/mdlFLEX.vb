@@ -400,20 +400,20 @@ Module mdlFLEX
     End Sub
 
     Private Sub SegmentRollingAlarm()
-        If SegAsmblyData.ProcessData.ContainsKey(PlcIf.AssemblyPieceNo) AndAlso SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MarginEnable Then
-            Dim MRRollingChangeData As Single = Math.Abs(PlcIf.MashineRearRolling - SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MachineRearRolling)
+        'If SegAsmblyData.ProcessData.ContainsKey(PlcIf.AssemblyPieceNo) AndAlso SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MarginEnable Then
+        '    Dim MRRollingChangeData As Single = Math.Abs(PlcIf.MashineRearRolling - SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MachineRearRolling)
 
-            If Math.Abs(SegAsmblyData.ProcessData(PlcIf.RingNo).ClockWiseSegMargin - MRRollingChangeData) < CtlPara.LoszeroRollingTolerance Or
-                     Math.Abs(SegAsmblyData.ProcessData(PlcIf.RingNo).AntiClockWiseSegMargin - MRRollingChangeData) < CtlPara.LoszeroRollingTolerance Then
-                My.Forms.frmMain.l
-            End If
-
-
+        '    If Math.Abs(SegAsmblyData.ProcessData(PlcIf.RingNo).ClockWiseSegMargin - MRRollingChangeData) < CtlPara.LoszeroRollingTolerance Or
+        '             Math.Abs(SegAsmblyData.ProcessData(PlcIf.RingNo).AntiClockWiseSegMargin - MRRollingChangeData) < CtlPara.LoszeroRollingTolerance Then
+        '        'My.Forms.frmMain.l
+        '    End If
 
 
 
 
-        End If
+
+
+        'End If
 
 
     End Sub

@@ -119,8 +119,8 @@
         If CtlPara.MachineRearRollingExist And InitPara.LosZeroEquip Then
             DspRealMRRolling.Value = PlcIf.MashineRearRolling  'マシンローリング
             '転送時マシンローリング
-            If SegAsmblyData.ProcessData.ContainsKey(PlcIf.AssemblyPieceNo) AndAlso SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MarginEnable Then
-                DspTransMRRolling.Value = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MachineRearRolling
+            If SegAsmblyData.rollingMindEnable(PlcIf.RingNo) Then
+                DspTransMRRolling.Value = SegAsmblyData.MachineRearRolling(PlcIf.RingNo)
                 DspChangeMRRolling.Value = DspRealMRRolling.Value - DspTransMRRolling.Value 'マシンローリング変化量
             Else
                 DspTransMRRolling.Text = "---"
@@ -515,6 +515,20 @@
 
         If SegAsmblyData.ProcessData.Count <> 0 Then
 
+
+            If SegAsmblyData.rollingMindEnable(PlcIf.RingNo) Then
+                DspAntiClockwiseMargin.Value = SegAsmblyData.AntiClockWiseSegMargin(PlcIf.RingNo) '反時計端余裕度
+                DspClockwiseMargin.Value = SegAsmblyData.ClockWiseSegMargin(PlcIf.RingNo) '時計端余裕度
+                DspSegmentRolling.Value = SegAsmblyData.SegmentRolling(PlcIf.RingNo)
+            Else
+                DspAntiClockwiseMargin.Value = "-" '反時計端余裕度
+                DspClockwiseMargin.Value = "-" '時計端余裕度
+                DspSegmentRolling.Value = "-"
+
+            End If
+
+
+
             With SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo)
                 'TODO:組立セグメント、組立ﾎﾞﾙﾄﾋﾟｯﾁの取込
                 DspBoltPitch.Value = .BoltPitch '組立ボルトピッチ
@@ -524,15 +538,6 @@
                 DspClosetThrustJack.Value = SegAsmblyData.JackListDsp(.ClosetThrustJack) '押込み推進ジャッキ
                 DspAddClosetThrustJack.Value = SegAsmblyData.JackListDsp(.AddClosetJack) '追加押込みジャッキ
 
-                DspSegmentRolling.Value = .SegmentRolling
-                If .MarginEnable Then
-                    DspAntiClockwiseMargin.Value = .AntiClockWiseSegMargin '反時計端余裕度
-                    DspClockwiseMargin.Value = .ClockWiseSegMargin '時計端余裕度
-                Else
-                    DspAntiClockwiseMargin.Value = "-" '反時計端余裕度
-                    DspClockwiseMargin.Value = "-" '時計端余裕度
-
-                End If
 
 
 

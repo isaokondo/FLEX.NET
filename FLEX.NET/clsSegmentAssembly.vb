@@ -37,6 +37,25 @@ Friend Class clsSegmentAssembly
     Private _TypeNo As New Dictionary(Of Integer, Short)
 
     ''' <summary>
+    ''' セグメントローリング
+    ''' </summary>
+    Private _SegmentRolling As New Dictionary(Of Integer, Single)
+
+    ''' <summary>
+    ''' 反時計端側の余裕度(deg)
+    ''' </summary>
+    Private _AntiClockWiseSegMargin As New Dictionary(Of Integer, Single)
+    ''' <summary>
+    '''  時計端側の余裕度(deg)
+    ''' </summary>
+    Private _ClockWiseSegMargin As New Dictionary(Of Integer, Single)
+    ''' <summary>
+    ''' マシン後胴ローリング
+    ''' </summary>
+    Private _MachineRearRolling As New Dictionary(Of Integer, Single)
+
+
+    ''' <summary>
     ''' セグメント組立データ  ピース番号がKey
     ''' </summary>
     Private _ProcessData As New SortedDictionary(Of Short, AsseblyProcess)
@@ -59,6 +78,14 @@ Friend Class clsSegmentAssembly
     ''' シュミレーションデータの指示書転送日
     ''' </summary>
     Private _TransferDate As New Dictionary(Of Integer, Date)
+    ''' <summary>
+    ''' ローリング考慮が有効かどうか
+    ''' </summary>
+    Private rollingMind As Boolean
+    ''' <summary>
+    ''' 各リングのローリング考慮有効か
+    ''' </summary>
+    Private _rollingMindEnable As New Dictionary(Of Integer, Boolean)
 
 
     ''' <summary>
@@ -92,6 +119,56 @@ Friend Class clsSegmentAssembly
         '             " WHERE リング番号 = " & intRingNo & ";")
         'End Set
     End Property
+    ''' <summary>
+    ''' ローリング考慮有効か
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property rollingMindEnable As Dictionary(Of Integer, Boolean)
+        Get
+            Return _rollingMindEnable
+        End Get
+    End Property
+
+
+    ''' <summary>
+    ''' セグメントローリング
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property SegmentRolling As Dictionary(Of Integer, Single)
+        Get
+            Return _SegmentRolling
+        End Get
+    End Property
+    ''' <summary>
+    ''' 反時計端側の余裕度(deg)
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property AntiClockWiseSegMargin As Dictionary(Of Integer, Single)
+        Get
+            Return _AntiClockWiseSegMargin
+        End Get
+    End Property
+    ''' <summary>
+    ''' 時計端側の余裕度(deg)
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ClockWiseSegMargin As Dictionary(Of Integer, Single)
+        Get
+            Return _ClockWiseSegMargin
+        End Get
+    End Property
+    ''' <summary>
+    ''' マシン後胴ローリング
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MachineRearRolling As Dictionary(Of Integer, Single)
+        Get
+            Return _MachineRearRolling
+        End Get
+    End Property
+
+
+
     ''' <summary>
     ''' 掘進終了のストローク更新
     ''' </summary>
@@ -284,14 +361,14 @@ Friend Class clsSegmentAssembly
 
         End If
 
-        Dim RollinEn As Boolean = dsSegAsm.Columns.Contains("時計端差異") And dsSegAsm.Columns.Contains("反時計端差異")
+        'Dim RollinEn As Boolean = dsSegAsm.Columns.Contains("時計端差異") And dsSegAsm.Columns.Contains("反時計端差異")
 
         _ProcessData.Clear()
 
         For Each dRow As DataRow In dsSegAsm.Rows
 
-            RollinEn = RollinEn And Not IsDBNull(dRow("SGローリング")) And
-                Not IsDBNull(dRow("MRローリング")) And Not IsDBNull(dRow("時計端差異")) And Not IsDBNull(dRow("反時計端差異"))
+            'RollinEn = RollinEn And Not IsDBNull(dRow("SGローリング")) And
+            '    Not IsDBNull(dRow("MRローリング")) And Not IsDBNull(dRow("時計端差異")) And Not IsDBNull(dRow("反時計端差異"))
 
             For Each Col As DataColumn In dsSegAsm.Columns
                 Dim ColName As String = Col.ColumnName
@@ -306,14 +383,14 @@ Friend Class clsSegmentAssembly
                     SegDt.PatternName = dRow("組立パターン名")
                     SegDt.BoltPitch = dRow("組立ピッチ")
 
-                    SegDt.MarginEnable = RollinEn
+                    'SegDt.MarginEnable = RollinEn
 
-                    If SegDt.MarginEnable Then
-                        SegDt.SegmentRolling = dRow("SGローリング")
-                        SegDt.MachineRearRolling = dRow("MRローリング")
-                        SegDt.ClockWiseSegMargin = dRow("時計端差異")
-                        SegDt.AntiClockWiseSegMargin = dRow("反時計端差異")
-                    End If
+                    'If SegDt.MarginEnable Then
+                    '    SegDt.SegmentRolling = dRow("SGローリング")
+                    '    SegDt.MachineRearRolling = dRow("MRローリング")
+                    '    SegDt.ClockWiseSegMargin = dRow("時計端差異")
+                    '    SegDt.AntiClockWiseSegMargin = dRow("反時計端差異")
+                    'End If
 
 
 
@@ -504,17 +581,22 @@ Friend Class clsSegmentAssembly
     Public Sub SegmentRingDataRead()
 
         SegmentListRead() 'セグメントリスト読込
+        'ローリング考慮の場合の追加フィールド
+        Dim RollAdFld As String = ""
+        If rollingMind Then
+            RollAdFld = ",`セグメント割付シュミレーション`.`SGローリング`,`セグメント割付シュミレーション`.`MRローリング`,
+            `セグメント割付シュミレーション`.`反時計端差異`,`セグメント割付シュミレーション`.`時計端差異`"
+        End If
+
 
         Dim rsData As DataTable =
-            GetDtfmSQL("select  `flexセグメント組立データ`.`シートID`, `flexセグメント組立データ`.`リング番号`, `flexセグメント組立データ`.`セグメントNo` ,
+            GetDtfmSQL($"select  `flexセグメント組立データ`.`シートID`, `flexセグメント組立データ`.`リング番号`, `flexセグメント組立データ`.`セグメントNo` ,
             `flexセグメント組立データ`.`組立パターンNo`,`flexセグメント組立データ`.`掘進終了ストローク`,
-            `セグメント割付シュミレーション`.`セグメントNo`,`セグメント割付シュミレーション`.`組立パターンNo`  ,`セグメント割付シュミレーション`.`シートID`   
+            `セグメント割付シュミレーション`.`セグメントNo`,`セグメント割付シュミレーション`.`組立パターンNo`  ,`セグメント割付シュミレーション`.`シートID`{RollAdFld}   
             FROM `flexセグメント組立データ`
             LEFT OUTER JOIN `セグメント割付シュミレーション` ON `flexセグメント組立データ`.`シートID`=`セグメント割付シュミレーション`.`シートID`
             AND `flexセグメント組立データ`.`リング番号`=`セグメント割付シュミレーション`.`リングＮｏ` ORDER BY `リング番号`")
 
-        'rsData = ExecuteSql _
-        '("SELECT * FROM flexセグメント組立データ Inner Join セグメント組立パターンベース")
 
         For Each tb As DataRow In rsData.Rows
             Dim RingNo As Integer = tb.Item("リング番号")
@@ -530,6 +612,17 @@ Friend Class clsSegmentAssembly
                 _TypeNo(RingNo) = tb.Item("セグメントNo1")
                 If InitPara.LosZeroEquip Then
                     _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo1")
+                    _rollingMindEnable(RingNo) =
+                        rollingMind And Not IsDBNull(tb.Item("時計端差異")) And Not IsDBNull(tb.Item("反時計端差異")) And Not IsDBNull(tb.Item("MRローリング")) And Not IsDBNull(tb.Item("SGローリング"))
+
+
+                    If _rollingMindEnable(RingNo) Then
+                        _ClockWiseSegMargin(RingNo) = tb.Item("時計端差異")
+                        _AntiClockWiseSegMargin(RingNo) = tb.Item("反時計端差異")
+                        _MachineRearRolling(RingNo) = tb.Item("MRローリング")
+                        _SegmentRolling(RingNo) = tb.Item("SGローリング")
+                    End If
+
                 End If
             End If
             '_TypeNo(i) = t.Item("セグメントNo")
@@ -718,6 +811,11 @@ Friend Class clsSegmentAssembly
 
 
     Public Sub New()
+        'コラム名に情報を取得し時計端差異,反時計端差異が存在するかどうか判断し
+        'ローリング考慮ありなしのセット
+        Dim tt As Integer = GetDtfmSQL($"SHOW columns from `セグメント割付シュミレーション`").Select("Field='時計端差異'
+            or Field='反時計端差異'").Length
+        rollingMind = (tt = 2)
 
         SegmentListRead() 'セグメントリスト読込
         SegmentRingDataRead() ''データベース読込
@@ -739,39 +837,39 @@ Friend Class clsSegmentAssembly
         ''' <returns></returns>
         Public Property BoltPitch As Single
 
-        ''' <summary>
-        ''' 余裕度の入力あるかどうか
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property MarginEnable As Boolean
+        ''''' <summary>
+        ''''' 余裕度の入力あるかどうか
+        ''''' </summary>
+        ''''' <returns></returns>
+        ''Public Property MarginEnable As Boolean
 
 
-        ''' <summary>
-        ''' 時計端側の余裕度(deg)
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property ClockWiseSegMargin As Single
+        ''''' <summary>
+        ''''' 時計端側の余裕度(deg)
+        ''''' </summary>
+        ''''' <returns></returns>
+        ''Public Property ClockWiseSegMargin As Single
 
 
-        ''' <summary>
-        ''' セグメントローリング
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property SegmentRolling As Single
+        ''''' <summary>
+        ''''' セグメントローリング
+        ''''' </summary>
+        ''''' <returns></returns>
+        ''Public Property SegmentRolling As Single
 
 
-        ''' <summary>
-        ''' マシン後胴ローリング
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property MachineRearRolling As Single
+        ''''' <summary>
+        ''''' マシン後胴ローリング
+        ''''' </summary>
+        ''''' <returns></returns>
+        ''Public Property MachineRearRolling As Single
 
 
-        ''' <summary>
-        ''' 反時計端側の余裕度(deg)
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property AntiClockWiseSegMargin As Single
+        ''''' <summary>
+        ''''' 反時計端側の余裕度(deg)
+        ''''' </summary>
+        ''''' <returns></returns>
+        ''Public Property AntiClockWiseSegMargin As Single
 
 
 
