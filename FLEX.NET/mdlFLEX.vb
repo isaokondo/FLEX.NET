@@ -399,7 +399,24 @@ Module mdlFLEX
         'End If
     End Sub
 
+    Private Sub SegmentRollingAlarm()
+        'If SegAsmblyData.ProcessData.ContainsKey(PlcIf.AssemblyPieceNo) AndAlso SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MarginEnable Then
+        '    Dim MRRollingChangeData As Single = Math.Abs(PlcIf.MashineRearRolling - SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).MachineRearRolling)
 
+        '    If Math.Abs(SegAsmblyData.ProcessData(PlcIf.RingNo).ClockWiseSegMargin - MRRollingChangeData) < CtlPara.LoszeroRollingTolerance Or
+        '             Math.Abs(SegAsmblyData.ProcessData(PlcIf.RingNo).AntiClockWiseSegMargin - MRRollingChangeData) < CtlPara.LoszeroRollingTolerance Then
+        '        'My.Forms.frmMain.l
+        '    End If
+
+
+
+
+
+
+        'End If
+
+
+    End Sub
 
 
 
@@ -412,6 +429,7 @@ Module mdlFLEX
 
         If PlcIf.LosZeroMode Then
             WriteEventData("同時施工モードになりました。", Color.Blue)
+            Call SegmentRollingAlarm()
         Else
             WriteEventData("同時施工モードがOFFになりました", Color.Magenta)
             LosZeroSts = 0

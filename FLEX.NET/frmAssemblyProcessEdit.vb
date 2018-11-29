@@ -65,6 +65,15 @@ Public Class frmAssemblyProcessEdit
         DspTypeName.Value = SegAsbly.TypeData(ConfirmRingNo.Value).TypeName 'セグメント種類
         DspAssemblyPattern.Value = SegAsbly.AssemblyPtnName(ConfirmRingNo.Value) '組立パターン名
 
+        '時計端、反時計端余裕度
+        If SegAsbly.rollingMindEnable(ConfirmRingNo.Value) Then
+            DspClockwiseMargin.Value = SegAsbly.ClockWiseSegMargin(ConfirmRingNo.Value) '
+            DspAntiClockwiseMargin.Value = SegAsbly.AntiClockWiseSegMargin(ConfirmRingNo.Value) '
+        Else
+            DspClockwiseMargin.Value = "---"
+            DspAntiClockwiseMargin.Value = "---"
+        End If
+
 
         picAssemblySeg.Visible = (SegAsbly.ProcessData.Count <> 0)
 

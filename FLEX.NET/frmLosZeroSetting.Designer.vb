@@ -43,6 +43,7 @@ Partial Class frmLosZeroSetting
         Me.OpposeJackExcep = New FLEX.NET.ucnRdBtn()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.AssemblyPieceNumber = New FLEX.NET.ucnNumEdit()
+        Me.LoszeroRollingTolerance = New FLEX.NET.ucnNumEdit()
         Me.SuspendLayout()
         '
         'btnOK
@@ -57,7 +58,7 @@ Partial Class frmLosZeroSetting
         '
         Me.LosZeroOpposeControl.BackColor = System.Drawing.Color.Transparent
         Me.LosZeroOpposeControl.FieldName = "対抗圧制御"
-        Me.LosZeroOpposeControl.Location = New System.Drawing.Point(16, 116)
+        Me.LosZeroOpposeControl.Location = New System.Drawing.Point(16, 154)
         Me.LosZeroOpposeControl.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeControl.Name = "LosZeroOpposeControl"
         Me.LosZeroOpposeControl.rdbtnValue = False
@@ -71,7 +72,7 @@ Partial Class frmLosZeroSetting
         '
         Me.LosZeroOpposeJack.BackColor = System.Drawing.Color.Transparent
         Me.LosZeroOpposeJack.FieldName = "対抗ジャッキ選択"
-        Me.LosZeroOpposeJack.Location = New System.Drawing.Point(16, 63)
+        Me.LosZeroOpposeJack.Location = New System.Drawing.Point(16, 101)
         Me.LosZeroOpposeJack.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeJack.Name = "LosZeroOpposeJack"
         Me.LosZeroOpposeJack.rdbtnValue = False
@@ -273,7 +274,7 @@ Partial Class frmLosZeroSetting
         Me.LosZeroOpposeGroupNumber.FieldName = "対抗グループ数"
         Me.LosZeroOpposeGroupNumber.Increment = 1.0!
         Me.LosZeroOpposeGroupNumber.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.LosZeroOpposeGroupNumber.Location = New System.Drawing.Point(19, 167)
+        Me.LosZeroOpposeGroupNumber.Location = New System.Drawing.Point(19, 205)
         Me.LosZeroOpposeGroupNumber.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeGroupNumber.MaxValue = "5"
         Me.LosZeroOpposeGroupNumber.MinValue = "0"
@@ -294,7 +295,7 @@ Partial Class frmLosZeroSetting
         Me.LosZeroOpposeManualSV.FieldName = "対抗グループ手動圧力設定"
         Me.LosZeroOpposeManualSV.Increment = 1.0!
         Me.LosZeroOpposeManualSV.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.LosZeroOpposeManualSV.Location = New System.Drawing.Point(19, 210)
+        Me.LosZeroOpposeManualSV.Location = New System.Drawing.Point(19, 248)
         Me.LosZeroOpposeManualSV.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeManualSV.MaxValue = "50"
         Me.LosZeroOpposeManualSV.MinValue = "0"
@@ -336,7 +337,7 @@ Partial Class frmLosZeroSetting
         Me.ReduceReachStrokeDiff.FieldName = "減圧開始可能ストローク設定"
         Me.ReduceReachStrokeDiff.Increment = 1.0!
         Me.ReduceReachStrokeDiff.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.ReduceReachStrokeDiff.Location = New System.Drawing.Point(19, 341)
+        Me.ReduceReachStrokeDiff.Location = New System.Drawing.Point(19, 379)
         Me.ReduceReachStrokeDiff.Margin = New System.Windows.Forms.Padding(2)
         Me.ReduceReachStrokeDiff.MaxValue = "1000"
         Me.ReduceReachStrokeDiff.MinValue = "-1000"
@@ -354,7 +355,7 @@ Partial Class frmLosZeroSetting
         Me.Label2.BackColor = System.Drawing.Color.Silver
         Me.Label2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Navy
-        Me.Label2.Location = New System.Drawing.Point(16, 283)
+        Me.Label2.Location = New System.Drawing.Point(16, 321)
         Me.Label2.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(362, 54)
@@ -366,7 +367,7 @@ Partial Class frmLosZeroSetting
         '
         Me.OpposeJackExcep.BackColor = System.Drawing.Color.Transparent
         Me.OpposeJackExcep.FieldName = "対抗ｼﾞｬｯｷのｽﾄﾛｰｸ除外"
-        Me.OpposeJackExcep.Location = New System.Drawing.Point(16, 445)
+        Me.OpposeJackExcep.Location = New System.Drawing.Point(16, 483)
         Me.OpposeJackExcep.Margin = New System.Windows.Forms.Padding(2)
         Me.OpposeJackExcep.Name = "OpposeJackExcep"
         Me.OpposeJackExcep.rdbtnValue = False
@@ -381,7 +382,7 @@ Partial Class frmLosZeroSetting
         Me.Label3.BackColor = System.Drawing.Color.Silver
         Me.Label3.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Navy
-        Me.Label3.Location = New System.Drawing.Point(16, 414)
+        Me.Label3.Location = New System.Drawing.Point(16, 452)
         Me.Label3.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(166, 29)
@@ -410,11 +411,33 @@ Partial Class frmLosZeroSetting
         Me.AssemblyPieceNumber.Unit = ""
         Me.AssemblyPieceNumber.Value = 1.0R
         '
+        'LoszeroRollingTolerance
+        '
+        Me.LoszeroRollingTolerance.DataDspWidth = 110
+        Me.LoszeroRollingTolerance.DecimalPlaces = CType(2, Short)
+        Me.LoszeroRollingTolerance.DspFieldName = True
+        Me.LoszeroRollingTolerance.FieldName = "ローリング許容値"
+        Me.LoszeroRollingTolerance.Increment = 0.01!
+        Me.LoszeroRollingTolerance.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.LoszeroRollingTolerance.Location = New System.Drawing.Point(16, 52)
+        Me.LoszeroRollingTolerance.Margin = New System.Windows.Forms.Padding(2)
+        Me.LoszeroRollingTolerance.MaxValue = "3"
+        Me.LoszeroRollingTolerance.MinValue = "0"
+        Me.LoszeroRollingTolerance.Name = "LoszeroRollingTolerance"
+        Me.LoszeroRollingTolerance.SelectItem = Nothing
+        Me.LoszeroRollingTolerance.Size = New System.Drawing.Size(405, 39)
+        Me.LoszeroRollingTolerance.TabIndex = 154
+        Me.LoszeroRollingTolerance.ttMsg = ""
+        Me.LoszeroRollingTolerance.ttTile = ""
+        Me.LoszeroRollingTolerance.Unit = "deg"
+        Me.LoszeroRollingTolerance.Value = 0R
+        '
         'frmLosZeroSetting
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(887, 585)
+        Me.Controls.Add(Me.LoszeroRollingTolerance)
         Me.Controls.Add(Me.AssemblyPieceNumber)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.OpposeJackExcep)
@@ -460,6 +483,7 @@ Partial Class frmLosZeroSetting
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.AssemblyPieceNumber, 0)
+        Me.Controls.SetChildIndex(Me.LoszeroRollingTolerance, 0)
         Me.ResumeLayout(False)
 
     End Sub
@@ -485,4 +509,5 @@ Partial Class frmLosZeroSetting
     Friend WithEvents OpposeJackExcep As ucnRdBtn
     Friend WithEvents Label3 As Label
     Friend WithEvents AssemblyPieceNumber As ucnNumEdit
+    Friend WithEvents LoszeroRollingTolerance As ucnNumEdit
 End Class

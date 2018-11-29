@@ -108,6 +108,8 @@ Partial Class frmMain
         Me.lblMachineMode = New System.Windows.Forms.Label()
         Me.btnLoszeroContinu = New System.Windows.Forms.Button()
         Me.lblMRRolling = New System.Windows.Forms.Label()
+        Me.ｌｂｌRollingAlarm = New System.Windows.Forms.Label()
+        Me.btnConfirm = New System.Windows.Forms.Button()
         Me.DspChangeMRRolling = New FLEX.NET.ucnDspDataMin2()
         Me.DspAntiClockwiseMargin = New FLEX.NET.ucnDspData()
         Me.DspClockwiseMargin = New FLEX.NET.ucnDspData()
@@ -188,8 +190,6 @@ Partial Class frmMain
         Me.DspHorDev = New FLEX.NET.ucnDspData()
         Me.DspWideUse12 = New FLEX.NET.ucnDspData()
         Me.InterruptTime = New FLEX.NET.ucnDspData()
-        Me.ｌｂｌRollingAlarm = New System.Windows.Forms.Label()
-        Me.btnConfirm = New System.Windows.Forms.Button()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -220,91 +220,91 @@ Partial Class frmMain
         'RingNoChange
         '
         Me.RingNoChange.Name = "RingNoChange"
-        Me.RingNoChange.Size = New System.Drawing.Size(183, 22)
+        Me.RingNoChange.Size = New System.Drawing.Size(188, 22)
         Me.RingNoChange.Text = "リング番号の変更(&C)"
         '
         'RingNoUpdateSetting
         '
         Me.RingNoUpdateSetting.Name = "RingNoUpdateSetting"
-        Me.RingNoUpdateSetting.Size = New System.Drawing.Size(183, 22)
+        Me.RingNoUpdateSetting.Size = New System.Drawing.Size(188, 22)
         Me.RingNoUpdateSetting.Text = "リング番号更新設定(&U)"
         '
         'NetStrokeChange
         '
         Me.NetStrokeChange.Name = "NetStrokeChange"
-        Me.NetStrokeChange.Size = New System.Drawing.Size(183, 22)
+        Me.NetStrokeChange.Size = New System.Drawing.Size(188, 22)
         Me.NetStrokeChange.Text = "目標推進量の変更"
         Me.NetStrokeChange.ToolTipText = "リング目標方向角の距離変更"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(180, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(185, 6)
         '
         'ReportOut
         '
         Me.ReportOut.Name = "ReportOut"
-        Me.ReportOut.Size = New System.Drawing.Size(183, 22)
+        Me.ReportOut.Size = New System.Drawing.Size(188, 22)
         Me.ReportOut.Text = "帳票出力(&Y)"
         '
         'RingDataViewer
         '
         Me.RingDataViewer.Name = "RingDataViewer"
-        Me.RingDataViewer.Size = New System.Drawing.Size(183, 22)
+        Me.RingDataViewer.Size = New System.Drawing.Size(188, 22)
         Me.RingDataViewer.Text = "リング内ビューワ"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(180, 6)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(185, 6)
         '
         'ExcavEnforceStart
         '
         Me.ExcavEnforceStart.Name = "ExcavEnforceStart"
-        Me.ExcavEnforceStart.Size = New System.Drawing.Size(183, 22)
+        Me.ExcavEnforceStart.Size = New System.Drawing.Size(188, 22)
         Me.ExcavEnforceStart.Text = "掘進の強制開始(&X)"
         '
         'ExcavEnforceStop
         '
         Me.ExcavEnforceStop.Name = "ExcavEnforceStop"
-        Me.ExcavEnforceStop.Size = New System.Drawing.Size(183, 22)
+        Me.ExcavEnforceStop.Size = New System.Drawing.Size(188, 22)
         Me.ExcavEnforceStop.Text = "掘進の強制終了(&B)"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(180, 6)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(185, 6)
         '
         'SystemEnd
         '
         Me.SystemEnd.Name = "SystemEnd"
-        Me.SystemEnd.Size = New System.Drawing.Size(183, 22)
+        Me.SystemEnd.Size = New System.Drawing.Size(188, 22)
         Me.SystemEnd.Text = "プログラム終了(&E)"
         '
         '表示ToolStripMenuItem
         '
         Me.表示ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DspSetting, Me.ScaleSetting, Me.StrokeMonitor})
         Me.表示ToolStripMenuItem.Name = "表示ToolStripMenuItem"
-        Me.表示ToolStripMenuItem.Size = New System.Drawing.Size(57, 20)
+        Me.表示ToolStripMenuItem.Size = New System.Drawing.Size(59, 20)
         Me.表示ToolStripMenuItem.Text = "表示(&D)"
         '
         'DspSetting
         '
         Me.DspSetting.Name = "DspSetting"
-        Me.DspSetting.Size = New System.Drawing.Size(164, 22)
+        Me.DspSetting.Size = New System.Drawing.Size(168, 22)
         Me.DspSetting.Text = "各種の表示設定"
         '
         'ScaleSetting
         '
         Me.ScaleSetting.Name = "ScaleSetting"
-        Me.ScaleSetting.Size = New System.Drawing.Size(164, 22)
+        Me.ScaleSetting.Size = New System.Drawing.Size(168, 22)
         Me.ScaleSetting.Text = "スケール"
         Me.ScaleSetting.ToolTipText = "モーメント、偏角、線形トレンドのスケール等を設定します"
         '
         'StrokeMonitor
         '
         Me.StrokeMonitor.Name = "StrokeMonitor"
-        Me.StrokeMonitor.Size = New System.Drawing.Size(164, 22)
+        Me.StrokeMonitor.Size = New System.Drawing.Size(168, 22)
         Me.StrokeMonitor.Text = "計算ストロークモニタ"
         Me.StrokeMonitor.ToolTipText = "計算ストローク、スピードの演算状態を表示します。"
         '
@@ -312,135 +312,135 @@ Partial Class frmMain
         '
         Me.設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PressParameter, Me.OneDirectionParameter, Me.OneDirectionLimit, Me.ToolStripMenuItem4, Me.PresBlock, Me.ManagmentMethd, Me.LossZeroConcern, Me.OterSetting, Me.ToolStripMenuItem5, Me.PlanDataView, Me.SegmentEdit, Me.AssemblyProcessEdit})
         Me.設定ToolStripMenuItem.Name = "設定ToolStripMenuItem"
-        Me.設定ToolStripMenuItem.Size = New System.Drawing.Size(57, 20)
+        Me.設定ToolStripMenuItem.Size = New System.Drawing.Size(58, 20)
         Me.設定ToolStripMenuItem.Text = "設定(&R)"
         '
         'PressParameter
         '
         Me.PressParameter.Name = "PressParameter"
-        Me.PressParameter.Size = New System.Drawing.Size(152, 22)
+        Me.PressParameter.Size = New System.Drawing.Size(156, 22)
         Me.PressParameter.Text = "圧力パラメータ"
         Me.PressParameter.ToolTipText = "ダイレクト制御、減圧比例弁の感度調整等のパラメータ変更"
         '
         'OneDirectionParameter
         '
         Me.OneDirectionParameter.Name = "OneDirectionParameter"
-        Me.OneDirectionParameter.Size = New System.Drawing.Size(152, 22)
+        Me.OneDirectionParameter.Size = New System.Drawing.Size(156, 22)
         Me.OneDirectionParameter.Text = "片押パラメータ"
         Me.OneDirectionParameter.ToolTipText = "水平、鉛直偏角の感度調整用パラメータ"
         '
         'OneDirectionLimit
         '
         Me.OneDirectionLimit.Name = "OneDirectionLimit"
-        Me.OneDirectionLimit.Size = New System.Drawing.Size(152, 22)
+        Me.OneDirectionLimit.Size = New System.Drawing.Size(156, 22)
         Me.OneDirectionLimit.Text = "片押し制限"
         Me.OneDirectionLimit.ToolTipText = "圧力、モーメント許容値、ｒ制限値、戻し量の設定"
         '
         'ToolStripMenuItem4
         '
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(149, 6)
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(153, 6)
         '
         'PresBlock
         '
         Me.PresBlock.Name = "PresBlock"
-        Me.PresBlock.Size = New System.Drawing.Size(152, 22)
+        Me.PresBlock.Size = New System.Drawing.Size(156, 22)
         Me.PresBlock.Text = "圧力ブロック"
         Me.PresBlock.ToolTipText = "全開ブロックの設定等"
         '
         'ManagmentMethd
         '
         Me.ManagmentMethd.Name = "ManagmentMethd"
-        Me.ManagmentMethd.Size = New System.Drawing.Size(152, 22)
+        Me.ManagmentMethd.Size = New System.Drawing.Size(156, 22)
         Me.ManagmentMethd.Text = "管理方法"
         Me.ManagmentMethd.ToolTipText = "リング更新のパラメータ"
         '
         'LossZeroConcern
         '
         Me.LossZeroConcern.Name = "LossZeroConcern"
-        Me.LossZeroConcern.Size = New System.Drawing.Size(152, 22)
+        Me.LossZeroConcern.Size = New System.Drawing.Size(156, 22)
         Me.LossZeroConcern.Text = "同時施工関連"
         '
         'OterSetting
         '
         Me.OterSetting.Name = "OterSetting"
-        Me.OterSetting.Size = New System.Drawing.Size(152, 22)
+        Me.OterSetting.Size = New System.Drawing.Size(156, 22)
         Me.OterSetting.Text = "その他"
         Me.OterSetting.ToolTipText = "掘削開始時の力点位置、間引き制御、クリアランス計"
         '
         'ToolStripMenuItem5
         '
         Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(149, 6)
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(153, 6)
         '
         'PlanDataView
         '
         Me.PlanDataView.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.平面ToolStripMenuItem, Me.縦断ToolStripMenuItem})
         Me.PlanDataView.Name = "PlanDataView"
-        Me.PlanDataView.Size = New System.Drawing.Size(152, 22)
+        Me.PlanDataView.Size = New System.Drawing.Size(156, 22)
         Me.PlanDataView.Text = "計画路線表示"
         '
         '平面ToolStripMenuItem
         '
         Me.平面ToolStripMenuItem.Name = "平面ToolStripMenuItem"
-        Me.平面ToolStripMenuItem.Size = New System.Drawing.Size(94, 22)
+        Me.平面ToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
         Me.平面ToolStripMenuItem.Text = "平面"
         '
         '縦断ToolStripMenuItem
         '
         Me.縦断ToolStripMenuItem.Name = "縦断ToolStripMenuItem"
-        Me.縦断ToolStripMenuItem.Size = New System.Drawing.Size(94, 22)
+        Me.縦断ToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
         Me.縦断ToolStripMenuItem.Text = "縦断"
         '
         'SegmentEdit
         '
         Me.SegmentEdit.Name = "SegmentEdit"
-        Me.SegmentEdit.Size = New System.Drawing.Size(152, 22)
+        Me.SegmentEdit.Size = New System.Drawing.Size(156, 22)
         Me.SegmentEdit.Text = "セグメントの割付"
         Me.SegmentEdit.ToolTipText = "各リングのセグメント割り付け情報"
         '
         'AssemblyProcessEdit
         '
         Me.AssemblyProcessEdit.Name = "AssemblyProcessEdit"
-        Me.AssemblyProcessEdit.Size = New System.Drawing.Size(152, 22)
+        Me.AssemblyProcessEdit.Size = New System.Drawing.Size(156, 22)
         Me.AssemblyProcessEdit.Text = "組立工程の編集"
         '
         '目標ToolStripMenuItem
         '
         Me.目標ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CorrectionValMng, Me.RingCloseValueMng})
         Me.目標ToolStripMenuItem.Name = "目標ToolStripMenuItem"
-        Me.目標ToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
+        Me.目標ToolStripMenuItem.Size = New System.Drawing.Size(58, 20)
         Me.目標ToolStripMenuItem.Text = "目標(&P)"
         '
         'CorrectionValMng
         '
         Me.CorrectionValMng.Name = "CorrectionValMng"
-        Me.CorrectionValMng.Size = New System.Drawing.Size(143, 22)
+        Me.CorrectionValMng.Size = New System.Drawing.Size(148, 22)
         Me.CorrectionValMng.Text = "補正値管理"
         '
         'RingCloseValueMng
         '
         Me.RingCloseValueMng.Name = "RingCloseValueMng"
-        Me.RingCloseValueMng.Size = New System.Drawing.Size(143, 22)
+        Me.RingCloseValueMng.Size = New System.Drawing.Size(148, 22)
         Me.RingCloseValueMng.Text = "リング終値管理"
         '
         'ウインドウToolStripMenuItem
         '
         Me.ウインドウToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TuningMonitorClicｋ})
         Me.ウインドウToolStripMenuItem.Name = "ウインドウToolStripMenuItem"
-        Me.ウインドウToolStripMenuItem.Size = New System.Drawing.Size(79, 20)
+        Me.ウインドウToolStripMenuItem.Size = New System.Drawing.Size(82, 20)
         Me.ウインドウToolStripMenuItem.Text = "ウインドウ(&W)"
         '
         'TuningMonitorClicｋ
         '
         Me.TuningMonitorClicｋ.Name = "TuningMonitorClicｋ"
-        Me.TuningMonitorClicｋ.Size = New System.Drawing.Size(150, 22)
+        Me.TuningMonitorClicｋ.Size = New System.Drawing.Size(153, 22)
         Me.TuningMonitorClicｋ.Text = "チューニングモニタ"
         '
         'ヘルプToolStripMenuItem
         '
         Me.ヘルプToolStripMenuItem.Name = "ヘルプToolStripMenuItem"
-        Me.ヘルプToolStripMenuItem.Size = New System.Drawing.Size(62, 20)
+        Me.ヘルプToolStripMenuItem.Size = New System.Drawing.Size(65, 20)
         Me.ヘルプToolStripMenuItem.Text = "ヘルプ(&H)"
         '
         'Panel1
@@ -929,7 +929,7 @@ Partial Class frmMain
         Me.pnlLosZero.Controls.Add(Me.UcnOpposeJackSelect)
         Me.pnlLosZero.Controls.Add(Me.ucnLosZeroMode)
         Me.pnlLosZero.Controls.Add(Me.ShapeContainer1)
-        Me.pnlLosZero.Location = New System.Drawing.Point(1728, 31)
+        Me.pnlLosZero.Location = New System.Drawing.Point(1740, 31)
         Me.pnlLosZero.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlLosZero.Name = "pnlLosZero"
         Me.pnlLosZero.Size = New System.Drawing.Size(156, 343)
@@ -1069,7 +1069,7 @@ Partial Class frmMain
         '
         Me.btnLossZerooCancel.BackColor = System.Drawing.Color.DarkGray
         Me.btnLossZerooCancel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnLossZerooCancel.Location = New System.Drawing.Point(1734, 424)
+        Me.btnLossZerooCancel.Location = New System.Drawing.Point(1746, 424)
         Me.btnLossZerooCancel.Margin = New System.Windows.Forms.Padding(2)
         Me.btnLossZerooCancel.Name = "btnLossZerooCancel"
         Me.btnLossZerooCancel.Size = New System.Drawing.Size(137, 36)
@@ -1129,7 +1129,7 @@ Partial Class frmMain
         Me.btnLoszeroContinu.BackColor = System.Drawing.Color.DarkGray
         Me.btnLoszeroContinu.Enabled = False
         Me.btnLoszeroContinu.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnLoszeroContinu.Location = New System.Drawing.Point(1607, 424)
+        Me.btnLoszeroContinu.Location = New System.Drawing.Point(1613, 424)
         Me.btnLoszeroContinu.Margin = New System.Windows.Forms.Padding(2)
         Me.btnLoszeroContinu.Name = "btnLoszeroContinu"
         Me.btnLoszeroContinu.Size = New System.Drawing.Size(123, 36)
@@ -1146,6 +1146,30 @@ Partial Class frmMain
         Me.lblMRRolling.Size = New System.Drawing.Size(94, 13)
         Me.lblMRRolling.TabIndex = 162
         Me.lblMRRolling.Text = "マシンローリング"
+        '
+        'ｌｂｌRollingAlarm
+        '
+        Me.ｌｂｌRollingAlarm.BackColor = System.Drawing.Color.Yellow
+        Me.ｌｂｌRollingAlarm.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.ｌｂｌRollingAlarm.Font = New System.Drawing.Font("MS UI Gothic", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.ｌｂｌRollingAlarm.ForeColor = System.Drawing.Color.Red
+        Me.ｌｂｌRollingAlarm.Location = New System.Drawing.Point(405, 181)
+        Me.ｌｂｌRollingAlarm.Name = "ｌｂｌRollingAlarm"
+        Me.ｌｂｌRollingAlarm.Size = New System.Drawing.Size(376, 94)
+        Me.ｌｂｌRollingAlarm.TabIndex = 163
+        Me.ｌｂｌRollingAlarm.Text = "マシンローリングの余裕限界を超えました。" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "セグメントピースとジャッキスプレッダーが" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "干渉する恐れがあります。" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "注意してください！!" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.ｌｂｌRollingAlarm.Visible = False
+        '
+        'btnConfirm
+        '
+        Me.btnConfirm.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnConfirm.Location = New System.Drawing.Point(691, 238)
+        Me.btnConfirm.Name = "btnConfirm"
+        Me.btnConfirm.Size = New System.Drawing.Size(63, 30)
+        Me.btnConfirm.TabIndex = 164
+        Me.btnConfirm.Text = "確認"
+        Me.btnConfirm.UseVisualStyleBackColor = True
+        Me.btnConfirm.Visible = False
         '
         'DspChangeMRRolling
         '
@@ -1166,20 +1190,20 @@ Partial Class frmMain
         Me.DspAntiClockwiseMargin.Blink = False
         Me.DspAntiClockwiseMargin.BlinkColor = System.Drawing.Color.Red
         Me.DspAntiClockwiseMargin.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspAntiClockwiseMargin.DataWidth = 56
+        Me.DspAntiClockwiseMargin.DataWidth = 75
         Me.DspAntiClockwiseMargin.DecimalPlaces = CType(2, Short)
         Me.DspAntiClockwiseMargin.FieldName = "反時計端側の余裕度(deg)"
-        Me.DspAntiClockwiseMargin.FieldNameWidth = 180
+        Me.DspAntiClockwiseMargin.FieldNameWidth = 170
         Me.DspAntiClockwiseMargin.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAntiClockwiseMargin.Location = New System.Drawing.Point(1633, 648)
+        Me.DspAntiClockwiseMargin.Location = New System.Drawing.Point(1642, 649)
         Me.DspAntiClockwiseMargin.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAntiClockwiseMargin.Name = "DspAntiClockwiseMargin"
-        Me.DspAntiClockwiseMargin.Size = New System.Drawing.Size(243, 30)
+        Me.DspAntiClockwiseMargin.Size = New System.Drawing.Size(250, 30)
         Me.DspAntiClockwiseMargin.TabIndex = 160
         Me.DspAntiClockwiseMargin.Unit = "deg"
         Me.DspAntiClockwiseMargin.UnitVisible = False
         Me.DspAntiClockwiseMargin.Value = "-"
-        Me.DspAntiClockwiseMargin.ValueType = True
+        Me.DspAntiClockwiseMargin.ValueType = False
         '
         'DspClockwiseMargin
         '
@@ -1187,15 +1211,15 @@ Partial Class frmMain
         Me.DspClockwiseMargin.Blink = False
         Me.DspClockwiseMargin.BlinkColor = System.Drawing.Color.Red
         Me.DspClockwiseMargin.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspClockwiseMargin.DataWidth = 56
-        Me.DspClockwiseMargin.DecimalPlaces = CType(1, Short)
+        Me.DspClockwiseMargin.DataWidth = 75
+        Me.DspClockwiseMargin.DecimalPlaces = CType(2, Short)
         Me.DspClockwiseMargin.FieldName = "時計端側の余裕度(deg)"
-        Me.DspClockwiseMargin.FieldNameWidth = 180
+        Me.DspClockwiseMargin.FieldNameWidth = 170
         Me.DspClockwiseMargin.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspClockwiseMargin.Location = New System.Drawing.Point(1398, 649)
         Me.DspClockwiseMargin.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClockwiseMargin.Name = "DspClockwiseMargin"
-        Me.DspClockwiseMargin.Size = New System.Drawing.Size(243, 30)
+        Me.DspClockwiseMargin.Size = New System.Drawing.Size(250, 30)
         Me.DspClockwiseMargin.TabIndex = 159
         Me.DspClockwiseMargin.Unit = "deg"
         Me.DspClockwiseMargin.UnitVisible = False
@@ -1257,20 +1281,20 @@ Partial Class frmMain
         Me.DspSegmentRolling.Blink = False
         Me.DspSegmentRolling.BlinkColor = System.Drawing.Color.Red
         Me.DspSegmentRolling.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspSegmentRolling.DataWidth = 91
+        Me.DspSegmentRolling.DataWidth = 75
         Me.DspSegmentRolling.DecimalPlaces = CType(2, Short)
-        Me.DspSegmentRolling.FieldName = "セグメントローリング"
-        Me.DspSegmentRolling.FieldNameWidth = 146
+        Me.DspSegmentRolling.FieldName = "セグメントローリング(deg)"
+        Me.DspSegmentRolling.FieldNameWidth = 170
         Me.DspSegmentRolling.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspSegmentRolling.Location = New System.Drawing.Point(1634, 617)
+        Me.DspSegmentRolling.Location = New System.Drawing.Point(1641, 617)
         Me.DspSegmentRolling.Margin = New System.Windows.Forms.Padding(1)
         Me.DspSegmentRolling.Name = "DspSegmentRolling"
-        Me.DspSegmentRolling.Size = New System.Drawing.Size(243, 30)
+        Me.DspSegmentRolling.Size = New System.Drawing.Size(250, 30)
         Me.DspSegmentRolling.TabIndex = 109
         Me.DspSegmentRolling.Unit = "deg"
         Me.DspSegmentRolling.UnitVisible = False
         Me.DspSegmentRolling.Value = "-"
-        Me.DspSegmentRolling.ValueType = True
+        Me.DspSegmentRolling.ValueType = False
         '
         'DspClosetJack
         '
@@ -1278,15 +1302,15 @@ Partial Class frmMain
         Me.DspClosetJack.Blink = False
         Me.DspClosetJack.BlinkColor = System.Drawing.Color.Red
         Me.DspClosetJack.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspClosetJack.DataWidth = 91
+        Me.DspClosetJack.DataWidth = 100
         Me.DspClosetJack.DecimalPlaces = CType(0, Short)
         Me.DspClosetJack.FieldName = "押込ｼﾞｬｯｷ"
         Me.DspClosetJack.FieldNameWidth = 146
         Me.DspClosetJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspClosetJack.Location = New System.Drawing.Point(1633, 555)
+        Me.DspClosetJack.Location = New System.Drawing.Point(1641, 558)
         Me.DspClosetJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetJack.Name = "DspClosetJack"
-        Me.DspClosetJack.Size = New System.Drawing.Size(243, 30)
+        Me.DspClosetJack.Size = New System.Drawing.Size(250, 30)
         Me.DspClosetJack.TabIndex = 106
         Me.DspClosetJack.Unit = "deg"
         Me.DspClosetJack.UnitVisible = False
@@ -1299,15 +1323,15 @@ Partial Class frmMain
         Me.DspBoltPitch.Blink = False
         Me.DspBoltPitch.BlinkColor = System.Drawing.Color.Red
         Me.DspBoltPitch.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.DspBoltPitch.DataWidth = 91
+        Me.DspBoltPitch.DataWidth = 75
         Me.DspBoltPitch.DecimalPlaces = CType(1, Short)
         Me.DspBoltPitch.FieldName = "組立ﾎﾞﾙﾄ位置"
-        Me.DspBoltPitch.FieldNameWidth = 146
+        Me.DspBoltPitch.FieldNameWidth = 170
         Me.DspBoltPitch.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspBoltPitch.Location = New System.Drawing.Point(1399, 618)
         Me.DspBoltPitch.Margin = New System.Windows.Forms.Padding(1)
         Me.DspBoltPitch.Name = "DspBoltPitch"
-        Me.DspBoltPitch.Size = New System.Drawing.Size(243, 30)
+        Me.DspBoltPitch.Size = New System.Drawing.Size(250, 30)
         Me.DspBoltPitch.TabIndex = 102
         Me.DspBoltPitch.Unit = "deg"
         Me.DspBoltPitch.UnitVisible = False
@@ -1695,7 +1719,7 @@ Partial Class frmMain
         Me.DspAssemblyPattern.Blink = False
         Me.DspAssemblyPattern.BlinkColor = System.Drawing.Color.Red
         Me.DspAssemblyPattern.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspAssemblyPattern.DataWidth = 216
+        Me.DspAssemblyPattern.DataWidth = 230
         Me.DspAssemblyPattern.DecimalPlaces = CType(0, Short)
         Me.DspAssemblyPattern.FieldName = "組立パターン"
         Me.DspAssemblyPattern.FieldNameWidth = 260
@@ -1703,7 +1727,7 @@ Partial Class frmMain
         Me.DspAssemblyPattern.Location = New System.Drawing.Point(1399, 496)
         Me.DspAssemblyPattern.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPattern.Name = "DspAssemblyPattern"
-        Me.DspAssemblyPattern.Size = New System.Drawing.Size(472, 30)
+        Me.DspAssemblyPattern.Size = New System.Drawing.Size(500, 30)
         Me.DspAssemblyPattern.TabIndex = 111
         Me.DspAssemblyPattern.Unit = "deg"
         Me.DspAssemblyPattern.UnitVisible = False
@@ -1716,15 +1740,15 @@ Partial Class frmMain
         Me.DspNextPieceName.Blink = False
         Me.DspNextPieceName.BlinkColor = System.Drawing.Color.Red
         Me.DspNextPieceName.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspNextPieceName.DataWidth = 91
+        Me.DspNextPieceName.DataWidth = 100
         Me.DspNextPieceName.DecimalPlaces = CType(2, Short)
         Me.DspNextPieceName.FieldName = "次の組立ピース"
         Me.DspNextPieceName.FieldNameWidth = 146
         Me.DspNextPieceName.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspNextPieceName.Location = New System.Drawing.Point(1634, 525)
+        Me.DspNextPieceName.Location = New System.Drawing.Point(1642, 526)
         Me.DspNextPieceName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspNextPieceName.Name = "DspNextPieceName"
-        Me.DspNextPieceName.Size = New System.Drawing.Size(243, 30)
+        Me.DspNextPieceName.Size = New System.Drawing.Size(480, 30)
         Me.DspNextPieceName.TabIndex = 110
         Me.DspNextPieceName.Unit = "deg"
         Me.DspNextPieceName.UnitVisible = False
@@ -1737,15 +1761,15 @@ Partial Class frmMain
         Me.DspAddClosetThrustJack.Blink = False
         Me.DspAddClosetThrustJack.BlinkColor = System.Drawing.Color.Red
         Me.DspAddClosetThrustJack.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspAddClosetThrustJack.DataWidth = 91
+        Me.DspAddClosetThrustJack.DataWidth = 100
         Me.DspAddClosetThrustJack.DecimalPlaces = CType(0, Short)
         Me.DspAddClosetThrustJack.FieldName = "追加推進ｼﾞｬｯｷ"
         Me.DspAddClosetThrustJack.FieldNameWidth = 146
         Me.DspAddClosetThrustJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(1633, 586)
+        Me.DspAddClosetThrustJack.Location = New System.Drawing.Point(1641, 588)
         Me.DspAddClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAddClosetThrustJack.Name = "DspAddClosetThrustJack"
-        Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(243, 30)
+        Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(250, 30)
         Me.DspAddClosetThrustJack.TabIndex = 108
         Me.DspAddClosetThrustJack.Unit = "deg"
         Me.DspAddClosetThrustJack.UnitVisible = False
@@ -1758,7 +1782,7 @@ Partial Class frmMain
         Me.DspClosetThrustJack.Blink = False
         Me.DspClosetThrustJack.BlinkColor = System.Drawing.Color.Red
         Me.DspClosetThrustJack.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspClosetThrustJack.DataWidth = 91
+        Me.DspClosetThrustJack.DataWidth = 100
         Me.DspClosetThrustJack.DecimalPlaces = CType(2, Short)
         Me.DspClosetThrustJack.FieldName = "押込推進ｼﾞｬｯｷ"
         Me.DspClosetThrustJack.FieldNameWidth = 146
@@ -1766,7 +1790,7 @@ Partial Class frmMain
         Me.DspClosetThrustJack.Location = New System.Drawing.Point(1399, 588)
         Me.DspClosetThrustJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspClosetThrustJack.Name = "DspClosetThrustJack"
-        Me.DspClosetThrustJack.Size = New System.Drawing.Size(243, 30)
+        Me.DspClosetThrustJack.Size = New System.Drawing.Size(250, 30)
         Me.DspClosetThrustJack.TabIndex = 107
         Me.DspClosetThrustJack.Unit = "deg"
         Me.DspClosetThrustJack.UnitVisible = False
@@ -1779,15 +1803,15 @@ Partial Class frmMain
         Me.DspPullBackJack.Blink = False
         Me.DspPullBackJack.BlinkColor = System.Drawing.Color.Red
         Me.DspPullBackJack.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspPullBackJack.DataWidth = 91
+        Me.DspPullBackJack.DataWidth = 100
         Me.DspPullBackJack.DecimalPlaces = CType(2, Short)
         Me.DspPullBackJack.FieldName = "引戻ｼﾞｬｯｷ"
         Me.DspPullBackJack.FieldNameWidth = 146
         Me.DspPullBackJack.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspPullBackJack.Location = New System.Drawing.Point(1399, 556)
+        Me.DspPullBackJack.Location = New System.Drawing.Point(1399, 558)
         Me.DspPullBackJack.Margin = New System.Windows.Forms.Padding(1)
         Me.DspPullBackJack.Name = "DspPullBackJack"
-        Me.DspPullBackJack.Size = New System.Drawing.Size(243, 30)
+        Me.DspPullBackJack.Size = New System.Drawing.Size(250, 30)
         Me.DspPullBackJack.TabIndex = 105
         Me.DspPullBackJack.Unit = "deg"
         Me.DspPullBackJack.UnitVisible = False
@@ -1800,15 +1824,15 @@ Partial Class frmMain
         Me.DspAssemblyPieace.Blink = False
         Me.DspAssemblyPieace.BlinkColor = System.Drawing.Color.Red
         Me.DspAssemblyPieace.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspAssemblyPieace.DataWidth = 91
+        Me.DspAssemblyPieace.DataWidth = 100
         Me.DspAssemblyPieace.DecimalPlaces = CType(2, Short)
         Me.DspAssemblyPieace.FieldName = "組立ピース"
         Me.DspAssemblyPieace.FieldNameWidth = 146
         Me.DspAssemblyPieace.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspAssemblyPieace.Location = New System.Drawing.Point(1399, 525)
+        Me.DspAssemblyPieace.Location = New System.Drawing.Point(1399, 526)
         Me.DspAssemblyPieace.Margin = New System.Windows.Forms.Padding(1)
         Me.DspAssemblyPieace.Name = "DspAssemblyPieace"
-        Me.DspAssemblyPieace.Size = New System.Drawing.Size(243, 30)
+        Me.DspAssemblyPieace.Size = New System.Drawing.Size(480, 30)
         Me.DspAssemblyPieace.TabIndex = 103
         Me.DspAssemblyPieace.Unit = "deg"
         Me.DspAssemblyPieace.UnitVisible = False
@@ -1821,7 +1845,7 @@ Partial Class frmMain
         Me.DspTypeName.Blink = False
         Me.DspTypeName.BlinkColor = System.Drawing.Color.Red
         Me.DspTypeName.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.DspTypeName.DataWidth = 216
+        Me.DspTypeName.DataWidth = 230
         Me.DspTypeName.DecimalPlaces = CType(0, Short)
         Me.DspTypeName.FieldName = "組立セグメント"
         Me.DspTypeName.FieldNameWidth = 260
@@ -1829,7 +1853,7 @@ Partial Class frmMain
         Me.DspTypeName.Location = New System.Drawing.Point(1399, 466)
         Me.DspTypeName.Margin = New System.Windows.Forms.Padding(1)
         Me.DspTypeName.Name = "DspTypeName"
-        Me.DspTypeName.Size = New System.Drawing.Size(472, 30)
+        Me.DspTypeName.Size = New System.Drawing.Size(500, 30)
         Me.DspTypeName.TabIndex = 101
         Me.DspTypeName.Unit = "deg"
         Me.DspTypeName.UnitVisible = False
@@ -2635,30 +2659,6 @@ Partial Class frmMain
         Me.InterruptTime.Value = "20"
         Me.InterruptTime.ValueType = False
         '
-        'ｌｂｌRollingAlarm
-        '
-        Me.ｌｂｌRollingAlarm.BackColor = System.Drawing.Color.Yellow
-        Me.ｌｂｌRollingAlarm.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.ｌｂｌRollingAlarm.Font = New System.Drawing.Font("MS UI Gothic", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.ｌｂｌRollingAlarm.ForeColor = System.Drawing.Color.Red
-        Me.ｌｂｌRollingAlarm.Location = New System.Drawing.Point(405, 181)
-        Me.ｌｂｌRollingAlarm.Name = "ｌｂｌRollingAlarm"
-        Me.ｌｂｌRollingAlarm.Size = New System.Drawing.Size(376, 94)
-        Me.ｌｂｌRollingAlarm.TabIndex = 163
-        Me.ｌｂｌRollingAlarm.Text = "マシンローリングの余裕限界を超えました。" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "セグメントピースとジャッキスプレッダーが" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "干渉する恐れがあります。" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "注意してください！!" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        Me.ｌｂｌRollingAlarm.Visible = False
-        '
-        'btnConfirm
-        '
-        Me.btnConfirm.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnConfirm.Location = New System.Drawing.Point(691, 238)
-        Me.btnConfirm.Name = "btnConfirm"
-        Me.btnConfirm.Size = New System.Drawing.Size(63, 30)
-        Me.btnConfirm.TabIndex = 164
-        Me.btnConfirm.Text = "確認"
-        Me.btnConfirm.UseVisualStyleBackColor = True
-        Me.btnConfirm.Visible = False
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -2943,8 +2943,8 @@ Partial Class frmMain
     Friend WithEvents DspClockwiseMargin As ucnDspData
     Friend WithEvents DspChangeMRRolling As ucnDspDataMin2
     Friend WithEvents lblMRRolling As Label
-    Friend WithEvents ｌｂｌRollingAlarm As Label
     Friend WithEvents btnConfirm As Button
+    Public WithEvents ｌｂｌRollingAlarm As Label
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog
