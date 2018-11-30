@@ -195,6 +195,12 @@
     <Compile Include="frmRingDataView.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmRollingOverAlarm.Designer.vb">
+      <DependentUpon>frmRollingOverAlarm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmRollingOverAlarm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmTuningTrend.Designer.vb">
       <DependentUpon>frmTuningTrend.vb</DependentUpon>
     </Compile>
@@ -454,6 +460,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRingDataView.resx">
       <DependentUpon>frmRingDataView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRollingOverAlarm.resx">
+      <DependentUpon>frmRollingOverAlarm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTuningTrend.resx">
       <DependentUpon>frmTuningTrend.vb</DependentUpon>

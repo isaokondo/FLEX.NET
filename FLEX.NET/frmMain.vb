@@ -121,16 +121,14 @@
             '転送時マシンローリング
             If SegAsmblyData.rollingMindEnable(PlcIf.RingNo) Then
                 DspTransMRRolling.Value = SegAsmblyData.MachineRearRolling(PlcIf.RingNo)
-                DspChangeMRRolling.Value = DspRealMRRolling.Value - DspTransMRRolling.Value 'マシンローリング変化量
+                DspChangeMRRolling.Value = PlcIf.rollingChange 'マシンローリング変化量
             Else
                 DspTransMRRolling.Text = "---"
                 DspChangeMRRolling.Text = "---"
             End If
         End If
 
-
-
-
+        'テールクリアランス
         DspBottomClearance.Value = PlcIf.botomClearance
         DspTopClearance.Value = PlcIf.topClearance
         DspRightClearance.Value = PlcIf.rightClearance
@@ -214,7 +212,8 @@
         DspHorDev.Blink = RefernceDirection.HorDevLimitOver
         DspVerDev.Blink = RefernceDirection.VerDevLimitOver
 
-
+        DspClockwiseMargin.Blink = PlcIf.rollingClockWiseOver
+        DspAntiClockwiseMargin.Blink = PlcIf.rollingAntiClockWiseOver
 
 
         'チャートの更新

@@ -912,4 +912,10 @@ Module mdlFLEX
 
 
     End Sub
+    ''' <summary>
+    ''' ローリング許容値オーバー
+    ''' </summary>
+    Private Sub PlcIf_RollingOverAlarm() Handles PlcIf.RollingOverAlarm
+        My.Forms.frmRollingOverAlarm.Show()
+    End Sub
 End Module

@@ -123,9 +123,13 @@ Friend Class clsSegmentAssembly
     ''' ローリング考慮有効か
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property rollingMindEnable As Dictionary(Of Integer, Boolean)
+    Public ReadOnly Property rollingMindEnable(RingNo) As Boolean
         Get
-            Return _rollingMindEnable
+            If _rollingMindEnable.ContainsKey(RingNo) Then
+                Return _rollingMindEnable(RingNo)
+            Else
+                Return False
+            End If
         End Get
     End Property
 
