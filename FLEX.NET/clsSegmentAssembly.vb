@@ -617,7 +617,8 @@ Friend Class clsSegmentAssembly
                 If InitPara.LosZeroEquip Then
                     _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo1")
                     _rollingMindEnable(RingNo) =
-                        rollingMind And Not IsDBNull(tb.Item("時計端差異")) And Not IsDBNull(tb.Item("反時計端差異")) And Not IsDBNull(tb.Item("MRローリング")) And Not IsDBNull(tb.Item("SGローリング"))
+                        rollingMind AndAlso
+                        Not IsDBNull(tb.Item("時計端差異")) AndAlso Not IsDBNull(tb.Item("反時計端差異")) AndAlso Not IsDBNull(tb.Item("MRローリング")) AndAlso Not IsDBNull(tb.Item("SGローリング"))
 
 
                     If _rollingMindEnable(RingNo) Then

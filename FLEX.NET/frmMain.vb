@@ -225,6 +225,9 @@
             ucnVerDevChart.ChartDataAdd(PlcIf.RealStroke, RefernceDirection.縦断偏角)
         End If
 
+        '計測ジャッキ更新数
+
+        MeasuerJPullNum.Value = $"{CalcStroke.MesuerJPullNum}／{InitPara.MesureJackAngle.Count}"
         '同時施工用
         ucnLosZeroMode.BitStatus = PlcIf.LosZeroEnable And PlcIf.LosZeroMode
         ucnLosZeroMode.Blink = Not PlcIf.LosZeroEnable And PlcIf.LosZeroMode
@@ -1399,13 +1402,5 @@
     Private Sub NetStrokeChange_Click(sender As Object, e As EventArgs) Handles NetStrokeChange.Click, DspTargetNetStroke.DoubleClick, DspRingTargetDir.DoubleClick
         frmNetStrokeChange.Show()
     End Sub
-    ''' <summary>
-    ''' ロスゼロ時のローリング許容値超のメッセージ確認ボタン
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
-        btnConfirm.Visible = False
-        lblMRRolling.Visible = False
-    End Sub
+
 End Class

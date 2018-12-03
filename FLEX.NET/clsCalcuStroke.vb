@@ -32,7 +32,10 @@ Public Class clsCalcuStroke
     ''' </summary>
     Private _aveOffsetJackStroke As Single
 
-
+    ''' <summary>
+    ''' すべての計測ジャッキが引き戻されたイベント
+    ''' </summary>
+    Public Event MeasureJackAllUp()
 
 
     ''' <summary>
@@ -68,6 +71,12 @@ Public Class clsCalcuStroke
     ''' セグメントローリング
     ''' </summary>
     Public Property segmentRolling As Single
+
+    ''' <summary>
+    ''' 引きジャッキと組立完了ジャッキの数
+    ''' </summary>
+    Private _MesuerJPullNum As Integer
+
 
     ''' <summary>
     ''' セグメント中心幅
@@ -197,8 +206,15 @@ Public Class clsCalcuStroke
     Public ReadOnly Property MesureAveSpeed As Single
     'Public Property StartMesureStroke As New Dictionary(Of Short, Integer)
 
-
-
+    ''' <summary>
+    ''' 計測ジャッキ更新数
+    ''' </summary>
+    ''' <returns>引きジャッキと組立完了ジャッキの数</returns>
+    Public ReadOnly Property MesuerJPullNum As Integer
+        Get
+            Return _MesuerJPullNum
+        End Get
+    End Property
 
 
 
@@ -407,7 +423,7 @@ Public Class clsCalcuStroke
         'ジャッキが組み立てモード
         '引き戻しジャッキで組み立て完了していないジャッキ及び　有効ジャッキ
         For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
-            If Not PlcIf.JackExecMode(mjJkNo-1) OrElse ((_PullBackJack.Contains(mjJkNo) _
+            If Not PlcIf.JackExecMode(mjJkNo - 1) OrElse ((_PullBackJack.Contains(mjJkNo) _
                 And Not _asembleFinishedJack.Contains(mjJkNo)) Or CtlPara.ExceptMesureJackNo.Contains(mjJkNo)) Then
                 _ExclusionJack.Add(mjJkNo) '計算から除外するジャッキ
                 If CtlPara.LosZeroOpposeJackExcept Then
@@ -415,6 +431,17 @@ Public Class clsCalcuStroke
                 End If
             End If
         Next
+
+        Dim blnT As Boolean = (_MesuerJPullNum = InitPara.MesureJackAngle.Count)
+        '引きジャッキと組立完了ジャッキの数
+        _MesuerJPullNum = _ExclusionJack.Count
+        If blnT = False And (_MesuerJPullNum = InitPara.MesureJackAngle.Count) Then
+            'RaiseEvent MeasureJackAllUp()
+            MessageBox.Show("すべての計測ジャッキストロークが引き戻し更新されました", "全計測ｼﾞｬｯｷ引戻", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+
+
+
 
         '各ストロークの伸び分
         Dim AddStroke As New List(Of Integer)
@@ -425,6 +452,7 @@ Public Class clsCalcuStroke
             _mesureCalcJackStroke(mjJkNo) = _mesureJackStroke(mjJkNo)
 
             If _asembleFinishedJack.Contains(mjJkNo) Then
+                _MesuerJPullNum = _MesuerJPullNum + 1
                 'セグメント幅分を加算
                 _mesureCalcJackStroke(mjJkNo) +=
                     _SegnebtCenterWidth +

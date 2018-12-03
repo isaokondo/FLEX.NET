@@ -1119,7 +1119,7 @@ Public Class clsPlcIf
 
             If iReturnCode = 0 Then '通信OK
                 'モニタモード時は無条件に実施
-                If InitPara.MonitorMode OrElse IsNothing(AnalogComData) Then 'OrElse Not sharrDeviceValue.SequenceEqual(AnalogComData) Then
+                If InitPara.MonitorMode OrElse Not IsNothing(sharrDeviceValue) Then 'OrElse Not sharrDeviceValue.SequenceEqual(AnalogComData) Then
                     Try
                         '保存用データ保持
                         AnalogComData = sharrDeviceValue.Clone
