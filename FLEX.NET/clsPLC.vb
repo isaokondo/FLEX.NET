@@ -25,6 +25,9 @@ Public Class clsPlcIf
     Private _machinePitching As Single         ''マシンピッチング
     Private _mashineRolling As Single          ''マシンローリング
     Private _mashineRearRolling As Single   'マシン後胴ローリング
+    Private _rollingChange As Single 'ローリング変化量
+    Private _rollingClockWiseOver As Boolean 'ローリング許容値超 時計端
+    Private _rollingAntiClockWiseOver As Boolean 'ローリング許容値超 時計端
     Private _nakaoreLR As Single           '中折左右角
     Private _nakaoreTB As Single           '中折上下角
     Private _jkPress As Single           'シールド元圧
@@ -210,6 +213,13 @@ Public Class clsPlcIf
     ''' 同時施工モード変換
     ''' </summary>
     Public Event LosZeroModeChange()
+
+    ''' <summary>
+    ''' セグメントローリング許容値オーバー
+    ''' </summary>
+    Public Event RollingOverAlarm()
+
+
 
     ''' <summary>
     ''' 次ピース組立開始
@@ -453,6 +463,35 @@ Public Class clsPlcIf
             Return _mashineRearRolling
         End Get
     End Property
+
+    ''' <summary>
+    ''' ローリング変化量
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property rollingChange As Single
+        Get
+            Return _rollingChange
+        End Get
+    End Property
+    ''' <summary>
+    ''' 時計端許容値オーバー
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property rollingClockWiseOver As Boolean
+        Get
+            Return _rollingClockWiseOver
+        End Get
+    End Property
+    ''' <summary>
+    ''' 反時計端許容値オーバー
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property rollingAntiClockWiseOver As Boolean
+        Get
+            Return _rollingAntiClockWiseOver
+        End Get
+    End Property
+
 
     Public ReadOnly Property MachinePitching As Single
         Get
@@ -1080,7 +1119,7 @@ Public Class clsPlcIf
 
             If iReturnCode = 0 Then '通信OK
                 'モニタモード時は無条件に実施
-                If InitPara.MonitorMode OrElse IsNothing(AnalogComData) OrElse Not sharrDeviceValue.SequenceEqual(AnalogComData) Then
+                If InitPara.MonitorMode OrElse Not IsNothing(sharrDeviceValue) Then 'OrElse Not sharrDeviceValue.SequenceEqual(AnalogComData) Then
                     Try
                         '保存用データ保持
                         AnalogComData = sharrDeviceValue.Clone
@@ -1097,8 +1136,28 @@ Public Class clsPlcIf
                         _machinePitching = _EngValue("マシンピッチング")
                         _mashineRolling = _EngValue("マシンローリング")
 
-                        If CtlPara.MachineRearRollingExist Then
+                        If CtlPara.MachineRearRollingExist AndAlso SegAsmblyData.rollingMindEnable(_RingNo) Then
+                            Dim blnPreOver As Boolean = (_rollingClockWiseOver Or _rollingAntiClockWiseOver) And _LosZeroEnable
                             _mashineRearRolling = _EngValue("後胴ローリング")
+                            _rollingChange =
+                                _mashineRearRolling - SegAsmblyData.MachineRearRolling(_RingNo) 'ローリング変化量
+                            'ローリング許容値超
+                            '時計端
+                            _rollingClockWiseOver =
+                            (Math.Abs(SegAsmblyData.ClockWiseSegMargin(_RingNo) - _rollingChange) < CtlPara.LoszeroRollingTolerance)
+                            '反時計端
+                            _rollingAntiClockWiseOver =
+                            (Math.Abs(SegAsmblyData.AntiClockWiseSegMargin(_RingNo) - _rollingChange) < CtlPara.LoszeroRollingTolerance)
+                            '許容値オーバーがOFF→ONでイベント発生
+                            If Not blnPreOver And ((_rollingClockWiseOver Or _rollingAntiClockWiseOver) And _LosZeroEnable) Then
+                                RaiseEvent RollingOverAlarm()
+                            End If
+
+
+
+                        Else
+                            _rollingClockWiseOver = False
+                            _rollingAntiClockWiseOver = False
                         End If
 
 
