@@ -50,7 +50,7 @@ Partial Class frmRollingOverAlarm
         Me.lblRollingAlarm.Name = "lblRollingAlarm"
         Me.lblRollingAlarm.Size = New System.Drawing.Size(438, 103)
         Me.lblRollingAlarm.TabIndex = 164
-        Me.lblRollingAlarm.Text = "マシンローリングの余裕限界を超えました。" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "セグメントピースとジャッキスプレッダーが" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "干渉する恐れがあります。" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "注意してください！!" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.lblRollingAlarm.Text = "ピース端部の余裕がなくなりました。" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "セグメントピースとジャッキスプレッダーが" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "干渉する恐れがあります。" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "注意してください！!" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'tmrBlink
         '
@@ -65,9 +65,9 @@ Partial Class frmRollingOverAlarm
         Me.lblLoszeroRollingTolerance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.lblLoszeroRollingTolerance.Location = New System.Drawing.Point(35, 125)
         Me.lblLoszeroRollingTolerance.Name = "lblLoszeroRollingTolerance"
-        Me.lblLoszeroRollingTolerance.Size = New System.Drawing.Size(144, 19)
+        Me.lblLoszeroRollingTolerance.Size = New System.Drawing.Size(214, 19)
         Me.lblLoszeroRollingTolerance.TabIndex = 166
-        Me.lblLoszeroRollingTolerance.Text = "ローリング許容値"
+        Me.lblLoszeroRollingTolerance.Text = "ピース端部の余裕許容値"
         '
         'frmRollingOverAlarm
         '

@@ -76,8 +76,10 @@ Public Class clsCalcuStroke
     ''' 引きジャッキと組立完了ジャッキの数
     ''' </summary>
     Private _MesuerJPullNum As Integer
-
-
+    ''' <summary>
+    ''' 全計測ジャッキ更新
+    ''' </summary>
+    Private _AllMesJackUp As Boolean
     ''' <summary>
     ''' セグメント中心幅
     ''' </summary>
@@ -215,7 +217,15 @@ Public Class clsCalcuStroke
             Return _MesuerJPullNum
         End Get
     End Property
-
+    ''' <summary>
+    ''' 全計測ジャッキ更新
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property AllMesJackUp As Boolean
+        Get
+            Return _AllMesJackUp
+        End Get
+    End Property
 
 
     Public ReadOnly Property JackState As Dictionary(Of Short, String)
@@ -419,6 +429,8 @@ Public Class clsCalcuStroke
         _ExclusionJack.Clear()
         _ExclusionOpposeJack.Clear()
 
+        Dim blnT As Boolean = (_MesuerJPullNum = InitPara.MesureJackAngle.Count)
+
         '除外ジャッキの算出
         'ジャッキが組み立てモード
         '引き戻しジャッキで組み立て完了していないジャッキ及び　有効ジャッキ
@@ -432,15 +444,7 @@ Public Class clsCalcuStroke
             End If
         Next
 
-        Dim blnT As Boolean = (_MesuerJPullNum = InitPara.MesureJackAngle.Count)
-        '引きジャッキと組立完了ジャッキの数
         _MesuerJPullNum = _ExclusionJack.Count
-        If blnT = False And (_MesuerJPullNum = InitPara.MesureJackAngle.Count) Then
-            'RaiseEvent MeasureJackAllUp()
-            MessageBox.Show("すべての計測ジャッキストロークが引き戻し更新されました", "全計測ｼﾞｬｯｷ引戻", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-        End If
-
-
 
 
         '各ストロークの伸び分
@@ -494,6 +498,13 @@ Public Class clsCalcuStroke
             Else 'セグメントモード
                 _CalcAveLogicalStroke = SegAsmblyData.RingLastStroke(PlcIf.RingNo) - CtlPara.StartAveStroke
             End If
+        End If
+        '全計測ジャッキ更新？
+        _AllMesJackUp = (_MesuerJPullNum = InitPara.MesureJackAngle.Count)
+        '引きジャッキと組立完了ジャッキの数
+        If blnT = False And _AllMesJackUp Then
+            'RaiseEvent MeasureJackAllUp()
+            MessageBox.Show("すべての計測ジャッキストロークが引き戻し更新されました", "全計測ｼﾞｬｯｷ引戻", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
 
 

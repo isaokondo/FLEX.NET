@@ -64,6 +64,7 @@ Partial Class frmMain
         Me.TuningMonitorClicｋ = New System.Windows.Forms.ToolStripMenuItem()
         Me.ヘルプToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.MeasuerJPullNum = New FLEX.NET.ucnDspData()
         Me.DspTargetNetStroke = New FLEX.NET.ucnDspData()
         Me.DspSegmentW = New FLEX.NET.ucnDspData()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -188,7 +189,6 @@ Partial Class frmMain
         Me.DspHorDev = New FLEX.NET.ucnDspData()
         Me.DspWideUse12 = New FLEX.NET.ucnDspData()
         Me.InterruptTime = New FLEX.NET.ucnDspData()
-        Me.MeasuerJPullNum = New FLEX.NET.ucnDspData()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -219,91 +219,91 @@ Partial Class frmMain
         'RingNoChange
         '
         Me.RingNoChange.Name = "RingNoChange"
-        Me.RingNoChange.Size = New System.Drawing.Size(183, 22)
+        Me.RingNoChange.Size = New System.Drawing.Size(188, 22)
         Me.RingNoChange.Text = "リング番号の変更(&C)"
         '
         'RingNoUpdateSetting
         '
         Me.RingNoUpdateSetting.Name = "RingNoUpdateSetting"
-        Me.RingNoUpdateSetting.Size = New System.Drawing.Size(183, 22)
+        Me.RingNoUpdateSetting.Size = New System.Drawing.Size(188, 22)
         Me.RingNoUpdateSetting.Text = "リング番号更新設定(&U)"
         '
         'NetStrokeChange
         '
         Me.NetStrokeChange.Name = "NetStrokeChange"
-        Me.NetStrokeChange.Size = New System.Drawing.Size(183, 22)
+        Me.NetStrokeChange.Size = New System.Drawing.Size(188, 22)
         Me.NetStrokeChange.Text = "目標推進量の変更"
         Me.NetStrokeChange.ToolTipText = "リング目標方向角の距離変更"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(180, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(185, 6)
         '
         'ReportOut
         '
         Me.ReportOut.Name = "ReportOut"
-        Me.ReportOut.Size = New System.Drawing.Size(183, 22)
+        Me.ReportOut.Size = New System.Drawing.Size(188, 22)
         Me.ReportOut.Text = "帳票出力(&Y)"
         '
         'RingDataViewer
         '
         Me.RingDataViewer.Name = "RingDataViewer"
-        Me.RingDataViewer.Size = New System.Drawing.Size(183, 22)
+        Me.RingDataViewer.Size = New System.Drawing.Size(188, 22)
         Me.RingDataViewer.Text = "リング内ビューワ"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(180, 6)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(185, 6)
         '
         'ExcavEnforceStart
         '
         Me.ExcavEnforceStart.Name = "ExcavEnforceStart"
-        Me.ExcavEnforceStart.Size = New System.Drawing.Size(183, 22)
+        Me.ExcavEnforceStart.Size = New System.Drawing.Size(188, 22)
         Me.ExcavEnforceStart.Text = "掘進の強制開始(&X)"
         '
         'ExcavEnforceStop
         '
         Me.ExcavEnforceStop.Name = "ExcavEnforceStop"
-        Me.ExcavEnforceStop.Size = New System.Drawing.Size(183, 22)
+        Me.ExcavEnforceStop.Size = New System.Drawing.Size(188, 22)
         Me.ExcavEnforceStop.Text = "掘進の強制終了(&B)"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(180, 6)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(185, 6)
         '
         'SystemEnd
         '
         Me.SystemEnd.Name = "SystemEnd"
-        Me.SystemEnd.Size = New System.Drawing.Size(183, 22)
+        Me.SystemEnd.Size = New System.Drawing.Size(188, 22)
         Me.SystemEnd.Text = "プログラム終了(&E)"
         '
         '表示ToolStripMenuItem
         '
         Me.表示ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DspSetting, Me.ScaleSetting, Me.StrokeMonitor})
         Me.表示ToolStripMenuItem.Name = "表示ToolStripMenuItem"
-        Me.表示ToolStripMenuItem.Size = New System.Drawing.Size(57, 20)
+        Me.表示ToolStripMenuItem.Size = New System.Drawing.Size(59, 20)
         Me.表示ToolStripMenuItem.Text = "表示(&D)"
         '
         'DspSetting
         '
         Me.DspSetting.Name = "DspSetting"
-        Me.DspSetting.Size = New System.Drawing.Size(164, 22)
+        Me.DspSetting.Size = New System.Drawing.Size(168, 22)
         Me.DspSetting.Text = "各種の表示設定"
         '
         'ScaleSetting
         '
         Me.ScaleSetting.Name = "ScaleSetting"
-        Me.ScaleSetting.Size = New System.Drawing.Size(164, 22)
+        Me.ScaleSetting.Size = New System.Drawing.Size(168, 22)
         Me.ScaleSetting.Text = "スケール"
         Me.ScaleSetting.ToolTipText = "モーメント、偏角、線形トレンドのスケール等を設定します"
         '
         'StrokeMonitor
         '
         Me.StrokeMonitor.Name = "StrokeMonitor"
-        Me.StrokeMonitor.Size = New System.Drawing.Size(164, 22)
+        Me.StrokeMonitor.Size = New System.Drawing.Size(168, 22)
         Me.StrokeMonitor.Text = "計算ストロークモニタ"
         Me.StrokeMonitor.ToolTipText = "計算ストローク、スピードの演算状態を表示します。"
         '
@@ -311,135 +311,135 @@ Partial Class frmMain
         '
         Me.設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PressParameter, Me.OneDirectionParameter, Me.OneDirectionLimit, Me.ToolStripMenuItem4, Me.PresBlock, Me.ManagmentMethd, Me.LossZeroConcern, Me.OterSetting, Me.ToolStripMenuItem5, Me.PlanDataView, Me.SegmentEdit, Me.AssemblyProcessEdit})
         Me.設定ToolStripMenuItem.Name = "設定ToolStripMenuItem"
-        Me.設定ToolStripMenuItem.Size = New System.Drawing.Size(57, 20)
+        Me.設定ToolStripMenuItem.Size = New System.Drawing.Size(58, 20)
         Me.設定ToolStripMenuItem.Text = "設定(&R)"
         '
         'PressParameter
         '
         Me.PressParameter.Name = "PressParameter"
-        Me.PressParameter.Size = New System.Drawing.Size(152, 22)
+        Me.PressParameter.Size = New System.Drawing.Size(156, 22)
         Me.PressParameter.Text = "圧力パラメータ"
         Me.PressParameter.ToolTipText = "ダイレクト制御、減圧比例弁の感度調整等のパラメータ変更"
         '
         'OneDirectionParameter
         '
         Me.OneDirectionParameter.Name = "OneDirectionParameter"
-        Me.OneDirectionParameter.Size = New System.Drawing.Size(152, 22)
+        Me.OneDirectionParameter.Size = New System.Drawing.Size(156, 22)
         Me.OneDirectionParameter.Text = "片押パラメータ"
         Me.OneDirectionParameter.ToolTipText = "水平、鉛直偏角の感度調整用パラメータ"
         '
         'OneDirectionLimit
         '
         Me.OneDirectionLimit.Name = "OneDirectionLimit"
-        Me.OneDirectionLimit.Size = New System.Drawing.Size(152, 22)
+        Me.OneDirectionLimit.Size = New System.Drawing.Size(156, 22)
         Me.OneDirectionLimit.Text = "片押し制限"
         Me.OneDirectionLimit.ToolTipText = "圧力、モーメント許容値、ｒ制限値、戻し量の設定"
         '
         'ToolStripMenuItem4
         '
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(149, 6)
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(153, 6)
         '
         'PresBlock
         '
         Me.PresBlock.Name = "PresBlock"
-        Me.PresBlock.Size = New System.Drawing.Size(152, 22)
+        Me.PresBlock.Size = New System.Drawing.Size(156, 22)
         Me.PresBlock.Text = "圧力ブロック"
         Me.PresBlock.ToolTipText = "全開ブロックの設定等"
         '
         'ManagmentMethd
         '
         Me.ManagmentMethd.Name = "ManagmentMethd"
-        Me.ManagmentMethd.Size = New System.Drawing.Size(152, 22)
+        Me.ManagmentMethd.Size = New System.Drawing.Size(156, 22)
         Me.ManagmentMethd.Text = "管理方法"
         Me.ManagmentMethd.ToolTipText = "リング更新のパラメータ"
         '
         'LossZeroConcern
         '
         Me.LossZeroConcern.Name = "LossZeroConcern"
-        Me.LossZeroConcern.Size = New System.Drawing.Size(152, 22)
+        Me.LossZeroConcern.Size = New System.Drawing.Size(156, 22)
         Me.LossZeroConcern.Text = "同時施工関連"
         '
         'OterSetting
         '
         Me.OterSetting.Name = "OterSetting"
-        Me.OterSetting.Size = New System.Drawing.Size(152, 22)
+        Me.OterSetting.Size = New System.Drawing.Size(156, 22)
         Me.OterSetting.Text = "その他"
         Me.OterSetting.ToolTipText = "掘削開始時の力点位置、間引き制御、クリアランス計"
         '
         'ToolStripMenuItem5
         '
         Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(149, 6)
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(153, 6)
         '
         'PlanDataView
         '
         Me.PlanDataView.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.平面ToolStripMenuItem, Me.縦断ToolStripMenuItem})
         Me.PlanDataView.Name = "PlanDataView"
-        Me.PlanDataView.Size = New System.Drawing.Size(152, 22)
+        Me.PlanDataView.Size = New System.Drawing.Size(156, 22)
         Me.PlanDataView.Text = "計画路線表示"
         '
         '平面ToolStripMenuItem
         '
         Me.平面ToolStripMenuItem.Name = "平面ToolStripMenuItem"
-        Me.平面ToolStripMenuItem.Size = New System.Drawing.Size(94, 22)
+        Me.平面ToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
         Me.平面ToolStripMenuItem.Text = "平面"
         '
         '縦断ToolStripMenuItem
         '
         Me.縦断ToolStripMenuItem.Name = "縦断ToolStripMenuItem"
-        Me.縦断ToolStripMenuItem.Size = New System.Drawing.Size(94, 22)
+        Me.縦断ToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
         Me.縦断ToolStripMenuItem.Text = "縦断"
         '
         'SegmentEdit
         '
         Me.SegmentEdit.Name = "SegmentEdit"
-        Me.SegmentEdit.Size = New System.Drawing.Size(152, 22)
+        Me.SegmentEdit.Size = New System.Drawing.Size(156, 22)
         Me.SegmentEdit.Text = "セグメントの割付"
         Me.SegmentEdit.ToolTipText = "各リングのセグメント割り付け情報"
         '
         'AssemblyProcessEdit
         '
         Me.AssemblyProcessEdit.Name = "AssemblyProcessEdit"
-        Me.AssemblyProcessEdit.Size = New System.Drawing.Size(152, 22)
+        Me.AssemblyProcessEdit.Size = New System.Drawing.Size(156, 22)
         Me.AssemblyProcessEdit.Text = "組立工程の編集"
         '
         '目標ToolStripMenuItem
         '
         Me.目標ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CorrectionValMng, Me.RingCloseValueMng})
         Me.目標ToolStripMenuItem.Name = "目標ToolStripMenuItem"
-        Me.目標ToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
+        Me.目標ToolStripMenuItem.Size = New System.Drawing.Size(58, 20)
         Me.目標ToolStripMenuItem.Text = "目標(&P)"
         '
         'CorrectionValMng
         '
         Me.CorrectionValMng.Name = "CorrectionValMng"
-        Me.CorrectionValMng.Size = New System.Drawing.Size(143, 22)
+        Me.CorrectionValMng.Size = New System.Drawing.Size(148, 22)
         Me.CorrectionValMng.Text = "補正値管理"
         '
         'RingCloseValueMng
         '
         Me.RingCloseValueMng.Name = "RingCloseValueMng"
-        Me.RingCloseValueMng.Size = New System.Drawing.Size(143, 22)
+        Me.RingCloseValueMng.Size = New System.Drawing.Size(148, 22)
         Me.RingCloseValueMng.Text = "リング終値管理"
         '
         'ウインドウToolStripMenuItem
         '
         Me.ウインドウToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TuningMonitorClicｋ})
         Me.ウインドウToolStripMenuItem.Name = "ウインドウToolStripMenuItem"
-        Me.ウインドウToolStripMenuItem.Size = New System.Drawing.Size(79, 20)
+        Me.ウインドウToolStripMenuItem.Size = New System.Drawing.Size(82, 20)
         Me.ウインドウToolStripMenuItem.Text = "ウインドウ(&W)"
         '
         'TuningMonitorClicｋ
         '
         Me.TuningMonitorClicｋ.Name = "TuningMonitorClicｋ"
-        Me.TuningMonitorClicｋ.Size = New System.Drawing.Size(150, 22)
+        Me.TuningMonitorClicｋ.Size = New System.Drawing.Size(153, 22)
         Me.TuningMonitorClicｋ.Text = "チューニングモニタ"
         '
         'ヘルプToolStripMenuItem
         '
         Me.ヘルプToolStripMenuItem.Name = "ヘルプToolStripMenuItem"
-        Me.ヘルプToolStripMenuItem.Size = New System.Drawing.Size(62, 20)
+        Me.ヘルプToolStripMenuItem.Size = New System.Drawing.Size(65, 20)
         Me.ヘルプToolStripMenuItem.Text = "ヘルプ(&H)"
         '
         'Panel1
@@ -468,6 +468,27 @@ Partial Class frmMain
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(575, 350)
         Me.Panel1.TabIndex = 119
+        '
+        'MeasuerJPullNum
+        '
+        Me.MeasuerJPullNum.BackColor = System.Drawing.Color.Transparent
+        Me.MeasuerJPullNum.Blink = False
+        Me.MeasuerJPullNum.BlinkColor = System.Drawing.Color.Orange
+        Me.MeasuerJPullNum.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.MeasuerJPullNum.DataWidth = 91
+        Me.MeasuerJPullNum.DecimalPlaces = CType(2, Short)
+        Me.MeasuerJPullNum.FieldName = "計測ジャッキ更新数"
+        Me.MeasuerJPullNum.FieldNameWidth = 175
+        Me.MeasuerJPullNum.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.MeasuerJPullNum.Location = New System.Drawing.Point(301, 53)
+        Me.MeasuerJPullNum.Margin = New System.Windows.Forms.Padding(1)
+        Me.MeasuerJPullNum.Name = "MeasuerJPullNum"
+        Me.MeasuerJPullNum.Size = New System.Drawing.Size(257, 30)
+        Me.MeasuerJPullNum.TabIndex = 163
+        Me.MeasuerJPullNum.Unit = "deg"
+        Me.MeasuerJPullNum.UnitVisible = False
+        Me.MeasuerJPullNum.Value = "99/99"
+        Me.MeasuerJPullNum.ValueType = True
         '
         'DspTargetNetStroke
         '
@@ -1168,7 +1189,7 @@ Partial Class frmMain
         Me.DspAntiClockwiseMargin.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.DspAntiClockwiseMargin.DataWidth = 75
         Me.DspAntiClockwiseMargin.DecimalPlaces = CType(2, Short)
-        Me.DspAntiClockwiseMargin.FieldName = "反時計端側の余裕度(deg)"
+        Me.DspAntiClockwiseMargin.FieldName = "反時計端側の余裕(deg)"
         Me.DspAntiClockwiseMargin.FieldNameWidth = 170
         Me.DspAntiClockwiseMargin.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspAntiClockwiseMargin.Location = New System.Drawing.Point(1642, 649)
@@ -1189,7 +1210,7 @@ Partial Class frmMain
         Me.DspClockwiseMargin.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.DspClockwiseMargin.DataWidth = 75
         Me.DspClockwiseMargin.DecimalPlaces = CType(2, Short)
-        Me.DspClockwiseMargin.FieldName = "時計端側の余裕度(deg)"
+        Me.DspClockwiseMargin.FieldName = "時計端側の余裕(deg)"
         Me.DspClockwiseMargin.FieldNameWidth = 170
         Me.DspClockwiseMargin.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspClockwiseMargin.Location = New System.Drawing.Point(1398, 649)
@@ -1259,10 +1280,10 @@ Partial Class frmMain
         Me.DspSegmentRolling.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.DspSegmentRolling.DataWidth = 75
         Me.DspSegmentRolling.DecimalPlaces = CType(2, Short)
-        Me.DspSegmentRolling.FieldName = "セグメントローリング(deg)"
-        Me.DspSegmentRolling.FieldNameWidth = 170
+        Me.DspSegmentRolling.FieldName = "ｾｸﾞﾒﾝﾄﾛｰﾘﾝｸﾞ(deg)"
+        Me.DspSegmentRolling.FieldNameWidth = 175
         Me.DspSegmentRolling.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspSegmentRolling.Location = New System.Drawing.Point(1641, 617)
+        Me.DspSegmentRolling.Location = New System.Drawing.Point(1637, 617)
         Me.DspSegmentRolling.Margin = New System.Windows.Forms.Padding(1)
         Me.DspSegmentRolling.Name = "DspSegmentRolling"
         Me.DspSegmentRolling.Size = New System.Drawing.Size(250, 30)
@@ -1307,7 +1328,7 @@ Partial Class frmMain
         Me.DspBoltPitch.Location = New System.Drawing.Point(1399, 618)
         Me.DspBoltPitch.Margin = New System.Windows.Forms.Padding(1)
         Me.DspBoltPitch.Name = "DspBoltPitch"
-        Me.DspBoltPitch.Size = New System.Drawing.Size(250, 30)
+        Me.DspBoltPitch.Size = New System.Drawing.Size(249, 30)
         Me.DspBoltPitch.TabIndex = 102
         Me.DspBoltPitch.Unit = "deg"
         Me.DspBoltPitch.UnitVisible = False
@@ -2635,33 +2656,13 @@ Partial Class frmMain
         Me.InterruptTime.Value = "20"
         Me.InterruptTime.ValueType = False
         '
-        'MeasuerJPullNum
-        '
-        Me.MeasuerJPullNum.BackColor = System.Drawing.Color.Transparent
-        Me.MeasuerJPullNum.Blink = False
-        Me.MeasuerJPullNum.BlinkColor = System.Drawing.Color.Red
-        Me.MeasuerJPullNum.DataTextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.MeasuerJPullNum.DataWidth = 91
-        Me.MeasuerJPullNum.DecimalPlaces = CType(2, Short)
-        Me.MeasuerJPullNum.FieldName = "計測ジャッキ更新数"
-        Me.MeasuerJPullNum.FieldNameWidth = 175
-        Me.MeasuerJPullNum.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.MeasuerJPullNum.Location = New System.Drawing.Point(301, 53)
-        Me.MeasuerJPullNum.Margin = New System.Windows.Forms.Padding(1)
-        Me.MeasuerJPullNum.Name = "MeasuerJPullNum"
-        Me.MeasuerJPullNum.Size = New System.Drawing.Size(257, 30)
-        Me.MeasuerJPullNum.TabIndex = 163
-        Me.MeasuerJPullNum.Unit = "deg"
-        Me.MeasuerJPullNum.UnitVisible = False
-        Me.MeasuerJPullNum.Value = "99/99"
-        Me.MeasuerJPullNum.ValueType = True
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.DspBoltPitch)
         Me.Controls.Add(Me.lblMRRolling)
         Me.Controls.Add(Me.DspChangeMRRolling)
         Me.Controls.Add(Me.DspAntiClockwiseMargin)
@@ -2672,7 +2673,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.DspRingTargetDir)
         Me.Controls.Add(Me.DspSegmentRolling)
         Me.Controls.Add(Me.DspClosetJack)
-        Me.Controls.Add(Me.DspBoltPitch)
         Me.Controls.Add(Me.DspAveStartStroke)
         Me.Controls.Add(Me.DspExcvSpeed)
         Me.Controls.Add(Me.DspAveStroke)

@@ -228,6 +228,9 @@
         '計測ジャッキ更新数
 
         MeasuerJPullNum.Value = $"{CalcStroke.MesuerJPullNum}／{InitPara.MesureJackAngle.Count}"
+        MeasuerJPullNum.Blink = CalcStroke.AllMesJackUp
+
+
         '同時施工用
         ucnLosZeroMode.BitStatus = PlcIf.LosZeroEnable And PlcIf.LosZeroMode
         ucnLosZeroMode.Blink = Not PlcIf.LosZeroEnable And PlcIf.LosZeroMode
@@ -328,7 +331,22 @@
             DspSumAsmPiece.Value = LosZeroPerform.SumAsmPiece
             DspAveLoszeroTime.Value = LosZeroPerform.AveLoszeroTime
             DspSumLoszeroTime.Value = LosZeroPerform.SumLoszeroTime
+
+            If SegAsmblyData.rollingMindEnable(PlcIf.RingNo) Then
+                '反時計端余裕度 表示のみマイナス
+                DspAntiClockwiseMargin.Value = -(SegAsmblyData.AntiClockWiseSegMargin(PlcIf.RingNo) - PlcIf.rollingChange)
+                DspClockwiseMargin.Value = SegAsmblyData.ClockWiseSegMargin(PlcIf.RingNo) - PlcIf.rollingChange '時計端余裕度
+                DspSegmentRolling.Value = SegAsmblyData.SegmentRolling(PlcIf.RingNo) ' - PlcIf.rollingChange
+            Else
+                DspAntiClockwiseMargin.Value = "-" '反時計端余裕度
+                DspClockwiseMargin.Value = "-" '時計端余裕度
+                DspSegmentRolling.Value = "-"
+
+            End If
+
+
         End If
+
 
         '定期バックアップの実行
         If InitPara.ServerMode AndAlso Date.Compare(DateTime.Now.Date, BackUpDate.Date) <> 0 AndAlso
@@ -518,16 +536,6 @@
         If SegAsmblyData.ProcessData.Count <> 0 Then
 
 
-            If SegAsmblyData.rollingMindEnable(PlcIf.RingNo) Then
-                DspAntiClockwiseMargin.Value = SegAsmblyData.AntiClockWiseSegMargin(PlcIf.RingNo) '反時計端余裕度
-                DspClockwiseMargin.Value = SegAsmblyData.ClockWiseSegMargin(PlcIf.RingNo) '時計端余裕度
-                DspSegmentRolling.Value = SegAsmblyData.SegmentRolling(PlcIf.RingNo)
-            Else
-                DspAntiClockwiseMargin.Value = "-" '反時計端余裕度
-                DspClockwiseMargin.Value = "-" '時計端余裕度
-                DspSegmentRolling.Value = "-"
-
-            End If
 
 
 

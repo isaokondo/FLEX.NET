@@ -64,6 +64,11 @@ Public Class clsPlcIf
     '計測ジャッキ番号、値　Dictionary
     Private _mesureJackStroke As Dictionary(Of Short, Integer) '計測ジャッキストローク
     Private _mesureJackSpeed As Dictionary(Of Short, Integer) '計測ジャッキスピード
+    ''' <summary>
+    ''' '異常ストローク番号
+    ''' </summary>
+    Private FailStrokeNo As Integer
+
 
     ''' <summary>
     ''' 掘進ストローク
@@ -926,7 +931,7 @@ Public Class clsPlcIf
             Return _LosZeroEnable
         End Get
         Set(value As Boolean)
-            _LosZeroEnable = value
+            '_LosZeroEnable = value
             DigtalPlcWrite("同時施工可", value)
         End Set
     End Property
@@ -1019,7 +1024,10 @@ Public Class clsPlcIf
             _LosZeroMode = DigtalPlcRead("同時施工モード")
 
             _excavMode = DigtalPlcRead("掘進モード")
-            _segmentMode = DigtalPlcRead("セグメントモード")
+
+
+            '
+
 
             If _LosZeroSts_FLEX <= 2 Then LosZeroSts = _LosZeroSts_FLEX '減圧開始or完了
             If _LosZeroSts_M = 2 Then LosZeroSts = 3    '引き戻し中
@@ -1142,12 +1150,12 @@ Public Class clsPlcIf
                             _rollingChange =
                                 _mashineRearRolling - SegAsmblyData.MachineRearRolling(_RingNo) 'ローリング変化量
                             'ローリング許容値超
-                            '時計端
+                            '時計端 時計端差異ーローリング変化量　＜　ピース端部の余裕許容値
                             _rollingClockWiseOver =
-                            (Math.Abs(SegAsmblyData.ClockWiseSegMargin(_RingNo) - _rollingChange) < CtlPara.LoszeroRollingTolerance)
-                            '反時計端
+                            ((SegAsmblyData.ClockWiseSegMargin(_RingNo) - _rollingChange) < CtlPara.LoszeroRollingTolerance)
+                            '反時計端 ー（反時計端差異ーローリング変化量）　＜　ピース端部の余裕許容値
                             _rollingAntiClockWiseOver =
-                            (Math.Abs(SegAsmblyData.AntiClockWiseSegMargin(_RingNo) - _rollingChange) < CtlPara.LoszeroRollingTolerance)
+                            (-(SegAsmblyData.AntiClockWiseSegMargin(_RingNo) - _rollingChange) < CtlPara.LoszeroRollingTolerance)
                             '許容値オーバーがOFF→ONでイベント発生
                             If Not blnPreOver And ((_rollingClockWiseOver Or _rollingAntiClockWiseOver) And _LosZeroEnable) Then
                                 RaiseEvent RollingOverAlarm()
@@ -1208,6 +1216,17 @@ Public Class clsPlcIf
                             _mesureJackStroke(mj) = _EngValue("ジャッキストローク" & mj)
                             _mesureJackSpeed(mj) = _EngValue("ジャッキスピード" & mj)
                         Next
+
+                        If _EngValue.ContainsKey("異常ストローク番号") Then
+                            Dim FailStrokeBf As Integer = FailStrokeNo
+                            FailStrokeNo = _EngValue("異常ストローク番号")
+                            If FailStrokeNo <> FailStrokeBf Then
+                                WriteEventData($"No.{FailStrokeNo}ストローク計の異常が検知されました。", Color.Red)
+                                MessageBox.Show($"ストローク計の故障の疑い。{vbCrLf}No.{FailStrokeNo}ストローク計の異常が検知されました。{vbCrLf}確認してください！", "ストローク計故障",
+                                                MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            End If
+                        End If
+
 
                         If InitPara.LosZeroEquip Then '同時施工あり
 
@@ -1429,8 +1448,15 @@ Public Class clsPlcIf
                     Dim bf_segmentoMode As Boolean = _segmentMode
                     _segmentMode = bit(DigtalTag.TagData("セグメントモード").OffsetAddress)
                     If _segmentMode And Not bf_segmentoMode Then
+
+
                         'セグメントモードに変わったとき
                         RaiseEvent ExcavModeChange(False)
+
+
+
+
+
                     End If
 
                     Dim tmp As Boolean
@@ -1454,7 +1480,14 @@ Public Class clsPlcIf
                         LosZeroCancel = bit(DigtalTag.TagData("同時施工キャンセル").OffsetAddress)
                         If tmp = False And LosZeroCancel Then RaiseEvent LosZeroCancelOn()
 
+
+                        Dim LosZeroEn As Boolean = _LosZeroEnable
                         _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
+
+                        If Not LosZeroEn And _LosZeroEnable AndAlso (_rollingAntiClockWiseOver Or _rollingClockWiseOver) Then
+                            RaiseEvent RollingOverAlarm()
+                        End If
+
 
                     End If
 

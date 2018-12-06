@@ -93,7 +93,7 @@ Public Class clsControlParameter
     Private _LoszerorStep As Single '1ループの演算の力点変化量
 
     Private _LosZeroRollingTake As Boolean  '同時施工：ローリング考慮
-    Private _LoszeroRollingTolerance As Single 'ローリング許容値
+    Private _LoszeroRollingTolerance As Single 'ピース端部の余裕許容値
     Private _LosZeroOpposeJack As Boolean '対抗ジャッキ選択
     Private _LosZeroOpposeControl As Boolean '対抗圧制御
     Private _LosZeroOpposeGroupNumber As Short '対抗ジャッキ制御グループ数
@@ -864,7 +864,7 @@ Public Class clsControlParameter
     End Property
 
     ''' <summary>
-    ''' 同時施工：ローリング考慮
+    ''' 同時施工：ピース端部の余裕許容値
     ''' </summary>
     ''' <returns></returns>
     Public Property LoszeroRollingTolerance As Single

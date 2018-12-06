@@ -103,11 +103,15 @@ Module mdlFLEX
         If Not (player Is Nothing) Then
             StopSound()
         End If
+        Try
+            '読み込む
+            player = New System.Media.SoundPlayer(strm)
+            '非同期再生する
+            player.Play()
 
-        '読み込む
-        player = New System.Media.SoundPlayer(strm)
-        '非同期再生する
-        player.Play()
+        Catch ex As Exception
+
+        End Try
 
 
     End Sub
@@ -429,6 +433,7 @@ Module mdlFLEX
 
         If PlcIf.LosZeroMode Then
             WriteEventData("同時施工モードになりました。", Color.Blue)
+            CtlPara.optGpEn.Clear() '低圧推進ブロックを解除
             Call SegmentRollingAlarm()
         Else
             WriteEventData("同時施工モードがOFFになりました", Color.Magenta)
@@ -609,19 +614,21 @@ Module mdlFLEX
             '低圧推進ジャッキのセット
             If CtlPara.optGpEn.Contains(InitPara.JackGroupPos(i)) Then
                 DivCul.OptinalJack.Add(i, CtlPara.optGpSv(InitPara.JackGroupPos(i) - 1))
-            End If
+            Else
 
-            '対抗グループのセット ロスゼロありで対抗ジャッキ選択ありで減圧開始から押し込み中まで
-            Dim OpposeJ As Boolean =
+
+                '対抗グループのセット ロスゼロありで対抗ジャッキ選択ありで減圧開始から押し込み中まで
+                Dim OpposeJ As Boolean =
                 InitPara.LosZeroEquip AndAlso CtlPara.LosZeroOpposeJack AndAlso
                 (LosZeroSts >= 1 AndAlso LosZeroSts <= 5) AndAlso
                 SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).OpposeGroup.Contains(InitPara.JackGroupPos(i))
-            If OpposeJ Then
-                If CtlPara.LosZeroOpposeControl Then
-                    DivCul.OptinalJack.Add(i, Reduce.MomentOpt.DivCul0.OpposeGroupSv)
-                Else
-                    DivCul.OptinalJack.Add(i, CtlPara.LosZeroOpposeManualSV)
+                If OpposeJ Then
+                    If CtlPara.LosZeroOpposeControl Then
+                        DivCul.OptinalJack.Add(i, Reduce.MomentOpt.DivCul0.OpposeGroupSv)
+                    Else
+                        DivCul.OptinalJack.Add(i, CtlPara.LosZeroOpposeManualSV)
 
+                    End If
                 End If
             End If
 
@@ -900,8 +907,20 @@ Module mdlFLEX
         'セグメントモード時の時間演算
         If Not Mode Then
             ElapsedTime.SegmentMode()
+            'すべてのストローク計測ジャッキが引戻更新され,セグメントモードになった
+            If CalcStroke.AllMesJackUp Then
+                Dim result As DialogResult = MessageBox.Show("掘進終了の判定ができません。終了してもよろしいですか？",
+                                                            "リング更新処理", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                'リング更新処理の場合
+                If result = DialogResult.Yes Then
+                    PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
+                    MessageBox.Show("リング更新処理されました。掘進モードにて、「待機中」となります。", "リング更新処理", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+            End If
+
         End If
         WriteEventData(IIf(Mode, "掘進", "セグメント") & "モードになりました。", Color.DarkMagenta)
+
     End Sub
     ''' <summary>
     ''' ジャイロ異常発生
@@ -916,6 +935,6 @@ Module mdlFLEX
     ''' ローリング許容値オーバー
     ''' </summary>
     Private Sub PlcIf_RollingOverAlarm() Handles PlcIf.RollingOverAlarm
-        My.Forms.frmRollingOverAlarm.Show()
+        My.Forms.frmRollingOverAlarm.ShowDialog()
     End Sub
 End Module

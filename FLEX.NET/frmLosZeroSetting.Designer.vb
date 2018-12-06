@@ -416,7 +416,7 @@ Partial Class frmLosZeroSetting
         Me.LoszeroRollingTolerance.DataDspWidth = 110
         Me.LoszeroRollingTolerance.DecimalPlaces = CType(2, Short)
         Me.LoszeroRollingTolerance.DspFieldName = True
-        Me.LoszeroRollingTolerance.FieldName = "ローリング許容値"
+        Me.LoszeroRollingTolerance.FieldName = "ピース端部の余裕許容値"
         Me.LoszeroRollingTolerance.Increment = 0.01!
         Me.LoszeroRollingTolerance.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.LoszeroRollingTolerance.Location = New System.Drawing.Point(16, 52)

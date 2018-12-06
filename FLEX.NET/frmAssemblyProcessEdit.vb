@@ -67,8 +67,8 @@ Public Class frmAssemblyProcessEdit
 
         '時計端、反時計端余裕度
         If SegAsbly.rollingMindEnable(ConfirmRingNo.Value) Then
-            DspClockwiseMargin.Value = SegAsbly.ClockWiseSegMargin(ConfirmRingNo.Value) '
-            DspAntiClockwiseMargin.Value = SegAsbly.AntiClockWiseSegMargin(ConfirmRingNo.Value) '
+            DspClockwiseMargin.Value = -(SegAsbly.ClockWiseSegMargin(ConfirmRingNo.Value) - PlcIf.rollingChange) '
+            DspAntiClockwiseMargin.Value = SegAsbly.AntiClockWiseSegMargin(ConfirmRingNo.Value) - PlcIf.rollingChange '
         Else
             DspClockwiseMargin.Value = "---"
             DspAntiClockwiseMargin.Value = "---"
