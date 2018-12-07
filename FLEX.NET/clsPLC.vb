@@ -1143,10 +1143,12 @@ Public Class clsPlcIf
 
                         _machinePitching = _EngValue("マシンピッチング")
                         _mashineRolling = _EngValue("マシンローリング")
+                        If CtlPara.MachineRearRollingExist Then
+                            _mashineRearRolling = _EngValue("後胴ローリング")
 
+                        End If
                         If CtlPara.MachineRearRollingExist AndAlso SegAsmblyData.rollingMindEnable(_RingNo) Then
                             Dim blnPreOver As Boolean = (_rollingClockWiseOver Or _rollingAntiClockWiseOver) And _LosZeroEnable
-                            _mashineRearRolling = _EngValue("後胴ローリング")
                             _rollingChange =
                                 _mashineRearRolling - SegAsmblyData.MachineRearRolling(_RingNo) 'ローリング変化量
                             'ローリング許容値超
