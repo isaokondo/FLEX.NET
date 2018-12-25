@@ -142,7 +142,7 @@ Public Class frmSim
 
 
     Private Function GetMachineOfDiAdr(PlcAdr As String) As Integer
-        If Not IsNothing(PlcAdr) Then
+        If Not IsNothing(PlcAdr) AndAlso PlcAdr <> "" Then
             Return CInt("&H" & PlcAdr.Substring(1)) - CInt("&H" & MachineDiStartAdress.Substring(1))
         Else
             Return 0

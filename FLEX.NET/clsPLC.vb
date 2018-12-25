@@ -1014,14 +1014,17 @@ Public Class clsPlcIf
             End If
 
             '初期状態読込 イベントを発生させないため
-            _LosZeroSts_FLEX = AnalogPlcRead("同時施工ステータス_FLEX")
-            _LosZeroSts_M = AnalogPlcRead("同時施工ステータス_Machine")
+            If InitPara.LosZeroEquip Then
+                _LosZeroSts_FLEX = AnalogPlcRead("同時施工ステータス_FLEX")
+                _LosZeroSts_M = AnalogPlcRead("同時施工ステータス_Machine")
+                _AssemblyPieceNo = AnalogPlcRead("組立ピース")
+                _LosZeroMode = DigtalPlcRead("同時施工モード")
+            End If
+
             _excaStatus = AnalogPlcRead("掘進ステータス")
-            _AssemblyPieceNo = AnalogPlcRead("組立ピース")
             _RingNo = ParameterPlcRead("RingNo")
             PreRealStroke = AnalogPlcRead("掘進ストローク")
             PreExcaStatus = _excaStatus
-            _LosZeroMode = DigtalPlcRead("同時施工モード")
 
             _excavMode = DigtalPlcRead("掘進モード")
 
