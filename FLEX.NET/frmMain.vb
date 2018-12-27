@@ -226,9 +226,10 @@
         End If
 
         '計測ジャッキ更新数
-
-        MeasuerJPullNum.Value = $"{CalcStroke.MesuerJPullNum}／{InitPara.MesureJackAngle.Count}"
-        MeasuerJPullNum.Blink = CalcStroke.AllMesJackUp
+        If InitPara.LosZeroEquip Then
+            MeasuerJPullNum.Value = $"{CalcStroke.MesuerJPullNum}／{InitPara.MesureJackAngle.Count}"
+            MeasuerJPullNum.Blink = CalcStroke.AllMesJackUp
+        End If
 
 
         '同時施工用
@@ -830,7 +831,7 @@
         Dim tbEvID As DataTable = DB.GetDtfmSQL _
             ($"SELECT ID FROM FLEXイベントデータ 
              ORDER BY ID DESC LIMIT 0,1")
-        'IDが更新されてれば表示更新
+        'IDが更新されてれば表示更
         If tbEvID.Rows.Count <> 0 Then
             If EventID <> tbEvID.Rows(0).Item(0) Then
                 rtbEventLog.Clear()

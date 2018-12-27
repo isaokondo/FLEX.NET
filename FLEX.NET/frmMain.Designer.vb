@@ -487,7 +487,7 @@ Partial Class frmMain
         Me.MeasuerJPullNum.TabIndex = 163
         Me.MeasuerJPullNum.Unit = "deg"
         Me.MeasuerJPullNum.UnitVisible = False
-        Me.MeasuerJPullNum.Value = "99/99"
+        Me.MeasuerJPullNum.Value = "-----"
         Me.MeasuerJPullNum.ValueType = True
         '
         'DspTargetNetStroke

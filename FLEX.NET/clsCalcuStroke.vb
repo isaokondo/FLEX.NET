@@ -502,7 +502,7 @@ Public Class clsCalcuStroke
         '全計測ジャッキ更新？
         _AllMesJackUp = (_MesuerJPullNum = InitPara.MesureJackAngle.Count)
         '引きジャッキと組立完了ジャッキの数
-        If blnT = False And _AllMesJackUp Then
+        If blnT = False And _AllMesJackUp And PlcIf.LosZeroEnable Then
             'RaiseEvent MeasureJackAllUp()
             MessageBox.Show("すべての計測ジャッキストロークが引き戻し更新されました", "全計測ｼﾞｬｯｷ引戻", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If

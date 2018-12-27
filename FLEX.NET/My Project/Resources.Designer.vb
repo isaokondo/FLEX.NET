@@ -82,6 +82,15 @@ Namespace My.Resources
         '''<summary>
         '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
         '''</summary>
+        Friend ReadOnly Property KsegAsemAllJackOn() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("KsegAsemAllJackOn", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
+        '''</summary>
         Friend ReadOnly Property NextPieceConfirm() As System.IO.UnmanagedMemoryStream
             Get
                 Return ResourceManager.GetStream("NextPieceConfirm", resourceCulture)
@@ -150,6 +159,15 @@ Namespace My.Resources
         Friend ReadOnly Property ReduceStrokeReach() As System.IO.UnmanagedMemoryStream
             Get
                 Return ResourceManager.GetStream("ReduceStrokeReach", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
+        '''</summary>
+        Friend ReadOnly Property RingUpdateConfirm() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("RingUpdateConfirm", resourceCulture)
             End Get
         End Property
         

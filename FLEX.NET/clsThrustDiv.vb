@@ -305,6 +305,7 @@ Public Class clsThrustDiv
             IgNum(InitPara.JackGroupPos(i) - 1) += 1 '各グループのジャッキ本数加算
 
             _分担率計算値(InitPara.JackGroupPos(i) - 1) += _PjDash(i)
+
             If _OnJack(i) Then
                 KgNum(InitPara.JackGroupPos(i) - 1) += 1 '各グループの有効ジャッキ本数加算
             End If

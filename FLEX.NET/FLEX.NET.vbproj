@@ -667,6 +667,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Shortbridge24-1 %28online-audio-converter.com%29.wav" />
     <None Include="Resources\ReduceStrokeReach.wav" />
     <None Include="Resources\SegmentAsem.wav" />
     <None Include="Resources\ReduceStart.wav" />
@@ -683,6 +684,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="1473bf5de9784b3e3a32fa31f3f03eb4_xxo.ico" />
+    <None Include="Resources\Chime-Announce03.wav" />
     <Content Include="Resources\excelpdfout.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
