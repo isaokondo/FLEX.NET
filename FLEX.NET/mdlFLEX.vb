@@ -207,9 +207,9 @@ Module mdlFLEX
             'ロスゼロの実績算出
             LosZeroPerform.Caluc()
             'サーバーモードで前リングと100mm以上異なる場合
-            CtlPara.TargetNetStroke = 0
             'ストローク補正値
             CtlPara.OffsetStroke = 0
+            CtlPara.TargetNetStroke = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
             If InitPara.ServerMode AndAlso
                 Math.Abs(SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth - SegAsmblyData.TypeData(PlcIf.RingNo - 1).CenterWidth) > 0.1 Then
                 frmNetStrokeChange.Show() '推進量の変更
@@ -342,7 +342,7 @@ Module mdlFLEX
                                             MessageBoxButtons.OK, MessageBoxIcon.Warning)
                         End If
                         'リング更新の確認
-                        PlaySound(My.Resources.RingUpdateConfirm)
+                        PlaySound(My.Resources.TargetStrokeOver)
                         Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}{PlcIf.RingNo}リングのリング更新を行いますか？",
                                             "リング更新の確認",
                                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
@@ -960,5 +960,20 @@ Module mdlFLEX
     ''' </summary>
     Private Sub PlcIf_RollingOverAlarm() Handles PlcIf.RollingOverAlarm
         My.Forms.frmRollingOverAlarm.ShowDialog()
+    End Sub
+    ''' <summary>
+    ''' 目標推進量超えたか
+    ''' </summary>
+    Private Sub PlcIf_TargetStrokeOverEv() Handles PlcIf.TargetStrokeOverEv
+        If InitPara.ServerMode Then
+            PlaySound(My.Resources.TargetStrokeOver)
+
+            Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了後の目標ストローク{CtlPara.TargetNetStroke}mmを超えました。{vbCrLf}リング更新を行いますか？",
+                                                 "リング更新処理", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+            If ret = DialogResult.Yes Then
+                PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
+            End If
+        End If
+
     End Sub
 End Module

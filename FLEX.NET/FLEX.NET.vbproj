@@ -667,10 +667,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Shortbridge24-1 %28online-audio-converter.com%29.wav" />
-    <None Include="Resources\ReduceStrokeReach.wav" />
-    <None Include="Resources\SegmentAsem.wav" />
-    <None Include="Resources\ReduceStart.wav" />
+    <None Include="Resources\TargetStrokeOver.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\ReduceStrokeReach.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SegmentAsem.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\ReduceStart.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\ClosetStart.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

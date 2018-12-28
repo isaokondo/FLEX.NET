@@ -2212,8 +2212,8 @@ Partial Class frmMain
         Me.UcnJackDsp.FlexAutoManual = False
         Me.UcnJackDsp.FlexPointR = 0!
         Me.UcnJackDsp.FlexPointSeater = 0!
-        Me.UcnJackDsp.FlexPointX = 0!
-        Me.UcnJackDsp.FlexPointY = 0!
+        '        Me.UcnJackDsp.FlexPointX = 0!
+        '       Me.UcnJackDsp.FlexPointY = 0!
         Me.UcnJackDsp.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.UcnJackDsp.GroupPV = New Single() {0!}
         Me.UcnJackDsp.JackAutoOneWayLimit = False

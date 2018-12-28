@@ -165,18 +165,18 @@ Namespace My.Resources
         '''<summary>
         '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
         '''</summary>
-        Friend ReadOnly Property RingUpdateConfirm() As System.IO.UnmanagedMemoryStream
+        Friend ReadOnly Property SegmentAsem() As System.IO.UnmanagedMemoryStream
             Get
-                Return ResourceManager.GetStream("RingUpdateConfirm", resourceCulture)
+                Return ResourceManager.GetStream("SegmentAsem", resourceCulture)
             End Get
         End Property
         
         '''<summary>
         '''  System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
         '''</summary>
-        Friend ReadOnly Property SegmentAsem() As System.IO.UnmanagedMemoryStream
+        Friend ReadOnly Property TargetStrokeOver() As System.IO.UnmanagedMemoryStream
             Get
-                Return ResourceManager.GetStream("SegmentAsem", resourceCulture)
+                Return ResourceManager.GetStream("TargetStrokeOver", resourceCulture)
             End Get
         End Property
     End Module

@@ -68,8 +68,10 @@ Public Class clsPlcIf
     ''' '異常ストローク番号
     ''' </summary>
     Private FailStrokeNo As Integer
-
-
+    ''' <summary>
+    ''' 目標推進量超えたか
+    ''' </summary>
+    Private TargetStrokeOver As Boolean
     ''' <summary>
     ''' 掘進ストローク
     ''' </summary>
@@ -223,7 +225,11 @@ Public Class clsPlcIf
     ''' セグメントローリング許容値オーバー
     ''' </summary>
     Public Event RollingOverAlarm()
-
+    ''' <summary>
+    ''' Kｾｸﾞﾒﾝﾄ組み立て後
+    ''' 目標推進量超えた
+    ''' </summary>
+    Public Event TargetStrokeOverEv()
 
 
     ''' <summary>
@@ -1266,11 +1272,20 @@ Public Class clsPlcIf
                             If InitPara.MonitorMode Then
                                 _AssemblyPieceNo = _EngValue("組立ピース")
                             End If
+                            'Kセグメント完了で目標推進量を超えたときにリング更新するかどうかの判断
+                            If _LosZeroSts_M = 8 And CtlPara.TargetNetStroke <> 0 AndAlso
+                                CalcStroke.CalcAveLogicalStroke > CtlPara.TargetNetStroke And Not TargetStrokeOver Then
+                                TargetStrokeOver = True
+                                RaiseEvent TargetStrokeOverEv()
+                            End If
+                            '値保持
+                            TargetStrokeOver = (CalcStroke.CalcAveLogicalStroke > CtlPara.TargetNetStroke)
+
 
                         End If
 
-                        '掘進中でダイレクト制御ONでFLEX手動モード時
-                        If _excaStatus = cKussin AndAlso _flexControlOn And
+                            '掘進中でダイレクト制御ONでFLEX手動モード時
+                            If _excaStatus = cKussin AndAlso _flexControlOn And
                             CtlPara.DirectControl And Not CtlPara.AutoDirectionControl Then
                             'PID偏差がダイレクト制御偏差より変化
                             For i As Short = 0 To InitPara.NumberGroup - 1

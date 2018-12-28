@@ -154,7 +154,7 @@
   <data name="KsegAsemAllJackOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Chime-Announce03.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="RingUpdateConfirm" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Shortbridge24-1 (online-audio-converter.com).wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TargetStrokeOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TargetStrokeOver.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
