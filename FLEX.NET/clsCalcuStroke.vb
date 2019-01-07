@@ -443,8 +443,9 @@ Public Class clsCalcuStroke
                 End If
             End If
         Next
-
-        _MesuerJPullNum = _ExclusionJack.Count
+        If PlcIf.ExcaStatus <> cTaiki Then
+            _MesuerJPullNum = _ExclusionJack.Count
+        End If
 
 
         '各ストロークの伸び分
