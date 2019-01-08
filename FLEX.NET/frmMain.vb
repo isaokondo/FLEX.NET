@@ -879,9 +879,11 @@
     End Sub
 
     Private Sub ｂｔｎLossZerooCancel_Click(sender As Object, e As EventArgs) Handles btnLossZerooCancel.Click
-        PlcIf.DigtalPlcWrite("同時施工キャンセル", True)
-        PlcIf.LosZeroEnable = False '同時施工キャンセル
-        PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
+        If MsgBox("同時施工キャンセルしますか？", MsgBoxStyle.YesNo + MsgBoxStyle.Exclamation, "同時施工") = MsgBoxResult.Yes Then
+            PlcIf.DigtalPlcWrite("同時施工キャンセル", True)
+            PlcIf.LosZeroEnable = False '同時施工キャンセル
+            PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
+        End If
     End Sub
 
     Private Sub StrokeMonitor_Click(sender As Object, e As EventArgs) Handles StrokeMonitor.Click
