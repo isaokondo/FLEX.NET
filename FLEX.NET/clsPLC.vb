@@ -1273,7 +1273,7 @@ Public Class clsPlcIf
                                 _AssemblyPieceNo = _EngValue("組立ピース")
                             End If
                             'Kセグメント完了で目標推進量を超えたときにリング更新するかどうかの判断
-                            If _LosZeroSts_M = 8 And CtlPara.TargetNetStroke <> 0 AndAlso
+                            If _LosZeroSts_FLEX = 3 AndAlso SegAsmblyData.AssemblyPlanPieceNumber = _AssemblyPieceNo AndAlso CtlPara.TargetNetStroke <> 0 AndAlso
                                 CalcStroke.CalcAveLogicalStroke > CtlPara.TargetNetStroke And Not TargetStrokeOver Then
                                 TargetStrokeOver = True
                                 RaiseEvent TargetStrokeOverEv()

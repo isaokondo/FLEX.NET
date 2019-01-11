@@ -327,6 +327,14 @@ Module mdlFLEX
                         WriteEventData("Ｋセグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
 
+                        'リング更新の確認
+                        PlaySound(My.Resources.TargetStrokeOver)
+                        Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}{PlcIf.RingNo}リングのリング更新を行いますか？",
+                                            "リング更新の確認",
+                                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                        If ret = DialogResult.Yes Then
+                            PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
+                        End If
                         '未推進ジャッキの確認
                         If Not PlcIf.JackSel.All(Function(x) x = True) Then
                             '未推進ジャッキ番号の取得
@@ -340,14 +348,6 @@ Module mdlFLEX
                             MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}ジャッキNo. {String.Join(", ", NoSelJk)} が未推進です。確認してください",
                                             "未推進ジャッキの確認",
                                             MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                        End If
-                        'リング更新の確認
-                        PlaySound(My.Resources.TargetStrokeOver)
-                        Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}{PlcIf.RingNo}リングのリング更新を行いますか？",
-                                            "リング更新の確認",
-                                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-                        If ret = DialogResult.Yes Then
-                            PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
                         End If
 
 
