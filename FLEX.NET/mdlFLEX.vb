@@ -326,6 +326,7 @@ Module mdlFLEX
                     Case 8
                         WriteEventData("Ｋセグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
+                        LosZeroSts = 6
 
                         'リング更新の確認
                         PlaySound(My.Resources.TargetStrokeOver)

@@ -919,7 +919,9 @@ Public Class clsPlcIf
         End Get
         Set(value As Short)
             _AssemblyPieceNo = value
-            AnalogPlcWrite("組立ピース", _AssemblyPieceNo)
+            If InitPara.LosZeroEquip Then
+                AnalogPlcWrite("組立ピース", _AssemblyPieceNo)
+            End If
         End Set
     End Property
 
@@ -938,7 +940,9 @@ Public Class clsPlcIf
         End Get
         Set(value As Boolean)
             '_LosZeroEnable = value
-            DigtalPlcWrite("同時施工可", value)
+            If InitPara.LosZeroEquip Then
+                DigtalPlcWrite("同時施工可", value)
+            End If
         End Set
     End Property
     ''' <summary>
@@ -962,8 +966,10 @@ Public Class clsPlcIf
             Return _LosZeroSts_FLEX
         End Get
         Set(value As Short)
+            If InitPara.LosZeroEquip Then
+                AnalogPlcWrite("同時施工ステータス_FLEX", value)
+            End If
             '_LosZeroSts_FLEX = value
-            AnalogPlcWrite("同時施工ステータス_FLEX", value)
         End Set
     End Property
 
@@ -1612,15 +1618,18 @@ Public Class clsPlcIf
     ''' <param name="TagName">書込種類　引戻しジャッキ等</param>
     ''' <param name="WrData">書込データ</param>
     Public Sub LosZeroDataWrite(ByVal TagName As String, ByVal WrData As List(Of Short))
-        Dim PlcAdress As String = DigtalTag.TagData(TagName & "1").Address  'PLC書込アドレス
-        Dim Bit(InitPara.NumberJack - 1) As Boolean
-        If Not IsNothing(WrData) Then
-            For Each i As Short In WrData
-                Bit(i - 1) = True
-            Next
+        If InitPara.LosZeroEquip Then
+            Dim PlcAdress As String = DigtalTag.TagData(TagName & "1").Address  'PLC書込アドレス
+            Dim Bit(InitPara.NumberJack - 1) As Boolean
+            If Not IsNothing(WrData) Then
+                For Each i As Short In WrData
+                    Bit(i - 1) = True
+                Next
+            End If
+            Dim PlcWrData() As Integer = BitToWord(Bit)
+            Dim iReturnCode As Long = com_ReferencesEasyIF.WriteDeviceBlock(PlcAdress, PlcWrData.Length, PlcWrData(0))
+
         End If
-        Dim PlcWrData() As Integer = BitToWord(Bit)
-        Dim iReturnCode As Long = com_ReferencesEasyIF.WriteDeviceBlock(PlcAdress, PlcWrData.Length, PlcWrData(0))
         'todo:通信エラー時の処理
     End Sub
     ''' <summary>
