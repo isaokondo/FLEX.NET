@@ -673,9 +673,11 @@ Friend Class clsReducePress
         SpeedRateSetV = PlcIf.SppedRate -
             SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Count / InitPara.NumberJack * 100
 
-        '最適化
-        MomentOpt.Optimize()
-        If CtlPara.LosZeroOpposeJack Then
+        '最適化 FLEx制御自動のときのみ実施
+        If CtlPara.AutoDirectionControl Then
+            MomentOpt.Optimize()
+        End If
+        If CtlPara.LosZeroOpposeControl Then
             '対抗グループSV自動算出
             MomentOpt.DivCul0.OpposeGpLst =
                 New List(Of Short)(SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).OpposeGroup)
