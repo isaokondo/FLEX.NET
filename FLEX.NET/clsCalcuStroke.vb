@@ -385,6 +385,7 @@ Public Class clsCalcuStroke
     ''' 各計測ジャッキ及び平均ジャッキストローク
     ''' 引き戻し開始時に実行
     ''' </summary>
+    ''' 
     Public Sub SetOffsetStroke()
         For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
             _mesureOffsetJackStroke(mjJkNo) = _mesureJackStroke(mjJkNo)

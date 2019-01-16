@@ -1053,6 +1053,7 @@ Public Class clsPlcIf
                 LosZeroSts_FLEX = 2
             End If
 
+
             If _excaStatus <> cTaiki Then
                 _MesureCalcAveJackStroke = AnalogPlcRead("平均ジャッキストローク")
                 RaiseEvent MesureStrokeChange()
@@ -1264,7 +1265,7 @@ Public Class clsPlcIf
                                 RaiseEvent LosZeroStsChange(p, _LosZeroSts_M, True)
                             End If
                             '組立完了後の経過時間カウント
-                            If _LosZeroSts_M = 5 And _LosZeroSts_FLEX <> 2 And _LosZeroEnable Then
+                            If _LosZeroSts_M = 5 And _LosZeroSts_FLEX = 3 And _LosZeroEnable Then
                                 AsmbledPastTime += 1 'カウントアップ
                                 If AsmbledPastTime = CtlPara.NextPieceConfirmTime Then
                                     'カウントアップ後次ピース確認イベント
@@ -1274,21 +1275,27 @@ Public Class clsPlcIf
                                 AsmbledPastTime = 0 'リセット
                             End If
 
+                            '減圧中のステータスがONだけど、実際減圧してないときの処理　立ち上げ時
+                            If _LosZeroSts_FLEX = 1 And Not Reduce.ReduceNow Then
+                                Reduce.Start()
+                            End If
+
+
                             'モニターモードではPLCより組立ピース読込
                             If InitPara.MonitorMode Then
-                                _AssemblyPieceNo = _EngValue("組立ピース")
-                            End If
-                            'Kセグメント完了で目標推進量を超えたときにリング更新するかどうかの判断
-                            If _LosZeroSts_FLEX = 3 AndAlso SegAsmblyData.AssemblyPlanPieceNumber = _AssemblyPieceNo AndAlso CtlPara.TargetNetStroke <> 0 AndAlso
+                                    _AssemblyPieceNo = _EngValue("組立ピース")
+                                End If
+                                'Kセグメント完了で目標推進量を超えたときにリング更新するかどうかの判断
+                                If _LosZeroSts_FLEX = 3 AndAlso SegAsmblyData.AssemblyPlanPieceNumber = _AssemblyPieceNo AndAlso CtlPara.TargetNetStroke <> 0 AndAlso
                                 CalcStroke.CalcAveLogicalStroke > CtlPara.TargetNetStroke And Not TargetStrokeOver Then
-                                TargetStrokeOver = True
-                                RaiseEvent TargetStrokeOverEv()
+                                    TargetStrokeOver = True
+                                    RaiseEvent TargetStrokeOverEv()
+                                End If
+                                '値保持
+                                TargetStrokeOver = (CalcStroke.CalcAveLogicalStroke > CtlPara.TargetNetStroke)
+
+
                             End If
-                            '値保持
-                            TargetStrokeOver = (CalcStroke.CalcAveLogicalStroke > CtlPara.TargetNetStroke)
-
-
-                        End If
 
                             '掘進中でダイレクト制御ONでFLEX手動モード時
                             If _excaStatus = cKussin AndAlso _flexControlOn And
