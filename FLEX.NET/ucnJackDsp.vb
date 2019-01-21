@@ -296,12 +296,12 @@ Public Class ucnJackDsp
 
             _FlexAutoManual = value
             btnPointAutoMan.Text = IIf(_FlexAutoManual, "手動", "自動")
-
-            imgPointXDOWN.Visible = Not _FlexAutoManual
-            imgPointYDOWN.Visible = Not _FlexAutoManual
-            imgPointXUP.Visible = Not _FlexAutoManual
-            imgPointYUP.Visible = Not _FlexAutoManual
-            btnPointCenter.Visible = Not _FlexAutoManual
+            '自動方向制御の時も力点の操作が可能とする
+            'imgPointXDOWN.Visible = Not _FlexAutoManual
+            'imgPointYDOWN.Visible = Not _FlexAutoManual
+            'imgPointXUP.Visible = Not _FlexAutoManual
+            'imgPointYUP.Visible = Not _FlexAutoManual
+            'btnPointCenter.Visible = Not _FlexAutoManual
 
 
         End Set

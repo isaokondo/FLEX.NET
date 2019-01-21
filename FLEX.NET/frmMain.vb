@@ -771,9 +771,23 @@
         PlcIf.PointX = UcnJackDsp.FlexPointX
         PlcIf.PointY = UcnJackDsp.FlexPointY
 
-        JackManual.PutPointXY(PlcIf.PointX, PlcIf.PointY)
+        'JackManual.PutPointXY(PlcIf.PointX, PlcIf.PointY)
 
         PlcIf.PointWrite()
+
+        '自動方向制御でも力点の操作が可能とする
+        If CtlPara.AutoDirectionControl Then
+            JackMvAuto.MvAutoStop()
+            JackMvAuto.PointX = PlcIf.PointX
+            JackMvAuto.PointY = PlcIf.PointY
+            JackMvAuto.sbMnToAutTracking()
+            ''自動演算開始
+            JackMvAuto.MvAutoStart()
+
+
+
+        End If
+
 
     End Sub
     ''' <summary>

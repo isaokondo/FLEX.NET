@@ -203,6 +203,7 @@ Partial Class ucnJackDsp
         '
         'imgPointXDOWN
         '
+        Me.imgPointXDOWN.BackColor = System.Drawing.Color.DarkGray
         Me.imgPointXDOWN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.imgPointXDOWN.Cursor = System.Windows.Forms.Cursors.Default
         Me.imgPointXDOWN.Image = CType(resources.GetObject("imgPointXDOWN.Image"), System.Drawing.Image)

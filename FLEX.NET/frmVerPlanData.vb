@@ -44,8 +44,8 @@
             dSet.setData(1, VerPlan.線形(ZoneNo))
             dSet.setData(2, VerPlan.線分水平距離(ZoneNo))
             dSet.setData(3, VerPlan.曲率半径(ZoneNo))
-            dSet.setData(4, VerPlan.始点シフト量(ZoneNo))
-            dSet.setData(5, VerPlan.終点シフト量(ZoneNo))
+            'dSet.setData(4, VerPlan.始点シフト量(ZoneNo))
+            'dSet.setData(5, VerPlan.終点シフト量(ZoneNo))
 
             dSet.setData(6, VerPlan.中折(ZoneNo))
             dSet.setData(7, VerPlan.前胴中心(ZoneNo))
