@@ -1314,16 +1314,16 @@ Public Class clsControlParameter
 
         _ReduceTime = chk.GetValue("ReduceTime")
         _ReduceJudgePress = chk.GetValue("ReduceJudgePress")
-        _NextPieceConfirm = chk.GetValue("NextPieceConfirm")
-        _NextPieceConfirmTime = chk.GetValue("NextPieceConfirmTime")
+        _NextPieceConfirm = chk.GetValue("NextPieceConfirm", "TRUE")
+        _NextPieceConfirmTime = chk.GetValue("NextPieceConfirmTime", 5)
         _PIDShiftDefl = chk.GetValue("PIDShiftDefl")
         _DirectControl = fnBoolean(chk.GetValue("DirectControl"))
         _ReduceReachStrokeDiff = chk.GetValue("ReduceReachStrokeDiff", 0)
 
         _aveOffsetJackStroke = chk.GetValue("aveOffsetJackStroke", 0)
 
-        _CopyCutEnableStroke = chk.GetValue("CopyCutEnableStroke")
-        _CopySelect = chk.GetValue("CopySelect")
+        _CopyCutEnableStroke = chk.GetValue("CopyCutEnableStroke", 5)
+        _CopySelect = chk.GetValue("CopySelect", 1)
 
         '減圧開始時のモーメント低減率
         _MomentRdductionRateOnReduce = chk.GetValue("MomentRdductionRateOnReduce", "80")
