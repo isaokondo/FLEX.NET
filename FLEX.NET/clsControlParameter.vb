@@ -147,6 +147,10 @@ Public Class clsControlParameter
     ''' </summary>
     Private _OptGpSvDic As Dictionary(Of Short, Single)
 
+    ''' <summary>
+    ''' 自動方向制御でも手動操作が可能とする
+    ''' </summary>
+    Private _SemiAuto As Boolean
 
     ''' <summary>
     ''' コピーストローク表示
@@ -1001,6 +1005,21 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+    ''' <summary>
+    ''' 自動方向制御でも手動操作が可能とする
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property SemiAuto As Boolean
+        Get
+            Return _SemiAuto
+        End Get
+        Set(value As Boolean)
+            _SemiAuto = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
+
 
     ''' <summary>
     ''' コピーストローク表示
@@ -1309,7 +1328,7 @@ Public Class clsControlParameter
         Else
             _LosZeroOpposeJack = False
             _LosZeroOpposeControl = False
-            _LosZeroOpposeGroupNumber=0
+            _LosZeroOpposeGroupNumber = 0
         End If
 
         _ReduceTime = chk.GetValue("ReduceTime")
@@ -1322,6 +1341,7 @@ Public Class clsControlParameter
 
         _aveOffsetJackStroke = chk.GetValue("aveOffsetJackStroke", 0)
 
+        _SemiAuto = chk.GetValue("SemiAuto", "FALSE")
         _CopyCutEnableStroke = chk.GetValue("CopyCutEnableStroke", 5)
         _CopySelect = chk.GetValue("CopySelect", 1)
 

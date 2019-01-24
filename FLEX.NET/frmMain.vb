@@ -199,6 +199,7 @@
         Next
 
         With CtlPara
+            UcnJackDsp.SemiAuto = .SemiAuto
             '自動方向制御ON／OFF
             UcnJackDsp.FlexAutoManual = .AutoDirectionControl
             DspFlexAuto.BitStatus = .AutoDirectionControl

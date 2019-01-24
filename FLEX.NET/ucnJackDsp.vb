@@ -40,6 +40,9 @@ Public Class ucnJackDsp
 
     Private _CopyVisible As Boolean = True
 
+    Private _SemiAuto As Boolean = False
+
+
     ''' <summary>
     ''' コピーストローク表示
     ''' コピーカッタの色表示が有効になるストローク
@@ -276,6 +279,17 @@ Public Class ucnJackDsp
         End Set
     End Property
 
+    Public Property SemiAuto As Boolean
+        Get
+            Return _SemiAuto
+        End Get
+        Set(value As Boolean)
+            _SemiAuto = value
+        End Set
+    End Property
+
+
+
 
     Public Property PieceName As New List(Of String)
     Public Property PieceAngle As New List(Of Single)
@@ -297,11 +311,13 @@ Public Class ucnJackDsp
             _FlexAutoManual = value
             btnPointAutoMan.Text = IIf(_FlexAutoManual, "手動", "自動")
             '自動方向制御の時も力点の操作が可能とする
-            'imgPointXDOWN.Visible = Not _FlexAutoManual
-            'imgPointYDOWN.Visible = Not _FlexAutoManual
-            'imgPointXUP.Visible = Not _FlexAutoManual
-            'imgPointYUP.Visible = Not _FlexAutoManual
-            'btnPointCenter.Visible = Not _FlexAutoManual
+            If Not _SemiAuto Then
+                imgPointXDOWN.Visible = Not _FlexAutoManual
+                imgPointYDOWN.Visible = Not _FlexAutoManual
+                imgPointXUP.Visible = Not _FlexAutoManual
+                imgPointYUP.Visible = Not _FlexAutoManual
+                btnPointCenter.Visible = Not _FlexAutoManual
+            End If
 
 
         End Set
