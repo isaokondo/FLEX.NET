@@ -887,6 +887,12 @@
             PlcIf.LosZeroEnable = True '同時施工可　信号出力
             '組立ピース確認
             WriteEventData("同時施工　組立ピース確認しました。", Color.Blue)
+            '同時組立中にセグメントモードにして同時施工OFFとなった場合の工程継続対応
+            If PlcIf.ExcaStatus <> cTaiki AndAlso PlcIf.LosZeroSts_M = 5 And PlcIf.AssemblyPieceNo < SegAsmblyData.AssemblyPlanPieceNumber Then
+                btnLoszeroContinu.Enabled = True
+            End If
+
+
 
         End If
 
