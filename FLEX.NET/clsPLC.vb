@@ -1040,8 +1040,18 @@ Public Class clsPlcIf
 
             _excavMode = DigtalPlcRead("掘進モード")
 
+            If _excaStatus <> cTaiki Then
+                _MesureCalcAveJackStroke = AnalogPlcRead("平均ジャッキストローク")
+                RaiseEvent MesureStrokeChange()
+                'PlcIf_MesureStrokeChange()
+
+            End If
 
             '
+            For i = 0 To InitPara.NumberJack - 1
+                _JackStatus(i) = AnalogPlcRead("ジャッキステータス" & (i + 1))
+                _jackSelect(i) = (_JackStatus(i) And 1)
+            Next
 
 
             If _LosZeroSts_FLEX <= 2 Then LosZeroSts = _LosZeroSts_FLEX '減圧開始or完了
@@ -1054,11 +1064,6 @@ Public Class clsPlcIf
             End If
 
 
-            If _excaStatus <> cTaiki Then
-                _MesureCalcAveJackStroke = AnalogPlcRead("平均ジャッキストローク")
-                RaiseEvent MesureStrokeChange()
-
-            End If
 
         Else
             'モニターモードでもPLC書き込み可能か
@@ -1069,6 +1074,8 @@ Public Class clsPlcIf
         SpeedRateWrite()
 
         PLC_Read()
+
+
 
         'TODO:操作権なしの時は、タイマで常時読み込み
         _PointX = _EngValue("ポイントＸ")

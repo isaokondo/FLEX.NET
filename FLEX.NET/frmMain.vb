@@ -1344,16 +1344,14 @@
         'ロスゼロで掘進途中に立ち上げたときのストローク処理
         StrokeSet()
 
-        '計算ストローク演算
-        PlcIf_MesureStrokeChange()
+        If PlcIf.ExcaStatus <> cTaiki Then
+            '計算ストローク演算
+            PlcIf_MesureStrokeChange()
+        End If
 
-        '立ち上がったイベントを表示
+        '立ち上がったイベントをログに
 
-        Dim db As New clsDataBase
-
-        'db.ExecuteSqlCmd _
-        '    ($"INSERT INTO FLEXイベントデータ
-        '    (Time,イベントデータ,イベント種類) VALUES('{DateTime.Now}','Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]','0')")
+        WriteEventData($"Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]", Color.White)
 
     End Sub
     ''' <summary>
