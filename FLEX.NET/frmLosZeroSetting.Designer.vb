@@ -44,21 +44,24 @@ Partial Class frmLosZeroSetting
         Me.Label3 = New System.Windows.Forms.Label()
         Me.AssemblyPieceNumber = New FLEX.NET.ucnNumEdit()
         Me.LoszeroRollingTolerance = New FLEX.NET.ucnNumEdit()
+        Me.TargetStrokeOverRate = New FLEX.NET.ucnNumEdit()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.lblTargetStrokeOverStoke = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(548, 517)
+        Me.btnOK.Location = New System.Drawing.Point(548, 527)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(672, 517)
+        Me.btnCancel.Location = New System.Drawing.Point(672, 527)
         '
         'LosZeroOpposeControl
         '
         Me.LosZeroOpposeControl.BackColor = System.Drawing.Color.Transparent
         Me.LosZeroOpposeControl.FieldName = "対抗圧制御"
-        Me.LosZeroOpposeControl.Location = New System.Drawing.Point(16, 154)
+        Me.LosZeroOpposeControl.Location = New System.Drawing.Point(16, 127)
         Me.LosZeroOpposeControl.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeControl.Name = "LosZeroOpposeControl"
         Me.LosZeroOpposeControl.rdbtnValue = False
@@ -72,7 +75,7 @@ Partial Class frmLosZeroSetting
         '
         Me.LosZeroOpposeJack.BackColor = System.Drawing.Color.Transparent
         Me.LosZeroOpposeJack.FieldName = "対抗ジャッキ選択"
-        Me.LosZeroOpposeJack.Location = New System.Drawing.Point(16, 101)
+        Me.LosZeroOpposeJack.Location = New System.Drawing.Point(16, 93)
         Me.LosZeroOpposeJack.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeJack.Name = "LosZeroOpposeJack"
         Me.LosZeroOpposeJack.rdbtnValue = False
@@ -229,7 +232,7 @@ Partial Class frmLosZeroSetting
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape2})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(887, 585)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(887, 599)
         Me.ShapeContainer1.TabIndex = 45
         Me.ShapeContainer1.TabStop = False
         '
@@ -274,7 +277,7 @@ Partial Class frmLosZeroSetting
         Me.LosZeroOpposeGroupNumber.FieldName = "対抗グループ数"
         Me.LosZeroOpposeGroupNumber.Increment = 1.0!
         Me.LosZeroOpposeGroupNumber.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.LosZeroOpposeGroupNumber.Location = New System.Drawing.Point(19, 205)
+        Me.LosZeroOpposeGroupNumber.Location = New System.Drawing.Point(19, 176)
         Me.LosZeroOpposeGroupNumber.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeGroupNumber.MaxValue = "5"
         Me.LosZeroOpposeGroupNumber.MinValue = "0"
@@ -295,7 +298,7 @@ Partial Class frmLosZeroSetting
         Me.LosZeroOpposeManualSV.FieldName = "対抗グループ手動圧力設定"
         Me.LosZeroOpposeManualSV.Increment = 1.0!
         Me.LosZeroOpposeManualSV.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.LosZeroOpposeManualSV.Location = New System.Drawing.Point(19, 248)
+        Me.LosZeroOpposeManualSV.Location = New System.Drawing.Point(19, 214)
         Me.LosZeroOpposeManualSV.Margin = New System.Windows.Forms.Padding(2)
         Me.LosZeroOpposeManualSV.MaxValue = "50"
         Me.LosZeroOpposeManualSV.MinValue = "0"
@@ -337,7 +340,7 @@ Partial Class frmLosZeroSetting
         Me.ReduceReachStrokeDiff.FieldName = "減圧開始可能ストローク設定"
         Me.ReduceReachStrokeDiff.Increment = 1.0!
         Me.ReduceReachStrokeDiff.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.ReduceReachStrokeDiff.Location = New System.Drawing.Point(19, 379)
+        Me.ReduceReachStrokeDiff.Location = New System.Drawing.Point(19, 441)
         Me.ReduceReachStrokeDiff.Margin = New System.Windows.Forms.Padding(2)
         Me.ReduceReachStrokeDiff.MaxValue = "1000"
         Me.ReduceReachStrokeDiff.MinValue = "-1000"
@@ -355,10 +358,10 @@ Partial Class frmLosZeroSetting
         Me.Label2.BackColor = System.Drawing.Color.Silver
         Me.Label2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Navy
-        Me.Label2.Location = New System.Drawing.Point(16, 321)
+        Me.Label2.Location = New System.Drawing.Point(16, 393)
         Me.Label2.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(362, 54)
+        Me.Label2.Size = New System.Drawing.Size(362, 44)
         Me.Label2.TabIndex = 142
         Me.Label2.Text = "ジャッキストロークがセグメント幅＋下記設定値で減圧可能（ボイスアナウンス)"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -367,7 +370,7 @@ Partial Class frmLosZeroSetting
         '
         Me.OpposeJackExcep.BackColor = System.Drawing.Color.Transparent
         Me.OpposeJackExcep.FieldName = "対抗ｼﾞｬｯｷのｽﾄﾛｰｸ除外"
-        Me.OpposeJackExcep.Location = New System.Drawing.Point(16, 483)
+        Me.OpposeJackExcep.Location = New System.Drawing.Point(16, 527)
         Me.OpposeJackExcep.Margin = New System.Windows.Forms.Padding(2)
         Me.OpposeJackExcep.Name = "OpposeJackExcep"
         Me.OpposeJackExcep.rdbtnValue = False
@@ -382,7 +385,7 @@ Partial Class frmLosZeroSetting
         Me.Label3.BackColor = System.Drawing.Color.Silver
         Me.Label3.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Navy
-        Me.Label3.Location = New System.Drawing.Point(16, 452)
+        Me.Label3.Location = New System.Drawing.Point(16, 496)
         Me.Label3.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(166, 29)
@@ -432,11 +435,61 @@ Partial Class frmLosZeroSetting
         Me.LoszeroRollingTolerance.Unit = "deg"
         Me.LoszeroRollingTolerance.Value = 0R
         '
+        'TargetStrokeOverRate
+        '
+        Me.TargetStrokeOverRate.DataDspWidth = 110
+        Me.TargetStrokeOverRate.DecimalPlaces = CType(0, Short)
+        Me.TargetStrokeOverRate.DspFieldName = True
+        Me.TargetStrokeOverRate.FieldName = "ﾘﾝｸﾞ更新ﾒｯｾｰｼﾞﾀｲﾐﾝｸﾞ"
+        Me.TargetStrokeOverRate.Increment = 1.0!
+        Me.TargetStrokeOverRate.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.TargetStrokeOverRate.Location = New System.Drawing.Point(19, 305)
+        Me.TargetStrokeOverRate.Margin = New System.Windows.Forms.Padding(2)
+        Me.TargetStrokeOverRate.MaxValue = "200"
+        Me.TargetStrokeOverRate.MinValue = "0"
+        Me.TargetStrokeOverRate.Name = "TargetStrokeOverRate"
+        Me.TargetStrokeOverRate.SelectItem = Nothing
+        Me.TargetStrokeOverRate.Size = New System.Drawing.Size(386, 39)
+        Me.TargetStrokeOverRate.TabIndex = 155
+        Me.TargetStrokeOverRate.ttMsg = ""
+        Me.TargetStrokeOverRate.ttTile = ""
+        Me.TargetStrokeOverRate.Unit = "%"
+        Me.TargetStrokeOverRate.Value = 0R
+        '
+        'Label4
+        '
+        Me.Label4.BackColor = System.Drawing.Color.Silver
+        Me.Label4.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label4.ForeColor = System.Drawing.Color.Navy
+        Me.Label4.Location = New System.Drawing.Point(16, 259)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(362, 44)
+        Me.Label4.TabIndex = 156
+        Me.Label4.Text = "目標推進量にこの割合を掛けたものを超えると更新メッセージ出力"
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblTargetStrokeOverStoke
+        '
+        Me.lblTargetStrokeOverStoke.BackColor = System.Drawing.Color.Silver
+        Me.lblTargetStrokeOverStoke.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTargetStrokeOverStoke.ForeColor = System.Drawing.Color.Crimson
+        Me.lblTargetStrokeOverStoke.Location = New System.Drawing.Point(131, 336)
+        Me.lblTargetStrokeOverStoke.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblTargetStrokeOverStoke.Name = "lblTargetStrokeOverStoke"
+        Me.lblTargetStrokeOverStoke.Size = New System.Drawing.Size(140, 36)
+        Me.lblTargetStrokeOverStoke.TabIndex = 157
+        Me.lblTargetStrokeOverStoke.Text = "リング更新推進量" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "12345mm"
+        Me.lblTargetStrokeOverStoke.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'frmLosZeroSetting
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(887, 585)
+        Me.ClientSize = New System.Drawing.Size(887, 599)
+        Me.Controls.Add(Me.lblTargetStrokeOverStoke)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.TargetStrokeOverRate)
         Me.Controls.Add(Me.LoszeroRollingTolerance)
         Me.Controls.Add(Me.AssemblyPieceNumber)
         Me.Controls.Add(Me.Label3)
@@ -484,6 +537,9 @@ Partial Class frmLosZeroSetting
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.AssemblyPieceNumber, 0)
         Me.Controls.SetChildIndex(Me.LoszeroRollingTolerance, 0)
+        Me.Controls.SetChildIndex(Me.TargetStrokeOverRate, 0)
+        Me.Controls.SetChildIndex(Me.Label4, 0)
+        Me.Controls.SetChildIndex(Me.lblTargetStrokeOverStoke, 0)
         Me.ResumeLayout(False)
 
     End Sub
@@ -510,4 +566,7 @@ Partial Class frmLosZeroSetting
     Friend WithEvents Label3 As Label
     Friend WithEvents AssemblyPieceNumber As ucnNumEdit
     Friend WithEvents LoszeroRollingTolerance As ucnNumEdit
+    Friend WithEvents TargetStrokeOverRate As ucnNumEdit
+    Friend WithEvents Label4 As Label
+    Friend WithEvents lblTargetStrokeOverStoke As Label
 End Class

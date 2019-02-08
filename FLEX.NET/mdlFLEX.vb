@@ -328,14 +328,23 @@ Module mdlFLEX
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
 
-                        'リング更新の確認
-                        PlaySound(My.Resources.TargetStrokeOver)
-                        Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}{PlcIf.RingNo}リングのリング更新を行いますか？",
-                                            "リング更新の確認",
-                                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-                        If ret = DialogResult.Yes Then
-                            PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
-                        End If
+                        'メッセージ表示時も他の操作が出来るようにタスク使用
+
+                        Dim task As Task = Task.Factory.StartNew(
+                                Sub()
+
+                                    'リング更新の確認
+                                    PlaySound(My.Resources.TargetStrokeOver)
+                                    Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}{PlcIf.RingNo}リングのリング更新を行いますか？",
+                                    "リング更新の確認",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                                                                              MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
+                                    If ret = DialogResult.Yes Then
+                                        PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
+                                    End If
+                                End Sub
+                            )
+
                         '未推進ジャッキの確認
                         If Not PlcIf.JackSel.All(Function(x) x = True) Then
                             '未推進ジャッキ番号の取得
@@ -347,8 +356,8 @@ Module mdlFLEX
                             Next
                             PlaySound(My.Resources.KsegAsemAllJackOn)
                             MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}ジャッキNo. {String.Join(", ", NoSelJk)} が未推進です。確認してください",
-                                            "未推進ジャッキの確認",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                    "未推進ジャッキの確認",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
                         End If
 
 
@@ -966,15 +975,24 @@ Module mdlFLEX
     ''' 目標推進量超えたか
     ''' </summary>
     Private Sub PlcIf_TargetStrokeOverEv() Handles PlcIf.TargetStrokeOverEv
-        If InitPara.ServerMode Then
-            PlaySound(My.Resources.TargetStrokeOver)
+        'メッセージ表示時も他の操作が出来るようにタスク使用
+        Dim task As Task = Task.Factory.StartNew(
+            Sub()
+                If InitPara.ServerMode Then
+                    PlaySound(My.Resources.TargetStrokeOver)
 
-            Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了後の目標ストローク{CtlPara.TargetNetStroke}mmを超えました。{vbCrLf}リング更新を行いますか？",
-                                                 "リング更新処理", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-            If ret = DialogResult.Yes Then
-                PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
-            End If
-        End If
+                    Dim ret As DialogResult =
+                    MessageBox.Show($"Kセグメント組立完了後の目標ストローク{CtlPara.TargetNetStroke}mmを超えました。{vbCrLf}リング更新を行いますか？",
+                                                         "リング更新処理", MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                                                              MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
+                    If ret = DialogResult.Yes Then
+                        PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
+                    End If
+                End If
+
+            End Sub
+                )
+
 
     End Sub
 End Module

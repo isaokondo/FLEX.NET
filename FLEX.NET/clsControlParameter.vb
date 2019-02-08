@@ -123,6 +123,10 @@ Public Class clsControlParameter
 
     Private _TargetNetStroke As Integer = 0   'ネットストローク　セグメント幅が変更になった時にリング目標値を開始よりこの値を距離を目標に
 
+    Private _TargetStrokeOverRate As Integer = 100   'ストローク超えでリング更新メッセージ出すタイミングの割合
+
+
+
     ''' <summary>
     ''' パラメータに対応するPLCアドレスのハッシュテーブル
     ''' </summary>
@@ -498,6 +502,20 @@ Public Class clsControlParameter
             _TargetNetStroke = value
             Call sbUpdateData(value)
             RaiseEvent ReferChnge()
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 'ストローク超えでリング更新メッセージ出すタイミングの割合
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TargetStrokeOverRate As Integer
+        Get
+            Return _TargetStrokeOverRate
+        End Get
+        Set(value As Integer)
+            _TargetStrokeOverRate = value
+            Call sbUpdateData(value)
         End Set
     End Property
 
@@ -1295,6 +1313,7 @@ Public Class clsControlParameter
         _RightStrokeDiff = fnBoolean(chk.GetValue("RightStrokeDiff", "True"))
 
         _TargetNetStroke = chk.GetValue("TargetNetStroke", 0)
+        _TargetStrokeOverRate = chk.GetValue("TargetStrokeOverRate", 100)
 
         Dim Value As Boolean = fnBoolean(chk.GetValue("AutoDirectionControl"))
         If _AutoDirectionControl <> Value Then

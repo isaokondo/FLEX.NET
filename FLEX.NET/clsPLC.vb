@@ -1292,14 +1292,14 @@ Public Class clsPlcIf
                             If InitPara.MonitorMode Then
                                     _AssemblyPieceNo = _EngValue("組立ピース")
                                 End If
-                                'Kセグメント完了で目標推進量を超えたときにリング更新するかどうかの判断
-                                If _LosZeroSts_FLEX = 3 AndAlso SegAsmblyData.AssemblyPlanPieceNumber = _AssemblyPieceNo AndAlso CtlPara.TargetNetStroke <> 0 AndAlso
-                                CalcStroke.CalcAveLogicalStroke > CtlPara.TargetNetStroke And Not TargetStrokeOver Then
-                                    TargetStrokeOver = True
-                                    RaiseEvent TargetStrokeOverEv()
-                                End If
-                                '値保持
-                                TargetStrokeOver = (CalcStroke.CalcAveLogicalStroke > CtlPara.TargetNetStroke)
+                            'Kセグメント完了で目標推進量(割合を掛けたもの)を超えたときにリング更新するかどうかの判断
+                            If _LosZeroSts_FLEX = 3 AndAlso SegAsmblyData.AssemblyPlanPieceNumber = _AssemblyPieceNo AndAlso CtlPara.TargetNetStroke <> 0 AndAlso
+                                CalcStroke.CalcAveLogicalStroke > (CtlPara.TargetStrokeOverRate * CtlPara.TargetNetStroke / 100) And Not TargetStrokeOver Then
+                                TargetStrokeOver = True
+                                RaiseEvent TargetStrokeOverEv()
+                            End If
+                            '値保持
+                            TargetStrokeOver = (CalcStroke.CalcAveLogicalStroke > CtlPara.TargetNetStroke)
 
 
                             End If

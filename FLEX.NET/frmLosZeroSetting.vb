@@ -41,6 +41,10 @@
         LosZeroOpposeControl.Selectable = InitPara.OpposeJackEnable
         LosZeroOpposeGroupNumber.Enabled = InitPara.OpposeJackEnable
         LosZeroOpposeManualSV.Enabled = InitPara.OpposeJackEnable
+
+        TargetStrokeOverRate.Value = CtlPara.TargetStrokeOverRate
+
+
     End Sub
 
     Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs)
@@ -74,11 +78,18 @@
 
         CtlPara.ReduceReachStrokeDiff = ReduceReachStrokeDiff.Value
 
+        CtlPara.TargetStrokeOverRate = TargetStrokeOverRate.Value
+
         Me.Close()
 
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
 
+    End Sub
+
+    Private Sub TargetStrokeOverRate_ValueChanged(sender As Object, e As EventArgs) Handles TargetStrokeOverRate.ValueChanged
+        lblTargetStrokeOverStoke.Text =
+            $"リング更新推進量{vbCrLf}{(TargetStrokeOverRate.Value * CtlPara.TargetNetStroke / 100).ToString("0000")}mm"
     End Sub
 End Class
