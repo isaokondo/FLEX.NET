@@ -69,10 +69,6 @@ Public Class clsPlcIf
     ''' </summary>
     Private FailStrokeNo As Integer
     ''' <summary>
-    ''' 目標推進量超えたか
-    ''' </summary>
-    Private TargetStrokeOver As Boolean
-    ''' <summary>
     ''' 掘進ストローク
     ''' </summary>
     Private _MaxExcavingStroke As Integer
@@ -87,7 +83,8 @@ Public Class clsPlcIf
 
     Private _mintIPAdress As Integer         ''操作権のあるＩＰアドレス（下位）
 
-    Private _CopyAngle As Integer   'コピー角度
+    Private _CopyAngle1 As Integer   'コピー角度
+    Private _CopyAngle2 As Integer   'コピー角度
     Private _CopyStroke1 As Integer 'コピーストローク1
     Private _CopyStroke2 As Integer 'コピーストローク1
 
@@ -588,11 +585,19 @@ Public Class clsPlcIf
         End Get
     End Property
 
-    Public ReadOnly Property CopyAngle As Integer
+    Public ReadOnly Property CopyAngle1 As Integer
         Get
-            Return _CopyAngle
+            Return _CopyAngle1
         End Get
     End Property
+
+
+    Public ReadOnly Property CopyAngle2 As Integer
+        Get
+            Return _CopyAngle2
+        End Get
+    End Property
+
 
     Public ReadOnly Property CopyStroke1 As Integer
         Get
@@ -1007,6 +1012,9 @@ Public Class clsPlcIf
             _EngValue.Add(an.FieldName, 0)
         Next
 
+        'コピーカッタの数設定
+        CtlPara.CopyNumber = If(_EngValue.ContainsKey("コピーストローク2"), 2, 1)
+
         CtlPara.TaleClrMeasurRExist = _EngValue.ContainsKey("クリアランス右")
         CtlPara.TaleClrMeasurLExist = _EngValue.ContainsKey("クリアランス左")
         CtlPara.TaleClrMeasurUExist = _EngValue.ContainsKey("クリアランス上")
@@ -1216,10 +1224,16 @@ Public Class clsPlcIf
                         _nakaoreTB = _EngValue("中折上下角")
                         _realStroke = _EngValue("掘進ストローク")
                         _excaStatus = _EngValue("掘進ステータス")
-                        _CopyAngle = _EngValue("コピー角度")
+                        _CopyAngle1 = _EngValue("コピー角度")
                         _CopyStroke1 = _EngValue("コピーストローク1")
-                        If _EngValue.ContainsKey("コピーストローク2") Then
+                        If CtlPara.CopyNumber = 2 Then
                             _CopyStroke2 = _EngValue("コピーストローク2")
+                            If _EngValue.ContainsKey("コピー角度2") Then
+                                _CopyAngle2 = _EngValue("コピー角度2")
+                            Else
+                                _CopyAngle2 = _CopyAngle1 + 180
+
+                            End If
                         End If
                         _MesureCalcAveJackStroke = _EngValue("平均ジャッキストローク")
 
@@ -1294,15 +1308,12 @@ Public Class clsPlcIf
                                 End If
                             'Kセグメント完了で目標推進量(割合を掛けたもの)を超えたときにリング更新するかどうかの判断
                             If _LosZeroSts_FLEX = 3 AndAlso SegAsmblyData.AssemblyPlanPieceNumber = _AssemblyPieceNo AndAlso CtlPara.TargetNetStroke <> 0 AndAlso
-                                CalcStroke.CalcAveLogicalStroke > (CtlPara.TargetStrokeOverRate * CtlPara.TargetNetStroke / 100) And Not TargetStrokeOver Then
-                                TargetStrokeOver = True
-                                RaiseEvent TargetStrokeOverEv()
+                                CalcStroke.CalcAveLogicalStroke > (CtlPara.TargetStrokeOverRate * CtlPara.TargetNetStroke / 100) Then
+                                RaiseEvent TargetStrokeOverEv() 'メッセージ出力イベント
                             End If
-                            '値保持
-                            TargetStrokeOver = (CalcStroke.CalcAveLogicalStroke > CtlPara.TargetNetStroke)
 
 
-                            End If
+                        End If
 
                             '掘進中でダイレクト制御ONでFLEX手動モード時
                             If _excaStatus = cKussin AndAlso _flexControlOn And

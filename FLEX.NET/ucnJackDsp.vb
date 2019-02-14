@@ -3,6 +3,7 @@
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Math
+Imports System.Runtime.CompilerServices
 
 ''' <summary>
 ''' ジャッキ状態表rm示
@@ -103,12 +104,17 @@ Public Class ucnJackDsp
     ''' コピー伸び表示設定
     ''' </summary>
     Private _CopyStrechSet As Integer
-    ''' <summary>
-    ''' コピーの表示ステータス　
-    ''' 0:黒　1:コピー位置(緑) 2:コピー切った場所(赤)
-    ''' 5度ピッチ
-    ''' </summary>
-    Private CopyStatus(72) As Brush
+
+    'コピーカッタの数　MAX２
+    Private _CopyNumber As Short = 1
+
+    Private _CopyAngleStroke1 As New Dictionary(Of Short, Integer)
+    Private _CopyAngleStroke2 As New Dictionary(Of Short, Integer)
+
+    Private CopyAngle1 As Integer
+    Private CopyAngle2 As Integer
+
+
     ''' <summary>
     ''' FLEX表示用コントロール
     ''' </summary>
@@ -229,6 +235,39 @@ Public Class ucnJackDsp
             _CopyStroke = value
         End Set
     End Property
+
+    Public WriteOnly Property CopyNumber As Short
+        Set(value As Short)
+            _CopyNumber = value
+        End Set
+    End Property
+
+
+    Public Structure StCopyAgSt
+        Dim angle As Short
+        Dim Stroke As Integer
+    End Structure
+
+
+    Public WriteOnly Property CopyAngleStroke1 As StCopyAgSt
+        Set(value As StCopyAgSt)
+            CopyAngle1 = value.angle.ToRound5
+            _CopyAngleStroke1(value.angle.ToRound5) = value.Stroke
+        End Set
+    End Property
+
+
+    Public WriteOnly Property CopyAngleStroke2 As StCopyAgSt
+        Set(value As StCopyAgSt)
+            CopyAngle2 = value.angle.ToRound5
+            _CopyAngleStroke2(value.angle.ToRound5) = value.Stroke
+        End Set
+    End Property
+
+
+
+
+
     <Browsable(True), Description("コピー伸び表示設定")>
     Public Property CopyStrechSet As Integer
         Get
@@ -865,18 +904,6 @@ Public Class ucnJackDsp
 
         Dim g As Graphics = Graphics.FromImage(bmpForDso)
 
-        'Dim g As Graphics = Me.CreateGraphics
-        'TODO:早い回転でうまく表示されない時がある
-        Dim k As Integer = CInt(_CopyAngle / 5)
-        If _CopyStroke > _CopyCutEnableStroke Then
-            Dim CpyLocColor As Integer =
-                        (_CopyStroke) / (_MaxCopyStroke - _CopyCutEnableStroke) * (255 - 20) + 20
-            If CpyLocColor > 255 Then CpyLocColor = 255
-            CopyStatus(k) = New SolidBrush(Color.FromArgb(CpyLocColor, 0, 0))
-        Else
-            CopyStatus(k) = Brushes.Black
-        End If
-        'Dim i As Integer
         '5度ピッチで７２分割
         For i As Short = 0 To 71
 
@@ -886,29 +913,31 @@ Public Class ucnJackDsp
                 (MaxRadios * CopyRadiousRate * Cos((i * 5 - 90).ToRad),
                  MaxRadios * CopyRadiousRate * Sin((i * 5 - 90).ToRad))
 
-            Dim Br As Brush '色の表示
-            If k = i Then
-                Br = Brushes.LightGreen  'コピー位置
-            Else
-                If IsNothing(CopyStatus(i)) Then
-                    Br = Brushes.Black
-                Else
-                    Br = CopyStatus(i)
-                End If
-                ''If CopyStatus(i) Then
-                'If _CopyStroke > _CopyCutEnableStroke Then
-                '    'DarkRed→Red
-                '    'Br = Brushes.Red    '伸びた位置
-                '    Dim CpyLocColor As Integer =
-                '        (_MaxCopyStroke - _CopyStroke) / (_MaxCopyStroke - _CopyCutEnableStroke) * (255 - 139) + 139
+            Dim Br As Brush = Brushes.Black '色の表示
 
-                '    Br = New SolidBrush(Color.FromArgb(CpyLocColor, 0, 0))
-                'Else
-                '    Br = Brushes.Black
-                'End If
+            Dim Ang As Short = i * 5
+
+            If _CopyAngleStroke1.ContainsKey(Ang) AndAlso _CopyAngleStroke1(Ang) > _CopyStrechSet Then
+                Br = Brushes.Gold
             End If
 
-            FillACircle(Br, g, p, 7)
+            If _CopyNumber = 2 And _CopyAngleStroke2.ContainsKey(Ang) AndAlso _CopyAngleStroke2(Ang) > _CopyStrechSet Then
+                Br = Brushes.Gold
+            End If
+
+
+            If Ang = CopyAngle1 Then
+                Br = Brushes.LawnGreen
+            End If
+
+            If _CopyNumber = 2 And Ang = CopyAngle2 Then
+                Br = Brushes.Magenta
+            End If
+
+
+            FillACircle(Br, g, p, 7) '塗りつぶし
+
+            DrawACircle(Pens.Black, g, p, 7) '周りの円弧
 
         Next
 

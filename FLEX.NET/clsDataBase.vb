@@ -560,6 +560,7 @@ Public Class clsInitParameter
 
 
 
+
     ''' <summary>
     ''' ジャッキ本数
     ''' </summary>
@@ -1441,7 +1442,7 @@ End Class
 Public Class clsTableUpdateConfirm
     Inherits clsDataBase
 
-    Dim tbTime As Dictionary(Of String, Date)
+    'Dim tbTime As Dictionary(Of String, Date)
     Private MisamTable() As String =
         {"flexアナログtag", "flexデジタルtag", "flex初期パラメータ",
         "flex制御パラメータ", "flexセグメント組立データ", "セグメント割付シュミレーション",
@@ -1459,9 +1460,6 @@ Public Class clsTableUpdateConfirm
             'MyISAMのチェック
             CheckMisam()
         End If
-        '更新時刻の取得
-        tbTime = GetUpdateTIme()
-
         TimerRun()
 
     End Sub
@@ -1559,22 +1557,6 @@ Public Class clsTableUpdateConfirm
     End Sub
 
 
-    Private Function GetUpdateTIme() As Dictionary(Of String, Date)
-        '更新時間を取得　MISAMのみ
-
-        If clsDataBase.MySQLVersion = "4.0.25" Then
-            Dim tableUpTime As DataTable =
-            GetDtfmSQL("show table status;")
-
-            Dim k =
-            From i In tableUpTime.AsEnumerable Where i("TYPE") = "MyISAM"
-
-            Return k.ToDictionary(Function(n) n("name").ToString, Function(n) CDate(n("Update_time")))
-
-        End If
-
-
-    End Function
     ''' <summary>
     ''' テーブルがMyISAMかどうか、チェック！
     ''' </summary>

@@ -139,6 +139,23 @@ Module CommonMdl
         '    fnNearZero = False
         'End If
     End Function
+    ''' <summary>
+    ''' 360°の値を５度ピッチに四捨五入
+    ''' </summary>
+    ''' <param name="Deg"></param>
+    ''' <returns></returns>
+    <Extension()>
+    Public Function ToRound5(ByVal Deg As Short) As Short
+        If IsNumeric(Deg) Then
+            Dim t As Short = Round(Deg / 5) * 5
+            If t > 360 Then t = t - 360
+            Return t
+        Else
+            Return 0
+        End If
+
+    End Function
+
 
 
 

@@ -41,7 +41,6 @@ Public Class frmSim
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
         Dim db As New clsDataBase
         'MYSQLのバージョン取得
-        db.GetMySQKVersion()
 
         InitParm = New clsInitParameter
 
@@ -207,7 +206,7 @@ Public Class frmSim
 
 
         'フォームに情報表示
-        Me.Text &= $"　論理局番=[{ComPlc.ActLogicalStationNumber}] ]"
+        Me.Text &= $"{InitParm.ConstructionName}　論理局番=[{ComPlc.ActLogicalStationNumber}] ]"
 
 
         GetMachinePlcInfo()
@@ -678,7 +677,7 @@ Public Class frmSim
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub btnJackAllSelect_Click(sender As Object, e As EventArgs) Handles btnJackAllSelect.Click
+    Private Sub JackAllSelectk() Handles btnJackAllSelect.Click
         Dim i As Integer
         For i = 0 To InitParm.NumberJack - 1
             Dim Jadr As String
@@ -814,8 +813,7 @@ CatchError:  '例外処理
             Dim iRet = ComPlc.SetDevice(PlcAdr, WrData)
         Else
             'ヘッダーをダブルクリック
-            Dim i As Integer
-            For i = 0 To InitParm.NumberJack - 1
+            For i As Integer = 0 To InitParm.NumberJack - 1
                 Dim PlcAdr As String = "B" & Convert.ToString(intPlcWrBaseAdress + i, 16)
                 'シフトキーが推されてた時は、ON
                 Dim iret = ComPlc.SetDevice(PlcAdr, (Control.ModifierKeys And Keys.Shift) = Keys.Shift)
@@ -927,6 +925,16 @@ CatchError:  '例外処理
 
         Next
 
+        JackAllSelectk() 'ジャッキ全選択
+
+
+        Dim intPlcWrBaseAdress As Integer = Convert.ToInt32(SimSet.ExcavOrSegmentAdr.Substring(1), 16)
+
+        For i As Integer = 0 To InitParm.NumberJack - 1
+            Dim PlcAdr As String = "B" & Convert.ToString(intPlcWrBaseAdress + i, 16)
+            'シフトキーが推されてた時は、ON
+            Dim iret = ComPlc.SetDevice(PlcAdr, 1)
+        Next
 
 
     End Sub

@@ -79,7 +79,7 @@ Friend Class clsDataSave
                     Data(ColumnList.IndexOf("下ジャッキストローク")) = PlcIf.BotomStroke.ToString
                     Data(ColumnList.IndexOf("下ジャッキ速度")) = PlcIf.BotomSpeed.ToString
                 End If
-            Data(ColumnList.IndexOf("コピー角度1")) = PlcIf.CopyAngle.ToString
+            Data(ColumnList.IndexOf("コピー角度1")) = PlcIf.CopyAngle1.ToString
             Data(ColumnList.IndexOf("コピーストローク1")) = PlcIf.CopyStroke1.ToString
             'TODO:未割り当て
             'Data(ColumnList.IndexOf("コピー角度2")) = .RealStroke.ToString

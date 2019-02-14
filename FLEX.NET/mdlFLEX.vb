@@ -73,6 +73,10 @@ Module mdlFLEX
     Private ReduceEnableStrokeReachFlg As Boolean
 
 
+    ''' <summary>
+    ''' 目標推進量超えたかの確認メッセージ出力フラグ
+    ''' </summary>
+    Private TargetStrokeOverConfirm As Boolean
 
 
     ''' <summary>
@@ -209,6 +213,8 @@ Module mdlFLEX
             'サーバーモードで前リングと100mm以上異なる場合
             'ストローク補正値
             CtlPara.OffsetStroke = 0
+            '目標推進量超えたかの確認メッセージ出力フラグOFF
+            TargetStrokeOverConfirm = False
             CtlPara.TargetNetStroke = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
             If InitPara.ServerMode AndAlso
                 Math.Abs(SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth - SegAsmblyData.TypeData(PlcIf.RingNo - 1).CenterWidth) > 0.1 Then
@@ -341,6 +347,9 @@ Module mdlFLEX
                                                                               MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
                                     If ret = DialogResult.Yes Then
                                         PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
+                                        '目標推進量超えたかの確認メッセージ出力フラグon
+                                        TargetStrokeOverConfirm = True
+
                                     End If
                                 End Sub
                             )
@@ -398,6 +407,8 @@ Module mdlFLEX
                     '計算ストローク用セグメント幅等設定
                     CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
                     'todo:テーパー量等？
+                    '目標推進量超えたかの確認メッセージ出力フラグOFF
+                    TargetStrokeOverConfirm = False
 
                 Case 2
                     WriteEventData("減圧完了しました。", Color.Magenta)
@@ -971,18 +982,23 @@ Module mdlFLEX
     Private Sub PlcIf_RollingOverAlarm() Handles PlcIf.RollingOverAlarm
         My.Forms.frmRollingOverAlarm.ShowDialog()
     End Sub
+
+    Private task As Task
     ''' <summary>
     ''' 目標推進量超えたか
     ''' </summary>
     Private Sub PlcIf_TargetStrokeOverEv() Handles PlcIf.TargetStrokeOverEv
         'メッセージ表示時も他の操作が出来るようにタスク使用
-        Dim task As Task = Task.Factory.StartNew(
+
+        If (IsNothing(task) OrElse task.IsCompleted) And Not TargetStrokeOverConfirm Then
+            task = Task.Factory.StartNew(
             Sub()
                 If InitPara.ServerMode Then
+                    TargetStrokeOverConfirm = True
                     PlaySound(My.Resources.TargetStrokeOver)
 
                     Dim ret As DialogResult =
-                    MessageBox.Show($"Kセグメント組立完了後の目標ストローク{CtlPara.TargetNetStroke}mmを超えました。{vbCrLf}リング更新を行いますか？",
+                    MessageBox.Show($"Kセグメント組立完了後の目標ストロークを超えました。{vbCrLf}リング更新を行いますか？",
                                                          "リング更新処理", MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
                                                               MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
                     If ret = DialogResult.Yes Then
@@ -994,5 +1010,6 @@ Module mdlFLEX
                 )
 
 
+        End If
     End Sub
 End Module

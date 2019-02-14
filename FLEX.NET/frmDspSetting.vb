@@ -6,7 +6,7 @@
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
-        numCopyNo.Value = CtlPara.CopySelect
+        'numCopyNo.Value = CtlPara.CopySelect
         numCopyCutEnableStroke.Value = CtlPara.CopyCutEnableStroke
 
         RightStrokeDiff.rdbtnValue = Not CtlPara.RightStrokeDiff
@@ -15,7 +15,7 @@
 
     Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
 
-        CtlPara.CopySelect = numCopyNo.Value
+        'CtlPara.CopySelect = numCopyNo.Value
         CtlPara.CopyCutEnableStroke = numCopyCutEnableStroke.Value
 
         CtlPara.RightStrokeDiff = Not RightStrokeDiff.rdbtnValue

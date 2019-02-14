@@ -129,7 +129,7 @@ Friend Class clsCulMoment
         _Thrust = 0
 
         ''掘進中以外は０に
-        If _ExcaStatus <> cKussin Then Exit Sub
+        If _ExcaStatus <> cKussin Or IsNothing(PlcIf) Then Exit Sub
 
 
         Dim i As Short

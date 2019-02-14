@@ -122,7 +122,7 @@ Partial Class frmMain
         Me.DspExcvSpeed = New FLEX.NET.ucnDspData()
         Me.DspAveStroke = New FLEX.NET.ucnDspData()
         Me.UcnGpPvBarGraph = New FLEX.NET.ucnGpPvBarGraph()
-        Me.DspCopyStroke = New FLEX.NET.ucnDspDataMin2()
+        Me.DspCopyStroke1 = New FLEX.NET.ucnDspDataMin2()
         Me.DspTransMRRolling = New FLEX.NET.ucnDspDataMin2()
         Me.DspRealMRRolling = New FLEX.NET.ucnDspDataMin2()
         Me.DspUpRealStroke = New FLEX.NET.ucnDspDataMin()
@@ -189,6 +189,7 @@ Partial Class frmMain
         Me.DspHorDev = New FLEX.NET.ucnDspData()
         Me.DspWideUse12 = New FLEX.NET.ucnDspData()
         Me.InterruptTime = New FLEX.NET.ucnDspData()
+        Me.DspCopyStroke2 = New FLEX.NET.ucnDspDataMin2()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -1414,16 +1415,16 @@ Partial Class frmMain
         '
         'DspCopyStroke
         '
-        Me.DspCopyStroke.BackColor = System.Drawing.Color.Transparent
-        Me.DspCopyStroke.DecimalPlaces = CType(0, Short)
-        Me.DspCopyStroke.FieldName = "余掘"
-        Me.DspCopyStroke.Location = New System.Drawing.Point(867, 611)
-        Me.DspCopyStroke.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspCopyStroke.Name = "DspCopyStroke"
-        Me.DspCopyStroke.Size = New System.Drawing.Size(185, 30)
-        Me.DspCopyStroke.TabIndex = 149
-        Me.DspCopyStroke.Unit = "mm"
-        Me.DspCopyStroke.Value = 0R
+        Me.DspCopyStroke1.BackColor = System.Drawing.Color.Transparent
+        Me.DspCopyStroke1.DecimalPlaces = CType(0, Short)
+        Me.DspCopyStroke1.FieldName = "余掘1"
+        Me.DspCopyStroke1.Location = New System.Drawing.Point(867, 597)
+        Me.DspCopyStroke1.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspCopyStroke1.Name = "DspCopyStroke"
+        Me.DspCopyStroke1.Size = New System.Drawing.Size(185, 30)
+        Me.DspCopyStroke1.TabIndex = 149
+        Me.DspCopyStroke1.Unit = "mm"
+        Me.DspCopyStroke1.Value = 0R
         '
         'DspTransMRRolling
         '
@@ -2212,8 +2213,8 @@ Partial Class frmMain
         Me.UcnJackDsp.FlexAutoManual = False
         Me.UcnJackDsp.FlexPointR = 0!
         Me.UcnJackDsp.FlexPointSeater = 0!
-        '        Me.UcnJackDsp.FlexPointX = 0!
-        '       Me.UcnJackDsp.FlexPointY = 0!
+        Me.UcnJackDsp.FlexPointX = 0!
+        Me.UcnJackDsp.FlexPointY = 0!
         Me.UcnJackDsp.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.UcnJackDsp.GroupPV = New Single() {0!}
         Me.UcnJackDsp.JackAutoOneWayLimit = False
@@ -2232,6 +2233,7 @@ Partial Class frmMain
         Me.UcnJackDsp.PieceName = CType(resources.GetObject("UcnJackDsp.PieceName"), System.Collections.Generic.List(Of String))
         Me.UcnJackDsp.PointRLimitOver = False
         Me.UcnJackDsp.SegmentDspEnable = False
+        Me.UcnJackDsp.SemiAuto = False
         Me.UcnJackDsp.Size = New System.Drawing.Size(795, 731)
         Me.UcnJackDsp.TabIndex = 68
         '
@@ -2656,12 +2658,26 @@ Partial Class frmMain
         Me.InterruptTime.Value = "20"
         Me.InterruptTime.ValueType = False
         '
+        'DspCopyStroke2
+        '
+        Me.DspCopyStroke2.BackColor = System.Drawing.Color.Transparent
+        Me.DspCopyStroke2.DecimalPlaces = CType(0, Short)
+        Me.DspCopyStroke2.FieldName = "余掘2"
+        Me.DspCopyStroke2.Location = New System.Drawing.Point(865, 623)
+        Me.DspCopyStroke2.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspCopyStroke2.Name = "DspCopyStroke2"
+        Me.DspCopyStroke2.Size = New System.Drawing.Size(185, 30)
+        Me.DspCopyStroke2.TabIndex = 163
+        Me.DspCopyStroke2.Unit = "mm"
+        Me.DspCopyStroke2.Value = 0R
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.DspCopyStroke2)
         Me.Controls.Add(Me.DspBoltPitch)
         Me.Controls.Add(Me.lblMRRolling)
         Me.Controls.Add(Me.DspChangeMRRolling)
@@ -2679,7 +2695,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.lblMachineMode)
         Me.Controls.Add(Me.cmbWideSelct)
         Me.Controls.Add(Me.UcnGpPvBarGraph)
-        Me.Controls.Add(Me.DspCopyStroke)
+        Me.Controls.Add(Me.DspCopyStroke1)
         Me.Controls.Add(Me.DspTransMRRolling)
         Me.Controls.Add(Me.DspRealMRRolling)
         Me.Controls.Add(Me.DspUpRealStroke)
@@ -2918,7 +2934,7 @@ Partial Class frmMain
     Friend WithEvents DspRightClearance As ucnDspDataMin
     Friend WithEvents DspRealMRRolling As ucnDspDataMin2
     Friend WithEvents DspTransMRRolling As ucnDspDataMin2
-    Friend WithEvents DspCopyStroke As ucnDspDataMin2
+    Friend WithEvents DspCopyStroke1 As ucnDspDataMin2
     Friend WithEvents cmbWideSelct As ComboBox
     Friend WithEvents 平面ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 縦断ToolStripMenuItem As ToolStripMenuItem
@@ -2939,6 +2955,7 @@ Partial Class frmMain
     Friend WithEvents DspChangeMRRolling As ucnDspDataMin2
     Friend WithEvents lblMRRolling As Label
     Friend WithEvents MeasuerJPullNum As ucnDspData
+    Friend WithEvents DspCopyStroke2 As ucnDspDataMin2
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

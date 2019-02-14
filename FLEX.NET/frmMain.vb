@@ -108,13 +108,17 @@
         DspHorBroken.Value = PlcIf.NakaoreLR         '中折左右
         DspVerBroken.Value = PlcIf.NakaoreTB         '中折上下
 
-        Select Case CtlPara.CopySelect
-            Case 1
-                DspCopyStroke.Value = PlcIf.CopyStroke1 'コピーストローク
-            Case 2
-                DspCopyStroke.Value = PlcIf.CopyStroke2 'コピーストローク
+        'Select Case CtlPara.CopySelect
+        '    Case 1
+        DspCopyStroke1.Value = PlcIf.CopyStroke1 'コピーストローク
+        'Case 2
+        If CtlPara.CopyNumber = 2 Then
+            DspCopyStroke2.Value = PlcIf.CopyStroke2 'コピーストローク
+        Else
+            DspCopyStroke2.Visible = False
+        End If
 
-        End Select
+        'End Select
 
         If CtlPara.MachineRearRollingExist And InitPara.LosZeroEquip Then
             DspRealMRRolling.Value = PlcIf.MashineRearRolling  'マシンローリング
@@ -151,9 +155,27 @@
         UcnJackDsp.GroupPV = PlcIf.GroupPv
         UcnJackDsp.JackOrgPress = PlcIf.JkPress
         'コピー角度、ストローク
-        UcnJackDsp.CopyAngle = PlcIf.CopyAngle
-        UcnJackDsp.CopyStroke = PlcIf.CopyStroke1
+        UcnJackDsp.CopyAngle = PlcIf.CopyAngle1
+
         UcnJackDsp.CopyCutEnableStroke = CtlPara.CopyCutEnableStroke
+
+        Dim d As New ucnJackDsp.StCopyAgSt
+        d.angle = PlcIf.CopyAngle1
+        d.Stroke = PlcIf.CopyStroke1
+
+        UcnJackDsp.CopyAngleStroke1 = d
+
+        If CtlPara.CopyNumber = 2 Then
+            d.angle = PlcIf.CopyAngle2
+            d.Stroke = PlcIf.CopyStroke2
+
+            UcnJackDsp.CopyAngleStroke2 = d
+
+
+        End If
+
+
+
         'グループ圧バーグラフ
         UcnGpPvBarGraph.GpFlg = PlcIf.GroupFlg
         UcnGpPvBarGraph.GpPv = PlcIf.GroupPv
@@ -1204,6 +1226,8 @@
             .JackGroupPos = InitPara.JackGroupPos
             .NumberJack = InitPara.NumberJack
             .MeasureJkNo = InitPara.MesureJackAngle.Keys.ToList
+
+            .CopyNumber = CtlPara.CopyNumber
 
             .FlexPointX = PlcIf.PointX
             .FlexPointY = PlcIf.PointY

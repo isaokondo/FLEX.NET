@@ -157,6 +157,15 @@ Public Class clsControlParameter
     Private _SemiAuto As Boolean
 
     ''' <summary>
+    ''' コピーカッタの数
+    ''' 'コピーカッタの数　MAX２個まで対応
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property CopyNumber As Short = 1
+
+
+
+    ''' <summary>
     ''' コピーストローク表示
     ''' コピーカッタの色表示が有効になるストローク
     ''' </summary>
