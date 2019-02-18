@@ -1182,7 +1182,8 @@ Friend Class clsCulKijun
                                 End If
                             Else
                                 mint現中折計算区分 = 1 '通常の中折れ処理
-                                mdbl現旋回中心 = .前胴中心(_ZoneNo + 1) '旋回中心は次ｿﾞｰﾝの前胴中心　05/01/20 修正
+                                '                                mdbl現旋回中心 = .前胴中心(_ZoneNo + 1) '旋回中心は次ｿﾞｰﾝの前胴中心　05/01/20 修正
+                                mdbl現旋回中心 = .前胴中心(_ZoneNo) '旋回中心は現ｿﾞｰﾝの前胴中心　2019/2/18 修正
                                 mdbl現中折角度 = 0 '中折れ不定
                             End If
                         Else
