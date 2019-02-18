@@ -501,10 +501,11 @@ Public Class clsCalcuStroke
                 _CalcAveLogicalStroke = SegAsmblyData.RingLastStroke(PlcIf.RingNo) - CtlPara.StartAveStroke
             End If
         End If
+        If _CalcAveLogicalStroke < 0 Then _CalcAveLogicalStroke = 0 '負の値は除外
         '全計測ジャッキ更新？
         _AllMesJackUp = (_MesuerJPullNum = InitPara.MesureJackAngle.Count)
         '引きジャッキと組立完了ジャッキの数
-        If blnT = False And _AllMesJackUp And PlcIf.LosZeroEnable Then
+        If InitPara.ServerMode AndAlso blnT = False And _AllMesJackUp And PlcIf.LosZeroEnable Then
             'RaiseEvent MeasureJackAllUp()
             MessageBox.Show("すべての計測ジャッキストロークが引き戻し更新されました", "全計測ｼﾞｬｯｷ引戻", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If

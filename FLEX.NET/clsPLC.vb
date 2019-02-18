@@ -1064,6 +1064,10 @@ Public Class clsPlcIf
 
             If _LosZeroSts_FLEX <= 2 Then LosZeroSts = _LosZeroSts_FLEX '減圧開始or完了
             If _LosZeroSts_M = 2 Then LosZeroSts = 3    '引き戻し中
+            If _LosZeroSts_M = 3 Then LosZeroSts = 4    '引き戻し完了
+            If _LosZeroSts_M = 4 Then LosZeroSts = 5    '組み立て中
+            'If _LosZeroSts_M = 5 Then LosZeroSts = 6    '組み立て中
+
             If _LosZeroSts_FLEX = 3 Then LosZeroSts = 6 '組立完了
             '減圧中で掘進してない時は減圧完了とする
             If _excaStatus <> cKussin And LosZeroSts = 1 Then

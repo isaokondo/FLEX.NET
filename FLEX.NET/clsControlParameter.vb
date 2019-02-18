@@ -1231,9 +1231,8 @@ Public Class clsControlParameter
             _mesureOffsetJackStroke = value
             'Call sbUpdateData(value.ToString)
             If InitPara.ServerMode Then
-                ExecuteSqlCmd("DELETE FROM FLEX制御パラメータ WHERE `項目名称` LIKE 'mesureOffsetJackStroke%'")
                 For Each fds As KeyValuePair(Of Short, Integer) In _mesureOffsetJackStroke
-                    ExecuteSqlCmd($"INSERT INTO FLEX制御パラメータ (`項目名称`,`値`) VALUES ('mesureOffsetJackStroke{fds.Key}','{fds.Value}') ")
+                    ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{fds.Value}' WHERE 項目名称 ='mesureOffsetJackStroke{fds.Key}'")
                 Next
             End If
         End Set
@@ -1454,18 +1453,18 @@ Public Class clsControlParameter
         '計測ジャッキストローク　初期化,フィールドの存在チェック
         For Each i As KeyValuePair(Of Short, Single) In InitPara.MesureJackAngle
             _StartJackStroke.Add(i.Key, 0)
-            Dim tbchk As DataTable =
+            Dim tbchk1 As DataTable =
                 GetDtfmSQL($"SELECT * FROM FLEX制御パラメータ WHERE 項目名称='開始ジャッキストローク{i.Key}'")
-            'GetDtfmSQL($"SELECT * FROM FLEX制御パラメータ WHERE 項目名称 ='開始ジャッキストローク{i.Key}'")
-            If tbchk.Rows.Count = 0 Then
-                MsgBox($"項目名　開始ジャッキストローク{i.Key}が、存在しません。{vbCrLf}テーブル「FLEX制御パラメータ」に追加してください", vbExclamation)
+            If tbchk1.Rows.Count = 0 Then
+                ExecuteSqlCmd($"INSERT INTO FLEX制御パラメータ (`項目名称`,`値`) VALUES ('開始ジャッキストローク{i.Key}','0') ")
             End If
-            'Dim tbchk As Odbc.OdbcDataReader =
-            '    ExecuteSql($"SELECT * FROM FLEX制御パラメータ WHERE 項目名称 ='開始ジャッキストローク{i.Key}'")
-            'If Not tbchk.HasRows Then
-            '    MsgBox($"項目名　開始ジャッキストローク{i.Key}が、存在しません。{vbCrLf}テーブル「FLEX制御パラメータ」に追加してください", vbExclamation)
-            'End If
-            'tbchk.Close()
+
+            Dim tbchk2 As DataTable =
+                GetDtfmSQL($"SELECT * FROM FLEX制御パラメータ WHERE 項目名称='mesureOffsetJackStroke{i.Key}'")
+            If tbchk2.Rows.Count = 0 Then
+                ExecuteSqlCmd($"INSERT INTO FLEX制御パラメータ (`項目名称`,`値`) VALUES ('mesureOffsetJackStroke{i.Key}','0') ")
+            End If
+
 
         Next
 
