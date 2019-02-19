@@ -206,32 +206,40 @@ Public Class clsDataBase
         End If
 
         If MySQLVersion = "MariaDB" Then
+            Try
 
-            Dim Builder = New MySqlConnectionStringBuilder()
-            ' データベースに接続するために必要な情報をBuilderに与える
-            Builder.Server = HostName
-            Builder.Port = PortNo
-            Builder.UserID = "toyo"
-            Builder.Password = "yanagi"
-            Builder.Database = DataBaseName
-            Builder.ConnectionTimeout = 600
-            Builder.DefaultCommandTimeout = 300
+                Dim Builder = New MySqlConnectionStringBuilder()
+                ' データベースに接続するために必要な情報をBuilderに与える
+                Builder.Server = HostName
+                Builder.Port = PortNo
+                Builder.UserID = "toyo"
+                Builder.Password = "yanagi"
+                Builder.Database = DataBaseName
+                Builder.ConnectionTimeout = 600
+                Builder.DefaultCommandTimeout = 300
 
-            Dim ConStr = Builder.ToString()
+                Dim ConStr = Builder.ToString()
 
-            Dim con As New MySqlConnection
-            con.ConnectionString = ConStr
-            con.Open()
+                Dim con As New MySqlConnection
+                con.ConnectionString = ConStr
+                con.Open()
 
-            Dim cmd As New MySqlCommand(SQLCommand, con)
-            Dim dr As MySqlDataReader = cmd.ExecuteReader
+                Dim cmd As New MySqlCommand(SQLCommand, con)
+                Dim dr As MySqlDataReader = cmd.ExecuteReader
 
-            'If dr.RecordsAffected = 0 Then
-            'End If
+                'If dr.RecordsAffected = 0 Then
+                'End If
 
-            dr.Close()
-            con.Close()
-            con.Dispose()
+                dr.Close()
+                con.Close()
+                con.Dispose()
+
+            Catch ex As Exception
+                MsgBox($"データベースSQLコマンドエラー{vbCrLf}
+                    {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}", vbCritical)
+
+            End Try
+
 
         End If
 

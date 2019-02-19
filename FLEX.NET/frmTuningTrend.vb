@@ -232,8 +232,8 @@
                 LstData.Add($"'{GpData.Mv(i - 1)}'")
 
             Next
-            LstColumn.Add("シールドジャッキ圧力")
-            LstData.Add(GpData.JkPress)
+            LstColumn.Add("`シールドジャッキ圧力`")
+            LstData.Add($"'{GpData.JkPress}'")
 
 
             'Dim recDataSave As Odbc.OdbcDataReader =
