@@ -858,6 +858,7 @@ CatchError:  '例外処理
     Private Sub frmSim_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
         btnLoszeroStart.Visible = ((Not IsNothing(SimSet.LoszeroStart)) AndAlso SimSet.LoszeroStart.Length > 0)
+        JackAllSelectk() 'ジャッキ全選択
 
 
     End Sub
@@ -925,7 +926,6 @@ CatchError:  '例外処理
 
         Next
 
-        JackAllSelectk() 'ジャッキ全選択
 
 
         Dim intPlcWrBaseAdress As Integer = Convert.ToInt32(SimSet.ExcavOrSegmentAdr.Substring(1), 16)

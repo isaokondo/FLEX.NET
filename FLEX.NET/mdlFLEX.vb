@@ -354,20 +354,27 @@ Module mdlFLEX
                                 End Sub
                             )
 
-                        '未推進ジャッキの確認
-                        If Not PlcIf.JackSel.All(Function(x) x = True) Then
-                            '未推進ジャッキ番号の取得
-                            Dim NoSelJk As New List(Of Short)
-                            For i As Short = 0 To InitPara.NumberJack - 1
-                                If Not PlcIf.JackSel(i) Then
-                                    NoSelJk.Add(i + 1)
+                        Dim task2 As Task = Task.Factory.StartNew(
+                            Sub()
+
+                                '未推進ジャッキの確認
+                                If Not PlcIf.JackSel.All(Function(x) x = True) Then
+                                    '未推進ジャッキ番号の取得
+                                    Dim NoSelJk As New List(Of Short)
+                                    For i As Short = 0 To InitPara.NumberJack - 1
+                                        If Not PlcIf.JackSel(i) Then
+                                            NoSelJk.Add(i + 1)
+                                        End If
+                                    Next
+                                    PlaySound(My.Resources.KsegAsemAllJackOn)
+                                    WriteEventData($"ジャッキNo. {String.Join(", ", NoSelJk)} が未推進です。", Color.Magenta)
+                                    MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}ジャッキNo. {String.Join(", ", NoSelJk)} が未推進です。確認してください",
+                                                "未推進ジャッキの確認",
+                                                MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
+
                                 End If
-                            Next
-                            PlaySound(My.Resources.KsegAsemAllJackOn)
-                            MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}ジャッキNo. {String.Join(", ", NoSelJk)} が未推進です。確認してください",
-                                    "未推進ジャッキの確認",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
-                        End If
+                            End Sub
+                            )
 
 
                 End Select
