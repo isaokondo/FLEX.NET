@@ -130,6 +130,7 @@ Public Class clsDataBase
                 End If
                 If rString.Contains("MariaDB") Then
                     MySQLVersion = "MariaDB"
+
                 End If
                 If IsNothing(MySQLVersion) Then
                     MsgBox($"データベースが異常です　{rString}",,)
@@ -180,6 +181,11 @@ Public Class clsDataBase
             If ex.Message.Contains("Unknown MySQL server host") Then
                 ErrMsg = HostName & ":ホスト名が見つかりません！  {ConnectionString}"
             End If
+            'イベントログに書き込み
+            My.Application.Log.WriteException(ex,
+            TraceEventType.Error,
+            "Exception in conMYSQLDB " &
+            "with argument " & ex.Message & ".")
 
             MsgBox($"Connect Error:{ex.Message & vbCrLf & ErrMsg} FLEX.NET",
                    MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -235,8 +241,17 @@ Public Class clsDataBase
                 con.Dispose()
 
             Catch ex As Exception
-                MsgBox($"データベースSQLコマンドエラー{vbCrLf}
+                'イベントログに書き込み
+                My.Application.Log.WriteException(ex,
+            TraceEventType.Error,
+            "Exception in ExecuteSqlCmd " &
+            "with argument " & SQLCommand & ".")
+
+                MsgBox($"データベースSQLコマンドエラー ExecuteSqlCmd {vbCrLf}
                     {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}", vbCritical)
+
+
+
 
             End Try
 
@@ -287,13 +302,13 @@ Public Class clsDataBase
                 Builder.DefaultCommandTimeout = 1000
                 Dim ConStr = Builder.ToString()
                 Dim con As New MySqlConnection
-                con.ConnectionString = ConStr
-
-                con.Open()
-
-                Dim adpter As New MySqlDataAdapter(SQLCommand, con)
 
                 Try
+                    con.ConnectionString = ConStr
+
+                    con.Open()
+
+                    Dim adpter As New MySqlDataAdapter(SQLCommand, con)
 
                     adpter.Fill(ds)
                     adpter.Dispose()
@@ -303,6 +318,8 @@ Public Class clsDataBase
                     con.Dispose()
 
                 Catch ex As Exception
+
+
                     MsgBox($"データベースSQLコマンドエラー{vbCrLf}
                     {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}　FLEXを終了します  ", vbCritical)
                     Application.Exit()
@@ -839,6 +856,9 @@ Public Class clsInitParameter
 
 
     Public Sub New()
+        'plccomdata の column  `Analog` は、サイズが1000だとオーバーすることがあるので1500にする
+        ExecuteSqlCmd("ALTER TABLE `plccomdata`	CHANGE COLUMN `Analog` `Analog` VARCHAR(1500) NOT NULL AFTER `SEC`;")
+
 
         Dim paraDB As DataTable =
             GetDtfmSQL("SELECT * FROM FLEX初期パラメータ")
@@ -1204,8 +1224,6 @@ Public Class clsDBBackUp
     ''' flexイベントデータ、plccomdata、updatetablをバックアップ
     ''' </summary>
     Public Async Sub DailyBackup()
-
-
 
         Dim taskBak As Task = Task.Run(
             Sub()
