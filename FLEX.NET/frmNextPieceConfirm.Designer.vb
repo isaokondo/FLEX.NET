@@ -29,11 +29,13 @@ Partial Class frmNextPieceConfirm
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(215, 125)
+        Me.btnOK.Font = New System.Drawing.Font("MS UI Gothic", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnOK.Location = New System.Drawing.Point(448, 269)
+        Me.btnOK.Size = New System.Drawing.Size(149, 45)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(340, 60)
+        Me.btnCancel.Location = New System.Drawing.Point(639, 38)
         Me.btnCancel.Text = "閉じる"
         Me.btnCancel.Visible = False
         '
@@ -41,23 +43,24 @@ Partial Class frmNextPieceConfirm
         '
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 48.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(28, 79)
+        Me.Label1.Location = New System.Drawing.Point(69, 158)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(308, 29)
+        Me.Label1.Size = New System.Drawing.Size(676, 64)
         Me.Label1.TabIndex = 9
         Me.Label1.Text = "同時施工継続しますか？"
         '
         'btnClose
         '
         Me.btnClose.BackColor = System.Drawing.Color.Silver
+        Me.btnClose.Font = New System.Drawing.Font("MS UI Gothic", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.btnClose.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnClose.Location = New System.Drawing.Point(340, 125)
+        Me.btnClose.Location = New System.Drawing.Point(626, 269)
         Me.btnClose.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClose.Name = "btnClose"
-        Me.btnClose.Size = New System.Drawing.Size(102, 35)
+        Me.btnClose.Size = New System.Drawing.Size(149, 45)
         Me.btnClose.TabIndex = 10
         Me.btnClose.Text = "閉じる"
         Me.btnClose.UseVisualStyleBackColor = False
@@ -66,12 +69,12 @@ Partial Class frmNextPieceConfirm
         '
         Me.lblNextPieceNo.AutoSize = True
         Me.lblNextPieceNo.BackColor = System.Drawing.Color.Transparent
-        Me.lblNextPieceNo.Font = New System.Drawing.Font("MS UI Gothic", 26.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblNextPieceNo.Font = New System.Drawing.Font("MS UI Gothic", 48.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblNextPieceNo.ForeColor = System.Drawing.Color.Black
-        Me.lblNextPieceNo.Location = New System.Drawing.Point(28, 29)
+        Me.lblNextPieceNo.Location = New System.Drawing.Point(68, 50)
         Me.lblNextPieceNo.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblNextPieceNo.Name = "lblNextPieceNo"
-        Me.lblNextPieceNo.Size = New System.Drawing.Size(167, 35)
+        Me.lblNextPieceNo.Size = New System.Drawing.Size(304, 64)
         Me.lblNextPieceNo.TabIndex = 11
         Me.lblNextPieceNo.Text = "＿＿ピース"
         '
@@ -80,7 +83,7 @@ Partial Class frmNextPieceConfirm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Thistle
-        Me.ClientSize = New System.Drawing.Size(473, 184)
+        Me.ClientSize = New System.Drawing.Size(796, 345)
         Me.Controls.Add(Me.lblNextPieceNo)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
