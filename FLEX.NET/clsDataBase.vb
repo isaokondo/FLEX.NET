@@ -580,6 +580,9 @@ Public Class clsInitParameter
     Private _DistanceInputMethod As Boolean = False 'False:発進からの入力　True:起点からの入力
 
 
+
+
+
     Private WithEvents Htb As New clsHashtableRead
 
 
@@ -849,8 +852,12 @@ Public Class clsInitParameter
 
         End Get
     End Property
-
-
+    ''' <summary>
+    ''' 同時施工時の不動作推進ジャッキ機能あり
+    ''' デジタルタグに不動作ジャッキONがあるかどうかで判断
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property NoOpJkExist As Boolean = False
 
 
 

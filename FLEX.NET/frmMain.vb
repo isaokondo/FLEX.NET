@@ -305,6 +305,9 @@
         End If
 
 
+        btnNoOpJk.Text = If(PlcIf.NoOpJackOn, "不動作ｼﾞｬｯｷON", "全ｼﾞｬｯｷ推進")
+        btnNoOpJk.Enabled = PlcIf.LosZeroEnable
+
 
         If ucnPullBackFinish.Blink Then
             ucnPullBackFinish.FieldName = "引戻し中"
@@ -1315,6 +1318,9 @@
         btnPieceConfirm.Visible = InitPara.LosZeroEquip
         btnLossZerooCancel.Visible = InitPara.LosZeroEquip
 
+        '不動作推進のボタン
+        btnNoOpJk.Visible = InitPara.NoOpJkExist
+
 
         DspUpRealStroke.Visible = InitPara.LosZeroEquip
         DspRightRealStroke.Visible = InitPara.LosZeroEquip
@@ -1456,5 +1462,19 @@
     Private Sub NetStrokeChange_Click(sender As Object, e As EventArgs) Handles NetStrokeChange.Click, DspTargetNetStroke.DoubleClick, DspRingTargetDir.DoubleClick
         frmNetStrokeChange.Show()
     End Sub
+    ''' <summary>
+    ''' 不動作ジャッキ／全ジャッキ推進の切り替え
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnNoOpJk_Click(sender As Object, e As EventArgs) Handles btnNoOpJk.Click
+        If InitPara.ServerMode Then
+            Dim msg As String = If(PlcIf.NoOpJackOn, "全ジャッキ", "不動作ジャッキ")
+            Dim ret As DialogResult = MessageBox.Show($"{msg}に切り替えますか？", "全ジャッキ推進、不動作ジャッキ切り替え", MessageBoxButtons.YesNo)
+            If ret = DialogResult.Yes Then
+                PlcIf.NoOpJackOn = Not PlcIf.NoOpJackOn
+            End If
 
+        End If
+    End Sub
 End Class

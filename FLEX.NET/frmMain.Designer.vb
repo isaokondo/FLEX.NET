@@ -190,6 +190,7 @@ Partial Class frmMain
         Me.DspWideUse12 = New FLEX.NET.ucnDspData()
         Me.InterruptTime = New FLEX.NET.ucnDspData()
         Me.DspCopyStroke2 = New FLEX.NET.ucnDspDataMin2()
+        Me.btnNoOpJk = New System.Windows.Forms.Button()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -1413,14 +1414,14 @@ Partial Class frmMain
         Me.UcnGpPvBarGraph.Size = New System.Drawing.Size(78, 555)
         Me.UcnGpPvBarGraph.TabIndex = 96
         '
-        'DspCopyStroke
+        'DspCopyStroke1
         '
         Me.DspCopyStroke1.BackColor = System.Drawing.Color.Transparent
         Me.DspCopyStroke1.DecimalPlaces = CType(0, Short)
         Me.DspCopyStroke1.FieldName = "余掘1"
         Me.DspCopyStroke1.Location = New System.Drawing.Point(867, 597)
         Me.DspCopyStroke1.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspCopyStroke1.Name = "DspCopyStroke"
+        Me.DspCopyStroke1.Name = "DspCopyStroke1"
         Me.DspCopyStroke1.Size = New System.Drawing.Size(185, 30)
         Me.DspCopyStroke1.TabIndex = 149
         Me.DspCopyStroke1.Unit = "mm"
@@ -2671,12 +2672,25 @@ Partial Class frmMain
         Me.DspCopyStroke2.Unit = "mm"
         Me.DspCopyStroke2.Value = 0R
         '
+        'btnNoOpJk
+        '
+        Me.btnNoOpJk.BackColor = System.Drawing.Color.DarkGray
+        Me.btnNoOpJk.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnNoOpJk.Location = New System.Drawing.Point(1746, 381)
+        Me.btnNoOpJk.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnNoOpJk.Name = "btnNoOpJk"
+        Me.btnNoOpJk.Size = New System.Drawing.Size(146, 36)
+        Me.btnNoOpJk.TabIndex = 164
+        Me.btnNoOpJk.Text = "不動作ｼﾞｬｯｷOFF"
+        Me.btnNoOpJk.UseVisualStyleBackColor = False
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.btnNoOpJk)
         Me.Controls.Add(Me.DspCopyStroke2)
         Me.Controls.Add(Me.DspBoltPitch)
         Me.Controls.Add(Me.lblMRRolling)
@@ -2956,6 +2970,7 @@ Partial Class frmMain
     Friend WithEvents lblMRRolling As Label
     Friend WithEvents MeasuerJPullNum As ucnDspData
     Friend WithEvents DspCopyStroke2 As ucnDspDataMin2
+    Friend WithEvents btnNoOpJk As Button
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

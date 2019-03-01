@@ -64,6 +64,11 @@ Public Class clsPlcIf
     '計測ジャッキ番号、値　Dictionary
     Private _mesureJackStroke As Dictionary(Of Short, Integer) '計測ジャッキストローク
     Private _mesureJackSpeed As Dictionary(Of Short, Integer) '計測ジャッキスピード
+
+
+    Private _NoOpJackOn As Boolean '不動作推進ON
+
+
     ''' <summary>
     ''' '異常ストローク番号
     ''' </summary>
@@ -592,6 +597,7 @@ Public Class clsPlcIf
     End Property
 
 
+
     Public ReadOnly Property CopyAngle2 As Integer
         Get
             Return _CopyAngle2
@@ -692,6 +698,19 @@ Public Class clsPlcIf
             Return _segmentMode
         End Get
     End Property
+
+    Public Property NoOpJackOn As Boolean
+        Get
+            Return _NoOpJackOn
+        End Get
+        Set(value As Boolean)
+            _NoOpJackOn = value
+            DigtalPlcWrite("不動作推進ON", value)
+
+        End Set
+    End Property
+
+
     ''' <summary>
     ''' 掘進中の最大ストローク（保持用）
     ''' </summary>
@@ -1039,6 +1058,9 @@ Public Class clsPlcIf
                 _LosZeroSts_M = AnalogPlcRead("同時施工ステータス_Machine")
                 _AssemblyPieceNo = AnalogPlcRead("組立ピース")
                 _LosZeroMode = DigtalPlcRead("同時施工モード")
+
+                InitPara.NoOpJkExist = DigtalTag.TagExist("不動作推進ON")
+
             End If
 
             _excaStatus = AnalogPlcRead("掘進ステータス")
@@ -1498,6 +1520,11 @@ Public Class clsPlcIf
                     If DigtalTag.TagExist("組立完了") Then
                         _assembleSegFinish = bit(DigtalTag.TagData("組立完了").OffsetAddress)
                     End If
+
+                    If DigtalTag.TagExist("不動作推進ON") Then
+                        _NoOpJackOn = bit(DigtalTag.TagData("不動作推進ON").OffsetAddress)
+                    End If
+
 
 
                     Dim bf_segmentoMode As Boolean = _segmentMode
