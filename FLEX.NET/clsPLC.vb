@@ -706,6 +706,9 @@ Public Class clsPlcIf
         Set(value As Boolean)
             _NoOpJackOn = value
             DigtalPlcWrite("不動作推進ON", value)
+            '不動作ジャッキ選択出力
+            NoOpJackSet()
+
 
         End Set
     End Property
@@ -1566,6 +1569,11 @@ Public Class clsPlcIf
                         Dim LosZeroEn As Boolean = _LosZeroEnable
                         _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
 
+                        If LosZeroEn <> _LosZeroEnable Then
+                            NoOpJackSet() '不動作ジャッキの出力
+                        End If
+
+
                         If Not LosZeroEn And _LosZeroEnable AndAlso (_rollingAntiClockWiseOver Or _rollingClockWiseOver) Then
                             RaiseEvent RollingOverAlarm()
                         End If
@@ -1697,6 +1705,9 @@ Public Class clsPlcIf
         End If
 
     End Sub
+
+
+
 
     Const ELEMENT_SIZE_32BITINTEGER = 2 '32bit整数の書込み/読出し時、シーケンサ格納データ用配列の使用要素数
 

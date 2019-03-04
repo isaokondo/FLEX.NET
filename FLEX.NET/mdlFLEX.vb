@@ -314,6 +314,7 @@ Module mdlFLEX
                         WriteEventData($"[{ .PieceName}] セグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
+
                         '計算ストローク用に組立ジャッキの設定
                         CalcStroke.asembleFinishedJack = .ClosetJack '押込みジャッキ
                         CalcStroke.asembleFinishedJack = .AddClosetJack '追加押込ジャッキ
@@ -537,10 +538,23 @@ Module mdlFLEX
         PlcIf.LosZeroDataWrite("引戻しジャッキ", Nothing)
         PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
         PlcIf.LosZeroDataWrite("押込みジャッキ②", Nothing)
+
         PlcIf.LosZeroEnable = False   '同時施工可OFF
 
     End Sub
-
+    ''' <summary>
+    ''' 不動作ジャッキの出力
+    ''' </summary>
+    Public Sub NoOpJackSet() Handles TableUpdateConfirm.SegmentAsmChange, PlcIf.LosZeroStsChange
+        '同時施工可　不動作ジャッキあり　１ピース目　組立完了でない条件で出力
+        If InitPara.NoOpJkExist Then
+            If PlcIf.AssemblyPieceNo = 1 And PlcIf.LosZeroEnable And PlcIf.NoOpJackOn And LosZeroSts <> 6 Then
+                PlcIf.LosZeroDataWrite("不動作ジャッキ", SegAsmblyData.ProcessData(1).PullBackJack)
+            Else
+                PlcIf.LosZeroDataWrite("不動作ジャッキ", Nothing)
+            End If
+        End If
+    End Sub
 
 
     ''' <summary>

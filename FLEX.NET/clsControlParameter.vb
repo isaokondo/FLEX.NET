@@ -1220,8 +1220,12 @@ Public Class clsControlParameter
                     _mesureOffsetJackStroke.Add(JkNo, 0)
                 Next
             Else
+                '制御パラメータの値を読み込み
                 For Each t As DataRow In OffsetJk.Rows
-                    _mesureOffsetJackStroke.Add(t.Item("項目名称").ToString.Replace("mesureOffsetJackStroke", ""), t.Item("値"))
+                    Dim jkNo As Short = t.Item("項目名称").ToString.Replace("mesureOffsetJackStroke", "")
+                    If Not _mesureOffsetJackStroke.ContainsKey(jkNo) Then   '重複チェク
+                        _mesureOffsetJackStroke.Add(jkNo, t.Item("値"))
+                    End If
                 Next
             End If
             Return _mesureOffsetJackStroke
