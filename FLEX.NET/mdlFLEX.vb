@@ -238,11 +238,12 @@ Module mdlFLEX
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
             CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
 
+            'バックアップ時にエラーで応答なしになるので別の方保を検討
             'データのバックアップ
-            If InitPara.ServerMode Then
-                Dim RingDataBackUp As New clsDBBackUp
-                RingDataBackUp.RingIntervalBakUp()
-            End If
+            'If InitPara.ServerMode Then
+            '    Dim RingDataBackUp As New clsDBBackUp
+            '    RingDataBackUp.RingIntervalBakUp()
+            'End If
 
 
 

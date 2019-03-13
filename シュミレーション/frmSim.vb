@@ -424,7 +424,9 @@ Public Class frmSim
             '押込み指令
             LosZeroStatusRead(SimSet.ClosetCommand, 7, MachineBit)
             '追加押込み指令
-            LosZeroStatusRead(SimSet.AddClosetCommand, 8, MachineBit)
+            If SimSet.AddClosetCommand <> "" Then
+                LosZeroStatusRead(SimSet.AddClosetCommand, 8, MachineBit)
+            End If
 
 
             '減圧開始PBのパルス化
