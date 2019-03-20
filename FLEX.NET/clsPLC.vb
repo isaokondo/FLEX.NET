@@ -706,10 +706,7 @@ Public Class clsPlcIf
         Set(value As Boolean)
             _NoOpJackOn = value
             DigtalPlcWrite("不動作推進ON", value)
-            '不動作ジャッキ選択出力
-            NoOpJackSet()
-
-
+            Call NoOpJackSet()
         End Set
     End Property
 
@@ -1524,8 +1521,12 @@ Public Class clsPlcIf
                         _assembleSegFinish = bit(DigtalTag.TagData("組立完了").OffsetAddress)
                     End If
 
+                    'Dim bf_NoOpJackOn As Boolean = _NoOpJackOn
                     If DigtalTag.TagExist("不動作推進ON") Then
                         _NoOpJackOn = bit(DigtalTag.TagData("不動作推進ON").OffsetAddress)
+                        'If bf_NoOpJackOn <> _NoOpJackOn Then
+                        'NoOpJackSet()
+                        'End If
                     End If
 
 

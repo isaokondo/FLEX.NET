@@ -768,7 +768,7 @@ Friend Class clsReducePress
     ''' 減圧キャンセル
     ''' </summa_pointy>
     Public Sub Cancel()
-        FlexAutoManualChange()
+        'FlexAutoManualChange()
         timer.Stop()
         '_LstRd.Clear()
     End Sub

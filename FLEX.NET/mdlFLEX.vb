@@ -546,13 +546,24 @@ Module mdlFLEX
     ''' <summary>
     ''' 不動作ジャッキの出力
     ''' </summary>
-    Public Sub NoOpJackSet() Handles TableUpdateConfirm.SegmentAsmChange, PlcIf.LosZeroStsChange
+    Public Sub NoOpJackSet() Handles TableUpdateConfirm.SegmentAsmChange, PlcIf.LosZeroModeChange
+
         '同時施工可　不動作ジャッキあり　１ピース目　組立完了でない条件で出力
         If InitPara.NoOpJkExist Then
             If PlcIf.AssemblyPieceNo = 1 And PlcIf.LosZeroEnable And PlcIf.NoOpJackOn And LosZeroSts <> 6 Then
                 PlcIf.LosZeroDataWrite("不動作ジャッキ", SegAsmblyData.ProcessData(1).PullBackJack)
+                WriteEventData($"No.{  SegAsmblyData.ProcessData(1).PullBackJack.ToCommaDelmit} 不動作ｼﾞｬｯｷ指令出力しました", Color.Blue)
+                'iピース目の押し込み出力
+                PlcIf.LosZeroDataWrite("押込みジャッキ", SegAsmblyData.ProcessData(1).ClosetJack)
+                PlcIf.LosZeroDataWrite("押込みジャッキ②", SegAsmblyData.ProcessData(1).AddClosetJack)
+
+
             Else
                 PlcIf.LosZeroDataWrite("不動作ジャッキ", Nothing)
+                PlcIf.LosZeroDataWrite("押込みジャッキ", Nothing)
+                PlcIf.LosZeroDataWrite("押込みジャッキ②", Nothing)
+
+
             End If
         End If
     End Sub

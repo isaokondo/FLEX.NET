@@ -306,7 +306,7 @@
 
 
         btnNoOpJk.Text = If(PlcIf.NoOpJackOn, "不動作ｼﾞｬｯｷON", "全ｼﾞｬｯｷ推進")
-        btnNoOpJk.Enabled = PlcIf.LosZeroEnable
+        'btnNoOpJk.Enabled = PlcIf.LosZeroEnable
 
 
         If ucnPullBackFinish.Blink Then
