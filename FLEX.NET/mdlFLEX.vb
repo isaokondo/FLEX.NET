@@ -240,10 +240,10 @@ Module mdlFLEX
 
             'バックアップ時にエラーで応答なしになるので別の方保を検討
             'データのバックアップ
-            'If InitPara.ServerMode Then
-            '    Dim RingDataBackUp As New clsDBBackUp
-            '    RingDataBackUp.RingIntervalBakUp()
-            'End If
+            If InitPara.ServerMode Then
+                Dim RingDataBackUp As New clsDBBackUp
+                RingDataBackUp.RingIntervalBakUp()
+            End If
 
 
 

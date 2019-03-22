@@ -1119,6 +1119,11 @@ Public Class clsLosZeroPerform
     Private _AveLoszeroTime As Single '同時施工平均時間
     Private _SumLoszeroTime As Integer '同時施工累積時間
 
+    Private LastRingNo As Integer = 0 '最終演算リング
+
+    Private PieceLst As New List(Of Integer)
+    Private RingLoszeroTime As New List(Of Integer)
+
 
 
     Public ReadOnly Property AveAsmPiece As Single
@@ -1149,26 +1154,24 @@ Public Class clsLosZeroPerform
 
 
     ''' <summary>
-    ''' 組立ピース数の算出
+    '''全リング 組立ピース数の算出
     ''' </summary>
     Public Async Sub Caluc()
 
         If InitPara.LosZeroEquip Then
-            Dim PieceLst As New List(Of Integer)
-            Dim RingLoszeroTime As New List(Of Integer)
-
-            Dim anaTag As New DataTable
+            Dim LoszeroTT As New DataTable
 
             Dim task As Task = Task.Run(
         Sub()
 
-            anaTag =
-            GetDtfmSQL("select max(`組立ピース`),max(`同時掘進時間`) from `flex掘削データ`
-            where `同時施工ステータス_Machine`='5'  group by `リング番号`")
+            LoszeroTT =
+            GetDtfmSQL($"select max(`組立ピース`),max(`同時掘進時間`),`リング番号`  from `flex掘削データ`
+            where `同時施工ステータス_Machine`='5' AND `リング番号`>'{LastRingNo}'  group by `リング番号`")
 
-            For Each t As DataRow In anaTag.Rows
+            For Each t As DataRow In LoszeroTT.Rows
                 PieceLst.Add(t(0))
                 RingLoszeroTime.Add(t(1))
+                LastRingNo = t(2)
             Next
 
             If PieceLst.Count <> 0 Then
@@ -1194,6 +1197,8 @@ Public Class clsLosZeroPerform
         End If
 
     End Sub
+
+
 
 
 
