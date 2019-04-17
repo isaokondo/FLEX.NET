@@ -1268,7 +1268,7 @@ Public Class frmMain
 
 
 
-        ExcelLink.Range("AB2").Value = Now.ToLongTimeString
+        ExcelLink.Range("AA2").Value = Now
 
         'TS 鉛直角
         ExcelLink.Range("Z3").Value = Tb_vad.Text
@@ -1285,6 +1285,7 @@ Public Class frmMain
 
 
         ExcelLink.Range("Z6").Value = PlcIF.gyro '方位角転送
+
         ExcelLink.Range("Z7").Value = PlcIF.machinePitching '前胴ﾋﾟｯﾁﾝｸﾞ
         ExcelLink.Range("Z8").Value = PlcIF.mashineRearRolling '後胴ﾛｰﾘﾝｸﾞ
 
