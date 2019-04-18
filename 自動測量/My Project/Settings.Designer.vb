@@ -53,6 +53,66 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("500")>  _
+        Public Property HorDevChartHigh() As Single
+            Get
+                Return CType(Me("HorDevChartHigh"),Single)
+            End Get
+            Set
+                Me("HorDevChartHigh") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("-500")>  _
+        Public Property HorDevChartLow() As Single
+            Get
+                Return CType(Me("HorDevChartLow"),Single)
+            End Get
+            Set
+                Me("HorDevChartLow") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("500")>  _
+        Public Property VerDevChartHigh() As Single
+            Get
+                Return CType(Me("VerDevChartHigh"),Single)
+            End Get
+            Set
+                Me("VerDevChartHigh") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("-500")>  _
+        Public Property VerDevChartLow() As Single
+            Get
+                Return CType(Me("VerDevChartLow"),Single)
+            End Get
+            Set
+                Me("VerDevChartLow") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1200")>  _
+        Public Property ChartStrokeWidth() As Short
+            Get
+                Return CType(Me("ChartStrokeWidth"),Short)
+            End Get
+            Set
+                Me("ChartStrokeWidth") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

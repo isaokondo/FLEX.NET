@@ -23,6 +23,7 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.EraseButton = New System.Windows.Forms.Button()
         Me.Bt_Sendmes = New System.Windows.Forms.Button()
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
@@ -238,6 +239,8 @@ Partial Class frmMain
         Me.lb_AvDv = New System.Windows.Forms.Label()
         Me.ucnVerDevChart = New 自動測量.ucnChart()
         Me.ucnHorDevChart = New 自動測量.ucnChart()
+        Me.btnHorScaleChange = New System.Windows.Forms.Button()
+        Me.btnVerScaleChange = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'EraseButton
@@ -2443,6 +2446,7 @@ Partial Class frmMain
         Me.ucnVerDevChart.CenterColor = System.Drawing.Color.Black
         Me.ucnVerDevChart.ChartBakColor = System.Drawing.Color.White
         Me.ucnVerDevChart.ChartHighScale = 500.0!
+        Me.ucnVerDevChart.ChartLowScale = -1000.0!
         Me.ucnVerDevChart.ChartPenColor = System.Drawing.Color.Red
         Me.ucnVerDevChart.DecimalPlaces = CType(0, Short)
         Me.ucnVerDevChart.FieldName = "縦断偏差(mm)"
@@ -2459,6 +2463,7 @@ Partial Class frmMain
         Me.ucnHorDevChart.CenterColor = System.Drawing.Color.Black
         Me.ucnHorDevChart.ChartBakColor = System.Drawing.Color.White
         Me.ucnHorDevChart.ChartHighScale = 500.0!
+        Me.ucnHorDevChart.ChartLowScale = -1000.0!
         Me.ucnHorDevChart.ChartPenColor = System.Drawing.Color.Red
         Me.ucnHorDevChart.DecimalPlaces = CType(0, Short)
         Me.ucnHorDevChart.FieldName = "平面偏差(mm)"
@@ -2469,11 +2474,31 @@ Partial Class frmMain
         Me.ucnHorDevChart.StrokeWidth = 1500
         Me.ucnHorDevChart.TabIndex = 215
         '
+        'btnHorScaleChange
+        '
+        Me.btnHorScaleChange.Location = New System.Drawing.Point(153, 743)
+        Me.btnHorScaleChange.Name = "btnHorScaleChange"
+        Me.btnHorScaleChange.Size = New System.Drawing.Size(95, 23)
+        Me.btnHorScaleChange.TabIndex = 217
+        Me.btnHorScaleChange.Text = "スケール変更"
+        Me.btnHorScaleChange.UseVisualStyleBackColor = True
+        '
+        'btnVerScaleChange
+        '
+        Me.btnVerScaleChange.Location = New System.Drawing.Point(664, 743)
+        Me.btnVerScaleChange.Name = "btnVerScaleChange"
+        Me.btnVerScaleChange.Size = New System.Drawing.Size(95, 23)
+        Me.btnVerScaleChange.TabIndex = 218
+        Me.btnVerScaleChange.Text = "スケール変更"
+        Me.btnVerScaleChange.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1236, 914)
+        Me.Controls.Add(Me.btnVerScaleChange)
+        Me.Controls.Add(Me.btnHorScaleChange)
         Me.Controls.Add(Me.ucnVerDevChart)
         Me.Controls.Add(Me.ucnHorDevChart)
         Me.Controls.Add(Me.lb_AvDv)
@@ -2685,6 +2710,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.Bt_Sendmes)
         Me.Controls.Add(Me.EraseButton)
         Me.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
         Me.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.Text = "TSコントロール Ver1"
@@ -2908,4 +2934,6 @@ Partial Class frmMain
     Friend WithEvents lb_AvDv As Label
     Friend WithEvents ucnHorDevChart As ucnChart
     Friend WithEvents ucnVerDevChart As ucnChart
+    Private WithEvents btnHorScaleChange As Button
+    Private WithEvents btnVerScaleChange As Button
 End Class

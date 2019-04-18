@@ -124,6 +124,7 @@
             _EngValue.Add(an.FieldName, 0)
         Next
 
+        PLC_Read()
 
         TimerRun()
 

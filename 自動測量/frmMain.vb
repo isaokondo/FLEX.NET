@@ -26,7 +26,24 @@ Public Class frmMain
 
     Private DataSave As New clsDataSave
 
+    Private Sub Settings_SettingChanging(ByVal sender As Object,
+        ByVal e As System.Configuration.SettingChangingEventArgs)
+        '変更しようとしている設定が"Text"のとき
+        ucnHorDevChart.ChartHighScale = My.Settings.HorDevChartHigh
+        ucnHorDevChart.ChartLowScale = My.Settings.VerDevChartLow
+        ucnHorDevChart.StrokeWidth = My.Settings.ChartStrokeWidth
+        ucnHorDevChart.ChartUp()
+        ucnVerDevChart.ChartHighScale = My.Settings.VerDevChartHigh
+        ucnVerDevChart.ChartLowScale = My.Settings.VerDevChartLow
+        ucnVerDevChart.StrokeWidth = My.Settings.ChartStrokeWidth
+        ucnVerDevChart.ChartUp()
+
+        My.Settings.Save()
+    End Sub
+
+
     Public Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        AddHandler My.Settings.SettingChanging, AddressOf Settings_SettingChanging
 
         With SerialPort1
 
@@ -61,12 +78,51 @@ Public Class frmMain
         PlcIF = New clsPLC
         ExcelLink = New clsExcelToDtGrd
 
+        ChartStart()
+
+
+
     End Sub
 
+    ''' <summary>
+    ''' 偏差グラフの立ち上げ時の表示設定
+    ''' </summary>
+    Private Sub ChartStart()
+
+        ucnHorDevChart.ChartHighScale = My.Settings.HorDevChartHigh
+        ucnHorDevChart.ChartLowScale = My.Settings.VerDevChartLow
+        ucnHorDevChart.StrokeWidth = My.Settings.ChartStrokeWidth
+
+        ucnVerDevChart.ChartHighScale = My.Settings.VerDevChartHigh
+        ucnVerDevChart.ChartLowScale = My.Settings.VerDevChartLow
+        ucnVerDevChart.StrokeWidth = My.Settings.ChartStrokeWidth
+
+
+        Dim dt As New clsGetDevChartData(PlcIF.RingNo)
+
+        For Each t As KeyValuePair(Of Integer, Single) In dt.HorData
+            ucnHorDevChart.ChartDataAdd(t.Key, t.Value)
+        Next
+
+        For Each t As KeyValuePair(Of Integer, Single) In dt.VerData
+            ucnVerDevChart.ChartDataAdd(t.Key, t.Value)
+        Next
+
+
+
+    End Sub
+
+
+    ''' <summary>
+    ''' 偏差グラフのデータクリア
+    ''' </summary>
     Private Sub ChartClear() Handles PlcIF.ToWaiting
         ucnHorDevChart.ChartClear()
         ucnVerDevChart.ChartClear()
     End Sub
+
+
+
 
 
 
@@ -114,7 +170,9 @@ Public Class frmMain
             Tm_Protocol.Enabled = False
         End If
 
-        ExcelLink.ExcelClose()
+        If Not IsNothing(ExcelLink) Then
+            ExcelLink.ExcelClose()
+        End If
 
 
     End Sub
@@ -1386,5 +1444,26 @@ Public Class frmMain
 
     End Sub
 
+    Private Sub ucnHorDevChart_Load(sender As Object, e As EventArgs) Handles ucnHorDevChart.Load
 
+    End Sub
+
+    Private Sub ucnHorDevChart_ContextMenuStripChanged(sender As Object, e As EventArgs) Handles ucnHorDevChart.ContextMenuStripChanged
+
+    End Sub
+
+    Private Sub ucnHorDevChart_Click(sender As Object, e As EventArgs) Handles ucnHorDevChart.Click, btnHorScaleChange.Click
+
+        Dim frmHorScaleChange As New frmGraphScaleChange(True)
+        frmHorScaleChange.Show()
+
+    End Sub
+
+    Private Sub ucnVerDevChart_Click(sender As Object, e As EventArgs) Handles ucnVerDevChart.Click, btnVerScaleChange.Click
+
+        Dim frmVerScaleChange As New frmGraphScaleChange(False)
+        frmVerScaleChange.Show()
+
+
+    End Sub
 End Class

@@ -1211,8 +1211,8 @@ Public Class clsDataSave
         Try
             'PLCからの読込
 
-            Data(ColumnList.IndexOf("測定時刻")) = ExcelLink.Range("Z2").Value
-            Data(ColumnList.IndexOf("待ち時間")) = ExcelLink.Range("AB2").Value
+            Data(ColumnList.IndexOf("測定時刻")) = ExcelLink.Range("Y2").Text
+            Data(ColumnList.IndexOf("待ち時間")) = ExcelLink.Range("AB2").Text
             Data(ColumnList.IndexOf("リング番号")) = ExcelLink.Range("AB9").Value
             Data(ColumnList.IndexOf("掘進ストローク")) = ExcelLink.Range("AB10").Value
             Data(ColumnList.IndexOf("掘進ﾓｰﾄﾞ")) = ExcelLink.Range("AB11").Value
@@ -1302,6 +1302,43 @@ Public Class clsDataSave
 
 
     End Function
+
+
+
+End Class
+
+
+Public Class clsGetDevChartData
+    Inherits clsDataBase
+    ''' <summary>
+    ''' 指定リングの偏差データを取得
+    ''' </summary>
+    Private _HorData As New Dictionary(Of Integer, Single)
+    Private _VerData As New Dictionary(Of Integer, Single)
+
+    Public Sub New(RingNo As Integer)
+        Dim dt As DataTable = GetDtfmSQL($"SELECT * FROM 自動測量データ WHERE リング番号='{RingNo}'")
+
+        For Each r As DataRow In dt.Rows
+            _HorData.Add(r.Item("掘進ストローク"), r.Item("平面平均偏差(mm)"))
+            _VerData.Add(r.Item("掘進ストローク"), r.Item("縦断平均偏差(mm)"))
+        Next
+    End Sub
+
+
+    Public ReadOnly Property HorData As Dictionary(Of Integer, Single)
+        Get
+            Return _HorData
+        End Get
+    End Property
+
+    Public ReadOnly Property VerData As Dictionary(Of Integer, Single)
+        Get
+            Return _VerData
+        End Get
+    End Property
+
+
 
 
 

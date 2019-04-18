@@ -7,7 +7,8 @@ Public Class ucnChart
     ''' <remarks></remarks>
     Friend _DecimalPlaces As Short = 0
     Protected _StrokeWidth As Integer = 1500
-    Friend _ChartHeight As Single = 1000
+    Friend _ChartHighScale As Single = 1000
+    Friend _ChartLowScale As Single = -1000
     ''' <summary>
     ''' チャート背景色
     ''' </summary>
@@ -62,14 +63,27 @@ Public Class ucnChart
     <Browsable(True), Description("グラフ高さ（工業値)")>
     Public Property ChartHighScale As Single
         Get
-            Return _ChartHeight
+            Return _ChartHighScale
         End Get
         Set(value As Single)
-            _ChartHeight = value
-            lblGraphHigh.Text = "+" & _ChartHeight.ToString
-            lblGraphLow.Text = "-" & _ChartHeight.ToString
+            _ChartHighScale = value
+            lblGraphHigh.Text = _ChartHighScale.ToString
+            lblGraphLow.Text = _ChartHighScale.ToString
         End Set
     End Property
+
+    Public Property ChartLowScale As Single
+        Get
+            Return _ChartLowScale
+        End Get
+        Set(value As Single)
+            _ChartLowScale = value
+            lblGraphHigh.Text = _ChartHighScale.ToString
+            lblGraphLow.Text = _ChartLowScale.ToString
+        End Set
+    End Property
+
+
     <Browsable(True), Description("チャート背景色")>
     Public Property ChartBakColor As Color
         Get
@@ -114,17 +128,22 @@ Public Class ucnChart
     ''' <summary>
     ''' チャート更新
     ''' </summary>
-    Protected Overridable Sub ChartUp()
+    Public Sub ChartUp()
         Dim canvas As New Bitmap(picChart.Width, picChart.Height)
         Dim g As Graphics = Graphics.FromImage(canvas)
 
         g.Clear(_ChartBakColor)
-        g.DrawLine(New Pen(_CenterColor, 1), New Point(0, picChart.Height / 2), New Point(picChart.Width, picChart.Height / 2))
+        Dim ptZero As Integer = Math.Abs(_ChartHighScale / (_ChartHighScale - _ChartLowScale)) * picChart.Height
+        '上下限のスケールが異符号ならゼロ位置を描画
+        If _ChartHighScale * _ChartLowScale < 0 Then
+            g.DrawLine(New Pen(_CenterColor, 1), New Point(0, ptZero), New Point(picChart.Width, ptZero))
+            lblCenter.Top = picChart.Top + ptZero - lblCenter.Font.Size/2
+        End If
         Pt0 = Nothing
         For Each p In ChartList
             Dim pt2 As Point
             pt2.X = p.Key / _StrokeWidth * picChart.Width
-            pt2.Y = -p.Value / (_ChartHeight * 2) * picChart.Height + picChart.Height / 2
+            pt2.Y = -p.Value / (_ChartHighScale - _ChartLowScale) * picChart.Height + ptZero
             If ChartList.Count > 1 And Pt0 <> New Point(0, 0) And pt2.X >= Pt0.X Then
                 g.DrawLine(New Pen(ChartPenColor, 2), Pt0, pt2)
             End If
