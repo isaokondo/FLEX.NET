@@ -153,12 +153,14 @@
     ''' </summary>
     Public Sub PLC_Read()
 
-        'Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
-        Dim szDeviceName As String = ""         'デバイス名称
-        Dim iNumberOfDeviceName As Integer = 0  'デバイス・サイズ
 
-        'モニタモード時は、DBよびPLC通信データを読込
-        Dim tb As DataTable = GetDtfmSQL("SELECT * FROM plccomdata ORDER BY TIME DESC LIMIT 0,1")
+        Try
+            'Dim iReturnCode As Long              'Actコントロールのメソッドの戻り値
+            Dim szDeviceName As String = ""         'デバイス名称
+            Dim iNumberOfDeviceName As Integer = 0  'デバイス・サイズ
+
+            'モニタモード時は、DBよびPLC通信データを読込
+            Dim tb As DataTable = GetDtfmSQL("SELECT * FROM plccomdata ORDER BY TIME DESC LIMIT 0,1")
             If tb.Rows.Count > 0 Then
                 'アナログデータ
                 AnalogComData =
@@ -166,52 +168,57 @@
                 'パラメータ
                 ParmterComData =
                 (From i In tb.Rows(0).Item("Parameter").ToString.Split(",") Select CShort(i)).ToArray
-            'データを取得した時刻　フォームに表示
-            _DataGetTime = DateTime.Parse(tb.Rows(0).Item("TIME")).AddSeconds(tb.Rows(0).Item("SEC"))
+                'データを取得した時刻　フォームに表示
+                _DataGetTime = DateTime.Parse(tb.Rows(0).Item("TIME")).AddSeconds(tb.Rows(0).Item("SEC"))
             End If
 
 
-        '==============================================================================================================
-        'モニタモード時は無条件に実施
-        '保存用データ保持
+            '==============================================================================================================
+            'モニタモード時は無条件に実施
+            '保存用データ保持
 
-        sharrDeviceValue = AnalogComData
-
-
-        For Each at In AnalogTag.Tag
-            _EngValue(at.FieldName) = GetAnalogData(at.FieldName, AnalogTag)
-        Next
-
-        _gyro = _EngValue("ジャイロ方位")
-        _gyroPitching = _EngValue("ジャイロピッチング")
-        _gyroRolling = _EngValue("ジャイロローリング")
-        _machinePitching = _EngValue("マシンピッチング")
-        _mashineRolling = _EngValue("マシンローリング")
-        _mashineRearRolling = _EngValue("後胴ローリング")
-
-        _realStroke = _EngValue("掘進ストローク")
-
-        Dim excaStsPre As Integer = _excaStatus
-        _excaStatus = _EngValue("掘進ステータス")
-        '待機中に変わったか
-        If excaStsPre <> cTaiki And _excaStatus = cTaiki Then
-            RaiseEvent ToWaiting()
-        End If
+            sharrDeviceValue = AnalogComData
 
 
-        _RightUpNkStroke = _EngValue("右上中折ストローク")
-        _RightDownNkStroke = _EngValue("右下中折ストローク")
-        _LeftDownNkStroke = _EngValue("左下中折ストローク")
-        _LeftUpNkStroke = _EngValue("左上中折ストローク")
+            For Each at In AnalogTag.Tag
+                _EngValue(at.FieldName) = GetAnalogData(at.FieldName, AnalogTag)
+            Next
+
+            _gyro = _EngValue("ジャイロ方位")
+            _gyroPitching = _EngValue("ジャイロピッチング")
+            _gyroRolling = _EngValue("ジャイロローリング")
+            _machinePitching = _EngValue("マシンピッチング")
+            _mashineRolling = _EngValue("マシンローリング")
+            _mashineRearRolling = _EngValue("後胴ローリング")
+
+            _realStroke = _EngValue("掘進ストローク")
+
+            Dim excaStsPre As Integer = _excaStatus
+            _excaStatus = _EngValue("掘進ステータス")
+            '待機中に変わったか
+            If excaStsPre <> cTaiki And _excaStatus = cTaiki Then
+                RaiseEvent ToWaiting()
+            End If
 
 
+            _RightUpNkStroke = _EngValue("右上中折ストローク")
+            _RightDownNkStroke = _EngValue("右下中折ストローク")
+            _LeftDownNkStroke = _EngValue("左下中折ストローク")
+            _LeftUpNkStroke = _EngValue("左上中折ストローク")
 
 
 
-        sharrDeviceValue = ParmterComData
 
-        _RingNo = GetAnalogData("RingNo", ParameterTag)
 
+            sharrDeviceValue = ParmterComData
+
+            _RingNo = GetAnalogData("RingNo", ParameterTag)
+
+
+        Catch ex As Exception
+            MsgBox($"PLC_Readエラー{vbCrLf}{ex.Message}{vbCrLf}{Environment.StackTrace.ToString}")
+
+        End Try
 
 
     End Sub

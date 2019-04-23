@@ -237,10 +237,12 @@ Partial Class frmMain
         Me.Label10 = New System.Windows.Forms.Label()
         Me.lb_AvDh = New System.Windows.Forms.Label()
         Me.lb_AvDv = New System.Windows.Forms.Label()
-        Me.ucnVerDevChart = New 自動測量.ucnChart()
-        Me.ucnHorDevChart = New 自動測量.ucnChart()
         Me.btnHorScaleChange = New System.Windows.Forms.Button()
         Me.btnVerScaleChange = New System.Windows.Forms.Button()
+        Me.btnDevImgScaleChange = New System.Windows.Forms.Button()
+        Me.UcnDevImgDsp = New 自動測量.ucnDevImgDsp()
+        Me.ucnVerDevChart = New 自動測量.ucnChart()
+        Me.ucnHorDevChart = New 自動測量.ucnChart()
         Me.SuspendLayout()
         '
         'EraseButton
@@ -2094,7 +2096,7 @@ Partial Class frmMain
         Me.lb_ResltR5C20.Name = "lb_ResltR5C20"
         Me.lb_ResltR5C20.Size = New System.Drawing.Size(52, 19)
         Me.lb_ResltR5C20.TabIndex = 183
-        Me.lb_ResltR5C20.Text = "999"
+        Me.lb_ResltR5C20.Text = "-30"
         Me.lb_ResltR5C20.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lb_ResltR4C20
@@ -2116,7 +2118,7 @@ Partial Class frmMain
         Me.lb_ResltR3C20.Name = "lb_ResltR3C20"
         Me.lb_ResltR3C20.Size = New System.Drawing.Size(52, 19)
         Me.lb_ResltR3C20.TabIndex = 181
-        Me.lb_ResltR3C20.Text = "999"
+        Me.lb_ResltR3C20.Text = "20"
         Me.lb_ResltR3C20.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lb_ResltR0C20
@@ -2159,7 +2161,7 @@ Partial Class frmMain
         Me.lb_ResltR5C35.Name = "lb_ResltR5C35"
         Me.lb_ResltR5C35.Size = New System.Drawing.Size(52, 19)
         Me.lb_ResltR5C35.TabIndex = 195
-        Me.lb_ResltR5C35.Text = "999"
+        Me.lb_ResltR5C35.Text = "-10"
         Me.lb_ResltR5C35.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lb_ResltR4C35
@@ -2181,7 +2183,7 @@ Partial Class frmMain
         Me.lb_ResltR3C35.Name = "lb_ResltR3C35"
         Me.lb_ResltR3C35.Size = New System.Drawing.Size(52, 19)
         Me.lb_ResltR3C35.TabIndex = 193
-        Me.lb_ResltR3C35.Text = "999"
+        Me.lb_ResltR3C35.Text = "40"
         Me.lb_ResltR3C35.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lb_ResltR0C35
@@ -2440,6 +2442,43 @@ Partial Class frmMain
         Me.lb_AvDv.Text = "9999"
         Me.lb_AvDv.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
+        'btnHorScaleChange
+        '
+        Me.btnHorScaleChange.Location = New System.Drawing.Point(153, 719)
+        Me.btnHorScaleChange.Name = "btnHorScaleChange"
+        Me.btnHorScaleChange.Size = New System.Drawing.Size(95, 23)
+        Me.btnHorScaleChange.TabIndex = 217
+        Me.btnHorScaleChange.Text = "スケール変更"
+        Me.btnHorScaleChange.UseVisualStyleBackColor = True
+        '
+        'btnVerScaleChange
+        '
+        Me.btnVerScaleChange.Location = New System.Drawing.Point(523, 719)
+        Me.btnVerScaleChange.Name = "btnVerScaleChange"
+        Me.btnVerScaleChange.Size = New System.Drawing.Size(95, 23)
+        Me.btnVerScaleChange.TabIndex = 218
+        Me.btnVerScaleChange.Text = "スケール変更"
+        Me.btnVerScaleChange.UseVisualStyleBackColor = True
+        '
+        'btnDevImgScaleChange
+        '
+        Me.btnDevImgScaleChange.Location = New System.Drawing.Point(1038, 743)
+        Me.btnDevImgScaleChange.Name = "btnDevImgScaleChange"
+        Me.btnDevImgScaleChange.Size = New System.Drawing.Size(95, 23)
+        Me.btnDevImgScaleChange.TabIndex = 220
+        Me.btnDevImgScaleChange.Text = "スケール変更"
+        Me.btnDevImgScaleChange.UseVisualStyleBackColor = True
+        '
+        'UcnDevImgDsp
+        '
+        Me.UcnDevImgDsp.DevPointX = 0!
+        Me.UcnDevImgDsp.DevPointY = 0!
+        Me.UcnDevImgDsp.DevScale = 50
+        Me.UcnDevImgDsp.Location = New System.Drawing.Point(852, 719)
+        Me.UcnDevImgDsp.Name = "UcnDevImgDsp"
+        Me.UcnDevImgDsp.Size = New System.Drawing.Size(281, 200)
+        Me.UcnDevImgDsp.TabIndex = 219
+        '
         'ucnVerDevChart
         '
         Me.ucnVerDevChart.BackColor = System.Drawing.Color.Transparent
@@ -2450,7 +2489,7 @@ Partial Class frmMain
         Me.ucnVerDevChart.ChartPenColor = System.Drawing.Color.Red
         Me.ucnVerDevChart.DecimalPlaces = CType(0, Short)
         Me.ucnVerDevChart.FieldName = "縦断偏差(mm)"
-        Me.ucnVerDevChart.Location = New System.Drawing.Point(623, 761)
+        Me.ucnVerDevChart.Location = New System.Drawing.Point(482, 737)
         Me.ucnVerDevChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnVerDevChart.Name = "ucnVerDevChart"
         Me.ucnVerDevChart.Size = New System.Drawing.Size(435, 158)
@@ -2467,36 +2506,20 @@ Partial Class frmMain
         Me.ucnHorDevChart.ChartPenColor = System.Drawing.Color.Red
         Me.ucnHorDevChart.DecimalPlaces = CType(0, Short)
         Me.ucnHorDevChart.FieldName = "平面偏差(mm)"
-        Me.ucnHorDevChart.Location = New System.Drawing.Point(103, 761)
+        Me.ucnHorDevChart.Location = New System.Drawing.Point(103, 737)
         Me.ucnHorDevChart.Margin = New System.Windows.Forms.Padding(2)
         Me.ucnHorDevChart.Name = "ucnHorDevChart"
         Me.ucnHorDevChart.Size = New System.Drawing.Size(435, 158)
         Me.ucnHorDevChart.StrokeWidth = 1500
         Me.ucnHorDevChart.TabIndex = 215
         '
-        'btnHorScaleChange
-        '
-        Me.btnHorScaleChange.Location = New System.Drawing.Point(153, 743)
-        Me.btnHorScaleChange.Name = "btnHorScaleChange"
-        Me.btnHorScaleChange.Size = New System.Drawing.Size(95, 23)
-        Me.btnHorScaleChange.TabIndex = 217
-        Me.btnHorScaleChange.Text = "スケール変更"
-        Me.btnHorScaleChange.UseVisualStyleBackColor = True
-        '
-        'btnVerScaleChange
-        '
-        Me.btnVerScaleChange.Location = New System.Drawing.Point(664, 743)
-        Me.btnVerScaleChange.Name = "btnVerScaleChange"
-        Me.btnVerScaleChange.Size = New System.Drawing.Size(95, 23)
-        Me.btnVerScaleChange.TabIndex = 218
-        Me.btnVerScaleChange.Text = "スケール変更"
-        Me.btnVerScaleChange.UseVisualStyleBackColor = True
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1236, 914)
+        Me.Controls.Add(Me.btnDevImgScaleChange)
+        Me.Controls.Add(Me.UcnDevImgDsp)
         Me.Controls.Add(Me.btnVerScaleChange)
         Me.Controls.Add(Me.btnHorScaleChange)
         Me.Controls.Add(Me.ucnVerDevChart)
@@ -2936,4 +2959,6 @@ Partial Class frmMain
     Friend WithEvents ucnVerDevChart As ucnChart
     Private WithEvents btnHorScaleChange As Button
     Private WithEvents btnVerScaleChange As Button
+    Friend WithEvents UcnDevImgDsp As ucnDevImgDsp
+    Private WithEvents btnDevImgScaleChange As Button
 End Class

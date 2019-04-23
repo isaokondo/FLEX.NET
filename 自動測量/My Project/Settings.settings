@@ -17,5 +17,8 @@
     <Setting Name="ChartStrokeWidth" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">1200</Value>
     </Setting>
+    <Setting Name="DevImgScale" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

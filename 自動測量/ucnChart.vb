@@ -33,6 +33,18 @@ Public Class ucnChart
 
     End Sub
 
+    Public ReadOnly Property LastData As Single
+        Get
+            If IsNumeric(lblData.Text) Then
+                Return lblData.Text
+            Else
+                Return 0
+            End If
+        End Get
+    End Property
+
+
+
     <Browsable(True), Description("凡例文字列")>
     Public Property FieldName As String
         Get
@@ -68,7 +80,7 @@ Public Class ucnChart
         Set(value As Single)
             _ChartHighScale = value
             lblGraphHigh.Text = _ChartHighScale.ToString
-            lblGraphLow.Text = _ChartHighScale.ToString
+            lblGraphLow.Text = _ChartLowScale.ToString
         End Set
     End Property
 
@@ -143,7 +155,11 @@ Public Class ucnChart
         For Each p In ChartList
             Dim pt2 As Point
             pt2.X = p.Key / _StrokeWidth * picChart.Width
-            pt2.Y = -p.Value / (_ChartHighScale - _ChartLowScale) * picChart.Height + ptZero
+            If _ChartHighScale > _ChartLowScale Then
+                pt2.Y = -p.Value / (_ChartHighScale - _ChartLowScale) * picChart.Height + ptZero
+            Else
+                pt2.Y = p.Value / (-_ChartHighScale + _ChartLowScale) * picChart.Height + ptZero
+            End If
             If ChartList.Count > 1 And Pt0 <> New Point(0, 0) And pt2.X >= Pt0.X Then
                 g.DrawLine(New Pen(ChartPenColor, 2), Pt0, pt2)
             End If
@@ -160,7 +176,7 @@ Public Class ucnChart
     ''' チャート初期化
     ''' </summary>
     Public Sub ChartClear()
-        'ChartList.Clear()
+        ChartList.Clear()
         Pt0 = Nothing
         ChartUp()
     End Sub

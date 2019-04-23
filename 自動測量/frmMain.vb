@@ -26,24 +26,36 @@ Public Class frmMain
 
     Private DataSave As New clsDataSave
 
-    Private Sub Settings_SettingChanging(ByVal sender As Object,
-        ByVal e As System.Configuration.SettingChangingEventArgs)
+    Private Sub Settings_SettingSaving(ByVal sender As Object,
+        ByVal e As System.ComponentModel.PropertyChangedEventArgs)
         '変更しようとしている設定が"Text"のとき
-        ucnHorDevChart.ChartHighScale = My.Settings.HorDevChartHigh
-        ucnHorDevChart.ChartLowScale = My.Settings.VerDevChartLow
-        ucnHorDevChart.StrokeWidth = My.Settings.ChartStrokeWidth
-        ucnHorDevChart.ChartUp()
-        ucnVerDevChart.ChartHighScale = My.Settings.VerDevChartHigh
-        ucnVerDevChart.ChartLowScale = My.Settings.VerDevChartLow
-        ucnVerDevChart.StrokeWidth = My.Settings.ChartStrokeWidth
-        ucnVerDevChart.ChartUp()
+        If e.PropertyName.Contains("Hor") Then
+            ucnHorDevChart.ChartHighScale = My.Settings.HorDevChartHigh
+            ucnHorDevChart.ChartLowScale = My.Settings.HorDevChartLow
+            ucnHorDevChart.StrokeWidth = My.Settings.ChartStrokeWidth
+            ucnHorDevChart.ChartUp()
+        End If
+        If e.PropertyName.Contains("Ver") Then
+            ucnVerDevChart.ChartHighScale = My.Settings.VerDevChartHigh
+            ucnVerDevChart.ChartLowScale = My.Settings.VerDevChartLow
+            ucnVerDevChart.StrokeWidth = My.Settings.ChartStrokeWidth
+            ucnVerDevChart.ChartUp()
+        End If
+
+        If e.PropertyName.Contains("DevImg") Then
+            UcnDevImgDsp.DevScale = My.Settings.DevImgScale
+
+
+        End If
+
+
 
         My.Settings.Save()
     End Sub
 
 
     Public Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-        AddHandler My.Settings.SettingChanging, AddressOf Settings_SettingChanging
+        AddHandler My.Settings.PropertyChanged, AddressOf Settings_SettingSaving
 
         With SerialPort1
 
@@ -76,11 +88,15 @@ Public Class frmMain
         End With
 
         PlcIF = New clsPLC
+
         ExcelLink = New clsExcelToDtGrd
 
         ChartStart()
 
+        UcnDevImgDsp.DevScale = My.Settings.DevImgScale
 
+
+        UcnDevImgDsp.DspUp()
 
     End Sub
 
@@ -90,7 +106,7 @@ Public Class frmMain
     Private Sub ChartStart()
 
         ucnHorDevChart.ChartHighScale = My.Settings.HorDevChartHigh
-        ucnHorDevChart.ChartLowScale = My.Settings.VerDevChartLow
+        ucnHorDevChart.ChartLowScale = My.Settings.HorDevChartLow
         ucnHorDevChart.StrokeWidth = My.Settings.ChartStrokeWidth
 
         ucnVerDevChart.ChartHighScale = My.Settings.VerDevChartHigh
@@ -108,6 +124,8 @@ Public Class frmMain
             ucnVerDevChart.ChartDataAdd(t.Key, t.Value)
         Next
 
+        UcnDevImgDsp.DevPointX = ucnHorDevChart.LastData
+        UcnDevImgDsp.DevPointY = ucnVerDevChart.LastData
 
 
     End Sub
@@ -705,12 +723,18 @@ Public Class frmMain
                         showMeasure(QsSerial.Data) '測定データの表示
                         ExcellRun() 'ｴｸｾﾙ計算の更新
 
-                        If PlcIF.excaStatus = cKussin And Tb_sea.Text = "追尾" Then
+                        If Tb_sea.Text = "追尾" Then
 
                             DataSave.Save() 'データベース保存
                             '偏差グラフ更新
                             ucnHorDevChart.ChartDataAdd(PlcIF.realStroke, lb_AvDh.Text)
                             ucnVerDevChart.ChartDataAdd(PlcIF.realStroke, lb_AvDv.Text)
+
+                            UcnDevImgDsp.DevPointX = lb_AvDh.Text
+                            UcnDevImgDsp.DevPointY = lb_AvDv.Text
+
+
+
 
                         End If
 
@@ -1455,15 +1479,21 @@ Public Class frmMain
     Private Sub ucnHorDevChart_Click(sender As Object, e As EventArgs) Handles ucnHorDevChart.Click, btnHorScaleChange.Click
 
         Dim frmHorScaleChange As New frmGraphScaleChange(True)
-        frmHorScaleChange.Show()
+        frmHorScaleChange.ShowDialog(Me)
 
     End Sub
 
     Private Sub ucnVerDevChart_Click(sender As Object, e As EventArgs) Handles ucnVerDevChart.Click, btnVerScaleChange.Click
 
         Dim frmVerScaleChange As New frmGraphScaleChange(False)
-        frmVerScaleChange.Show()
+        frmVerScaleChange.ShowDialog(Me)
 
+
+    End Sub
+
+    Private Sub btnDevImgScaleChange_Click(sender As Object, e As EventArgs) Handles btnDevImgScaleChange.Click
+        Dim frmDevImgScaleChange As New frmDevImgScaleChange
+        frmDevImgScaleChange.ShowDialog(Me)
 
     End Sub
 End Class
