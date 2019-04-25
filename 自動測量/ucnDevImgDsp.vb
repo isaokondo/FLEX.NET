@@ -16,8 +16,10 @@
     Private _DevScale As Integer = 50
 
 
-    Public Property DevPointX As Single
-    Public Property DevPointY As Single
+    Public Property P1DevPointX As Single
+    Public Property P1DevPointY As Single
+    Public Property P3DevPointX As Single
+    Public Property P3DevPointY As Single
 
     Public Property DevScale As Integer
         Get
@@ -111,28 +113,58 @@
                    New Point(PntCtr.X, PntCtr.Y + Rd))
 
         '力点イメージの表示
+
         '力点の半径
-        Dim PointDia As Integer = 5
+        Dim PointDia As Integer = 7
+
+        'P1
         '力点の中心座標
-        Dim X As Integer = PntCtr.X + DevPointX / _DevScale * canvas.Width / 2
-        Dim Y As Integer = PntCtr.Y - DevPointY / _DevScale * canvas.Width / 2
+        Dim X As Integer = PntCtr.X + P1DevPointX / _DevScale * canvas.Width / 2
+        Dim Y As Integer = PntCtr.Y - P1DevPointY / _DevScale * canvas.Width / 2
         'イメージの左端の座標を取得
         Dim p As New Point(X, Y)
 
         '力点の色設定
-        Dim Pcl As Brush
-        Pcl = Brushes.Blue
-        FillACircle(Pcl, g, p, PointDia)
+        FillACircle(New SolidBrush(lblP1Col.BackColor), g, p, PointDia)
         DrawACircle(New Pen(Color.White, 1), g, p, PointDia)
 
         PointDia += 3
         'クロス線
-        g.DrawLine(New Pen(Color.Green, 3),
+        g.DrawLine(New Pen(Color.Green, 1),
                    New Point(p.X - PointDia, p.Y),
                    New Point(p.X + PointDia, p.Y))
-        g.DrawLine(New Pen(Color.Green, 3),
+        g.DrawLine(New Pen(Color.Green, 1),
                    New Point(p.X, p.Y - PointDia),
                    New Point(p.X, p.Y + PointDia))
+
+
+        PointDia = 7
+
+        '力点の中心座標
+        X = PntCtr.X + P3DevPointX / _DevScale * canvas.Width / 2
+        Y = PntCtr.Y - P3DevPointY / _DevScale * canvas.Width / 2
+        'イメージの左端の座標を取得
+        p = New Point(X, Y)
+
+        '力点の色設定
+        FillACircle(New SolidBrush(lblP3Col.BackColor), g, p, PointDia)
+        DrawACircle(New Pen(Color.White, 1), g, p, PointDia)
+
+        PointDia += 3
+        'クロス線
+        g.DrawLine(New Pen(Color.Green, 1),
+                   New Point(p.X - PointDia, p.Y),
+                   New Point(p.X + PointDia, p.Y))
+        g.DrawLine(New Pen(Color.Green, 1),
+                   New Point(p.X, p.Y - PointDia),
+                   New Point(p.X, p.Y + PointDia))
+
+
+
+
+
+
+
 
         g.Dispose()
 

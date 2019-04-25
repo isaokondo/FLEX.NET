@@ -124,9 +124,11 @@ Public Class frmMain
             ucnVerDevChart.ChartDataAdd(t.Key, t.Value)
         Next
 
-        UcnDevImgDsp.DevPointX = ucnHorDevChart.LastData
-        UcnDevImgDsp.DevPointY = ucnVerDevChart.LastData
-
+        UcnDevImgDsp.P1DevPointX = lb_ResltR3C20.Text
+        UcnDevImgDsp.P1DevPointY = lb_ResltR3C35.Text
+        UcnDevImgDsp.P3DevPointX = lb_ResltR5C20.Text
+        UcnDevImgDsp.P3DevPointY = lb_ResltR5C35.Text
+        UcnDevImgDsp.DspUp()
 
     End Sub
 
@@ -730,9 +732,11 @@ Public Class frmMain
                             ucnHorDevChart.ChartDataAdd(PlcIF.realStroke, lb_AvDh.Text)
                             ucnVerDevChart.ChartDataAdd(PlcIF.realStroke, lb_AvDv.Text)
 
-                            UcnDevImgDsp.DevPointX = lb_AvDh.Text
-                            UcnDevImgDsp.DevPointY = lb_AvDv.Text
-
+                            UcnDevImgDsp.P1DevPointX = lb_ResltR3C20.Text
+                            UcnDevImgDsp.P1DevPointY = lb_ResltR3C35.Text
+                            UcnDevImgDsp.P3DevPointX = lb_ResltR5C20.Text
+                            UcnDevImgDsp.P3DevPointY = lb_ResltR5C35.Text
+                            UcnDevImgDsp.DspUp()
 
 
 

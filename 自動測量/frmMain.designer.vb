@@ -2096,7 +2096,7 @@ Partial Class frmMain
         Me.lb_ResltR5C20.Name = "lb_ResltR5C20"
         Me.lb_ResltR5C20.Size = New System.Drawing.Size(52, 19)
         Me.lb_ResltR5C20.TabIndex = 183
-        Me.lb_ResltR5C20.Text = "-30"
+        Me.lb_ResltR5C20.Text = "16"
         Me.lb_ResltR5C20.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lb_ResltR4C20
@@ -2118,7 +2118,7 @@ Partial Class frmMain
         Me.lb_ResltR3C20.Name = "lb_ResltR3C20"
         Me.lb_ResltR3C20.Size = New System.Drawing.Size(52, 19)
         Me.lb_ResltR3C20.TabIndex = 181
-        Me.lb_ResltR3C20.Text = "20"
+        Me.lb_ResltR3C20.Text = "18"
         Me.lb_ResltR3C20.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lb_ResltR0C20
@@ -2183,7 +2183,7 @@ Partial Class frmMain
         Me.lb_ResltR3C35.Name = "lb_ResltR3C35"
         Me.lb_ResltR3C35.Size = New System.Drawing.Size(52, 19)
         Me.lb_ResltR3C35.TabIndex = 193
-        Me.lb_ResltR3C35.Text = "40"
+        Me.lb_ResltR3C35.Text = "-17"
         Me.lb_ResltR3C35.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lb_ResltR0C35
@@ -2471,12 +2471,14 @@ Partial Class frmMain
         '
         'UcnDevImgDsp
         '
-        Me.UcnDevImgDsp.DevPointX = 0!
-        Me.UcnDevImgDsp.DevPointY = 0!
         Me.UcnDevImgDsp.DevScale = 50
         Me.UcnDevImgDsp.Location = New System.Drawing.Point(852, 719)
         Me.UcnDevImgDsp.Name = "UcnDevImgDsp"
-        Me.UcnDevImgDsp.Size = New System.Drawing.Size(281, 200)
+        Me.UcnDevImgDsp.P1DevPointX = 0!
+        Me.UcnDevImgDsp.P1DevPointY = 0!
+        Me.UcnDevImgDsp.P3DevPointX = 0!
+        Me.UcnDevImgDsp.P3DevPointY = 0!
+        Me.UcnDevImgDsp.Size = New System.Drawing.Size(337, 200)
         Me.UcnDevImgDsp.TabIndex = 219
         '
         'ucnVerDevChart

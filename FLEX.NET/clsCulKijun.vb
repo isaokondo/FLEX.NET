@@ -361,7 +361,7 @@ Friend Class clsCulKijun
             HorZendoKijun.掘進累積距離 - AveStoke + NetStroke
         Dim RingTargetKodo As New clsLineMake '中折演算用
         RingTargetKodo.掘進累積距離 =
-            HorKodoKijun.掘進累積距離 - AveStoke / 1000 + NetStroke
+            HorKodoKijun.掘進累積距離 - AveStoke + NetStroke
 
         Dim RgTgNkKodo As New clsCulNakaore1
         With RgTgNkKodo

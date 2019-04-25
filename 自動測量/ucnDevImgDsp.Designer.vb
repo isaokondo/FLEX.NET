@@ -27,6 +27,10 @@ Partial Class ucnDevImgDsp
         Me.lblGraphHighX = New System.Windows.Forms.Label()
         Me.lblGraphLowY = New System.Windows.Forms.Label()
         Me.lblGraphLowX = New System.Windows.Forms.Label()
+        Me.lblP1 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblP1Col = New System.Windows.Forms.Label()
+        Me.lblP3Col = New System.Windows.Forms.Label()
         CType(Me.picPoint, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -78,17 +82,63 @@ Partial Class ucnDevImgDsp
         Me.lblGraphLowX.Text = "10000"
         Me.lblGraphLowX.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'lblP1
+        '
+        Me.lblP1.BackColor = System.Drawing.SystemColors.Control
+        Me.lblP1.Location = New System.Drawing.Point(232, 46)
+        Me.lblP1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblP1.Name = "lblP1"
+        Me.lblP1.Size = New System.Drawing.Size(24, 27)
+        Me.lblP1.TabIndex = 17
+        Me.lblP1.Text = "P1"
+        Me.lblP1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label1
+        '
+        Me.Label1.BackColor = System.Drawing.SystemColors.Control
+        Me.Label1.Location = New System.Drawing.Point(232, 68)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(24, 27)
+        Me.Label1.TabIndex = 18
+        Me.Label1.Text = "P3"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblP1Col
+        '
+        Me.lblP1Col.BackColor = System.Drawing.Color.Fuchsia
+        Me.lblP1Col.Location = New System.Drawing.Point(254, 54)
+        Me.lblP1Col.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblP1Col.Name = "lblP1Col"
+        Me.lblP1Col.Size = New System.Drawing.Size(10, 10)
+        Me.lblP1Col.TabIndex = 19
+        Me.lblP1Col.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblP3Col
+        '
+        Me.lblP3Col.BackColor = System.Drawing.Color.Blue
+        Me.lblP3Col.Location = New System.Drawing.Point(254, 76)
+        Me.lblP3Col.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblP3Col.Name = "lblP3Col"
+        Me.lblP3Col.Size = New System.Drawing.Size(10, 10)
+        Me.lblP3Col.TabIndex = 20
+        Me.lblP3Col.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'ucnDevImgDsp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.lblP3Col)
+        Me.Controls.Add(Me.lblP1Col)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.lblP1)
         Me.Controls.Add(Me.lblGraphLowX)
         Me.Controls.Add(Me.lblGraphLowY)
         Me.Controls.Add(Me.lblGraphHighX)
         Me.Controls.Add(Me.lblGraphHighY)
         Me.Controls.Add(Me.picPoint)
         Me.Name = "ucnDevImgDsp"
-        Me.Size = New System.Drawing.Size(256, 226)
+        Me.Size = New System.Drawing.Size(315, 226)
         CType(Me.picPoint, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -99,4 +149,8 @@ Partial Class ucnDevImgDsp
     Protected WithEvents lblGraphHighX As Label
     Protected WithEvents lblGraphLowY As Label
     Protected WithEvents lblGraphLowX As Label
+    Protected WithEvents lblP1 As Label
+    Protected WithEvents Label1 As Label
+    Protected WithEvents lblP1Col As Label
+    Protected WithEvents lblP3Col As Label
 End Class
