@@ -928,15 +928,17 @@ CatchError:  '例外処理
 
         Next
 
+        If InitParm.LosZeroEquip Then
 
+            Dim intPlcWrBaseAdress As Integer = Convert.ToInt32(SimSet.ExcavOrSegmentAdr.Substring(1), 16)
 
-        Dim intPlcWrBaseAdress As Integer = Convert.ToInt32(SimSet.ExcavOrSegmentAdr.Substring(1), 16)
+            For i As Integer = 0 To InitParm.NumberJack - 1
+                Dim PlcAdr As String = "B" & Convert.ToString(intPlcWrBaseAdress + i, 16)
+                'シフトキーが推されてた時は、ON
+                Dim iret = ComPlc.SetDevice(PlcAdr, 1)
+            Next
+        End If
 
-        For i As Integer = 0 To InitParm.NumberJack - 1
-            Dim PlcAdr As String = "B" & Convert.ToString(intPlcWrBaseAdress + i, 16)
-            'シフトキーが推されてた時は、ON
-            Dim iret = ComPlc.SetDevice(PlcAdr, 1)
-        Next
 
 
     End Sub
