@@ -299,7 +299,7 @@ Public Class clsPlcIf
         Set(value As Single)
             If value <> _PointX Then
                 _PointX = value
-                AnalogPlcWrite("ポイントＸ", _PointX)
+                AnalogPlcWrite("ポイントＸ", value)
             End If
         End Set
     End Property
@@ -310,7 +310,7 @@ Public Class clsPlcIf
         Set(value As Single)
             If value <> _PointY Then
                 _PointY = value
-                AnalogPlcWrite("ポイントＹ", _PointY)
+                AnalogPlcWrite("ポイントＹ", value)
             End If
         End Set
     End Property
@@ -1362,18 +1362,18 @@ Public Class clsPlcIf
                             _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
                             _jackSelect(i) = (_JackStatus(i) And 1)
                         Next
+                        Debug.Print($" _pointX={_PointX}  _pointY={_PointY}")
 
                         '作用点
-                        Dim Px As Single = _PointX
-                        Dim Py As Single = _PointY
+                        'Dim Px As Single = _PointX
+                        'Dim Py As Single = _PointY
                         _PointX = _EngValue("ポイントＸ")
                         _PointY = _EngValue("ポイントＹ")
                         _操作強 = _EngValue("操作強")
                         _操作角 = _EngValue("操作角")
 
-
-                        'FLEXモードで手動時に作用点が変化したとき
-                        If _flexControlOn And (Px <> _PointX Or Py <> _PointY) AndAlso Not CtlPara.AutoDirectionControl Then
+                        'FLEXモードで手動時
+                        If _flexControlOn AndAlso Not CtlPara.AutoDirectionControl Then
                             JackManual.PutPointXY(_PointX, _PointY)
                         End If
 
