@@ -676,7 +676,9 @@ Module mdlFLEX
 
         For i As Short = 0 To InitPara.NumberJack - 1
             '減圧中のジャッキ
-            Dim RdJ As Boolean = InitPara.LosZeroEquip AndAlso (PlcIf.LosZeroSts_FLEX = 1 Or PlcIf.LosZeroSts_FLEX = 2) AndAlso
+            'Dim RdJ As Boolean = InitPara.LosZeroEquip AndAlso (PlcIf.LosZeroSts_FLEX = 1 Or PlcIf.LosZeroSts_FLEX = 2) AndAlso
+            '(SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Contains(i + 1))
+            Dim RdJ As Boolean = InitPara.LosZeroEquip AndAlso PlcIf.LosZeroSts_FLEX = 1 AndAlso
                 (SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Contains(i + 1))
 
             DivCul.OnJack(i) =

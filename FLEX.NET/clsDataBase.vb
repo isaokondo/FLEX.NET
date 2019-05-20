@@ -868,7 +868,7 @@ Public Class clsInitParameter
 
 
         Dim paraDB As DataTable =
-            GetDtfmSQL("SELECT * FROM FLEX初期パラメータ")
+            GetDtfmSQL("SELECT * FROM flex初期パラメータ")
 
         Try
             Dim ht As New Dictionary(Of String, String)
