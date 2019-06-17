@@ -139,6 +139,7 @@
     <Compile Include="clsCalcuStroke.vb" />
     <Compile Include="clsControlParameter.vb" />
     <Compile Include="clsElapsedTime.vb" />
+    <Compile Include="clsGetDevi.vb" />
     <Compile Include="clsMachinSpec.vb" />
     <Compile Include="clsThrustDiv.vb" />
     <Compile Include="clsSegmentAssembly.vb" />

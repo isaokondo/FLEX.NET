@@ -1362,7 +1362,7 @@ Public Class clsPlcIf
                             _JackStatus(i) = _EngValue("ジャッキステータス" & (i + 1))
                             _jackSelect(i) = (_JackStatus(i) And 1)
                         Next
-                        Debug.Print($" _pointX={_PointX}  _pointY={_PointY}")
+                        'Debug.Print($" _pointX={_PointX}  _pointY={_PointY}")
 
                         '作用点
                         'Dim Px As Single = _PointX
@@ -1376,6 +1376,8 @@ Public Class clsPlcIf
                         If _flexControlOn AndAlso Not CtlPara.AutoDirectionControl Then
                             JackManual.PutPointXY(_PointX, _PointY)
                         End If
+
+
 
                         TimeOutErrCount = 0
 

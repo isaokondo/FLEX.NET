@@ -181,6 +181,16 @@ Public Class clsControlParameter
     ''' </summary>
     Private _ExceptMesureJackNo As List(Of Short)
 
+
+    ''' <summary>
+    ''' 水平目標ストローク差
+    ''' </summary>
+    Private _HorTargerStrokeDev As Integer
+    ''' <summary>
+    ''' 水平曲線管理角度 
+    ''' </summary>
+    Private _horCurveMngAngle As Single = 0.05
+
     ''' <summary>
     ''' 線形が変化した時
     ''' </summary>
@@ -1117,6 +1127,36 @@ Public Class clsControlParameter
     End Property
 
     ''' <summary>
+    ''' 水平目標ストローク差
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property HorTargerStrokeDev As Integer
+        Get
+            Return _HorTargerStrokeDev
+        End Get
+        Set(value As Integer)
+            _HorTargerStrokeDev = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 水平曲線管理角度 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property horCurveMngAngle As Single
+        Get
+            Return _horCurveMngAngle
+        End Get
+        Set(value As Single)
+            _horCurveMngAngle = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+
+    ''' <summary>
     ''' ストローク補正値
     ''' ジャッキストローク演算にエラーが有った場合の補正値
     ''' リング更新でリセット
@@ -1385,6 +1425,10 @@ Public Class clsControlParameter
         _AssemblyPieceNumber = chk.GetValue("AssemblyPieceNumber", "0")
         'ストローク補正値
         _OffsetStroke = chk.GetValue("OffsetStroke", "0")
+
+
+        _HorTargerStrokeDev = chk.GetValue("水平目標ストローク差", "0")
+        _horCurveMngAngle = chk.GetValue("水平曲線管理角度", "0.05")
 
         _optGpEn =
             (From k In Split(chk.GetValue("OptinalGroupSetNumber"), ",") Where IsNumeric(k) Select CShort(k)).ToList

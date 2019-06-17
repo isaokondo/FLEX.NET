@@ -17,6 +17,12 @@ Public Class frmCalcStrokeConfirm
             DgvJackStroke.Rows.Add(i.Key, 0, 0, 0, 0, 0, i.Value, "", Not CtlPara.ExceptMesureJackNo.Contains(i.Key))
         Next
 
+        DgvStrokeDev.Rows.Add("上")
+        DgvStrokeDev.Rows.Add("水平")
+        DgvStrokeDev.Rows.Add("下")
+
+
+
         OpposeJackExcep.Visible = InitPara.LosZeroEquip 'ロスゼロのときのみ表示
         OpposeJackExcep.rdbtnValue = CtlPara.LosZeroOpposeJackExcept
         DspCenterWidth.Visible = InitPara.LosZeroEquip    'セグメント幅
@@ -59,6 +65,19 @@ Public Class frmCalcStrokeConfirm
 
         DspAveLogocalStroke.Value = CalcStroke.CalcAveLogicalStroke
         DspAveSpeed.Value = CalcStroke.MesureAveSpeed
+
+
+        DspHorTargerStrokeDev.Value = CtlPara.HorTargerStrokeDev '目標ストローク差
+        DspHorTargerNowStrokeDev.Value = StrokeDev.現在目標ストローク差 '目標ストローク差
+
+
+        DgvStrokeDev.Rows(0).Cells(LeftStroke.Index).Value = StrokeDev.TopLeftStroke
+        DgvStrokeDev.Rows(0).Cells(RightStroke.Index).Value = StrokeDev.TopRighttStroke
+        DgvStrokeDev.Rows(1).Cells(LeftStroke.Index).Value = StrokeDev.HorizonLefttStroke
+        DgvStrokeDev.Rows(1).Cells(RightStroke.Index).Value = StrokeDev.HorizonRighttStroke
+        DgvStrokeDev.Rows(2).Cells(LeftStroke.Index).Value = StrokeDev.BottomLefttStroke
+        DgvStrokeDev.Rows(2).Cells(RightStroke.Index).Value = StrokeDev.BottomRighttStroke
+
 
 
     End Sub

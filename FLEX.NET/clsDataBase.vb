@@ -579,8 +579,25 @@ Public Class clsInitParameter
 
     Private _DistanceInputMethod As Boolean = False 'False:発進からの入力　True:起点からの入力
 
+    Private _CntDistLRSpreader As Single '左右スプレッダの中心間隔 ストローク差制御演算用(m)')
 
-
+    'ストローク差制御用（同時施工時）
+    ''' <summary>
+    ''' 上左ストロークNo
+    ''' </summary>
+    Private _StrokeNoTopLeft As Integer
+    ''' <summary>
+    ''' 上右ストロークNo
+    ''' </summary>
+    Private _StrokeNoTopRight As Integer
+    ''' <summary>
+    ''' 下左ストロークNo
+    ''' </summary>
+    Private _StrokeNoBottomLeft As Integer
+    ''' <summary>
+    ''' 下左ストロークNo
+    ''' </summary>
+    Private _StrokeNoBottomRight As Integer
 
 
     Private WithEvents Htb As New clsHashtableRead
@@ -775,6 +792,51 @@ Public Class clsInitParameter
     End Property
 
     ''' <summary>
+    ''' 左右スプレッダの中心間隔 ストローク差制御演算用(m)')
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property CntDistLRSpreader As Single
+        Get
+            Return _CntDistLRSpreader
+        End Get
+    End Property
+    ''' <summary>
+    ''' 上左ストロークNo
+    ''' </summary>
+    Public ReadOnly Property StrokeNoTopLeft As Integer
+        Get
+            Return _StrokeNoTopLeft
+        End Get
+    End Property
+    ''' <summary>
+    ''' 上右ストロークNo
+    ''' </summary>
+    Public ReadOnly Property StrokeNoTopRight As Integer
+        Get
+            Return _StrokeNoTopRight
+        End Get
+    End Property
+    ''' <summary>
+    ''' 下左ストロークNo
+    ''' </summary>
+    Public ReadOnly Property StrokeNoBottomLeft As Integer
+        Get
+            Return _StrokeNoBottomLeft
+        End Get
+    End Property
+    ''' <summary>
+    ''' 下左ストロークNo
+    ''' </summary>
+    Public ReadOnly Property StrokeNoBottomRight As Integer
+        Get
+            Return _StrokeNoBottomRight
+        End Get
+    End Property
+
+
+
+
+    ''' <summary>
     ''' クライアントモード
     ''' </summary>
     ''' <returns></returns>
@@ -963,6 +1025,26 @@ Public Class clsInitParameter
             Else
                 _backUpFTPHostUserPass = $"ftp.toyoindustry.co.jp/flexbak/{DataBaseName.Replace("flex", "")},flexbak,toyodaimon177"
             End If
+
+            '左右スプレッダの中心間隔 ストローク差制御演算用(m)
+            If ht.ContainsKey("CntDistLRSpreader") Then
+                _CntDistLRSpreader = Convert.ToSingle(ht("CntDistLRSpreader"))
+            End If
+
+            If ht.ContainsKey("ストローク上左No") Then
+                _StrokeNoTopLeft = ht("ストローク上左No")
+            End If
+            If ht.ContainsKey("ストローク上右No") Then
+                _StrokeNoTopRight = ht("ストローク上右No")
+            End If
+            If ht.ContainsKey("ストローク下左No") Then
+                _StrokeNoBottomLeft = ht("ストローク下左No")
+            End If
+            If ht.ContainsKey("ストローク下右No") Then
+                _StrokeNoBottomRight = ht("ストローク下右No")
+            End If
+
+
 
         Catch ex As Exception
 

@@ -169,7 +169,7 @@ Public Class ucnJackDsp
             'End If
         End Set
     End Property
-    <Browsable(True), Description("力点X")>
+    <Browsable(False), Description("力点X")>
     Public Property FlexPointX As Single
         Get
             Return _FlexPointX
@@ -182,7 +182,7 @@ Public Class ucnJackDsp
             DspPointData()
         End Set
     End Property
-    <Browsable(True), Description("力点Y")>
+    <Browsable(False), Description("力点Y")>
     Public Property FlexPointY As Single
         Get
             Return _FlexPointY

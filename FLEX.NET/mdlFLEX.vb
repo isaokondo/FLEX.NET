@@ -67,6 +67,9 @@ Module mdlFLEX
     ''' </summary>
     Public LosZeroPerform As New clsLosZeroPerform
 
+    Public StrokeDev As New clsStrokeDevi
+
+
     ''' <summary>
     ''' 減圧可能ストロークに達した
     ''' </summary>
@@ -181,6 +184,9 @@ Module mdlFLEX
             '掘進開始時のストローク取り込み
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
             FullOpenStart() '全押しスタート
+
+            StrokeDev.StartCul() 'ストローク差制御初期化
+
         End If
         If PreStatus = cChudan And NowStatus = cKussin Then
             WriteEventData("掘進再開しました", Color.Magenta)
@@ -290,7 +296,7 @@ Module mdlFLEX
 
                         WriteEventData($"No.{ .PullBackJack.ToCommaDelmit} のジャッキの引戻し開始しました。", Color.Blue)
                         LosZeroSts = 3
-                        Reduce.LstRdGp.Clear() '減圧グループ　クリア
+                        'Reduce.LstRdGp.Clear() '減圧グループ　クリア
 
                         PlaySound(My.Resources.PullStart)
                     Case 3
@@ -299,6 +305,7 @@ Module mdlFLEX
 
                         PlaySound(My.Resources.PullFInish)
                     Case 4
+                        Reduce.LstRdGp.Clear() '減圧グループ　クリア
 
                         WriteEventData($"No.{ .ClosetJack.ToCommaDelmit} のジャッキ押込み開始しました。", Color.Blue)
                         LosZeroSts = 5
@@ -525,6 +532,26 @@ Module mdlFLEX
             PlaySound(My.Resources.ReduceStrokeReach)
         End If
 
+        'ストローク制御の計算用ストローク
+        StrokeDev.HorizonLefttStroke = CalcStroke.LeftCalcStroke
+        StrokeDev.HorizonRighttStroke = CalcStroke.RightCalcStroke
+
+        If CalcStroke.MesureCalcJackStroke.ContainsKey(InitPara.StrokeNoBottomLeft) Then
+            StrokeDev.BottomLefttStroke = CalcStroke.MesureCalcJackStroke(InitPara.StrokeNoBottomLeft)
+        End If
+        If CalcStroke.MesureCalcJackStroke.ContainsKey(InitPara.StrokeNoTopLeft) Then
+            StrokeDev.TopLeftStroke = CalcStroke.MesureCalcJackStroke(InitPara.StrokeNoTopLeft)
+        End If
+        If CalcStroke.MesureCalcJackStroke.ContainsKey(InitPara.StrokeNoBottomRight) Then
+            StrokeDev.BottomRighttStroke = CalcStroke.MesureCalcJackStroke(InitPara.StrokeNoBottomRight)
+        End If
+        If CalcStroke.MesureCalcJackStroke.ContainsKey(InitPara.StrokeNoTopRight) Then
+            StrokeDev.TopRighttStroke = CalcStroke.MesureCalcJackStroke(InitPara.StrokeNoTopRight)
+        End If
+
+
+
+
     End Sub
 
 
@@ -582,6 +609,9 @@ Module mdlFLEX
             JackMvAuto.水平偏差角 = RefernceDirection.平面偏角
             JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
         End If
+
+
+        StrokeDev.sbGetDev()
 
         If InitPara.ServerMode Then
             PlcIf.LineDatalePlcWrite(RefernceDirection.平面偏角, RefernceDirection.縦断偏角, CtlPara.水平入力補正値, CtlPara.鉛直入力補正値)
@@ -678,7 +708,7 @@ Module mdlFLEX
             '減圧中のジャッキ
             'Dim RdJ As Boolean = InitPara.LosZeroEquip AndAlso (PlcIf.LosZeroSts_FLEX = 1 Or PlcIf.LosZeroSts_FLEX = 2) AndAlso
             '(SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Contains(i + 1))
-            Dim RdJ As Boolean = InitPara.LosZeroEquip AndAlso PlcIf.LosZeroSts_FLEX = 1 AndAlso
+            Dim RdJ As Boolean = InitPara.LosZeroEquip And PlcIf.LosZeroSts_M <> 4 AndAlso (PlcIf.LosZeroSts_FLEX = 1 Or PlcIf.LosZeroSts_FLEX = 2) AndAlso
                 (SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack.Contains(i + 1))
 
             DivCul.OnJack(i) =
