@@ -51,7 +51,7 @@ Public Class clsStrokeDevi
 
         ''掘進開始時の演算処理
         StartAveStroke = (PlcIf.RightStroke + PlcIf.LeftStroke) / 2 / 1000
-        StartDevStroke = PlcIf.RightStroke - PlcIf.LeftStroke
+        StartDevStroke = HorizonRighttStroke - HorizonLefttStroke
         StartAmsKanzan = Math.Asin(StartDevStroke / 1000 / InitPara.CntDistLRSpreader)
 
     End Sub
@@ -260,14 +260,14 @@ Public Class clsStrokeDevi
         Dim TotalHouiDev As Single ''全方位変化量
         Dim dblRh As Double ''曲率半径
         ''全推進量の取得
-        TotalStroke = CtlPara.TargetNetStroke / 1000 - StartAveStroke
+        TotalStroke = CtlPara.TargetNetStroke / 1000 '- StartAveStroke
         ''全ストローク差変化量の角度換算値（°）　反時計回り
         TotalHouiDev = Math.Asin(CtlPara.HorTargerStrokeDev / 1000 / InitPara.CntDistLRSpreader) - StartAmsKanzan
 
 
         If Abs(TotalHouiDev * 180 / PI) > CtlPara.horCurveMngAngle Then
             dblRh = TotalStroke / (2 * Math.Sin(TotalHouiDev / 2))
-            If NowAveStroke < CtlPara.TargetNetStroke / 1000 Then
+            If NowAveStroke < (CtlPara.TargetNetStroke + StartAveStroke) / 1000 Then
                 換算現在目標方位 = 2 * Math.Asin((NowAveStroke - StartAveStroke) / dblRh / 2) + StartAmsKanzan
             Else
                 換算現在目標方位 = 2 * Math.Asin((CtlPara.TargetNetStroke / 1000 - StartAveStroke) / dblRh / 2) + StartAmsKanzan

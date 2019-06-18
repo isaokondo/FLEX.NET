@@ -80,11 +80,11 @@ Partial Class frmCalcStrokeConfirm
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(317, 539)
+        Me.btnOK.Location = New System.Drawing.Point(317, 565)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(443, 539)
+        Me.btnCancel.Location = New System.Drawing.Point(443, 565)
         Me.btnCancel.Visible = False
         '
         'Timer
@@ -426,8 +426,8 @@ Partial Class frmCalcStrokeConfirm
         Me.DspHorTargerStrokeDev.BlinkColor = System.Drawing.Color.Red
         Me.DspHorTargerStrokeDev.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.DspHorTargerStrokeDev.DataWidth = 80
-        Me.DspHorTargerStrokeDev.DecimalPlaces = CType(0, Short)
-        Me.DspHorTargerStrokeDev.FieldName = "リング目標ストローク"
+        Me.DspHorTargerStrokeDev.DecimalPlaces = CType(2, Short)
+        Me.DspHorTargerStrokeDev.FieldName = "リング目標ストローク差"
         Me.DspHorTargerStrokeDev.FieldNameWidth = 160
         Me.DspHorTargerStrokeDev.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspHorTargerStrokeDev.Location = New System.Drawing.Point(406, 103)
@@ -448,7 +448,7 @@ Partial Class frmCalcStrokeConfirm
         Me.DspHorTargerNowStrokeDev.DataTextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.DspHorTargerNowStrokeDev.DataWidth = 80
         Me.DspHorTargerNowStrokeDev.DecimalPlaces = CType(2, Short)
-        Me.DspHorTargerNowStrokeDev.FieldName = "現在目標ストローク"
+        Me.DspHorTargerNowStrokeDev.FieldName = "現在目標ストローク差"
         Me.DspHorTargerNowStrokeDev.FieldNameWidth = 160
         Me.DspHorTargerNowStrokeDev.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.DspHorTargerNowStrokeDev.Location = New System.Drawing.Point(406, 137)
