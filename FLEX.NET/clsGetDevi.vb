@@ -6,28 +6,84 @@ Public Class clsStrokeDevi
     'ストローク差を偏角に換算
 
 
-    Private StartAveStroke As Single ''開始平均ストローク
 
-    Private StartDevStroke As Integer ''開始ストローク差
-    Private StartAmsKanzan As Double     ''開始ストローク差の角度換算値　反時計回り＋
-    Private LastAmsKanzan As Double     ''終了ストローク差の角度換算値　反時計回り＋
-
-    Private 換算現在目標方位 As Single 'ラジアン
-    Private 換算実測水平角 As Single 'ラジアン
-    Private 換算水平偏角 As Single  'ラジアン
-
-    Private StartPitching As Single     ''開始ピッチング
+    ''' <summary>
+    ''' 開始ストローク差の角度換算値　反時計回り＋
+    ''' </summary>
+    Private StartAmsKanzan As Double
+    ''' <summary>
+    ''' 終了ストローク差の角度換算値　反時計回り＋
+    ''' </summary>
+    Private LastAmsKanzan As Double     ''
+    ''' <summary>
+    ''' ラジアン 換算現在目標方位
+    ''' </summary>
+    Private ConVertRealTargetDirction As Single
+    ''' <summary>
+    ''' 換算実測水平角 
+    ''' ラジアン
+    ''' </summary>
+    Private ConvertSurveyHorDir As Single '
+    ''' <summary>
+    ''' 換算水平偏角 
+    ''' ラジアン
+    ''' </summary>
+    Private ConvertHorDeflection As Single
+    ''' <summary>
+    ''' 開始ピッチング
+    ''' </summary>
+    Private StartPitching As Single     ''
     Private 現在の目標ピッチング As Single
 
     Private StartHoui As Single     ''開始方位
     Private 現在の目標方位 As Single
 
-    Private NowAveStroke As Single ''現在の平均ストローク
 
     Private StartRightStroke As Integer
     Private StartLeftStroke As Integer
 
+    ''' <summary>
+    ''' 現在の目標ストローク差
+    ''' </summary>
+    Private _TargetStrokeRealDiff As Single
 
+    ''' <summary>
+    ''' 上ストローク取付角度
+    ''' 換算ストロークさ演算用
+    ''' </summary>
+    Private _topAttachDir As Single
+
+    ''' <summary>
+    ''' 水平ストローク取付角度
+    ''' 換算ストロークさ演算用
+    ''' </summary>
+    Private _horAttachDir As Single
+
+    ''' <summary>
+    ''' 下ストローク取付角度
+    ''' 換算ストロークさ演算用
+    ''' </summary>
+    Private _btmAttachDir As Single
+
+
+
+
+    Public Const SelectHor = 0 '水平
+    Public Const SelectTop = 1 '上
+    Public Const SelectBtm = 2 '下
+
+    Public Sub New()
+        '換算ストローク差演算用のジャッキ取付角度取得
+        If InitPara.StrokeNoTopRight <> 0 Then
+            _topAttachDir = (360 - InitPara.MesureJackAngle(InitPara.StrokeNoTopRight)).ToRad
+        End If
+        _horAttachDir = (360 - InitPara.MesureJackAngle(InitPara.StrokeNoHorRight)).ToRad
+        If InitPara.StrokeNoBtmRight <> 0 Then
+            _btmAttachDir = (360 - InitPara.MesureJackAngle(InitPara.StrokeNoBtmRight)).ToRad
+        End If
+
+
+    End Sub
 
 
 
@@ -49,26 +105,19 @@ Public Class clsStrokeDevi
 
     Public Sub StartCul()
 
-        ''掘進開始時の演算処理
-        StartAveStroke = (PlcIf.RightStroke + PlcIf.LeftStroke) / 2 / 1000
-        StartDevStroke = HorizonRighttStroke - HorizonLefttStroke
-        StartAmsKanzan = Math.Asin(StartDevStroke / 1000 / InitPara.CntDistLRSpreader)
 
     End Sub
 
 
-    Public ReadOnly Property 開始平均ストローク() As Integer
-        Get
-            開始平均ストローク = StartDevStroke
-        End Get
-    End Property
+    ''' <summary>
+    ''' どのストロークを制御に使用するか
+    ''' 0:水平　1:上　2:下
+    ''' </summary>
+    Public Property StrokeSelect As Short
 
 
-    Public ReadOnly Property 開始ストローク差() As Integer
-        Get
-            開始ストローク差 = StartDevStroke
-        End Get
-    End Property
+
+
 
     ''' <summary>
     ''' 上左ストローク
@@ -105,6 +154,69 @@ Public Class clsStrokeDevi
     ''' <returns></returns>
     Public Property HorizonLefttStroke As Integer
 
+    ''' <summary>
+    ''' 上ストローク換算ストローク差
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ConVertTopStrokeDiff As Single
+    ''' <summary>
+    ''' 水平ストローク換算ストローク差
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ConVertHorStrokeDiff As Single
+    ''' <summary>
+    ''' 下ストローク換算ストローク差
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ConVertBottomStrokeDiff As Single
+
+    ''' <summary>
+    ''' 制御ストローク差
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ControlStrokeDiff As Single
+
+    ''' <summary>
+    ''' 上開始ストローク換算開始ストローク差
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ConVertTopStartStrokeDiff As Single
+    ''' <summary>
+    ''' 水平開始ストローク換算開始ストローク差
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ConVertHorStartStrokeDiff As Single
+    ''' <summary>
+    ''' 下開始ストローク換算開始ストローク差
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ConVertBottomStartStrokeDiff As Single
+
+    ''' <summary>
+    ''' リング内発生ストローク量
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property RingUpStroke As Single
+        Get
+            Return CtlPara.HorTargerStrokeDev - ConVertHorStartStrokeDiff
+        End Get
+    End Property
+
+
+
+    '
+
+
+    ''' <summary>
+    ''' ストローク偏差
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property StrokeDiffDeflection As Single
+        Get
+            Return Sin(ConvertHorDeflection) * InitPara.CntDistLRSpreader * 1000
+        End Get
+    End Property
+
 
     '    Public Property Let 開始ピッチング(ByVal vData As Single)
     '    msngStartPitching = vData
@@ -124,9 +236,9 @@ Public Class clsStrokeDevi
     '    Public Property Get 換算現在目標方位() As Single
     '    換算現在目標方位 = msng換算現在目標方位 / cPI * 180
     'End Property
-    Public ReadOnly Property 現在目標ストローク差() As Single
+    Public ReadOnly Property TargetStrokeRealDiff() As Single
         Get
-            現在目標ストローク差 = Sin(換算現在目標方位) * InitPara.CntDistLRSpreader * 1000
+            TargetStrokeRealDiff = _TargetStrokeRealDiff
         End Get
     End Property
 
@@ -151,7 +263,7 @@ Public Class clsStrokeDevi
     ''' </summary>
     Public Sub sbGetDev()
 
-        NowAveStroke = (PlcIf.RightStroke + PlcIf.LeftStroke) / 2 / 1000
+        'NowAveStroke = (PlcIf.RightStroke + PlcIf.LeftStroke) / 2 / 1000
 
         'Call sbGetHorDevi()   ''水平偏角を求める
         'Call sbGetVerDevi()   ''鉛直偏角を求める
@@ -256,36 +368,63 @@ Public Class clsStrokeDevi
         '
         ' 機能説明  :
 
-        Dim TotalStroke As Single ''全推進量(m)
+        Dim TotalStroke As Single = CtlPara.TargetNetStroke / 1000 ''全推進量(m)
         Dim TotalHouiDev As Single ''全方位変化量
         Dim dblRh As Double ''曲率半径
-        ''全推進量の取得
-        TotalStroke = CtlPara.TargetNetStroke / 1000 '- StartAveStroke
+
+        ''掘進開始時の演算処理
+        '開始ストローク差の角度換算値　反時計回り＋
+        StartAmsKanzan = Math.Asin((CtlPara.StartJackStroke(InitPara.StrokeNoHorRight) - CtlPara.StartJackStroke(InitPara.StrokeNoHorLeft)) / 1000 / InitPara.CntDistLRSpreader)
+
+
         ''全ストローク差変化量の角度換算値（°）　反時計回り
         TotalHouiDev = Math.Asin(CtlPara.HorTargerStrokeDev / 1000 / InitPara.CntDistLRSpreader) - StartAmsKanzan
 
-
         If Abs(TotalHouiDev * 180 / PI) > CtlPara.horCurveMngAngle Then
             dblRh = TotalStroke / (2 * Math.Sin(TotalHouiDev / 2))
-            If NowAveStroke < (CtlPara.TargetNetStroke + StartAveStroke) / 1000 Then
-                換算現在目標方位 = 2 * Math.Asin((NowAveStroke - StartAveStroke) / dblRh / 2) + StartAmsKanzan
+            If CalcStroke.MesureCalcAveJackStroke < CtlPara.TargetNetStroke + CtlPara.StartAveStroke Then
+                ConVertRealTargetDirction = 2 * Math.Asin((CalcStroke.CalcAveLogicalStroke / 1000) / dblRh / 2) + StartAmsKanzan
             Else
-                換算現在目標方位 = 2 * Math.Asin((CtlPara.TargetNetStroke / 1000 - StartAveStroke) / dblRh / 2) + StartAmsKanzan
+                ConVertRealTargetDirction = 2 * Math.Asin((CtlPara.TargetNetStroke / 1000) / dblRh / 2) + StartAmsKanzan
             End If
         Else
             ''直線管理
-            換算現在目標方位 = TotalHouiDev + StartAmsKanzan
+            ConVertRealTargetDirction = TotalHouiDev + StartAmsKanzan
         End If
 
-        'With clsPlc
+        '換算ストローク差演算
+        ConVertTopStrokeDiff = (TopRighttStroke - TopLeftStroke) / Math.Cos(_topAttachDir)
+        ConVertHorStrokeDiff = (HorizonRighttStroke - HorizonLefttStroke) / Math.Cos(_horAttachDir)
+        ConVertBottomStrokeDiff = (BottomRighttStroke - BottomLefttStroke) / Math.Cos(_btmAttachDir)
+
+        '換算ストローク差演算
+        If InitPara.StrokeNoTopRight <> 0 Then
+            ConVertTopStartStrokeDiff = (CtlPara.StartJackStroke(InitPara.StrokeNoTopRight) - CtlPara.StartJackStroke(InitPara.StrokeNoTopLeft)) / Math.Cos(_horAttachDir)
+        End If
+        ConVertHorStartStrokeDiff = (CtlPara.StartJackStroke(InitPara.StrokeNoHorRight) - CtlPara.StartJackStroke(InitPara.StrokeNoHorLeft)) / Math.Cos(_horAttachDir)
+        If InitPara.StrokeNoBtmRight <> 0 Then
+            ConVertBottomStartStrokeDiff = (CtlPara.StartJackStroke(InitPara.StrokeNoBtmRight) - CtlPara.StartJackStroke(InitPara.StrokeNoBtmLeft)) / Math.Cos(_horAttachDir)
+        End If
+        'どのストローク差で制御するか選択
+        Select Case StrokeSelect
+            Case SelectBtm
+                ControlStrokeDiff = ConVertBottomStartStrokeDiff
+            Case SelectHor
+                ControlStrokeDiff = ConVertHorStartStrokeDiff
+            Case SelectTop
+                ControlStrokeDiff = ConVertTopStartStrokeDiff
+        End Select
+
+
         ''実測水平角（角度換算）
-        換算実測水平角 = Math.Asin((PlcIf.RightStroke - PlcIf.LeftStroke) / 1000 / InitPara.CntDistLRSpreader)
-        '換算実測水平角 = Math.Asin((.右ストローク - .左ストローク) / 1000 / InitPara.CntDistLRSpreader) ' + mdblStartAmsKanzan
+        ConvertSurveyHorDir = Math.Asin((ControlStrokeDiff) / 1000 / InitPara.CntDistLRSpreader)
 
-        'End With
+        'ストローク偏差　角度換算
+        ConvertHorDeflection = -(ConvertSurveyHorDir - ConVertRealTargetDirction)
 
-        換算水平偏角 = -(換算実測水平角 - 換算現在目標方位)
-        Debug.Print($"換算水平偏角 {換算水平偏角} 換算実測水平角 {換算実測水平角} 換算現在目標方位 {換算現在目標方位}")
+        '現在の目標ストローク差
+        _TargetStrokeRealDiff = Sin(ConVertRealTargetDirction) * InitPara.CntDistLRSpreader * 1000
+
 
     End Sub
 

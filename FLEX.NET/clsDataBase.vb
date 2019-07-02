@@ -593,16 +593,19 @@ Public Class clsInitParameter
     ''' <summary>
     ''' 下左ストロークNo
     ''' </summary>
-    Private _StrokeNoBottomLeft As Integer
+    Private _StrokeNoBtmLeft As Integer
     ''' <summary>
     ''' 下左ストロークNo
     ''' </summary>
-    Private _StrokeNoBottomRight As Integer
+    Private _StrokeNoBtmRight As Integer
 
 
     Private WithEvents Htb As New clsHashtableRead
 
-
+    ''' <summary>
+    ''' ストローク差制御あり
+    ''' </summary>
+    Private _StrokeDiffControlEnable As Boolean = False
 
 
 
@@ -792,6 +795,17 @@ Public Class clsInitParameter
     End Property
 
     ''' <summary>
+    ''' ストローク差制御あり
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property StrokeDiffControlEnable As Boolean
+        Get
+            Return _StrokeDiffControlEnable
+        End Get
+    End Property
+
+
+    ''' <summary>
     ''' 左右スプレッダの中心間隔 ストローク差制御演算用(m)')
     ''' </summary>
     ''' <returns></returns>
@@ -819,20 +833,39 @@ Public Class clsInitParameter
     ''' <summary>
     ''' 下左ストロークNo
     ''' </summary>
-    Public ReadOnly Property StrokeNoBottomLeft As Integer
+    Public ReadOnly Property StrokeNoBtmLeft As Integer
         Get
-            Return _StrokeNoBottomLeft
+            Return _StrokeNoBtmLeft
         End Get
     End Property
     ''' <summary>
     ''' 下左ストロークNo
     ''' </summary>
-    Public ReadOnly Property StrokeNoBottomRight As Integer
+    Public ReadOnly Property StrokeNoBtmRight As Integer
         Get
-            Return _StrokeNoBottomRight
+            Return _StrokeNoBtmRight
         End Get
     End Property
 
+    ''' <summary>
+    ''' 右ストロークNo
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property StrokeNoHorRight As Integer
+        Get
+            Return _mesureJackNo(1)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 右ストロークNo
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property StrokeNoHorLeft As Integer
+        Get
+            Return _mesureJackNo(3)
+        End Get
+    End Property
 
 
 
@@ -1029,6 +1062,8 @@ Public Class clsInitParameter
             '左右スプレッダの中心間隔 ストローク差制御演算用(m)
             If ht.ContainsKey("CntDistLRSpreader") Then
                 _CntDistLRSpreader = Convert.ToSingle(ht("CntDistLRSpreader"))
+            Else
+                _CntDistLRSpreader = _jackRadius * 2
             End If
 
             If ht.ContainsKey("ストローク上左No") Then
@@ -1038,13 +1073,15 @@ Public Class clsInitParameter
                 _StrokeNoTopRight = ht("ストローク上右No")
             End If
             If ht.ContainsKey("ストローク下左No") Then
-                _StrokeNoBottomLeft = ht("ストローク下左No")
+                _StrokeNoBtmLeft = ht("ストローク下左No")
             End If
             If ht.ContainsKey("ストローク下右No") Then
-                _StrokeNoBottomRight = ht("ストローク下右No")
+                _StrokeNoBtmRight = ht("ストローク下右No")
             End If
 
-
+            If ht.ContainsKey("ストローク差制御あり") Then
+                _StrokeDiffControlEnable = (ht("ストローク差制御あり").ToLower = "true")
+            End If
 
         Catch ex As Exception
 

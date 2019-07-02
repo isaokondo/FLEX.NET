@@ -92,4 +92,8 @@
         lblTargetStrokeOverStoke.Text =
             $"リング更新推進量{vbCrLf}{(TargetStrokeOverRate.Value * CtlPara.TargetNetStroke / 100).ToString("0000")}mm"
     End Sub
+
+    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
+
+    End Sub
 End Class

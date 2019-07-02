@@ -27,6 +27,11 @@ Partial Class frmCorrectionValueManagement
         Me.btnOK = New System.Windows.Forms.Button()
         Me.btnCLose = New System.Windows.Forms.Button()
         Me.tmrLineUpdate = New System.Windows.Forms.Timer(Me.components)
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.VerLastTargetVal = New FLEX.NET.ucnNumEdit()
+        Me.HorLastTargetVal = New FLEX.NET.ucnNumEdit()
         Me.HorPlan18 = New FLEX.NET.ucnSpredCompnent()
         Me.NowRing = New FLEX.NET.ucnSpredCompnent()
         Me.PlanCommon2 = New FLEX.NET.ucnSpredCompnent()
@@ -79,7 +84,7 @@ Partial Class frmCorrectionValueManagement
         '
         Me.btnCancel.BackColor = System.Drawing.Color.Silver
         Me.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnCancel.Location = New System.Drawing.Point(168, 276)
+        Me.btnCancel.Location = New System.Drawing.Point(172, 311)
         Me.btnCancel.Margin = New System.Windows.Forms.Padding(2)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(102, 35)
@@ -91,7 +96,7 @@ Partial Class frmCorrectionValueManagement
         '
         Me.btnOK.BackColor = System.Drawing.Color.Silver
         Me.btnOK.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnOK.Location = New System.Drawing.Point(39, 276)
+        Me.btnOK.Location = New System.Drawing.Point(43, 311)
         Me.btnOK.Margin = New System.Windows.Forms.Padding(2)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(102, 35)
@@ -103,7 +108,7 @@ Partial Class frmCorrectionValueManagement
         '
         Me.btnCLose.BackColor = System.Drawing.Color.Silver
         Me.btnCLose.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnCLose.Location = New System.Drawing.Point(39, 327)
+        Me.btnCLose.Location = New System.Drawing.Point(43, 362)
         Me.btnCLose.Margin = New System.Windows.Forms.Padding(2)
         Me.btnCLose.Name = "btnCLose"
         Me.btnCLose.Size = New System.Drawing.Size(102, 35)
@@ -115,6 +120,84 @@ Partial Class frmCorrectionValueManagement
         '
         Me.tmrLineUpdate.Enabled = True
         Me.tmrLineUpdate.Interval = 1000
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.White
+        Me.Label1.Location = New System.Drawing.Point(12, 18)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(89, 19)
+        Me.Label1.TabIndex = 61
+        Me.Label1.Text = "確認距離"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(12, 180)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(69, 19)
+        Me.Label2.TabIndex = 62
+        Me.Label2.Text = "補正値"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(12, 297)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(92, 19)
+        Me.Label3.TabIndex = 65
+        Me.Label3.Text = "リング終値"
+        Me.Label3.Visible = False
+        '
+        'VerLastTargetVal
+        '
+        Me.VerLastTargetVal.DataDspWidth = 110
+        Me.VerLastTargetVal.DecimalPlaces = CType(3, Short)
+        Me.VerLastTargetVal.DspFieldName = True
+        Me.VerLastTargetVal.FieldName = "目標ピッチング"
+        Me.VerLastTargetVal.Increment = 0.01!
+        Me.VerLastTargetVal.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.VerLastTargetVal.Location = New System.Drawing.Point(20, 357)
+        Me.VerLastTargetVal.Margin = New System.Windows.Forms.Padding(2)
+        Me.VerLastTargetVal.MaxValue = "10"
+        Me.VerLastTargetVal.MinValue = "-10"
+        Me.VerLastTargetVal.Name = "VerLastTargetVal"
+        Me.VerLastTargetVal.SelectItem = Nothing
+        Me.VerLastTargetVal.Size = New System.Drawing.Size(415, 30)
+        Me.VerLastTargetVal.TabIndex = 64
+        Me.VerLastTargetVal.ttMsg = ""
+        Me.VerLastTargetVal.ttTile = ""
+        Me.VerLastTargetVal.Unit = "deg"
+        Me.VerLastTargetVal.Value = 0R
+        Me.VerLastTargetVal.Visible = False
+        '
+        'HorLastTargetVal
+        '
+        Me.HorLastTargetVal.DataDspWidth = 110
+        Me.HorLastTargetVal.DecimalPlaces = CType(0, Short)
+        Me.HorLastTargetVal.DspFieldName = True
+        Me.HorLastTargetVal.FieldName = "目標ストローク差"
+        Me.HorLastTargetVal.Increment = 1.0!
+        Me.HorLastTargetVal.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.HorLastTargetVal.Location = New System.Drawing.Point(20, 324)
+        Me.HorLastTargetVal.Margin = New System.Windows.Forms.Padding(2)
+        Me.HorLastTargetVal.MaxValue = "500"
+        Me.HorLastTargetVal.MinValue = "-500"
+        Me.HorLastTargetVal.Name = "HorLastTargetVal"
+        Me.HorLastTargetVal.SelectItem = Nothing
+        Me.HorLastTargetVal.Size = New System.Drawing.Size(415, 30)
+        Me.HorLastTargetVal.TabIndex = 63
+        Me.HorLastTargetVal.ttMsg = ""
+        Me.HorLastTargetVal.ttTile = ""
+        Me.HorLastTargetVal.Unit = "mm"
+        Me.HorLastTargetVal.Value = 0R
+        Me.HorLastTargetVal.Visible = False
         '
         'HorPlan18
         '
@@ -740,7 +823,7 @@ Partial Class frmCorrectionValueManagement
         Me.VerCorrentionValue.FieldName = "鉛直補正値"
         Me.VerCorrentionValue.Increment = 0.01!
         Me.VerCorrentionValue.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.VerCorrentionValue.Location = New System.Drawing.Point(16, 205)
+        Me.VerCorrentionValue.Location = New System.Drawing.Point(20, 240)
         Me.VerCorrentionValue.Margin = New System.Windows.Forms.Padding(2)
         Me.VerCorrentionValue.MaxValue = "5"
         Me.VerCorrentionValue.MinValue = "-5"
@@ -761,7 +844,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorCorrentionValue.FieldName = "水平補正値"
         Me.HorCorrentionValue.Increment = 0.01!
         Me.HorCorrentionValue.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.HorCorrentionValue.Location = New System.Drawing.Point(16, 172)
+        Me.HorCorrentionValue.Location = New System.Drawing.Point(20, 207)
         Me.HorCorrentionValue.Margin = New System.Windows.Forms.Padding(2)
         Me.HorCorrentionValue.MaxValue = "5"
         Me.HorCorrentionValue.MinValue = "-5"
@@ -844,6 +927,11 @@ Partial Class frmCorrectionValueManagement
         Me.BackColor = System.Drawing.Color.Gray
         Me.ClientSize = New System.Drawing.Size(932, 917)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.VerLastTargetVal)
+        Me.Controls.Add(Me.HorLastTargetVal)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.HorPlan18)
         Me.Controls.Add(Me.NowRing)
         Me.Controls.Add(Me.btnCLose)
@@ -897,6 +985,7 @@ Partial Class frmCorrectionValueManagement
         Me.Name = "frmCorrectionValueManagement"
         Me.Text = "補正値管理"
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents ConfirmRingNo As FLEX.NET.ucnNumEdit
@@ -949,4 +1038,9 @@ Partial Class frmCorrectionValueManagement
     Friend WithEvents tmrLineUpdate As Timer
     Friend WithEvents HorPlan17 As ucnSpredCompnent
     Friend WithEvents HorPlan18 As ucnSpredCompnent
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents VerLastTargetVal As ucnNumEdit
+    Friend WithEvents HorLastTargetVal As ucnNumEdit
 End Class

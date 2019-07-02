@@ -17,10 +17,6 @@ Public Class frmCalcStrokeConfirm
             DgvJackStroke.Rows.Add(i.Key, 0, 0, 0, 0, 0, i.Value, "", Not CtlPara.ExceptMesureJackNo.Contains(i.Key))
         Next
 
-        DgvStrokeDev.Rows.Add("上")
-        DgvStrokeDev.Rows.Add("水平")
-        DgvStrokeDev.Rows.Add("下")
-
 
 
         OpposeJackExcep.Visible = InitPara.LosZeroEquip 'ロスゼロのときのみ表示
@@ -31,6 +27,19 @@ Public Class frmCalcStrokeConfirm
         RectangleShape2.Visible = InitPara.LosZeroEquip
 
         DspAveStroke.Value = CalcStroke.MesureCalcAveJackStroke '平均ストローク表示
+
+
+        If pnlStrokeDiffContorol.Visible Then
+            'ストロークNo
+            lblTopRightStNo.Text &= InitPara.StrokeNoTopRight
+            lblTopLefttStNo.Text &= InitPara.StrokeNoTopLeft
+            lblHorRightStNo.Text &= InitPara.StrokeNoHorRight
+            lblHorLefttStNo.Text &= InitPara.StrokeNoHorLeft
+            lblBtmRightStNo.Text &= InitPara.StrokeNoBtmRight
+            lblBtmLeftStNo.Text &= InitPara.StrokeNoBtmLeft
+        End If
+
+
 
 
 
@@ -68,19 +77,103 @@ Public Class frmCalcStrokeConfirm
 
 
         DspHorTargerStrokeDev.Value = CtlPara.HorTargerStrokeDev '目標ストローク差
-        DspHorTargerNowStrokeDev.Value = StrokeDev.現在目標ストローク差 '目標ストローク差
+        DspHorTargerNowStrokeDev.Value = StrokeDev.TargetStrokeRealDiff '目標ストローク差
+        DspRingUpStroke.Value = StrokeDev.RingUpStroke 'リング内発生ストローク量
 
 
-        DgvStrokeDev.Rows(0).Cells(LeftStroke.Index).Value = StrokeDev.TopLeftStroke
-        DgvStrokeDev.Rows(0).Cells(RightStroke.Index).Value = StrokeDev.TopRighttStroke
-        DgvStrokeDev.Rows(1).Cells(LeftStroke.Index).Value = StrokeDev.HorizonLefttStroke
-        DgvStrokeDev.Rows(1).Cells(RightStroke.Index).Value = StrokeDev.HorizonRighttStroke
-        DgvStrokeDev.Rows(2).Cells(LeftStroke.Index).Value = StrokeDev.BottomLefttStroke
-        DgvStrokeDev.Rows(2).Cells(RightStroke.Index).Value = StrokeDev.BottomRighttStroke
+        If pnlStrokeDiffContorol.Visible Then
+            '上半ｽﾄﾛｰｸ----------------------------------------------------
+            '開始ストローク
+            If InitPara.StrokeNoTopRight <> 0 And InitPara.StrokeNoTopLeft <> 0 Then
+                lblTopRightStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoTopRight) '開始ストローク
+                lblTopLeftStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoTopLeft)
+                lblTopRightRealSt.Text = StrokeDev.TopRighttStroke '現在のストローク
+                lblTopLeftRealSt.Text = StrokeDev.TopLeftStroke
+                '推進量
+                lblTopNetSt.Text =
+                    ((StrokeDev.TopRighttStroke + StrokeDev.TopLeftStroke - lblTopLeftStartSt.Text - lblTopRightStartSt.Text) / 2).ToString("F1")
+                lblConvertTopStrokeDiff.Text = StrokeDev.ConVertTopStrokeDiff.ToString("F1") '換算ストローク差
+                lblConvertTopStartStrokeDiff.Text = StrokeDev.ConVertTopStartStrokeDiff.ToString("F1")
+                lblTopRingTargetSt.Text = (StrokeDev.ConVertTopStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
+
+                ' 掘進モード、セグメントモードで背景色を変更
+                Call ModeColorSet(lblTopRightStNo, InitPara.StrokeNoTopRight)
+                Call ModeColorSet(lblTopLefttStNo, InitPara.StrokeNoTopLeft)
+
+
+            End If
+
+
+            '水平部ｽﾄﾛｰｸ----------------------------------------------------
+            lblHorRightStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoHorRight)
+            lblHorLeftStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoHorLeft)
+            lblHorRightRealSt.Text = StrokeDev.HorizonRighttStroke
+            lblHorLeftRealSt.Text = StrokeDev.HorizonLefttStroke
+            '推進量
+            lblHorNetSt.Text =
+                ((StrokeDev.HorizonRighttStroke + StrokeDev.HorizonLefttStroke - lblHorLeftStartSt.Text - lblHorRightStartSt.Text) / 2).ToString("F1")
+            lblConvertHorStrokeDiff.Text = StrokeDev.ConVertHorStrokeDiff.ToString("F1")
+            lblConvertHorStartStrokeDiff.Text = StrokeDev.ConVertHorStartStrokeDiff.ToString("F1")
+            lblHorRingTargetSt.Text = (StrokeDev.ConVertHorStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
+            ' 掘進モード、セグメントモードで背景色を変更
+            Call ModeColorSet(lblHorLefttStNo, InitPara.StrokeNoHorLeft)
+            Call ModeColorSet(lblHorRightStNo, InitPara.StrokeNoHorRight)
+
+            '下半ｽﾄﾛｰｸ----------------------------------------------------
+            If InitPara.StrokeNoBtmRight <> 0 And InitPara.StrokeNoBtmLeft <> 0 Then
+                lblBtmRightStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoBtmRight)
+                lblBtmLeftStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoBtmLeft)
+                lblBtmRightRealSt.Text = StrokeDev.BottomRighttStroke
+                lblBtmLeftRealSt.Text = StrokeDev.BottomLefttStroke
+                '推進量
+                lblBtmNetSt.Text =
+                    ((StrokeDev.BottomLefttStroke + StrokeDev.BottomRighttStroke - lblBtmLeftStartSt.Text - lblBtmRightStartSt.Text) / 2).ToString("F1")
+                lblConvertBtmStrokeDiff.Text = StrokeDev.ConVertBottomStrokeDiff.ToString("F1")
+                lblConvertBtmStartStrokeDiff.Text = StrokeDev.ConVertBottomStartStrokeDiff.ToString("F1")
+                lblBtmRingTargetSt.Text = (StrokeDev.ConVertBottomStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
+                ' 掘進モード、セグメントモードで背景色を変更
+                Call ModeColorSet(lblBtmRightStNo, InitPara.StrokeNoBtmRight)
+                Call ModeColorSet(lblBtmLeftStNo, InitPara.StrokeNoBtmLeft)
+
+            End If
+
+        End If
+
+        ' 制御ストロークをハイライト表示
+        Dim SelectColor As Color = Color.DodgerBlue
+        Dim NotSelectColor As Color = Color.LightGray
+
+        lblHorStItem.BackColor = NotSelectColor
+        lblBtmStItem.BackColor = NotSelectColor
+        lblTopStItem.BackColor = NotSelectColor
+
+        Select Case StrokeDev.StrokeSelect
+            Case clsStrokeDevi.SelectHor
+                lblHorStItem.BackColor = Color.DodgerBlue
+            Case clsStrokeDevi.SelectBtm
+                lblBtmStItem.BackColor = Color.DodgerBlue
+            Case clsStrokeDevi.SelectTop
+                lblTopStItem.BackColor = Color.DodgerBlue
+        End Select
+
+
 
 
 
     End Sub
+    ''' <summary>
+    ''' 掘進モード、セグメントモードで背景色を変更
+    ''' </summary>
+    ''' <param name="lblSt">背景色を変更するラベル</param>
+    ''' <param name="StNo">ジャッキ番号</param>
+    Private Sub ModeColorSet(lblSt As Label, StNo As Integer)
+        Dim ExecModeColor As Color = Color.Red
+        Dim SegModeColor As Color = Color.Cyan
+
+        lblSt.BackColor = If(PlcIf.JackStatus(StNo - 1) And 2, ExecModeColor, SegModeColor)
+
+    End Sub
+
 
     Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
         If InitPara.LosZeroEquip Then

@@ -15,7 +15,7 @@
             nudLineDevLastRing.Value = .LineDevLastRing
             nudPresBarGraphWidt.Value = .PresBarGraphWidt
             nudDevTolerance.Value = .DevTolerance
-
+            nudHorDevDiffTrendWidth.Value = .HorDevDiffTrendWidth
         End With
 
     End Sub
@@ -31,6 +31,8 @@
             .LineDevLastRing = nudLineDevLastRing.Value
             .PresBarGraphWidt = nudPresBarGraphWidt.Value
             .DevTolerance = nudDevTolerance.Value
+            .HorDevDiffTrendWidth = nudHorDevDiffTrendWidth.Value
+
         End With
 
         'チャートの設定
@@ -44,7 +46,7 @@
         End With
         With My.Forms.frmMain.ucnHorDevChart
             .StrokeWidth = CtlPara.GraphStrokeWidth
-            .ChartHighScale = CtlPara.HorDevDegTrendWidth
+            .ChartHighScale = If(CtlPara.horAngleDetection = GyroDetciotn, CtlPara.HorDevDegTrendWidth, CtlPara.HorDevDiffTrendWidth)
         End With
         With My.Forms.frmMain.ucnVerDevChart
             .StrokeWidth = CtlPara.GraphStrokeWidth

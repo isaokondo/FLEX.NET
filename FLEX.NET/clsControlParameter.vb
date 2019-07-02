@@ -6,6 +6,7 @@ Public Class clsControlParameter
     Public Property Name As String
 
 
+
     Private _最低全開グループ数 As Short = 3
     Private _全開作動範囲 As Short = 35
     Private _全開作動指令値 As Short
@@ -81,6 +82,7 @@ Public Class clsControlParameter
     Private _HorMomentTrendWidth As Integer '水平モーメントトレンド幅
     Private _VerMomentTrendWidth As Integer '鉛直モーメントトレンド幅	
     Private _HorDevDegTrendWidth As Single  '水平偏角トレンド幅	
+    Private _HorDevDiffTrendWidth As Integer  '水平偏差トレンド幅(mm)
     Private _VerDevDegTrendWidth As Single  '鉛直偏角トレンド幅
     Private _LineDevStartRing As Integer    '姿勢角トレンド始点リング
     Private _LineDevLastRing As Integer     '姿勢角トレンド終点リング
@@ -190,6 +192,30 @@ Public Class clsControlParameter
     ''' 水平曲線管理角度 
     ''' </summary>
     Private _horCurveMngAngle As Single = 0.05
+
+
+
+    ''' <summary>
+    ''' 水平目標の設定
+    ''' </summary>
+    Private _horTargetSet As Boolean
+    ''' <summary>
+    ''' 鉛直目標の設定
+    ''' </summary>
+    Private _verTargetSet As Boolean
+
+    ''' <summary>
+    ''' 水平角検出
+    ''' </summary>
+    Private _horAngleDetection As Boolean
+
+
+
+
+
+
+
+
 
     ''' <summary>
     ''' 線形が変化した時
@@ -786,6 +812,21 @@ Public Class clsControlParameter
             Call sbUpdateData(value)
         End Set
     End Property
+
+    ''' <summary>
+    ''' 水平偏角トレンド幅
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property HorDevDiffTrendWidth As Integer
+        Get
+            Return _HorDevDiffTrendWidth
+        End Get
+        Set(value As Integer)
+            _HorDevDiffTrendWidth = value
+            Call sbUpdateData(value)
+        End Set
+    End Property
+
     ''' <summary>
     ''' 鉛直偏角トレンド幅
     ''' </summary>
@@ -1142,6 +1183,67 @@ Public Class clsControlParameter
     End Property
 
     ''' <summary>
+    ''' 水平目標の設定 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property horTargetSet As Boolean
+        Get
+            If InitPara.StrokeDiffControlEnable Then
+                Return _horTargetSet
+            Else
+                Return CorrectionVal
+            End If
+        End Get
+        Set(value As Boolean)
+            _horTargetSet = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 鉛直目標の設定 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property verTargetSet As Boolean
+        Get
+            If InitPara.StrokeDiffControlEnable Then
+                Return _verTargetSet
+            Else
+                Return CorrectionVal
+            End If
+
+        End Get
+        Set(value As Boolean)
+            _verTargetSet = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 水平目標の設定 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property horAngleDetection As Boolean
+        Get
+            If InitPara.StrokeDiffControlEnable Then
+                Return _horAngleDetection
+            Else
+                Return GyroDetciotn
+            End If
+
+        End Get
+        Set(value As Boolean)
+            _horAngleDetection = value
+            Call sbUpdateData(value)
+
+        End Set
+    End Property
+
+
+
+    ''' <summary>
     ''' 水平曲線管理角度 
     ''' </summary>
     ''' <returns></returns>
@@ -1155,6 +1257,9 @@ Public Class clsControlParameter
 
         End Set
     End Property
+
+
+
 
     ''' <summary>
     ''' ストローク補正値
@@ -1377,6 +1482,7 @@ Public Class clsControlParameter
         _HorMomentTrendWidth = chk.GetValue("HorMomentTrendWidth")
         _VerMomentTrendWidth = chk.GetValue("VerMomentTrendWidth")
         _HorDevDegTrendWidth = chk.GetValue("HorDevDegTrendWidth")
+        _HorDevDiffTrendWidth = chk.GetValue("HorDevDiffTrendWidth", 5)
         _VerDevDegTrendWidth = chk.GetValue("VerDevDegTrendWidth")
         _LineDevStartRing = chk.GetValue("LineDevStartRing")
         _LineDevLastRing = chk.GetValue("LineDevLastRing")
@@ -1427,8 +1533,12 @@ Public Class clsControlParameter
         _OffsetStroke = chk.GetValue("OffsetStroke", "0")
 
 
-        _HorTargerStrokeDev = chk.GetValue("水平目標ストローク差", "0")
-        _horCurveMngAngle = chk.GetValue("水平曲線管理角度", "0.05")
+        _HorTargerStrokeDev = chk.GetValue("HorTargerStrokeDev", "0")
+        _horCurveMngAngle = chk.GetValue("horCurveMngAngle", "0.05")
+
+        _horTargetSet = chk.GetValue("horTargetSet", "-1")
+        _verTargetSet = chk.GetValue("verTargetSet", "-1")
+        _horAngleDetection = chk.GetValue("horAngleDetection", "-1")
 
         _optGpEn =
             (From k In Split(chk.GetValue("OptinalGroupSetNumber"), ",") Where IsNumeric(k) Select CShort(k)).ToList

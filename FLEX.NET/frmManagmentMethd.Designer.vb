@@ -22,130 +22,134 @@ Partial Class frmManagmentMethd
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.LosZeroRollingTake = New FLEX.NET.ucnRdBtn()
-        Me.UcnRdBtn1 = New FLEX.NET.ucnRdBtn()
+        Me.HorTargetVal = New FLEX.NET.ucnRdBtn()
         Me.UcnRdBtn2 = New FLEX.NET.ucnRdBtn()
-        Me.UcnRdBtn3 = New FLEX.NET.ucnRdBtn()
-        Me.UcnRdBtn4 = New FLEX.NET.ucnRdBtn()
-        Me.UcnRdBtn5 = New FLEX.NET.ucnRdBtn()
+        Me.HorAngleDetection = New FLEX.NET.ucnRdBtn()
+        Me.VerTargetVal = New FLEX.NET.ucnRdBtn()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.lblFieldName = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(234, 379)
+        Me.btnOK.Location = New System.Drawing.Point(240, 292)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(355, 379)
+        Me.btnCancel.Location = New System.Drawing.Point(361, 292)
         '
-        'LosZeroRollingTake
+        'HorTargetVal
         '
-        Me.LosZeroRollingTake.BackColor = System.Drawing.Color.Transparent
-        Me.LosZeroRollingTake.FieldName = "目標値の設定"
-        Me.LosZeroRollingTake.Location = New System.Drawing.Point(25, 24)
-        Me.LosZeroRollingTake.Margin = New System.Windows.Forms.Padding(2)
-        Me.LosZeroRollingTake.Name = "LosZeroRollingTake"
-        Me.LosZeroRollingTake.rdbtnValue = False
-        Me.LosZeroRollingTake.Size = New System.Drawing.Size(419, 34)
-        Me.LosZeroRollingTake.SlectNoName = "リング終値"
-        Me.LosZeroRollingTake.SlectYesName = "補正値"
-        Me.LosZeroRollingTake.TabIndex = 37
-        '
-        'UcnRdBtn1
-        '
-        Me.UcnRdBtn1.BackColor = System.Drawing.Color.Transparent
-        Me.UcnRdBtn1.FieldName = "自動更新"
-        Me.UcnRdBtn1.Location = New System.Drawing.Point(25, 65)
-        Me.UcnRdBtn1.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnRdBtn1.Name = "UcnRdBtn1"
-        Me.UcnRdBtn1.rdbtnValue = False
-        Me.UcnRdBtn1.Size = New System.Drawing.Size(419, 34)
-        Me.UcnRdBtn1.SlectNoName = "する"
-        Me.UcnRdBtn1.SlectYesName = "しない"
-        Me.UcnRdBtn1.TabIndex = 38
+        Me.HorTargetVal.BackColor = System.Drawing.Color.Transparent
+        Me.HorTargetVal.FieldName = "水平目標値の設定"
+        Me.HorTargetVal.Location = New System.Drawing.Point(25, 24)
+        Me.HorTargetVal.Margin = New System.Windows.Forms.Padding(2)
+        Me.HorTargetVal.Name = "HorTargetVal"
+        Me.HorTargetVal.rdbtnValue = False
+        Me.HorTargetVal.Selectable = True
+        Me.HorTargetVal.Size = New System.Drawing.Size(419, 34)
+        Me.HorTargetVal.SlectNoName = "リング終値"
+        Me.HorTargetVal.SlectYesName = "補正値"
+        Me.HorTargetVal.TabIndex = 37
         '
         'UcnRdBtn2
         '
         Me.UcnRdBtn2.BackColor = System.Drawing.Color.Transparent
-        Me.UcnRdBtn2.FieldName = "自動測量データ"
-        Me.UcnRdBtn2.Location = New System.Drawing.Point(25, 106)
+        Me.UcnRdBtn2.FieldName = "補正値の自動更新"
+        Me.UcnRdBtn2.Location = New System.Drawing.Point(25, 122)
         Me.UcnRdBtn2.Margin = New System.Windows.Forms.Padding(2)
         Me.UcnRdBtn2.Name = "UcnRdBtn2"
         Me.UcnRdBtn2.rdbtnValue = False
+        Me.UcnRdBtn2.Selectable = True
         Me.UcnRdBtn2.Size = New System.Drawing.Size(419, 34)
-        Me.UcnRdBtn2.SlectNoName = "採用しない"
-        Me.UcnRdBtn2.SlectYesName = "採用"
+        Me.UcnRdBtn2.SlectNoName = "しない"
+        Me.UcnRdBtn2.SlectYesName = "する"
         Me.UcnRdBtn2.TabIndex = 39
+        Me.UcnRdBtn2.Visible = False
         '
-        'UcnRdBtn3
+        'HorAngleDetection
         '
-        Me.UcnRdBtn3.BackColor = System.Drawing.Color.Transparent
-        Me.UcnRdBtn3.FieldName = "水平角偏差"
-        Me.UcnRdBtn3.Location = New System.Drawing.Point(25, 169)
-        Me.UcnRdBtn3.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnRdBtn3.Name = "UcnRdBtn3"
-        Me.UcnRdBtn3.rdbtnValue = False
-        Me.UcnRdBtn3.Size = New System.Drawing.Size(419, 34)
-        Me.UcnRdBtn3.SlectNoName = "ジャイロ"
-        Me.UcnRdBtn3.SlectYesName = "ｽﾄﾛｰｸ計"
-        Me.UcnRdBtn3.TabIndex = 40
+        Me.HorAngleDetection.BackColor = System.Drawing.Color.Transparent
+        Me.HorAngleDetection.FieldName = "水平角検出"
+        Me.HorAngleDetection.Location = New System.Drawing.Point(25, 220)
+        Me.HorAngleDetection.Margin = New System.Windows.Forms.Padding(2)
+        Me.HorAngleDetection.Name = "HorAngleDetection"
+        Me.HorAngleDetection.rdbtnValue = False
+        Me.HorAngleDetection.Selectable = True
+        Me.HorAngleDetection.Size = New System.Drawing.Size(419, 34)
+        Me.HorAngleDetection.SlectNoName = "ジャイロ"
+        Me.HorAngleDetection.SlectYesName = "ストローク計"
+        Me.HorAngleDetection.TabIndex = 42
         '
-        'UcnRdBtn4
+        'VerTargetVal
         '
-        Me.UcnRdBtn4.BackColor = System.Drawing.Color.Transparent
-        Me.UcnRdBtn4.FieldName = "管理方法"
-        Me.UcnRdBtn4.Location = New System.Drawing.Point(25, 207)
-        Me.UcnRdBtn4.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnRdBtn4.Name = "UcnRdBtn4"
-        Me.UcnRdBtn4.rdbtnValue = False
-        Me.UcnRdBtn4.Size = New System.Drawing.Size(419, 34)
-        Me.UcnRdBtn4.SlectNoName = "ｽﾄﾛｰｸ差"
-        Me.UcnRdBtn4.SlectYesName = "方位角"
-        Me.UcnRdBtn4.TabIndex = 41
+        Me.VerTargetVal.BackColor = System.Drawing.Color.Transparent
+        Me.VerTargetVal.FieldName = "鉛直目標値の設定"
+        Me.VerTargetVal.Location = New System.Drawing.Point(25, 73)
+        Me.VerTargetVal.Margin = New System.Windows.Forms.Padding(2)
+        Me.VerTargetVal.Name = "VerTargetVal"
+        Me.VerTargetVal.rdbtnValue = False
+        Me.VerTargetVal.Selectable = True
+        Me.VerTargetVal.Size = New System.Drawing.Size(419, 34)
+        Me.VerTargetVal.SlectNoName = "リング終値"
+        Me.VerTargetVal.SlectYesName = "補正値"
+        Me.VerTargetVal.TabIndex = 43
         '
-        'UcnRdBtn5
+        'ComboBox1
         '
-        Me.UcnRdBtn5.BackColor = System.Drawing.Color.Transparent
-        Me.UcnRdBtn5.FieldName = "方位角の基準"
-        Me.UcnRdBtn5.Location = New System.Drawing.Point(25, 292)
-        Me.UcnRdBtn5.Margin = New System.Windows.Forms.Padding(2)
-        Me.UcnRdBtn5.Name = "UcnRdBtn5"
-        Me.UcnRdBtn5.rdbtnValue = False
-        Me.UcnRdBtn5.Size = New System.Drawing.Size(419, 34)
-        Me.UcnRdBtn5.SlectNoName = "ｾｸﾞﾒﾝﾄ面"
-        Me.UcnRdBtn5.SlectYesName = "自動測量"
-        Me.UcnRdBtn5.TabIndex = 42
+        Me.ComboBox1.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Items.AddRange(New Object() {"方向分析", "自動測量"})
+        Me.ComboBox1.Location = New System.Drawing.Point(294, 161)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(121, 23)
+        Me.ComboBox1.TabIndex = 44
+        '
+        'lblFieldName
+        '
+        Me.lblFieldName.AutoSize = True
+        Me.lblFieldName.BackColor = System.Drawing.Color.Gray
+        Me.lblFieldName.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblFieldName.ForeColor = System.Drawing.Color.White
+        Me.lblFieldName.Location = New System.Drawing.Point(207, 163)
+        Me.lblFieldName.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblFieldName.Name = "lblFieldName"
+        Me.lblFieldName.Size = New System.Drawing.Size(82, 16)
+        Me.lblFieldName.TabIndex = 45
+        Me.lblFieldName.Text = "採用データ"
+        Me.lblFieldName.Visible = False
         '
         'frmManagmentMethd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.SystemColors.ControlDark
-        Me.ClientSize = New System.Drawing.Size(483, 436)
-        Me.Controls.Add(Me.UcnRdBtn5)
-        Me.Controls.Add(Me.UcnRdBtn4)
-        Me.Controls.Add(Me.UcnRdBtn3)
+        Me.BackColor = System.Drawing.Color.Gray
+        Me.ClientSize = New System.Drawing.Size(483, 351)
+        Me.Controls.Add(Me.lblFieldName)
+        Me.Controls.Add(Me.ComboBox1)
+        Me.Controls.Add(Me.VerTargetVal)
+        Me.Controls.Add(Me.HorAngleDetection)
         Me.Controls.Add(Me.UcnRdBtn2)
-        Me.Controls.Add(Me.UcnRdBtn1)
-        Me.Controls.Add(Me.LosZeroRollingTake)
+        Me.Controls.Add(Me.HorTargetVal)
         Me.Name = "frmManagmentMethd"
         Me.Text = "管理方法"
         Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
-        Me.Controls.SetChildIndex(Me.LosZeroRollingTake, 0)
-        Me.Controls.SetChildIndex(Me.UcnRdBtn1, 0)
+        Me.Controls.SetChildIndex(Me.HorTargetVal, 0)
         Me.Controls.SetChildIndex(Me.UcnRdBtn2, 0)
-        Me.Controls.SetChildIndex(Me.UcnRdBtn3, 0)
-        Me.Controls.SetChildIndex(Me.UcnRdBtn4, 0)
-        Me.Controls.SetChildIndex(Me.UcnRdBtn5, 0)
+        Me.Controls.SetChildIndex(Me.HorAngleDetection, 0)
+        Me.Controls.SetChildIndex(Me.VerTargetVal, 0)
+        Me.Controls.SetChildIndex(Me.ComboBox1, 0)
+        Me.Controls.SetChildIndex(Me.lblFieldName, 0)
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
-    Friend WithEvents LosZeroRollingTake As ucnRdBtn
-    Friend WithEvents UcnRdBtn1 As ucnRdBtn
+    Friend WithEvents HorTargetVal As ucnRdBtn
     Friend WithEvents UcnRdBtn2 As ucnRdBtn
-    Friend WithEvents UcnRdBtn3 As ucnRdBtn
-    Friend WithEvents UcnRdBtn4 As ucnRdBtn
-    Friend WithEvents UcnRdBtn5 As ucnRdBtn
+    Friend WithEvents HorAngleDetection As ucnRdBtn
+    Friend WithEvents VerTargetVal As ucnRdBtn
+    Friend WithEvents ComboBox1 As ComboBox
+    Private WithEvents lblFieldName As Label
 End Class

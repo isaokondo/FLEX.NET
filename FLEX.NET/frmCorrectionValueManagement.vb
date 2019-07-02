@@ -31,6 +31,7 @@
         'PuchUpStroke.Value=.
         CtlPara.水平入力補正値 = HorCorrentionValue.Value
         CtlPara.鉛直入力補正値 = VerCorrentionValue.Value
+        CtlPara.HorTargerStrokeDev=HorLastTargetVal.Value
         '押し上がりストロークの更新
         SegAsmblyData.RingLastStrokeUpdate(ConfirmRingNo.Value, PuchUpStroke.Value)
 
@@ -58,6 +59,38 @@
         VerCorrentionValue.Value = CtlPara.鉛直入力補正値
 
         DspUpdate()
+        'ストローク差制御有りのバージョン
+        If InitPara.StrokeDiffControlEnable Then
+            HorLastTargetVal.Visible = True
+            VerLastTargetVal.Visible = True
+            Label3.Visible = True
+            If CtlPara.horAngleDetection = StroekDiffDetciotn Then
+                HorLastTargetVal.Unit = "mm"
+                HorLastTargetVal.FieldName = "目標ストローク差"
+                HorLastTargetVal.DecimalPlaces = 0
+                HorLastTargetVal.Value = CtlPara.HorTargerStrokeDev
+            End If
+            If CtlPara.horAngleDetection = GyroDetciotn Then
+                HorLastTargetVal.Unit = "deg"
+                HorLastTargetVal.FieldName = "目標方位角"
+                HorLastTargetVal.DecimalPlaces = 2
+            End If
+
+
+
+            'ボタン位置変更
+            For Each btn As Control In Me.Controls
+                    If TypeOf btn Is Button Then
+                        btn.Top += 120
+
+                    End If
+                Next
+
+            End If
+
+
+
+
 
 
     End Sub

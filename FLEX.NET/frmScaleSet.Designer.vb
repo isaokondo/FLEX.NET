@@ -37,15 +37,16 @@ Partial Class frmScaleSet
         Me.nudLineDevLastRing = New FLEX.NET.ucnNumEdit()
         Me.nudPresBarGraphWidt = New FLEX.NET.ucnNumEdit()
         Me.nudDevTolerance = New FLEX.NET.ucnNumEdit()
+        Me.nudHorDevDiffTrendWidth = New FLEX.NET.ucnNumEdit()
         Me.SuspendLayout()
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(250, 606)
+        Me.btnOK.Location = New System.Drawing.Point(250, 642)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(376, 606)
+        Me.btnCancel.Location = New System.Drawing.Point(376, 642)
         '
         'RectangleShape1
         '
@@ -61,7 +62,7 @@ Partial Class frmScaleSet
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape3, Me.RectangleShape2, Me.RectangleShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(507, 664)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(507, 689)
         Me.ShapeContainer1.TabIndex = 9
         Me.ShapeContainer1.TabStop = False
         '
@@ -69,7 +70,7 @@ Partial Class frmScaleSet
         '
         Me.RectangleShape3.BorderColor = System.Drawing.Color.White
         Me.RectangleShape3.CornerRadius = 10
-        Me.RectangleShape3.Location = New System.Drawing.Point(15, 343)
+        Me.RectangleShape3.Location = New System.Drawing.Point(15, 364)
         Me.RectangleShape3.Name = "RectangleShape3"
         Me.RectangleShape3.Size = New System.Drawing.Size(460, 130)
         '
@@ -79,7 +80,7 @@ Partial Class frmScaleSet
         Me.RectangleShape2.CornerRadius = 10
         Me.RectangleShape2.Location = New System.Drawing.Point(16, 183)
         Me.RectangleShape2.Name = "RectangleShape2"
-        Me.RectangleShape2.Size = New System.Drawing.Size(460, 130)
+        Me.RectangleShape2.Size = New System.Drawing.Size(460, 162)
         '
         'nudHorMomentTrendWidth
         '
@@ -140,7 +141,7 @@ Partial Class frmScaleSet
         Me.nudHorDevDegTrendWidth.DataDspWidth = 110
         Me.nudHorDevDegTrendWidth.DecimalPlaces = CType(2, Short)
         Me.nudHorDevDegTrendWidth.DspFieldName = True
-        Me.nudHorDevDegTrendWidth.FieldName = "水平　　　　　　　　　　±"
+        Me.nudHorDevDegTrendWidth.FieldName = "水平偏角　 　　　　　　±"
         Me.nudHorDevDegTrendWidth.Increment = 0.01!
         Me.nudHorDevDegTrendWidth.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.nudHorDevDegTrendWidth.Location = New System.Drawing.Point(35, 223)
@@ -164,7 +165,7 @@ Partial Class frmScaleSet
         Me.nudVerDevDegTrendWidth.FieldName = "鉛直　　　　　　　　　　±"
         Me.nudVerDevDegTrendWidth.Increment = 0.01!
         Me.nudVerDevDegTrendWidth.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.nudVerDevDegTrendWidth.Location = New System.Drawing.Point(35, 258)
+        Me.nudVerDevDegTrendWidth.Location = New System.Drawing.Point(35, 294)
         Me.nudVerDevDegTrendWidth.Margin = New System.Windows.Forms.Padding(2)
         Me.nudVerDevDegTrendWidth.MaxValue = "10"
         Me.nudVerDevDegTrendWidth.MinValue = "0"
@@ -185,16 +186,16 @@ Partial Class frmScaleSet
         Me.Label1.Location = New System.Drawing.Point(32, 194)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(87, 15)
+        Me.Label1.Size = New System.Drawing.Size(119, 15)
         Me.Label1.TabIndex = 32
-        Me.Label1.Text = "偏角トレンド"
+        Me.Label1.Text = "偏角偏差トレンド"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(32, 358)
+        Me.Label2.Location = New System.Drawing.Point(32, 381)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(249, 15)
@@ -209,7 +210,7 @@ Partial Class frmScaleSet
         Me.nudLineDevStartRing.FieldName = "表示始点リング   　　　   －"
         Me.nudLineDevStartRing.Increment = 1.0!
         Me.nudLineDevStartRing.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.nudLineDevStartRing.Location = New System.Drawing.Point(35, 387)
+        Me.nudLineDevStartRing.Location = New System.Drawing.Point(35, 410)
         Me.nudLineDevStartRing.Margin = New System.Windows.Forms.Padding(2)
         Me.nudLineDevStartRing.MaxValue = "10"
         Me.nudLineDevStartRing.MinValue = "1"
@@ -230,7 +231,7 @@ Partial Class frmScaleSet
         Me.nudLineDevLastRing.FieldName = "表示終点リング　　　　　　＋"
         Me.nudLineDevLastRing.Increment = 1.0!
         Me.nudLineDevLastRing.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.nudLineDevLastRing.Location = New System.Drawing.Point(35, 422)
+        Me.nudLineDevLastRing.Location = New System.Drawing.Point(35, 445)
         Me.nudLineDevLastRing.Margin = New System.Windows.Forms.Padding(2)
         Me.nudLineDevLastRing.MaxValue = "10"
         Me.nudLineDevLastRing.MinValue = "1"
@@ -251,7 +252,7 @@ Partial Class frmScaleSet
         Me.nudPresBarGraphWidt.FieldName = "圧力バーグラフ"
         Me.nudPresBarGraphWidt.Increment = 1.0!
         Me.nudPresBarGraphWidt.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.nudPresBarGraphWidt.Location = New System.Drawing.Point(35, 504)
+        Me.nudPresBarGraphWidt.Location = New System.Drawing.Point(35, 527)
         Me.nudPresBarGraphWidt.Margin = New System.Windows.Forms.Padding(2)
         Me.nudPresBarGraphWidt.MaxValue = "100"
         Me.nudPresBarGraphWidt.MinValue = "0"
@@ -272,7 +273,7 @@ Partial Class frmScaleSet
         Me.nudDevTolerance.FieldName = "偏角許容値　　　　　　±"
         Me.nudDevTolerance.Increment = 0.1!
         Me.nudDevTolerance.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.nudDevTolerance.Location = New System.Drawing.Point(35, 548)
+        Me.nudDevTolerance.Location = New System.Drawing.Point(35, 571)
         Me.nudDevTolerance.Margin = New System.Windows.Forms.Padding(2)
         Me.nudDevTolerance.MaxValue = "10"
         Me.nudDevTolerance.MinValue = "0"
@@ -285,11 +286,33 @@ Partial Class frmScaleSet
         Me.nudDevTolerance.Unit = "deg"
         Me.nudDevTolerance.Value = 0R
         '
+        'nudHorDevDiffTrendWidth
+        '
+        Me.nudHorDevDiffTrendWidth.DataDspWidth = 110
+        Me.nudHorDevDiffTrendWidth.DecimalPlaces = CType(0, Short)
+        Me.nudHorDevDiffTrendWidth.DspFieldName = True
+        Me.nudHorDevDiffTrendWidth.FieldName = "水平偏差　 　　　　　　±"
+        Me.nudHorDevDiffTrendWidth.Increment = 1.0!
+        Me.nudHorDevDiffTrendWidth.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.nudHorDevDiffTrendWidth.Location = New System.Drawing.Point(35, 259)
+        Me.nudHorDevDiffTrendWidth.Margin = New System.Windows.Forms.Padding(2)
+        Me.nudHorDevDiffTrendWidth.MaxValue = "50"
+        Me.nudHorDevDiffTrendWidth.MinValue = "0"
+        Me.nudHorDevDiffTrendWidth.Name = "nudHorDevDiffTrendWidth"
+        Me.nudHorDevDiffTrendWidth.SelectItem = Nothing
+        Me.nudHorDevDiffTrendWidth.Size = New System.Drawing.Size(424, 30)
+        Me.nudHorDevDiffTrendWidth.TabIndex = 38
+        Me.nudHorDevDiffTrendWidth.ttMsg = ""
+        Me.nudHorDevDiffTrendWidth.ttTile = ""
+        Me.nudHorDevDiffTrendWidth.Unit = "mm"
+        Me.nudHorDevDiffTrendWidth.Value = 0R
+        '
         'frmScaleSet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(507, 664)
+        Me.ClientSize = New System.Drawing.Size(507, 689)
+        Me.Controls.Add(Me.nudHorDevDiffTrendWidth)
         Me.Controls.Add(Me.nudDevTolerance)
         Me.Controls.Add(Me.nudPresBarGraphWidt)
         Me.Controls.Add(Me.nudLineDevLastRing)
@@ -318,6 +341,7 @@ Partial Class frmScaleSet
         Me.Controls.SetChildIndex(Me.nudLineDevLastRing, 0)
         Me.Controls.SetChildIndex(Me.nudPresBarGraphWidt, 0)
         Me.Controls.SetChildIndex(Me.nudDevTolerance, 0)
+        Me.Controls.SetChildIndex(Me.nudHorDevDiffTrendWidth, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -338,4 +362,5 @@ Partial Class frmScaleSet
     Friend WithEvents nudPresBarGraphWidt As ucnNumEdit
     Friend WithEvents nudVerDevDegTrendWidth As ucnNumEdit
     Friend WithEvents nudDevTolerance As ucnNumEdit
+    Friend WithEvents nudHorDevDiffTrendWidth As ucnNumEdit
 End Class

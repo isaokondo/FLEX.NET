@@ -67,7 +67,7 @@ Module mdlFLEX
     ''' </summary>
     Public LosZeroPerform As New clsLosZeroPerform
 
-    Public StrokeDev As New clsStrokeDevi
+    Public StrokeDev As clsStrokeDevi
 
 
     ''' <summary>
@@ -80,6 +80,27 @@ Module mdlFLEX
     ''' 目標推進量超えたかの確認メッセージ出力フラグ
     ''' </summary>
     Private TargetStrokeOverConfirm As Boolean
+
+
+    ''' <summary>
+    ''' リング終値管理
+    ''' </summary>
+    Public Const RingCloseVal As Boolean = False
+    ''' <summary>
+    ''' 補正値管理
+    ''' </summary>
+    Public Const CorrectionVal As Boolean = True
+
+    ''' <summary>
+    ''' ジャイロ検出
+    ''' </summary>
+    Public Const GyroDetciotn As Boolean = True
+
+    ''' <summary>
+    ''' ストローク差検出
+    ''' </summary>
+    Public Const StroekDiffDetciotn As Boolean = False
+
 
 
     ''' <summary>
@@ -536,14 +557,14 @@ Module mdlFLEX
         StrokeDev.HorizonLefttStroke = CalcStroke.LeftCalcStroke
         StrokeDev.HorizonRighttStroke = CalcStroke.RightCalcStroke
 
-        If CalcStroke.MesureCalcJackStroke.ContainsKey(InitPara.StrokeNoBottomLeft) Then
-            StrokeDev.BottomLefttStroke = CalcStroke.MesureCalcJackStroke(InitPara.StrokeNoBottomLeft)
+        If CalcStroke.MesureCalcJackStroke.ContainsKey(InitPara.StrokeNoBtmLeft) Then
+            StrokeDev.BottomLefttStroke = CalcStroke.MesureCalcJackStroke(InitPara.StrokeNoBtmLeft)
         End If
         If CalcStroke.MesureCalcJackStroke.ContainsKey(InitPara.StrokeNoTopLeft) Then
             StrokeDev.TopLeftStroke = CalcStroke.MesureCalcJackStroke(InitPara.StrokeNoTopLeft)
         End If
-        If CalcStroke.MesureCalcJackStroke.ContainsKey(InitPara.StrokeNoBottomRight) Then
-            StrokeDev.BottomRighttStroke = CalcStroke.MesureCalcJackStroke(InitPara.StrokeNoBottomRight)
+        If CalcStroke.MesureCalcJackStroke.ContainsKey(InitPara.StrokeNoBtmRight) Then
+            StrokeDev.BottomRighttStroke = CalcStroke.MesureCalcJackStroke(InitPara.StrokeNoBtmRight)
         End If
         If CalcStroke.MesureCalcJackStroke.ContainsKey(InitPara.StrokeNoTopRight) Then
             StrokeDev.TopRighttStroke = CalcStroke.MesureCalcJackStroke(InitPara.StrokeNoTopRight)

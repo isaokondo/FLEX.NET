@@ -232,7 +232,46 @@
         DspMoment.Blink = JackMvAuto.モーメント上限超
         UcnJackDsp.PointRLimitOver = JackMvAuto.片押しR上限超
 
-        DspHorDev.Blink = RefernceDirection.HorDevLimitOver
+        Select Case CtlPara.horAngleDetection
+
+            Case GyroDetciotn
+                DspHorDev.Blink = RefernceDirection.HorDevLimitOver
+                DspHorDev.FieldName = "水平偏角"
+                DspHorDev.Unit = "deg"
+                DspHorDev.DecimalPlaces = 2
+
+                DspDirection.Blink = PlcIf.GyiroError
+                DspDirection.FieldName = "方位角"
+
+                DspRingTargetDir.FieldName = "リング目標方向角"
+
+                DspTargetDirection.FieldName = "目標方位角"
+            Case StroekDiffDetciotn
+                DspHorDev.Blink = False
+                DspHorDev.FieldName = "ｽﾄﾛｰｸ差偏差"
+                DspHorDev.Unit = "mm"
+                DspHorDev.DecimalPlaces = 1
+                DspDirection.FieldName = "ｽﾄﾛｰｸ差"
+                DspDirection.Blink = False
+
+                DspTargetDirection.FieldName = "目標ストローク差"
+
+                DspRingTargetDir.FieldName = "ﾘﾝｸﾞ目標ｽﾄﾛｰｸ差"
+
+                DspRingTargetDir.Value = CtlPara.HorTargerStrokeDev '目標ストローク差
+        End Select
+
+
+        ucnHorDevChart.FieldName = DspHorDev.FieldName & "(" & DspHorDev.Unit & ")"
+        ucnHorDevChart.DecimalPlaces = DspHorDev.DecimalPlaces
+        DspDirection.Unit = DspHorDev.Unit
+        DspDirection.DecimalPlaces = DspHorDev.DecimalPlaces
+
+        DspRingTargetDir.Unit = DspHorDev.Unit
+
+        DspTargetDirection.Unit = DspHorDev.Unit
+
+
         DspVerDev.Blink = RefernceDirection.VerDevLimitOver
 
         DspClockwiseMargin.Blink = PlcIf.rollingClockWiseOver
@@ -244,7 +283,13 @@
             'ﾓｰﾒﾝﾄ
             ucnHorMomentChart.ChartDataAdd(PlcIf.RealStroke, CulcMoment.MomentX)
             ucnVerMomentChart.ChartDataAdd(PlcIf.RealStroke, CulcMoment.MomentY)
-            ucnHorDevChart.ChartDataAdd(PlcIf.RealStroke, RefernceDirection.平面偏角)
+            If CtlPara.horAngleDetection = GyroDetciotn Then
+                ucnHorDevChart.ChartDataAdd(PlcIf.RealStroke, RefernceDirection.平面偏角)
+            Else
+                ucnHorDevChart.ChartDataAdd(PlcIf.RealStroke, StrokeDev.StrokeDiffDeflection)
+            End If
+
+
             ucnVerDevChart.ChartDataAdd(PlcIf.RealStroke, RefernceDirection.縦断偏角)
         End If
 
@@ -428,6 +473,8 @@
         Reduce = New clsReducePress 'ロスゼロ減圧処理
         TableUpdateConfirm = New clsTableUpdateConfirm    'テーブル更新によるパラメータ再取得
 
+        StrokeDev = New clsStrokeDevi
+
         CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
         'CalcStroke.MesureCalcAveJackStroke = PlcIf.MesureCalcAveJackStroke '平均ジャッキストロークのセット
 
@@ -495,10 +542,15 @@
 
             DspHorFChangePoint.Value = .HorZendoKijun.平面ゾーン内残距離
             DspHorRChangePoint.Value = .HorZendoKijun.平面ゾーン掘進距離
-            DspTargetDirection.Value = .平面基準方位
-            DspHorDev.Value = .平面偏角
+            If CtlPara.horAngleDetection = GyroDetciotn Then
+                DspHorDev.Value = .平面偏角
+                DspTargetDirection.Value = .平面基準方位
+                DspRingTargetDir.Value = Hoko2Hoi(RefernceDirection.RingTarget.平面計画方位) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
+
+            End If
 
             ucnHorLineChart.PlanNumData = .平面計画方位
+
 
 
 
@@ -524,6 +576,13 @@
 
         End With
 
+        'ストローク差制御
+        If CtlPara.horAngleDetection = StroekDiffDetciotn Then
+            DspHorDev.Value = StrokeDev.StrokeDiffDeflection
+            DspTargetDirection.Value = StrokeDev.TargetStrokeRealDiff '目標ストローク差
+
+        End If
+
 
         '姿勢角トレンドトレンド　データセット
         ucnHorLineChart.PlanData = DirectionChartD.HorPData
@@ -540,7 +599,6 @@
         ucnVerLineChart.RealData = DspPitching.Value
 
         'DspRingTargetDir.Value = Hoko2Hoi(RefernceDirection.RingTarget.軌道中心方位角) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
-        DspRingTargetDir.Value = Hoko2Hoi(RefernceDirection.RingTarget.平面計画方位) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
     End Sub
     ''' <summary>
     ''' 同時施工組立パターン情報表示
@@ -727,9 +785,13 @@
     Private Sub PresBlock_Click(sender As Object, e As EventArgs) Handles PresBlock.Click
         My.Forms.frmPressBlock.Show()
     End Sub
-
+    ''' <summary>
+    ''' 管理方法
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub ManagmentMethd_Click(sender As Object, e As EventArgs) Handles ManagmentMethd.Click
-
+        My.Forms.frmManagmentMethd.Show()
     End Sub
 
     Private Sub LossZeroConcern_Click(sender As Object, e As EventArgs) Handles LossZeroConcern.Click
@@ -1267,7 +1329,8 @@
         ucnVerMomentChart.ChartClear()
         '水平偏角
         ucnHorDevChart.StrokeWidth = CtlPara.GraphStrokeWidth
-        ucnHorDevChart.ChartHighScale = CtlPara.HorDevDegTrendWidth
+        ucnHorDevChart.ChartHighScale =
+            If(CtlPara.horAngleDetection = GyroDetciotn, CtlPara.HorDevDegTrendWidth, CtlPara.HorDevDiffTrendWidth)
         ucnHorDevChart.ChartList = HorDevData.DList
         ucnHorDevChart.ChartClear()
         '鉛直偏角

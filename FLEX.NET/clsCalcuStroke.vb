@@ -233,11 +233,11 @@ Public Class clsCalcuStroke
             Dim jk As New Dictionary(Of Short, String)
             For Each j In InitPara.MesureJackAngle.Keys
                 Dim st As String = "掘進モード"
+                If Not PlcIf.JackExecMode(j - 1) Then
+                    st = "組立モード"
+                End If
                 If _asembleFinishedJack.Contains(j) Then
                     st = "組立完了"
-                End If
-                If _ExclusionJack.Contains(j) Then
-                    st = "組立中"
                 End If
                 If _ExclusionOpposeJack.Contains(j) Then
                     st = "対抗ジャッキ"
