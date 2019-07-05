@@ -244,9 +244,16 @@
                 DspDirection.FieldName = "方位角"
 
                 DspRingTargetDir.FieldName = "リング目標方向角"
+                DspRingTargetDir.DecimalPlaces = 2
 
                 DspTargetDirection.FieldName = "目標方位角"
-            Case StroekDiffDetciotn
+
+                ucnHorLineChart.Visible = True
+
+                pnlStrokeDiffContorol.Visible = False
+
+                'ストローク差制御
+            Case StrokeDiffDetciotn
                 DspHorDev.Blink = False
                 DspHorDev.FieldName = "ｽﾄﾛｰｸ差偏差"
                 DspHorDev.Unit = "mm"
@@ -257,13 +264,24 @@
                 DspTargetDirection.FieldName = "目標ストローク差"
 
                 DspRingTargetDir.FieldName = "ﾘﾝｸﾞ目標ｽﾄﾛｰｸ差"
-
+                DspRingTargetDir.DecimalPlaces = 0
                 DspRingTargetDir.Value = CtlPara.HorTargerStrokeDev '目標ストローク差
+
+                ucnHorLineChart.Visible = False
+
+                pnlStrokeDiffContorol.Visible = True
+                Call DspStrokeDiffControlInfo()
+
         End Select
 
 
         ucnHorDevChart.FieldName = DspHorDev.FieldName & "(" & DspHorDev.Unit & ")"
         ucnHorDevChart.DecimalPlaces = DspHorDev.DecimalPlaces
+        '水平チャートのスケール
+        ucnHorDevChart.ChartHighScale =
+            If(CtlPara.horAngleDetection = GyroDetciotn, CtlPara.HorDevDegTrendWidth, CtlPara.HorDevDiffTrendWidth)
+
+
         DspDirection.Unit = DspHorDev.Unit
         DspDirection.DecimalPlaces = DspHorDev.DecimalPlaces
 
@@ -276,6 +294,7 @@
 
         DspClockwiseMargin.Blink = PlcIf.rollingClockWiseOver
         DspAntiClockwiseMargin.Blink = PlcIf.rollingAntiClockWiseOver
+
 
 
         'チャートの更新
@@ -444,6 +463,99 @@
         ucnVerDevChart.ChartList.Clear()
     End Sub
 
+    ''' <summary>
+    ''' ストローク差制御　情報表示
+    ''' </summary>
+    Private Sub DspStrokeDiffControlInfo()
+        '上半ｽﾄﾛｰｸ----------------------------------------------------
+        '開始ストローク
+        If InitPara.StrokeNoTopRight <> 0 And InitPara.StrokeNoTopLeft <> 0 Then
+            lblTopRightStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoTopRight) '開始ストローク
+            lblTopLeftStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoTopLeft)
+            lblTopRightRealSt.Text = StrokeDev.TopRighttStroke '現在のストローク
+            lblTopLeftRealSt.Text = StrokeDev.TopLeftStroke
+            '推進量
+            lblTopNetSt.Text =
+                    ((StrokeDev.TopRighttStroke + StrokeDev.TopLeftStroke - lblTopLeftStartSt.Text - lblTopRightStartSt.Text) / 2).ToString("F1")
+            lblConvertTopStrokeDiff.Text = StrokeDev.ConVertTopStrokeDiff.ToString("F1") '換算ストローク差
+            lblConvertTopStartStrokeDiff.Text = StrokeDev.ConVertTopStartStrokeDiff.ToString("F1")
+            lblTopRingTargetSt.Text = (StrokeDev.ConVertTopStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
+
+            ' 掘進モード、セグメントモードで背景色を変更
+            Call ModeColorSet(lblTopRightStNo, InitPara.StrokeNoTopRight)
+            Call ModeColorSet(lblTopLefttStNo, InitPara.StrokeNoTopLeft)
+
+
+        End If
+
+
+        '水平部ｽﾄﾛｰｸ----------------------------------------------------
+        lblHorRightStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoHorRight)
+        lblHorLeftStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoHorLeft)
+        lblHorRightRealSt.Text = StrokeDev.HorizonRighttStroke
+        lblHorLeftRealSt.Text = StrokeDev.HorizonLefttStroke
+        '推進量
+        lblHorNetSt.Text =
+                ((StrokeDev.HorizonRighttStroke + StrokeDev.HorizonLefttStroke - lblHorLeftStartSt.Text - lblHorRightStartSt.Text) / 2).ToString("F1")
+        lblConvertHorStrokeDiff.Text = StrokeDev.ConVertHorStrokeDiff.ToString("F1")
+        lblConvertHorStartStrokeDiff.Text = StrokeDev.ConVertHorStartStrokeDiff.ToString("F1")
+        lblHorRingTargetSt.Text = (StrokeDev.ConVertHorStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
+        ' 掘進モード、セグメントモードで背景色を変更
+        Call ModeColorSet(lblHorLefttStNo, InitPara.StrokeNoHorLeft)
+        Call ModeColorSet(lblHorRightStNo, InitPara.StrokeNoHorRight)
+
+        '下半ｽﾄﾛｰｸ----------------------------------------------------
+        If InitPara.StrokeNoBtmRight <> 0 And InitPara.StrokeNoBtmLeft <> 0 Then
+            lblBtmRightStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoBtmRight)
+            lblBtmLeftStartSt.Text = CtlPara.StartJackStroke(InitPara.StrokeNoBtmLeft)
+            lblBtmRightRealSt.Text = StrokeDev.BottomRighttStroke
+            lblBtmLeftRealSt.Text = StrokeDev.BottomLefttStroke
+            '推進量
+            lblBtmNetSt.Text =
+                    ((StrokeDev.BottomLefttStroke + StrokeDev.BottomRighttStroke - lblBtmLeftStartSt.Text - lblBtmRightStartSt.Text) / 2).ToString("F1")
+            lblConvertBtmStrokeDiff.Text = StrokeDev.ConVertBottomStrokeDiff.ToString("F1")
+            lblConvertBtmStartStrokeDiff.Text = StrokeDev.ConVertBottomStartStrokeDiff.ToString("F1")
+            lblBtmRingTargetSt.Text = (StrokeDev.ConVertBottomStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
+            ' 掘進モード、セグメントモードで背景色を変更
+            Call ModeColorSet(lblBtmRightStNo, InitPara.StrokeNoBtmRight)
+            Call ModeColorSet(lblBtmLeftStNo, InitPara.StrokeNoBtmLeft)
+
+        End If
+
+
+        ' 制御ストロークをハイライト表示
+        Dim SelectColor As Color = Color.DodgerBlue
+        Dim NotSelectColor As Color = Color.LightGray
+
+        lblHorStItem.BackColor = NotSelectColor
+        lblBtmStItem.BackColor = NotSelectColor
+        lblTopStItem.BackColor = NotSelectColor
+
+        Select Case StrokeDev.StrokeSelect
+            Case clsStrokeDevi.SelectHor
+                lblHorStItem.BackColor = Color.DodgerBlue
+            Case clsStrokeDevi.SelectBtm
+                lblBtmStItem.BackColor = Color.DodgerBlue
+            Case clsStrokeDevi.SelectTop
+                lblTopStItem.BackColor = Color.DodgerBlue
+        End Select
+
+
+    End Sub
+
+    ''' <summary>
+    ''' 掘進モード、セグメントモードで背景色を変更
+    ''' </summary>
+    ''' <param name="lblSt">背景色を変更するラベル</param>
+    ''' <param name="StNo">ジャッキ番号</param>
+    Private Sub ModeColorSet(lblSt As Label, StNo As Integer)
+        Dim ExecModeColor As Color = Color.Magenta
+        Dim SegModeColor As Color = Color.Aqua
+
+        lblSt.BackColor = If(PlcIf.JackStatus(StNo - 1) And 2, ExecModeColor, SegModeColor)
+
+    End Sub
+
 
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -476,6 +588,7 @@
         StrokeDev = New clsStrokeDevi
 
         CalcStroke.MesureJackStroke = PlcIf.MesureJackStroke
+        CalcStroke.CalcAveLogicalStroke = PlcIf.RealStroke
         'CalcStroke.MesureCalcAveJackStroke = PlcIf.MesureCalcAveJackStroke '平均ジャッキストロークのセット
 
         'TODO:画面ナロータイプを作成したい
@@ -492,7 +605,17 @@
         JackMvAuto.鉛直I定数 = CtlPara.鉛直ジャッキ制御I定数
         JackMvAuto.鉛直D定数 = CtlPara.鉛直ジャッキ制御D定数
 
+        'ストローク差制御の制御ストロークNoの表示
+        lblTopRightStNo.Text &= InitPara.StrokeNoTopRight
+        lblTopLefttStNo.Text &= InitPara.StrokeNoTopLeft
+        lblHorRightStNo.Text &= InitPara.StrokeNoHorRight
+        lblHorLefttStNo.Text &= InitPara.StrokeNoHorLeft
+        lblBtmRightStNo.Text &= InitPara.StrokeNoBtmRight
+        lblBtmLeftStNo.Text &= InitPara.StrokeNoBtmLeft
 
+
+        '管理方法の有効無効
+        ManagmentMethd.Enabled = InitPara.StrokeDiffControlEnable
 
     End Sub
     ''' <summary>
@@ -546,6 +669,7 @@
                 DspHorDev.Value = .平面偏角
                 DspTargetDirection.Value = .平面基準方位
                 DspRingTargetDir.Value = Hoko2Hoi(RefernceDirection.RingTarget.平面計画方位) + CtlPara.水平入力補正値 + HorPlan.X軸方位角
+                UcnDspDevImg.HorDev = .平面偏角
 
             End If
 
@@ -568,7 +692,6 @@
 
             ucnVerLineChart.PlanNumData = .縦断計画方位
 
-            UcnDspDevImg.HorDev = .平面偏角
             UcnDspDevImg.VerDev = .縦断偏角
 
 
@@ -577,9 +700,10 @@
         End With
 
         'ストローク差制御
-        If CtlPara.horAngleDetection = StroekDiffDetciotn Then
+        If CtlPara.horAngleDetection = StrokeDiffDetciotn Then
             DspHorDev.Value = StrokeDev.StrokeDiffDeflection
             DspTargetDirection.Value = StrokeDev.TargetStrokeRealDiff '目標ストローク差
+            UcnDspDevImg.HorDev = StrokeDev.ConvertHorDeflection
 
         End If
 
@@ -1152,9 +1276,6 @@
             '_DList = New Dictionary(Of Integer, Single)
             Dim rsData As DataTable =
                 GetDtfmSQL($"SELECT 掘進ストローク,{FldName} FROM flex掘削データ WHERE リング番号='{RingNo}';")
-            'While rsData.Read
-            '    _DList.Add(rsData.Item("掘進ストローク"), rsData.Item(FldName))
-            'End While
             _DList =
                 rsData.AsEnumerable.ToDictionary(Function(n) CInt(n.Item(0)), Function(n) CSng(n.Item(1)))
 
@@ -1327,7 +1448,7 @@
         ucnVerMomentChart.ChartHighScale = CtlPara.HorMomentTrendWidth
         ucnVerMomentChart.ChartList = VerMomentData.DList
         ucnVerMomentChart.ChartClear()
-        '水平偏角
+        '水平偏角(ストローク偏差)
         ucnHorDevChart.StrokeWidth = CtlPara.GraphStrokeWidth
         ucnHorDevChart.ChartHighScale =
             If(CtlPara.horAngleDetection = GyroDetciotn, CtlPara.HorDevDegTrendWidth, CtlPara.HorDevDiffTrendWidth)

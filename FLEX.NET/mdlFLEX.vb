@@ -99,7 +99,7 @@ Module mdlFLEX
     ''' <summary>
     ''' ストローク差検出
     ''' </summary>
-    Public Const StroekDiffDetciotn As Boolean = False
+    Public Const StrokeDiffDetciotn As Boolean = False
 
 
 
@@ -624,15 +624,25 @@ Module mdlFLEX
 
         RefernceDirection.sbCulKijun()
 
+        StrokeDev.sbGetDev() 'ストローク差角度換算を求める
+
+
         My.Forms.frmMain.LineDataUpdate()
 
         If CtlPara.AutoDirectionControl Then
-            JackMvAuto.水平偏差角 = RefernceDirection.平面偏角
+            Select Case CtlPara.horAngleDetection
+                Case GyroDetciotn
+                    JackMvAuto.HorControlDeflection = RefernceDirection.平面偏角
+                Case StrokeDiffDetciotn
+                    JackMvAuto.HorControlDeflection = StrokeDev.ConvertHorDeflection
+
+            End Select
+
+
             JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
         End If
 
 
-        StrokeDev.sbGetDev()
 
         If InitPara.ServerMode Then
             PlcIf.LineDatalePlcWrite(RefernceDirection.平面偏角, RefernceDirection.縦断偏角, CtlPara.水平入力補正値, CtlPara.鉛直入力補正値)
@@ -895,29 +905,37 @@ Module mdlFLEX
             JackMvAuto.鉛直P定数 = CtlPara.鉛直ジャッキ制御P定数
             JackMvAuto.鉛直I定数 = CtlPara.鉛直ジャッキ制御I定数
             JackMvAuto.鉛直D定数 = CtlPara.鉛直ジャッキ制御D定数
-            JackMvAuto.水平偏差角 = RefernceDirection.平面偏角
+
+            Select Case CtlPara.horAngleDetection
+                Case GyroDetciotn
+                    JackMvAuto.HorControlDeflection = RefernceDirection.平面偏角
+                Case StrokeDiffDetciotn
+                    JackMvAuto.HorControlDeflection = StrokeDev.ConvertHorDeflection
+            End Select
+
+
             JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
-            ''自動から手動時のトラッキング処理
-            'JackMvAuto.PointX = JackManual.PointX
-            'JackMvAuto.PointY = JackManual.PointY
-            JackMvAuto.PointX = PlcIf.PointX
-            JackMvAuto.PointY = PlcIf.PointY
-            JackMvAuto.sbMnToAutTracking()
-            ''自動演算開始
-            JackMvAuto.MvAutoStart()
-        Else
-            If PlcIf.FlexControlOn AndAlso PlcIf.ExcaStatus = cKussin Then
-                WriteEventData("方向制御 手動モードに変わりました", Color.Blue)
-            End If
-            ''自動演算停止
-            JackMvAuto.MvAutoStop()
-            '                ''自動→手動切替時
-            'TODO:操作権
-            'If mneSosa.Checked Then
-            ''自動から手動時のトラッキング処理
-            ''自動時の座標を手動時の座標へ渡す
-            'JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
-            JackManual.PutPointXY(PlcIf.PointX, PlcIf.PointY)
+                    ''自動から手動時のトラッキング処理
+                    'JackMvAuto.PointX = JackManual.PointX
+                    'JackMvAuto.PointY = JackManual.PointY
+                    JackMvAuto.PointX = PlcIf.PointX
+                    JackMvAuto.PointY = PlcIf.PointY
+                    JackMvAuto.sbMnToAutTracking()
+                    ''自動演算開始
+                    JackMvAuto.MvAutoStart()
+                    Else
+                    If PlcIf.FlexControlOn AndAlso PlcIf.ExcaStatus = cKussin Then
+                        WriteEventData("方向制御 手動モードに変わりました", Color.Blue)
+                    End If
+                    ''自動演算停止
+                    JackMvAuto.MvAutoStop()
+                    '                ''自動→手動切替時
+                    'TODO:操作権
+                    'If mneSosa.Checked Then
+                    ''自動から手動時のトラッキング処理
+                    ''自動時の座標を手動時の座標へ渡す
+                    'JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
+                    JackManual.PutPointXY(PlcIf.PointX, PlcIf.PointY)
 
         End If
     End Sub

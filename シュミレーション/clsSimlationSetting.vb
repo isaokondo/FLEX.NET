@@ -168,3 +168,163 @@ Public Class clsSimlationSetting
 
 End Class
 
+Public Class NumericUpDownColumn
+    Inherits DataGridViewColumn
+
+    Public Sub New()
+        MyBase.New(New NumericUpDownCell)
+    End Sub
+
+    Public Overrides Property CellTemplate As DataGridViewCell
+        Get
+            Return MyBase.CellTemplate
+        End Get
+        Set(value As DataGridViewCell)
+            MyBase.CellTemplate = value
+        End Set
+    End Property
+
+End Class
+
+Public Class NumericUpDownCell
+    Inherits DataGridViewTextBoxCell
+
+    Public Overrides Sub InitializeEditingControl(rowIndex As Integer, initialFormattedValue As Object, dataGridViewCellStyle As DataGridViewCellStyle)
+        MyBase.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle)
+        Dim ctl As NumericUpDownCellEditingControl = DataGridView.EditingControl
+        If Me.Value <> Nothing Then
+            ctl.Value = Decimal.Parse(Me.Value.ToString())
+        End If
+    End Sub
+
+    Public Overrides ReadOnly Property EditType As Type
+        Get
+            'Return MyBase.EditType
+            Return GetType(NumericUpDownCellEditingControl)
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property ValueType As Type
+        Get
+            'Return MyBase.ValueType
+            Return GetType(Decimal)
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property DefaultNewRowValue As Object
+        Get
+            'Return MyBase.DefaultNewRowValue
+            Return CDec(0)
+        End Get
+    End Property
+
+    Public Overrides Function ParseFormattedValue(formattedValue As Object, cellStyle As DataGridViewCellStyle, formattedValueTypeConverter As ComponentModel.TypeConverter, valueTypeConverter As ComponentModel.TypeConverter) As Object
+        'Return MyBase.ParseFormattedValue(formattedValue, cellStyle, formattedValueTypeConverter, valueTypeConverter)
+        Return MyBase.ParseFormattedValue(formattedValue.ToString(), cellStyle, formattedValueTypeConverter, valueTypeConverter)
+    End Function
+
+End Class
+
+Public Class NumericUpDownCellEditingControl
+    Inherits NumericUpDown
+    Implements IDataGridViewEditingControl
+
+    Private DataGridView As DataGridView
+    Private valueIsChanged As Boolean = False
+    Private rowIndex As Integer
+
+    Public Property EditingControlFormattedValue() As Object _
+Implements IDataGridViewEditingControl.EditingControlFormattedValue
+
+        Get
+            Return MyBase.Value
+        End Get
+
+        Set(ByVal value As Object)
+            Dim newValue As String = value
+            If newValue <> Nothing Then
+                MyBase.Value = Decimal.Parse(newValue)
+            End If
+        End Set
+    End Property
+
+    Public Function GetEditingControlFormattedValue(ByVal context As DataGridViewDataErrorContexts) As Object _
+Implements IDataGridViewEditingControl.GetEditingControlFormattedValue
+        Return EditingControlFormattedValue
+    End Function
+
+    Public Sub ApplyCellStyleToEditingControl(ByVal dataGridViewCellStyle As DataGridViewCellStyle) _
+Implements IDataGridViewEditingControl.ApplyCellStyleToEditingControl
+        Me.Font = dataGridViewCellStyle.Font
+    End Sub
+
+    Public Property EditingControlRowIndex() As Integer _
+Implements IDataGridViewEditingControl.EditingControlRowIndex
+
+        Get
+            Return rowIndex 'rowindexNum?
+        End Get
+        Set(ByVal value As Integer)
+            rowIndex = value 'rowindexNum?
+        End Set
+    End Property
+
+    Public Function EditingControlWantsInputKey(ByVal key As Keys, ByVal dataGridViewWantsInputKey As Boolean) As Boolean _
+Implements IDataGridViewEditingControl.EditingControlWantsInputKey
+        EditingControlWantsInputKey = False
+        Select Case key & Keys.KeyCode
+            Case Keys.Left
+            Case Keys.Up
+            Case Keys.Down
+            Case Keys.Right
+                EditingControlWantsInputKey = True
+            Case Else
+                EditingControlWantsInputKey = False
+        End Select
+    End Function
+
+    Public Sub PrepareEditingControlForEdit(ByVal selectAll As Boolean) _
+Implements IDataGridViewEditingControl.PrepareEditingControlForEdit
+        ' No preparation needs to be done.
+    End Sub
+
+    Public ReadOnly Property RepositionEditingControlOnValueChange() As Boolean _
+Implements IDataGridViewEditingControl.RepositionEditingControlOnValueChange
+        Get
+            Return False
+        End Get
+    End Property
+
+    Public Property EditingControlDataGridView() As DataGridView _
+Implements IDataGridViewEditingControl.EditingControlDataGridView
+        Get
+            Return DataGridView
+        End Get
+        Set(ByVal value As DataGridView)
+            DataGridView = value
+        End Set
+    End Property
+
+    Public Property EditingControlValueChanged() As Boolean _
+Implements IDataGridViewEditingControl.EditingControlValueChanged
+        Get
+            Return valueIsChanged
+        End Get
+        Set(ByVal value As Boolean)
+            valueIsChanged = value
+        End Set
+    End Property
+
+    Public ReadOnly Property EditingPanelCursor() As Cursor _
+Implements IDataGridViewEditingControl.EditingPanelCursor
+        Get
+            Return MyBase.Cursor
+        End Get
+    End Property
+
+    Protected Overrides Sub OnValueChanged(ByVal eventargs As EventArgs)
+        valueIsChanged = True
+        Me.EditingControlDataGridView.NotifyCurrentCellDirty(True)
+        MyBase.OnValueChanged(eventargs)
+    End Sub
+End Class

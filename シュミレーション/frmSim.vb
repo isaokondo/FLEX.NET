@@ -195,7 +195,8 @@ Public Class frmSim
 
 
         For i = 0 To InitParm.NumberJack - 1
-            DgvLosZero.Rows.Add()
+
+            .Rows.Add()
             DgvLosZero.Rows(i).Cells(0).Value = (i + 1).ToString
         Next
 
@@ -308,6 +309,8 @@ Public Class frmSim
         '元圧
         nudSoucePressure.Value = fnChangePresAnalogIn(AiMachineRd(GetMachineOfAiAdr(SimSet.JkPresAdr)))
 
+        nudSoucePressure.BackColor = If(nudSoucePressure.Value = 0, Color.Cyan, Color.White)
+
         '左ストローク
         nudLeftStroke.Value = fnChangeStrokeAnalogIn(AiMachineRd(GetMachineOfAiAdr(SimSet.LeftStrokeAdr)))
 
@@ -345,7 +348,9 @@ Public Class frmSim
 
             'ロスゼロ　fromFLEX
             iRet = ComPlc.GetDevice2(SimSet.LosZeroStFlex, plcAiData)
-            nudLosZeroStsFlex.Value = plcAiData
+            If iRet = 0 Then
+                nudLosZeroStsFlex.Value = plcAiData
+            End If
 
 
         End If
@@ -948,6 +953,10 @@ CatchError:  '例外処理
     End Sub
 
     Private Sub nudLeftStroke_ValueChanged(sender As Object, e As EventArgs) Handles nudLeftStroke.ValueChanged
+
+    End Sub
+
+    Private Sub DgvLosZero_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvLosZero.MouseDoubleClick
 
     End Sub
 End Class

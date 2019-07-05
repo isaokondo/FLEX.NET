@@ -496,10 +496,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblTopRightStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblTopRightStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblTopRightStartSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblTopRightStartSt.Location = New System.Drawing.Point(185, 44)
+        Me.lblTopRightStartSt.Location = New System.Drawing.Point(150, 44)
         Me.lblTopRightStartSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblTopRightStartSt.Name = "lblTopRightStartSt"
-        Me.lblTopRightStartSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblTopRightStartSt.Size = New System.Drawing.Size(60, 20)
         Me.lblTopRightStartSt.TabIndex = 175
         Me.lblTopRightStartSt.Text = "-----"
         Me.lblTopRightStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -510,10 +510,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblTopLeftStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblTopLeftStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblTopLeftStartSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblTopLeftStartSt.Location = New System.Drawing.Point(185, 66)
+        Me.lblTopLeftStartSt.Location = New System.Drawing.Point(150, 64)
         Me.lblTopLeftStartSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblTopLeftStartSt.Name = "lblTopLeftStartSt"
-        Me.lblTopLeftStartSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblTopLeftStartSt.Size = New System.Drawing.Size(60, 20)
         Me.lblTopLeftStartSt.TabIndex = 176
         Me.lblTopLeftStartSt.Text = "-----"
         Me.lblTopLeftStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -524,10 +524,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblTopRightRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblTopRightRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblTopRightRealSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblTopRightRealSt.Location = New System.Drawing.Point(245, 44)
+        Me.lblTopRightRealSt.Location = New System.Drawing.Point(210, 44)
         Me.lblTopRightRealSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblTopRightRealSt.Name = "lblTopRightRealSt"
-        Me.lblTopRightRealSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblTopRightRealSt.Size = New System.Drawing.Size(60, 20)
         Me.lblTopRightRealSt.TabIndex = 177
         Me.lblTopRightRealSt.Text = "-----"
         Me.lblTopRightRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -538,10 +538,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblTopLeftRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblTopLeftRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblTopLeftRealSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblTopLeftRealSt.Location = New System.Drawing.Point(245, 66)
+        Me.lblTopLeftRealSt.Location = New System.Drawing.Point(210, 64)
         Me.lblTopLeftRealSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblTopLeftRealSt.Name = "lblTopLeftRealSt"
-        Me.lblTopLeftRealSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblTopLeftRealSt.Size = New System.Drawing.Size(60, 20)
         Me.lblTopLeftRealSt.TabIndex = 178
         Me.lblTopLeftRealSt.Text = "-----"
         Me.lblTopLeftRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -552,10 +552,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblTopNetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblTopNetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblTopNetSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblTopNetSt.Location = New System.Drawing.Point(305, 44)
+        Me.lblTopNetSt.Location = New System.Drawing.Point(270, 44)
         Me.lblTopNetSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblTopNetSt.Name = "lblTopNetSt"
-        Me.lblTopNetSt.Size = New System.Drawing.Size(78, 66)
+        Me.lblTopNetSt.Size = New System.Drawing.Size(78, 60)
         Me.lblTopNetSt.TabIndex = 179
         Me.lblTopNetSt.Text = "-----"
         Me.lblTopNetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -565,7 +565,7 @@ Partial Class frmCalcStrokeConfirm
         Me.lblFieldName.BackColor = System.Drawing.Color.LightGray
         Me.lblFieldName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblFieldName.Location = New System.Drawing.Point(184, 1)
+        Me.lblFieldName.Location = New System.Drawing.Point(149, 1)
         Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblFieldName.Name = "lblFieldName"
         Me.lblFieldName.Size = New System.Drawing.Size(120, 22)
@@ -578,7 +578,7 @@ Partial Class frmCalcStrokeConfirm
         Me.Label6.BackColor = System.Drawing.Color.LightGray
         Me.Label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label6.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label6.Location = New System.Drawing.Point(184, 23)
+        Me.Label6.Location = New System.Drawing.Point(149, 23)
         Me.Label6.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(61, 22)
@@ -591,7 +591,7 @@ Partial Class frmCalcStrokeConfirm
         Me.Label7.BackColor = System.Drawing.Color.LightGray
         Me.Label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label7.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label7.Location = New System.Drawing.Point(243, 23)
+        Me.Label7.Location = New System.Drawing.Point(208, 23)
         Me.Label7.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(61, 22)
@@ -604,7 +604,7 @@ Partial Class frmCalcStrokeConfirm
         Me.Label8.BackColor = System.Drawing.Color.LightGray
         Me.Label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label8.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label8.Location = New System.Drawing.Point(305, 1)
+        Me.Label8.Location = New System.Drawing.Point(270, 1)
         Me.Label8.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(79, 44)
@@ -620,9 +620,9 @@ Partial Class frmCalcStrokeConfirm
         Me.Label9.Location = New System.Drawing.Point(4, 1)
         Me.Label9.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(180, 44)
+        Me.Label9.Size = New System.Drawing.Size(147, 44)
         Me.Label9.TabIndex = 184
-        Me.Label9.Text = "制御・管理用ストローク"
+        Me.Label9.Text = "制御管理用" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ストローク"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblTopStItem
@@ -633,9 +633,9 @@ Partial Class frmCalcStrokeConfirm
         Me.lblTopStItem.Location = New System.Drawing.Point(4, 44)
         Me.lblTopStItem.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblTopStItem.Name = "lblTopStItem"
-        Me.lblTopStItem.Size = New System.Drawing.Size(127, 44)
+        Me.lblTopStItem.Size = New System.Drawing.Size(92, 40)
         Me.lblTopStItem.TabIndex = 185
-        Me.lblTopStItem.Text = "上半ｽﾄﾛｰｸ"
+        Me.lblTopStItem.Text = "上半" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ｽﾄﾛｰｸ"
         Me.lblTopStItem.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblTopRightStNo
@@ -643,10 +643,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblTopRightStNo.BackColor = System.Drawing.Color.LightGray
         Me.lblTopRightStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblTopRightStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblTopRightStNo.Location = New System.Drawing.Point(121, 44)
+        Me.lblTopRightStNo.Location = New System.Drawing.Point(97, 44)
         Me.lblTopRightStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblTopRightStNo.Name = "lblTopRightStNo"
-        Me.lblTopRightStNo.Size = New System.Drawing.Size(64, 22)
+        Me.lblTopRightStNo.Size = New System.Drawing.Size(52, 20)
         Me.lblTopRightStNo.TabIndex = 186
         Me.lblTopRightStNo.Text = "No."
         Me.lblTopRightStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -656,10 +656,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblTopLefttStNo.BackColor = System.Drawing.Color.LightGray
         Me.lblTopLefttStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblTopLefttStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblTopLefttStNo.Location = New System.Drawing.Point(121, 66)
+        Me.lblTopLefttStNo.Location = New System.Drawing.Point(97, 64)
         Me.lblTopLefttStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblTopLefttStNo.Name = "lblTopLefttStNo"
-        Me.lblTopLefttStNo.Size = New System.Drawing.Size(64, 22)
+        Me.lblTopLefttStNo.Size = New System.Drawing.Size(52, 20)
         Me.lblTopLefttStNo.TabIndex = 187
         Me.lblTopLefttStNo.Text = "No."
         Me.lblTopLefttStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -669,7 +669,7 @@ Partial Class frmCalcStrokeConfirm
         Me.Label13.BackColor = System.Drawing.Color.LightGray
         Me.Label13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label13.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label13.Location = New System.Drawing.Point(383, 1)
+        Me.Label13.Location = New System.Drawing.Point(348, 1)
         Me.Label13.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(79, 44)
@@ -683,10 +683,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblTopRingTargetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblTopRingTargetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblTopRingTargetSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblTopRingTargetSt.Location = New System.Drawing.Point(383, 43)
+        Me.lblTopRingTargetSt.Location = New System.Drawing.Point(348, 44)
         Me.lblTopRingTargetSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblTopRingTargetSt.Name = "lblTopRingTargetSt"
-        Me.lblTopRingTargetSt.Size = New System.Drawing.Size(78, 66)
+        Me.lblTopRingTargetSt.Size = New System.Drawing.Size(78, 60)
         Me.lblTopRingTargetSt.TabIndex = 189
         Me.lblTopRingTargetSt.Text = "-----"
         Me.lblTopRingTargetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -697,10 +697,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblHorRightStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblHorRightStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblHorRightStartSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblHorRightStartSt.Location = New System.Drawing.Point(185, 110)
+        Me.lblHorRightStartSt.Location = New System.Drawing.Point(150, 104)
         Me.lblHorRightStartSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblHorRightStartSt.Name = "lblHorRightStartSt"
-        Me.lblHorRightStartSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblHorRightStartSt.Size = New System.Drawing.Size(60, 20)
         Me.lblHorRightStartSt.TabIndex = 190
         Me.lblHorRightStartSt.Text = "1000"
         Me.lblHorRightStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -711,10 +711,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblHorLeftStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblHorLeftStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblHorLeftStartSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblHorLeftStartSt.Location = New System.Drawing.Point(185, 132)
+        Me.lblHorLeftStartSt.Location = New System.Drawing.Point(150, 124)
         Me.lblHorLeftStartSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblHorLeftStartSt.Name = "lblHorLeftStartSt"
-        Me.lblHorLeftStartSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblHorLeftStartSt.Size = New System.Drawing.Size(60, 20)
         Me.lblHorLeftStartSt.TabIndex = 191
         Me.lblHorLeftStartSt.Text = "1000"
         Me.lblHorLeftStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -725,10 +725,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblHorRightRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblHorRightRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblHorRightRealSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblHorRightRealSt.Location = New System.Drawing.Point(245, 110)
+        Me.lblHorRightRealSt.Location = New System.Drawing.Point(210, 104)
         Me.lblHorRightRealSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblHorRightRealSt.Name = "lblHorRightRealSt"
-        Me.lblHorRightRealSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblHorRightRealSt.Size = New System.Drawing.Size(60, 20)
         Me.lblHorRightRealSt.TabIndex = 192
         Me.lblHorRightRealSt.Text = "1000"
         Me.lblHorRightRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -739,10 +739,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblHorLeftRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblHorLeftRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblHorLeftRealSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblHorLeftRealSt.Location = New System.Drawing.Point(245, 132)
+        Me.lblHorLeftRealSt.Location = New System.Drawing.Point(210, 124)
         Me.lblHorLeftRealSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblHorLeftRealSt.Name = "lblHorLeftRealSt"
-        Me.lblHorLeftRealSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblHorLeftRealSt.Size = New System.Drawing.Size(60, 20)
         Me.lblHorLeftRealSt.TabIndex = 193
         Me.lblHorLeftRealSt.Text = "1000"
         Me.lblHorLeftRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -753,10 +753,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblHorNetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblHorNetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblHorNetSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblHorNetSt.Location = New System.Drawing.Point(305, 110)
+        Me.lblHorNetSt.Location = New System.Drawing.Point(270, 104)
         Me.lblHorNetSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblHorNetSt.Name = "lblHorNetSt"
-        Me.lblHorNetSt.Size = New System.Drawing.Size(78, 66)
+        Me.lblHorNetSt.Size = New System.Drawing.Size(78, 60)
         Me.lblHorNetSt.TabIndex = 194
         Me.lblHorNetSt.Text = "1000"
         Me.lblHorNetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -766,10 +766,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblHorStItem.BackColor = System.Drawing.Color.DodgerBlue
         Me.lblHorStItem.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblHorStItem.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblHorStItem.Location = New System.Drawing.Point(4, 110)
+        Me.lblHorStItem.Location = New System.Drawing.Point(4, 104)
         Me.lblHorStItem.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblHorStItem.Name = "lblHorStItem"
-        Me.lblHorStItem.Size = New System.Drawing.Size(127, 44)
+        Me.lblHorStItem.Size = New System.Drawing.Size(92, 40)
         Me.lblHorStItem.TabIndex = 195
         Me.lblHorStItem.Text = "水平部ｽﾄﾛｰｸ"
         Me.lblHorStItem.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -779,10 +779,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblHorRightStNo.BackColor = System.Drawing.Color.LightGray
         Me.lblHorRightStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblHorRightStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblHorRightStNo.Location = New System.Drawing.Point(121, 110)
+        Me.lblHorRightStNo.Location = New System.Drawing.Point(97, 104)
         Me.lblHorRightStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblHorRightStNo.Name = "lblHorRightStNo"
-        Me.lblHorRightStNo.Size = New System.Drawing.Size(64, 22)
+        Me.lblHorRightStNo.Size = New System.Drawing.Size(52, 20)
         Me.lblHorRightStNo.TabIndex = 196
         Me.lblHorRightStNo.Text = "No."
         Me.lblHorRightStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -792,10 +792,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblHorLefttStNo.BackColor = System.Drawing.Color.LightGray
         Me.lblHorLefttStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblHorLefttStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblHorLefttStNo.Location = New System.Drawing.Point(121, 132)
+        Me.lblHorLefttStNo.Location = New System.Drawing.Point(97, 124)
         Me.lblHorLefttStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblHorLefttStNo.Name = "lblHorLefttStNo"
-        Me.lblHorLefttStNo.Size = New System.Drawing.Size(64, 22)
+        Me.lblHorLefttStNo.Size = New System.Drawing.Size(52, 20)
         Me.lblHorLefttStNo.TabIndex = 197
         Me.lblHorLefttStNo.Text = "No."
         Me.lblHorLefttStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -806,10 +806,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblHorRingTargetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblHorRingTargetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblHorRingTargetSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblHorRingTargetSt.Location = New System.Drawing.Point(383, 110)
+        Me.lblHorRingTargetSt.Location = New System.Drawing.Point(348, 104)
         Me.lblHorRingTargetSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblHorRingTargetSt.Name = "lblHorRingTargetSt"
-        Me.lblHorRingTargetSt.Size = New System.Drawing.Size(78, 66)
+        Me.lblHorRingTargetSt.Size = New System.Drawing.Size(78, 60)
         Me.lblHorRingTargetSt.TabIndex = 198
         Me.lblHorRingTargetSt.Text = "1000"
         Me.lblHorRingTargetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -820,10 +820,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblBtmRightStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblBtmRightStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblBtmRightStartSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblBtmRightStartSt.Location = New System.Drawing.Point(186, 176)
+        Me.lblBtmRightStartSt.Location = New System.Drawing.Point(151, 164)
         Me.lblBtmRightStartSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBtmRightStartSt.Name = "lblBtmRightStartSt"
-        Me.lblBtmRightStartSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblBtmRightStartSt.Size = New System.Drawing.Size(60, 20)
         Me.lblBtmRightStartSt.TabIndex = 199
         Me.lblBtmRightStartSt.Text = "------"
         Me.lblBtmRightStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -834,10 +834,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblBtmLeftStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblBtmLeftStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblBtmLeftStartSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblBtmLeftStartSt.Location = New System.Drawing.Point(186, 198)
+        Me.lblBtmLeftStartSt.Location = New System.Drawing.Point(151, 184)
         Me.lblBtmLeftStartSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBtmLeftStartSt.Name = "lblBtmLeftStartSt"
-        Me.lblBtmLeftStartSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblBtmLeftStartSt.Size = New System.Drawing.Size(60, 20)
         Me.lblBtmLeftStartSt.TabIndex = 200
         Me.lblBtmLeftStartSt.Text = "------"
         Me.lblBtmLeftStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -848,10 +848,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblBtmRightRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblBtmRightRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblBtmRightRealSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblBtmRightRealSt.Location = New System.Drawing.Point(246, 176)
+        Me.lblBtmRightRealSt.Location = New System.Drawing.Point(211, 164)
         Me.lblBtmRightRealSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBtmRightRealSt.Name = "lblBtmRightRealSt"
-        Me.lblBtmRightRealSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblBtmRightRealSt.Size = New System.Drawing.Size(60, 20)
         Me.lblBtmRightRealSt.TabIndex = 201
         Me.lblBtmRightRealSt.Text = "------"
         Me.lblBtmRightRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -862,10 +862,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblBtmLeftRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblBtmLeftRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblBtmLeftRealSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblBtmLeftRealSt.Location = New System.Drawing.Point(246, 198)
+        Me.lblBtmLeftRealSt.Location = New System.Drawing.Point(211, 184)
         Me.lblBtmLeftRealSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBtmLeftRealSt.Name = "lblBtmLeftRealSt"
-        Me.lblBtmLeftRealSt.Size = New System.Drawing.Size(60, 22)
+        Me.lblBtmLeftRealSt.Size = New System.Drawing.Size(60, 20)
         Me.lblBtmLeftRealSt.TabIndex = 202
         Me.lblBtmLeftRealSt.Text = "------"
         Me.lblBtmLeftRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -876,10 +876,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblBtmNetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblBtmNetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblBtmNetSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblBtmNetSt.Location = New System.Drawing.Point(305, 176)
+        Me.lblBtmNetSt.Location = New System.Drawing.Point(270, 164)
         Me.lblBtmNetSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBtmNetSt.Name = "lblBtmNetSt"
-        Me.lblBtmNetSt.Size = New System.Drawing.Size(78, 66)
+        Me.lblBtmNetSt.Size = New System.Drawing.Size(78, 60)
         Me.lblBtmNetSt.TabIndex = 203
         Me.lblBtmNetSt.Text = "------"
         Me.lblBtmNetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -889,12 +889,12 @@ Partial Class frmCalcStrokeConfirm
         Me.lblBtmStItem.BackColor = System.Drawing.Color.LightGray
         Me.lblBtmStItem.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblBtmStItem.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblBtmStItem.Location = New System.Drawing.Point(4, 176)
+        Me.lblBtmStItem.Location = New System.Drawing.Point(4, 164)
         Me.lblBtmStItem.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblBtmStItem.Name = "lblBtmStItem"
-        Me.lblBtmStItem.Size = New System.Drawing.Size(127, 44)
+        Me.lblBtmStItem.Size = New System.Drawing.Size(92, 40)
         Me.lblBtmStItem.TabIndex = 204
-        Me.lblBtmStItem.Text = "下半ｽﾄﾛｰｸ"
+        Me.lblBtmStItem.Text = "下半" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ｽﾄﾛｰｸ"
         Me.lblBtmStItem.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblBtmRightStNo
@@ -902,10 +902,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblBtmRightStNo.BackColor = System.Drawing.Color.LightGray
         Me.lblBtmRightStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblBtmRightStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblBtmRightStNo.Location = New System.Drawing.Point(121, 176)
+        Me.lblBtmRightStNo.Location = New System.Drawing.Point(97, 164)
         Me.lblBtmRightStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblBtmRightStNo.Name = "lblBtmRightStNo"
-        Me.lblBtmRightStNo.Size = New System.Drawing.Size(64, 22)
+        Me.lblBtmRightStNo.Size = New System.Drawing.Size(52, 20)
         Me.lblBtmRightStNo.TabIndex = 205
         Me.lblBtmRightStNo.Text = "No."
         Me.lblBtmRightStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -915,10 +915,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblBtmLeftStNo.BackColor = System.Drawing.Color.LightGray
         Me.lblBtmLeftStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblBtmLeftStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblBtmLeftStNo.Location = New System.Drawing.Point(121, 198)
+        Me.lblBtmLeftStNo.Location = New System.Drawing.Point(97, 184)
         Me.lblBtmLeftStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.lblBtmLeftStNo.Name = "lblBtmLeftStNo"
-        Me.lblBtmLeftStNo.Size = New System.Drawing.Size(64, 22)
+        Me.lblBtmLeftStNo.Size = New System.Drawing.Size(52, 20)
         Me.lblBtmLeftStNo.TabIndex = 206
         Me.lblBtmLeftStNo.Text = "No."
         Me.lblBtmLeftStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -929,10 +929,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblBtmRingTargetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblBtmRingTargetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblBtmRingTargetSt.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblBtmRingTargetSt.Location = New System.Drawing.Point(383, 176)
+        Me.lblBtmRingTargetSt.Location = New System.Drawing.Point(348, 164)
         Me.lblBtmRingTargetSt.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBtmRingTargetSt.Name = "lblBtmRingTargetSt"
-        Me.lblBtmRingTargetSt.Size = New System.Drawing.Size(78, 66)
+        Me.lblBtmRingTargetSt.Size = New System.Drawing.Size(78, 60)
         Me.lblBtmRingTargetSt.TabIndex = 207
         Me.lblBtmRingTargetSt.Text = "------"
         Me.lblBtmRingTargetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -983,7 +983,7 @@ Partial Class frmCalcStrokeConfirm
         Me.pnlStrokeDiffContorol.Controls.Add(Me.lblTopRightStartSt)
         Me.pnlStrokeDiffContorol.Location = New System.Drawing.Point(346, 504)
         Me.pnlStrokeDiffContorol.Name = "pnlStrokeDiffContorol"
-        Me.pnlStrokeDiffContorol.Size = New System.Drawing.Size(482, 245)
+        Me.pnlStrokeDiffContorol.Size = New System.Drawing.Size(432, 229)
         Me.pnlStrokeDiffContorol.TabIndex = 175
         '
         'Label12
@@ -991,12 +991,12 @@ Partial Class frmCalcStrokeConfirm
         Me.Label12.BackColor = System.Drawing.Color.LightGray
         Me.Label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label12.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label12.Location = New System.Drawing.Point(4, 220)
+        Me.Label12.Location = New System.Drawing.Point(4, 204)
         Me.Label12.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(181, 22)
+        Me.Label12.Size = New System.Drawing.Size(145, 20)
         Me.Label12.TabIndex = 217
-        Me.Label12.Text = "下半換算ストローク差"
+        Me.Label12.Text = "下半換算ｽﾄﾛｰｸ差"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblConvertBtmStrokeDiff
@@ -1005,10 +1005,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblConvertBtmStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblConvertBtmStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblConvertBtmStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblConvertBtmStrokeDiff.Location = New System.Drawing.Point(246, 220)
+        Me.lblConvertBtmStrokeDiff.Location = New System.Drawing.Point(209, 204)
         Me.lblConvertBtmStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
         Me.lblConvertBtmStrokeDiff.Name = "lblConvertBtmStrokeDiff"
-        Me.lblConvertBtmStrokeDiff.Size = New System.Drawing.Size(60, 22)
+        Me.lblConvertBtmStrokeDiff.Size = New System.Drawing.Size(60, 20)
         Me.lblConvertBtmStrokeDiff.TabIndex = 216
         Me.lblConvertBtmStrokeDiff.Text = "------"
         Me.lblConvertBtmStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1019,10 +1019,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblConvertBtmStartStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblConvertBtmStartStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblConvertBtmStartStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblConvertBtmStartStrokeDiff.Location = New System.Drawing.Point(186, 220)
+        Me.lblConvertBtmStartStrokeDiff.Location = New System.Drawing.Point(149, 204)
         Me.lblConvertBtmStartStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
         Me.lblConvertBtmStartStrokeDiff.Name = "lblConvertBtmStartStrokeDiff"
-        Me.lblConvertBtmStartStrokeDiff.Size = New System.Drawing.Size(60, 22)
+        Me.lblConvertBtmStartStrokeDiff.Size = New System.Drawing.Size(60, 20)
         Me.lblConvertBtmStartStrokeDiff.TabIndex = 215
         Me.lblConvertBtmStartStrokeDiff.Text = "------"
         Me.lblConvertBtmStartStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1032,12 +1032,12 @@ Partial Class frmCalcStrokeConfirm
         Me.Label5.BackColor = System.Drawing.Color.LightGray
         Me.Label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label5.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label5.Location = New System.Drawing.Point(4, 154)
+        Me.Label5.Location = New System.Drawing.Point(4, 144)
         Me.Label5.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(181, 22)
+        Me.Label5.Size = New System.Drawing.Size(145, 20)
         Me.Label5.TabIndex = 214
-        Me.Label5.Text = "水平部ストローク差"
+        Me.Label5.Text = "水平部ｽﾄﾛｰｸ差"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblConvertHorStrokeDiff
@@ -1046,10 +1046,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblConvertHorStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblConvertHorStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblConvertHorStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblConvertHorStrokeDiff.Location = New System.Drawing.Point(246, 154)
+        Me.lblConvertHorStrokeDiff.Location = New System.Drawing.Point(211, 144)
         Me.lblConvertHorStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
         Me.lblConvertHorStrokeDiff.Name = "lblConvertHorStrokeDiff"
-        Me.lblConvertHorStrokeDiff.Size = New System.Drawing.Size(60, 22)
+        Me.lblConvertHorStrokeDiff.Size = New System.Drawing.Size(60, 20)
         Me.lblConvertHorStrokeDiff.TabIndex = 213
         Me.lblConvertHorStrokeDiff.Text = "1000"
         Me.lblConvertHorStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1060,10 +1060,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblConvertHorStartStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblConvertHorStartStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblConvertHorStartStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblConvertHorStartStrokeDiff.Location = New System.Drawing.Point(186, 154)
+        Me.lblConvertHorStartStrokeDiff.Location = New System.Drawing.Point(151, 144)
         Me.lblConvertHorStartStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
         Me.lblConvertHorStartStrokeDiff.Name = "lblConvertHorStartStrokeDiff"
-        Me.lblConvertHorStartStrokeDiff.Size = New System.Drawing.Size(60, 22)
+        Me.lblConvertHorStartStrokeDiff.Size = New System.Drawing.Size(60, 20)
         Me.lblConvertHorStartStrokeDiff.TabIndex = 212
         Me.lblConvertHorStartStrokeDiff.Text = "1000"
         Me.lblConvertHorStartStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1073,12 +1073,12 @@ Partial Class frmCalcStrokeConfirm
         Me.label4.BackColor = System.Drawing.Color.LightGray
         Me.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.label4.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.label4.Location = New System.Drawing.Point(4, 88)
+        Me.label4.Location = New System.Drawing.Point(4, 84)
         Me.label4.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.label4.Name = "label4"
-        Me.label4.Size = New System.Drawing.Size(181, 22)
+        Me.label4.Size = New System.Drawing.Size(145, 20)
         Me.label4.TabIndex = 211
-        Me.label4.Text = "上半換算ストローク差"
+        Me.label4.Text = "上半換算ｽﾄﾛｰｸ差"
         Me.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblConvertTopStrokeDiff
@@ -1087,10 +1087,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblConvertTopStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblConvertTopStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblConvertTopStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblConvertTopStrokeDiff.Location = New System.Drawing.Point(246, 88)
+        Me.lblConvertTopStrokeDiff.Location = New System.Drawing.Point(211, 84)
         Me.lblConvertTopStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
         Me.lblConvertTopStrokeDiff.Name = "lblConvertTopStrokeDiff"
-        Me.lblConvertTopStrokeDiff.Size = New System.Drawing.Size(60, 22)
+        Me.lblConvertTopStrokeDiff.Size = New System.Drawing.Size(60, 20)
         Me.lblConvertTopStrokeDiff.TabIndex = 210
         Me.lblConvertTopStrokeDiff.Text = "-----"
         Me.lblConvertTopStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1101,10 +1101,10 @@ Partial Class frmCalcStrokeConfirm
         Me.lblConvertTopStartStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblConvertTopStartStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblConvertTopStartStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
-        Me.lblConvertTopStartStrokeDiff.Location = New System.Drawing.Point(186, 88)
+        Me.lblConvertTopStartStrokeDiff.Location = New System.Drawing.Point(151, 84)
         Me.lblConvertTopStartStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
         Me.lblConvertTopStartStrokeDiff.Name = "lblConvertTopStartStrokeDiff"
-        Me.lblConvertTopStartStrokeDiff.Size = New System.Drawing.Size(60, 22)
+        Me.lblConvertTopStartStrokeDiff.Size = New System.Drawing.Size(60, 20)
         Me.lblConvertTopStartStrokeDiff.TabIndex = 209
         Me.lblConvertTopStartStrokeDiff.Text = "-----"
         Me.lblConvertTopStartStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight

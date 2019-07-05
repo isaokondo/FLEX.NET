@@ -191,10 +191,54 @@ Partial Class frmMain
         Me.InterruptTime = New FLEX.NET.ucnDspData()
         Me.DspCopyStroke2 = New FLEX.NET.ucnDspDataMin2()
         Me.btnNoOpJk = New System.Windows.Forms.Button()
+        Me.pnlStrokeDiffContorol = New System.Windows.Forms.Panel()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.lblConvertBtmStrokeDiff = New System.Windows.Forms.Label()
+        Me.lblConvertBtmStartStrokeDiff = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lblConvertHorStrokeDiff = New System.Windows.Forms.Label()
+        Me.lblConvertHorStartStrokeDiff = New System.Windows.Forms.Label()
+        Me.label4 = New System.Windows.Forms.Label()
+        Me.lblConvertTopStrokeDiff = New System.Windows.Forms.Label()
+        Me.lblConvertTopStartStrokeDiff = New System.Windows.Forms.Label()
+        Me.lblBtmRingTargetSt = New System.Windows.Forms.Label()
+        Me.lblBtmLeftStNo = New System.Windows.Forms.Label()
+        Me.lblBtmRightStNo = New System.Windows.Forms.Label()
+        Me.lblBtmStItem = New System.Windows.Forms.Label()
+        Me.lblBtmNetSt = New System.Windows.Forms.Label()
+        Me.lblBtmLeftRealSt = New System.Windows.Forms.Label()
+        Me.lblBtmRightRealSt = New System.Windows.Forms.Label()
+        Me.lblBtmLeftStartSt = New System.Windows.Forms.Label()
+        Me.lblBtmRightStartSt = New System.Windows.Forms.Label()
+        Me.lblHorRingTargetSt = New System.Windows.Forms.Label()
+        Me.lblHorLefttStNo = New System.Windows.Forms.Label()
+        Me.lblHorRightStNo = New System.Windows.Forms.Label()
+        Me.lblHorStItem = New System.Windows.Forms.Label()
+        Me.lblHorNetSt = New System.Windows.Forms.Label()
+        Me.lblHorLeftRealSt = New System.Windows.Forms.Label()
+        Me.lblHorRightRealSt = New System.Windows.Forms.Label()
+        Me.lblHorLeftStartSt = New System.Windows.Forms.Label()
+        Me.lblHorRightStartSt = New System.Windows.Forms.Label()
+        Me.lblTopRingTargetSt = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.lblTopLefttStNo = New System.Windows.Forms.Label()
+        Me.lblTopRightStNo = New System.Windows.Forms.Label()
+        Me.lblTopStItem = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.lblFieldName = New System.Windows.Forms.Label()
+        Me.lblTopNetSt = New System.Windows.Forms.Label()
+        Me.lblTopLeftRealSt = New System.Windows.Forms.Label()
+        Me.lblTopRightRealSt = New System.Windows.Forms.Label()
+        Me.lblTopLeftStartSt = New System.Windows.Forms.Label()
+        Me.lblTopRightStartSt = New System.Windows.Forms.Label()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.pnlLosZero.SuspendLayout()
+        Me.pnlStrokeDiffContorol.SuspendLayout()
         Me.SuspendLayout()
         '
         'tmrDataDsp
@@ -2684,12 +2728,632 @@ Partial Class frmMain
         Me.btnNoOpJk.Text = "不動作ｼﾞｬｯｷOFF"
         Me.btnNoOpJk.UseVisualStyleBackColor = False
         '
+        'pnlStrokeDiffContorol
+        '
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.Label12)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblConvertBtmStrokeDiff)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblConvertBtmStartStrokeDiff)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.Label5)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblConvertHorStrokeDiff)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblConvertHorStartStrokeDiff)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.label4)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblConvertTopStrokeDiff)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblConvertTopStartStrokeDiff)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblBtmRingTargetSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblBtmLeftStNo)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblBtmRightStNo)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblBtmStItem)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblBtmNetSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblBtmLeftRealSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblBtmRightRealSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblBtmLeftStartSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblBtmRightStartSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblHorRingTargetSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblHorLefttStNo)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblHorRightStNo)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblHorStItem)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblHorNetSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblHorLeftRealSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblHorRightRealSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblHorLeftStartSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblHorRightStartSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblTopRingTargetSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.Label13)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblTopLefttStNo)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblTopRightStNo)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblTopStItem)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.Label9)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.Label8)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.Label7)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.Label6)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblFieldName)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblTopNetSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblTopLeftRealSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblTopRightRealSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblTopLeftStartSt)
+        Me.pnlStrokeDiffContorol.Controls.Add(Me.lblTopRightStartSt)
+        Me.pnlStrokeDiffContorol.Location = New System.Drawing.Point(836, 662)
+        Me.pnlStrokeDiffContorol.Name = "pnlStrokeDiffContorol"
+        Me.pnlStrokeDiffContorol.Size = New System.Drawing.Size(432, 229)
+        Me.pnlStrokeDiffContorol.TabIndex = 176
+        '
+        'Label12
+        '
+        Me.Label12.BackColor = System.Drawing.Color.LightGray
+        Me.Label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label12.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label12.Location = New System.Drawing.Point(4, 204)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(145, 20)
+        Me.Label12.TabIndex = 217
+        Me.Label12.Text = "下半換算ｽﾄﾛｰｸ差"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblConvertBtmStrokeDiff
+        '
+        Me.lblConvertBtmStrokeDiff.BackColor = System.Drawing.Color.Black
+        Me.lblConvertBtmStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblConvertBtmStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblConvertBtmStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblConvertBtmStrokeDiff.Location = New System.Drawing.Point(209, 204)
+        Me.lblConvertBtmStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblConvertBtmStrokeDiff.Name = "lblConvertBtmStrokeDiff"
+        Me.lblConvertBtmStrokeDiff.Size = New System.Drawing.Size(60, 20)
+        Me.lblConvertBtmStrokeDiff.TabIndex = 216
+        Me.lblConvertBtmStrokeDiff.Text = "------"
+        Me.lblConvertBtmStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblConvertBtmStartStrokeDiff
+        '
+        Me.lblConvertBtmStartStrokeDiff.BackColor = System.Drawing.Color.Black
+        Me.lblConvertBtmStartStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblConvertBtmStartStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblConvertBtmStartStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblConvertBtmStartStrokeDiff.Location = New System.Drawing.Point(149, 204)
+        Me.lblConvertBtmStartStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblConvertBtmStartStrokeDiff.Name = "lblConvertBtmStartStrokeDiff"
+        Me.lblConvertBtmStartStrokeDiff.Size = New System.Drawing.Size(60, 20)
+        Me.lblConvertBtmStartStrokeDiff.TabIndex = 215
+        Me.lblConvertBtmStartStrokeDiff.Text = "------"
+        Me.lblConvertBtmStartStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label5
+        '
+        Me.Label5.BackColor = System.Drawing.Color.LightGray
+        Me.Label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label5.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label5.Location = New System.Drawing.Point(4, 144)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(145, 20)
+        Me.Label5.TabIndex = 214
+        Me.Label5.Text = "水平部ｽﾄﾛｰｸ差"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblConvertHorStrokeDiff
+        '
+        Me.lblConvertHorStrokeDiff.BackColor = System.Drawing.Color.Black
+        Me.lblConvertHorStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblConvertHorStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblConvertHorStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblConvertHorStrokeDiff.Location = New System.Drawing.Point(211, 144)
+        Me.lblConvertHorStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblConvertHorStrokeDiff.Name = "lblConvertHorStrokeDiff"
+        Me.lblConvertHorStrokeDiff.Size = New System.Drawing.Size(60, 20)
+        Me.lblConvertHorStrokeDiff.TabIndex = 213
+        Me.lblConvertHorStrokeDiff.Text = "1000"
+        Me.lblConvertHorStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblConvertHorStartStrokeDiff
+        '
+        Me.lblConvertHorStartStrokeDiff.BackColor = System.Drawing.Color.Black
+        Me.lblConvertHorStartStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblConvertHorStartStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblConvertHorStartStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblConvertHorStartStrokeDiff.Location = New System.Drawing.Point(151, 144)
+        Me.lblConvertHorStartStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblConvertHorStartStrokeDiff.Name = "lblConvertHorStartStrokeDiff"
+        Me.lblConvertHorStartStrokeDiff.Size = New System.Drawing.Size(60, 20)
+        Me.lblConvertHorStartStrokeDiff.TabIndex = 212
+        Me.lblConvertHorStartStrokeDiff.Text = "1000"
+        Me.lblConvertHorStartStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'label4
+        '
+        Me.label4.BackColor = System.Drawing.Color.LightGray
+        Me.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.label4.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.label4.Location = New System.Drawing.Point(4, 84)
+        Me.label4.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.label4.Name = "label4"
+        Me.label4.Size = New System.Drawing.Size(145, 20)
+        Me.label4.TabIndex = 211
+        Me.label4.Text = "上半換算ｽﾄﾛｰｸ差"
+        Me.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblConvertTopStrokeDiff
+        '
+        Me.lblConvertTopStrokeDiff.BackColor = System.Drawing.Color.Black
+        Me.lblConvertTopStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblConvertTopStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblConvertTopStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblConvertTopStrokeDiff.Location = New System.Drawing.Point(211, 84)
+        Me.lblConvertTopStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblConvertTopStrokeDiff.Name = "lblConvertTopStrokeDiff"
+        Me.lblConvertTopStrokeDiff.Size = New System.Drawing.Size(60, 20)
+        Me.lblConvertTopStrokeDiff.TabIndex = 210
+        Me.lblConvertTopStrokeDiff.Text = "-----"
+        Me.lblConvertTopStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblConvertTopStartStrokeDiff
+        '
+        Me.lblConvertTopStartStrokeDiff.BackColor = System.Drawing.Color.Black
+        Me.lblConvertTopStartStrokeDiff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblConvertTopStartStrokeDiff.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblConvertTopStartStrokeDiff.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblConvertTopStartStrokeDiff.Location = New System.Drawing.Point(151, 84)
+        Me.lblConvertTopStartStrokeDiff.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblConvertTopStartStrokeDiff.Name = "lblConvertTopStartStrokeDiff"
+        Me.lblConvertTopStartStrokeDiff.Size = New System.Drawing.Size(60, 20)
+        Me.lblConvertTopStartStrokeDiff.TabIndex = 209
+        Me.lblConvertTopStartStrokeDiff.Text = "-----"
+        Me.lblConvertTopStartStrokeDiff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblBtmRingTargetSt
+        '
+        Me.lblBtmRingTargetSt.BackColor = System.Drawing.Color.Black
+        Me.lblBtmRingTargetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBtmRingTargetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblBtmRingTargetSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblBtmRingTargetSt.Location = New System.Drawing.Point(348, 164)
+        Me.lblBtmRingTargetSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBtmRingTargetSt.Name = "lblBtmRingTargetSt"
+        Me.lblBtmRingTargetSt.Size = New System.Drawing.Size(78, 60)
+        Me.lblBtmRingTargetSt.TabIndex = 207
+        Me.lblBtmRingTargetSt.Text = "------"
+        Me.lblBtmRingTargetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblBtmLeftStNo
+        '
+        Me.lblBtmLeftStNo.BackColor = System.Drawing.Color.LightGray
+        Me.lblBtmLeftStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblBtmLeftStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblBtmLeftStNo.Location = New System.Drawing.Point(97, 184)
+        Me.lblBtmLeftStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblBtmLeftStNo.Name = "lblBtmLeftStNo"
+        Me.lblBtmLeftStNo.Size = New System.Drawing.Size(52, 20)
+        Me.lblBtmLeftStNo.TabIndex = 206
+        Me.lblBtmLeftStNo.Text = "No."
+        Me.lblBtmLeftStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblBtmRightStNo
+        '
+        Me.lblBtmRightStNo.BackColor = System.Drawing.Color.LightGray
+        Me.lblBtmRightStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblBtmRightStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblBtmRightStNo.Location = New System.Drawing.Point(97, 164)
+        Me.lblBtmRightStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblBtmRightStNo.Name = "lblBtmRightStNo"
+        Me.lblBtmRightStNo.Size = New System.Drawing.Size(52, 20)
+        Me.lblBtmRightStNo.TabIndex = 205
+        Me.lblBtmRightStNo.Text = "No."
+        Me.lblBtmRightStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblBtmStItem
+        '
+        Me.lblBtmStItem.BackColor = System.Drawing.Color.LightGray
+        Me.lblBtmStItem.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblBtmStItem.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblBtmStItem.Location = New System.Drawing.Point(4, 164)
+        Me.lblBtmStItem.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblBtmStItem.Name = "lblBtmStItem"
+        Me.lblBtmStItem.Size = New System.Drawing.Size(92, 40)
+        Me.lblBtmStItem.TabIndex = 204
+        Me.lblBtmStItem.Text = "下半" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ｽﾄﾛｰｸ"
+        Me.lblBtmStItem.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblBtmNetSt
+        '
+        Me.lblBtmNetSt.BackColor = System.Drawing.Color.Black
+        Me.lblBtmNetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBtmNetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblBtmNetSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblBtmNetSt.Location = New System.Drawing.Point(270, 164)
+        Me.lblBtmNetSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBtmNetSt.Name = "lblBtmNetSt"
+        Me.lblBtmNetSt.Size = New System.Drawing.Size(78, 60)
+        Me.lblBtmNetSt.TabIndex = 203
+        Me.lblBtmNetSt.Text = "------"
+        Me.lblBtmNetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblBtmLeftRealSt
+        '
+        Me.lblBtmLeftRealSt.BackColor = System.Drawing.Color.Black
+        Me.lblBtmLeftRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBtmLeftRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblBtmLeftRealSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblBtmLeftRealSt.Location = New System.Drawing.Point(211, 184)
+        Me.lblBtmLeftRealSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBtmLeftRealSt.Name = "lblBtmLeftRealSt"
+        Me.lblBtmLeftRealSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblBtmLeftRealSt.TabIndex = 202
+        Me.lblBtmLeftRealSt.Text = "------"
+        Me.lblBtmLeftRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblBtmRightRealSt
+        '
+        Me.lblBtmRightRealSt.BackColor = System.Drawing.Color.Black
+        Me.lblBtmRightRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBtmRightRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblBtmRightRealSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblBtmRightRealSt.Location = New System.Drawing.Point(211, 164)
+        Me.lblBtmRightRealSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBtmRightRealSt.Name = "lblBtmRightRealSt"
+        Me.lblBtmRightRealSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblBtmRightRealSt.TabIndex = 201
+        Me.lblBtmRightRealSt.Text = "------"
+        Me.lblBtmRightRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblBtmLeftStartSt
+        '
+        Me.lblBtmLeftStartSt.BackColor = System.Drawing.Color.Black
+        Me.lblBtmLeftStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBtmLeftStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblBtmLeftStartSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblBtmLeftStartSt.Location = New System.Drawing.Point(151, 184)
+        Me.lblBtmLeftStartSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBtmLeftStartSt.Name = "lblBtmLeftStartSt"
+        Me.lblBtmLeftStartSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblBtmLeftStartSt.TabIndex = 200
+        Me.lblBtmLeftStartSt.Text = "------"
+        Me.lblBtmLeftStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblBtmRightStartSt
+        '
+        Me.lblBtmRightStartSt.BackColor = System.Drawing.Color.Black
+        Me.lblBtmRightStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBtmRightStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblBtmRightStartSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblBtmRightStartSt.Location = New System.Drawing.Point(151, 164)
+        Me.lblBtmRightStartSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBtmRightStartSt.Name = "lblBtmRightStartSt"
+        Me.lblBtmRightStartSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblBtmRightStartSt.TabIndex = 199
+        Me.lblBtmRightStartSt.Text = "------"
+        Me.lblBtmRightStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblHorRingTargetSt
+        '
+        Me.lblHorRingTargetSt.BackColor = System.Drawing.Color.Black
+        Me.lblHorRingTargetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHorRingTargetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblHorRingTargetSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblHorRingTargetSt.Location = New System.Drawing.Point(348, 104)
+        Me.lblHorRingTargetSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHorRingTargetSt.Name = "lblHorRingTargetSt"
+        Me.lblHorRingTargetSt.Size = New System.Drawing.Size(78, 60)
+        Me.lblHorRingTargetSt.TabIndex = 198
+        Me.lblHorRingTargetSt.Text = "1000"
+        Me.lblHorRingTargetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblHorLefttStNo
+        '
+        Me.lblHorLefttStNo.BackColor = System.Drawing.Color.LightGray
+        Me.lblHorLefttStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblHorLefttStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblHorLefttStNo.Location = New System.Drawing.Point(97, 124)
+        Me.lblHorLefttStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblHorLefttStNo.Name = "lblHorLefttStNo"
+        Me.lblHorLefttStNo.Size = New System.Drawing.Size(52, 20)
+        Me.lblHorLefttStNo.TabIndex = 197
+        Me.lblHorLefttStNo.Text = "No."
+        Me.lblHorLefttStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblHorRightStNo
+        '
+        Me.lblHorRightStNo.BackColor = System.Drawing.Color.LightGray
+        Me.lblHorRightStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblHorRightStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblHorRightStNo.Location = New System.Drawing.Point(97, 104)
+        Me.lblHorRightStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblHorRightStNo.Name = "lblHorRightStNo"
+        Me.lblHorRightStNo.Size = New System.Drawing.Size(52, 20)
+        Me.lblHorRightStNo.TabIndex = 196
+        Me.lblHorRightStNo.Text = "No."
+        Me.lblHorRightStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblHorStItem
+        '
+        Me.lblHorStItem.BackColor = System.Drawing.Color.DodgerBlue
+        Me.lblHorStItem.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblHorStItem.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblHorStItem.Location = New System.Drawing.Point(4, 104)
+        Me.lblHorStItem.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblHorStItem.Name = "lblHorStItem"
+        Me.lblHorStItem.Size = New System.Drawing.Size(92, 40)
+        Me.lblHorStItem.TabIndex = 195
+        Me.lblHorStItem.Text = "水平部ｽﾄﾛｰｸ"
+        Me.lblHorStItem.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblHorNetSt
+        '
+        Me.lblHorNetSt.BackColor = System.Drawing.Color.Black
+        Me.lblHorNetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHorNetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblHorNetSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblHorNetSt.Location = New System.Drawing.Point(270, 104)
+        Me.lblHorNetSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHorNetSt.Name = "lblHorNetSt"
+        Me.lblHorNetSt.Size = New System.Drawing.Size(78, 60)
+        Me.lblHorNetSt.TabIndex = 194
+        Me.lblHorNetSt.Text = "1000"
+        Me.lblHorNetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblHorLeftRealSt
+        '
+        Me.lblHorLeftRealSt.BackColor = System.Drawing.Color.Black
+        Me.lblHorLeftRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHorLeftRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblHorLeftRealSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblHorLeftRealSt.Location = New System.Drawing.Point(210, 124)
+        Me.lblHorLeftRealSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHorLeftRealSt.Name = "lblHorLeftRealSt"
+        Me.lblHorLeftRealSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblHorLeftRealSt.TabIndex = 193
+        Me.lblHorLeftRealSt.Text = "1000"
+        Me.lblHorLeftRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblHorRightRealSt
+        '
+        Me.lblHorRightRealSt.BackColor = System.Drawing.Color.Black
+        Me.lblHorRightRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHorRightRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblHorRightRealSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblHorRightRealSt.Location = New System.Drawing.Point(210, 104)
+        Me.lblHorRightRealSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHorRightRealSt.Name = "lblHorRightRealSt"
+        Me.lblHorRightRealSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblHorRightRealSt.TabIndex = 192
+        Me.lblHorRightRealSt.Text = "1000"
+        Me.lblHorRightRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblHorLeftStartSt
+        '
+        Me.lblHorLeftStartSt.BackColor = System.Drawing.Color.Black
+        Me.lblHorLeftStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHorLeftStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblHorLeftStartSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblHorLeftStartSt.Location = New System.Drawing.Point(150, 124)
+        Me.lblHorLeftStartSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHorLeftStartSt.Name = "lblHorLeftStartSt"
+        Me.lblHorLeftStartSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblHorLeftStartSt.TabIndex = 191
+        Me.lblHorLeftStartSt.Text = "1000"
+        Me.lblHorLeftStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblHorRightStartSt
+        '
+        Me.lblHorRightStartSt.BackColor = System.Drawing.Color.Black
+        Me.lblHorRightStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHorRightStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblHorRightStartSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblHorRightStartSt.Location = New System.Drawing.Point(150, 104)
+        Me.lblHorRightStartSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHorRightStartSt.Name = "lblHorRightStartSt"
+        Me.lblHorRightStartSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblHorRightStartSt.TabIndex = 190
+        Me.lblHorRightStartSt.Text = "1000"
+        Me.lblHorRightStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblTopRingTargetSt
+        '
+        Me.lblTopRingTargetSt.BackColor = System.Drawing.Color.Black
+        Me.lblTopRingTargetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblTopRingTargetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTopRingTargetSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblTopRingTargetSt.Location = New System.Drawing.Point(348, 44)
+        Me.lblTopRingTargetSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblTopRingTargetSt.Name = "lblTopRingTargetSt"
+        Me.lblTopRingTargetSt.Size = New System.Drawing.Size(78, 60)
+        Me.lblTopRingTargetSt.TabIndex = 189
+        Me.lblTopRingTargetSt.Text = "-----"
+        Me.lblTopRingTargetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label13
+        '
+        Me.Label13.BackColor = System.Drawing.Color.LightGray
+        Me.Label13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label13.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label13.Location = New System.Drawing.Point(348, 1)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(79, 44)
+        Me.Label13.TabIndex = 188
+        Me.Label13.Text = "ﾘﾝｸﾞ目標ｽﾄﾛｰｸ差" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(mm)"
+        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblTopLefttStNo
+        '
+        Me.lblTopLefttStNo.BackColor = System.Drawing.Color.LightGray
+        Me.lblTopLefttStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblTopLefttStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTopLefttStNo.Location = New System.Drawing.Point(97, 64)
+        Me.lblTopLefttStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblTopLefttStNo.Name = "lblTopLefttStNo"
+        Me.lblTopLefttStNo.Size = New System.Drawing.Size(52, 20)
+        Me.lblTopLefttStNo.TabIndex = 187
+        Me.lblTopLefttStNo.Text = "No."
+        Me.lblTopLefttStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblTopRightStNo
+        '
+        Me.lblTopRightStNo.BackColor = System.Drawing.Color.LightGray
+        Me.lblTopRightStNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblTopRightStNo.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTopRightStNo.Location = New System.Drawing.Point(97, 44)
+        Me.lblTopRightStNo.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblTopRightStNo.Name = "lblTopRightStNo"
+        Me.lblTopRightStNo.Size = New System.Drawing.Size(52, 20)
+        Me.lblTopRightStNo.TabIndex = 186
+        Me.lblTopRightStNo.Text = "No."
+        Me.lblTopRightStNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblTopStItem
+        '
+        Me.lblTopStItem.BackColor = System.Drawing.Color.LightGray
+        Me.lblTopStItem.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblTopStItem.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTopStItem.Location = New System.Drawing.Point(4, 44)
+        Me.lblTopStItem.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblTopStItem.Name = "lblTopStItem"
+        Me.lblTopStItem.Size = New System.Drawing.Size(92, 40)
+        Me.lblTopStItem.TabIndex = 185
+        Me.lblTopStItem.Text = "上半" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ｽﾄﾛｰｸ"
+        Me.lblTopStItem.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label9
+        '
+        Me.Label9.BackColor = System.Drawing.Color.LightGray
+        Me.Label9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label9.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label9.Location = New System.Drawing.Point(4, 1)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(147, 44)
+        Me.Label9.TabIndex = 184
+        Me.Label9.Text = "制御管理用" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ストローク"
+        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label8
+        '
+        Me.Label8.BackColor = System.Drawing.Color.LightGray
+        Me.Label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label8.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label8.Location = New System.Drawing.Point(270, 1)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(79, 44)
+        Me.Label8.TabIndex = 183
+        Me.Label8.Text = "推進量" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(mm)"
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label7
+        '
+        Me.Label7.BackColor = System.Drawing.Color.LightGray
+        Me.Label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label7.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label7.Location = New System.Drawing.Point(208, 23)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(61, 22)
+        Me.Label7.TabIndex = 182
+        Me.Label7.Text = "現在"
+        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label6
+        '
+        Me.Label6.BackColor = System.Drawing.Color.LightGray
+        Me.Label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label6.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label6.Location = New System.Drawing.Point(149, 23)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(61, 22)
+        Me.Label6.TabIndex = 181
+        Me.Label6.Text = "開始"
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblFieldName
+        '
+        Me.lblFieldName.BackColor = System.Drawing.Color.LightGray
+        Me.lblFieldName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblFieldName.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblFieldName.Location = New System.Drawing.Point(149, 1)
+        Me.lblFieldName.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.lblFieldName.Name = "lblFieldName"
+        Me.lblFieldName.Size = New System.Drawing.Size(120, 22)
+        Me.lblFieldName.TabIndex = 180
+        Me.lblFieldName.Text = "実ｽﾄﾛｰｸ(mm)"
+        Me.lblFieldName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblTopNetSt
+        '
+        Me.lblTopNetSt.BackColor = System.Drawing.Color.Black
+        Me.lblTopNetSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblTopNetSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTopNetSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblTopNetSt.Location = New System.Drawing.Point(270, 44)
+        Me.lblTopNetSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblTopNetSt.Name = "lblTopNetSt"
+        Me.lblTopNetSt.Size = New System.Drawing.Size(78, 60)
+        Me.lblTopNetSt.TabIndex = 179
+        Me.lblTopNetSt.Text = "-----"
+        Me.lblTopNetSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblTopLeftRealSt
+        '
+        Me.lblTopLeftRealSt.BackColor = System.Drawing.Color.Black
+        Me.lblTopLeftRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblTopLeftRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTopLeftRealSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblTopLeftRealSt.Location = New System.Drawing.Point(210, 64)
+        Me.lblTopLeftRealSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblTopLeftRealSt.Name = "lblTopLeftRealSt"
+        Me.lblTopLeftRealSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblTopLeftRealSt.TabIndex = 178
+        Me.lblTopLeftRealSt.Text = "-----"
+        Me.lblTopLeftRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblTopRightRealSt
+        '
+        Me.lblTopRightRealSt.BackColor = System.Drawing.Color.Black
+        Me.lblTopRightRealSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblTopRightRealSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTopRightRealSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblTopRightRealSt.Location = New System.Drawing.Point(210, 44)
+        Me.lblTopRightRealSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblTopRightRealSt.Name = "lblTopRightRealSt"
+        Me.lblTopRightRealSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblTopRightRealSt.TabIndex = 177
+        Me.lblTopRightRealSt.Text = "-----"
+        Me.lblTopRightRealSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblTopLeftStartSt
+        '
+        Me.lblTopLeftStartSt.BackColor = System.Drawing.Color.Black
+        Me.lblTopLeftStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblTopLeftStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTopLeftStartSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblTopLeftStartSt.Location = New System.Drawing.Point(150, 64)
+        Me.lblTopLeftStartSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblTopLeftStartSt.Name = "lblTopLeftStartSt"
+        Me.lblTopLeftStartSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblTopLeftStartSt.TabIndex = 176
+        Me.lblTopLeftStartSt.Text = "-----"
+        Me.lblTopLeftStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblTopRightStartSt
+        '
+        Me.lblTopRightStartSt.BackColor = System.Drawing.Color.Black
+        Me.lblTopRightStartSt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblTopRightStartSt.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTopRightStartSt.ForeColor = System.Drawing.Color.LightGreen
+        Me.lblTopRightStartSt.Location = New System.Drawing.Point(150, 44)
+        Me.lblTopRightStartSt.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblTopRightStartSt.Name = "lblTopRightStartSt"
+        Me.lblTopRightStartSt.Size = New System.Drawing.Size(60, 20)
+        Me.lblTopRightStartSt.TabIndex = 175
+        Me.lblTopRightStartSt.Text = "-----"
+        Me.lblTopRightStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.pnlStrokeDiffContorol)
         Me.Controls.Add(Me.btnNoOpJk)
         Me.Controls.Add(Me.DspCopyStroke2)
         Me.Controls.Add(Me.DspBoltPitch)
@@ -2795,6 +3459,7 @@ Partial Class frmMain
         Me.Panel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.pnlLosZero.ResumeLayout(False)
+        Me.pnlStrokeDiffContorol.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2971,6 +3636,49 @@ Partial Class frmMain
     Friend WithEvents MeasuerJPullNum As ucnDspData
     Friend WithEvents DspCopyStroke2 As ucnDspDataMin2
     Friend WithEvents btnNoOpJk As Button
+    Friend WithEvents pnlStrokeDiffContorol As Panel
+    Friend WithEvents Label12 As Label
+    Friend WithEvents lblConvertBtmStrokeDiff As Label
+    Friend WithEvents lblConvertBtmStartStrokeDiff As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents lblConvertHorStrokeDiff As Label
+    Friend WithEvents lblConvertHorStartStrokeDiff As Label
+    Friend WithEvents label4 As Label
+    Friend WithEvents lblConvertTopStrokeDiff As Label
+    Friend WithEvents lblConvertTopStartStrokeDiff As Label
+    Friend WithEvents lblBtmRingTargetSt As Label
+    Friend WithEvents lblBtmLeftStNo As Label
+    Friend WithEvents lblBtmRightStNo As Label
+    Friend WithEvents lblBtmStItem As Label
+    Friend WithEvents lblBtmNetSt As Label
+    Friend WithEvents lblBtmLeftRealSt As Label
+    Friend WithEvents lblBtmRightRealSt As Label
+    Friend WithEvents lblBtmLeftStartSt As Label
+    Friend WithEvents lblBtmRightStartSt As Label
+    Friend WithEvents lblHorRingTargetSt As Label
+    Friend WithEvents lblHorLefttStNo As Label
+    Friend WithEvents lblHorRightStNo As Label
+    Friend WithEvents lblHorStItem As Label
+    Friend WithEvents lblHorNetSt As Label
+    Friend WithEvents lblHorLeftRealSt As Label
+    Friend WithEvents lblHorRightRealSt As Label
+    Friend WithEvents lblHorLeftStartSt As Label
+    Friend WithEvents lblHorRightStartSt As Label
+    Friend WithEvents lblTopRingTargetSt As Label
+    Friend WithEvents Label13 As Label
+    Friend WithEvents lblTopLefttStNo As Label
+    Friend WithEvents lblTopRightStNo As Label
+    Friend WithEvents lblTopStItem As Label
+    Friend WithEvents Label9 As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents lblFieldName As Label
+    Friend WithEvents lblTopNetSt As Label
+    Friend WithEvents lblTopLeftRealSt As Label
+    Friend WithEvents lblTopRightRealSt As Label
+    Friend WithEvents lblTopLeftStartSt As Label
+    Friend WithEvents lblTopRightStartSt As Label
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

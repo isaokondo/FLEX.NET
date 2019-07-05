@@ -64,7 +64,7 @@
             HorLastTargetVal.Visible = True
             VerLastTargetVal.Visible = True
             Label3.Visible = True
-            If CtlPara.horAngleDetection = StroekDiffDetciotn Then
+            If CtlPara.horAngleDetection = StrokeDiffDetciotn Then
                 HorLastTargetVal.Unit = "mm"
                 HorLastTargetVal.FieldName = "目標ストローク差"
                 HorLastTargetVal.DecimalPlaces = 0

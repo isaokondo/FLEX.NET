@@ -28,8 +28,8 @@ Public Class ucnJackDsp
     ''' 自動方向制御　Auto:True　Manual:False
     ''' </summary>
     Private _FlexAutoManual As Boolean
-    Private _FlexPointX As Single
-    Private _FlexPointY As Single
+    Private _FlexPointX As Single = 0
+    Private _FlexPointY As Single = 0
 
     Private _FlexPointR As Single
     Private _FlexPointSeater As Single

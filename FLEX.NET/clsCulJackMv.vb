@@ -44,8 +44,11 @@ Friend Class clsCulJackMv
 
     Private mdblジャッキ圧 As Double
 
-    ''目標姿勢に対する偏差角
-    Private mdbl水平偏差角 As Double
+    ''目標姿勢に対する偏差角　or ストローク差偏差
+    ''' <summary>
+    ''' 水平制御偏差
+    ''' </summary>
+    Private _HorControlDeflection As Double
     Private mdbl鉛直偏差角 As Double
 
     ''設定値
@@ -178,15 +181,17 @@ Friend Class clsCulJackMv
         End Set
     End Property
 
-    ''-----------------------------------------------------------
 
-
-    Public Property 水平偏差角() As Double
+    ''' <summary>
+    ''' 水平制御偏差
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property HorControlDeflection() As Double
         Get
-            Return mdbl水平偏差角
+            Return _HorControlDeflection
         End Get
         Set(ByVal Value As Double)
-            mdbl水平偏差角 = Value
+            _HorControlDeflection = Value
         End Set
     End Property
     Public Property 鉛直偏差角() As Double
@@ -396,7 +401,7 @@ Friend Class clsCulJackMv
         dblVerGi = cVerDg / _鉛直I定数
 
         '力点位置はPLCより取得
-        _HorDev = (PlcIf.PointX / dblHorKp - dblHorGp * mdbl水平偏差角) / dblHorGi
+        _HorDev = (PlcIf.PointX / dblHorKp - dblHorGp * _HorControlDeflection) / dblHorGi
         _VerDev = (PlcIf.PointY / dblVerKp - dblVerGp * mdbl鉛直偏差角) / dblVerGi
 
         TimerAuto.Start()
@@ -462,7 +467,7 @@ Friend Class clsCulJackMv
         ''姿勢制御
         ''ＰＩＤ演算
 
-        _HorDev += mdbl水平偏差角
+        _HorDev += _HorControlDeflection
         _VerDev += mdbl鉛直偏差角
 
 
@@ -476,7 +481,7 @@ Friend Class clsCulJackMv
         dblHorGi = cHorDg / _水平I定数
         dblVerGi = cVerDg / _鉛直I定数
 
-        dblX = dblHorKp * (dblHorGp * mdbl水平偏差角 + dblHorGi * _HorDev)
+        dblX = dblHorKp * (dblHorGp * _HorControlDeflection + dblHorGi * _HorDev)
         dblY = dblVerKp * (dblVerGp * mdbl鉛直偏差角 + dblVerGi * _VerDev)
 
 
@@ -530,7 +535,7 @@ Friend Class clsCulJackMv
             dblX = mdbl操作強 * Cos(mdbl操作角.ToRad)
             dblY = mdbl操作強 * Sin(mdbl操作角.ToRad)
 
-            _HorDev = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * mdbl水平偏差角
+            _HorDev = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * _HorControlDeflection
             _VerDev = 1 / (dblVerKp * dblVerGi) * dblY - dblVerGp / dblVerGi * mdbl鉛直偏差角
             mdblRcDash = mdbl操作強
 
@@ -565,7 +570,7 @@ Friend Class clsCulJackMv
             dblX = MomentOpt.CulPointX
             dblY = MomentOpt.CulPointY
 
-            _HorDev = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * mdbl水平偏差角
+            _HorDev = 1 / (dblHorKp * dblHorGi) * dblX - dblHorGp / dblHorGi * _HorControlDeflection
             _VerDev = 1 / (dblVerKp * dblVerGi) * dblY - dblVerGp / dblVerGi * mdbl鉛直偏差角
 
             mdblRcDash = Sqrt(dblX ^ 2 + dblY ^ 2)
@@ -618,7 +623,7 @@ Friend Class clsCulJackMv
         dblHorGi = cHorDg / _水平I定数
         dblVerGi = cVerDg / _鉛直I定数
 
-        _HorDev = 1 / (dblHorKp * dblHorGi) * mdblPointX - dblHorGp / dblHorGi * mdbl水平偏差角
+        _HorDev = 1 / (dblHorKp * dblHorGi) * mdblPointX - dblHorGp / dblHorGi * _HorControlDeflection
         _VerDev = 1 / (dblVerKp * dblVerGi) * mdblPointY - dblVerGp / dblVerGi * mdbl鉛直偏差角
 
         ''手動→自動トラッキング時は片押しが効かないようにセット

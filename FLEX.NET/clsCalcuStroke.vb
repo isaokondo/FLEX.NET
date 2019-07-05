@@ -194,7 +194,7 @@ Public Class clsCalcuStroke
     ''' 計算平均掘進ストローク（ネットストローク)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property CalcAveLogicalStroke As Single
+    Public Property CalcAveLogicalStroke As Single
 
     ''' <summary>
     ''' 計算計測掘進ストローク
@@ -436,7 +436,7 @@ Public Class clsCalcuStroke
         'ジャッキが組み立てモード
         '引き戻しジャッキで組み立て完了していないジャッキ及び　有効ジャッキ
         For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
-            If Not PlcIf.JackExecMode(mjJkNo - 1) OrElse ((_PullBackJack.Contains(mjJkNo) _
+            If (PlcIf.ExcavMode And Not PlcIf.JackExecMode(mjJkNo - 1)) OrElse ((_PullBackJack.Contains(mjJkNo) _
                 And Not _asembleFinishedJack.Contains(mjJkNo)) Or CtlPara.ExceptMesureJackNo.Contains(mjJkNo)) Then
                 _ExclusionJack.Add(mjJkNo) '計算から除外するジャッキ
                 If CtlPara.LosZeroOpposeJackExcept Then
@@ -501,7 +501,7 @@ Public Class clsCalcuStroke
                 _CalcAveLogicalStroke = SegAsmblyData.RingLastStroke(PlcIf.RingNo) - CtlPara.StartAveStroke
             End If
         End If
-        If _CalcAveLogicalStroke < 0 Then _CalcAveLogicalStroke = 0 '負の値は除外
+        If _CalcAveLogicalStroke < 0 Then _CalcAveLogicalStroke = PlcIf.RealStroke '負の値は除外
         '全計測ジャッキ更新？
         _AllMesJackUp = (_MesuerJPullNum = InitPara.MesureJackAngle.Count)
         '引きジャッキと組立完了ジャッキの数

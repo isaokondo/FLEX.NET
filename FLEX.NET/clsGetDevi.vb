@@ -28,7 +28,16 @@ Public Class clsStrokeDevi
     ''' 換算水平偏角 
     ''' ラジアン
     ''' </summary>
-    Private ConvertHorDeflection As Single
+    Private _ConvertHorDeflection As Single
+    ''' <summary>
+    ''' 換算水平偏角 
+    ''' 度変換
+    ''' </summary>
+    Public ReadOnly Property ConvertHorDeflection As Single
+        Get
+            Return _ConvertHorDeflection.ToDgree
+        End Get
+    End Property
     ''' <summary>
     ''' 開始ピッチング
     ''' </summary>
@@ -213,7 +222,7 @@ Public Class clsStrokeDevi
     ''' <returns></returns>
     Public ReadOnly Property StrokeDiffDeflection As Single
         Get
-            Return Sin(ConvertHorDeflection) * InitPara.CntDistLRSpreader * 1000
+            Return Sin(_ConvertHorDeflection) * InitPara.CntDistLRSpreader * 1000
         End Get
     End Property
 
@@ -405,14 +414,35 @@ Public Class clsStrokeDevi
         If InitPara.StrokeNoBtmRight <> 0 Then
             ConVertBottomStartStrokeDiff = (CtlPara.StartJackStroke(InitPara.StrokeNoBtmRight) - CtlPara.StartJackStroke(InitPara.StrokeNoBtmLeft)) / Math.Cos(_horAttachDir)
         End If
+
+
+        If Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoHorRight) And
+            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoHorLeft) Then
+            StrokeSelect = SelectHor
+        ElseIf Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoTopRight) And
+            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoTopLeft) Then
+            StrokeSelect = SelectTop
+        ElseIf Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoBtmRight) And
+            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoBtmLeft) Then
+            StrokeSelect = SelectBtm
+        End If
+
+
+
+
+
+
+
+
+
         'どのストローク差で制御するか選択
         Select Case StrokeSelect
             Case SelectBtm
-                ControlStrokeDiff = ConVertBottomStartStrokeDiff
+                ControlStrokeDiff = ConVertBottomStrokeDiff
             Case SelectHor
-                ControlStrokeDiff = ConVertHorStartStrokeDiff
+                ControlStrokeDiff = ConVertHorStrokeDiff
             Case SelectTop
-                ControlStrokeDiff = ConVertTopStartStrokeDiff
+                ControlStrokeDiff = ConVertTopStrokeDiff
         End Select
 
 
@@ -420,7 +450,7 @@ Public Class clsStrokeDevi
         ConvertSurveyHorDir = Math.Asin((ControlStrokeDiff) / 1000 / InitPara.CntDistLRSpreader)
 
         'ストローク偏差　角度換算
-        ConvertHorDeflection = -(ConvertSurveyHorDir - ConVertRealTargetDirction)
+        _ConvertHorDeflection = -(ConvertSurveyHorDir - ConVertRealTargetDirction)
 
         '現在の目標ストローク差
         _TargetStrokeRealDiff = Sin(ConVertRealTargetDirction) * InitPara.CntDistLRSpreader * 1000

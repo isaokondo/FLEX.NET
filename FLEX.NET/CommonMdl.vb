@@ -205,6 +205,22 @@ Module CommonMdl
     ''' <summary>
     ''' 度をラジアンに変換
     ''' </summary>
+    ''' <param name="Rad"></param>
+    ''' <returns></returns>
+    <Extension()>
+    Public Function ToDgree(ByVal Rad As Object) As Double
+        If IsNumeric(Rad) Then
+            Return Rad / PI * 180
+        Else
+            Return 0
+        End If
+
+    End Function
+
+
+    ''' <summary>
+    ''' 度をラジアンに変換
+    ''' </summary>
     ''' <param name="Deg"></param>
     ''' <returns></returns>
     <Extension()>
