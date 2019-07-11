@@ -81,7 +81,7 @@
 
         DspRingNo.Text = PlcIf.RingNo 'リングNo
 
-        DspDirection.Value = PlcIf.Gyro              '方位角
+
         If InitPara.bottomStrokeEnable Then
             DspBottomRealStroke.Value = CalcStroke.BottomCalcStroke '下ｽﾄﾛｰｸ
             DspBottomRawStroke.Value = PlcIf.BotomStroke '下ｽﾄﾛｰｸ
@@ -204,7 +204,7 @@
         DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
         DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均スピード
 
-        DspLRStrokeDiff.Value = CalcStroke.LeftCalcStroke - CalcStroke.RightCalcStroke '左右ｽﾄﾛｰｸ差
+        DspLRStrokeDiff.Value = StrokeDev.ControlStrokeDiff             'ストローク差 '左右ｽﾄﾛｰｸ差
         If CtlPara.RightStrokeDiff Then
             DspLRStrokeDiff.Value = -DspLRStrokeDiff.Value
         End If
@@ -242,7 +242,7 @@
 
                 DspDirection.Blink = PlcIf.GyiroError
                 DspDirection.FieldName = "方位角"
-
+                DspDirection.Value = PlcIf.Gyro              '方位角
                 DspRingTargetDir.FieldName = "リング目標方向角"
                 DspRingTargetDir.DecimalPlaces = 2
 
@@ -252,6 +252,8 @@
 
                 pnlStrokeDiffContorol.Visible = False
 
+                DspFlexHorControl.FieldName = "ジャイロ"
+
                 'ストローク差制御
             Case StrokeDiffDetciotn
                 DspHorDev.Blink = False
@@ -260,7 +262,7 @@
                 DspHorDev.DecimalPlaces = 1
                 DspDirection.FieldName = "ｽﾄﾛｰｸ差"
                 DspDirection.Blink = False
-
+                DspDirection.Value = StrokeDev.ControlStrokeDiff             'ストローク差
                 DspTargetDirection.FieldName = "目標ストローク差"
 
                 DspRingTargetDir.FieldName = "ﾘﾝｸﾞ目標ｽﾄﾛｰｸ差"
@@ -271,6 +273,7 @@
 
                 pnlStrokeDiffContorol.Visible = True
                 Call DspStrokeDiffControlInfo()
+                DspFlexHorControl.FieldName = "ｽﾄﾛｰｸ差"
 
         End Select
 
@@ -476,8 +479,8 @@
             lblTopLeftRealSt.Text = StrokeDev.TopLeftStroke
             '推進量
             lblTopNetSt.Text =
-                    ((StrokeDev.TopRighttStroke + StrokeDev.TopLeftStroke - lblTopLeftStartSt.Text - lblTopRightStartSt.Text) / 2).ToString("F1")
-            lblConvertTopStrokeDiff.Text = StrokeDev.ConVertTopStrokeDiff.ToString("F1") '換算ストローク差
+                If(StrokeDev.TopStrokeControlEnable, ((StrokeDev.TopRighttStroke + StrokeDev.TopLeftStroke - lblTopLeftStartSt.Text - lblTopRightStartSt.Text) / 2).ToString("F1"), "-----")
+            lblConvertTopStrokeDiff.Text = If(StrokeDev.TopStrokeControlEnable, StrokeDev.ConVertTopStrokeDiff.ToString("F1"), "------") '換算ストローク差
             lblConvertTopStartStrokeDiff.Text = StrokeDev.ConVertTopStartStrokeDiff.ToString("F1")
             lblTopRingTargetSt.Text = (StrokeDev.ConVertTopStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
 
@@ -496,8 +499,8 @@
         lblHorLeftRealSt.Text = StrokeDev.HorizonLefttStroke
         '推進量
         lblHorNetSt.Text =
-                ((StrokeDev.HorizonRighttStroke + StrokeDev.HorizonLefttStroke - lblHorLeftStartSt.Text - lblHorRightStartSt.Text) / 2).ToString("F1")
-        lblConvertHorStrokeDiff.Text = StrokeDev.ConVertHorStrokeDiff.ToString("F1")
+                If(StrokeDev.HorStrokeControlEnable, ((StrokeDev.HorizonRighttStroke + StrokeDev.HorizonLefttStroke - lblHorLeftStartSt.Text - lblHorRightStartSt.Text) / 2).ToString("F1"), "------")
+        lblConvertHorStrokeDiff.Text = If(StrokeDev.HorStrokeControlEnable, StrokeDev.ConVertHorStrokeDiff.ToString("F1"), "------")
         lblConvertHorStartStrokeDiff.Text = StrokeDev.ConVertHorStartStrokeDiff.ToString("F1")
         lblHorRingTargetSt.Text = (StrokeDev.ConVertHorStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
         ' 掘進モード、セグメントモードで背景色を変更
@@ -512,8 +515,8 @@
             lblBtmLeftRealSt.Text = StrokeDev.BottomLefttStroke
             '推進量
             lblBtmNetSt.Text =
-                    ((StrokeDev.BottomLefttStroke + StrokeDev.BottomRighttStroke - lblBtmLeftStartSt.Text - lblBtmRightStartSt.Text) / 2).ToString("F1")
-            lblConvertBtmStrokeDiff.Text = StrokeDev.ConVertBottomStrokeDiff.ToString("F1")
+                      If(StrokeDev.BtmStrokeControlEnable, ((StrokeDev.BottomLefttStroke + StrokeDev.BottomRighttStroke - lblBtmLeftStartSt.Text - lblBtmRightStartSt.Text) / 2).ToString("F1"), "-----")
+            lblConvertBtmStrokeDiff.Text = If(StrokeDev.BtmStrokeControlEnable, StrokeDev.ConVertBottomStrokeDiff.ToString("F1"), "----")
             lblConvertBtmStartStrokeDiff.Text = StrokeDev.ConVertBottomStartStrokeDiff.ToString("F1")
             lblBtmRingTargetSt.Text = (StrokeDev.ConVertBottomStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
             ' 掘進モード、セグメントモードで背景色を変更
@@ -914,7 +917,7 @@
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub ManagmentMethd_Click(sender As Object, e As EventArgs) Handles ManagmentMethd.Click
+    Private Sub ManagmentMethd_Click(sender As Object, e As EventArgs) Handles ManagmentMethd.Click, DspFlexHorControl.DoubleClick
         My.Forms.frmManagmentMethd.Show()
     End Sub
 
@@ -1566,6 +1569,8 @@
         '立ち上がったイベントをログに
 
         WriteEventData($"Flex Start [{System.Net.Dns.GetHostName()}] [{InitPara.ModeName}]", Color.White)
+
+
 
     End Sub
     ''' <summary>

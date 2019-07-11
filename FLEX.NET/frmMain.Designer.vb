@@ -82,7 +82,7 @@ Partial Class frmMain
         Me.lblUnit = New System.Windows.Forms.Label()
         Me.DspRingNo = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.DspFlexGyiroControl = New FLEX.NET.ucnDspBit()
+        Me.DspFlexHorControl = New FLEX.NET.ucnDspBit()
         Me.DspFlexAutoAzurControl = New FLEX.NET.ucnDspBit()
         Me.DspExcavingStop = New FLEX.NET.ucnDspBit()
         Me.UcnDspBit2 = New FLEX.NET.ucnDspBit()
@@ -841,7 +841,7 @@ Partial Class frmMain
         '
         Me.Panel2.BackColor = System.Drawing.Color.DarkGray
         Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel2.Controls.Add(Me.DspFlexGyiroControl)
+        Me.Panel2.Controls.Add(Me.DspFlexHorControl)
         Me.Panel2.Controls.Add(Me.DspFlexAutoAzurControl)
         Me.Panel2.Controls.Add(Me.DspExcavingStop)
         Me.Panel2.Controls.Add(Me.UcnDspBit2)
@@ -856,19 +856,19 @@ Partial Class frmMain
         Me.Panel2.Size = New System.Drawing.Size(580, 75)
         Me.Panel2.TabIndex = 120
         '
-        'DspFlexGyiroControl
+        'DspFlexHorControl
         '
-        Me.DspFlexGyiroControl.BackColor = System.Drawing.Color.Transparent
-        Me.DspFlexGyiroControl.BitStatus = True
-        Me.DspFlexGyiroControl.Blink = False
-        Me.DspFlexGyiroControl.FieldName = "ジャイロ"
-        Me.DspFlexGyiroControl.Location = New System.Drawing.Point(481, 40)
-        Me.DspFlexGyiroControl.Margin = New System.Windows.Forms.Padding(2)
-        Me.DspFlexGyiroControl.Name = "DspFlexGyiroControl"
-        Me.DspFlexGyiroControl.OffBackColor = System.Drawing.Color.LightGray
-        Me.DspFlexGyiroControl.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DspFlexGyiroControl.Size = New System.Drawing.Size(90, 30)
-        Me.DspFlexGyiroControl.TabIndex = 73
+        Me.DspFlexHorControl.BackColor = System.Drawing.Color.Transparent
+        Me.DspFlexHorControl.BitStatus = True
+        Me.DspFlexHorControl.Blink = False
+        Me.DspFlexHorControl.FieldName = "ジャイロ"
+        Me.DspFlexHorControl.Location = New System.Drawing.Point(481, 40)
+        Me.DspFlexHorControl.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspFlexHorControl.Name = "DspFlexHorControl"
+        Me.DspFlexHorControl.OffBackColor = System.Drawing.Color.LightGray
+        Me.DspFlexHorControl.OnBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DspFlexHorControl.Size = New System.Drawing.Size(90, 30)
+        Me.DspFlexHorControl.TabIndex = 73
         '
         'DspFlexAutoAzurControl
         '
@@ -2258,8 +2258,6 @@ Partial Class frmMain
         Me.UcnJackDsp.FlexAutoManual = False
         Me.UcnJackDsp.FlexPointR = 0!
         Me.UcnJackDsp.FlexPointSeater = 0!
-        Me.UcnJackDsp.FlexPointX = 0!
-        Me.UcnJackDsp.FlexPointY = 0!
         Me.UcnJackDsp.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.UcnJackDsp.GroupPV = New Single() {0!}
         Me.UcnJackDsp.JackAutoOneWayLimit = False
@@ -3571,7 +3569,7 @@ Partial Class frmMain
     Friend WithEvents DspSumAsmPiece As ucnDspData
     Friend WithEvents DspAveAsmPiece As ucnDspData
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents DspFlexGyiroControl As ucnDspBit
+    Friend WithEvents DspFlexHorControl As ucnDspBit
     Friend WithEvents DspFlexAutoAzurControl As ucnDspBit
     Friend WithEvents DspExcavingStop As ucnDspBit
     Friend WithEvents UcnDspBit2 As ucnDspBit

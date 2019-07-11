@@ -1125,7 +1125,7 @@ Public Class clsPlcIf
     Public Sub TimerRun()
 
         'RaiseEvent ExcavationStatusChange(0, 0)
-        'RaiseEvent LineDistanceChage()
+        RaiseEvent LineDistanceChage()
 
         Dim timer As Timer = New Timer()
         AddHandler timer.Tick, New EventHandler(AddressOf PLC_Read)

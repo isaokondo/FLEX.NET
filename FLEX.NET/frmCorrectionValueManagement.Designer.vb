@@ -30,7 +30,7 @@ Partial Class frmCorrectionValueManagement
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.VerLastTargetVal = New FLEX.NET.ucnNumEdit()
+        Me.TargetNetStroke = New FLEX.NET.ucnNumEdit()
         Me.HorLastTargetVal = New FLEX.NET.ucnNumEdit()
         Me.HorPlan18 = New FLEX.NET.ucnSpredCompnent()
         Me.NowRing = New FLEX.NET.ucnSpredCompnent()
@@ -155,27 +155,27 @@ Partial Class frmCorrectionValueManagement
         Me.Label3.Text = "リング終値"
         Me.Label3.Visible = False
         '
-        'VerLastTargetVal
+        'TargetNetStroke
         '
-        Me.VerLastTargetVal.DataDspWidth = 110
-        Me.VerLastTargetVal.DecimalPlaces = CType(3, Short)
-        Me.VerLastTargetVal.DspFieldName = True
-        Me.VerLastTargetVal.FieldName = "目標ピッチング"
-        Me.VerLastTargetVal.Increment = 0.01!
-        Me.VerLastTargetVal.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
-        Me.VerLastTargetVal.Location = New System.Drawing.Point(20, 357)
-        Me.VerLastTargetVal.Margin = New System.Windows.Forms.Padding(2)
-        Me.VerLastTargetVal.MaxValue = "10"
-        Me.VerLastTargetVal.MinValue = "-10"
-        Me.VerLastTargetVal.Name = "VerLastTargetVal"
-        Me.VerLastTargetVal.SelectItem = Nothing
-        Me.VerLastTargetVal.Size = New System.Drawing.Size(415, 30)
-        Me.VerLastTargetVal.TabIndex = 64
-        Me.VerLastTargetVal.ttMsg = ""
-        Me.VerLastTargetVal.ttTile = ""
-        Me.VerLastTargetVal.Unit = "deg"
-        Me.VerLastTargetVal.Value = 0R
-        Me.VerLastTargetVal.Visible = False
+        Me.TargetNetStroke.DataDspWidth = 110
+        Me.TargetNetStroke.DecimalPlaces = CType(0, Short)
+        Me.TargetNetStroke.DspFieldName = True
+        Me.TargetNetStroke.FieldName = "目標推進量"
+        Me.TargetNetStroke.Increment = 1.0!
+        Me.TargetNetStroke.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
+        Me.TargetNetStroke.Location = New System.Drawing.Point(20, 357)
+        Me.TargetNetStroke.Margin = New System.Windows.Forms.Padding(2)
+        Me.TargetNetStroke.MaxValue = "10000"
+        Me.TargetNetStroke.MinValue = "0"
+        Me.TargetNetStroke.Name = "TargetNetStroke"
+        Me.TargetNetStroke.SelectItem = Nothing
+        Me.TargetNetStroke.Size = New System.Drawing.Size(415, 30)
+        Me.TargetNetStroke.TabIndex = 64
+        Me.TargetNetStroke.ttMsg = ""
+        Me.TargetNetStroke.ttTile = ""
+        Me.TargetNetStroke.Unit = "mm"
+        Me.TargetNetStroke.Value = 0R
+        Me.TargetNetStroke.Visible = False
         '
         'HorLastTargetVal
         '
@@ -928,7 +928,7 @@ Partial Class frmCorrectionValueManagement
         Me.ClientSize = New System.Drawing.Size(932, 917)
         Me.ControlBox = False
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.VerLastTargetVal)
+        Me.Controls.Add(Me.TargetNetStroke)
         Me.Controls.Add(Me.HorLastTargetVal)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
@@ -1041,6 +1041,6 @@ Partial Class frmCorrectionValueManagement
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents VerLastTargetVal As ucnNumEdit
+    Friend WithEvents TargetNetStroke As ucnNumEdit
     Friend WithEvents HorLastTargetVal As ucnNumEdit
 End Class

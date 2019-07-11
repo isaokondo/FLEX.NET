@@ -32,17 +32,17 @@ Partial Class frmManagmentMethd
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(240, 292)
+        Me.btnOK.Location = New System.Drawing.Point(240, 142)
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(361, 292)
+        Me.btnCancel.Location = New System.Drawing.Point(361, 142)
         '
         'HorTargetVal
         '
         Me.HorTargetVal.BackColor = System.Drawing.Color.Transparent
         Me.HorTargetVal.FieldName = "水平目標値の設定"
-        Me.HorTargetVal.Location = New System.Drawing.Point(25, 24)
+        Me.HorTargetVal.Location = New System.Drawing.Point(24, 95)
         Me.HorTargetVal.Margin = New System.Windows.Forms.Padding(2)
         Me.HorTargetVal.Name = "HorTargetVal"
         Me.HorTargetVal.rdbtnValue = False
@@ -51,12 +51,13 @@ Partial Class frmManagmentMethd
         Me.HorTargetVal.SlectNoName = "リング終値"
         Me.HorTargetVal.SlectYesName = "補正値"
         Me.HorTargetVal.TabIndex = 37
+        Me.HorTargetVal.Visible = False
         '
         'UcnRdBtn2
         '
         Me.UcnRdBtn2.BackColor = System.Drawing.Color.Transparent
         Me.UcnRdBtn2.FieldName = "補正値の自動更新"
-        Me.UcnRdBtn2.Location = New System.Drawing.Point(25, 122)
+        Me.UcnRdBtn2.Location = New System.Drawing.Point(24, 193)
         Me.UcnRdBtn2.Margin = New System.Windows.Forms.Padding(2)
         Me.UcnRdBtn2.Name = "UcnRdBtn2"
         Me.UcnRdBtn2.rdbtnValue = False
@@ -71,7 +72,7 @@ Partial Class frmManagmentMethd
         '
         Me.HorAngleDetection.BackColor = System.Drawing.Color.Transparent
         Me.HorAngleDetection.FieldName = "水平角検出"
-        Me.HorAngleDetection.Location = New System.Drawing.Point(25, 220)
+        Me.HorAngleDetection.Location = New System.Drawing.Point(24, 36)
         Me.HorAngleDetection.Margin = New System.Windows.Forms.Padding(2)
         Me.HorAngleDetection.Name = "HorAngleDetection"
         Me.HorAngleDetection.rdbtnValue = False
@@ -85,7 +86,7 @@ Partial Class frmManagmentMethd
         '
         Me.VerTargetVal.BackColor = System.Drawing.Color.Transparent
         Me.VerTargetVal.FieldName = "鉛直目標値の設定"
-        Me.VerTargetVal.Location = New System.Drawing.Point(25, 73)
+        Me.VerTargetVal.Location = New System.Drawing.Point(24, 144)
         Me.VerTargetVal.Margin = New System.Windows.Forms.Padding(2)
         Me.VerTargetVal.Name = "VerTargetVal"
         Me.VerTargetVal.rdbtnValue = False
@@ -94,16 +95,18 @@ Partial Class frmManagmentMethd
         Me.VerTargetVal.SlectNoName = "リング終値"
         Me.VerTargetVal.SlectYesName = "補正値"
         Me.VerTargetVal.TabIndex = 43
+        Me.VerTargetVal.Visible = False
         '
         'ComboBox1
         '
         Me.ComboBox1.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"方向分析", "自動測量"})
-        Me.ComboBox1.Location = New System.Drawing.Point(294, 161)
+        Me.ComboBox1.Location = New System.Drawing.Point(293, 232)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(121, 23)
         Me.ComboBox1.TabIndex = 44
+        Me.ComboBox1.Visible = False
         '
         'lblFieldName
         '
@@ -111,7 +114,7 @@ Partial Class frmManagmentMethd
         Me.lblFieldName.BackColor = System.Drawing.Color.Gray
         Me.lblFieldName.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblFieldName.ForeColor = System.Drawing.Color.White
-        Me.lblFieldName.Location = New System.Drawing.Point(207, 163)
+        Me.lblFieldName.Location = New System.Drawing.Point(206, 234)
         Me.lblFieldName.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblFieldName.Name = "lblFieldName"
         Me.lblFieldName.Size = New System.Drawing.Size(82, 16)
@@ -124,7 +127,7 @@ Partial Class frmManagmentMethd
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Gray
-        Me.ClientSize = New System.Drawing.Size(483, 351)
+        Me.ClientSize = New System.Drawing.Size(483, 273)
         Me.Controls.Add(Me.lblFieldName)
         Me.Controls.Add(Me.ComboBox1)
         Me.Controls.Add(Me.VerTargetVal)

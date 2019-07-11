@@ -94,6 +94,21 @@ Public Class clsStrokeDevi
 
     End Sub
 
+    ''' <summary>
+    ''' 上半ストローク制御有効
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TopStrokeControlEnable As Boolean
+    ''' <summary>
+    ''' 水平ストローク制御有効
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property HorStrokeControlEnable As Boolean
+    ''' <summary>
+    ''' 下半ストローク制御有効
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property BtmStrokeControlEnable As Boolean
 
 
     '    Public Property Let 開始右ストローク(ByVal vData As Integer)
@@ -416,23 +431,45 @@ Public Class clsStrokeDevi
         End If
 
 
-        If Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoHorRight) And
-            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoHorLeft) Then
-            StrokeSelect = SelectHor
-        ElseIf Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoTopRight) And
-            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoTopLeft) Then
-            StrokeSelect = SelectTop
-        ElseIf Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoBtmRight) And
-            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoBtmLeft) Then
-            StrokeSelect = SelectBtm
+        '各ストローク差制御の有効無効の判断
+        'ストローク演算で除外するジャッキが含まれてるときは無効
+        '水平
+        HorStrokeControlEnable = Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoHorRight) And
+            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoHorLeft)
+        '上半
+        TopStrokeControlEnable = Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoTopRight) And
+            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoTopLeft)
+        '下半
+        BtmStrokeControlEnable = Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoBtmRight) And
+            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoBtmLeft)
+
+        '前回の選択ジャッキが有効な場合は制御選択変更なし
+        Dim blnNoChange As Boolean
+
+        Select Case StrokeSelect
+            Case SelectBtm
+                blnNoChange = BtmStrokeControlEnable
+            Case SelectHor
+                blnNoChange = HorStrokeControlEnable
+            Case SelectTop
+                blnNoChange = TopStrokeControlEnable
+        End Select
+
+        '制御選択ジャッキが変更
+        If Not blnNoChange Then
+            Dim SelStStr As String = ""
+            If HorStrokeControlEnable Then
+                StrokeSelect = SelectHor
+                SelStStr = "水平"
+            ElseIf TopStrokeControlEnable Then
+                StrokeSelect = SelectTop
+                SelStStr = "上半"
+            ElseIf BtmStrokeControlEnable Then
+                StrokeSelect = SelectBtm
+                SelStStr = "下半"
+            End If
+            WriteEventData($"ｽﾄﾛｰｸ差制御 {SelStStr}ｽﾄﾛｰｸになりました。", Color.BlueViolet)
         End If
-
-
-
-
-
-
-
 
 
         'どのストローク差で制御するか選択
