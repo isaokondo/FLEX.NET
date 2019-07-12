@@ -31,6 +31,32 @@ Friend Class clsDataSave
         'recDataSave.Close()
     End Sub
 
+    'Private Class DataMk
+    '    Private _ColumnList As List(Of String)
+
+
+    '    Public Sub New(clst As List(Of String))
+    '        _ColumnList = clst
+    '        ReDim _SqlData(_ColumnList.Count - 1)
+    '    End Sub
+
+    '    Public Property SqlData As String()
+
+
+    '    Public Sub PutData(data As String)
+
+    '    End Sub
+    '    Public Sub PutData(data As Single)
+
+    '    End Sub
+
+
+
+    'End Class
+
+
+
+
     ''' <summary>
     ''' SQL作成
     ''' </summary>
