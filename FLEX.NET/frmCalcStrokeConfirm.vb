@@ -92,8 +92,8 @@ Public Class frmCalcStrokeConfirm
                 '推進量
                 lblTopNetSt.Text =
                     ((StrokeDev.TopRighttStroke + StrokeDev.TopLeftStroke - lblTopLeftStartSt.Text - lblTopRightStartSt.Text) / 2).ToString("F1")
-                lblConvertTopStrokeDiff.Text = StrokeDev.ConVertTopStrokeDiff.ToString("F1") '換算ストローク差
-                lblConvertTopStartStrokeDiff.Text = StrokeDev.ConVertTopStartStrokeDiff.ToString("F1")
+                lblConvertTopStrokeDiff.Text = -StrokeDev.ConVertTopStrokeDiff.ToString("F1") '換算ストローク差
+                lblConvertTopStartStrokeDiff.Text = -StrokeDev.ConVertTopStartStrokeDiff.ToString("F1")
                 lblTopRingTargetSt.Text = (StrokeDev.ConVertTopStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
 
                 ' 掘進モード、セグメントモードで背景色を変更
@@ -112,8 +112,8 @@ Public Class frmCalcStrokeConfirm
             '推進量
             lblHorNetSt.Text =
                 ((StrokeDev.HorizonRighttStroke + StrokeDev.HorizonLefttStroke - lblHorLeftStartSt.Text - lblHorRightStartSt.Text) / 2).ToString("F1")
-            lblConvertHorStrokeDiff.Text = StrokeDev.ConVertHorStrokeDiff.ToString("F1")
-            lblConvertHorStartStrokeDiff.Text = StrokeDev.ConVertHorStartStrokeDiff.ToString("F1")
+            lblConvertHorStrokeDiff.Text = -StrokeDev.ConVertHorStrokeDiff.ToString("F1")
+            lblConvertHorStartStrokeDiff.Text = -StrokeDev.ConVertHorStartStrokeDiff.ToString("F1")
             lblHorRingTargetSt.Text = (StrokeDev.ConVertHorStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
             ' 掘進モード、セグメントモードで背景色を変更
             Call ModeColorSet(lblHorLefttStNo, InitPara.StrokeNoHorLeft)

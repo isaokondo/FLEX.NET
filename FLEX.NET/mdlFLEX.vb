@@ -206,7 +206,7 @@ Module mdlFLEX
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
             FullOpenStart() '全押しスタート
 
-            StrokeDev.StartCul() 'ストローク差制御初期化
+            StrokeDev.StrokeSelect = clsStrokeDevi.SelectHor 'ストローク差制 開始時は水平からスタート
 
         End If
         If PreStatus = cChudan And NowStatus = cKussin Then

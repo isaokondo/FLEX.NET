@@ -480,9 +480,9 @@
             '推進量
             lblTopNetSt.Text =
                 If(StrokeDev.TopStrokeControlEnable, ((StrokeDev.TopRighttStroke + StrokeDev.TopLeftStroke - lblTopLeftStartSt.Text - lblTopRightStartSt.Text) / 2).ToString("F1"), "-----")
-            lblConvertTopStrokeDiff.Text = If(StrokeDev.TopStrokeControlEnable, StrokeDev.ConVertTopStrokeDiff.ToString("F1"), "------") '換算ストローク差
-            lblConvertTopStartStrokeDiff.Text = StrokeDev.ConVertTopStartStrokeDiff.ToString("F1")
-            lblTopRingTargetSt.Text = (StrokeDev.ConVertTopStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
+            lblConvertTopStrokeDiff.Text = If(StrokeDev.TopStrokeControlEnable, -StrokeDev.ConVertTopStrokeDiff.ToString("F1"), "------") '換算ストローク差
+            lblConvertTopStartStrokeDiff.Text = -StrokeDev.ConVertTopStartStrokeDiff.ToString("F1")
+            lblTopRingTargetSt.Text = (-(StrokeDev.ConVertTopStartStrokeDiff + StrokeDev.RingUpStroke)).ToString("F2")
 
             ' 掘進モード、セグメントモードで背景色を変更
             Call ModeColorSet(lblTopRightStNo, InitPara.StrokeNoTopRight)
@@ -500,9 +500,9 @@
         '推進量
         lblHorNetSt.Text =
                 If(StrokeDev.HorStrokeControlEnable, ((StrokeDev.HorizonRighttStroke + StrokeDev.HorizonLefttStroke - lblHorLeftStartSt.Text - lblHorRightStartSt.Text) / 2).ToString("F1"), "------")
-        lblConvertHorStrokeDiff.Text = If(StrokeDev.HorStrokeControlEnable, StrokeDev.ConVertHorStrokeDiff.ToString("F1"), "------")
-        lblConvertHorStartStrokeDiff.Text = StrokeDev.ConVertHorStartStrokeDiff.ToString("F1")
-        lblHorRingTargetSt.Text = (StrokeDev.ConVertHorStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
+        lblConvertHorStrokeDiff.Text = If(StrokeDev.HorStrokeControlEnable, -StrokeDev.ConVertHorStrokeDiff.ToString("F1"), "------")
+        lblConvertHorStartStrokeDiff.Text = -StrokeDev.ConVertHorStartStrokeDiff.ToString("F1")
+        lblHorRingTargetSt.Text =(- (StrokeDev.ConVertHorStartStrokeDiff + StrokeDev.RingUpStroke)).ToString("F2")
         ' 掘進モード、セグメントモードで背景色を変更
         Call ModeColorSet(lblHorLefttStNo, InitPara.StrokeNoHorLeft)
         Call ModeColorSet(lblHorRightStNo, InitPara.StrokeNoHorRight)
@@ -516,9 +516,9 @@
             '推進量
             lblBtmNetSt.Text =
                       If(StrokeDev.BtmStrokeControlEnable, ((StrokeDev.BottomLefttStroke + StrokeDev.BottomRighttStroke - lblBtmLeftStartSt.Text - lblBtmRightStartSt.Text) / 2).ToString("F1"), "-----")
-            lblConvertBtmStrokeDiff.Text = If(StrokeDev.BtmStrokeControlEnable, StrokeDev.ConVertBottomStrokeDiff.ToString("F1"), "----")
-            lblConvertBtmStartStrokeDiff.Text = StrokeDev.ConVertBottomStartStrokeDiff.ToString("F1")
-            lblBtmRingTargetSt.Text = (StrokeDev.ConVertBottomStartStrokeDiff + StrokeDev.RingUpStroke).ToString("F2")
+            lblConvertBtmStrokeDiff.Text = If(StrokeDev.BtmStrokeControlEnable, -StrokeDev.ConVertBottomStrokeDiff.ToString("F1"), "----")
+            lblConvertBtmStartStrokeDiff.Text = -StrokeDev.ConVertBottomStartStrokeDiff.ToString("F1")
+            lblBtmRingTargetSt.Text =(- (StrokeDev.ConVertBottomStartStrokeDiff + StrokeDev.RingUpStroke)).ToString("F2")
             ' 掘進モード、セグメントモードで背景色を変更
             Call ModeColorSet(lblBtmRightStNo, InitPara.StrokeNoBtmRight)
             Call ModeColorSet(lblBtmLeftStNo, InitPara.StrokeNoBtmLeft)

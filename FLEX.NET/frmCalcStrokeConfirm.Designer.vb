@@ -985,6 +985,7 @@ Partial Class frmCalcStrokeConfirm
         Me.pnlStrokeDiffContorol.Name = "pnlStrokeDiffContorol"
         Me.pnlStrokeDiffContorol.Size = New System.Drawing.Size(432, 229)
         Me.pnlStrokeDiffContorol.TabIndex = 175
+        Me.pnlStrokeDiffContorol.Visible = False
         '
         'Label12
         '
