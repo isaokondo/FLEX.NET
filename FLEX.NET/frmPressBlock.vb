@@ -12,7 +12,7 @@ Public Class frmPressBlock
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
-
+        MinimumFullPowerBlock.MaxValue = InitPara.NumberGroup
         With CtlPara
             'FullPowerMinimumEnable.rdbtnValue = .全開グループ制限
             MinimumFullPowerBlock.Value = .最低全開グループ数
