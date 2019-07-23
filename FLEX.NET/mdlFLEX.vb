@@ -1050,7 +1050,7 @@ Module mdlFLEX
 
     Private Sub PlcIf_ExcavModeChange(Mode As Boolean) Handles PlcIf.ExcavModeChange
         'セグメントモード時の時間演算
-        If Not Mode Then
+        If Not Mode And InitPara.ServerMode Then
             ElapsedTime.SegmentMode()
             'すべてのストローク計測ジャッキが引戻更新され,セグメントモードになった
             If CalcStroke.AllMesJackUp Then
