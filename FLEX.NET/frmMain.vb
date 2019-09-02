@@ -254,7 +254,8 @@
 
                 DspFlexHorControl.FieldName = "ジャイロ"
 
-                'ストローク差制御
+                '
+
             Case StrokeDiffDetciotn
                 DspHorDev.Blink = False
                 DspHorDev.FieldName = "ｽﾄﾛｰｸ差偏差"

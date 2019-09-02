@@ -348,4 +348,8 @@ Public Class frmSegmentEdit
     Private Sub DgvSegAssign_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvSegAssign.CellContentClick
 
     End Sub
+
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+
+    End Sub
 End Class

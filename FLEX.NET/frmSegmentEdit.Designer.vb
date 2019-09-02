@@ -185,26 +185,26 @@ Partial Class frmSegmentEdit
         '
         Me.ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmCopy, Me.tsmPaste, Me.tsmPtternPaste})
         Me.ContextMenuStrip.Name = "ContextMenuStrip"
-        Me.ContextMenuStrip.Size = New System.Drawing.Size(150, 70)
+        Me.ContextMenuStrip.Size = New System.Drawing.Size(152, 70)
         '
         'tsmCopy
         '
         Me.tsmCopy.Name = "tsmCopy"
-        Me.tsmCopy.Size = New System.Drawing.Size(149, 22)
+        Me.tsmCopy.Size = New System.Drawing.Size(151, 22)
         Me.tsmCopy.Text = "コピー"
         '
         'tsmPaste
         '
         Me.tsmPaste.Enabled = False
         Me.tsmPaste.Name = "tsmPaste"
-        Me.tsmPaste.Size = New System.Drawing.Size(149, 22)
+        Me.tsmPaste.Size = New System.Drawing.Size(151, 22)
         Me.tsmPaste.Text = "貼り付け"
         '
         'tsmPtternPaste
         '
         Me.tsmPtternPaste.Enabled = False
         Me.tsmPtternPaste.Name = "tsmPtternPaste"
-        Me.tsmPtternPaste.Size = New System.Drawing.Size(149, 22)
+        Me.tsmPtternPaste.Size = New System.Drawing.Size(151, 22)
         Me.tsmPtternPaste.Text = "パターン貼り付け"
         '
         'DgvSegSim
@@ -312,18 +312,18 @@ Partial Class frmSegmentEdit
         '
         Me.ContextMenuStripSim.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmSelect, Me.tsmCancel})
         Me.ContextMenuStripSim.Name = "ContextMenuStrip"
-        Me.ContextMenuStripSim.Size = New System.Drawing.Size(95, 48)
+        Me.ContextMenuStripSim.Size = New System.Drawing.Size(99, 48)
         '
         'tsmSelect
         '
         Me.tsmSelect.Name = "tsmSelect"
-        Me.tsmSelect.Size = New System.Drawing.Size(94, 22)
+        Me.tsmSelect.Size = New System.Drawing.Size(98, 22)
         Me.tsmSelect.Text = "選択"
         '
         'tsmCancel
         '
         Me.tsmCancel.Name = "tsmCancel"
-        Me.tsmCancel.Size = New System.Drawing.Size(94, 22)
+        Me.tsmCancel.Size = New System.Drawing.Size(98, 22)
         Me.tsmCancel.Text = "解除"
         '
         'btnTransfer

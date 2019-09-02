@@ -315,17 +315,21 @@ Public Class clsStrokeDevi
         End If
 
 
+
+
         '各ストローク差制御の有効無効の判断
         'ストローク演算で除外するジャッキが含まれてるときは無効
+        Dim ReduceJack As List(Of Short) = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack
+        ReduceJack.AddRange(CalcStroke.ExclusionJack)
         '水平
-        HorStrokeControlEnable = Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoHorRight) And
-            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoHorLeft)
+        HorStrokeControlEnable = Not ReduceJack.Contains(InitPara.StrokeNoHorRight) And
+            Not ReduceJack.Contains(InitPara.StrokeNoHorLeft)
         '上半
-        TopStrokeControlEnable = Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoTopRight) And
-            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoTopLeft)
+        TopStrokeControlEnable = Not ReduceJack.Contains(InitPara.StrokeNoTopRight) And
+            Not ReduceJack.Contains(InitPara.StrokeNoTopLeft)
         '下半
-        BtmStrokeControlEnable = Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoBtmRight) And
-            Not CalcStroke.ExclusionJack.Contains(InitPara.StrokeNoBtmLeft)
+        BtmStrokeControlEnable = Not ReduceJack.Contains(InitPara.StrokeNoBtmRight) And
+            Not ReduceJack.Contains(InitPara.StrokeNoBtmLeft)
 
         '前回の選択ジャッキが有効な場合は制御選択変更なし
         Dim blnNoChange As Boolean
@@ -345,14 +349,16 @@ Public Class clsStrokeDevi
             If HorStrokeControlEnable Then
                 StrokeSelect = SelectHor
                 SelStStr = "水平"
-            ElseIf TopStrokeControlEnable Then
-                StrokeSelect = SelectTop
-                SelStStr = "上半"
             ElseIf BtmStrokeControlEnable Then
                 StrokeSelect = SelectBtm
                 SelStStr = "下半"
+            ElseIf TopStrokeControlEnable Then
+                StrokeSelect = SelectTop
+                SelStStr = "上半"
             End If
-            WriteEventData($"ｽﾄﾛｰｸ差制御 {SelStStr}ｽﾄﾛｰｸになりました。", Color.BlueViolet)
+            If CtlPara.horAngleDetection = StrokeDiffDetciotn Then
+                WriteEventData($"ｽﾄﾛｰｸ差制御 {SelStStr}ｽﾄﾛｰｸになりました。", Color.BlueViolet)
+            End If
         End If
 
 

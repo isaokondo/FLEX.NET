@@ -182,7 +182,7 @@ Partial Class frmCorrectionValueManagement
         Me.HorLastTargetVal.DataDspWidth = 110
         Me.HorLastTargetVal.DecimalPlaces = CType(0, Short)
         Me.HorLastTargetVal.DspFieldName = True
-        Me.HorLastTargetVal.FieldName = "目標ストローク差"
+        Me.HorLastTargetVal.FieldName = "目標ストローク差(左勝ち+)"
         Me.HorLastTargetVal.Increment = 1.0!
         Me.HorLastTargetVal.InputStyle = FLEX.NET.ucnNumEdit.InputMethod.NumericInputType
         Me.HorLastTargetVal.Location = New System.Drawing.Point(20, 324)
