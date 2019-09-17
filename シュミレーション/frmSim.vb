@@ -196,7 +196,7 @@ Public Class frmSim
 
         For i = 0 To InitParm.NumberJack - 1
 
-            .Rows.Add()
+            DgvLosZero.Rows.Add()
             DgvLosZero.Rows(i).Cells(0).Value = (i + 1).ToString
         Next
 
@@ -867,6 +867,15 @@ CatchError:  '例外処理
         btnLoszeroStart.Visible = ((Not IsNothing(SimSet.LoszeroStart)) AndAlso SimSet.LoszeroStart.Length > 0)
         JackAllSelectk() 'ジャッキ全選択
 
+        '全ジャッキ掘進モードに
+        For i As Integer = 0 To InitParm.NumberJack - 1
+            Dim intPlcWrBaseAdress As Integer = Convert.ToInt32(SimSet.ExcavOrSegmentAdr.Substring(1), 16)
+            Dim PlcAdr As String = "B" & Convert.ToString(intPlcWrBaseAdress + i, 16)
+            'シフトキーが推されてた時は、ON
+            Dim iret = ComPlc.SetDevice(PlcAdr, True)
+        Next
+
+
 
     End Sub
     ''' <summary>
@@ -957,6 +966,10 @@ CatchError:  '例外処理
     End Sub
 
     Private Sub DgvLosZero_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvLosZero.MouseDoubleClick
+
+    End Sub
+
+    Private Sub DgvLosZero_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvLosZero.CellContentClick
 
     End Sub
 End Class

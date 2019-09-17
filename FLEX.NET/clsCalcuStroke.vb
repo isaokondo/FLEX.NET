@@ -196,6 +196,11 @@ Public Class clsCalcuStroke
     ''' <returns></returns>
     Public Property CalcAveLogicalStroke As Single
 
+
+
+    Public ReadOnly Property JackLocSegmentWd As New Dictionary(Of Short, Single)
+
+
     ''' <summary>
     ''' 計算計測掘進ストローク
     ''' </summary>
@@ -303,6 +308,7 @@ Public Class clsCalcuStroke
             _mesureJackStroke.Add(i, 0)
             _mesureJackSpeed.Add(i, 0)
             _MesureCalcLogicalStroke.Add(i, 0)
+            _JackLocSegmentWd.Add(i, 0)
             _mesureOffsetJackStroke.Add(i, 0)
         Next
         _aveOffsetJackStroke = CtlPara.aveOffsetJackStroke
@@ -456,15 +462,18 @@ Public Class clsCalcuStroke
         For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
 
             _mesureCalcJackStroke(mjJkNo) = _mesureJackStroke(mjJkNo)
-
-            If _asembleFinishedJack.Contains(mjJkNo) Then
-                _MesuerJPullNum = _MesuerJPullNum + 1
-                'セグメント幅分を加算
-                _mesureCalcJackStroke(mjJkNo) +=
+            _JackLocSegmentWd(mjJkNo) =
                     _SegnebtCenterWidth +
                     _SegmentTaperValue / 2 *
                     Math.Cos((_SegmentMaxTaperLoc + _rearDrumRolling - _segmentRolling - InitPara.MesureJackAngle(mjJkNo)) _
                     / 180 * Math.PI)
+
+            If _asembleFinishedJack.Contains(mjJkNo) Then
+                _MesuerJPullNum = _MesuerJPullNum + 1
+                'セグメント幅分を加算
+
+                _mesureCalcJackStroke(mjJkNo) += _JackLocSegmentWd(mjJkNo)
+
             End If
 
             If Not _ExclusionOpposeJack.Contains(mjJkNo) And Not _ExclusionJack.Contains(mjJkNo) Then

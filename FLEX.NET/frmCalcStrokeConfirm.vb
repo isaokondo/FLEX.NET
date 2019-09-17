@@ -54,6 +54,7 @@ Public Class frmCalcStrokeConfirm
             dv.Cells(StartStroke.Index).Value = CtlPara.StartJackStroke(jkNo)
             dv.Cells(JackSpeed.Index).Value = PlcIf.MesureJackSpeed(jkNo)    '計測ジャッキスピード
             dv.Cells(CalcStrokeLen.Index).Value = CalcStroke.MesureCalcJackStroke(jkNo)  '計算計測ジャッキストローク
+            dv.Cells(SegmentWidth.Index).Value = CalcStroke.JackLocSegmentWd(jkNo).ToString("F0")
             dv.Cells(JackState.Index).Value = CalcStroke.JackState(jkNo) 'ジャッキステータス
             Select Case CalcStroke.JackState(jkNo)
                 Case "掘進モード"

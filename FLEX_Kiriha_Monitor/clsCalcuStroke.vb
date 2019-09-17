@@ -423,6 +423,12 @@ Public Class clsCalcuStroke
             _mesureCalcJackStroke(mjJkNo) = _mesureJackStroke(mjJkNo)
 
             If _asembleFinishedJack.Contains(mjJkNo) Then
+
+                _JackLocSegmentWd(mjJkNo) =
+                    _SegnebtCenterWidth +
+                    _SegmentTaperValue / 2 *
+                    Math.Cos((_SegmentMaxTaperLoc + _rearDrumRolling - _segmentRolling - InitPara.MesureJackAngle(mjJkNo)) _
+                    / 180 * Math.PI)
                 'セグメント幅分を加算
                 _mesureCalcJackStroke(mjJkNo) +=
                     _SegnebtCenterWidth +
