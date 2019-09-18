@@ -319,17 +319,21 @@ Public Class clsStrokeDevi
 
         '各ストローク差制御の有効無効の判断
         'ストローク演算で除外するジャッキが含まれてるときは無効
-        Dim ReduceJack As List(Of Short) = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack
-        ReduceJack.AddRange(CalcStroke.ExclusionJack)
-        '水平
-        HorStrokeControlEnable = Not ReduceJack.Contains(InitPara.StrokeNoHorRight) And
+        If PlcIf.LosZeroEnable Then
+            Dim ReduceJack As List(Of Short) = SegAsmblyData.ProcessData(PlcIf.AssemblyPieceNo).ReduceJack
+            ReduceJack.AddRange(CalcStroke.ExclusionJack)
+            '水平
+            HorStrokeControlEnable = Not ReduceJack.Contains(InitPara.StrokeNoHorRight) And
             Not ReduceJack.Contains(InitPara.StrokeNoHorLeft)
-        '上半
-        TopStrokeControlEnable = Not ReduceJack.Contains(InitPara.StrokeNoTopRight) And
+            '上半
+            TopStrokeControlEnable = Not ReduceJack.Contains(InitPara.StrokeNoTopRight) And
             Not ReduceJack.Contains(InitPara.StrokeNoTopLeft)
-        '下半
-        BtmStrokeControlEnable = Not ReduceJack.Contains(InitPara.StrokeNoBtmRight) And
+            '下半
+            BtmStrokeControlEnable = Not ReduceJack.Contains(InitPara.StrokeNoBtmRight) And
             Not ReduceJack.Contains(InitPara.StrokeNoBtmLeft)
+
+        End If
+
 
         '前回の選択ジャッキが有効な場合は制御選択変更なし
         Dim blnNoChange As Boolean

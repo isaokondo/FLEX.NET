@@ -1582,7 +1582,8 @@
             'TODO:最大テーパーの算出
             CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
             '最大テーパー位置
-            CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
+            'CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
+            CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TaperLoc(PlcIf.RingNo)
             'セグメント幅
             CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
             '引き戻し中から押込み中の間は引き戻しｼﾞｬｯｷをセット

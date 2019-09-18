@@ -30,6 +30,11 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     Private _SheetID As New Dictionary(Of Integer, Integer)
 
+    ''' <summary>
+    ''' テーパー位置
+    ''' </summary>
+    Private _TaperLoc As New Dictionary(Of Integer, Single)
+
 
     ''' <summary>
     ''' セグメント種類No　 リング番号がKey
@@ -221,6 +226,17 @@ Friend Class clsSegmentAssembly
             'TODO:データベース更新作業
         End Set
     End Property
+
+    Public Property TaperLoc As Dictionary(Of Integer, Single)
+        Get
+            Return _TaperLoc
+        End Get
+        Set(value As Dictionary(Of Integer, Single))
+            _TaperLoc = value
+        End Set
+    End Property
+
+
     ''' <summary>
     ''' 組立パターン名
     ''' </summary>
@@ -596,7 +612,7 @@ Friend Class clsSegmentAssembly
         Dim rsData As DataTable =
             GetDtfmSQL($"select  `flexセグメント組立データ`.`シートID`, `flexセグメント組立データ`.`リング番号`, `flexセグメント組立データ`.`セグメントNo` ,
             `flexセグメント組立データ`.`組立パターンNo`,`flexセグメント組立データ`.`掘進終了ストローク`,
-            `セグメント割付シュミレーション`.`セグメントNo`,`セグメント割付シュミレーション`.`組立パターンNo`  ,`セグメント割付シュミレーション`.`シートID`{RollAdFld}   
+            `セグメント割付シュミレーション`.`セグメントNo`,`セグメント割付シュミレーション`.`組立パターンNo`,`セグメント割付シュミレーション`.`テーパ位置`  ,`セグメント割付シュミレーション`.`シートID`{RollAdFld}   
             FROM `flexセグメント組立データ`
             LEFT OUTER JOIN `セグメント割付シュミレーション` ON `flexセグメント組立データ`.`シートID`=`セグメント割付シュミレーション`.`シートID`
             AND `flexセグメント組立データ`.`リング番号`=`セグメント割付シュミレーション`.`リングＮｏ` ORDER BY `リング番号`")
@@ -616,6 +632,7 @@ Friend Class clsSegmentAssembly
                 _TypeNo(RingNo) = tb.Item("セグメントNo1")
                 If InitPara.LosZeroEquip Then
                     _SegmentAssenblyPtnID(RingNo) = tb.Item("組立パターンNo1")
+                    _TaperLoc(RingNo) = tb.Item("テーパ位置")
                     _rollingMindEnable(RingNo) =
                         rollingMind AndAlso
                         Not IsDBNull(tb.Item("時計端差異")) AndAlso Not IsDBNull(tb.Item("反時計端差異")) AndAlso Not IsDBNull(tb.Item("MRローリング")) AndAlso Not IsDBNull(tb.Item("SGローリング"))

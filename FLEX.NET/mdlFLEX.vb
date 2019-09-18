@@ -183,12 +183,16 @@ Module mdlFLEX
         SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
         '姿勢トレンドのデータ取得
         frmMain.DirectionChartD.DataGet()
-        'TODO:最大テーパーの算出
-        CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
-        '最大テーパー位置
-        CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
-        'セグメント幅
-        CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+        If PlcIf.LosZeroEnable Then
+
+            'TODO:最大テーパーの算出
+            CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
+            '最大テーパー位置
+            'CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
+            CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TaperLoc(PlcIf.RingNo)
+            'セグメント幅
+            CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+        End If
 
         'If PreStatus = -1 Then Exit Sub
         '待機中から掘進or 中断中-----------------------------------------------------------
