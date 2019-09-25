@@ -462,11 +462,12 @@ Public Class clsCalcuStroke
         For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
 
             _mesureCalcJackStroke(mjJkNo) = _mesureJackStroke(mjJkNo)
+            'ストローク加算時のテーパー量の補正率を加味
             _JackLocSegmentWd(mjJkNo) =
                     _SegnebtCenterWidth +
                     _SegmentTaperValue / 2 *
                     Math.Cos((_SegmentMaxTaperLoc + _rearDrumRolling - _segmentRolling - InitPara.MesureJackAngle(mjJkNo)) _
-                    / 180 * Math.PI)
+                    / 180 * Math.PI) * InitPara.TaperCorRate / 100
 
             If _asembleFinishedJack.Contains(mjJkNo) Then
                 _MesuerJPullNum = _MesuerJPullNum + 1

@@ -553,6 +553,8 @@ Public Class clsInitParameter
     Private _topStrokeEnable As Boolean     '上ストローク計あり
     Private _bottomStrokeEnable As Boolean '下ストローク計あり
 
+    Private _TaperCorRate As Integer 'ストローク加算時のテーパー量の補正率(%)
+
 
     Private _backUpFolder As String 'バックアップフォルダ
     Private _backUpTime As TimeSpan 'バックアップ時間
@@ -717,6 +719,17 @@ Public Class clsInitParameter
             Return _mesureJackNo
         End Get
     End Property
+
+    ''' <summary>
+    ''' ストローク加算時のテーパー量の補正率(%)
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property TaperCorRate As Integer
+        Get
+            Return _TaperCorRate
+        End Get
+    End Property
+
 
     Public ReadOnly Property topStrokeEnable As Boolean
         Get
@@ -1036,6 +1049,13 @@ Public Class clsInitParameter
             '上下のストローク計の有無
             _topStrokeEnable = (_mesureJackNo(0) <> 0)
             _bottomStrokeEnable = (_mesureJackNo(2) <> 0)
+
+
+            If ht.ContainsKey("ストローク加算時のテーパー量の補正率(%)") Then
+                _TaperCorRate = ht("ストローク加算時のテーパー量の補正率(%)")
+            Else
+                _TaperCorRate = 100
+            End If
 
 
             If ht.ContainsKey("測量距離入力") Then

@@ -25,9 +25,10 @@ Public Class frmCalcStrokeConfirm
         DspMaxTaperLoc.Visible = InitPara.LosZeroEquip '最大テーパー位置
         DspTaperValue.Visible = InitPara.LosZeroEquip    'テーパー量
         RectangleShape2.Visible = InitPara.LosZeroEquip
+        DspTaperCorRate.Visible = InitPara.LosZeroEquip
 
         DspAveStroke.Value = CalcStroke.MesureCalcAveJackStroke '平均ストローク表示
-
+        DspTaperCorRate.Value = InitPara.TaperCorRate
 
         If pnlStrokeDiffContorol.Visible Then
             'ストロークNo
