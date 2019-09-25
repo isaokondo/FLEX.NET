@@ -71,11 +71,13 @@ Public Class frmCalcStrokeConfirm
             DspAveStroke.Value = CalcStroke.MesureCalcAveJackStroke '平均ストローク表示
             DspCenterWidth.Value = CalcStroke.SegnebtCenterWidth    'セグメント幅
             'DspMaxTaperLoc.Value = CalcStroke.SegmentMaxTaperLoc '最大テーパー位置
-            DspMaxTaperLoc.Value = Lim180(SegAsmblyData.TaperLoc(PlcIf.RingNo)) '最大テーパー位置
+            If SegAsmblyData.TaperLoc.ContainsKey(PlcIf.RingNo) Then
+                DspMaxTaperLoc.Value = Lim180(SegAsmblyData.TaperLoc(PlcIf.RingNo)) '最大テーパー位置
+            End If
             DspTaperValue.Value = CalcStroke.SegmentTaperValue    'テーパー量
         End If
 
-        DspAveLogocalStroke.Value = CalcStroke.CalcAveLogicalStroke
+            DspAveLogocalStroke.Value = CalcStroke.CalcAveLogicalStroke
         DspAveSpeed.Value = CalcStroke.MesureAveSpeed
 
 
