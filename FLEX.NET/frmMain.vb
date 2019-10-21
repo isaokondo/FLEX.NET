@@ -204,11 +204,19 @@
         DspAveStroke.Value = CalcStroke.CalcAveLogicalStroke '計算平均ストローク
         DspExcvSpeed.Value = CalcStroke.MesureAveSpeed '計測ジャッキ平均スピード
 
-        DspLRStrokeDiff.Value = StrokeDev.ControlStrokeDiff             'ストローク差 '左右ｽﾄﾛｰｸ差
-        If CtlPara.RightStrokeDiff Then
+        '左右のストローク差（ストローク制御とは無関係） 実ストローク
+        DspLRRealStrokeDiff.Value = CalcStroke.RightCalcStroke - CalcStroke.LeftCalcStroke 'StrokeDev.ControlStrokeDiff             'ストローク差 '左右ｽﾄﾛｰｸ差
+        If Not CtlPara.RightStrokeDiff Then
+            DspLRRealStrokeDiff.Value = -DspLRRealStrokeDiff.Value
+        End If
+        DspLRRealStrokeDiff.FieldName = $"実ｽﾄﾛｰｸ差(mm){If(CtlPara.RightStrokeDiff, "右", "左")}勝"
+        '読みストロークの差
+        DspLRStrokeDiff.Value = PlcIf.RightStroke - PlcIf.LeftStroke
+        If Not CtlPara.RightStrokeDiff Then
             DspLRStrokeDiff.Value = -DspLRStrokeDiff.Value
         End If
         DspLRStrokeDiff.FieldName = $"ｽﾄﾛｰｸ差(mm){If(CtlPara.RightStrokeDiff, "右", "左")}勝"
+
 
         '汎用データ表示
         For Each wu In CtlPara.WideUse

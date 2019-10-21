@@ -234,6 +234,7 @@ Partial Class frmMain
         Me.lblTopRightRealSt = New System.Windows.Forms.Label()
         Me.lblTopLeftStartSt = New System.Windows.Forms.Label()
         Me.lblTopRightStartSt = New System.Windows.Forms.Label()
+        Me.DspLRRealStrokeDiff = New FLEX.NET.ucnDspDataMin()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -1289,7 +1290,7 @@ Partial Class frmMain
         Me.DspLRStrokeDiff.BackColor = System.Drawing.Color.Transparent
         Me.DspLRStrokeDiff.DecimalPlaces = CType(0, Short)
         Me.DspLRStrokeDiff.FieldName = "左右ｽﾄﾛｰｸ差"
-        Me.DspLRStrokeDiff.Location = New System.Drawing.Point(919, 530)
+        Me.DspLRStrokeDiff.Location = New System.Drawing.Point(919, 555)
         Me.DspLRStrokeDiff.Margin = New System.Windows.Forms.Padding(2)
         Me.DspLRStrokeDiff.Name = "DspLRStrokeDiff"
         Me.DspLRStrokeDiff.Size = New System.Drawing.Size(138, 51)
@@ -1463,7 +1464,7 @@ Partial Class frmMain
         Me.DspCopyStroke1.BackColor = System.Drawing.Color.Transparent
         Me.DspCopyStroke1.DecimalPlaces = CType(0, Short)
         Me.DspCopyStroke1.FieldName = "余掘1"
-        Me.DspCopyStroke1.Location = New System.Drawing.Point(867, 597)
+        Me.DspCopyStroke1.Location = New System.Drawing.Point(867, 606)
         Me.DspCopyStroke1.Margin = New System.Windows.Forms.Padding(2)
         Me.DspCopyStroke1.Name = "DspCopyStroke1"
         Me.DspCopyStroke1.Size = New System.Drawing.Size(185, 30)
@@ -2258,6 +2259,8 @@ Partial Class frmMain
         Me.UcnJackDsp.FlexAutoManual = False
         Me.UcnJackDsp.FlexPointR = 0!
         Me.UcnJackDsp.FlexPointSeater = 0!
+        Me.UcnJackDsp.FlexPointX = 0!
+        Me.UcnJackDsp.FlexPointY = 0!
         Me.UcnJackDsp.Font = New System.Drawing.Font("MS UI Gothic", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.UcnJackDsp.GroupPV = New Single() {0!}
         Me.UcnJackDsp.JackAutoOneWayLimit = False
@@ -2706,7 +2709,7 @@ Partial Class frmMain
         Me.DspCopyStroke2.BackColor = System.Drawing.Color.Transparent
         Me.DspCopyStroke2.DecimalPlaces = CType(0, Short)
         Me.DspCopyStroke2.FieldName = "余掘2"
-        Me.DspCopyStroke2.Location = New System.Drawing.Point(865, 623)
+        Me.DspCopyStroke2.Location = New System.Drawing.Point(866, 629)
         Me.DspCopyStroke2.Margin = New System.Windows.Forms.Padding(2)
         Me.DspCopyStroke2.Name = "DspCopyStroke2"
         Me.DspCopyStroke2.Size = New System.Drawing.Size(185, 30)
@@ -3345,12 +3348,27 @@ Partial Class frmMain
         Me.lblTopRightStartSt.Text = "-----"
         Me.lblTopRightStartSt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
+        'DspLRRealStrokeDiff
+        '
+        Me.DspLRRealStrokeDiff.BackColor = System.Drawing.Color.Transparent
+        Me.DspLRRealStrokeDiff.DecimalPlaces = CType(0, Short)
+        Me.DspLRRealStrokeDiff.FieldName = "左右ｽﾄﾛｰｸ差"
+        Me.DspLRRealStrokeDiff.Location = New System.Drawing.Point(917, 511)
+        Me.DspLRRealStrokeDiff.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspLRRealStrokeDiff.Name = "DspLRRealStrokeDiff"
+        Me.DspLRRealStrokeDiff.Size = New System.Drawing.Size(138, 51)
+        Me.DspLRRealStrokeDiff.TabIndex = 177
+        Me.DspLRRealStrokeDiff.Unit = "mm"
+        Me.DspLRRealStrokeDiff.Value = 1234.0R
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.DspLRStrokeDiff)
+        Me.Controls.Add(Me.DspLRRealStrokeDiff)
         Me.Controls.Add(Me.pnlStrokeDiffContorol)
         Me.Controls.Add(Me.btnNoOpJk)
         Me.Controls.Add(Me.DspCopyStroke2)
@@ -3361,7 +3379,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.DspClockwiseMargin)
         Me.Controls.Add(Me.DspGyiroError)
         Me.Controls.Add(Me.btnLoszeroContinu)
-        Me.Controls.Add(Me.DspLRStrokeDiff)
         Me.Controls.Add(Me.DspRingTargetDir)
         Me.Controls.Add(Me.DspSegmentRolling)
         Me.Controls.Add(Me.DspClosetJack)
@@ -3677,6 +3694,7 @@ Partial Class frmMain
     Friend WithEvents lblTopRightRealSt As Label
     Friend WithEvents lblTopLeftStartSt As Label
     Friend WithEvents lblTopRightStartSt As Label
+    Friend WithEvents DspLRRealStrokeDiff As ucnDspDataMin
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog
