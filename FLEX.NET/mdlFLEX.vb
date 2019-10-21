@@ -189,7 +189,9 @@ Module mdlFLEX
             CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
             '最大テーパー位置
             'CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
-            CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TaperLoc(PlcIf.RingNo)
+            If SegAsmblyData.TaperLoc.ContainsKey(PlcIf.RingNo) Then
+                CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TaperLoc(PlcIf.RingNo)
+            End If
             'セグメント幅
             CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
         End If

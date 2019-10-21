@@ -479,7 +479,9 @@ Public Class clsCalcuStroke
                     / 180 * Math.PI) * InitPara.TaperCorRate / 100
 
             If _asembleFinishedJack.Contains(mjJkNo) Then
-                _MesuerJPullNum = _MesuerJPullNum + 1
+                If Not CtlPara.ExceptMesureJackNo.Contains(mjJkNo) Then
+                    _MesuerJPullNum = _MesuerJPullNum + 1
+                End If
                 'セグメント幅分を加算
 
                 _mesureCalcJackStroke(mjJkNo) += _JackLocSegmentWd(mjJkNo)
