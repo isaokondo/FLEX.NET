@@ -326,7 +326,7 @@
 
         '計測ジャッキ更新数
         If InitPara.LosZeroEquip Then
-            MeasuerJPullNum.Value = $"{CalcStroke.MesuerJPullNum}／{InitPara.MesureJackAngle.Count}"
+            MeasuerJPullNum.Value = $"{CalcStroke.MesuerJPullNum}／{InitPara.MesureJackAngle.Count - CtlPara.ExceptMesureJackNo.Count}"
             MeasuerJPullNum.Blink = CalcStroke.AllMesJackUp
         End If
 
@@ -1591,7 +1591,9 @@
             CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
             '最大テーパー位置
             'CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
-            CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TaperLoc(PlcIf.RingNo)
+            If SegAsmblyData.TaperLoc.ContainsKey(PlcIf.RingNo) Then
+                CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TaperLoc(PlcIf.RingNo)
+            End If
             'セグメント幅
             CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
             '引き戻し中から押込み中の間は引き戻しｼﾞｬｯｷをセット

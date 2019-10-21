@@ -57,6 +57,7 @@ Public Class frmCalcStrokeConfirm
             dv.Cells(CalcStrokeLen.Index).Value = CalcStroke.MesureCalcJackStroke(jkNo)  '計算計測ジャッキストローク
             dv.Cells(SegmentWidth.Index).Value = CalcStroke.JackLocSegmentWd(jkNo).ToString("F0")
             dv.Cells(JackState.Index).Value = CalcStroke.JackState(jkNo) 'ジャッキステータス
+            dv.Cells(JackEnable.Index).Value = Not CtlPara.ExceptMesureJackNo.Contains(jkNo)
             Select Case CalcStroke.JackState(jkNo)
                 Case "掘進モード"
                     dv.DefaultCellStyle.BackColor = Color.LightGreen

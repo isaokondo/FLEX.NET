@@ -436,23 +436,32 @@ Public Class clsCalcuStroke
         _ExclusionJack.Clear()
         _ExclusionOpposeJack.Clear()
 
-        Dim blnT As Boolean = (_MesuerJPullNum = InitPara.MesureJackAngle.Count)
+        Dim blnT As Boolean = (_MesuerJPullNum = (InitPara.MesureJackAngle.Count - CtlPara.ExceptMesureJackNo.Count))
 
         '除外ジャッキの算出
         'ジャッキが組み立てモード
         '引き戻しジャッキで組み立て完了していないジャッキ及び　有効ジャッキ
+        _MesuerJPullNum = 0
         For Each mjJkNo As Short In InitPara.MesureJackAngle.Keys
             If (PlcIf.ExcavMode And Not PlcIf.JackExecMode(mjJkNo - 1)) OrElse ((_PullBackJack.Contains(mjJkNo) _
                 And Not _asembleFinishedJack.Contains(mjJkNo)) Or CtlPara.ExceptMesureJackNo.Contains(mjJkNo)) Then
                 _ExclusionJack.Add(mjJkNo) '計算から除外するジャッキ
+
+                If Not CtlPara.ExceptMesureJackNo.Contains(mjJkNo) Then
+                    _MesuerJPullNum += 1
+                End If
+
+
                 If CtlPara.LosZeroOpposeJackExcept Then
                     _ExclusionOpposeJack.Add(GetOpsiJk(mjJkNo)) '対抗する計測ジャッキ　ロスゼロジャッキ組み立てモード時のみ
                 End If
             End If
         Next
-        If PlcIf.ExcaStatus <> cTaiki Then
-            _MesuerJPullNum = _ExclusionJack.Count
-        End If
+        'If PlcIf.ExcaStatus <> cTaiki Then
+        '    _MesuerJPullNum = _ExclusionJack.Count
+        'End If
+
+
 
 
         '各ストロークの伸び分
