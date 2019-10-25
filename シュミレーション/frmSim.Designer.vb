@@ -457,7 +457,8 @@ Partial Class frmSim
         Me.nudLosZeroStatusMachin.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.nudLosZeroStatusMachin.Location = New System.Drawing.Point(941, 36)
         Me.nudLosZeroStatusMachin.Margin = New System.Windows.Forms.Padding(2)
-        Me.nudLosZeroStatusMachin.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.nudLosZeroStatusMachin.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudLosZeroStatusMachin.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
         Me.nudLosZeroStatusMachin.Name = "nudLosZeroStatusMachin"
         Me.nudLosZeroStatusMachin.Size = New System.Drawing.Size(67, 26)
         Me.nudLosZeroStatusMachin.TabIndex = 18

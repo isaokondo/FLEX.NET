@@ -582,7 +582,7 @@ Friend Class clsSegmentAssembly
         'End If
 
         For i As Short = 0 To tmpS.Length - 1
-            If tmpS.Substring(i, 1) = "1" Then
+            If tmpS.Substring(i, 1) = "1" And i + 1 <= InitPara.NumberJack Then
                 lst.Add(i + 1)
             End If
         Next
