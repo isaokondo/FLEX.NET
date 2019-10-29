@@ -616,7 +616,7 @@
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </COMReference>
     <COMReference Include="ACTMULTILib">
       <Guid>{A306B141-AE98-11D3-83AE-00A024BDBF2B}</Guid>
