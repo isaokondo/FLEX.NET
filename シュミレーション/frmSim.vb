@@ -866,14 +866,16 @@ CatchError:  '例外処理
 
         btnLoszeroStart.Visible = ((Not IsNothing(SimSet.LoszeroStart)) AndAlso SimSet.LoszeroStart.Length > 0)
         JackAllSelectk() 'ジャッキ全選択
+        If InitParm.LosZeroEquip Then
+            '全ジャッキ掘進モードに
+            For i As Integer = 0 To InitParm.NumberJack - 1
+                Dim intPlcWrBaseAdress As Integer = Convert.ToInt32(SimSet.ExcavOrSegmentAdr.Substring(1), 16)
+                Dim PlcAdr As String = "B" & Convert.ToString(intPlcWrBaseAdress + i, 16)
+                'シフトキーが推されてた時は、ON
+                Dim iret = ComPlc.SetDevice(PlcAdr, True)
+            Next
 
-        '全ジャッキ掘進モードに
-        For i As Integer = 0 To InitParm.NumberJack - 1
-            Dim intPlcWrBaseAdress As Integer = Convert.ToInt32(SimSet.ExcavOrSegmentAdr.Substring(1), 16)
-            Dim PlcAdr As String = "B" & Convert.ToString(intPlcWrBaseAdress + i, 16)
-            'シフトキーが推されてた時は、ON
-            Dim iret = ComPlc.SetDevice(PlcAdr, True)
-        Next
+        End If
 
 
 
