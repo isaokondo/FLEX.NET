@@ -353,12 +353,12 @@ Public Class clsStrokeDevi
             If HorStrokeControlEnable Then
                 StrokeSelect = SelectHor
                 SelStStr = "水平"
-            ElseIf BtmStrokeControlEnable Then
-                StrokeSelect = SelectBtm
-                SelStStr = "下半"
             ElseIf TopStrokeControlEnable Then
                 StrokeSelect = SelectTop
                 SelStStr = "上半"
+            ElseIf BtmStrokeControlEnable Then
+                StrokeSelect = SelectBtm
+                SelStStr = "下半"
             End If
             If CtlPara.horAngleDetection = StrokeDiffDetciotn And SelStStr<>""　Then
                 WriteEventData($"ｽﾄﾛｰｸ差制御 {SelStStr}ｽﾄﾛｰｸになりました。", Color.BlueViolet)

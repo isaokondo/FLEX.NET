@@ -744,6 +744,11 @@
 
         If Not InitPara.LosZeroEquip Then Exit Sub
 
+
+        lblTransfer.Text = If(SegAsmblyData.TransferFmSim, "転送済", "未転送")
+        lblTransfer.BackColor = If(SegAsmblyData.TransferFmSim, Color.Yellow, Color.Cyan)
+
+
         'Dim p As Short = 0
         If PlcIf.AssemblyPieceNo <= 0 Then PlcIf.AssemblyPieceNo = 1
 
@@ -1106,6 +1111,9 @@
 
         If SegAsmblyData.ProcessData.Count = 0 Then
             MsgBox($"{PlcIf.RingNo}リングの'{SegAsmblyData.AssemblyPtnName(PlcIf.RingNo)}'の、組立順序が設定されてません'", vbCritical)
+        ElseIf Not SegAsmblyData.TransferFmSim Then
+            MsgBox("セグメント割付シュミレーションより転送処理を行ってください'", vbCritical)
+            My.Forms.frmSegmentEdit.Show()
         Else
             PlcIf.LosZeroEnable = True '同時施工可　信号出力
             '組立ピース確認
@@ -1438,6 +1446,8 @@
             .SegmentDspEnable = InitPara.LosZeroEquip
             .MaxCopyStroke = PlcIf.AnalogTag.TagData("コピーストローク1").EngHight
         End With
+
+        lblTransfer.Visible = InitPara.LosZeroEquip
 
         '---------------チャートの設定------------------------
         '偏角、モーメントグラフ

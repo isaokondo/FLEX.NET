@@ -235,6 +235,8 @@ Partial Class frmMain
         Me.lblTopLeftStartSt = New System.Windows.Forms.Label()
         Me.lblTopRightStartSt = New System.Windows.Forms.Label()
         Me.DspLRRealStrokeDiff = New FLEX.NET.ucnDspDataMin()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lblTransfer = New System.Windows.Forms.Label()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -3361,12 +3363,35 @@ Partial Class frmMain
         Me.DspLRRealStrokeDiff.Unit = "mm"
         Me.DspLRRealStrokeDiff.Value = 1234.0R
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(0, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(38, 12)
+        Me.Label2.TabIndex = 178
+        Me.Label2.Text = "Label2"
+        '
+        'lblTransfer
+        '
+        Me.lblTransfer.BackColor = System.Drawing.Color.Yellow
+        Me.lblTransfer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblTransfer.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblTransfer.Location = New System.Drawing.Point(1577, 472)
+        Me.lblTransfer.Name = "lblTransfer"
+        Me.lblTransfer.Size = New System.Drawing.Size(71, 23)
+        Me.lblTransfer.TabIndex = 179
+        Me.lblTransfer.Text = "転送済"
+        Me.lblTransfer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.lblTransfer)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.DspLRStrokeDiff)
         Me.Controls.Add(Me.DspLRRealStrokeDiff)
         Me.Controls.Add(Me.pnlStrokeDiffContorol)
@@ -3695,6 +3720,8 @@ Partial Class frmMain
     Friend WithEvents lblTopLeftStartSt As Label
     Friend WithEvents lblTopRightStartSt As Label
     Friend WithEvents DspLRRealStrokeDiff As ucnDspDataMin
+    Friend WithEvents Label2 As Label
+    Friend WithEvents lblTransfer As Label
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

@@ -1534,7 +1534,7 @@ Public Class clsControlParameter
 
 
         _HorTargerStrokeDev = chk.GetValue("HorTargerStrokeDev", "0")
-        _horCurveMngAngle = chk.GetValue("horCurveMngAngle", "0.05")
+        _horCurveMngAngle = chk.GetValue("horCurveMngAngle", "0")
 
         _horTargetSet = chk.GetValue("horTargetSet", "-1")
         _verTargetSet = chk.GetValue("verTargetSet", "-1")

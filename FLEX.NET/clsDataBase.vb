@@ -605,7 +605,8 @@ Public Class clsInitParameter
     Private WithEvents Htb As New clsHashtableRead
 
     ''' <summary>
-    ''' ストローク差制御あり
+    ''' 
+    ''' 
     ''' </summary>
     Private _StrokeDiffControlEnable As Boolean = False
 

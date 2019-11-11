@@ -92,6 +92,11 @@ Friend Class clsSegmentAssembly
     ''' </summary>
     Private _rollingMindEnable As New Dictionary(Of Integer, Boolean)
 
+    ''' <summary>
+    ''' 線形管理シュミレーションより転送
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TransferFmSim As Boolean
 
     ''' <summary>
     ''' セグメント種類（タイプ）データ
@@ -368,11 +373,13 @@ Friend Class clsSegmentAssembly
         Dim dsSegAsm As DataTable
 
         If SheetID.Rows.Count = 0 OrElse IsDBNull(SheetID.Rows(0).Item(0)) Then
+            TransferFmSim = False
             dsSegAsm =
               GetDtfmSQL($"SELECT  * FROM `セグメント組立パターンリスト`  
             Inner Join `セグメント分割仕様リスト` ON `セグメント分割仕様リスト`.`分割No` = `セグメント組立パターンリスト`.`分割No` 
             WHERE `組立パターンNo` = '{_SegmentAssenblyPtnID(RingNo)}'")
         Else
+            TransferFmSim = True
             '線形管理のセグメント割付シュミレーションで転送済みの場合
             dsSegAsm =
               GetDtfmSQL($"SELECT  * FROM `セグメント割付シュミレーション`  
