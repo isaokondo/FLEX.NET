@@ -200,6 +200,7 @@ Module mdlFLEX
         '待機中から掘進or 中断中-----------------------------------------------------------
         'If PreStatus = cTaiki And NowStatus = cKussin Then
         If PreStatus = cTaiki Then
+            StrokeDev.StrokeSelect = clsStrokeDevi.SelectHor 'ストローク差制 開始時は水平からスタート
             PlcIf.SppedRate = 100
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
             PlcIf.LosZeroSts_FLEX = 0
@@ -212,7 +213,6 @@ Module mdlFLEX
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
             FullOpenStart() '全押しスタート
 
-            StrokeDev.StrokeSelect = clsStrokeDevi.SelectHor 'ストローク差制 開始時は水平からスタート
 
         End If
         If PreStatus = cChudan And NowStatus = cKussin Then
@@ -270,6 +270,8 @@ Module mdlFLEX
             '掘進開始時のストローク取り込み
             CtlPara.StartJackStroke = New Dictionary(Of Short, Integer)(PlcIf.MesureJackStroke)
             CalcStroke.ExecavStart() '計算ストローク組立完了ジャッキクリア
+            StrokeDev.StrokeSelect = clsStrokeDevi.SelectHor 'ストローク差制 開始時は水平からスタート
+
 
             'バックアップ時にエラーで応答なしになるので別の方保を検討
             'データのバックアップ
@@ -1059,7 +1061,7 @@ Module mdlFLEX
         If Not Mode And InitPara.ServerMode Then
             ElapsedTime.SegmentMode()
             'すべてのストローク計測ジャッキが引戻更新され,セグメントモードになった
-            If CalcStroke.AllMesJackUp Then
+            If CalcStroke.AllMesJackUp And InitPara.ServerMode Then
                 Dim result As DialogResult = MessageBox.Show("掘進終了の判定ができません。終了してもよろしいですか？",
                                                             "リング更新処理", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                 'リング更新処理の場合
