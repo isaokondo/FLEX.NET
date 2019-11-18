@@ -217,6 +217,21 @@
         End If
         DspLRStrokeDiff.FieldName = $"ｽﾄﾛｰｸ差(mm){If(CtlPara.RightStrokeDiff, "右", "左")}勝"
 
+        If DspUDStrokeDiff.Visible Then
+            If DspUDRealStrokeDiff.Visible Then
+                '上下のストローク差（ストローク制御とは無関係） 実ストローク
+                DspUDRealStrokeDiff.Value = CalcStroke.TopCalcStroke - CalcStroke.BottomCalcStroke 'StrokeDev.ControlStrokeDiff             'ストローク差 '左右ｽﾄﾛｰｸ差
+                DspUDRealStrokeDiff.FieldName = "実ｽﾄﾛｰｸ差(mm)上勝"
+            End If
+            '読みストロークの差
+            DspUDStrokeDiff.Value = PlcIf.TopStroke - PlcIf.BotomStroke
+            DspUDStrokeDiff.FieldName = "ｽﾄﾛｰｸ差(mm)上勝"
+
+        End If
+
+
+
+
 
         '汎用データ表示
         For Each wu In CtlPara.WideUse
@@ -1559,6 +1574,12 @@
         DspUpRawStroke.Visible = InitPara.topStrokeEnable
         DspUpRealStroke.Visible = InitPara.topStrokeEnable And InitPara.LosZeroEquip
         DspUpSpeed.Visible = InitPara.topStrokeEnable
+
+        DspUDStrokeDiff.Visible = (InitPara.topStrokeEnable And InitPara.bottomStrokeEnable)
+        DspUDRealStrokeDiff.Visible = DspUDStrokeDiff.Visible And InitPara.LosZeroEquip
+
+
+        DspLRRealStrokeDiff.Visible = InitPara.LosZeroEquip
 
         'テールクリアランスの表示
         DspTopClearance.Visible = CtlPara.TaleClrMeasurUExist

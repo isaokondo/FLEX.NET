@@ -235,8 +235,9 @@ Partial Class frmMain
         Me.lblTopLeftStartSt = New System.Windows.Forms.Label()
         Me.lblTopRightStartSt = New System.Windows.Forms.Label()
         Me.DspLRRealStrokeDiff = New FLEX.NET.ucnDspDataMin()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.lblTransfer = New System.Windows.Forms.Label()
+        Me.DspUDStrokeDiff = New FLEX.NET.ucnDspDataMin()
+        Me.DspUDRealStrokeDiff = New FLEX.NET.ucnDspDataMin()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -1531,7 +1532,7 @@ Partial Class frmMain
         Me.DspLeftClearance.BackColor = System.Drawing.Color.Transparent
         Me.DspLeftClearance.DecimalPlaces = CType(0, Short)
         Me.DspLeftClearance.FieldName = "左ｸﾘｱ"
-        Me.DspLeftClearance.Location = New System.Drawing.Point(104, 485)
+        Me.DspLeftClearance.Location = New System.Drawing.Point(104, 465)
         Me.DspLeftClearance.Margin = New System.Windows.Forms.Padding(2)
         Me.DspLeftClearance.Name = "DspLeftClearance"
         Me.DspLeftClearance.Size = New System.Drawing.Size(138, 46)
@@ -1544,7 +1545,7 @@ Partial Class frmMain
         Me.DspBottomSpeed.BackColor = System.Drawing.Color.Transparent
         Me.DspBottomSpeed.DecimalPlaces = CType(0, Short)
         Me.DspBottomSpeed.FieldName = "下速度"
-        Me.DspBottomSpeed.Location = New System.Drawing.Point(114, 677)
+        Me.DspBottomSpeed.Location = New System.Drawing.Point(114, 686)
         Me.DspBottomSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.DspBottomSpeed.Name = "DspBottomSpeed"
         Me.DspBottomSpeed.Size = New System.Drawing.Size(138, 46)
@@ -1557,7 +1558,7 @@ Partial Class frmMain
         Me.DspBottomClearance.BackColor = System.Drawing.Color.Transparent
         Me.DspBottomClearance.DecimalPlaces = CType(0, Short)
         Me.DspBottomClearance.FieldName = "下ｸﾘｱ"
-        Me.DspBottomClearance.Location = New System.Drawing.Point(198, 677)
+        Me.DspBottomClearance.Location = New System.Drawing.Point(198, 686)
         Me.DspBottomClearance.Margin = New System.Windows.Forms.Padding(2)
         Me.DspBottomClearance.Name = "DspBottomClearance"
         Me.DspBottomClearance.Size = New System.Drawing.Size(138, 46)
@@ -1596,7 +1597,7 @@ Partial Class frmMain
         Me.DspBottomRawStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspBottomRawStroke.DecimalPlaces = CType(0, Short)
         Me.DspBottomRawStroke.FieldName = "下ST読"
-        Me.DspBottomRawStroke.Location = New System.Drawing.Point(114, 629)
+        Me.DspBottomRawStroke.Location = New System.Drawing.Point(114, 645)
         Me.DspBottomRawStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspBottomRawStroke.Name = "DspBottomRawStroke"
         Me.DspBottomRawStroke.Size = New System.Drawing.Size(138, 46)
@@ -1609,7 +1610,7 @@ Partial Class frmMain
         Me.DspLeftRawStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspLeftRawStroke.DecimalPlaces = CType(0, Short)
         Me.DspLeftRawStroke.FieldName = "左ST読"
-        Me.DspLeftRawStroke.Location = New System.Drawing.Point(104, 383)
+        Me.DspLeftRawStroke.Location = New System.Drawing.Point(104, 376)
         Me.DspLeftRawStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspLeftRawStroke.Name = "DspLeftRawStroke"
         Me.DspLeftRawStroke.Size = New System.Drawing.Size(138, 46)
@@ -1949,7 +1950,7 @@ Partial Class frmMain
         Me.DspLeftSpeed.BackColor = System.Drawing.Color.Transparent
         Me.DspLeftSpeed.DecimalPlaces = CType(0, Short)
         Me.DspLeftSpeed.FieldName = "左速度"
-        Me.DspLeftSpeed.Location = New System.Drawing.Point(102, 433)
+        Me.DspLeftSpeed.Location = New System.Drawing.Point(102, 421)
         Me.DspLeftSpeed.Margin = New System.Windows.Forms.Padding(2)
         Me.DspLeftSpeed.Name = "DspLeftSpeed"
         Me.DspLeftSpeed.Size = New System.Drawing.Size(138, 46)
@@ -1988,7 +1989,7 @@ Partial Class frmMain
         Me.DspBottomRealStroke.BackColor = System.Drawing.Color.Transparent
         Me.DspBottomRealStroke.DecimalPlaces = CType(0, Short)
         Me.DspBottomRealStroke.FieldName = "下ST実"
-        Me.DspBottomRealStroke.Location = New System.Drawing.Point(114, 579)
+        Me.DspBottomRealStroke.Location = New System.Drawing.Point(114, 600)
         Me.DspBottomRealStroke.Margin = New System.Windows.Forms.Padding(2)
         Me.DspBottomRealStroke.Name = "DspBottomRealStroke"
         Me.DspBottomRealStroke.Size = New System.Drawing.Size(138, 46)
@@ -3363,15 +3364,6 @@ Partial Class frmMain
         Me.DspLRRealStrokeDiff.Unit = "mm"
         Me.DspLRRealStrokeDiff.Value = 1234.0R
         '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(0, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(38, 12)
-        Me.Label2.TabIndex = 178
-        Me.Label2.Text = "Label2"
-        '
         'lblTransfer
         '
         Me.lblTransfer.BackColor = System.Drawing.Color.Yellow
@@ -3384,14 +3376,42 @@ Partial Class frmMain
         Me.lblTransfer.Text = "転送済"
         Me.lblTransfer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'DspUDStrokeDiff
+        '
+        Me.DspUDStrokeDiff.BackColor = System.Drawing.Color.Transparent
+        Me.DspUDStrokeDiff.DecimalPlaces = CType(0, Short)
+        Me.DspUDStrokeDiff.FieldName = "上下ｽﾄﾛｰｸ差"
+        Me.DspUDStrokeDiff.Location = New System.Drawing.Point(109, 555)
+        Me.DspUDStrokeDiff.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspUDStrokeDiff.Name = "DspUDStrokeDiff"
+        Me.DspUDStrokeDiff.Size = New System.Drawing.Size(138, 51)
+        Me.DspUDStrokeDiff.TabIndex = 180
+        Me.DspUDStrokeDiff.Unit = "mm"
+        Me.DspUDStrokeDiff.Value = 1234.0R
+        '
+        'DspUDRealStrokeDiff
+        '
+        Me.DspUDRealStrokeDiff.BackColor = System.Drawing.Color.Transparent
+        Me.DspUDRealStrokeDiff.DecimalPlaces = CType(0, Short)
+        Me.DspUDRealStrokeDiff.FieldName = "上下ｽﾄﾛｰｸ差"
+        Me.DspUDRealStrokeDiff.Location = New System.Drawing.Point(107, 511)
+        Me.DspUDRealStrokeDiff.Margin = New System.Windows.Forms.Padding(2)
+        Me.DspUDRealStrokeDiff.Name = "DspUDRealStrokeDiff"
+        Me.DspUDRealStrokeDiff.Size = New System.Drawing.Size(138, 51)
+        Me.DspUDRealStrokeDiff.TabIndex = 181
+        Me.DspUDRealStrokeDiff.Unit = "mm"
+        Me.DspUDRealStrokeDiff.Value = 1234.0R
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.DspBottomRealStroke)
+        Me.Controls.Add(Me.DspUDStrokeDiff)
+        Me.Controls.Add(Me.DspUDRealStrokeDiff)
         Me.Controls.Add(Me.lblTransfer)
-        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.DspLRStrokeDiff)
         Me.Controls.Add(Me.DspLRRealStrokeDiff)
         Me.Controls.Add(Me.pnlStrokeDiffContorol)
@@ -3452,7 +3472,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.DspLeftSpeed)
         Me.Controls.Add(Me.DspLeftRealStroke)
         Me.Controls.Add(Me.DspUpSpeed)
-        Me.Controls.Add(Me.DspBottomRealStroke)
         Me.Controls.Add(Me.DspWideUse11)
         Me.Controls.Add(Me.DspWideUse10)
         Me.Controls.Add(Me.DspWideUse9)
@@ -3720,8 +3739,9 @@ Partial Class frmMain
     Friend WithEvents lblTopLeftStartSt As Label
     Friend WithEvents lblTopRightStartSt As Label
     Friend WithEvents DspLRRealStrokeDiff As ucnDspDataMin
-    Friend WithEvents Label2 As Label
     Friend WithEvents lblTransfer As Label
+    Friend WithEvents DspUDStrokeDiff As ucnDspDataMin
+    Friend WithEvents DspUDRealStrokeDiff As ucnDspDataMin
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog
