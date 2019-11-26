@@ -535,6 +535,7 @@ Partial Class frmMain
         Me.MeasuerJPullNum.Name = "MeasuerJPullNum"
         Me.MeasuerJPullNum.Size = New System.Drawing.Size(257, 30)
         Me.MeasuerJPullNum.TabIndex = 163
+        Me.MeasuerJPullNum.ToolTipText = Nothing
         Me.MeasuerJPullNum.Unit = "deg"
         Me.MeasuerJPullNum.UnitVisible = False
         Me.MeasuerJPullNum.Value = "-----"
@@ -556,6 +557,7 @@ Partial Class frmMain
         Me.DspTargetNetStroke.Name = "DspTargetNetStroke"
         Me.DspTargetNetStroke.Size = New System.Drawing.Size(189, 32)
         Me.DspTargetNetStroke.TabIndex = 136
+        Me.DspTargetNetStroke.ToolTipText = Nothing
         Me.DspTargetNetStroke.Unit = "deg"
         Me.DspTargetNetStroke.UnitVisible = False
         Me.DspTargetNetStroke.Value = "1200"
@@ -577,6 +579,7 @@ Partial Class frmMain
         Me.DspSegmentW.Name = "DspSegmentW"
         Me.DspSegmentW.Size = New System.Drawing.Size(198, 32)
         Me.DspSegmentW.TabIndex = 135
+        Me.DspSegmentW.ToolTipText = Nothing
         Me.DspSegmentW.Unit = "deg"
         Me.DspSegmentW.UnitVisible = False
         Me.DspSegmentW.Value = "1200"
@@ -610,6 +613,7 @@ Partial Class frmMain
         Me.DspSumLoszeroTime.Name = "DspSumLoszeroTime"
         Me.DspSumLoszeroTime.Size = New System.Drawing.Size(275, 32)
         Me.DspSumLoszeroTime.TabIndex = 132
+        Me.DspSumLoszeroTime.ToolTipText = Nothing
         Me.DspSumLoszeroTime.Unit = "deg"
         Me.DspSumLoszeroTime.UnitVisible = False
         Me.DspSumLoszeroTime.Value = "0"
@@ -631,6 +635,7 @@ Partial Class frmMain
         Me.DspAveLoszeroTime.Name = "DspAveLoszeroTime"
         Me.DspAveLoszeroTime.Size = New System.Drawing.Size(275, 32)
         Me.DspAveLoszeroTime.TabIndex = 131
+        Me.DspAveLoszeroTime.ToolTipText = Nothing
         Me.DspAveLoszeroTime.Unit = "deg"
         Me.DspAveLoszeroTime.UnitVisible = False
         Me.DspAveLoszeroTime.Value = "0"
@@ -652,6 +657,7 @@ Partial Class frmMain
         Me.DspSumAsmPiece.Name = "DspSumAsmPiece"
         Me.DspSumAsmPiece.Size = New System.Drawing.Size(275, 32)
         Me.DspSumAsmPiece.TabIndex = 130
+        Me.DspSumAsmPiece.ToolTipText = Nothing
         Me.DspSumAsmPiece.Unit = "deg"
         Me.DspSumAsmPiece.UnitVisible = False
         Me.DspSumAsmPiece.Value = "0"
@@ -673,6 +679,7 @@ Partial Class frmMain
         Me.DspAveAsmPiece.Name = "DspAveAsmPiece"
         Me.DspAveAsmPiece.Size = New System.Drawing.Size(275, 32)
         Me.DspAveAsmPiece.TabIndex = 129
+        Me.DspAveAsmPiece.ToolTipText = Nothing
         Me.DspAveAsmPiece.Unit = "deg"
         Me.DspAveAsmPiece.UnitVisible = False
         Me.DspAveAsmPiece.Value = "0"
@@ -694,6 +701,7 @@ Partial Class frmMain
         Me.DspInterruptTime.Name = "DspInterruptTime"
         Me.DspInterruptTime.Size = New System.Drawing.Size(275, 32)
         Me.DspInterruptTime.TabIndex = 127
+        Me.DspInterruptTime.ToolTipText = Nothing
         Me.DspInterruptTime.Unit = "deg"
         Me.DspInterruptTime.UnitVisible = False
         Me.DspInterruptTime.Value = "20"
@@ -715,6 +723,7 @@ Partial Class frmMain
         Me.DspWatingElapsedTime.Name = "DspWatingElapsedTime"
         Me.DspWatingElapsedTime.Size = New System.Drawing.Size(275, 32)
         Me.DspWatingElapsedTime.TabIndex = 126
+        Me.DspWatingElapsedTime.ToolTipText = Nothing
         Me.DspWatingElapsedTime.Unit = "deg"
         Me.DspWatingElapsedTime.UnitVisible = False
         Me.DspWatingElapsedTime.Value = "20"
@@ -736,6 +745,7 @@ Partial Class frmMain
         Me.DspLosZeroElapsedTime.Name = "DspLosZeroElapsedTime"
         Me.DspLosZeroElapsedTime.Size = New System.Drawing.Size(275, 32)
         Me.DspLosZeroElapsedTime.TabIndex = 125
+        Me.DspLosZeroElapsedTime.ToolTipText = Nothing
         Me.DspLosZeroElapsedTime.Unit = "deg"
         Me.DspLosZeroElapsedTime.UnitVisible = False
         Me.DspLosZeroElapsedTime.Value = "20"
@@ -757,6 +767,7 @@ Partial Class frmMain
         Me.DspExcationElapsedTime.Name = "DspExcationElapsedTime"
         Me.DspExcationElapsedTime.Size = New System.Drawing.Size(275, 32)
         Me.DspExcationElapsedTime.TabIndex = 124
+        Me.DspExcationElapsedTime.ToolTipText = Nothing
         Me.DspExcationElapsedTime.Unit = "deg"
         Me.DspExcationElapsedTime.UnitVisible = False
         Me.DspExcationElapsedTime.Value = "20"
@@ -778,6 +789,7 @@ Partial Class frmMain
         Me.DspExcavStartTime.Name = "DspExcavStartTime"
         Me.DspExcavStartTime.Size = New System.Drawing.Size(275, 32)
         Me.DspExcavStartTime.TabIndex = 123
+        Me.DspExcavStartTime.ToolTipText = Nothing
         Me.DspExcavStartTime.Unit = "deg"
         Me.DspExcavStartTime.UnitVisible = False
         Me.DspExcavStartTime.Value = "23:01:01"
@@ -799,6 +811,7 @@ Partial Class frmMain
         Me.DspExcavStartDate.Name = "DspExcavStartDate"
         Me.DspExcavStartDate.Size = New System.Drawing.Size(275, 32)
         Me.DspExcavStartDate.TabIndex = 122
+        Me.DspExcavStartDate.ToolTipText = Nothing
         Me.DspExcavStartDate.Unit = "deg"
         Me.DspExcavStartDate.UnitVisible = False
         Me.DspExcavStartDate.Value = "2016/05/01"
@@ -1247,6 +1260,7 @@ Partial Class frmMain
         Me.DspAntiClockwiseMargin.Name = "DspAntiClockwiseMargin"
         Me.DspAntiClockwiseMargin.Size = New System.Drawing.Size(250, 30)
         Me.DspAntiClockwiseMargin.TabIndex = 160
+        Me.DspAntiClockwiseMargin.ToolTipText = Nothing
         Me.DspAntiClockwiseMargin.Unit = "deg"
         Me.DspAntiClockwiseMargin.UnitVisible = False
         Me.DspAntiClockwiseMargin.Value = "-"
@@ -1268,6 +1282,7 @@ Partial Class frmMain
         Me.DspClockwiseMargin.Name = "DspClockwiseMargin"
         Me.DspClockwiseMargin.Size = New System.Drawing.Size(250, 30)
         Me.DspClockwiseMargin.TabIndex = 159
+        Me.DspClockwiseMargin.ToolTipText = Nothing
         Me.DspClockwiseMargin.Unit = "deg"
         Me.DspClockwiseMargin.UnitVisible = False
         Me.DspClockwiseMargin.Value = "-"
@@ -1312,11 +1327,12 @@ Partial Class frmMain
         Me.DspRingTargetDir.FieldName = "リング目標方向角"
         Me.DspRingTargetDir.FieldNameWidth = 155
         Me.DspRingTargetDir.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DspRingTargetDir.Location = New System.Drawing.Point(1, 127)
+        Me.DspRingTargetDir.Location = New System.Drawing.Point(0, 126)
         Me.DspRingTargetDir.Margin = New System.Windows.Forms.Padding(1)
         Me.DspRingTargetDir.Name = "DspRingTargetDir"
         Me.DspRingTargetDir.Size = New System.Drawing.Size(300, 35)
         Me.DspRingTargetDir.TabIndex = 154
+        Me.DspRingTargetDir.ToolTipText = Nothing
         Me.DspRingTargetDir.Unit = "deg"
         Me.DspRingTargetDir.UnitVisible = True
         Me.DspRingTargetDir.Value = "999.99"
@@ -1338,6 +1354,7 @@ Partial Class frmMain
         Me.DspSegmentRolling.Name = "DspSegmentRolling"
         Me.DspSegmentRolling.Size = New System.Drawing.Size(250, 30)
         Me.DspSegmentRolling.TabIndex = 109
+        Me.DspSegmentRolling.ToolTipText = Nothing
         Me.DspSegmentRolling.Unit = "deg"
         Me.DspSegmentRolling.UnitVisible = False
         Me.DspSegmentRolling.Value = "-"
@@ -1359,6 +1376,7 @@ Partial Class frmMain
         Me.DspClosetJack.Name = "DspClosetJack"
         Me.DspClosetJack.Size = New System.Drawing.Size(250, 30)
         Me.DspClosetJack.TabIndex = 106
+        Me.DspClosetJack.ToolTipText = Nothing
         Me.DspClosetJack.Unit = "deg"
         Me.DspClosetJack.UnitVisible = False
         Me.DspClosetJack.Value = "-"
@@ -1380,6 +1398,7 @@ Partial Class frmMain
         Me.DspBoltPitch.Name = "DspBoltPitch"
         Me.DspBoltPitch.Size = New System.Drawing.Size(249, 30)
         Me.DspBoltPitch.TabIndex = 102
+        Me.DspBoltPitch.ToolTipText = Nothing
         Me.DspBoltPitch.Unit = "deg"
         Me.DspBoltPitch.UnitVisible = False
         Me.DspBoltPitch.Value = "-"
@@ -1401,6 +1420,7 @@ Partial Class frmMain
         Me.DspAveStartStroke.Name = "DspAveStartStroke"
         Me.DspAveStartStroke.Size = New System.Drawing.Size(313, 32)
         Me.DspAveStartStroke.TabIndex = 153
+        Me.DspAveStartStroke.ToolTipText = Nothing
         Me.DspAveStartStroke.Unit = "mm"
         Me.DspAveStartStroke.UnitVisible = True
         Me.DspAveStartStroke.Value = "9999"
@@ -1422,6 +1442,7 @@ Partial Class frmMain
         Me.DspExcvSpeed.Name = "DspExcvSpeed"
         Me.DspExcvSpeed.Size = New System.Drawing.Size(300, 35)
         Me.DspExcvSpeed.TabIndex = 41
+        Me.DspExcvSpeed.ToolTipText = "計測ジャッキの平均速度"
         Me.DspExcvSpeed.Unit = "mm/min"
         Me.DspExcvSpeed.UnitVisible = True
         Me.DspExcvSpeed.Value = "9999"
@@ -1443,6 +1464,7 @@ Partial Class frmMain
         Me.DspAveStroke.Name = "DspAveStroke"
         Me.DspAveStroke.Size = New System.Drawing.Size(313, 32)
         Me.DspAveStroke.TabIndex = 40
+        Me.DspAveStroke.ToolTipText = Nothing
         Me.DspAveStroke.Unit = "mm"
         Me.DspAveStroke.UnitVisible = True
         Me.DspAveStroke.Value = "9999"
@@ -1776,6 +1798,7 @@ Partial Class frmMain
         Me.DspAssemblyPattern.Name = "DspAssemblyPattern"
         Me.DspAssemblyPattern.Size = New System.Drawing.Size(500, 30)
         Me.DspAssemblyPattern.TabIndex = 111
+        Me.DspAssemblyPattern.ToolTipText = Nothing
         Me.DspAssemblyPattern.Unit = "deg"
         Me.DspAssemblyPattern.UnitVisible = False
         Me.DspAssemblyPattern.Value = "-------"
@@ -1797,6 +1820,7 @@ Partial Class frmMain
         Me.DspNextPieceName.Name = "DspNextPieceName"
         Me.DspNextPieceName.Size = New System.Drawing.Size(480, 30)
         Me.DspNextPieceName.TabIndex = 110
+        Me.DspNextPieceName.ToolTipText = Nothing
         Me.DspNextPieceName.Unit = "deg"
         Me.DspNextPieceName.UnitVisible = False
         Me.DspNextPieceName.Value = "-----"
@@ -1818,6 +1842,7 @@ Partial Class frmMain
         Me.DspAddClosetThrustJack.Name = "DspAddClosetThrustJack"
         Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(250, 30)
         Me.DspAddClosetThrustJack.TabIndex = 108
+        Me.DspAddClosetThrustJack.ToolTipText = Nothing
         Me.DspAddClosetThrustJack.Unit = "deg"
         Me.DspAddClosetThrustJack.UnitVisible = False
         Me.DspAddClosetThrustJack.Value = "-"
@@ -1839,6 +1864,7 @@ Partial Class frmMain
         Me.DspClosetThrustJack.Name = "DspClosetThrustJack"
         Me.DspClosetThrustJack.Size = New System.Drawing.Size(250, 30)
         Me.DspClosetThrustJack.TabIndex = 107
+        Me.DspClosetThrustJack.ToolTipText = Nothing
         Me.DspClosetThrustJack.Unit = "deg"
         Me.DspClosetThrustJack.UnitVisible = False
         Me.DspClosetThrustJack.Value = "-"
@@ -1860,6 +1886,7 @@ Partial Class frmMain
         Me.DspPullBackJack.Name = "DspPullBackJack"
         Me.DspPullBackJack.Size = New System.Drawing.Size(250, 30)
         Me.DspPullBackJack.TabIndex = 105
+        Me.DspPullBackJack.ToolTipText = Nothing
         Me.DspPullBackJack.Unit = "deg"
         Me.DspPullBackJack.UnitVisible = False
         Me.DspPullBackJack.Value = "-"
@@ -1881,6 +1908,7 @@ Partial Class frmMain
         Me.DspAssemblyPieace.Name = "DspAssemblyPieace"
         Me.DspAssemblyPieace.Size = New System.Drawing.Size(480, 30)
         Me.DspAssemblyPieace.TabIndex = 103
+        Me.DspAssemblyPieace.ToolTipText = Nothing
         Me.DspAssemblyPieace.Unit = "deg"
         Me.DspAssemblyPieace.UnitVisible = False
         Me.DspAssemblyPieace.Value = "-----"
@@ -1902,6 +1930,7 @@ Partial Class frmMain
         Me.DspTypeName.Name = "DspTypeName"
         Me.DspTypeName.Size = New System.Drawing.Size(500, 30)
         Me.DspTypeName.TabIndex = 101
+        Me.DspTypeName.ToolTipText = Nothing
         Me.DspTypeName.Unit = "deg"
         Me.DspTypeName.UnitVisible = False
         Me.DspTypeName.Value = "-------"
@@ -2013,6 +2042,7 @@ Partial Class frmMain
         Me.DspWideUse11.Name = "DspWideUse11"
         Me.DspWideUse11.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse11.TabIndex = 80
+        Me.DspWideUse11.ToolTipText = Nothing
         Me.DspWideUse11.Unit = ""
         Me.DspWideUse11.UnitVisible = True
         Me.DspWideUse11.Value = "123.45 "
@@ -2034,6 +2064,7 @@ Partial Class frmMain
         Me.DspWideUse10.Name = "DspWideUse10"
         Me.DspWideUse10.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse10.TabIndex = 79
+        Me.DspWideUse10.ToolTipText = Nothing
         Me.DspWideUse10.Unit = ""
         Me.DspWideUse10.UnitVisible = True
         Me.DspWideUse10.Value = "123.45 "
@@ -2055,6 +2086,7 @@ Partial Class frmMain
         Me.DspWideUse9.Name = "DspWideUse9"
         Me.DspWideUse9.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse9.TabIndex = 78
+        Me.DspWideUse9.ToolTipText = Nothing
         Me.DspWideUse9.Unit = ""
         Me.DspWideUse9.UnitVisible = True
         Me.DspWideUse9.Value = "123.45 "
@@ -2076,6 +2108,7 @@ Partial Class frmMain
         Me.DspWideUse8.Name = "DspWideUse8"
         Me.DspWideUse8.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse8.TabIndex = 77
+        Me.DspWideUse8.ToolTipText = Nothing
         Me.DspWideUse8.Unit = ""
         Me.DspWideUse8.UnitVisible = True
         Me.DspWideUse8.Value = "123.45 "
@@ -2097,6 +2130,7 @@ Partial Class frmMain
         Me.DspWideUse7.Name = "DspWideUse7"
         Me.DspWideUse7.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse7.TabIndex = 76
+        Me.DspWideUse7.ToolTipText = Nothing
         Me.DspWideUse7.Unit = ""
         Me.DspWideUse7.UnitVisible = True
         Me.DspWideUse7.Value = "123.45 "
@@ -2118,6 +2152,7 @@ Partial Class frmMain
         Me.DspWideUse6.Name = "DspWideUse6"
         Me.DspWideUse6.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse6.TabIndex = 75
+        Me.DspWideUse6.ToolTipText = Nothing
         Me.DspWideUse6.Unit = ""
         Me.DspWideUse6.UnitVisible = True
         Me.DspWideUse6.Value = "123.45 "
@@ -2139,6 +2174,7 @@ Partial Class frmMain
         Me.DspWideUse5.Name = "DspWideUse5"
         Me.DspWideUse5.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse5.TabIndex = 74
+        Me.DspWideUse5.ToolTipText = Nothing
         Me.DspWideUse5.Unit = ""
         Me.DspWideUse5.UnitVisible = True
         Me.DspWideUse5.Value = "123.45 "
@@ -2160,6 +2196,7 @@ Partial Class frmMain
         Me.DspWideUse4.Name = "DspWideUse4"
         Me.DspWideUse4.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse4.TabIndex = 73
+        Me.DspWideUse4.ToolTipText = Nothing
         Me.DspWideUse4.Unit = ""
         Me.DspWideUse4.UnitVisible = True
         Me.DspWideUse4.Value = "123.45 "
@@ -2181,6 +2218,7 @@ Partial Class frmMain
         Me.DspWideUse3.Name = "DspWideUse3"
         Me.DspWideUse3.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse3.TabIndex = 72
+        Me.DspWideUse3.ToolTipText = Nothing
         Me.DspWideUse3.Unit = ""
         Me.DspWideUse3.UnitVisible = True
         Me.DspWideUse3.Value = "123.45 "
@@ -2202,6 +2240,7 @@ Partial Class frmMain
         Me.DspWideUse2.Name = "DspWideUse2"
         Me.DspWideUse2.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse2.TabIndex = 71
+        Me.DspWideUse2.ToolTipText = Nothing
         Me.DspWideUse2.Unit = ""
         Me.DspWideUse2.UnitVisible = True
         Me.DspWideUse2.Value = "123.45 "
@@ -2223,6 +2262,7 @@ Partial Class frmMain
         Me.DspWideUse1.Name = "DspWideUse1"
         Me.DspWideUse1.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse1.TabIndex = 70
+        Me.DspWideUse1.ToolTipText = Nothing
         Me.DspWideUse1.Unit = ""
         Me.DspWideUse1.UnitVisible = True
         Me.DspWideUse1.Value = "123.45 "
@@ -2244,6 +2284,7 @@ Partial Class frmMain
         Me.DspWideUse0.Name = "DspWideUse0"
         Me.DspWideUse0.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse0.TabIndex = 69
+        Me.DspWideUse0.ToolTipText = Nothing
         Me.DspWideUse0.Unit = ""
         Me.DspWideUse0.UnitVisible = True
         Me.DspWideUse0.Value = "123.45 "
@@ -2302,6 +2343,7 @@ Partial Class frmMain
         Me.DspTargetPitching.Name = "DspTargetPitching"
         Me.DspTargetPitching.Size = New System.Drawing.Size(320, 32)
         Me.DspTargetPitching.TabIndex = 39
+        Me.DspTargetPitching.ToolTipText = Nothing
         Me.DspTargetPitching.Unit = "deg"
         Me.DspTargetPitching.UnitVisible = True
         Me.DspTargetPitching.Value = "123.45 "
@@ -2323,6 +2365,7 @@ Partial Class frmMain
         Me.DspTargetDirection.Name = "DspTargetDirection"
         Me.DspTargetDirection.Size = New System.Drawing.Size(320, 32)
         Me.DspTargetDirection.TabIndex = 38
+        Me.DspTargetDirection.ToolTipText = Nothing
         Me.DspTargetDirection.Unit = "deg"
         Me.DspTargetDirection.UnitVisible = True
         Me.DspTargetDirection.Value = "123.45 "
@@ -2344,6 +2387,7 @@ Partial Class frmMain
         Me.DspVerRChangePoint.Name = "DspVerRChangePoint"
         Me.DspVerRChangePoint.Size = New System.Drawing.Size(320, 32)
         Me.DspVerRChangePoint.TabIndex = 37
+        Me.DspVerRChangePoint.ToolTipText = Nothing
         Me.DspVerRChangePoint.Unit = "m"
         Me.DspVerRChangePoint.UnitVisible = True
         Me.DspVerRChangePoint.Value = "123.45 "
@@ -2365,6 +2409,7 @@ Partial Class frmMain
         Me.DspVerFChangePoint.Name = "DspVerFChangePoint"
         Me.DspVerFChangePoint.Size = New System.Drawing.Size(320, 32)
         Me.DspVerFChangePoint.TabIndex = 36
+        Me.DspVerFChangePoint.ToolTipText = Nothing
         Me.DspVerFChangePoint.Unit = "m"
         Me.DspVerFChangePoint.UnitVisible = True
         Me.DspVerFChangePoint.Value = "123.45 "
@@ -2386,6 +2431,7 @@ Partial Class frmMain
         Me.DspVerLine.Name = "DspVerLine"
         Me.DspVerLine.Size = New System.Drawing.Size(320, 32)
         Me.DspVerLine.TabIndex = 35
+        Me.DspVerLine.ToolTipText = Nothing
         Me.DspVerLine.Unit = "m"
         Me.DspVerLine.UnitVisible = True
         Me.DspVerLine.Value = "123.45 "
@@ -2407,6 +2453,7 @@ Partial Class frmMain
         Me.DspHorRChangePoint.Name = "DspHorRChangePoint"
         Me.DspHorRChangePoint.Size = New System.Drawing.Size(320, 32)
         Me.DspHorRChangePoint.TabIndex = 34
+        Me.DspHorRChangePoint.ToolTipText = Nothing
         Me.DspHorRChangePoint.Unit = "m"
         Me.DspHorRChangePoint.UnitVisible = True
         Me.DspHorRChangePoint.Value = "9123.45"
@@ -2428,6 +2475,7 @@ Partial Class frmMain
         Me.DspHorFChangePoint.Name = "DspHorFChangePoint"
         Me.DspHorFChangePoint.Size = New System.Drawing.Size(320, 32)
         Me.DspHorFChangePoint.TabIndex = 33
+        Me.DspHorFChangePoint.ToolTipText = Nothing
         Me.DspHorFChangePoint.Unit = "m"
         Me.DspHorFChangePoint.UnitVisible = True
         Me.DspHorFChangePoint.Value = "123.45 "
@@ -2449,6 +2497,7 @@ Partial Class frmMain
         Me.DspHorLine.Name = "DspHorLine"
         Me.DspHorLine.Size = New System.Drawing.Size(320, 32)
         Me.DspHorLine.TabIndex = 32
+        Me.DspHorLine.ToolTipText = Nothing
         Me.DspHorLine.Unit = "m"
         Me.DspHorLine.UnitVisible = True
         Me.DspHorLine.Value = "-2123.455"
@@ -2470,6 +2519,7 @@ Partial Class frmMain
         Me.DspDistance.Name = "DspDistance"
         Me.DspDistance.Size = New System.Drawing.Size(320, 32)
         Me.DspDistance.TabIndex = 31
+        Me.DspDistance.ToolTipText = Nothing
         Me.DspDistance.Unit = "m"
         Me.DspDistance.UnitVisible = True
         Me.DspDistance.Value = "123.45 "
@@ -2491,6 +2541,7 @@ Partial Class frmMain
         Me.DspMoment.Name = "DspMoment"
         Me.DspMoment.Size = New System.Drawing.Size(320, 32)
         Me.DspMoment.TabIndex = 30
+        Me.DspMoment.ToolTipText = Nothing
         Me.DspMoment.Unit = "kN･m"
         Me.DspMoment.UnitVisible = True
         Me.DspMoment.Value = "123.45 "
@@ -2512,6 +2563,7 @@ Partial Class frmMain
         Me.DspThrust.Name = "DspThrust"
         Me.DspThrust.Size = New System.Drawing.Size(320, 32)
         Me.DspThrust.TabIndex = 29
+        Me.DspThrust.ToolTipText = Nothing
         Me.DspThrust.Unit = "ｋN"
         Me.DspThrust.UnitVisible = True
         Me.DspThrust.Value = "123.45 "
@@ -2533,6 +2585,7 @@ Partial Class frmMain
         Me.DspJackPress.Name = "DspJackPress"
         Me.DspJackPress.Size = New System.Drawing.Size(320, 32)
         Me.DspJackPress.TabIndex = 28
+        Me.DspJackPress.ToolTipText = Nothing
         Me.DspJackPress.Unit = "MPa"
         Me.DspJackPress.UnitVisible = True
         Me.DspJackPress.Value = "123.45 "
@@ -2554,6 +2607,7 @@ Partial Class frmMain
         Me.DspVerBroken.Name = "DspVerBroken"
         Me.DspVerBroken.Size = New System.Drawing.Size(320, 32)
         Me.DspVerBroken.TabIndex = 27
+        Me.DspVerBroken.ToolTipText = Nothing
         Me.DspVerBroken.Unit = "deg"
         Me.DspVerBroken.UnitVisible = True
         Me.DspVerBroken.Value = "123.45 "
@@ -2575,6 +2629,7 @@ Partial Class frmMain
         Me.DspHorBroken.Name = "DspHorBroken"
         Me.DspHorBroken.Size = New System.Drawing.Size(320, 32)
         Me.DspHorBroken.TabIndex = 26
+        Me.DspHorBroken.ToolTipText = Nothing
         Me.DspHorBroken.Unit = "deg"
         Me.DspHorBroken.UnitVisible = True
         Me.DspHorBroken.Value = "123.45 "
@@ -2596,6 +2651,7 @@ Partial Class frmMain
         Me.DspPitching.Name = "DspPitching"
         Me.DspPitching.Size = New System.Drawing.Size(320, 32)
         Me.DspPitching.TabIndex = 25
+        Me.DspPitching.ToolTipText = Nothing
         Me.DspPitching.Unit = "deg"
         Me.DspPitching.UnitVisible = True
         Me.DspPitching.Value = "123.45 "
@@ -2617,6 +2673,7 @@ Partial Class frmMain
         Me.DspDirection.Name = "DspDirection"
         Me.DspDirection.Size = New System.Drawing.Size(320, 32)
         Me.DspDirection.TabIndex = 24
+        Me.DspDirection.ToolTipText = Nothing
         Me.DspDirection.Unit = "deg"
         Me.DspDirection.UnitVisible = True
         Me.DspDirection.Value = "123.45 "
@@ -2638,6 +2695,7 @@ Partial Class frmMain
         Me.DspVerDev.Name = "DspVerDev"
         Me.DspVerDev.Size = New System.Drawing.Size(320, 32)
         Me.DspVerDev.TabIndex = 23
+        Me.DspVerDev.ToolTipText = Nothing
         Me.DspVerDev.Unit = "deg"
         Me.DspVerDev.UnitVisible = True
         Me.DspVerDev.Value = "123.45 "
@@ -2659,6 +2717,7 @@ Partial Class frmMain
         Me.DspHorDev.Name = "DspHorDev"
         Me.DspHorDev.Size = New System.Drawing.Size(320, 32)
         Me.DspHorDev.TabIndex = 22
+        Me.DspHorDev.ToolTipText = Nothing
         Me.DspHorDev.Unit = "deg"
         Me.DspHorDev.UnitVisible = True
         Me.DspHorDev.Value = "123.45 "
@@ -2680,6 +2739,7 @@ Partial Class frmMain
         Me.DspWideUse12.Name = "DspWideUse12"
         Me.DspWideUse12.Size = New System.Drawing.Size(320, 32)
         Me.DspWideUse12.TabIndex = 157
+        Me.DspWideUse12.ToolTipText = Nothing
         Me.DspWideUse12.Unit = ""
         Me.DspWideUse12.UnitVisible = True
         Me.DspWideUse12.Value = "123.45 "
@@ -2702,6 +2762,7 @@ Partial Class frmMain
         Me.InterruptTime.Name = "InterruptTime"
         Me.InterruptTime.Size = New System.Drawing.Size(275, 32)
         Me.InterruptTime.TabIndex = 127
+        Me.InterruptTime.ToolTipText = Nothing
         Me.InterruptTime.Unit = "deg"
         Me.InterruptTime.UnitVisible = False
         Me.InterruptTime.Value = "20"
@@ -3233,7 +3294,7 @@ Partial Class frmMain
         '
         Me.Label8.BackColor = System.Drawing.Color.LightGray
         Me.Label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.Label8.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label8.Font = New System.Drawing.Font("ＭＳ ゴシック", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label8.Location = New System.Drawing.Point(270, 1)
         Me.Label8.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label8.Name = "Label8"

@@ -63,7 +63,19 @@ Public Class ucnDspData
         End Set
     End Property
 
-
+    Private ToolTipStr As String
+    <Browsable(True), Description("ToolTipの文")>
+    Public Property ToolTipText As String
+        Get
+            Return ToolTipStr
+        End Get
+        Set(value As String)
+            ToolTipStr = value
+            ToolTip1.SetToolTip(lblFieldName, ToolTipStr)
+            ToolTip1.SetToolTip(lblData, ToolTipStr)
+            ToolTip1.SetToolTip(lblUnit, ToolTipStr)
+        End Set
+    End Property
 
     <Browsable(True), Description("項目名の設定")>
     Public Property FieldName As String

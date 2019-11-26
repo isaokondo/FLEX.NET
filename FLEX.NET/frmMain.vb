@@ -289,10 +289,11 @@
                 DspDirection.Value = StrokeDev.ControlStrokeDiff             'ストローク差
                 DspTargetDirection.FieldName = "目標ストローク差"
 
-                DspRingTargetDir.FieldName = "ﾘﾝｸﾞ目標ｽﾄﾛｰｸ差"
+                DspRingTargetDir.FieldName = "目標ｽﾄﾛｰｸ差"
                 DspRingTargetDir.DecimalPlaces = 0
                 DspRingTargetDir.Value = CtlPara.HorTargerStrokeDev '目標ストローク差
-
+                DspRingTargetDir.ToolTipText = $"目標達成ストローク{CtlPara.TargetAchStroke}(mm)"
+                DspTargetDirection.ToolTipText = DspRingTargetDir.ToolTipText
                 ucnHorLineChart.Visible = False
 
                 pnlStrokeDiffContorol.Visible = True

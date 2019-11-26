@@ -32,7 +32,7 @@
         CtlPara.水平入力補正値 = HorCorrentionValue.Value
         CtlPara.鉛直入力補正値 = VerCorrentionValue.Value
         CtlPara.HorTargerStrokeDev = HorLastTargetVal.Value
-        CtlPara.TargetNetStroke = TargetNetStroke.Value
+        CtlPara.TargetAchStroke = TargetAchStroke.Value
         '押し上がりストロークの更新
         SegAsmblyData.RingLastStrokeUpdate(ConfirmRingNo.Value, PuchUpStroke.Value)
 
@@ -62,7 +62,7 @@
         DspUpdate()
 
         HorLastTargetVal.Visible = InitPara.StrokeDiffControlEnable
-        TargetNetStroke.Visible = InitPara.StrokeDiffControlEnable
+        TargetAchStroke.Visible = InitPara.StrokeDiffControlEnable
         'ストローク差制御有りのバージョン
         If InitPara.StrokeDiffControlEnable Then
             Label3.Visible = True
@@ -71,7 +71,7 @@
             '    HorLastTargetVal.FieldName = "目標ストローク差"
             '    HorLastTargetVal.DecimalPlaces = 0
             HorLastTargetVal.Value = CtlPara.HorTargerStrokeDev
-            TargetNetStroke.Value = CtlPara.TargetNetStroke
+            TargetAchStroke.Value = CtlPara.TargetAchStroke
             'End If
             'If CtlPara.horAngleDetection = GyroDetciotn Then
             '    HorLastTargetVal.Unit = "deg"

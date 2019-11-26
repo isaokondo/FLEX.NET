@@ -122,6 +122,8 @@ Public Class clsControlParameter
 
     Private _RightStrokeDiff As Boolean = True    'ストローク差　右勝ちでTRUE　左勝ちでFLASE
 
+    Private _TargetAchStroke As Integer = 0   '目標達成ストローク　ストローク差制御で有効
+
 
     Private _TargetNetStroke As Integer = 0   'ネットストローク　セグメント幅が変更になった時にリング目標値を開始よりこの値を距離を目標に
 
@@ -531,6 +533,25 @@ Public Class clsControlParameter
         Set(value As Boolean)
             _RightStrokeDiff = value
             Call sbUpdateData(value)
+        End Set
+    End Property
+
+
+    ''' <summary>
+    ''' 目標達成ストローク　ストローク差で制御有効
+    ''' </summary>
+    ''' <returns>単位mm</returns>
+    Public Property TargetAchStroke As Integer
+        Get
+            If _TargetAchStroke = 0 Then
+                _TargetAchStroke = _TargetNetStroke
+            End If
+            Return _TargetAchStroke
+        End Get
+        Set(value As Integer)
+            _TargetAchStroke = value
+            Call sbUpdateData(value)
+            RaiseEvent ReferChnge()
         End Set
     End Property
 
@@ -1468,6 +1489,8 @@ Public Class clsControlParameter
         _PitchingSel = chk.GetValue("PitchingSel")
 
         _RightStrokeDiff = fnBoolean(chk.GetValue("RightStrokeDiff", "True"))
+
+        _TargetAchStroke = chk.GetValue("TargetAchStroke", 0)
 
         _TargetNetStroke = chk.GetValue("TargetNetStroke", 0)
         _TargetStrokeOverRate = chk.GetValue("TargetStrokeOverRate", 100)

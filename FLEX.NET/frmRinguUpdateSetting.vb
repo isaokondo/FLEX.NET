@@ -32,10 +32,18 @@
             End If
         Next
 
-        CtlPara.ExceptMesureJackNo = ExceptJk
-        CtlPara.OffsetStroke = OffsetStroke.Value
+        If ExceptJk.Count = InitPara.MesureJackAngle.Count Then
+            MsgBox("すべてのジャッキを無効にすることは出来ません", , vbCritical)
 
-        Me.Close()
+        Else
+            CtlPara.ExceptMesureJackNo = ExceptJk
+            CtlPara.OffsetStroke = OffsetStroke.Value
+            Me.Close()
+
+        End If
+
+
+
 
     End Sub
 

@@ -27,6 +27,7 @@ Partial Class ucnDspData
         Me.lblData = New System.Windows.Forms.Label()
         Me.lblFieldName = New System.Windows.Forms.Label()
         Me.tmrBlink = New System.Windows.Forms.Timer(Me.components)
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.SuspendLayout()
         '
         'lblUnit
@@ -73,6 +74,11 @@ Partial Class ucnDspData
         '
         Me.tmrBlink.Interval = 1000
         '
+        'ToolTip1
+        '
+        Me.ToolTip1.BackColor = System.Drawing.Color.Yellow
+        Me.ToolTip1.IsBalloon = True
+        '
         'ucnDspData
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -92,4 +98,5 @@ Partial Class ucnDspData
     Friend WithEvents lblData As System.Windows.Forms.Label
     Friend WithEvents lblFieldName As System.Windows.Forms.Label
     Friend WithEvents tmrBlink As Timer
+    Private WithEvents ToolTip1 As ToolTip
 End Class

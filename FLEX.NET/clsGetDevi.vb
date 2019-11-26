@@ -28,10 +28,10 @@ Public Class clsStrokeDevi
     ''' 換算水平偏角 
     ''' ラジアン
     ''' </summary>
-    Private _ConvertHorDeflection As Single
+    Private _ConvertHorDeflection As Single = 0
 
 
-    Private _ControlStrokeDiff As Single
+    Private _ControlStrokeDiff As Single = 0
 
     ''' <summary>
     ''' 換算水平偏角 
@@ -276,7 +276,7 @@ Public Class clsStrokeDevi
         '
         ' 機能説明  :
 
-        Dim TotalStroke As Single = CtlPara.TargetNetStroke / 1000 ''全推進量(m)
+        Dim TotalStroke As Single = CtlPara.TargetAchStroke / 1000 ''全推進量(m)
         Dim TotalHouiDev As Single ''全方位変化量
         Dim dblRh As Double ''曲率半径
 
@@ -290,10 +290,10 @@ Public Class clsStrokeDevi
 
         If Abs(TotalHouiDev * 180 / PI) > CtlPara.horCurveMngAngle Then
             dblRh = TotalStroke / (2 * Math.Sin(TotalHouiDev / 2))
-            If CalcStroke.MesureCalcAveJackStroke < CtlPara.TargetNetStroke + CtlPara.StartAveStroke Then
+            If CalcStroke.MesureCalcAveJackStroke < CtlPara.TargetAchStroke + CtlPara.StartAveStroke Then
                 ConVertRealTargetDirction = 2 * Math.Asin((CalcStroke.CalcAveLogicalStroke / 1000) / dblRh / 2) + StartAmsKanzan
             Else
-                ConVertRealTargetDirction = 2 * Math.Asin((CtlPara.TargetNetStroke / 1000) / dblRh / 2) + StartAmsKanzan
+                ConVertRealTargetDirction = 2 * Math.Asin((CtlPara.TargetAchStroke / 1000) / dblRh / 2) + StartAmsKanzan
             End If
         Else
             ''直線管理
