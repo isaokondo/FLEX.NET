@@ -1572,9 +1572,9 @@ Public Class clsControlParameter
         'Dim Numb As Short = chk.GetValue("項目名称").ToGetNum
 
         For Each k In tb
-            If k.Key.Contains("開始ジャッキストローク") Then
-                _StartJackStroke(k.Key.ToGetNum) = k.Value
-            End If
+            'If k.Key.Contains("開始ジャッキストローク") Then
+            '    _StartJackStroke(k.Key.ToGetNum) = k.Value
+            'End If
             If k.Key.Contains("wideuse") Then
                 _wideUse(k.Key.ToGetNum) = k.Value
             End If
@@ -1584,6 +1584,13 @@ Public Class clsControlParameter
                 End If
             End If
         Next
+
+        For Each i As KeyValuePair(Of Short, Single) In InitPara.MesureJackAngle
+            _StartJackStroke(i.Key) = tb($"開始ジャッキストローク{i.Key}")
+        Next
+
+
+
 
         '平均開始ストロークの算出
         _StartAveJackStroke =
