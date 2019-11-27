@@ -310,6 +310,10 @@
             If(CtlPara.horAngleDetection = GyroDetciotn, CtlPara.HorDevDegTrendWidth, CtlPara.HorDevDiffTrendWidth)
 
 
+        ucnHorDevChart2.ChartHighScale = CtlPara.HorDevDegTrendWidth
+
+
+
         DspDirection.Unit = DspHorDev.Unit
         DspDirection.DecimalPlaces = DspHorDev.DecimalPlaces
 
@@ -337,6 +341,7 @@
             End If
 
 
+            ucnHorDevChart2.ChartDataAdd(PlcIf.RealStroke, RefernceDirection.平面偏角)
             ucnVerDevChart.ChartDataAdd(PlcIf.RealStroke, RefernceDirection.縦断偏角)
         End If
 
@@ -489,6 +494,7 @@
         ucnVerMomentChart.ChartList.Clear()
         ucnHorDevChart.ChartList.Clear()
         ucnVerDevChart.ChartList.Clear()
+        ucnHorDevChart2.ChartList.Clear()
     End Sub
 
     ''' <summary>
@@ -1492,6 +1498,15 @@
             If(CtlPara.horAngleDetection = GyroDetciotn, CtlPara.HorDevDegTrendWidth, CtlPara.HorDevDiffTrendWidth)
         ucnHorDevChart.ChartList = HorDevData.DList
         ucnHorDevChart.ChartClear()
+
+        '水平偏角
+        ucnHorDevChart2.StrokeWidth = CtlPara.GraphStrokeWidth
+        ucnHorDevChart2.ChartHighScale = CtlPara.HorDevDegTrendWidth
+        ucnHorDevChart2.ChartList = HorDevData.DList
+        ucnHorDevChart2.ChartClear()
+        'チャート切り替えボタン有効無効
+        btnChartChange.Visible = (CtlPara.horAngleDetection = StrokeDiffDetciotn)
+
         '鉛直偏角
         ucnVerDevChart.StrokeWidth = CtlPara.GraphStrokeWidth
         ucnVerDevChart.ChartHighScale = CtlPara.HorDevDegTrendWidth
@@ -1709,5 +1724,10 @@
             End If
 
         End If
+    End Sub
+
+    Private Sub btnChartChange_Click(sender As Object, e As EventArgs) Handles btnChartChange.Click
+        ucnHorDevChart2.Visible = Not ucnHorDevChart2.Visible
+        ucnVerLineChart.Visible = Not ucnHorDevChart2.Visible
     End Sub
 End Class

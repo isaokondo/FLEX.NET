@@ -238,6 +238,8 @@ Partial Class frmMain
         Me.lblTransfer = New System.Windows.Forms.Label()
         Me.DspUDStrokeDiff = New FLEX.NET.ucnDspDataMin()
         Me.DspUDRealStrokeDiff = New FLEX.NET.ucnDspDataMin()
+        Me.ucnHorDevChart2 = New FLEX.NET.ucnChart()
+        Me.btnChartChange = New System.Windows.Forms.Button()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -3463,12 +3465,41 @@ Partial Class frmMain
         Me.DspUDRealStrokeDiff.Unit = "mm"
         Me.DspUDRealStrokeDiff.Value = 1234.0R
         '
+        'ucnHorDevChart2
+        '
+        Me.ucnHorDevChart2.BackColor = System.Drawing.Color.Transparent
+        Me.ucnHorDevChart2.CenterColor = System.Drawing.Color.Yellow
+        Me.ucnHorDevChart2.ChartBakColor = System.Drawing.Color.Black
+        Me.ucnHorDevChart2.ChartHighScale = 2.0!
+        Me.ucnHorDevChart2.ChartPenColor = System.Drawing.Color.White
+        Me.ucnHorDevChart2.DecimalPlaces = CType(2, Short)
+        Me.ucnHorDevChart2.FieldName = "水平偏角(deg)"
+        Me.ucnHorDevChart2.Location = New System.Drawing.Point(849, 908)
+        Me.ucnHorDevChart2.Margin = New System.Windows.Forms.Padding(2)
+        Me.ucnHorDevChart2.Name = "ucnHorDevChart2"
+        Me.ucnHorDevChart2.Size = New System.Drawing.Size(397, 143)
+        Me.ucnHorDevChart2.StrokeWidth = 1500
+        Me.ucnHorDevChart2.TabIndex = 182
+        Me.ucnHorDevChart2.Visible = False
+        '
+        'btnChartChange
+        '
+        Me.btnChartChange.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnChartChange.Location = New System.Drawing.Point(793, 900)
+        Me.btnChartChange.Name = "btnChartChange"
+        Me.btnChartChange.Size = New System.Drawing.Size(45, 23)
+        Me.btnChartChange.TabIndex = 183
+        Me.btnChartChange.Text = "切替"
+        Me.btnChartChange.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.btnChartChange)
+        Me.Controls.Add(Me.ucnHorDevChart2)
         Me.Controls.Add(Me.DspBottomRealStroke)
         Me.Controls.Add(Me.DspUDStrokeDiff)
         Me.Controls.Add(Me.DspUDRealStrokeDiff)
@@ -3803,6 +3834,8 @@ Partial Class frmMain
     Friend WithEvents lblTransfer As Label
     Friend WithEvents DspUDStrokeDiff As ucnDspDataMin
     Friend WithEvents DspUDRealStrokeDiff As ucnDspDataMin
+    Friend WithEvents ucnHorDevChart2 As ucnChart
+    Friend WithEvents btnChartChange As Button
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog
