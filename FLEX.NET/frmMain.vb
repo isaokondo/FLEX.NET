@@ -1673,9 +1673,13 @@
         If PlcIf.DirectControlCoefficient = 0 Then
             PlcIf.DirectControlCoefficient = 1
         End If
-
-        If PlcIf.減圧弁制御P定数 = 0 Or PlcIf.減圧弁制御I定数 = 0 Then
-            frmPressParameterSet.Show()
+        If InitPara.ServerMode Then
+            If PlcIf.減圧弁制御P定数 = 0 Then
+                PlcIf.減圧弁制御P定数 = 100
+            End If
+            If PlcIf.減圧弁制御I定数 = 0 Then
+                PlcIf.減圧弁制御I定数 = 10
+            End If
         End If
     End Sub
 
