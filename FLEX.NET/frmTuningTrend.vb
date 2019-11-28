@@ -185,6 +185,14 @@
     ''' <param name="e"></param>
     Private Sub btnMvUpStart_Click(sender As Object, e As EventArgs) Handles btnMvUpStart.Click, btnDownStart.Click
 
+        If Not PlcIf.FlexControlOn Then
+            MsgBox("FLEX制御ONにしてください", vbCritical)
+            Exit Sub
+        End If
+
+
+        CtlPara.AutoDirectionControl=True
+
         PlcIf.減圧弁特性増減時間 = nudMVUpDownTime.Value
         Dim OutFlg As Integer
         'Select Case sender.GetType
