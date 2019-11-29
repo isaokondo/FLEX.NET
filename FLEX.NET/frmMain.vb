@@ -1502,7 +1502,7 @@
         '水平偏角
         ucnHorDevChart2.StrokeWidth = CtlPara.GraphStrokeWidth
         ucnHorDevChart2.ChartHighScale = CtlPara.HorDevDegTrendWidth
-        ucnHorDevChart2.ChartList = HorDevData.DList
+        'ucnHorDevChart2.ChartList = HorDevData.DList
         ucnHorDevChart2.ChartClear()
         'チャート切り替えボタン有効無効
         btnChartChange.Visible = (CtlPara.horAngleDetection = StrokeDiffDetciotn)

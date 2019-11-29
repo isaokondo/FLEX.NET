@@ -528,7 +528,7 @@ Public Class clsReportDb
         For Each t In RingLst.Rows
             If Not IsDBNull(t.item(0)) Then
                 Dim RingStartTime As DataRowCollection =
-                GetDtfmSQL($"select `時間`  from `flex掘削データ` where `リング番号`='{t.item(0)}' LIMIT 1").Rows
+                GetDtfmSQL($"select `時間`  from `flex掘削データ` where `リング番号`='{t.item(0)}' LIMIT 0,1").Rows
 
                 _RingData.Add(New RingInfo(t.Item(0), RingStartTime(0).Item(0).ToString))
             End If
