@@ -518,7 +518,7 @@ Public Class clsReportDb
     Public Sub New()
         'リング情報読込
         Dim RingLst As DataTable =
-                GetDtfmSQL("select `リング番号`  from `flex掘削データ` group by `リング番号`  desc")
+                GetDtfmSQL("SELECT   `Time`, REPLACE(`イベントデータ`,'リング 掘進開始しました','') FROM `flexイベントデータ`   where `イベントデータ` LIKE '%掘進開始%'")
         'Dim RingLst As DataTable =
         '        GetDtfmSQL("select `リング番号`,min(`時間`)  from `flex掘削データ` group by `リング番号`  desc")
         'GetDtfmSQL("Select Replace(`イベントデータ`,'リング 掘進開始しました',''),time 
@@ -527,10 +527,8 @@ Public Class clsReportDb
         'While RingLst.Read
         For Each t In RingLst.Rows
             If Not IsDBNull(t.item(0)) Then
-                Dim RingStartTime As DataRowCollection =
-                GetDtfmSQL($"select `時間`  from `flex掘削データ` where `リング番号`='{t.item(0)}' LIMIT 0,1").Rows
 
-                _RingData.Add(New RingInfo(t.Item(0), RingStartTime(0).Item(0).ToString))
+                _RingData.Add(New RingInfo(t.Item(1), t.Item(0).ToString))
             End If
         Next
         'End While
