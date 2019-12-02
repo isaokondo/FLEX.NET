@@ -84,6 +84,7 @@ Partial Class frmNextPieceConfirm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Thistle
         Me.ClientSize = New System.Drawing.Size(796, 345)
+        Me.ControlBox = False
         Me.Controls.Add(Me.lblNextPieceNo)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
