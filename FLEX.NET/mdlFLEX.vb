@@ -968,6 +968,10 @@ Module mdlFLEX
     ''' </summary>
     Private Sub ReportAutoPrintOut()
 
+        If My.Settings.ReportAutoPrintPtn = "" Then
+            Exit Sub
+        End If
+
         Dim RprDB As New clsReportDb
 
         '最新リング番号

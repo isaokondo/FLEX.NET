@@ -359,6 +359,8 @@
         UcnOpposeJackControl.BitStatus = CtlPara.LosZeroOpposeControl
         UcnOpposeJackSelect.BitStatus = CtlPara.LosZeroOpposeJack
 
+        If Not PlcIf.LosZeroEnable Then btnLoszeroContinu.Enabled = False
+
         '同時施工ピース確認ボタンブリンク
         btnPieceConfirm.Enabled = ucnLosZeroMode.Blink
         If btnPieceConfirm.Enabled Then
@@ -1680,6 +1682,11 @@
             If PlcIf.減圧弁制御I定数 = 0 Then
                 PlcIf.減圧弁制御I定数 = 10
             End If
+            If PlcIf.終了判定引きストローク <= 0 Then
+                PlcIf.終了判定引きストローク = 300
+            End If
+
+
         End If
     End Sub
 
