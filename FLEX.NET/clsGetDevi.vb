@@ -332,6 +332,8 @@ Public Class clsStrokeDevi
             BtmStrokeControlEnable = Not ReduceJack.Contains(InitPara.StrokeNoBtmRight) And
             Not ReduceJack.Contains(InitPara.StrokeNoBtmLeft)
 
+        Else
+            HorStrokeControlEnable = True
         End If
 
 
