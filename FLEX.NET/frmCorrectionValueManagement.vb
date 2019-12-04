@@ -24,6 +24,8 @@
     ''' <param name="e"></param>
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click, btnCLose.Click
 
+        '押し上がりストロークの更新
+        SegAsmblyData.RingLastStrokeUpdate(ConfirmRingNo.Value, PuchUpStroke.Value)
         CtlPara.測量ポイントリング番号 = ConfirmRingNo.Value
         '起点入力の場合は、起点から発進までの距離を減算
         CtlPara.測量ポイント総距離 =
@@ -33,8 +35,6 @@
         CtlPara.鉛直入力補正値 = VerCorrentionValue.Value
         CtlPara.HorTargerStrokeDev = HorLastTargetVal.Value
         CtlPara.TargetAchStroke = TargetAchStroke.Value
-        '押し上がりストロークの更新
-        SegAsmblyData.RingLastStrokeUpdate(ConfirmRingNo.Value, PuchUpStroke.Value)
 
         DspUpdate()
 

@@ -1696,7 +1696,7 @@ Public Class clsTableUpdateConfirm
         'MariaDBのときは、triggerを利用
         If clsDataBase.MySQLVersion = "MariaDB" Then
             Dim tableUpDt As DataTable =
-            GetDtfmSQL($"SELECT * FROM updatetable WHERE TIME>'{tbUpdateTime.ToString}' ORDER BY TIME DESC LIMIT 1")
+            GetDtfmSQL($"SELECT * FROM updatetable WHERE TIME>'{tbUpdateTime.ToString}' ORDER BY TIME DESC LIMIT 10")
 
             If tableUpDt.Rows.Count <> 0 Then
                 tbUpdateTime = tableUpDt.Rows(0).Item("TIME")
@@ -1705,6 +1705,7 @@ Public Class clsTableUpdateConfirm
             For i As Integer = 0 To tableUpDt.Rows.Count - 1
                 Select Case tableUpDt.Rows(i).Item("TableName")
                     Case "flex制御パラメータ"
+                        Call CtlParaChgEventWr(tableUpDt.Rows(i))
                         CtlPara.ReadParameter()
                         My.Forms.frmMain.WideDataFldSet() '汎用データの更新
                     Case "flexアナログtag", "flexデジタルtag"
@@ -1733,6 +1734,39 @@ Public Class clsTableUpdateConfirm
         End If
 
     End Sub
+
+    Private Sub CtlParaChgEventWr(Dr As DataRow)
+
+        If Dr.Item("BeforeValue") = Dr.Item("AfterValue") Then
+            Exit Sub
+        End If
+        Dim itm As New Dictionary(Of String, String) From {
+            {"水平入力補正値", "水平補正値,deg"},
+            {"鉛直入力補正値", "鉛直補正値,deg"},
+            {"最低全開グループ数", ","},
+             {"測量ポイントリング番号", "測量ポイントリング番号,deg"},
+             {"測量ポイント総距離", "測量ポイント総距離,mm"},
+             {"圧力許容値", "片押制限の圧力許容値,Mpa"},
+             {"ジャッキモーメント上限値", "片押制限のﾓｰﾒﾝﾄ上限値,kNm"},
+             {"TargetAchStroke", "目標達成ストローク,mm"},
+             {"TargetNetStroke", "目標推進量,mm"},
+             {"HorTargerStrokeDev", "目標ストローク差,mm"}
+           }
+
+
+        If itm.ContainsKey(Dr.Item("ItemName")) Then
+            Dim s As String = Dr.Item("ItemName")
+            WriteEventData($"{Split(itm(s), ",")(0)}が {Dr.Item("AfterValue")}{Split(itm(s), ",")(1)}に変更されました。", Color.DarkMagenta)
+        End If
+
+
+
+
+
+
+    End Sub
+
+
 
 
     ''' <summary>
