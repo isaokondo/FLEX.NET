@@ -1392,6 +1392,8 @@ Public Class clsTableUpdateConfirm
                             SegAsmblyData.AssemblyDataRead(PlcIf.RingNo)
 
 
+
+
                         My.Forms.frmMain.SegmentDataDsp() 'セグメント組立情報表示
 
                         RaiseEvent SegmentAsmChange()

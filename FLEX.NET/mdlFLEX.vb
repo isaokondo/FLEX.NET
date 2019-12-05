@@ -604,8 +604,20 @@ Module mdlFLEX
     End Sub
     ''' <summary>
     ''' 不動作ジャッキの出力
+    ''' ストローク計算用のテーパー位置、セグメント幅のセット
     ''' </summary>
-    Public Sub NoOpJackSet() Handles TableUpdateConfirm.SegmentAsmChange, PlcIf.LosZeroModeChange
+    Public Sub NoOpJackTpSet() Handles TableUpdateConfirm.SegmentAsmChange, PlcIf.LosZeroModeChange
+
+        'TODO:最大テーパーの算出
+        CalcStroke.SegmentTaperValue = SegAsmblyData.TypeData(PlcIf.RingNo).ETTaper
+        '最大テーパー位置
+        'CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TypeData(PlcIf.RingNo).TaperAngle
+        If SegAsmblyData.TaperLoc.ContainsKey(PlcIf.RingNo) Then
+            CalcStroke.SegmentMaxTaperLoc = SegAsmblyData.TaperLoc(PlcIf.RingNo)
+        End If
+        'セグメント幅
+        CalcStroke.SegnebtCenterWidth = SegAsmblyData.TypeData(PlcIf.RingNo).CenterWidth * 1000
+
 
         '同時施工可　不動作ジャッキあり　１ピース目　組立完了でない条件で出力
         If InitPara.NoOpJkExist Then

@@ -706,7 +706,7 @@ Public Class clsPlcIf
         Set(value As Boolean)
             _NoOpJackOn = value
             DigtalPlcWrite("不動作推進ON", value)
-            Call NoOpJackSet()
+            Call NoOpJackTpSet()
         End Set
     End Property
 
@@ -1330,8 +1330,8 @@ Public Class clsPlcIf
 
                             'モニターモードではPLCより組立ピース読込
                             If InitPara.MonitorMode Then
-                                    _AssemblyPieceNo = _EngValue("組立ピース")
-                                End If
+                                _AssemblyPieceNo = _EngValue("組立ピース")
+                            End If
                             'Kセグメント完了で目標推進量(割合を掛けたもの)を超えたときにリング更新するかどうかの判断
                             If _LosZeroSts_FLEX = 3 AndAlso SegAsmblyData.AssemblyPlanPieceNumber = _AssemblyPieceNo AndAlso CtlPara.TargetNetStroke <> 0 AndAlso
                                 CalcStroke.CalcAveLogicalStroke > (CtlPara.TargetStrokeOverRate * CtlPara.TargetNetStroke / 100) Then
@@ -1341,8 +1341,8 @@ Public Class clsPlcIf
 
                         End If
 
-                            '掘進中でダイレクト制御ONでFLEX手動モード時
-                            If _excaStatus = cKussin AndAlso _flexControlOn And
+                        '掘進中でダイレクト制御ONでFLEX手動モード時
+                        If _excaStatus = cKussin AndAlso _flexControlOn And
                             CtlPara.DirectControl And Not CtlPara.AutoDirectionControl Then
                             'PID偏差がダイレクト制御偏差より変化
                             For i As Short = 0 To InitPara.NumberGroup - 1
@@ -1573,7 +1573,7 @@ Public Class clsPlcIf
                         _LosZeroEnable = bit(DigtalTag.TagData("同時施工可").OffsetAddress)
 
                         If LosZeroEn <> _LosZeroEnable Then
-                            NoOpJackSet() '不動作ジャッキの出力
+                            NoOpJackTpSet() '不動作ジャッキの出力
                         End If
 
 

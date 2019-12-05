@@ -1750,6 +1750,7 @@ Public Class clsTableUpdateConfirm
              {"ジャッキモーメント上限値", "片押制限のﾓｰﾒﾝﾄ上限値,kNm"},
              {"TargetAchStroke", "目標達成ストローク,mm"},
              {"TargetNetStroke", "目標推進量,mm"},
+             {"片押しR制限値", "片押しR制限値,"},
              {"HorTargerStrokeDev", "目標ストローク差,mm"}
            }
 
