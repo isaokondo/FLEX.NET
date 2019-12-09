@@ -362,7 +362,7 @@ Public Class clsStrokeDevi
                 StrokeSelect = SelectBtm
                 SelStStr = "下半"
             End If
-            If CtlPara.horAngleDetection = StrokeDiffDetciotn And SelStStr<>""　Then
+            If InitPara.StrokeDiffControlEnable And CtlPara.horAngleDetection = StrokeDiffDetciotn And SelStStr <> "" Then
                 WriteEventData($"ｽﾄﾛｰｸ差制御 {SelStStr}ｽﾄﾛｰｸになりました。", Color.BlueViolet)
             End If
         End If
