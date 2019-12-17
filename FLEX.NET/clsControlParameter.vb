@@ -1315,13 +1315,14 @@ Public Class clsControlParameter
         End Get
         Set(value As Dictionary(Of Short, Integer))
             _StartJackStroke = value
-
-            For Each v In value
-                'Dim tb As Odbc.OdbcDataReader =
-                ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{v.Value}' 
+            If InitPara.ServerMode Then
+                For Each v In value
+                    'Dim tb As Odbc.OdbcDataReader =
+                    ExecuteSqlCmd($"UPDATE FLEX制御パラメータ SET 値='{v.Value}' 
         WHERE 項目名称='開始ジャッキストローク{v.Key}'")
-                'tb.Close()
-            Next
+                    'tb.Close()
+                Next
+            End If
             '平均開始ストロークの算出
             _StartAveJackStroke =
                 (From i In _StartJackStroke Where Not _ExceptMesureJackNo.Contains(i.Key) Select (i.Value)).Average
