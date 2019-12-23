@@ -486,7 +486,27 @@
         'Call LineDataUpdate()
 
         EventlogUpdate()
+
+
+        '全計測ｼﾞｬｯｷ引戻のメッセージを20秒で消去
+        Dim MsgCap As String = "全計測ｼﾞｬｯｷ引戻"
+        Static MsgCapPtTm As Integer '表示経過時間
+        If WindowsExist(MsgCap) Then
+            If MsgCapPtTm > 20 Then
+                WindowsClose(MsgCap)
+            Else
+                MsgCapPtTm += 1
+            End If
+        Else
+            MsgCapPtTm = 0
+        End If
+
+
+
     End Sub
+
+
+
     ''' <summary>
     ''' 偏角、モーメントのチャート初期化
     ''' 待機中から掘進中の時に実行

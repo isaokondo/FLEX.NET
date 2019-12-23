@@ -1,5 +1,6 @@
 ﻿Option Explicit On
-
+Imports System.Runtime.InteropServices
+Imports System.Diagnostics
 Module mdlFLEX
 
     Public InitPara As clsInitParameter '初期値パラメータ
@@ -101,6 +102,36 @@ Module mdlFLEX
     ''' </summary>
     Public Const StrokeDiffDetciotn As Boolean = False
 
+    Private Const WM_CLOSE As Integer = &H10
+
+    <DllImport("user32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
+    Public Function FindWindow(lpClassName As String,
+        lpWindowName As String) As IntPtr
+    End Function
+    Private Declare Function SendMessage Lib "user32.dll" Alias "SendMessageA" _
+        (ByVal hwnd As Integer, ByVal msg As Integer,
+         ByVal wParam As Integer, ByVal lParam As Integer) As Integer
+    ''' <summary>
+    ''' このWindowsを閉じる
+    ''' </summary>
+    ''' <param name="Caption"></param>
+    Public Sub WindowsClose(Caption As String)
+        Dim mbWnd As IntPtr = FindWindow(vbNullString, Caption)
+        If mbWnd <> IntPtr.Zero Then
+            SendMessage(mbWnd, &H112, &HF060, IntPtr.Zero)
+        End If
+
+    End Sub
+    ''' <summary>
+    ''' このWindowsが存在するか
+    ''' </summary>
+    ''' <param name="Caption"></param>
+    ''' <returns></returns>
+    Public Function WindowsExist(Caption As String) As Boolean
+        Dim mbWnd As IntPtr = FindWindow(vbNullString, Caption)
+        Return (mbWnd <> IntPtr.Zero)
+
+    End Function
 
 
     ''' <summary>
@@ -938,27 +969,27 @@ Module mdlFLEX
 
 
             JackMvAuto.鉛直偏差角 = RefernceDirection.縦断偏角
-                    ''自動から手動時のトラッキング処理
-                    'JackMvAuto.PointX = JackManual.PointX
-                    'JackMvAuto.PointY = JackManual.PointY
-                    JackMvAuto.PointX = PlcIf.PointX
-                    JackMvAuto.PointY = PlcIf.PointY
-                    JackMvAuto.sbMnToAutTracking()
-                    ''自動演算開始
-                    JackMvAuto.MvAutoStart()
-                    Else
-                    If PlcIf.FlexControlOn AndAlso PlcIf.ExcaStatus = cKussin Then
-                        WriteEventData("方向制御 手動モードに変わりました", Color.Blue)
-                    End If
-                    ''自動演算停止
-                    JackMvAuto.MvAutoStop()
-                    '                ''自動→手動切替時
-                    'TODO:操作権
-                    'If mneSosa.Checked Then
-                    ''自動から手動時のトラッキング処理
-                    ''自動時の座標を手動時の座標へ渡す
-                    'JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
-                    JackManual.PutPointXY(PlcIf.PointX, PlcIf.PointY)
+            ''自動から手動時のトラッキング処理
+            'JackMvAuto.PointX = JackManual.PointX
+            'JackMvAuto.PointY = JackManual.PointY
+            JackMvAuto.PointX = PlcIf.PointX
+            JackMvAuto.PointY = PlcIf.PointY
+            JackMvAuto.sbMnToAutTracking()
+            ''自動演算開始
+            JackMvAuto.MvAutoStart()
+        Else
+            If PlcIf.FlexControlOn AndAlso PlcIf.ExcaStatus = cKussin Then
+                WriteEventData("方向制御 手動モードに変わりました", Color.Blue)
+            End If
+            ''自動演算停止
+            JackMvAuto.MvAutoStop()
+            '                ''自動→手動切替時
+            'TODO:操作権
+            'If mneSosa.Checked Then
+            ''自動から手動時のトラッキング処理
+            ''自動時の座標を手動時の座標へ渡す
+            'JackManual.PutPointXY(JackMvAuto.PointX, JackMvAuto.PointY)
+            JackManual.PutPointXY(PlcIf.PointX, PlcIf.PointY)
 
         End If
     End Sub
