@@ -529,6 +529,7 @@ Public Class clsCalcuStroke
         If InitPara.ServerMode AndAlso blnT = False And _AllMesJackUp And PlcIf.LosZeroEnable Then
             'RaiseEvent MeasureJackAllUp()
             MessageBox.Show("すべての計測ジャッキストロークが引き戻し更新されました", "全計測ｼﾞｬｯｷ引戻", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            WriteEventData("すべての計測ジャッキストロークが引き戻し更新されました", Color.Black)
         End If
 
 

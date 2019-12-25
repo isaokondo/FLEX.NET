@@ -79,8 +79,8 @@ Public Class clsDataBase
 
 
         Else
-            MsgBox($"FLEX.INIファイルが見つかりません。{vbCrLf}ファイルパス：{IniFilePath}",
-                   MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation, "初期ファイル読込不良")
+            MessageBox.Show($"FLEX.INIファイルが見つかりません。{vbCrLf}ファイルパス：{IniFilePath}", "初期ファイル読込不良",
+                   MessageBoxButtons.OK, MessageBoxIcon.Error)
             End
         End If
 
@@ -100,9 +100,7 @@ Public Class clsDataBase
             objSck.Connect(HostName, PortNo)
         Catch ex As System.Net.Sockets.SocketException '
             '接続出来ない場合
-            MsgBox(ex.Message,
-                   MsgBoxStyle.Exclamation,
-                   "データベース接続エラー" & "ホスト名:    " & HostName & vbCrLf & "  ポート番号:" & PortNo)
+            MessageBox.Show(ex.Message, "データベース接続エラー" & "ホスト名:    " & HostName & vbCrLf & "  ポート番号:" & PortNo, MessageBoxButtons.OK, MessageBoxIcon.Error)
             End
         End Try
 
@@ -133,7 +131,7 @@ Public Class clsDataBase
 
                 End If
                 If IsNothing(MySQLVersion) Then
-                    MsgBox($"データベースが異常です　{rString}",,)
+                    MessageBox.Show($"データベースが異常です　{rString}")
 
                 End If
 
@@ -187,7 +185,7 @@ Public Class clsDataBase
             "Exception in conMYSQLDB " &
             "with argument " & ex.Message & ".")
 
-            MsgBox($"Connect Error:{ex.Message & vbCrLf & ErrMsg} FLEX.NET",
+            MessageBox.Show($"Connect Error:{ex.Message & vbCrLf & ErrMsg} FLEX.NET", "",
                    MessageBoxButtons.OK, MessageBoxIcon.Error)
             End
         End Try
@@ -247,8 +245,8 @@ Public Class clsDataBase
             "Exception in ExecuteSqlCmd " &
             "with argument " & SQLCommand & ".")
 
-                MsgBox($"データベースSQLコマンドエラー ExecuteSqlCmd {vbCrLf}
-                    {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}", vbCritical)
+                MessageBox.Show($"データベースSQLコマンドエラー ExecuteSqlCmd {vbCrLf}
+                    {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
 
 
@@ -320,8 +318,8 @@ Public Class clsDataBase
                 Catch ex As Exception
 
 
-                    MsgBox($"データベースSQLコマンドエラー{vbCrLf}
-                    {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}　FLEXを終了します  ", vbCritical)
+                    MessageBox.Show($"データベースSQLコマンドエラー{vbCrLf}
+                    {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}　FLEXを終了します  ", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Application.Exit()
 
                 End Try
@@ -332,8 +330,8 @@ Public Class clsDataBase
             Return ds.Tables(0)
 
         Catch ex As System.Data.Odbc.OdbcException
-            MsgBox($"データベース読込エラー
-            {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}　FLEXを終了します  ", vbCritical)
+            MessageBox.Show($"データベース読込エラー
+            {ex.Message}{vbCrLf}{SQLCommand}{vbCrLf}　FLEXを終了します  ")
             Application.Exit()
             Return Nothing
         End Try
@@ -394,7 +392,8 @@ Public Class clsTag
             Try
                 Return _TagList(tagDic(FldName))
             Catch ex As System.Collections.Generic.KeyNotFoundException
-                MsgBox($"{FldName}がTAGに見つかりません。設定をしてください{vbCrLf}{ex.Message}{vbCrLf}{ex.StackTrace}プログラムを終了します。", vbCritical)
+                MessageBox.Show($"{FldName}がTAGに見つかりません。設定をしてください{vbCrLf}{ex.Message}{vbCrLf}{ex.StackTrace}プログラムを終了します。",
+                                                                "", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Application.Exit()
                 Return Nothing
             End Try
@@ -521,7 +520,7 @@ Public Class clsTag
 
 
     Private Sub Htb_NotFindFld(sender As Object, ByVale As EventArgs, strFld As String) Handles Htb.NotFindFld
-        MsgBox("で、項目[" & strFld & "]が、見つかりませんでした。")
+        MessageBox.Show("で、項目[" & strFld & "]が、見つかりませんでした。")
 
     End Sub
 End Class
@@ -1163,7 +1162,7 @@ Public Class clsInitParameter
 
 
     Private Sub Htb_NotFindFld(sender As Object, ByVale As EventArgs, strFld As String) Handles Htb.NotFindFld
-        MsgBox("初期値パラメータで、項目[" & strFld & "]が、見つかりませんでした。")
+        MessageBox.Show("初期値パラメータで、項目[" & strFld & "]が、見つかりませんでした。")
     End Sub
 End Class
 Public Class clsHashtableRead
@@ -1809,7 +1808,7 @@ Public Class clsCheckDictionary
         If _dic.ContainsKey(tKey) Then
             Return _dic(tKey)
         Else
-            MsgBox($"テーブル'{_tableName}'に,'{tKey}'が見つかりません！", vbCritical)
+            MessageBox.Show($"テーブル'{_tableName}'に,'{tKey}'が見つかりません！")
             Return Nothing
         End If
     End Function

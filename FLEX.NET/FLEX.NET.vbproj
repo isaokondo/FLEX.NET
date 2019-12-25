@@ -695,6 +695,9 @@
     </None>
     <Content Include="1473bf5de9784b3e3a32fa31f3f03eb4_xxo.ico" />
     <None Include="Resources\Chime-Announce03.wav" />
+    <Content Include="NonMsgNet.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\excelpdfout.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

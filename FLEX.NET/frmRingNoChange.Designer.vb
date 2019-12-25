@@ -28,7 +28,7 @@ Partial Class frmRingNoChange
         '
         'btnOK
         '
-        resources.ApplyResources(Me.btnOK, "btnOK")
+        resources.ApplyResources(Me.btnClose, "btnOK")
         '
         'btnCancel
         '
@@ -58,7 +58,7 @@ Partial Class frmRingNoChange
         Me.Controls.Add(Me.RingNoEdt)
         Me.Name = "frmRingNoChange"
         Me.Controls.SetChildIndex(Me.RingNoEdt, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.ResumeLayout(False)
 

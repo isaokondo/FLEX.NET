@@ -36,7 +36,7 @@ Partial Class frmPressBlock
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(196, 363)
+        Me.btnClose.Location = New System.Drawing.Point(196, 363)
         '
         'btnCancel
         '
@@ -207,7 +207,7 @@ Partial Class frmPressBlock
         Me.Controls.SetChildIndex(Me.FullPowerRange, 0)
         Me.Controls.SetChildIndex(Me.MinimumContorolPress, 0)
         Me.Controls.SetChildIndex(Me.MaxContorolPress, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.picPressBlock, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)

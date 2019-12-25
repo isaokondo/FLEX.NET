@@ -59,6 +59,7 @@
         'PlcIf = New clsPlcIf
 
         'Reduce = New clsReducePress
+        ' NonMsgNet初期化
 
 
     End Sub
@@ -487,6 +488,14 @@
 
         EventlogUpdate()
 
+        'リング更新ボタンの表示、点滅
+        If PlcIf.ExcaStatus = cTaiki Or PlcIf.assembleSegFinish Then
+            btnRingUpdate.Visible = False
+        End If
+        If btnRingUpdate.Visible Then
+            btnRingUpdate.BackColor = If(BlinkFlg, Color.GreenYellow, Color.DarkGray)
+        End If
+
 
         '全計測ｼﾞｬｯｷ引戻のメッセージを20秒で消去
         Dim MsgCap As String = "全計測ｼﾞｬｯｷ引戻"
@@ -672,6 +681,8 @@
 
         '管理方法の有効無効
         ManagmentMethd.Enabled = InitPara.StrokeDiffControlEnable
+
+
 
     End Sub
     ''' <summary>
@@ -929,7 +940,7 @@
     End Sub
 
     Private Sub SystemEnd_Click(sender As Object, e As EventArgs) Handles SystemEnd.Click
-        If MsgBox("FLEXシステムを終了します。", MsgBoxStyle.OkCancel + MsgBoxStyle.Exclamation, "FLEX") = MsgBoxResult.Ok Then
+        If MessageBox.Show("FLEXシステムを終了します。", "FLEX", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) = DialogResult.OK Then
             Me.Close()
         End If
 
@@ -1077,8 +1088,7 @@
                 MsgText = "掘進強制終了"
         End Select
 
-        If MsgBox($"{MsgText}よろしいですか?",
-                  MsgBoxStyle.OkCancel + MsgBoxStyle.Exclamation, MsgText) = MsgBoxResult.Ok Then
+        If MessageBox.Show($"{MsgText}よろしいですか?", MsgText, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) = MsgBoxResult.Ok Then
             PlcIf.DigtalPlcWrite(MsgText, True) 'PLC書込
             WriteEventData(MsgText & "されました。", Color.BlueViolet)
         End If
@@ -1154,9 +1164,9 @@
     Private Sub btnPieceConfirm_Click(sender As Object, e As EventArgs) Handles btnPieceConfirm.Click
 
         If SegAsmblyData.ProcessData.Count = 0 Then
-            MsgBox($"{PlcIf.RingNo}リングの'{SegAsmblyData.AssemblyPtnName(PlcIf.RingNo)}'の、組立順序が設定されてません'", vbCritical)
+            MessageBox.Show($"{PlcIf.RingNo}リングの'{SegAsmblyData.AssemblyPtnName(PlcIf.RingNo)}'の、組立順序が設定されてません'", "", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         ElseIf Not SegAsmblyData.TransferFmSim Then
-            MsgBox("セグメント割付シュミレーションより転送処理を行ってください'", vbCritical)
+            MessageBox.Show("セグメント割付シュミレーションより転送処理を行ってください'", "", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             My.Forms.frmSegmentEdit.Show()
         Else
             PlcIf.LosZeroEnable = True '同時施工可　信号出力
@@ -1175,7 +1185,7 @@
     End Sub
 
     Private Sub ｂｔｎLossZerooCancel_Click(sender As Object, e As EventArgs) Handles btnLossZerooCancel.Click
-        If MsgBox("同時施工キャンセルしますか？", MsgBoxStyle.YesNo + MsgBoxStyle.Exclamation, "同時施工") = MsgBoxResult.Yes Then
+        If MessageBox.Show("同時施工キャンセルしますか？", "同時施工", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             PlcIf.DigtalPlcWrite("同時施工キャンセル", True)
             PlcIf.LosZeroEnable = False '同時施工キャンセル
             PlcIf.AssemblyPieceNo = 1 '組立ピース　初期化
@@ -1760,5 +1770,21 @@
     Private Sub btnChartChange_Click(sender As Object, e As EventArgs) Handles btnChartChange.Click
         ucnHorDevChart2.Visible = Not ucnHorDevChart2.Visible
         ucnVerLineChart.Visible = Not ucnHorDevChart2.Visible
+    End Sub
+    ''' <summary>
+    ''' リング更新　同時施工の場合
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btnRingUpdate_Click(sender As Object, e As EventArgs) Handles btnRingUpdate.Click
+        Dim ret As DialogResult = MessageBox.Show("リング更新を行いますか？", "リング更新処理", MessageBoxButtons.YesNo)
+        If ret = DialogResult.Yes Then
+            PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
+            If PlcIf.SegmentMode Then
+                MessageBox.Show("掘進モードにて待機中となります。", "リング更新処理", MessageBoxButtons.OK)
+            End If
+            btnRingUpdate.Visible = False
+            End If
+
     End Sub
 End Class

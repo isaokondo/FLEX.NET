@@ -60,7 +60,7 @@ Partial Class frmTuningTrend
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(643, 644)
+        Me.btnClose.Location = New System.Drawing.Point(643, 644)
         '
         'btnCancel
         '
@@ -459,7 +459,7 @@ Partial Class frmTuningTrend
         Me.Controls.SetChildIndex(Me.Label2, 0)
         Me.Controls.SetChildIndex(Me.lblNowTime, 0)
         Me.Controls.SetChildIndex(Me.lbl5minBefore, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.DgvGroup, 0)
         Me.Controls.SetChildIndex(Me.nudMVUpDownTime, 0)

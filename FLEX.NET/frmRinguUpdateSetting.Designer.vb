@@ -41,7 +41,7 @@ Partial Class frmRinguUpdateSetting
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(180, 395)
+        Me.btnClose.Location = New System.Drawing.Point(180, 395)
         '
         'btnCancel
         '
@@ -190,7 +190,7 @@ Partial Class frmRinguUpdateSetting
         Me.Name = "frmRinguUpdateSetting"
         Me.Text = "リング更新設定"
         Me.Controls.SetChildIndex(Me.CloseJudgePullStroke, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.DgvJackStroke, 0)
         Me.Controls.SetChildIndex(Me.OffsetStroke, 0)

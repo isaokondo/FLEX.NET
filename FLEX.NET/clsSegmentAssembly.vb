@@ -560,7 +560,6 @@ Friend Class clsSegmentAssembly
             Next
 
             If _ProcessData.Count = 0 Then
-                'MsgBox($"{RingNo}リングの組立パターン名'{dsSegAsm.Rows(0).Item("組立パターン名")}の、組立順序が設定されてません'", vbCritical)
             Else
                 '組立ピース数を取得
                 _AssemblyPlanPieceNumber = (From i In _ProcessData Select i.Value.AssemblyOrder).Max
@@ -656,7 +655,7 @@ Friend Class clsSegmentAssembly
             End If
             '_TypeNo(i) = t.Item("セグメントNo")
             If Not _TypeList.ContainsKey(_TypeNo(RingNo)) Then
-                MsgBox($"{RingNo}リングのセグメントNo[{_TypeNo(RingNo)}]が未登録です")
+                MessageBox.Show($"{RingNo}リングのセグメントNo[{_TypeNo(RingNo)}]が未登録です")
             Else
                 '_SegmentWidth(i) = _SegmentTypeList(rsData.Item("セグメントNo")).CenterWidth * 1000
             End If

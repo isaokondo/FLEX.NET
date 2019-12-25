@@ -30,7 +30,7 @@ Partial Class frmOtherSetting
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(187, 275)
+        Me.btnClose.Location = New System.Drawing.Point(187, 275)
         '
         'btnCancel
         '
@@ -105,7 +105,7 @@ Partial Class frmOtherSetting
         Me.Controls.SetChildIndex(Me.StartPowerPointPosition, 0)
         Me.Controls.SetChildIndex(Me.JackCullControl, 0)
         Me.Controls.SetChildIndex(Me.ClearanceMeterExist, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.PitchingSelect, 0)
         Me.ResumeLayout(False)

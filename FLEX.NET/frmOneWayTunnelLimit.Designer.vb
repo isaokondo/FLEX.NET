@@ -35,7 +35,7 @@ Partial Class frmOneWayTunnelLimit
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(219, 389)
+        Me.btnClose.Location = New System.Drawing.Point(219, 389)
         '
         'btnCancel
         '
@@ -222,7 +222,7 @@ Partial Class frmOneWayTunnelLimit
         Me.Controls.SetChildIndex(Me.DirectDirectionControl, 0)
         Me.Controls.SetChildIndex(Me.OneReduceValue, 0)
         Me.Controls.SetChildIndex(Me.OneReduceTime, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.MomentRdductionRateOnOnewayLimit, 0)
         Me.ResumeLayout(False)

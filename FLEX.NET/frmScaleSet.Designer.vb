@@ -42,7 +42,7 @@ Partial Class frmScaleSet
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(250, 642)
+        Me.btnClose.Location = New System.Drawing.Point(250, 642)
         '
         'btnCancel
         '
@@ -331,7 +331,7 @@ Partial Class frmScaleSet
         Me.Controls.SetChildIndex(Me.nudHorMomentTrendWidth, 0)
         Me.Controls.SetChildIndex(Me.nudVerMomentTrendWidth, 0)
         Me.Controls.SetChildIndex(Me.lblFieldName, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.nudHorDevDegTrendWidth, 0)
         Me.Controls.SetChildIndex(Me.nudVerDevDegTrendWidth, 0)

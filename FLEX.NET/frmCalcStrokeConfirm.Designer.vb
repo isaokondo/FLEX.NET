@@ -111,7 +111,7 @@ Partial Class frmCalcStrokeConfirm
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(537, 769)
+        Me.btnClose.Location = New System.Drawing.Point(537, 769)
         '
         'btnCancel
         '
@@ -1201,7 +1201,7 @@ Partial Class frmCalcStrokeConfirm
         Me.Controls.SetChildIndex(Me.DspHorTargerStrokeDev, 0)
         Me.Controls.SetChildIndex(Me.DspHorTargerNowStrokeDev, 0)
         Me.Controls.SetChildIndex(Me.pnlStrokeDiffContorol, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.DspRingUpStroke, 0)
         Me.Controls.SetChildIndex(Me.DspTaperCorRate, 0)

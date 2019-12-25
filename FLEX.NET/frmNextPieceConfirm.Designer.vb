@@ -29,9 +29,9 @@ Partial Class frmNextPieceConfirm
         '
         'btnOK
         '
-        Me.btnOK.Font = New System.Drawing.Font("MS UI Gothic", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnOK.Location = New System.Drawing.Point(448, 269)
-        Me.btnOK.Size = New System.Drawing.Size(149, 45)
+        Me.btnClose.Font = New System.Drawing.Font("MS UI Gothic", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnClose.Location = New System.Drawing.Point(448, 269)
+        Me.btnClose.Size = New System.Drawing.Size(149, 45)
         '
         'btnCancel
         '
@@ -90,7 +90,7 @@ Partial Class frmNextPieceConfirm
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmNextPieceConfirm"
         Me.Text = "同時施工継続"
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.btnClose, 0)

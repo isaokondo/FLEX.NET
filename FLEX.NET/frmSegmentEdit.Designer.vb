@@ -72,7 +72,7 @@ Partial Class frmSegmentEdit
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(385, 684)
+        Me.btnClose.Location = New System.Drawing.Point(385, 684)
         '
         'btnCancel
         '
@@ -387,7 +387,7 @@ Partial Class frmSegmentEdit
         Me.Controls.Add(Me.DgvSegAssign)
         Me.Name = "frmSegmentEdit"
         Me.Text = "セグメント割付"
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.DgvSegAssign, 0)
         Me.Controls.SetChildIndex(Me.DgvSegSim, 0)

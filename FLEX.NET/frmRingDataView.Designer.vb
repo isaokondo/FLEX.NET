@@ -34,8 +34,8 @@ Partial Class frmRingDataView
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(1210, 646)
-        Me.btnOK.Visible = False
+        Me.btnClose.Location = New System.Drawing.Point(1210, 646)
+        Me.btnClose.Visible = False
         '
         'btnCancel
         '
@@ -125,7 +125,7 @@ Partial Class frmRingDataView
         Me.Controls.Add(Me.dgv)
         Me.Name = "frmRingDataView"
         Me.Text = "リング内データ　ビューワ"
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.dgv, 0)
         Me.Controls.SetChildIndex(Me.cmbRingSel, 0)

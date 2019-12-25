@@ -240,6 +240,7 @@ Partial Class frmMain
         Me.DspUDRealStrokeDiff = New FLEX.NET.ucnDspDataMin()
         Me.ucnHorDevChart2 = New FLEX.NET.ucnChart()
         Me.btnChartChange = New System.Windows.Forms.Button()
+        Me.btnRingUpdate = New System.Windows.Forms.Button()
         Me.MenuSystem.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -3492,12 +3493,26 @@ Partial Class frmMain
         Me.btnChartChange.Text = "切替"
         Me.btnChartChange.UseVisualStyleBackColor = True
         '
+        'btnRingUpdate
+        '
+        Me.btnRingUpdate.BackColor = System.Drawing.Color.DarkGray
+        Me.btnRingUpdate.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnRingUpdate.Location = New System.Drawing.Point(1746, 382)
+        Me.btnRingUpdate.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnRingUpdate.Name = "btnRingUpdate"
+        Me.btnRingUpdate.Size = New System.Drawing.Size(146, 36)
+        Me.btnRingUpdate.TabIndex = 184
+        Me.btnRingUpdate.Text = "リング更新処理"
+        Me.btnRingUpdate.UseVisualStyleBackColor = False
+        Me.btnRingUpdate.Visible = False
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1914, 1053)
+        Me.Controls.Add(Me.btnRingUpdate)
         Me.Controls.Add(Me.btnChartChange)
         Me.Controls.Add(Me.ucnHorDevChart2)
         Me.Controls.Add(Me.DspBottomRealStroke)
@@ -3836,6 +3851,7 @@ Partial Class frmMain
     Friend WithEvents DspUDRealStrokeDiff As ucnDspDataMin
     Friend WithEvents ucnHorDevChart2 As ucnChart
     Friend WithEvents btnChartChange As Button
+    Public WithEvents btnRingUpdate As Button
     'Friend WithEvents UcDspAnalog2 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog1 As FLEX.NET.DspAnalog
     'Friend WithEvents UcDspAnalog3 As FLEX.NET.DspAnalog

@@ -186,7 +186,7 @@
     Private Sub btnMvUpStart_Click(sender As Object, e As EventArgs) Handles btnMvUpStart.Click, btnDownStart.Click
 
         If Not PlcIf.FlexControlOn Then
-            MsgBox("FLEX制御ONにしてください", vbCritical)
+            MessageBox.Show("FLEX制御ONにしてください")
             Exit Sub
         End If
 

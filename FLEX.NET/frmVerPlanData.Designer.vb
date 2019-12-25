@@ -34,7 +34,7 @@ Partial Class frmVerPlanData
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(1230, 85)
+        Me.btnClose.Location = New System.Drawing.Point(1230, 85)
         '
         'lblReachZ
         '
@@ -155,7 +155,7 @@ Partial Class frmVerPlanData
         Me.Controls.Add(Me.lblFieldName)
         Me.Name = "frmVerPlanData"
         Me.Text = "縦断計画路線"
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.lblFieldName, 0)
         Me.Controls.SetChildIndex(Me.lblStartZ, 0)

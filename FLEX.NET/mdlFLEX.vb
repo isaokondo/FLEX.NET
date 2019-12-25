@@ -104,6 +104,8 @@ Module mdlFLEX
 
     Private Const WM_CLOSE As Integer = &H10
 
+
+
     <DllImport("user32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
     Public Function FindWindow(lpClassName As String,
         lpWindowName As String) As IntPtr
@@ -195,9 +197,6 @@ Module mdlFLEX
     End Sub
     'TODO:PLCエラー処理検討
     Private Sub PlcIf_PLCErrOccur(sender As Object, ByVale As EventArgs, ErrMsg As String, ErrCode As Long) Handles PlcIf.PLCErrOccur
-        'If ErrCode <> 0 Then
-        '    Dim response = MsgBox($"PLC通信エラー:{ErrMsg}", MsgBoxStyle.AbortRetryIgnore)
-        '    If response = MsgBoxResult.Abort Then End
         'Else
         If ErrCode <> 0 Then
             WriteEventData($"{ErrMsg} ErrorCode:0x{ErrCode.ToString("X8")} ", Color.Red)
@@ -414,8 +413,8 @@ Module mdlFLEX
                                     PlaySound(My.Resources.TargetStrokeOver)
                                     Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}{PlcIf.RingNo}リングのリング更新を行いますか？",
                                     "リング更新の確認",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
-                                                                              MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) ',
+                                    'MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
                                     If ret = DialogResult.Yes Then
                                         PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
                                         '目標推進量超えたかの確認メッセージ出力フラグon
@@ -1041,7 +1040,7 @@ Module mdlFLEX
             Dim job As Process = Process.Start(psi)
             job.WaitForExit()
             If job.ExitCode <> 0 Then
-                MsgBox("リング報自動印刷に失敗しました。", vbCritical)
+                MessageBox.Show("リング報自動印刷に失敗しました。")
             End If
 
         Next
@@ -1148,26 +1147,37 @@ Module mdlFLEX
     Private Sub PlcIf_TargetStrokeOverEv() Handles PlcIf.TargetStrokeOverEv
         'メッセージ表示時も他の操作が出来るようにタスク使用
 
-        If (IsNothing(task) OrElse task.IsCompleted) And Not TargetStrokeOverConfirm Then
-            task = Task.Factory.StartNew(
-            Sub()
-                If InitPara.ServerMode Then
-                    TargetStrokeOverConfirm = True
-                    PlaySound(My.Resources.TargetStrokeOver)
-
-                    Dim ret As DialogResult =
-                    MessageBox.Show($"Kセグメント組立完了後の目標ストロークを超えました。{vbCrLf}リング更新を行いますか？",
-                                                         "リング更新処理", MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
-                                                              MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
-                    If ret = DialogResult.Yes Then
-                        PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
-                    End If
-                End If
-
-            End Sub
-                )
-
-
+        If My.Forms.frmMain.btnRingUpdate.Visible = False Then
+            PlaySound(My.Resources.TargetStrokeOver)
+            If InitPara.ServerMode Then
+                My.Forms.frmMain.btnRingUpdate.Visible = True
+            End If
+            WriteEventData("Kセグメント組立完了後の目標ストロークを超えました", Color.Magenta)
         End If
+
+        'If (IsNothing(task) OrElse task.IsCompleted) And Not TargetStrokeOverConfirm Then
+        '    task = Task.Factory.StartNew(
+        '    Sub()
+        '        If InitPara.ServerMode Then
+        '            TargetStrokeOverConfirm = True
+        '            PlaySound(My.Resources.TargetStrokeOver)
+        '            My.Forms.frmMain.btnRingUpdate.Visible = True
+        '            WriteEventData("Kセグメント組立完了後の目標ストロークを超えました", Color.Magenta)
+        '            'Dim ret As DialogResult =
+        '            'MessageBox.Show($"Kセグメント組立完了後の目標ストロークを超えました。{vbCrLf}リング更新を行いますか？",
+        '            '                                     "リング更新処理", MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+        '            '                                          MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
+        '            'If ret = DialogResult.Yes Then
+        '            '    PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
+        '            'End If
+        '        End If
+
+        '    End Sub
+        '        )
+
+
+        'End If
     End Sub
 End Module
+
+

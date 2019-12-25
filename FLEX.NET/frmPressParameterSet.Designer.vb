@@ -39,7 +39,7 @@ Partial Class frmPressParameterSet
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(228, 568)
+        Me.btnClose.Location = New System.Drawing.Point(228, 568)
         '
         'btnCancel
         '
@@ -295,7 +295,7 @@ Partial Class frmPressParameterSet
         Me.Controls.SetChildIndex(Me.ControlStartThrustData, 0)
         Me.Controls.SetChildIndex(Me.DirectControl, 0)
         Me.Controls.SetChildIndex(Me.ControlStartThrustOn, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.DirectControlCoefficient, 0)
         Me.Controls.SetChildIndex(Me.DirectControlOffset, 0)

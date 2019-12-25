@@ -37,7 +37,7 @@ Partial Class frmOneWayTunnel
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(209, 461)
+        Me.btnClose.Location = New System.Drawing.Point(209, 461)
         '
         'btnCancel
         '
@@ -226,7 +226,7 @@ Partial Class frmOneWayTunnel
         Me.Text = "片押しパラメータ"
         Me.Controls.SetChildIndex(Me.ShapeContainer1, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.HorPID_P, 0)
         Me.Controls.SetChildIndex(Me.HorPID_I, 0)
         Me.Controls.SetChildIndex(Me.HorPID_D, 0)

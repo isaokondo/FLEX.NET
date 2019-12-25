@@ -32,7 +32,7 @@ Partial Class frmManagmentMethd
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(240, 142)
+        Me.btnClose.Location = New System.Drawing.Point(240, 142)
         '
         'btnCancel
         '
@@ -136,7 +136,7 @@ Partial Class frmManagmentMethd
         Me.Controls.Add(Me.HorTargetVal)
         Me.Name = "frmManagmentMethd"
         Me.Text = "管理方法"
-        Me.Controls.SetChildIndex(Me.btnOK, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.HorTargetVal, 0)
         Me.Controls.SetChildIndex(Me.UcnRdBtn2, 0)
