@@ -184,7 +184,7 @@ ErrTrap:
         If Err.Number = 9 Then
             'MsgBox ("リング番号に０が入力されてます。確認してください")
         Else
-            MessageBox.Show(Err.Description)
+            MsgBox(Err.Description)
         End If
     End Sub
 End Class

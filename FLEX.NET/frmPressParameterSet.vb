@@ -21,7 +21,7 @@
 
     End Sub
 
-    Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+    Friend Overrides Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
         PlcIf.減圧弁制御P定数 = PID_P.Value
         PlcIf.減圧弁制御I定数 = PID_I.Value
             PlcIf.減圧弁制御D定数 = PID_D.Value

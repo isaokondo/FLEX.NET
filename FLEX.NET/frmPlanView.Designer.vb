@@ -31,8 +31,8 @@ Partial Class frmPlanView
         '
         'btnOK
         '
-        Me.btnClose.Location = New System.Drawing.Point(1230, 82)
-        Me.btnClose.Text = "閉じる"
+        Me.btnOK.Location = New System.Drawing.Point(1230, 82)
+        Me.btnOK.Text = "閉じる"
         '
         'btnCancel
         '
@@ -87,7 +87,7 @@ Partial Class frmPlanView
         Me.Controls.Add(Me.dgv)
         Me.Name = "frmPlanView"
         Me.Text = "frmPlanView"
-        Me.Controls.SetChildIndex(Me.btnClose, 0)
+        Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.dgv, 0)
         CType(Me.dgv, System.ComponentModel.ISupportInitialize).EndInit()

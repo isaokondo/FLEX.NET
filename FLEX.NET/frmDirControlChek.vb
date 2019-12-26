@@ -44,7 +44,7 @@ Public Class frmDirControlChek
 
         Next
 
-        Me.Height = dgv.Top + dgv.Height + btnClose.Height + 30
+        Me.Height = dgv.Top + dgv.Height + btnOK.Height + 30
 
 
 

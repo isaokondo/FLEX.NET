@@ -42,7 +42,7 @@ Partial Class frmHorPlanData
         '
         'btnOK
         '
-        Me.btnClose.Location = New System.Drawing.Point(1221, 152)
+        Me.btnOK.Location = New System.Drawing.Point(1221, 152)
         '
         'btnCancel
         '
@@ -280,7 +280,7 @@ Partial Class frmHorPlanData
         Me.Name = "frmHorPlanData"
         Me.Text = "平面掘進計画路線"
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
-        Me.Controls.SetChildIndex(Me.btnClose, 0)
+        Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.lblFieldName, 0)
         Me.Controls.SetChildIndex(Me.lblStartX, 0)
         Me.Controls.SetChildIndex(Me.Label3, 0)

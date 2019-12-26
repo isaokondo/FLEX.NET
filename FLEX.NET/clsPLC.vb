@@ -1047,8 +1047,8 @@ Public Class clsPlcIf
         If Not InitPara.MonitorMode Then
             Dim iRet As Long = PLC_Open() 'オープン処理
             If iRet <> 0 Then
-                MessageBox.Show($"シーケンサと通信出来ません！{vbCrLf}論理局番：{com_ReferencesEasyIF.ActLogicalStationNumber.ToString}", "",
-                       MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                MsgBox($"シーケンサと通信出来ません！{vbCrLf}論理局番：{com_ReferencesEasyIF.ActLogicalStationNumber.ToString}",
+                       MsgBoxStyle.Exclamation)
                 End
             End If
 
@@ -1386,6 +1386,7 @@ Public Class clsPlcIf
                         If IsNothing(sharrDeviceValue) Then
                         Else
 
+                            'MsgBox($"PLCアナログ読込エラー{vbCrLf}{ex.Message}{vbCrLf}{ex.StackTrace.ToString}")
                             RaiseEvent PLCErrOccur(Me, New EventArgs, $"PLC ReadErr {ex.Message}{vbCrLf}{ex.StackTrace.ToString}", 0)
                         End If
 
@@ -1791,7 +1792,7 @@ Public Class clsPlcIf
 
             End With
         Catch ex As Exception
-            MessageBox.Show($"GetAnalogDataでエラー{vbCrLf}{ex.Message}{vbCrLf}フィールド名:{FieldName}{vbCrLf}{Environment.StackTrace.ToString}")
+            MsgBox($"GetAnalogDataでエラー{vbCrLf}{ex.Message}{vbCrLf}フィールド名:{FieldName}{vbCrLf}{Environment.StackTrace.ToString}")
             Return 0
         End Try
     End Function

@@ -181,7 +181,7 @@ Public Class frmCalcStrokeConfirm
     End Sub
 
 
-    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnClose.Click
+    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
         If InitPara.LosZeroEquip Then
             CtlPara.LosZeroOpposeJackExcept = OpposeJackExcep.rdbtnValue
         End If

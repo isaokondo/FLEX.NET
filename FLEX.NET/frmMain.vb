@@ -564,7 +564,7 @@
                 If(StrokeDev.HorStrokeControlEnable, ((StrokeDev.HorizonRighttStroke + StrokeDev.HorizonLefttStroke - lblHorLeftStartSt.Text - lblHorRightStartSt.Text) / 2).ToString("F1"), "------")
         lblConvertHorStrokeDiff.Text = If(StrokeDev.HorStrokeControlEnable, -StrokeDev.ConVertHorStrokeDiff.ToString("F1"), "------")
         lblConvertHorStartStrokeDiff.Text = -StrokeDev.ConVertHorStartStrokeDiff.ToString("F1")
-        lblHorRingTargetSt.Text =(- (StrokeDev.ConVertHorStartStrokeDiff + StrokeDev.RingUpStroke)).ToString("F2")
+        lblHorRingTargetSt.Text = (-(StrokeDev.ConVertHorStartStrokeDiff + StrokeDev.RingUpStroke)).ToString("F2")
         ' 掘進モード、セグメントモードで背景色を変更
         Call ModeColorSet(lblHorLefttStNo, InitPara.StrokeNoHorLeft)
         Call ModeColorSet(lblHorRightStNo, InitPara.StrokeNoHorRight)
@@ -580,7 +580,7 @@
                       If(StrokeDev.BtmStrokeControlEnable, ((StrokeDev.BottomLefttStroke + StrokeDev.BottomRighttStroke - lblBtmLeftStartSt.Text - lblBtmRightStartSt.Text) / 2).ToString("F1"), "-----")
             lblConvertBtmStrokeDiff.Text = If(StrokeDev.BtmStrokeControlEnable, -StrokeDev.ConVertBottomStrokeDiff.ToString("F1"), "----")
             lblConvertBtmStartStrokeDiff.Text = -StrokeDev.ConVertBottomStartStrokeDiff.ToString("F1")
-            lblBtmRingTargetSt.Text =(- (StrokeDev.ConVertBottomStartStrokeDiff + StrokeDev.RingUpStroke)).ToString("F2")
+            lblBtmRingTargetSt.Text = (-(StrokeDev.ConVertBottomStartStrokeDiff + StrokeDev.RingUpStroke)).ToString("F2")
             ' 掘進モード、セグメントモードで背景色を変更
             Call ModeColorSet(lblBtmRightStNo, InitPara.StrokeNoBtmRight)
             Call ModeColorSet(lblBtmLeftStNo, InitPara.StrokeNoBtmLeft)
@@ -1784,7 +1784,7 @@
                 MessageBox.Show("掘進モードにて待機中となります。", "リング更新処理", MessageBoxButtons.OK)
             End If
             btnRingUpdate.Visible = False
-            End If
+        End If
 
     End Sub
 End Class

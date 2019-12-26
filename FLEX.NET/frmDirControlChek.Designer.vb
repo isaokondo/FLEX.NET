@@ -73,7 +73,7 @@ Partial Class frmDirControlChek
         '
         'btnOK
         '
-        Me.btnClose.Location = New System.Drawing.Point(1350, 627)
+        Me.btnOK.Location = New System.Drawing.Point(1350, 627)
         '
         'btnCancel
         '
@@ -700,7 +700,7 @@ Partial Class frmDirControlChek
         Me.Controls.Add(Me.lblX)
         Me.Name = "frmDirControlChek"
         Me.Text = "姿勢制御チェック"
-        Me.Controls.SetChildIndex(Me.btnClose, 0)
+        Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.lblX, 0)
         Me.Controls.SetChildIndex(Me.lblPointX, 0)

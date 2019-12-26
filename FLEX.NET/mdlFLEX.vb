@@ -104,8 +104,6 @@ Module mdlFLEX
 
     Private Const WM_CLOSE As Integer = &H10
 
-
-
     <DllImport("user32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
     Public Function FindWindow(lpClassName As String,
         lpWindowName As String) As IntPtr
@@ -197,6 +195,9 @@ Module mdlFLEX
     End Sub
     'TODO:PLCエラー処理検討
     Private Sub PlcIf_PLCErrOccur(sender As Object, ByVale As EventArgs, ErrMsg As String, ErrCode As Long) Handles PlcIf.PLCErrOccur
+        'If ErrCode <> 0 Then
+        '    Dim response = MsgBox($"PLC通信エラー:{ErrMsg}", MsgBoxStyle.AbortRetryIgnore)
+        '    If response = MsgBoxResult.Abort Then End
         'Else
         If ErrCode <> 0 Then
             WriteEventData($"{ErrMsg} ErrorCode:0x{ErrCode.ToString("X8")} ", Color.Red)
@@ -413,8 +414,8 @@ Module mdlFLEX
                                     PlaySound(My.Resources.TargetStrokeOver)
                                     Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}{PlcIf.RingNo}リングのリング更新を行いますか？",
                                     "リング更新の確認",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) ',
-                                    'MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                                                                              MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
                                     If ret = DialogResult.Yes Then
                                         PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
                                         '目標推進量超えたかの確認メッセージ出力フラグon
@@ -1040,7 +1041,7 @@ Module mdlFLEX
             Dim job As Process = Process.Start(psi)
             job.WaitForExit()
             If job.ExitCode <> 0 Then
-                MessageBox.Show("リング報自動印刷に失敗しました。")
+                MsgBox("リング報自動印刷に失敗しました。", vbCritical)
             End If
 
         Next
@@ -1179,5 +1180,3 @@ Module mdlFLEX
         'End If
     End Sub
 End Module
-
-

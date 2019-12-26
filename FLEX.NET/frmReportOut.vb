@@ -117,7 +117,7 @@ Public Class frmReportOut
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnClose.Click
+    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
 
         RprDB.PtnSave()
     End Sub
@@ -183,7 +183,7 @@ Public Class frmReportOut
         Dim job As Process = Process.Start(psi)
         job.WaitForExit()
         If job.ExitCode <> 0 Then
-            MessageBox.Show("リング報印刷に失敗しました。")
+            MsgBox("リング報印刷に失敗しました。", vbCritical)
         End If
 
 
@@ -213,7 +213,7 @@ Public Class frmReportOut
         Dim job As Process = Process.Start(psi) '("excelprt.vbs", TmpPath)
         job.WaitForExit()
         If job.ExitCode <> 0 Then
-            MessageBox.Show("リング報ファイル作成に失敗しました。")
+            MsgBox("リング報ファイル作成に失敗しました。", vbCritical)
         End If
         Dim RpV As New frmReportViewer(Replace(TmpPath, "xlsx", "pdf"))
         RpV.Show()
@@ -559,7 +559,7 @@ Public Class clsReportDb
             _RingReportRows = RingRptRow.Rows(0).Item(0)
             'End While
         Else
-            MessageBox.Show("リング報行数 RingReportRowsが　flex制御パラメータに設定されてません")
+            MsgBox("リング報行数 RingReportRowsが　flex制御パラメータに設定されてません", vbCritical)
         End If
 
         'リング報印字項目の設定読込
@@ -576,7 +576,7 @@ Public Class clsReportDb
             Next
             'End While
         Else
-            MessageBox.Show("リング報印字項目の設定読込 RingReporPtn　flex制御パラメータに設定されてません")
+            MsgBox("リング報印字項目の設定読込 RingReporPtn　flex制御パラメータに設定されてません", vbCritical)
         End If
 
 

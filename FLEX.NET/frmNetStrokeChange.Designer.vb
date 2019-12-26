@@ -28,7 +28,7 @@ Partial Class frmNetStrokeChange
         '
         'btnOK
         '
-        Me.btnClose.Location = New System.Drawing.Point(163, 140)
+        Me.btnOK.Location = New System.Drawing.Point(163, 140)
         '
         'btnCancel
         '
@@ -75,7 +75,7 @@ Partial Class frmNetStrokeChange
         Me.Controls.Add(Me.NetStrokeEdt)
         Me.Name = "frmNetStrokeChange"
         Me.Text = "目標推進量の変更"
-        Me.Controls.SetChildIndex(Me.btnClose, 0)
+        Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.NetStrokeEdt, 0)
         Me.Controls.SetChildIndex(Me.lblText, 0)

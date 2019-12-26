@@ -49,7 +49,7 @@ Partial Class frmReportOut
         '
         'btnOK
         '
-        Me.btnClose.Location = New System.Drawing.Point(527, 617)
+        Me.btnOK.Location = New System.Drawing.Point(527, 617)
         '
         'btnCancel
         '
@@ -283,7 +283,7 @@ Partial Class frmReportOut
         Me.Controls.Add(Me.cmbRingSel)
         Me.Name = "frmReportOut"
         Me.Text = "帳票出力"
-        Me.Controls.SetChildIndex(Me.btnClose, 0)
+        Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.cmbRingSel, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)

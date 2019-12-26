@@ -23,17 +23,17 @@ Public Class frmAssemblyProcessEdit
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    'Private Sub btnApply_Click(sender As Object, e As EventArgs) Handles btnApply.Click, btnOK.Click
-    '    CtlPara.AssemblyPieceNumber = AssemblyPieceNumber.Value
-    '    SegAsmblyData.SegmentAsemblyDataUpdat(ConfirmRingNo.Value, AssemblyPatternSel.ComboBox.SelectedItem, DspSegmentTypeName.ComboBox.SelectedItem, Nothing)
-    '    ConfirmRingNo_ValueChanged(sender, e)
-    'End Sub
+    Private Sub btnApply_Click(sender As Object, e As EventArgs) Handles btnApply.Click, btnOK.Click
+        CtlPara.AssemblyPieceNumber = AssemblyPieceNumber.Value
+        SegAsmblyData.SegmentAsemblyDataUpdat(ConfirmRingNo.Value, AssemblyPatternSel.ComboBox.SelectedItem, DspSegmentTypeName.ComboBox.SelectedItem, Nothing)
+        ConfirmRingNo_ValueChanged(sender, e)
+    End Sub
 
-    'Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
-    '    'SegAsmblyData.SegmentAsemblyDataUpdat(ConfirmRingNo.Value, AssemblyPatternSel.ComboBox.SelectedItem, DspSegmentTypeName.ComboBox.SelectedItem, Nothing)
-    '    'ConfirmRingNo_ValueChanged(sender, e)
-    '    Me.Close()
-    'End Sub
+    Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
+        'SegAsmblyData.SegmentAsemblyDataUpdat(ConfirmRingNo.Value, AssemblyPatternSel.ComboBox.SelectedItem, DspSegmentTypeName.ComboBox.SelectedItem, Nothing)
+        'ConfirmRingNo_ValueChanged(sender, e)
+        Me.Close()
+    End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
 
@@ -314,9 +314,5 @@ Public Class frmAssemblyProcessEdit
 
     Private Sub AssemblyPieceNumber_Load(sender As Object, e As EventArgs) Handles AssemblyPieceNumber.Load
 
-    End Sub
-
-    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-        Me.Close()
     End Sub
 End Class

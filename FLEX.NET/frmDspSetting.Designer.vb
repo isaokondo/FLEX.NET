@@ -33,7 +33,7 @@ Partial Class frmDspSetting
         '
         'btnOK
         '
-        Me.btnClose.Location = New System.Drawing.Point(197, 327)
+        Me.btnOK.Location = New System.Drawing.Point(197, 327)
         '
         'btnCancel
         '
@@ -133,7 +133,7 @@ Partial Class frmDspSetting
         Me.Controls.Add(Me.VerticalUnit)
         Me.Name = "frmDspSetting"
         Me.Text = "各種表示"
-        Me.Controls.SetChildIndex(Me.btnClose, 0)
+        Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.VerticalUnit, 0)
         Me.Controls.SetChildIndex(Me.DistanceLoc, 0)

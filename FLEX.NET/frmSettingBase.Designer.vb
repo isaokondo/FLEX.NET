@@ -24,7 +24,7 @@ Partial Class frmSettingBase
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSettingBase))
         Me.btnCancel = New System.Windows.Forms.Button()
-        Me.btnClose = New System.Windows.Forms.Button()
+        Me.btnOK = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'btnCancel
@@ -41,15 +41,15 @@ Partial Class frmSettingBase
         '
         'btnOK
         '
-        Me.btnClose.BackColor = System.Drawing.Color.Silver
-        Me.btnClose.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnClose.Location = New System.Drawing.Point(317, 488)
-        Me.btnClose.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnClose.Name = "btnOK"
-        Me.btnClose.Size = New System.Drawing.Size(102, 35)
-        Me.btnClose.TabIndex = 7
-        Me.btnClose.Text = "OK"
-        Me.btnClose.UseVisualStyleBackColor = False
+        Me.btnOK.BackColor = System.Drawing.Color.Silver
+        Me.btnOK.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnOK.Location = New System.Drawing.Point(317, 488)
+        Me.btnOK.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnOK.Name = "btnOK"
+        Me.btnOK.Size = New System.Drawing.Size(102, 35)
+        Me.btnOK.TabIndex = 7
+        Me.btnOK.Text = "OK"
+        Me.btnOK.UseVisualStyleBackColor = False
         '
         'frmSettingBase
         '
@@ -58,7 +58,7 @@ Partial Class frmSettingBase
         Me.BackColor = System.Drawing.Color.Gray
         Me.ClientSize = New System.Drawing.Size(574, 559)
         Me.Controls.Add(Me.btnCancel)
-        Me.Controls.Add(Me.btnClose)
+        Me.Controls.Add(Me.btnOK)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "frmSettingBase"
@@ -67,6 +67,6 @@ Partial Class frmSettingBase
         Me.ResumeLayout(False)
 
     End Sub
-    Protected WithEvents btnClose As Button
+    Protected WithEvents btnOK As Button
     Protected WithEvents btnCancel As Button
 End Class

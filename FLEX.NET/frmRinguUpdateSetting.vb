@@ -33,7 +33,7 @@
         Next
 
         If ExceptJk.Count = InitPara.MesureJackAngle.Count Then
-            MessageBox.Show("すべてのジャッキを無効にすることは出来ません")
+            MsgBox("すべてのジャッキを無効にすることは出来ません", , vbCritical)
 
         Else
             CtlPara.ExceptMesureJackNo = ExceptJk
@@ -47,7 +47,7 @@
 
     End Sub
 
-    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnClose.Click
+    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
         'Dim ExceptJk As New List(Of Short)
         'For Each dv As DataGridViewRow In DgvJackStroke.Rows
         '    If Not dv.Cells(JackEnable.Index).Value Then

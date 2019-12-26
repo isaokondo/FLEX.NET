@@ -50,15 +50,13 @@ Partial Class frmAssemblyProcessEdit
         CType(Me.picAssemblySeg, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'btnClose
+        'btnOK
         '
-        Me.btnClose.Location = New System.Drawing.Point(145, 471)
-        Me.btnClose.Text = "閉じる"
+        Me.btnOK.Location = New System.Drawing.Point(145, 471)
         '
         'btnCancel
         '
         Me.btnCancel.Location = New System.Drawing.Point(355, 471)
-        Me.btnCancel.Visible = False
         '
         'AssemblyBoltPitchSel
         '
@@ -255,7 +253,6 @@ Partial Class frmAssemblyProcessEdit
         Me.UcnDspData24.Name = "UcnDspData24"
         Me.UcnDspData24.Size = New System.Drawing.Size(243, 32)
         Me.UcnDspData24.TabIndex = 146
-        Me.UcnDspData24.ToolTipText = Nothing
         Me.UcnDspData24.Unit = "deg"
         Me.UcnDspData24.UnitVisible = False
         Me.UcnDspData24.Value = "-"
@@ -277,7 +274,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClosetJack.Name = "DspClosetJack"
         Me.DspClosetJack.Size = New System.Drawing.Size(243, 32)
         Me.DspClosetJack.TabIndex = 143
-        Me.DspClosetJack.ToolTipText = Nothing
         Me.DspClosetJack.Unit = "deg"
         Me.DspClosetJack.UnitVisible = False
         Me.DspClosetJack.Value = "-"
@@ -299,7 +295,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspBoltPitch.Name = "DspBoltPitch"
         Me.DspBoltPitch.Size = New System.Drawing.Size(242, 32)
         Me.DspBoltPitch.TabIndex = 140
-        Me.DspBoltPitch.ToolTipText = Nothing
         Me.DspBoltPitch.Unit = "deg"
         Me.DspBoltPitch.UnitVisible = False
         Me.DspBoltPitch.Value = "-"
@@ -321,7 +316,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPattern.Name = "DspAssemblyPattern"
         Me.DspAssemblyPattern.Size = New System.Drawing.Size(488, 32)
         Me.DspAssemblyPattern.TabIndex = 148
-        Me.DspAssemblyPattern.ToolTipText = Nothing
         Me.DspAssemblyPattern.Unit = "deg"
         Me.DspAssemblyPattern.UnitVisible = False
         Me.DspAssemblyPattern.Value = "-------"
@@ -343,7 +337,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspNextPieceName.Name = "DspNextPieceName"
         Me.DspNextPieceName.Size = New System.Drawing.Size(243, 32)
         Me.DspNextPieceName.TabIndex = 147
-        Me.DspNextPieceName.ToolTipText = Nothing
         Me.DspNextPieceName.Unit = "deg"
         Me.DspNextPieceName.UnitVisible = False
         Me.DspNextPieceName.Value = "-----"
@@ -365,7 +358,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAddClosetThrustJack.Name = "DspAddClosetThrustJack"
         Me.DspAddClosetThrustJack.Size = New System.Drawing.Size(243, 32)
         Me.DspAddClosetThrustJack.TabIndex = 145
-        Me.DspAddClosetThrustJack.ToolTipText = Nothing
         Me.DspAddClosetThrustJack.Unit = "deg"
         Me.DspAddClosetThrustJack.UnitVisible = False
         Me.DspAddClosetThrustJack.Value = "-"
@@ -387,7 +379,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClosetThrustJack.Name = "DspClosetThrustJack"
         Me.DspClosetThrustJack.Size = New System.Drawing.Size(243, 32)
         Me.DspClosetThrustJack.TabIndex = 144
-        Me.DspClosetThrustJack.ToolTipText = Nothing
         Me.DspClosetThrustJack.Unit = "deg"
         Me.DspClosetThrustJack.UnitVisible = False
         Me.DspClosetThrustJack.Value = "-"
@@ -409,7 +400,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspPullBackJack.Name = "DspPullBackJack"
         Me.DspPullBackJack.Size = New System.Drawing.Size(243, 32)
         Me.DspPullBackJack.TabIndex = 142
-        Me.DspPullBackJack.ToolTipText = Nothing
         Me.DspPullBackJack.Unit = "deg"
         Me.DspPullBackJack.UnitVisible = False
         Me.DspPullBackJack.Value = "-"
@@ -431,7 +421,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAssemblyPieace.Name = "DspAssemblyPieace"
         Me.DspAssemblyPieace.Size = New System.Drawing.Size(243, 32)
         Me.DspAssemblyPieace.TabIndex = 141
-        Me.DspAssemblyPieace.ToolTipText = Nothing
         Me.DspAssemblyPieace.Unit = "deg"
         Me.DspAssemblyPieace.UnitVisible = False
         Me.DspAssemblyPieace.Value = "-----"
@@ -453,7 +442,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspTypeName.Name = "DspTypeName"
         Me.DspTypeName.Size = New System.Drawing.Size(491, 32)
         Me.DspTypeName.TabIndex = 139
-        Me.DspTypeName.ToolTipText = Nothing
         Me.DspTypeName.Unit = "deg"
         Me.DspTypeName.UnitVisible = False
         Me.DspTypeName.Value = "RC20ST"
@@ -475,7 +463,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspReduceGroup.Name = "DspReduceGroup"
         Me.DspReduceGroup.Size = New System.Drawing.Size(243, 32)
         Me.DspReduceGroup.TabIndex = 149
-        Me.DspReduceGroup.ToolTipText = Nothing
         Me.DspReduceGroup.Unit = "deg"
         Me.DspReduceGroup.UnitVisible = False
         Me.DspReduceGroup.Value = "-"
@@ -492,7 +479,6 @@ Partial Class frmAssemblyProcessEdit
         Me.btnApply.TabIndex = 150
         Me.btnApply.Text = "適用"
         Me.btnApply.UseVisualStyleBackColor = False
-        Me.btnApply.Visible = False
         '
         'DspOpposeGroup
         '
@@ -510,7 +496,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspOpposeGroup.Name = "DspOpposeGroup"
         Me.DspOpposeGroup.Size = New System.Drawing.Size(243, 32)
         Me.DspOpposeGroup.TabIndex = 151
-        Me.DspOpposeGroup.ToolTipText = Nothing
         Me.DspOpposeGroup.Unit = "deg"
         Me.DspOpposeGroup.UnitVisible = False
         Me.DspOpposeGroup.Value = "-"
@@ -553,7 +538,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspAntiClockwiseMargin.Name = "DspAntiClockwiseMargin"
         Me.DspAntiClockwiseMargin.Size = New System.Drawing.Size(250, 30)
         Me.DspAntiClockwiseMargin.TabIndex = 162
-        Me.DspAntiClockwiseMargin.ToolTipText = Nothing
         Me.DspAntiClockwiseMargin.Unit = "deg"
         Me.DspAntiClockwiseMargin.UnitVisible = False
         Me.DspAntiClockwiseMargin.Value = "-"
@@ -575,7 +559,6 @@ Partial Class frmAssemblyProcessEdit
         Me.DspClockwiseMargin.Name = "DspClockwiseMargin"
         Me.DspClockwiseMargin.Size = New System.Drawing.Size(250, 30)
         Me.DspClockwiseMargin.TabIndex = 161
-        Me.DspClockwiseMargin.ToolTipText = Nothing
         Me.DspClockwiseMargin.Unit = "deg"
         Me.DspClockwiseMargin.UnitVisible = False
         Me.DspClockwiseMargin.Value = "-"
@@ -613,7 +596,7 @@ Partial Class frmAssemblyProcessEdit
         Me.Controls.Add(Me.ConfirmRingNo)
         Me.Name = "frmAssemblyProcessEdit"
         Me.Text = "組立工程の編集"
-        Me.Controls.SetChildIndex(Me.btnClose, 0)
+        Me.Controls.SetChildIndex(Me.btnOK, 0)
         Me.Controls.SetChildIndex(Me.btnCancel, 0)
         Me.Controls.SetChildIndex(Me.ConfirmRingNo, 0)
         Me.Controls.SetChildIndex(Me.DspSegmentTypeName, 0)

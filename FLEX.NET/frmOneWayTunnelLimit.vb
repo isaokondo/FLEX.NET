@@ -36,7 +36,7 @@
 
     End Sub
 
-    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnClose.Click
+    Private Sub btnOK_Click_1(sender As Object, e As EventArgs) Handles btnOK.Click
 
     End Sub
 End Class
