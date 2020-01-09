@@ -1777,14 +1777,15 @@
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub btnRingUpdate_Click(sender As Object, e As EventArgs) Handles btnRingUpdate.Click
-        Dim ret As DialogResult = MessageBox.Show("リング更新を行いますか？", "リング更新処理", MessageBoxButtons.YesNo)
-        If ret = DialogResult.Yes Then
-            PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
+        'Dim ret As DialogResult = MessageBox.Show("リング更新を行いますか？", "リング更新処理", MessageBoxButtons.YesNo)
+        'If ret = DialogResult.Yes Then
+        PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
             If PlcIf.SegmentMode Then
-                MessageBox.Show("掘進モードにて待機中となります。", "リング更新処理", MessageBoxButtons.OK)
-            End If
-            btnRingUpdate.Visible = False
+            'MessageBox.Show("掘進モードにて待機中となります。", "リング更新処理", MessageBoxButtons.OK)
+            WriteEventData("リング更新されました,掘進モードにて待機中となります", Color.Magenta)
         End If
+            btnRingUpdate.Visible = False
+        'End If
 
     End Sub
 End Class

@@ -607,6 +607,7 @@
     <None Include="Resources\基本条件設定forFlexNet.xlsm" />
     <None Include="ジャッキステータス.xlsx" />
     <None Include="基本条件設定forFlexNet.xlsm" />
+    <None Include="鹿島外環リング更新デバッグと結果とその対応.pdf" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="AcroPDFLib">

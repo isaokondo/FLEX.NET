@@ -8,7 +8,8 @@
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
         CloseJudgePullStroke.MinValue =
-                PlcIf.ParameterTag.TagData("終了判定引きストローク").EngLow
+                PlcIf.ParameterTag.TagData("
+                引きストローク").EngLow
         CloseJudgePullStroke.MaxValue =
                 PlcIf.ParameterTag.TagData("終了判定引きストローク").EngHight
 

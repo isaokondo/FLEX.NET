@@ -255,6 +255,11 @@ Public Class clsPlcIf
     ''' </summary>
     Public Event GyiroErrOccuerd()
 
+    ''' <summary>
+    ''' 目標推進量超えたか
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TargetNetStrokeOver As Boolean
 
     Public AnalogTag As clsTag
     Public ParameterTag As clsTag
@@ -1332,9 +1337,10 @@ Public Class clsPlcIf
                             If InitPara.MonitorMode Then
                                 _AssemblyPieceNo = _EngValue("組立ピース")
                             End If
+                            '目標推進量超えたか
+                            TargetNetStrokeOver = (CalcStroke.CalcAveLogicalStroke > (CtlPara.TargetStrokeOverRate * CtlPara.TargetNetStroke / 100))
                             'Kセグメント完了で目標推進量(割合を掛けたもの)を超えたときにリング更新するかどうかの判断
-                            If _LosZeroSts_FLEX = 3 AndAlso SegAsmblyData.AssemblyPlanPieceNumber = _AssemblyPieceNo AndAlso CtlPara.TargetNetStroke <> 0 AndAlso
-                                CalcStroke.CalcAveLogicalStroke > (CtlPara.TargetStrokeOverRate * CtlPara.TargetNetStroke / 100) Then
+                            If _LosZeroSts_FLEX = 3 AndAlso SegAsmblyData.AssemblyPlanPieceNumber = _AssemblyPieceNo AndAlso CtlPara.TargetNetStroke <> 0 AndAlso TargetNetStrokeOver Then
                                 RaiseEvent TargetStrokeOverEv() 'メッセージ出力イベント
                             End If
 

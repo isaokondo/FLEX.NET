@@ -405,6 +405,9 @@ Module mdlFLEX
                         WriteEventData("Ｋセグメント組立完了しました。", Color.Magenta)
                         PlcIf.LosZeroSts_FLEX = 3   '組立完了確認
                         LosZeroSts = 6
+                        'リング更新ボタン表示
+                        My.Forms.frmMain.btnRingUpdate.Visible = True
+
 
                         'メッセージ表示時も他の操作が出来るようにタスク使用
 
@@ -412,16 +415,15 @@ Module mdlFLEX
                                 Sub()
                                     'リング更新の確認
                                     PlaySound(My.Resources.TargetStrokeOver)
-                                    Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}{PlcIf.RingNo}リングのリング更新を行いますか？",
-                                    "リング更新の確認",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
-                                                                              MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
-                                    If ret = DialogResult.Yes Then
-                                        PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
-                                        '目標推進量超えたかの確認メッセージ出力フラグon
-                                        TargetStrokeOverConfirm = True
-                                    End If
-
+                                    'Dim ret As DialogResult = MessageBox.Show($"Kセグメント組立完了しました。{vbCrLf}{PlcIf.RingNo}リングのリング更新を行いますか？",
+                                    '"リング更新の確認",
+                                    'MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                                    '                                          MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)
+                                    'If ret = DialogResult.Yes Then
+                                    '    PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
+                                    '    '目標推進量超えたかの確認メッセージ出力フラグon
+                                    '    TargetStrokeOverConfirm = True
+                                    'End If
 
                                     '未推進ジャッキの確認
                                     If Not PlcIf.JackSel.All(Function(x) x = True) Then
@@ -1111,7 +1113,7 @@ Module mdlFLEX
         If Not Mode And InitPara.ServerMode Then
             ElapsedTime.SegmentMode()
             'すべてのストローク計測ジャッキが引戻更新され,セグメントモードになった
-            If CalcStroke.AllMesJackUp And InitPara.ServerMode Then
+            If CalcStroke.AllMesJackUp And InitPara.ServerMode And Not PlcIf.TargetNetStrokeOver Then
                 Dim result As DialogResult = MessageBox.Show("掘進終了の判定ができません。終了してもよろしいですか？",
                                                             "リング更新処理", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                 'リング更新処理の場合
@@ -1119,6 +1121,10 @@ Module mdlFLEX
                     PlcIf.DigtalPlcWrite("掘進強制終了", True) 'PLC書込
                     MessageBox.Show("リング更新処理されました。掘進モードにて、「待機中」となります。", "リング更新処理", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
+                'リング更新ボタン表示
+                My.Forms.frmMain.btnRingUpdate.Visible = True
+
+
             End If
 
         End If
