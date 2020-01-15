@@ -1,5 +1,6 @@
 ﻿Imports System.Data.Odbc
 Imports ClosedXML.Excel
+Imports System.Diagnostics
 Public Class frmReportOut
 
     Private RprDB As New clsReportDb

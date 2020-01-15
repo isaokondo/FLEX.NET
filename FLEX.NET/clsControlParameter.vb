@@ -1,5 +1,7 @@
 ﻿'Option Strict On
 Option Explicit On
+Imports System.Diagnostics
+
 Public Class clsControlParameter
     Inherits clsDataBase
 

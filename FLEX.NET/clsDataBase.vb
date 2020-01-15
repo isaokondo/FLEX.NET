@@ -1,7 +1,7 @@
 ﻿Imports System.Data.Odbc
 Imports System.Runtime.InteropServices
 Imports MySql.Data.MySqlClient
-
+Imports System.Diagnostics
 
 
 

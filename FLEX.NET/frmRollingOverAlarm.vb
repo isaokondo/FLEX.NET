@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
+Imports System.Diagnostics
+
 Public Class frmRollingOverAlarm
 
     Private blnBlinkFlg As Boolean

@@ -1,4 +1,5 @@
 ﻿Imports System.Convert
+Imports System.Diagnostics
 
 Public Class clsPlcIf
 
