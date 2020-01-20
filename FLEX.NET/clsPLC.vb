@@ -1217,10 +1217,10 @@ Public Class clsPlcIf
                             'ローリング許容値超
                             '時計端 時計端差異ーローリング変化量　＜　ピース端部の余裕許容値
                             _rollingClockWiseOver =
-                            ((SegAsmblyData.ClockWiseSegMargin(_RingNo) - _rollingChange) < CtlPara.LoszeroRollingTolerance)
+                            (Math.Abs(SegAsmblyData.ClockWiseSegMargin(_RingNo) - _rollingChange) < CtlPara.LoszeroRollingTolerance)
                             '反時計端 ー（反時計端差異ーローリング変化量）　＜　ピース端部の余裕許容値
                             _rollingAntiClockWiseOver =
-                            (-(SegAsmblyData.AntiClockWiseSegMargin(_RingNo) - _rollingChange) < CtlPara.LoszeroRollingTolerance)
+                            (Math.Abs(SegAsmblyData.AntiClockWiseSegMargin(_RingNo) - _rollingChange) < CtlPara.LoszeroRollingTolerance)
                             '許容値オーバーがOFF→ONでイベント発生
                             If Not blnPreOver And ((_rollingClockWiseOver Or _rollingAntiClockWiseOver) And _LosZeroEnable) Then
                                 RaiseEvent RollingOverAlarm()
